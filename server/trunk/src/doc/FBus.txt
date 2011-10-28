@@ -1,0 +1,70 @@
+Here you'll find a description of the protocol used in Nokia phones. Please note that Nokia doesn't provide any official information about the protocol it uses. The source of this information is mainly Gnokii and the hex command heaps that I made by sniffing the communication between the P.C. and Nokia phones. Nokia phones use two kinds of protocols, the Mbus protocol and the Fbus protocol. There is a lot of difference between the two, the basic difference being that one cannot transmit and receive data simultaneously with mbus, but the same is possible using fbus. Also there is a difference in the speeds. While Mbus operates at 9600 bps, Fbus operates at 115200 bps. So, if you want some fast data transfer between the pc and your phone, better use Fbus. Both mbus and fbus documentation can also be found at Gnokii, which is the original source of this document.
+
+
+Protocol Exchange Layout
+1. The Microcontroller sends some type of request or command packet
+2. Phone sends acknowledgement
+3. Phone sends response to the request packet
+4. Microcontroller sends acknowledgement
+
+Protocol Speed
+Speed      :: 115,200 bps
+Bits          :: 8  
+Parity       :: None 
+Stop Bits   :: 1
+
+Format of packets from Microcontroller  (General packet format)
+{ FrameID, DestDEV, SrcDEV, MsgType, 0x00, FrameLength, {block}, FramesToGo, SeqNo, PaddingByte?, ChkSum1, ChkSum2 }
+
+Where FrameID     =  0X1c       ---  IR/Fbus
+                           =  0x1e        ---  Serial/Fbus
+
+DestDEV, SrcDEV  =  0X00       ---  Mobile Phone
+                           =  0x0c        --- Microcontroller
+
+MsgTpye             =  Indicates the type of message .. can be 0x00 or  0x40 .. I haven't been able to decode it :(
+
+Framelength        =   {block} + 2 (+ 1 if PaddingByte exists)
+
+{Block}               =   The actual command body
+
+FramesToGo        =   If this packet is part of a group (eg. long sms), indicates how many more messages, including this one there are . 0x01 means the last frame
+
+SeqNo                 =  [0xXY] where X: 4: first block 0: continuing block  Y: sequence number  ... haven't had much success with this either. The sequence number for a standard frame seems to be between 40 and 47. So, one can use 40 at the beginning to initialize.
+
+PaddingByte?       =  0x00 if FrameLength would be an odd number
+
+ChkSum1            =  XOR on frame's odd numbers  --- Note
+ChkSum2            =  XOR on frame's even numbers --- Note
+
+Note :: A 16 bit XOR all the preceding bits can also be taken.
+
+
+Format of acknowledgement from the phone
+Now that's where the problem is .. There is no information available about this in the Gnokii documentation. I have been able to get some information though.. But there are a lot of loop holes in it ..
+
+{1e, 0c, 00, 7f, 00, len, MsgType, SeqNo, Chksum }
+
+where len   = length in bytes (always 02)
+
+MsgType    = Corresponds to the the original message type.
+
+SeqNo         =  Haven't been able to decode this .. One of the docs says .. Last 3 bits indicate sequence no. of packet being acknowledged, most significant nibble is normally 0, 8 for sequence error.
+
+Chksum     = 16 bit Xor of all preceding 16 bit words.
+
+Format of packet from the phone
+{1e, 0c, 00, MsgType, 00, FrameLength, {block}, FramesToGo, SeqNo, PaddingByte, Chksum}
+
+This is based on the original message sent by the Microcontroller to the phone.
+
+Format of acknowledgement from the phone
+{1e, 00, 0c, 7f, 00, len, Msgtype, SeqNr, Chksum}
+
+where len    = length in bytes (always 02)
+
+MsgType    = Corresponds to the original message type
+
+SeqNr          = Same as above
+
+Chksum      = 16 bit Xor off all preceding 16 bit words 

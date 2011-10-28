@@ -1,0 +1,57 @@
+PROJ = main
+WEBDIR = www
+WEBFILE= urom.c
+
+include $(DEVBASE)/OS/$(OS_VERSION)/nutapp_21b/Makedefs
+
+SRCS =  $(PROJ).c \
+devices/eth.c devices/uart.c devices/lcd.c devices/adc.c devices/ups.c devices/gsm.c devices/ir.c devices/i2c.c \
+services/http.c services/web.c services/admin.c services/monitor.c \
+apps/media/freebox.c apps/media/rc.c \
+apps/rooms/ext.c apps/rooms/rooms.c \
+apps/scenes/alarm.c apps/scenes/safety.c apps/scenes/atmosphere.c apps/scenes/scenes.c \
+$(WEBFILE)
+
+# devices/xflash.c services/tftp.c 
+
+LIBS =  $(LIBDIR)/nutinit.o -lnutpro -lnutos -lnutarch -lnutdev -lnutgorp -lnutnet -lnutfs -lnutcrt
+
+#LIBS =  $(LIBDIR)/nutinit.o -lnutnet -lnutpro -lnutfs -lnutos -lnutarch -lnutdev -lnutgorp -lnutcrt
+#LIBS =  $(LIBDIR)/nutinit.o -lnutcrt -lnutarch -lnutdev -lnutos -lnutdev -lnutarch 
+#LIBS =  $(LIBDIR)/nutinit.o -lnutpro -lnutos -lnutarch -lnutdev -lnutarch -lnutnet -lnutfs -lnutcrt
+
+OBJS =  $(SRCS:.c=.o)
+TARG =  $(PROJ).hex
+LTARG =  $(PROJ).lss
+
+all: $(OBJS) $(TARG) $(ITARG) $(DTARG) $(LTARG) 
+
+dep:
+	$(CC) -I$(top_srcdir)/include -M $(PROJ).c
+
+# Create extended listing file from ELF output file.
+%.lss: %.elf
+	@echo
+	@echo $(MSG_EXTENDED_LISTING) $@
+	avr-objdump -h -S $< > $@
+
+$(WEBFILE): $(WEBDIR)/index.asp
+	$(CRUROM) -r -o$(WEBFILE) $(WEBDIR)
+
+
+include $(DEVBASE)/OS/$(OS_VERSION)/nutapp_21b/Makerules
+
+studio: $(PROJ).obj
+
+clean:
+	-rm -f $(OBJS)
+	-rm -f $(TARG) $(ITARG) $(DTARG)
+	-rm -f $(PROJ).obj
+	-rm -f $(PROJ).sym
+	-rm -f $(PROJ).map
+	-rm -f $(PROJ).lss
+	-rm -f $(SRCS:.c=.lst)
+	-rm -f $(SRCS:.c=.bak)
+	-rm -f $(SRCS:.c=.i)
+	-rm -f $(WEBFILE)
+

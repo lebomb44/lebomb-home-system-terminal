@@ -1,0 +1,728 @@
+/*
+       some questions or comments send to <zecarlos1957@hotmail.com>
+       my thanks to web,   i am  learning width them
+       my bad ingles!!!!!!!!!!!!????????????
+
+       thanks to Justin Karneges who was the ward whork
+       I am Jose Jesus from Portugal
+*/      
+ 
+#include <stdlib.h>
+#include <conio.h>
+#include <stdio.h>
+#include <mem.h>
+#include <dos.h>
+#include <time.h>
+#include <string.h>
+
+#include "rs232.h"   //or some else serial driver
+
+
+#define N61MAXSIZE 120
+#define BUF_SIZ       1024
+
+typedef unsigned char uchar;
+typedef unsigned short ushort;
+
+uchar input_buffer[1024],output_buffer[1024];
+
+unsigned char transtable[]={
+	 '@' ,0xa3,'§' ,0xa5,0xe8,0xe9,0xf9,0xec,
+	 0xf2,0xc7,'\n',0xd8,0xf8,'\r',0xc5,0xe5,
+	 '?' ,'_' ,'?' ,'?' ,'?' ,'?' ,'?' ,'?' ,
+	 '?' ,'?' ,'?' ,'?' ,0xc6,0xe6,0xdf,0xc9,
+	 ' ' ,'!' ,'\"','#' ,0xa4,'%' ,'&' ,'\'',
+	 '(' ,')' ,'*' ,'+' ,',' ,'-' ,'.' ,'/' ,
+	 '0' ,'1' ,'2' ,'3' ,'4' ,'5' ,'6' ,'7' ,
+	 '8' ,'9' ,':' ,';' ,'<' ,'=' ,'>' ,'?' ,
+	 0xa1,'A' ,'B' ,'C' ,'D' ,'E' ,'F' ,'G' ,
+	 'H' ,'I' ,'J' ,'K' ,'L' ,'M' ,'N' ,'O' ,
+	 'P' ,'Q' ,'R' ,'S' ,'T' ,'U' ,'V' ,'W' ,
+	 'X' ,'Y' ,'Z' ,0xc4,0xd6,0xd1,0xdc,0xa7,
+	 0xbf,'a' ,'b' ,'c' ,'d' ,'e' ,'f' ,'g' ,
+	 'h' ,'i' ,'j' ,'k' ,'l' ,'m' ,'n' ,'o' ,
+	 'p' ,'q' ,'r' ,'s' ,'t' ,'u' ,'v' ,'w' ,
+	 'x' ,'y' ,'z' ,0xe4,0xf6,0xf1,0xfc,0xe0
+};
+struct Message{
+	 uchar id;
+	 uchar dest;
+	 uchar source;
+	 uchar type;
+	 uchar unknown;
+	 uchar size;
+	 uchar dat[256];
+	 uchar cs[2];
+}message;
+
+int firsttime=1;
+
+class TM{
+protected:
+	  int seqnum,prevseq,ack,inbox,done,nsms;
+	  uchar memtype;
+	  uchar version[80];
+	  uchar smsc[80];
+	  int sendframe(int,int,uchar*);
+	  int nextseq();
+//	  void sinc();
+	  void smssendfull(char *smsc,char *dest,char *msg);
+	  void sendack(int type,int seqnum);
+	  void bcd(char *dst,char *s);
+	  void bcd2(char *dst,char *s);
+//	  char *unbcd(unsigned char *dat);
+//	  char *unbcd2(unsigned char *dat);
+	  void pack7(char *dst,char *s);
+	  char *unpack7(unsigned char *dat,int len);
+	  unsigned char gettrans(unsigned char c);
+	  int process(Message*);
+public:
+	  void addchar(char *str,char c){
+		  int n=strlen(str); str[n]=c; str[n+1]=0;
+	  }
+	  int sendmsg(int type,int len,uchar*buf);
+	  char *unbcd(unsigned char *dat);
+	  char *unbcd2(unsigned char *dat);
+	  TM();
+	  ~TM();
+	  void sinc();
+	  int ackwait(int x);
+	  int wait(int x);
+	  int send(uchar *,uchar*);
+	  int update();
+	  int gettxt(uchar*);
+	  void show(Message*);
+	  void ver();
+	  int getmail(){return inbox;}
+	  void savemsg(char *sender,char *d,char *t,char *m);
+};
+
+int off=0,mode=0,datp=0,multiple=0,readsize=0;
+char Paulo[]={"918617088"};
+
+uchar msg[512];
+uchar msg2[512];
+uchar Date[10];
+uchar Time[10];
+char sender[15];
+uchar s1[50];
+uchar Imei[50];
+uchar Operator[50];
+uchar SmsC[15];
+int NetStatus=0;
+int Battery=0;
+
+uchar index=0;
+uchar memtype=0x02;
+
+/*
+  this is a part of a frame.this frame is complet wen sending
+   to the function TM::sendmsg(getver[0],getver[1],&getver[2])
+*/
+uchar getver[] =   {0xd1,0x05,0x00,0x01,0x00,0x03,0x00};
+uchar getsmsc[]=   {0x02,0x06,0x00,0x01,0x00,0x33,0x64,0x01};
+uchar getimei[]=   {0x1b,0x04,0x00,0x01,0x00,0x01};
+uchar getbatt[]=   {0x17,0x04,0x00,0x01,0x00,0x02};
+uchar getrf[]  =   {0x0a,0x04,0x00,0x01,0x00,0x81};
+uchar getnetwork[]={0x0a,0x04,0x00,0x01,0x00,0x70};
+uchar readsms[]=   {0x14,0x0a,0x00,0x01,0x01,0x07,memtype,0x00,index,0x01,0x65,0x01};
+uchar getalarm[]=  {0x11,0x04,0x00,0x01,0x00,0x6d};
+uchar delsms[]  =  {0x14,0x08,0x00,0x01,0x00,0x0a,memtype,0x00,index,0x00};
+uchar smsstatus[]= {0x14,0x05,0x00,0x01,0x00,0x36,0x64};
+	
+
+class App:public TM{
+	  int status,todo,old;
+	  char port;
+	  uchar *doit;
+	  uchar *tarefa[255];
+public:
+      App():status(0),port('1'),todo(0),old(0){}
+      int init(){
+	  if( rs_initport(port,RS_B115K,RS_NOPAR,RS_DBIT8,RS_SBIT1,
+	      BUF_SIZ,input_buffer,BUF_SIZ,output_buffer)>0){
+		  status=0;
+		  rs_modctrl(RS_WRTMCR,RS_MCRDTR,RS_LINON);
+		  cprintf("Terminal mode active \r\n");
+	  }
+	  else{
+		 status=1;
+		 cprintf("Unable to open COM port\r\n");
+	         return status;
+	  }
+	  tarefa[6]=::getver;
+	  tarefa[5]=::getsmsc;
+	  tarefa[4]=::getimei;
+	  tarefa[3]=::getbatt;
+	  tarefa[2]=::getrf;
+	  tarefa[1]=::getnetwork;
+	  tarefa[0]=::smsstatus;
+	  todo=7;
+	  return status;
+      }
+     ~App(){
+	  if(status==0)rs_modctrl(RS_WRTMCR,RS_MCRDTR,RS_LINOFF);
+	  rs_close();
+      }
+      int upload(){
+	  int r;
+	  if(todo!=old && todo){
+		doit=tarefa[todo-1];
+		sendmsg(doit[0],doit[1],&doit[2]);
+		old=todo;r=0;
+	  }else{
+	     if(old>0){
+	       	printf("Comando [%s] ",itoa((int)doit[0],s1,16));
+		printf("Nao Executado. Repetir?  esc:space\r\n");
+		old=0;
+		r=27;
+	     }
+	  }
+	return r;
+     }
+     int getstatus(){
+	if(done && todo==old && todo ){
+	  todo--;old=0;done=0;
+	  return ((message.type<<8)|message.dat[3]);
+	}
+        return 0;
+     }
+     void insertcmd(uchar * cmd){
+	if(todo<255){tarefa[todo++]=cmd;}
+	else printf("Error to mutch tarefas\r\n");
+     }
+     int getarefa(){return todo;}
+     void sendsms(uchar *dst,uchar *m){
+	if(smsc==0 || dst==0){
+	  printf("Falta o numero do Centro de mensagens\r\n");
+	  return;
+	}
+	smssendfull(smsc,dst,m);
+     }
+     void savemsg(uchar *s,uchar *d,uchar *t,uchar *mess){
+	FILE *f=fopen("backup.dat","at");
+	if(!f)return;
+	strcat(s,d);
+	strcat(s,t);
+	strcat(s,mess);
+	fwrite(s,strlen(s),1,f);
+	fclose(f);
+     }
+};
+
+
+
+
+
+
+void main(){
+  int end=0,c=0,er=0,type,mail=0;
+  App app;
+  long t1=0,t2,t3=8000;
+  char *dst;
+  if(app.init()==0){
+        t1=clock();
+        while(!end){
+	  t2=clock();
+	  if(t2>t1){
+		t1=t2+t3;
+		if(app.getarefa()==0){
+        		app.insertcmd(smsstatus);
+		//    see if there is sms to send ? send it
+			if(app.loadnet());
+		}
+		c=app.upload();
+	  }
+	  if(kbhit())c=getch();
+	  if(c){
+		if(c==27){
+		 while(!kbhit());
+		 if((c=getch())==27)break;
+		 c=0;
+		}
+	if(c==0x52){
+		 if(app.gettxt(msg)){
+		  dst=Paulo;
+		  app.sendsms(dst,msg);
+        	 }
+	}
+  }
+  delay(1);
+  if((er=app.update())){
+	if(er&0x01)printf("Receive overrun(buffer) ");
+	if(er&0x02)printf("Receive overrun(UART) ");
+	if(er&0x04)printf("Parity error ");
+	if(er&0x08)printf("Framing error ");
+	if(er&0x10)printf("Break detected ");
+	if(er&0x20)printf("Error in receive FIFO ");
+	printf(" Esc-ABort : Else-Continue \r\n");
+	c=27;
+  }
+  if((type=app.getstatus())){
+         if(type==0x1437){           
+  //if status report a sms message
+		if(index==0)index=message.dat[15];
+		mail=index;
+		if(mail ){
+			printf("%sª Messagem nova ",itoa(mail,s1,10));
+			readsms[8]=mail;t1=0;
+			app.insertcmd(readsms);     // read it
+		}
+	  }
+	  if(type==0x1408){  
+           //if there is a sms mark as read
+		mail=message.dat[7];
+		if(mail){
+			printf("%s %s\r\n",sender,::msg);
+//			app.show(&message);
+			printf("\r\n");
+			if(index)index--;
+			readsms[8]=mail;t1=0;
+//			app.insertcmd(delsms);      // delete it
+//			app.savemsg(sender,Date,Time,msg);
+		}
+	  }
+	  if(app.getarefa()>1)t1=0;
+      }
+    }
+  }
+}
+
+
+TM::TM():seqnum(0),prevseq(0),ack(0),memtype(0x02),inbox(0),done(0),nsms(0){
+  smsc[0]=0;version[0]=0;Imei[0]=0;Operator[0]=0;SmsC[0]=0;
+}
+
+TM::~TM(){}
+int TM::send(uchar *num,uchar *msg){
+	  if(smsc[0]==0)return 0x300;
+	  printf("Waiting...");
+	  smssendfull(smsc,num,msg);
+	  return 0;
+}
+
+
+
+
+int  TM::sendmsg(int type,int size,unsigned char *data){
+	  unsigned char buf[N61MAXSIZE+2];
+	  unsigned char num,lastsize;
+	  int n,len,er;
+	  num=(size+N61MAXSIZE-1)/N61MAXSIZE;
+	  lastsize=size%N61MAXSIZE;
+	  sinc();
+	  for(n=0;n<num;++n){
+		  if(n+1==num) len=lastsize;
+		  else len=N61MAXSIZE;
+		  memcpy(buf,data+(n*N61MAXSIZE),len);
+		  buf[len++]=num-n;            //  multiple framed msg
+		  buf[len++]=nextseq();      //  sequenci
+		  if(n) buf[len-1]&=7;
+		  ack=0;
+		  if((er=sendframe(type,len,buf)))break;
+	  }
+	  return er;
+}
+
+int TM::sendframe(int type,int size,uchar *data){
+	  unsigned char buf[256];
+	  int at,n,check,len;
+	  unsigned short *p;
+	  at=0;
+	  buf[at++]=0x1e;         //   id comunication 0x1e cable=0x1e infred=0x1c
+	  buf[at++]=0x00;         //   dest  0x00=mobil
+	  buf[at++]=0x0c;         //   source  0x0c=pc
+	  buf[at++]=type;         //   comand type  see below
+	  buf[at++]=0;            //   multiple sms
+	  buf[at++]=size;         //   size of data
+	  for(n=0;n<size;n++) buf[at++]=data[n];
+	  if(size%2)buf[at++]=0;
+	  check=0;
+	  p=(unsigned short *)buf;
+	  len=at/2;
+	  for(n=0;n<len;n++) check ^=p[n];
+	  p[n]=check;
+	  at+=2;
+	  int er;
+	  er=rs_sndstr(at,buf);
+//	  printf(" send   ");	  show((Message*)buf);
+	  if(er>0)er|=0x500;
+	  return er;
+}
+
+int TM::update(){
+  int n,er=0;
+  uchar c;
+  while(rs_inrcvd()){
+	 c=rs_getbyt();
+	 if(er=rs_error())break;
+	 message.cs[(off&1)]^=c;
+	 switch (mode){
+		case 0:
+		  if(c==0x1e){
+	    	     if(!multiple){ 
+                        memset(message.dat,0,255);}
+                        message.id=message.cs[0]=0x1e;message.cs[1]=0;
+			mode=1;off=0;
+  	             }
+		  break;
+		case 1: 
+                   if((message.dest=c)==0x0c)mode=2; else mode=0;
+                  break;
+		case 2: message.source=c;mode=3;break;
+		case 3: message.type=c;mode=4;break;
+		case 4: message.unknown=c;mode=5;break;
+		case 5:
+		  if(multiple) { message.size+=c-2; }
+		  else {message.size=c;datp=0;}
+		  mode=6;n=message.size%2;
+		  readsize=message.size+n+2;break;
+		case 6:
+		  n=datp++;
+		  if(n>255){
+	        	 multiple=0;mode=0;
+			 printf("Data to long \r\n");break;
+		  }
+		  message.dat[n]=c;
+		  if(n>=readsize-1){
+		 if(message.cs[0]==message.cs[1] && message.cs[0]==0){
+		 if(message.type!=0x7f ){
+	sendack(message.type,message.dat[message.size-1]&0x0f);
+	if(message.size>1 && message.dat[message.size-2]!=0x01){
+		  datp-=4;
+		  ++multiple;
+	}else multiple=0;
+  }
+  if(!multiple || message.type==0x7f){
+     		 printf("Accept ");show(&message);
+		 multiple=0;
+		 process(&message);
+  }
+ }else{ multiple=0;printf("CheckSum Error\r\n");show(&message);}
+ mode=0;
+}
+default:break;
+}
+ off++;
+ }
+ return er;
+}
+
+
+void TM::smssendfull(char *smsc,char *dest,char *msg){
+	  unsigned char buf[256];
+	  int n;
+	  //short Message Service Frame header
+	  buf[0]=0x00;  //  \
+	  buf[1]=0x01;  //   >  SMS Frame header
+	  buf[2]=0x00;  //  /
+	  buf[3]=0x01;  //  \
+	  buf[4]=0x02;  //   >  Send SMS Message
+	  buf[5]=0x00;  //  /
+	  memset(buf+6,0,12);
+	  bcd(buf+6,smsc);    //Short Message Service Center 12 bytes
+	  buf[18]=0x11;    // Message type
+	  buf[19]=0x00;    // SMS reference
+	  buf[20]=0x00;    // Protocol ID
+	  buf[21]=0xf1;    // Data coding scheme
+	  buf[22]=strlen(msg); //message size
+	  memset(buf+23,0,12);
+	  bcd2(buf+23,dest);    /// 12 bytes
+	  buf[35]=0xa7;      // valid period code
+	  buf[36]=0x00;
+	  buf[37]=0x00;
+	  buf[38]=0x00;
+	  buf[39]=0x00;  //
+	  buf[40]=0x00;  //
+	  buf[41]=0x00;  //
+	  pack7(buf+42,msg);   //  44 bytes
+	  sendmsg(0x02,42+strlen(msg),buf);
+}
+
+void TM::sendack(int type,int seqnum){
+	  char buf[2];
+	  buf[0]=type;
+	  buf[1]=seqnum;		//  sequenci
+	  sendframe(0x7f,2,buf);
+}
+
+int TM::ackwait(int x){
+	 int n;
+	 for(n=0;n<x;n++){
+		 delay(1);
+		 update();
+		 if(ack)return 1;
+	 }
+	 return 0;
+}
+
+int  TM::nextseq(){
+		  int n,n1;
+		  n=seqnum;
+		  prevseq=n;
+		  ++seqnum;
+		  seqnum&=7;
+		  if(::firsttime){::firsttime=0;n1=0x60;}else n1=0x40;
+		  return (n+n1);
+}
+
+void TM::bcd(char *dst,char *s){
+			 int size,x,y,n,hi,lo;
+			 if(s[0]=='+'){ dst[1]=0x91;++s;}
+			 else dst[1]=0xa1;//unknown 0x81;
+			 x=0;y=2;
+			 while(s[x]){
+				  lo=s[x++]-'0';
+				  if(s[x])hi=s[x++]-'0';
+				  else hi=0x0f;
+				  n=(hi<<4)+lo;
+				  dst[y++]=n;
+			 }
+			 dst[0]=y-1;
+}
+
+void TM::bcd2(char *dst,char *s){
+			 int size,x,y,n,hi,lo;
+			 if(s[0]=='+'){ dst[1]=0x91;++s;}
+			 else dst[1]=0x81;
+			 x=0;y=2;
+			 while(s[x]){
+				  lo=s[x++]-'0';
+				  if(s[x])hi=s[x++]-'0';
+				  else hi=0x0f;
+				  n=(hi<<4)+lo;
+				  dst[y++]=n;
+			 }
+			 dst[0]=strlen(s);
+}
+
+char *TM::unbcd(unsigned char *dat){
+		  static char buf[32];
+		  int len,n,x;
+		  buf[0]=0;
+		  len=dat[0];
+		  if(dat[1]==0x91) addchar(buf,'+');
+		  for(n=0;n<len-1;n++){
+			  x=dat[n+2]&0x0f;
+			  if(x<10)	addchar(buf,'0'+x);
+			  x=(dat[n+2]>>4)&0x0f;
+			  if(x<10)	addchar(buf+1,'0'+x);
+		  }
+		  return buf;
+}
+
+char *TM::unbcd2(unsigned char *dat){
+		  static char buf[32];
+		  int len,n,x,at=2;
+		  buf[0]=0;
+		  len=dat[0];
+		  if(dat[1]==0x91) addchar(buf,'+');
+		  for(n=0;n<len;n++){
+			  x=dat[at]&0x0f;
+			  if(x<10)	addchar(buf,'0'+x);
+			  ++n;
+			  if(!(n<len))break;
+			  x=(dat[at]>>4)&0x0f;
+			  if(x<10)	addchar(buf+1,'0'+x);
+			  ++at;
+		  }
+		  return buf;
+}void TM::pack7(char *dst,char *s){
+			 int len,at,shift,n,x;
+			 unsigned char c;
+			 unsigned short *p;
+			 unsigned short w;
+			 len=strlen(s);
+			 x=(len*8)/7;
+			 for(n=0;n<len;n++)dst[n]=0;
+			 shift=at=w=0;
+			 for(n=0;n<len;n++){
+				  p=(unsigned short*)(dst+at);
+				  w=gettrans(s[n])&0x7f;
+				  w<<=shift;
+				  *p|=w;
+				  shift+=7;
+				  if(shift>=8){shift&=0x07;++at;	}
+			 }
+}
+
+char * TM::unpack7(unsigned char *dat,int len){
+		  static char buf[256];
+		  unsigned short *p;
+		  unsigned short w;
+		  unsigned char c;
+		  int n,shift,at;
+		  shift=at=buf[0]=0;
+		  for(n=0;n<len;n++){
+			  p=(unsigned short *)(dat+at);
+			  w=*p;
+			  w>>=shift;
+			  c=w&0x7f;
+			  shift+=7;
+			  if(shift &8){  shift&=0x07;  ++at; }
+			  addchar(buf,transtable[c]);
+		  }
+		  buf[n]=0;
+		  return buf;
+}
+
+unsigned char TM::gettrans(unsigned char c){
+	 unsigned char n;
+	 if(c=='?')return 0x3f;
+	 for(n=0;n<128;n++)
+		 if(transtable[n]==c)
+			  return n;
+	 return 0x3f;
+}
+
+void TM::show(Message *head){
+	 int i=0;
+	 printf("%s ",itoa((int)head->id,s1,16));
+	 printf("%s ",itoa((int)head->dest,s1,16));
+	 printf("%s ",itoa((int)head->source,s1,16));
+	 printf("%s ",itoa((int)head->type,s1,16));
+	 printf("%s ",itoa((int)head->unknown,s1,16));
+	 printf("%s ",itoa((int)head->size,s1,16));
+	 for(int n=0;n<head->size+2;n++)
+		 printf("%s ",itoa(head->dat[n],s1,16));
+	 printf("\r\n");
+}
+
+int TM::process(Message *msg){
+	  int n,stype;
+	  switch(msg->type){
+			case 0x02:
+				  if(msg->dat[3]==0x02){printf("Mensagem Entrege\r\n");done=1;}
+				  if(msg->dat[3]==0x03){printf("BAD\r\n");done=1;}
+				  if(msg->dat[3]==0x10){
+						printf("%s %s\r\n",unbcd(msg->dat+23),unpack7(msg->dat+42,msg->dat[22]));
+  //						if(mess->dat[5])delsms(mess->dat[5]);
+
+						done=1;
+				  }
+				  if(msg->dat[3]==0x34) {  // recev sms center
+						strcpy(smsc,unbcd(msg->dat+21));
+						printf("SMS Center: %s \r\n",smsc);
+						done=1;
+				  }
+				  break;
+			case 0x0a:
+				  if(msg->dat[3]==0x71){           // Get Network Operator
+						for(n=0;n<msg->dat[16];n++)
+							addchar(Operator,msg->dat[n+17]);
+						printf("NetWork     %s\r\n",Operator);
+						done=1;
+				  }
+				  if(msg->dat[3]==0x82){           // Get Network Status RF
+						NetStatus=msg->dat[4];
+						done=1;
+						printf("RF signal   %s Percent\r\n",itoa((int)NetStatus,s1,10));
+				  }
+				  break;
+			case 0x14:
+				  if(msg->dat[3]==0x08){           //ler mensagem
+							int at=0,x;
+							for(n=2;n>=0;n--){
+								 x=(msg->dat[37+n]&0x0f);
+								 if(x<10)Date[at++]=x+'0';
+								 x=(msg->dat[37+n]>>4);
+								 if(x<10)Date[at++]=x+'0';
+								 Date[at++]='-';
+							}
+							Date[at-1]=0;at=0;
+							for(n=0;n<3;n++){
+								 Time[at++]='0'+(msg->dat[40+n]&0x0f);
+								 Time[at++]='0'+(msg->dat[40+n]>>4);
+								 Time[at++]=':';
+							}
+							Time[at-1]=0;
+/*							if(msg->dat[42]==0x34){
+								 printf("_ %s_ \r\n",unbcd(&msg->dat[44]));
+							}
+  */							 strcpy(::msg,unpack7(msg->dat+44,msg->dat[24]));
+							 strcpy(sender,unbcd2(msg->dat+25));
+							 if(nsms){
+  //							 printf("%s ",itoa((int)msg->dat[49],s1,16));
+ //							 printf("%s \r\n",itoa((int)msg->dat[48],s1,16));
+								if(msg->dat[49]==(nsms>>8))strcpy(msg2,::msg+7);
+								else {strcat(::msg,msg2);strcpy(msg2,::msg+7);}
+								if(msg->dat[49]==1){strcpy(::msg,msg2);nsms=0;}
+							 }
+							done=1;
+				  }
+				  else if(msg->dat[3]==0x09){done=1;}  // nao ha mensagens novas
+				  else if(msg->dat[3]==0x0b){done=1;printf("Mensagem Apagada\r\n");}
+				  else if(msg->dat[3]==0x37){done=1;}  //memsagen  nova recebida
+				  break;
+			case 0x17:
+				  if(msg->dat[3]=0x03){      // Battery charge
+						Battery=msg->dat[5];
+						printf("Battery     %s Percent\r\n",itoa((int)Battery,s1,10));
+						done=1;
+				  }
+				  break;
+			case 0x1b:                      // Imei
+				  if(msg->dat[3]==0x02){
+						n=4;
+						while(msg->dat[n])addchar(Imei,msg->dat[n++]);
+						printf("Imei:       %s\r\n",Imei);
+						done=1;
+				  }
+				  break;
+			case 0x1f:
+				  done=1;
+				  break;
+			case 0xd0:
+				  break;
+			case 0xd2:
+				  version[0]=0;              //recev software & hardware versin
+				  for(n=4;n<35;n++)
+						 addchar(version,msg->dat[n]);
+				  printf("Version: %s\r\n",version);
+				  done=1;
+				  break;
+			case 0x40:
+				  if(msg->dat[2]==0xca){     //ProducteCode
+					  done=1;
+				  }
+				  break;
+			case 0x7f:                      // acknoledg previos command
+				  if((msg->dat[1]&7)==prevseq) ack=1;
+				  break;
+			default:break;
+	  }
+}
+
+void TM::savemsg(char *sender,char *d,char *t,char *m){
+	printf("Sender: %s ",sender);
+	printf("date: %s ",d);
+	printf("time: %s ",t);
+	printf(": %s ",m);
+
+
+}
+
+
+int TM::gettxt(uchar *msg){
+	  int off=0;uchar c=0;
+	  printf("Enter text\r\n");
+	  while(1){
+			 if (kbhit()){
+				 c=getch();
+				 if(c==13 || c==27)break;
+				 msg[off++]=c;
+				 msg[off]=0;
+				 printf(&msg[off-1]);
+				 c=0;
+			 }
+	  }
+	  printf("\r\n");
+	  if(c==27)	  return 0;
+	  else return 1;
+}
+
+void TM::sinc(){
+	for(int n=0;n<128;n++) //55
+	  rs_sndbyt(0x55);
+	delay(5);
+}

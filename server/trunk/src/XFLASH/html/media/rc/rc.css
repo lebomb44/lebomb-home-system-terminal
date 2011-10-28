@@ -1,0 +1,48 @@
+fieldset, legend {
+	border: 1px solid #b4b4b4;
+	background-image: -moz-linear-gradient(top, #f7f7f7, #e5e5e5); /* FF3.6 */
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #e5e5e5),color-stop(1, #f7f7f7)); /* Saf4+, Chrome */
+}
+
+fieldset {
+	padding: 5px 5px 5px 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+legend {
+	padding: 1px 20px 1px 20px;
+	color: #030303;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+
+input.button {
+    height: 30px;
+	color: #f3f3f3;
+	-moz-border-radius: 2%;
+	-webkit-border-radius: 2%;
+	background-image: -moz-linear-gradient(top, #80786F, #1F1D1B); /* FF3.6 */
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #1F1D1B),color-stop(1, #80786F)); /* Saf4+, Chrome */
+	-webkit-box-shadow: #4b4b4b 0px 2px 5px;
+	-moz-box-shadow: #4b4b4b 0px 2px 5px;
+	box-shadow: #e3e3e3 0px 2px 5px;
+	border: none;
+}
+
+input.b1 {
+	width: 270px;
+}
+
+input.b2 {
+	width: 134px;
+}
+
+input.b3 {
+	width: 88px;
+}
+
+input:hover {
+	background-image: -moz-linear-gradient(top, #808080, #B3B3B3); /* FF3.6 */
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #1F1D1B),color-stop(1, #80786F)); /* Saf4+, Chrome */
+}

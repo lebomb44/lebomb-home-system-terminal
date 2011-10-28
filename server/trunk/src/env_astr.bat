@@ -1,0 +1,2 @@
+SET DEVBASE_DRIVE=D:
+SET DEVBASE=%DEVBASE_DRIVE%\Documents\cambon\Prive\elec\08_Lost\SERVEUR\V2
