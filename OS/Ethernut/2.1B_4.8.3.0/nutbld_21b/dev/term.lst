@@ -1,0 +1,1531 @@
+GAS LISTING C:\Temp/ccmzrweV.s 			page 1
+
+
+   1               		.file	"term.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	TermRefreshLineEnd, @function
+  12               	TermRefreshLineEnd:
+  13 0000 CF92      		push r12
+  14 0002 DF92      		push r13
+  15 0004 EF92      		push r14
+  16 0006 FF92      		push r15
+  17 0008 0F93      		push r16
+  18 000a 1F93      		push r17
+  19 000c CF93      		push r28
+  20 000e DF93      		push r29
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23 0010 EC01      		movw r28,r24
+  24 0012 E62E      		mov r14,r22
+  25 0014 F42E      		mov r15,r20
+  26 0016 CC8C      		ldd r12,Y+28
+  27 0018 DD8C      		ldd r13,Y+29
+  28 001a 198D      		ldd r17,Y+25
+  29 001c 8A89      		ldd r24,Y+18
+  30 001e 80FF      		sbrs r24,0
+  31 0020 00C0      		rjmp .L2
+  32 0022 E889      		ldd r30,Y+16
+  33 0024 F989      		ldd r31,Y+17
+  34 0026 80E0      		ldi r24,lo8(0)
+  35 0028 0995      		icall
+  36               	.L2:
+  37 002a E19E      		mul r14,r17
+  38 002c 8001      		movw r16,r0
+  39 002e 1124      		clr r1
+  40 0030 0F0D      		add r16,r15
+  41 0032 111D      		adc r17,__zero_reg__
+  42 0034 0C0D      		add r16,r12
+  43 0036 1D1D      		adc r17,r13
+  44 0038 888D      		ldd r24,Y+24
+  45 003a E89E      		mul r14,r24
+  46 003c 802D      		mov r24,r0
+  47 003e 1124      		clr r1
+  48 0040 E885      		ldd r30,Y+8
+  49 0042 F985      		ldd r31,Y+9
+  50 0044 8F0D      		add r24,r15
+  51               	.L7:
+  52 0046 0995      		icall
+  53 0048 4F2D      		mov r20,r15
+  54 004a F394      		inc r15
+  55 004c 898D      		ldd r24,Y+25
+  56 004e 4817      		cp r20,r24
+  57 0050 00F4      		brsh .L3
+GAS LISTING C:\Temp/ccmzrweV.s 			page 2
+
+
+  58 0052 EA81      		ldd r30,Y+2
+  59 0054 FB81      		ldd r31,Y+3
+  60 0056 D801      		movw r26,r16
+  61 0058 8D91      		ld r24,X+
+  62 005a 8D01      		movw r16,r26
+  63 005c 00C0      		rjmp .L7
+  64               	.L3:
+  65 005e 8A89      		ldd r24,Y+18
+  66 0060 80FF      		sbrs r24,0
+  67 0062 00C0      		rjmp .L6
+  68 0064 E889      		ldd r30,Y+16
+  69 0066 F989      		ldd r31,Y+17
+  70 0068 81E0      		ldi r24,lo8(1)
+  71 006a 0995      		icall
+  72               	.L6:
+  73               	/* epilogue start */
+  74 006c DF91      		pop r29
+  75 006e CF91      		pop r28
+  76 0070 1F91      		pop r17
+  77 0072 0F91      		pop r16
+  78 0074 FF90      		pop r15
+  79 0076 EF90      		pop r14
+  80 0078 DF90      		pop r13
+  81 007a CF90      		pop r12
+  82 007c 0895      		ret
+  83               		.size	TermRefreshLineEnd, .-TermRefreshLineEnd
+  84               	.global	TermRefresh
+  85               		.type	TermRefresh, @function
+  86               	TermRefresh:
+  87 007e 1F93      		push r17
+  88 0080 CF93      		push r28
+  89 0082 DF93      		push r29
+  90               	/* prologue: function */
+  91               	/* frame size = 0 */
+  92 0084 EC01      		movw r28,r24
+  93 0086 10E0      		ldi r17,lo8(0)
+  94 0088 00C0      		rjmp .L9
+  95               	.L10:
+  96 008a 40E0      		ldi r20,lo8(0)
+  97 008c 612F      		mov r22,r17
+  98 008e CE01      		movw r24,r28
+  99 0090 0E94 0000 		call TermRefreshLineEnd
+ 100 0094 1F5F      		subi r17,lo8(-(1))
+ 101               	.L9:
+ 102 0096 8F89      		ldd r24,Y+23
+ 103 0098 1817      		cp r17,r24
+ 104 009a 00F0      		brlo .L10
+ 105 009c 888D      		ldd r24,Y+24
+ 106 009e 9A8D      		ldd r25,Y+26
+ 107 00a0 899F      		mul r24,r25
+ 108 00a2 802D      		mov r24,r0
+ 109 00a4 1124      		clr r1
+ 110 00a6 9B8D      		ldd r25,Y+27
+ 111 00a8 E885      		ldd r30,Y+8
+ 112 00aa F985      		ldd r31,Y+9
+ 113 00ac 890F      		add r24,r25
+ 114 00ae 0995      		icall
+GAS LISTING C:\Temp/ccmzrweV.s 			page 3
+
+
+ 115               	/* epilogue start */
+ 116 00b0 DF91      		pop r29
+ 117 00b2 CF91      		pop r28
+ 118 00b4 1F91      		pop r17
+ 119 00b6 0895      		ret
+ 120               		.size	TermRefresh, .-TermRefresh
+ 121               	.global	TermIOCtl
+ 122               		.type	TermIOCtl, @function
+ 123               	TermIOCtl:
+ 124 00b8 CF92      		push r12
+ 125 00ba DF92      		push r13
+ 126 00bc EF92      		push r14
+ 127 00be FF92      		push r15
+ 128 00c0 0F93      		push r16
+ 129 00c2 1F93      		push r17
+ 130 00c4 CF93      		push r28
+ 131 00c6 DF93      		push r29
+ 132               	/* prologue: function */
+ 133               	/* frame size = 0 */
+ 134 00c8 EA01      		movw r28,r20
+ 135 00ca DC01      		movw r26,r24
+ 136 00cc 5196      		adiw r26,17
+ 137 00ce CD90      		ld r12,X+
+ 138 00d0 DC90      		ld r13,X
+ 139 00d2 5297      		sbiw r26,17+1
+ 140 00d4 B4E0      		ldi r27,hi8(1030)
+ 141 00d6 6630      		cpi r22,lo8(1030)
+ 142 00d8 7B07      		cpc r23,r27
+ 143 00da 01F4      		brne .+2
+ 144 00dc 00C0      		rjmp .L18
+ 145 00de E4E0      		ldi r30,hi8(1031)
+ 146 00e0 6730      		cpi r22,lo8(1031)
+ 147 00e2 7E07      		cpc r23,r30
+ 148 00e4 04F4      		brge .L23
+ 149 00e6 F4E0      		ldi r31,hi8(1026)
+ 150 00e8 6230      		cpi r22,lo8(1026)
+ 151 00ea 7F07      		cpc r23,r31
+ 152 00ec 01F0      		breq .L15
+ 153 00ee 84E0      		ldi r24,hi8(1027)
+ 154 00f0 6330      		cpi r22,lo8(1027)
+ 155 00f2 7807      		cpc r23,r24
+ 156 00f4 04F4      		brge .L24
+ 157 00f6 6150      		subi r22,lo8(1025)
+ 158 00f8 7440      		sbci r23,hi8(1025)
+ 159 00fa 01F0      		breq .+2
+ 160 00fc 00C0      		rjmp .L13
+ 161 00fe 00C0      		rjmp .L31
+ 162               	.L24:
+ 163 0100 B4E0      		ldi r27,hi8(1027)
+ 164 0102 6330      		cpi r22,lo8(1027)
+ 165 0104 7B07      		cpc r23,r27
+ 166 0106 01F0      		breq .L16
+ 167 0108 6550      		subi r22,lo8(1029)
+ 168 010a 7440      		sbci r23,hi8(1029)
+ 169 010c 01F0      		breq .+2
+ 170 010e 00C0      		rjmp .L13
+ 171 0110 00C0      		rjmp .L32
+GAS LISTING C:\Temp/ccmzrweV.s 			page 4
+
+
+ 172               	.L23:
+ 173 0112 F4E0      		ldi r31,hi8(1043)
+ 174 0114 6331      		cpi r22,lo8(1043)
+ 175 0116 7F07      		cpc r23,r31
+ 176 0118 01F4      		brne .+2
+ 177 011a 00C0      		rjmp .L20
+ 178 011c 84E0      		ldi r24,hi8(1044)
+ 179 011e 6431      		cpi r22,lo8(1044)
+ 180 0120 7807      		cpc r23,r24
+ 181 0122 04F4      		brge .L25
+ 182 0124 6750      		subi r22,lo8(1031)
+ 183 0126 7440      		sbci r23,hi8(1031)
+ 184 0128 01F0      		breq .+2
+ 185 012a 00C0      		rjmp .L13
+ 186 012c 00C0      		rjmp .L33
+ 187               	.L25:
+ 188 012e B4E0      		ldi r27,hi8(1044)
+ 189 0130 6431      		cpi r22,lo8(1044)
+ 190 0132 7B07      		cpc r23,r27
+ 191 0134 01F4      		brne .+2
+ 192 0136 00C0      		rjmp .L21
+ 193 0138 6150      		subi r22,lo8(1281)
+ 194 013a 7540      		sbci r23,hi8(1281)
+ 195 013c 01F0      		breq .+2
+ 196 013e 00C0      		rjmp .L13
+ 197 0140 00C0      		rjmp .L34
+ 198               	.L31:
+ 199 0142 D601      		movw r26,r12
+ 200 0144 1496      		adiw r26,4
+ 201 0146 ED91      		ld r30,X+
+ 202 0148 FC91      		ld r31,X
+ 203 014a 1597      		sbiw r26,4+1
+ 204 014c 6AE0      		ldi r22,lo8(10)
+ 205 014e 8881      		ld r24,Y
+ 206 0150 00C0      		rjmp .L29
+ 207               	.L15:
+ 208 0152 1881      		ld r17,Y
+ 209 0154 D601      		movw r26,r12
+ 210 0156 1496      		adiw r26,4
+ 211 0158 ED91      		ld r30,X+
+ 212 015a FC91      		ld r31,X
+ 213 015c 1597      		sbiw r26,4+1
+ 214 015e 6AE0      		ldi r22,lo8(10)
+ 215 0160 8981      		ldd r24,Y+1
+ 216 0162 0995      		icall
+ 217 0164 E601      		movw r28,r12
+ 218 0166 EC81      		ldd r30,Y+4
+ 219 0168 FD81      		ldd r31,Y+5
+ 220 016a 6AE0      		ldi r22,lo8(10)
+ 221 016c 812F      		mov r24,r17
+ 222               	.L29:
+ 223 016e 0995      		icall
+ 224 0170 00C0      		rjmp .L13
+ 225               	.L16:
+ 226 0172 E880      		ld r14,Y
+ 227 0174 F980      		ldd r15,Y+1
+ 228 0176 0A81      		ldd r16,Y+2
+GAS LISTING C:\Temp/ccmzrweV.s 			page 5
+
+
+ 229 0178 1B81      		ldd r17,Y+3
+ 230 017a D601      		movw r26,r12
+ 231 017c 1496      		adiw r26,4
+ 232 017e ED91      		ld r30,X+
+ 233 0180 FC91      		ld r31,X
+ 234 0182 1597      		sbiw r26,4+1
+ 235 0184 6AE0      		ldi r22,lo8(10)
+ 236 0186 8B81      		ldd r24,Y+3
+ 237 0188 0995      		icall
+ 238 018a C801      		movw r24,r16
+ 239 018c AA27      		clr r26
+ 240 018e BB27      		clr r27
+ 241 0190 E601      		movw r28,r12
+ 242 0192 EC81      		ldd r30,Y+4
+ 243 0194 FD81      		ldd r31,Y+5
+ 244 0196 6AE0      		ldi r22,lo8(10)
+ 245 0198 0995      		icall
+ 246 019a BB27      		clr r27
+ 247 019c A12F      		mov r26,r17
+ 248 019e 902F      		mov r25,r16
+ 249 01a0 8F2D      		mov r24,r15
+ 250 01a2 EC81      		ldd r30,Y+4
+ 251 01a4 FD81      		ldd r31,Y+5
+ 252 01a6 6AE0      		ldi r22,lo8(10)
+ 253 01a8 0995      		icall
+ 254 01aa EC81      		ldd r30,Y+4
+ 255 01ac FD81      		ldd r31,Y+5
+ 256 01ae 6AE0      		ldi r22,lo8(10)
+ 257 01b0 8E2D      		mov r24,r14
+ 258 01b2 00C0      		rjmp .L29
+ 259               	.L32:
+ 260 01b4 D601      		movw r26,r12
+ 261 01b6 1296      		adiw r26,2
+ 262 01b8 ED91      		ld r30,X+
+ 263 01ba FC91      		ld r31,X
+ 264 01bc 1397      		sbiw r26,2+1
+ 265 01be 8881      		ld r24,Y
+ 266 01c0 00C0      		rjmp .L30
+ 267               	.L18:
+ 268 01c2 1881      		ld r17,Y
+ 269 01c4 D601      		movw r26,r12
+ 270 01c6 1296      		adiw r26,2
+ 271 01c8 ED91      		ld r30,X+
+ 272 01ca FC91      		ld r31,X
+ 273 01cc 1397      		sbiw r26,2+1
+ 274 01ce 8981      		ldd r24,Y+1
+ 275 01d0 0995      		icall
+ 276 01d2 E601      		movw r28,r12
+ 277 01d4 EA81      		ldd r30,Y+2
+ 278 01d6 FB81      		ldd r31,Y+3
+ 279 01d8 812F      		mov r24,r17
+ 280               	.L30:
+ 281 01da 0995      		icall
+ 282 01dc 00C0      		rjmp .L13
+ 283               	.L33:
+ 284 01de E880      		ld r14,Y
+ 285 01e0 F980      		ldd r15,Y+1
+GAS LISTING C:\Temp/ccmzrweV.s 			page 6
+
+
+ 286 01e2 0A81      		ldd r16,Y+2
+ 287 01e4 1B81      		ldd r17,Y+3
+ 288 01e6 D601      		movw r26,r12
+ 289 01e8 1296      		adiw r26,2
+ 290 01ea ED91      		ld r30,X+
+ 291 01ec FC91      		ld r31,X
+ 292 01ee 1397      		sbiw r26,2+1
+ 293 01f0 8B81      		ldd r24,Y+3
+ 294 01f2 0995      		icall
+ 295 01f4 C801      		movw r24,r16
+ 296 01f6 AA27      		clr r26
+ 297 01f8 BB27      		clr r27
+ 298 01fa E601      		movw r28,r12
+ 299 01fc EA81      		ldd r30,Y+2
+ 300 01fe FB81      		ldd r31,Y+3
+ 301 0200 0995      		icall
+ 302 0202 BB27      		clr r27
+ 303 0204 A12F      		mov r26,r17
+ 304 0206 902F      		mov r25,r16
+ 305 0208 8F2D      		mov r24,r15
+ 306 020a EA81      		ldd r30,Y+2
+ 307 020c FB81      		ldd r31,Y+3
+ 308 020e 0995      		icall
+ 309 0210 EA81      		ldd r30,Y+2
+ 310 0212 FB81      		ldd r31,Y+3
+ 311 0214 8E2D      		mov r24,r14
+ 312 0216 00C0      		rjmp .L30
+ 313               	.L20:
+ 314 0218 8881      		ld r24,Y
+ 315 021a 9981      		ldd r25,Y+1
+ 316 021c AA81      		ldd r26,Y+2
+ 317 021e BB81      		ldd r27,Y+3
+ 318 0220 F601      		movw r30,r12
+ 319 0222 2289      		ldd r18,Z+18
+ 320 0224 3389      		ldd r19,Z+19
+ 321 0226 4489      		ldd r20,Z+20
+ 322 0228 5589      		ldd r21,Z+21
+ 323 022a 0097      		sbiw r24,0
+ 324 022c A105      		cpc r26,__zero_reg__
+ 325 022e B105      		cpc r27,__zero_reg__
+ 326 0230 01F0      		breq .L26
+ 327 0232 4260      		ori r20,hlo8(131072)
+ 328 0234 D601      		movw r26,r12
+ 329 0236 5296      		adiw r26,18
+ 330 0238 2D93      		st X+,r18
+ 331 023a 3D93      		st X+,r19
+ 332 023c 4D93      		st X+,r20
+ 333 023e 5C93      		st X,r21
+ 334 0240 5597      		sbiw r26,18+3
+ 335 0242 00C0      		rjmp .L13
+ 336               	.L26:
+ 337 0244 4D7F      		andi r20,hlo8(-131073)
+ 338 0246 E601      		movw r28,r12
+ 339 0248 2A8B      		std Y+18,r18
+ 340 024a 3B8B      		std Y+19,r19
+ 341 024c 4C8B      		std Y+20,r20
+ 342 024e 5D8B      		std Y+21,r21
+GAS LISTING C:\Temp/ccmzrweV.s 			page 7
+
+
+ 343 0250 00C0      		rjmp .L13
+ 344               	.L21:
+ 345 0252 F601      		movw r30,r12
+ 346 0254 8289      		ldd r24,Z+18
+ 347 0256 9389      		ldd r25,Z+19
+ 348 0258 A489      		ldd r26,Z+20
+ 349 025a B589      		ldd r27,Z+21
+ 350 025c A1FF      		sbrs r26,1
+ 351 025e 00C0      		rjmp .L27
+ 352 0260 81E0      		ldi r24,lo8(1)
+ 353 0262 90E0      		ldi r25,hi8(1)
+ 354 0264 A0E0      		ldi r26,hlo8(1)
+ 355 0266 B0E0      		ldi r27,hhi8(1)
+ 356 0268 8883      		st Y,r24
+ 357 026a 9983      		std Y+1,r25
+ 358 026c AA83      		std Y+2,r26
+ 359 026e BB83      		std Y+3,r27
+ 360 0270 00C0      		rjmp .L13
+ 361               	.L27:
+ 362 0272 1882      		st Y,__zero_reg__
+ 363 0274 1982      		std Y+1,__zero_reg__
+ 364 0276 1A82      		std Y+2,__zero_reg__
+ 365 0278 1B82      		std Y+3,__zero_reg__
+ 366 027a 00C0      		rjmp .L13
+ 367               	.L34:
+ 368 027c D601      		movw r26,r12
+ 369 027e 5796      		adiw r26,23
+ 370 0280 8C91      		ld r24,X
+ 371 0282 5797      		sbiw r26,23
+ 372 0284 8A83      		std Y+2,r24
+ 373 0286 1B82      		std Y+3,__zero_reg__
+ 374 0288 5996      		adiw r26,25
+ 375 028a 8C91      		ld r24,X
+ 376 028c 8883      		st Y,r24
+ 377 028e 1982      		std Y+1,__zero_reg__
+ 378 0290 1D82      		std Y+5,__zero_reg__
+ 379 0292 1C82      		std Y+4,__zero_reg__
+ 380 0294 1F82      		std Y+7,__zero_reg__
+ 381 0296 1E82      		std Y+6,__zero_reg__
+ 382               	.L13:
+ 383 0298 80E0      		ldi r24,lo8(0)
+ 384 029a 90E0      		ldi r25,hi8(0)
+ 385               	/* epilogue start */
+ 386 029c DF91      		pop r29
+ 387 029e CF91      		pop r28
+ 388 02a0 1F91      		pop r17
+ 389 02a2 0F91      		pop r16
+ 390 02a4 FF90      		pop r15
+ 391 02a6 EF90      		pop r14
+ 392 02a8 DF90      		pop r13
+ 393 02aa CF90      		pop r12
+ 394 02ac 0895      		ret
+ 395               		.size	TermIOCtl, .-TermIOCtl
+ 396               	.global	TermClose
+ 397               		.type	TermClose, @function
+ 398               	TermClose:
+ 399               	/* prologue: function */
+GAS LISTING C:\Temp/ccmzrweV.s 			page 8
+
+
+ 400               	/* frame size = 0 */
+ 401 02ae 9C01      		movw r18,r24
+ 402 02b0 0197      		sbiw r24,1
+ 403 02b2 8E5F      		subi r24,lo8(-2)
+ 404 02b4 9F4F      		sbci r25,hi8(-2)
+ 405 02b6 00F0      		brlo .L36
+ 406 02b8 2FEF      		ldi r18,lo8(-1)
+ 407 02ba 3FEF      		ldi r19,hi8(-1)
+ 408 02bc 00C0      		rjmp .L37
+ 409               	.L36:
+ 410 02be C901      		movw r24,r18
+ 411 02c0 0E94 0000 		call free
+ 412 02c4 20E0      		ldi r18,lo8(0)
+ 413 02c6 30E0      		ldi r19,hi8(0)
+ 414               	.L37:
+ 415 02c8 C901      		movw r24,r18
+ 416               	/* epilogue start */
+ 417 02ca 0895      		ret
+ 418               		.size	TermClose, .-TermClose
+ 419               	.global	TermOpen
+ 420               		.type	TermOpen, @function
+ 421               	TermOpen:
+ 422 02cc EF92      		push r14
+ 423 02ce FF92      		push r15
+ 424 02d0 0F93      		push r16
+ 425 02d2 1F93      		push r17
+ 426 02d4 CF93      		push r28
+ 427 02d6 DF93      		push r29
+ 428               	/* prologue: function */
+ 429               	/* frame size = 0 */
+ 430 02d8 EC01      		movw r28,r24
+ 431 02da 8A01      		movw r16,r20
+ 432 02dc F988      		ldd r15,Y+17
+ 433 02de EA88      		ldd r14,Y+18
+ 434 02e0 86E0      		ldi r24,lo8(6)
+ 435 02e2 90E0      		ldi r25,hi8(6)
+ 436 02e4 0E94 0000 		call malloc
+ 437 02e8 DC01      		movw r26,r24
+ 438 02ea BC01      		movw r22,r24
+ 439 02ec 0097      		sbiw r24,0
+ 440 02ee 01F4      		brne .L40
+ 441 02f0 6FEF      		ldi r22,lo8(-1)
+ 442 02f2 7FEF      		ldi r23,hi8(-1)
+ 443 02f4 00C0      		rjmp .L41
+ 444               	.L40:
+ 445 02f6 EF2D      		mov r30,r15
+ 446 02f8 FE2D      		mov r31,r14
+ 447 02fa 2289      		ldd r18,Z+18
+ 448 02fc 3389      		ldd r19,Z+19
+ 449 02fe 4489      		ldd r20,Z+20
+ 450 0300 5589      		ldd r21,Z+21
+ 451 0302 17FF      		sbrs r17,7
+ 452 0304 00C0      		rjmp .L42
+ 453 0306 4D7F      		andi r20,hlo8(-131073)
+ 454 0308 00C0      		rjmp .L45
+ 455               	.L42:
+ 456 030a 4260      		ori r20,hlo8(131072)
+GAS LISTING C:\Temp/ccmzrweV.s 			page 9
+
+
+ 457               	.L45:
+ 458 030c 228B      		std Z+18,r18
+ 459 030e 338B      		std Z+19,r19
+ 460 0310 448B      		std Z+20,r20
+ 461 0312 558B      		std Z+21,r21
+ 462 0314 1196      		adiw r26,1
+ 463 0316 1C92      		st X,__zero_reg__
+ 464 0318 1E92      		st -X,__zero_reg__
+ 465 031a 1396      		adiw r26,2+1
+ 466 031c DC93      		st X,r29
+ 467 031e CE93      		st -X,r28
+ 468 0320 1297      		sbiw r26,2
+ 469 0322 1596      		adiw r26,4+1
+ 470 0324 1C92      		st X,__zero_reg__
+ 471 0326 1E92      		st -X,__zero_reg__
+ 472 0328 1497      		sbiw r26,4
+ 473               	.L41:
+ 474 032a CB01      		movw r24,r22
+ 475               	/* epilogue start */
+ 476 032c DF91      		pop r29
+ 477 032e CF91      		pop r28
+ 478 0330 1F91      		pop r17
+ 479 0332 0F91      		pop r16
+ 480 0334 FF90      		pop r15
+ 481 0336 EF90      		pop r14
+ 482 0338 0895      		ret
+ 483               		.size	TermOpen, .-TermOpen
+ 484               		.type	TermClear, @function
+ 485               	TermClear:
+ 486 033a 0F93      		push r16
+ 487 033c 1F93      		push r17
+ 488               	/* prologue: function */
+ 489               	/* frame size = 0 */
+ 490 033e 8C01      		movw r16,r24
+ 491 0340 DC01      		movw r26,r24
+ 492 0342 5796      		adiw r26,23
+ 493 0344 8C91      		ld r24,X
+ 494 0346 5797      		sbiw r26,23
+ 495 0348 5996      		adiw r26,25
+ 496 034a 2C91      		ld r18,X
+ 497 034c 5997      		sbiw r26,25
+ 498 034e 829F      		mul r24,r18
+ 499 0350 C001      		movw r24,r0
+ 500 0352 1124      		clr r1
+ 501 0354 AC01      		movw r20,r24
+ 502 0356 60E2      		ldi r22,lo8(32)
+ 503 0358 70E0      		ldi r23,hi8(32)
+ 504 035a 5C96      		adiw r26,28
+ 505 035c 8D91      		ld r24,X+
+ 506 035e 9C91      		ld r25,X
+ 507 0360 5D97      		sbiw r26,28+1
+ 508 0362 0E94 0000 		call memset
+ 509 0366 F801      		movw r30,r16
+ 510 0368 138E      		std Z+27,__zero_reg__
+ 511 036a 128E      		std Z+26,__zero_reg__
+ 512 036c 0680      		ldd __tmp_reg__,Z+6
+ 513 036e F781      		ldd r31,Z+7
+GAS LISTING C:\Temp/ccmzrweV.s 			page 10
+
+
+ 514 0370 E02D      		mov r30,__tmp_reg__
+ 515 0372 0995      		icall
+ 516               	/* epilogue start */
+ 517 0374 1F91      		pop r17
+ 518 0376 0F91      		pop r16
+ 519 0378 0895      		ret
+ 520               		.size	TermClear, .-TermClear
+ 521               	.global	TermInit
+ 522               		.type	TermInit, @function
+ 523               	TermInit:
+ 524 037a 0F93      		push r16
+ 525 037c 1F93      		push r17
+ 526               	/* prologue: function */
+ 527               	/* frame size = 0 */
+ 528 037e FC01      		movw r30,r24
+ 529 0380 0189      		ldd r16,Z+17
+ 530 0382 1289      		ldd r17,Z+18
+ 531 0384 D801      		movw r26,r16
+ 532 0386 2D91      		ld r18,X+
+ 533 0388 3C91      		ld r19,X
+ 534 038a F901      		movw r30,r18
+ 535 038c 0995      		icall
+ 536 038e F801      		movw r30,r16
+ 537 0390 918D      		ldd r25,Z+25
+ 538 0392 8789      		ldd r24,Z+23
+ 539 0394 989F      		mul r25,r24
+ 540 0396 C001      		movw r24,r0
+ 541 0398 1124      		clr r1
+ 542 039a 0E94 0000 		call malloc
+ 543 039e D801      		movw r26,r16
+ 544 03a0 5C96      		adiw r26,28
+ 545 03a2 8C93      		st X,r24
+ 546 03a4 5C97      		sbiw r26,28
+ 547 03a6 5D96      		adiw r26,29
+ 548 03a8 9C93      		st X,r25
+ 549 03aa C801      		movw r24,r16
+ 550 03ac 0E94 0000 		call TermClear
+ 551 03b0 80E0      		ldi r24,lo8(0)
+ 552 03b2 90E0      		ldi r25,hi8(0)
+ 553               	/* epilogue start */
+ 554 03b4 1F91      		pop r17
+ 555 03b6 0F91      		pop r16
+ 556 03b8 0895      		ret
+ 557               		.size	TermInit, .-TermInit
+ 558               		.type	TermInsertLine, @function
+ 559               	TermInsertLine:
+ 560 03ba 0F93      		push r16
+ 561 03bc 1F93      		push r17
+ 562 03be CF93      		push r28
+ 563 03c0 DF93      		push r29
+ 564               	/* prologue: function */
+ 565               	/* frame size = 0 */
+ 566 03c2 EC01      		movw r28,r24
+ 567 03c4 062F      		mov r16,r22
+ 568 03c6 1F89      		ldd r17,Y+23
+ 569 03c8 00C0      		rjmp .L55
+ 570               	.L53:
+GAS LISTING C:\Temp/ccmzrweV.s 			page 11
+
+
+ 571 03ca 149F      		mul r17,r20
+ 572 03cc 9001      		movw r18,r0
+ 573 03ce 1124      		clr r1
+ 574 03d0 280F      		add r18,r24
+ 575 03d2 391F      		adc r19,r25
+ 576 03d4 50E0      		ldi r21,lo8(0)
+ 577 03d6 C901      		movw r24,r18
+ 578 03d8 841B      		sub r24,r20
+ 579 03da 950B      		sbc r25,r21
+ 580 03dc 50E0      		ldi r21,lo8(0)
+ 581 03de BC01      		movw r22,r24
+ 582 03e0 C901      		movw r24,r18
+ 583 03e2 0E94 0000 		call memcpy
+ 584               	.L55:
+ 585 03e6 1150      		subi r17,lo8(-(-1))
+ 586 03e8 498D      		ldd r20,Y+25
+ 587 03ea 8C8D      		ldd r24,Y+28
+ 588 03ec 9D8D      		ldd r25,Y+29
+ 589 03ee 0117      		cp r16,r17
+ 590 03f0 00F0      		brlo .L53
+ 591 03f2 049F      		mul r16,r20
+ 592 03f4 9001      		movw r18,r0
+ 593 03f6 1124      		clr r1
+ 594 03f8 280F      		add r18,r24
+ 595 03fa 391F      		adc r19,r25
+ 596 03fc 50E0      		ldi r21,lo8(0)
+ 597 03fe 60E2      		ldi r22,lo8(32)
+ 598 0400 70E0      		ldi r23,hi8(32)
+ 599 0402 C901      		movw r24,r18
+ 600 0404 0E94 0000 		call memset
+ 601 0408 CE01      		movw r24,r28
+ 602 040a 0E94 0000 		call TermRefresh
+ 603               	/* epilogue start */
+ 604 040e DF91      		pop r29
+ 605 0410 CF91      		pop r28
+ 606 0412 1F91      		pop r17
+ 607 0414 0F91      		pop r16
+ 608 0416 0895      		ret
+ 609               		.size	TermInsertLine, .-TermInsertLine
+ 610               		.type	TermDeleteLine, @function
+ 611               	TermDeleteLine:
+ 612 0418 1F93      		push r17
+ 613 041a CF93      		push r28
+ 614 041c DF93      		push r29
+ 615               	/* prologue: function */
+ 616               	/* frame size = 0 */
+ 617 041e EC01      		movw r28,r24
+ 618 0420 162F      		mov r17,r22
+ 619 0422 00C0      		rjmp .L57
+ 620               	.L59:
+ 621 0424 50E0      		ldi r21,lo8(0)
+ 622 0426 A49F      		mul r26,r20
+ 623 0428 9001      		movw r18,r0
+ 624 042a A59F      		mul r26,r21
+ 625 042c 300D      		add r19,r0
+ 626 042e B49F      		mul r27,r20
+ 627 0430 300D      		add r19,r0
+GAS LISTING C:\Temp/ccmzrweV.s 			page 12
+
+
+ 628 0432 1124      		clr r1
+ 629 0434 2E0F      		add r18,r30
+ 630 0436 3F1F      		adc r19,r31
+ 631 0438 C901      		movw r24,r18
+ 632 043a 840F      		add r24,r20
+ 633 043c 951F      		adc r25,r21
+ 634 043e 50E0      		ldi r21,lo8(0)
+ 635 0440 BC01      		movw r22,r24
+ 636 0442 C901      		movw r24,r18
+ 637 0444 0E94 0000 		call memcpy
+ 638 0448 1F5F      		subi r17,lo8(-(1))
+ 639               	.L57:
+ 640 044a A12F      		mov r26,r17
+ 641 044c B0E0      		ldi r27,lo8(0)
+ 642 044e 8F89      		ldd r24,Y+23
+ 643 0450 682F      		mov r22,r24
+ 644 0452 70E0      		ldi r23,lo8(0)
+ 645 0454 6150      		subi r22,lo8(-(-1))
+ 646 0456 7040      		sbci r23,hi8(-(-1))
+ 647 0458 498D      		ldd r20,Y+25
+ 648 045a EC8D      		ldd r30,Y+28
+ 649 045c FD8D      		ldd r31,Y+29
+ 650 045e A617      		cp r26,r22
+ 651 0460 B707      		cpc r27,r23
+ 652 0462 04F0      		brlt .L59
+ 653 0464 842F      		mov r24,r20
+ 654 0466 90E0      		ldi r25,lo8(0)
+ 655 0468 689F      		mul r22,r24
+ 656 046a 9001      		movw r18,r0
+ 657 046c 699F      		mul r22,r25
+ 658 046e 300D      		add r19,r0
+ 659 0470 789F      		mul r23,r24
+ 660 0472 300D      		add r19,r0
+ 661 0474 1124      		clr r1
+ 662 0476 2E0F      		add r18,r30
+ 663 0478 3F1F      		adc r19,r31
+ 664 047a 50E0      		ldi r21,lo8(0)
+ 665 047c 60E2      		ldi r22,lo8(32)
+ 666 047e 70E0      		ldi r23,hi8(32)
+ 667 0480 C901      		movw r24,r18
+ 668 0482 0E94 0000 		call memset
+ 669 0486 CE01      		movw r24,r28
+ 670 0488 0E94 0000 		call TermRefresh
+ 671               	/* epilogue start */
+ 672 048c DF91      		pop r29
+ 673 048e CF91      		pop r28
+ 674 0490 1F91      		pop r17
+ 675 0492 0895      		ret
+ 676               		.size	TermDeleteLine, .-TermDeleteLine
+ 677               		.type	TermPut, @function
+ 678               	TermPut:
+ 679 0494 5F92      		push r5
+ 680 0496 6F92      		push r6
+ 681 0498 7F92      		push r7
+ 682 049a 8F92      		push r8
+ 683 049c 9F92      		push r9
+ 684 049e AF92      		push r10
+GAS LISTING C:\Temp/ccmzrweV.s 			page 13
+
+
+ 685 04a0 BF92      		push r11
+ 686 04a2 CF92      		push r12
+ 687 04a4 DF92      		push r13
+ 688 04a6 EF92      		push r14
+ 689 04a8 FF92      		push r15
+ 690 04aa 0F93      		push r16
+ 691 04ac 1F93      		push r17
+ 692 04ae CF93      		push r28
+ 693 04b0 DF93      		push r29
+ 694               	/* prologue: function */
+ 695               	/* frame size = 0 */
+ 696 04b2 4A01      		movw r8,r20
+ 697 04b4 3901      		movw r6,r18
+ 698 04b6 DC01      		movw r26,r24
+ 699 04b8 5196      		adiw r26,17
+ 700 04ba CD91      		ld r28,X+
+ 701 04bc DC91      		ld r29,X
+ 702 04be 5297      		sbiw r26,17+1
+ 703 04c0 6115      		cp r22,__zero_reg__
+ 704 04c2 7105      		cpc r23,__zero_reg__
+ 705 04c4 01F4      		brne .L62
+ 706 04c6 EE24      		clr r14
+ 707 04c8 FF24      		clr r15
+ 708 04ca 00C0      		rjmp .L63
+ 709               	.L62:
+ 710 04cc 6B01      		movw r12,r22
+ 711 04ce EE24      		clr r14
+ 712 04d0 FF24      		clr r15
+ 713 04d2 63E0      		ldi r22,lo8(3)
+ 714 04d4 A62E      		mov r10,r22
+ 715 04d6 52E0      		ldi r21,lo8(2)
+ 716 04d8 552E      		mov r5,r21
+ 717 04da 40E2      		ldi r20,lo8(32)
+ 718 04dc B42E      		mov r11,r20
+ 719 04de 00C0      		rjmp .L64
+ 720               	.L119:
+ 721 04e0 6114      		cp r6,__zero_reg__
+ 722 04e2 7104      		cpc r7,__zero_reg__
+ 723 04e4 01F0      		breq .L65
+ 724 04e6 F601      		movw r30,r12
+ 725               	/* #APP */
+ 726               	 ;  439 "../../nut/dev/term.c" 1
+ 727 04e8 1491      		lpm r17, Z
+ 728               		
+ 729               	 ;  0 "" 2
+ 730               	/* #NOAPP */
+ 731 04ea 00C0      		rjmp .L66
+ 732               	.L65:
+ 733 04ec D601      		movw r26,r12
+ 734 04ee 1C91      		ld r17,X
+ 735               	.L66:
+ 736 04f0 8A89      		ldd r24,Y+18
+ 737 04f2 9B89      		ldd r25,Y+19
+ 738 04f4 AC89      		ldd r26,Y+20
+ 739 04f6 BD89      		ldd r27,Y+21
+ 740 04f8 A1FF      		sbrs r26,1
+ 741 04fa 00C0      		rjmp .L67
+GAS LISTING C:\Temp/ccmzrweV.s 			page 14
+
+
+ 742 04fc 8E89      		ldd r24,Y+22
+ 743 04fe 8823      		tst r24
+ 744 0500 01F0      		breq .+2
+ 745 0502 00C0      		rjmp .L68
+ 746 0504 1A30      		cpi r17,lo8(10)
+ 747 0506 01F4      		brne .L69
+ 748 0508 1B8E      		std Y+27,__zero_reg__
+ 749 050a 9A8D      		ldd r25,Y+26
+ 750 050c 9F5F      		subi r25,lo8(-(1))
+ 751 050e 9A8F      		std Y+26,r25
+ 752 0510 8F89      		ldd r24,Y+23
+ 753 0512 9817      		cp r25,r24
+ 754 0514 00F0      		brlo .L70
+ 755 0516 8150      		subi r24,lo8(-(-1))
+ 756 0518 8A8F      		std Y+26,r24
+ 757 051a 60E0      		ldi r22,lo8(0)
+ 758 051c 00C0      		rjmp .L125
+ 759               	.L70:
+ 760 051e 888D      		ldd r24,Y+24
+ 761 0520 00C0      		rjmp .L130
+ 762               	.L69:
+ 763 0522 1D30      		cpi r17,lo8(13)
+ 764 0524 01F4      		brne .L72
+ 765 0526 1B8E      		std Y+27,__zero_reg__
+ 766 0528 988D      		ldd r25,Y+24
+ 767 052a 8A8D      		ldd r24,Y+26
+ 768               	.L130:
+ 769 052c E885      		ldd r30,Y+8
+ 770 052e F985      		ldd r31,Y+9
+ 771 0530 989F      		mul r25,r24
+ 772 0532 802D      		mov r24,r0
+ 773 0534 1124      		clr r1
+ 774 0536 00C0      		rjmp .L122
+ 775               	.L72:
+ 776 0538 1B31      		cpi r17,lo8(27)
+ 777 053a 01F4      		brne .L73
+ 778 053c 81E0      		ldi r24,lo8(1)
+ 779 053e 8E8B      		std Y+22,r24
+ 780 0540 00C0      		rjmp .L71
+ 781               	.L73:
+ 782 0542 1830      		cpi r17,lo8(8)
+ 783 0544 01F4      		brne .L74
+ 784 0546 2B8D      		ldd r18,Y+27
+ 785 0548 2223      		tst r18
+ 786 054a 01F4      		brne .+2
+ 787 054c 00C0      		rjmp .L71
+ 788 054e 422F      		mov r20,r18
+ 789 0550 4150      		subi r20,lo8(-(-1))
+ 790 0552 4B8F      		std Y+27,r20
+ 791 0554 898D      		ldd r24,Y+25
+ 792 0556 2A8D      		ldd r18,Y+26
+ 793 0558 829F      		mul r24,r18
+ 794 055a C001      		movw r24,r0
+ 795 055c 1124      		clr r1
+ 796 055e 840F      		add r24,r20
+ 797 0560 911D      		adc r25,__zero_reg__
+ 798 0562 EC8D      		ldd r30,Y+28
+GAS LISTING C:\Temp/ccmzrweV.s 			page 15
+
+
+ 799 0564 FD8D      		ldd r31,Y+29
+ 800 0566 E80F      		add r30,r24
+ 801 0568 F91F      		adc r31,r25
+ 802 056a 00C0      		rjmp .L75
+ 803               	.L76:
+ 804 056c 8181      		ldd r24,Z+1
+ 805 056e 8193      		st Z+,r24
+ 806 0570 4F5F      		subi r20,lo8(-(1))
+ 807               	.L75:
+ 808 0572 242F      		mov r18,r20
+ 809 0574 30E0      		ldi r19,lo8(0)
+ 810 0576 898D      		ldd r24,Y+25
+ 811 0578 90E0      		ldi r25,lo8(0)
+ 812 057a 0197      		sbiw r24,1
+ 813 057c 2817      		cp r18,r24
+ 814 057e 3907      		cpc r19,r25
+ 815 0580 04F0      		brlt .L76
+ 816 0582 00C0      		rjmp .L129
+ 817               	.L74:
+ 818 0584 1C30      		cpi r17,lo8(12)
+ 819 0586 01F0      		breq .+2
+ 820 0588 00C0      		rjmp .L67
+ 821 058a 00C0      		rjmp .L83
+ 822               	.L68:
+ 823 058c 8130      		cpi r24,lo8(1)
+ 824 058e 01F0      		breq .+2
+ 825 0590 00C0      		rjmp .L77
+ 826 0592 1E8A      		std Y+22,__zero_reg__
+ 827 0594 812F      		mov r24,r17
+ 828 0596 90E0      		ldi r25,lo8(0)
+ 829 0598 FC01      		movw r30,r24
+ 830 059a E054      		subi r30,lo8(-(-64))
+ 831 059c F040      		sbci r31,hi8(-(-64))
+ 832 059e E033      		cpi r30,48
+ 833 05a0 F105      		cpc r31,__zero_reg__
+ 834 05a2 00F0      		brlo .+2
+ 835 05a4 00C0      		rjmp .L71
+ 836 05a6 E050      		subi r30,lo8(-(gs(.L97)))
+ 837 05a8 F040      		sbci r31,hi8(-(gs(.L97)))
+ 838 05aa EE0F      		lsl r30
+ 839 05ac FF1F      		rol r31
+ 840 05ae 0590      		lpm __tmp_reg__,Z+
+ 841 05b0 F491      		lpm r31,Z
+ 842 05b2 E02D      		mov r30,__tmp_reg__
+ 843 05b4 0994      		ijmp
+ 844               		.data
+ 845               		.section .progmem.gcc_sw_table, "a", @progbits
+ 846               		.p2align 1
+ 847               	.L97:
+ 848               		.data
+ 849               		.section .progmem.gcc_sw_table, "a", @progbits
+ 850               		.p2align 1
+ 851 0000 0000      		.word gs(.L78)
+ 852 0002 0000      		.word gs(.L79)
+ 853 0004 0000      		.word gs(.L80)
+ 854 0006 0000      		.word gs(.L81)
+ 855 0008 0000      		.word gs(.L82)
+GAS LISTING C:\Temp/ccmzrweV.s 			page 16
+
+
+ 856 000a 0000      		.word gs(.L83)
+ 857 000c 0000      		.word gs(.L71)
+ 858 000e 0000      		.word gs(.L71)
+ 859 0010 0000      		.word gs(.L84)
+ 860 0012 0000      		.word gs(.L85)
+ 861 0014 0000      		.word gs(.L86)
+ 862 0016 0000      		.word gs(.L87)
+ 863 0018 0000      		.word gs(.L88)
+ 864 001a 0000      		.word gs(.L89)
+ 865 001c 0000      		.word gs(.L71)
+ 866 001e 0000      		.word gs(.L71)
+ 867 0020 0000      		.word gs(.L90)
+ 868 0022 0000      		.word gs(.L71)
+ 869 0024 0000      		.word gs(.L71)
+ 870 0026 0000      		.word gs(.L71)
+ 871 0028 0000      		.word gs(.L71)
+ 872 002a 0000      		.word gs(.L71)
+ 873 002c 0000      		.word gs(.L71)
+ 874 002e 0000      		.word gs(.L71)
+ 875 0030 0000      		.word gs(.L71)
+ 876 0032 0000      		.word gs(.L91)
+ 877 0034 0000      		.word gs(.L92)
+ 878 0036 0000      		.word gs(.L71)
+ 879 0038 0000      		.word gs(.L71)
+ 880 003a 0000      		.word gs(.L71)
+ 881 003c 0000      		.word gs(.L71)
+ 882 003e 0000      		.word gs(.L71)
+ 883 0040 0000      		.word gs(.L71)
+ 884 0042 0000      		.word gs(.L71)
+ 885 0044 0000      		.word gs(.L71)
+ 886 0046 0000      		.word gs(.L71)
+ 887 0048 0000      		.word gs(.L93)
+ 888 004a 0000      		.word gs(.L94)
+ 889 004c 0000      		.word gs(.L95)
+ 890 004e 0000      		.word gs(.L71)
+ 891 0050 0000      		.word gs(.L71)
+ 892 0052 0000      		.word gs(.L71)
+ 893 0054 0000      		.word gs(.L71)
+ 894 0056 0000      		.word gs(.L71)
+ 895 0058 0000      		.word gs(.L71)
+ 896 005a 0000      		.word gs(.L71)
+ 897 005c 0000      		.word gs(.L71)
+ 898 005e 0000      		.word gs(.L96)
+ 899               		.text
+ 900               	.L78:
+ 901 05b6 8A8D      		ldd r24,Y+26
+ 902 05b8 90E0      		ldi r25,lo8(0)
+ 903 05ba 0196      		adiw r24,1
+ 904 05bc 298D      		ldd r18,Y+25
+ 905 05be 30E0      		ldi r19,lo8(0)
+ 906 05c0 FC01      		movw r30,r24
+ 907 05c2 E29F      		mul r30,r18
+ 908 05c4 C001      		movw r24,r0
+ 909 05c6 E39F      		mul r30,r19
+ 910 05c8 900D      		add r25,r0
+ 911 05ca F29F      		mul r31,r18
+ 912 05cc 900D      		add r25,r0
+GAS LISTING C:\Temp/ccmzrweV.s 			page 17
+
+
+ 913 05ce 1124      		clr r1
+ 914 05d0 0197      		sbiw r24,1
+ 915 05d2 EC8D      		ldd r30,Y+28
+ 916 05d4 FD8D      		ldd r31,Y+29
+ 917 05d6 E80F      		add r30,r24
+ 918 05d8 F91F      		adc r31,r25
+ 919 05da 4B8D      		ldd r20,Y+27
+ 920 05dc 00C0      		rjmp .L98
+ 921               	.L99:
+ 922 05de 8291      		ld r24,-Z
+ 923 05e0 8183      		std Z+1,r24
+ 924 05e2 4F5F      		subi r20,lo8(-(1))
+ 925               	.L98:
+ 926 05e4 242F      		mov r18,r20
+ 927 05e6 30E0      		ldi r19,lo8(0)
+ 928 05e8 898D      		ldd r24,Y+25
+ 929 05ea 90E0      		ldi r25,lo8(0)
+ 930 05ec 0197      		sbiw r24,1
+ 931 05ee 2817      		cp r18,r24
+ 932 05f0 3907      		cpc r19,r25
+ 933 05f2 04F0      		brlt .L99
+ 934 05f4 B082      		st Z,r11
+ 935 05f6 4B8D      		ldd r20,Y+27
+ 936 05f8 6A8D      		ldd r22,Y+26
+ 937 05fa CE01      		movw r24,r28
+ 938 05fc 0E94 0000 		call TermRefreshLineEnd
+ 939 0600 00C0      		rjmp .L117
+ 940               	.L79:
+ 941 0602 8A8D      		ldd r24,Y+26
+ 942 0604 8823      		tst r24
+ 943 0606 01F4      		brne .+2
+ 944 0608 00C0      		rjmp .L71
+ 945 060a 8150      		subi r24,lo8(-(-1))
+ 946 060c 8A8F      		std Y+26,r24
+ 947 060e 988D      		ldd r25,Y+24
+ 948 0610 00C0      		rjmp .L131
+ 949               	.L80:
+ 950 0612 9A8D      		ldd r25,Y+26
+ 951 0614 9F5F      		subi r25,lo8(-(1))
+ 952 0616 9A8F      		std Y+26,r25
+ 953 0618 8F89      		ldd r24,Y+23
+ 954 061a 9817      		cp r25,r24
+ 955 061c 00F0      		brlo .L132
+ 956 061e 8150      		subi r24,lo8(-(-1))
+ 957 0620 8A8F      		std Y+26,r24
+ 958 0622 00C0      		rjmp .L71
+ 959               	.L81:
+ 960 0624 8B8D      		ldd r24,Y+27
+ 961 0626 8F5F      		subi r24,lo8(-(1))
+ 962 0628 8B8F      		std Y+27,r24
+ 963 062a 998D      		ldd r25,Y+25
+ 964 062c 8917      		cp r24,r25
+ 965 062e 00F4      		brsh .L101
+ 966 0630 EE85      		ldd r30,Y+14
+ 967 0632 FF85      		ldd r31,Y+15
+ 968 0634 00C0      		rjmp .L124
+ 969               	.L101:
+GAS LISTING C:\Temp/ccmzrweV.s 			page 18
+
+
+ 970 0636 9150      		subi r25,lo8(-(-1))
+ 971 0638 9B8F      		std Y+27,r25
+ 972 063a 00C0      		rjmp .L71
+ 973               	.L82:
+ 974 063c 8B8D      		ldd r24,Y+27
+ 975 063e 8823      		tst r24
+ 976 0640 01F4      		brne .+2
+ 977 0642 00C0      		rjmp .L71
+ 978 0644 EC85      		ldd r30,Y+12
+ 979 0646 FD85      		ldd r31,Y+13
+ 980 0648 0995      		icall
+ 981 064a 8B8D      		ldd r24,Y+27
+ 982 064c 8150      		subi r24,lo8(-(-1))
+ 983 064e 8B8F      		std Y+27,r24
+ 984 0650 00C0      		rjmp .L71
+ 985               	.L83:
+ 986 0652 CE01      		movw r24,r28
+ 987 0654 0E94 0000 		call TermClear
+ 988 0658 00C0      		rjmp .L71
+ 989               	.L84:
+ 990 065a 1B8E      		std Y+27,__zero_reg__
+ 991 065c 1A8E      		std Y+26,__zero_reg__
+ 992 065e EA85      		ldd r30,Y+10
+ 993 0660 FB85      		ldd r31,Y+11
+ 994               	.L124:
+ 995 0662 0995      		icall
+ 996 0664 00C0      		rjmp .L71
+ 997               	.L85:
+ 998 0666 8A8D      		ldd r24,Y+26
+ 999 0668 982F      		mov r25,r24
+ 1000 066a 9150      		subi r25,lo8(-(-1))
+ 1001 066c 9A8F      		std Y+26,r25
+ 1002 066e 8823      		tst r24
+ 1003 0670 01F0      		breq .L102
+ 1004               	.L132:
+ 1005 0672 888D      		ldd r24,Y+24
+ 1006 0674 00C0      		rjmp .L131
+ 1007               	.L102:
+ 1008 0676 1A8E      		std Y+26,__zero_reg__
+ 1009 0678 60E0      		ldi r22,lo8(0)
+ 1010 067a 00C0      		rjmp .L127
+ 1011               	.L86:
+ 1012 067c 4B8D      		ldd r20,Y+27
+ 1013 067e 298D      		ldd r18,Y+25
+ 1014 0680 4217      		cp r20,r18
+ 1015 0682 00F4      		brsh .L103
+ 1016 0684 30E0      		ldi r19,lo8(0)
+ 1017 0686 50E0      		ldi r21,lo8(0)
+ 1018 0688 B901      		movw r22,r18
+ 1019 068a 641B      		sub r22,r20
+ 1020 068c 750B      		sbc r23,r21
+ 1021 068e 8A8D      		ldd r24,Y+26
+ 1022 0690 90E0      		ldi r25,lo8(0)
+ 1023 0692 DC01      		movw r26,r24
+ 1024 0694 A29F      		mul r26,r18
+ 1025 0696 C001      		movw r24,r0
+ 1026 0698 A39F      		mul r26,r19
+GAS LISTING C:\Temp/ccmzrweV.s 			page 19
+
+
+ 1027 069a 900D      		add r25,r0
+ 1028 069c B29F      		mul r27,r18
+ 1029 069e 900D      		add r25,r0
+ 1030 06a0 1124      		clr r1
+ 1031 06a2 840F      		add r24,r20
+ 1032 06a4 951F      		adc r25,r21
+ 1033 06a6 2C8D      		ldd r18,Y+28
+ 1034 06a8 3D8D      		ldd r19,Y+29
+ 1035 06aa 280F      		add r18,r24
+ 1036 06ac 391F      		adc r19,r25
+ 1037 06ae AB01      		movw r20,r22
+ 1038 06b0 60E2      		ldi r22,lo8(32)
+ 1039 06b2 70E0      		ldi r23,hi8(32)
+ 1040 06b4 C901      		movw r24,r18
+ 1041 06b6 0E94 0000 		call memset
+ 1042               	.L103:
+ 1043 06ba 1A8D      		ldd r17,Y+26
+ 1044 06bc 00C0      		rjmp .L121
+ 1045               	.L105:
+ 1046 06be 498D      		ldd r20,Y+25
+ 1047 06c0 149F      		mul r17,r20
+ 1048 06c2 C001      		movw r24,r0
+ 1049 06c4 1124      		clr r1
+ 1050 06c6 2C8D      		ldd r18,Y+28
+ 1051 06c8 3D8D      		ldd r19,Y+29
+ 1052 06ca 280F      		add r18,r24
+ 1053 06cc 391F      		adc r19,r25
+ 1054 06ce 50E0      		ldi r21,lo8(0)
+ 1055 06d0 60E2      		ldi r22,lo8(32)
+ 1056 06d2 70E0      		ldi r23,hi8(32)
+ 1057 06d4 C901      		movw r24,r18
+ 1058 06d6 0E94 0000 		call memset
+ 1059               	.L121:
+ 1060 06da 1F5F      		subi r17,lo8(-(1))
+ 1061 06dc 8F89      		ldd r24,Y+23
+ 1062 06de 1817      		cp r17,r24
+ 1063 06e0 00F0      		brlo .L105
+ 1064 06e2 00C0      		rjmp .L126
+ 1065               	.L87:
+ 1066 06e4 4B8D      		ldd r20,Y+27
+ 1067 06e6 298D      		ldd r18,Y+25
+ 1068 06e8 4217      		cp r20,r18
+ 1069 06ea 00F0      		brlo .+2
+ 1070 06ec 00C0      		rjmp .L71
+ 1071 06ee 30E0      		ldi r19,lo8(0)
+ 1072 06f0 50E0      		ldi r21,lo8(0)
+ 1073 06f2 B901      		movw r22,r18
+ 1074 06f4 641B      		sub r22,r20
+ 1075 06f6 750B      		sbc r23,r21
+ 1076 06f8 8A8D      		ldd r24,Y+26
+ 1077 06fa 90E0      		ldi r25,lo8(0)
+ 1078 06fc FC01      		movw r30,r24
+ 1079 06fe E29F      		mul r30,r18
+ 1080 0700 C001      		movw r24,r0
+ 1081 0702 E39F      		mul r30,r19
+ 1082 0704 900D      		add r25,r0
+ 1083 0706 F29F      		mul r31,r18
+GAS LISTING C:\Temp/ccmzrweV.s 			page 20
+
+
+ 1084 0708 900D      		add r25,r0
+ 1085 070a 1124      		clr r1
+ 1086 070c 840F      		add r24,r20
+ 1087 070e 951F      		adc r25,r21
+ 1088 0710 2C8D      		ldd r18,Y+28
+ 1089 0712 3D8D      		ldd r19,Y+29
+ 1090 0714 280F      		add r18,r24
+ 1091 0716 391F      		adc r19,r25
+ 1092 0718 AB01      		movw r20,r22
+ 1093 071a 00C0      		rjmp .L128
+ 1094               	.L88:
+ 1095 071c 6A8D      		ldd r22,Y+26
+ 1096               	.L127:
+ 1097 071e CE01      		movw r24,r28
+ 1098 0720 0E94 0000 		call TermInsertLine
+ 1099 0724 00C0      		rjmp .L71
+ 1100               	.L89:
+ 1101 0726 6A8D      		ldd r22,Y+26
+ 1102               	.L125:
+ 1103 0728 CE01      		movw r24,r28
+ 1104 072a 0E94 0000 		call TermDeleteLine
+ 1105 072e 00C0      		rjmp .L71
+ 1106               	.L90:
+ 1107 0730 4B8D      		ldd r20,Y+27
+ 1108 0732 898D      		ldd r24,Y+25
+ 1109 0734 2A8D      		ldd r18,Y+26
+ 1110 0736 829F      		mul r24,r18
+ 1111 0738 C001      		movw r24,r0
+ 1112 073a 1124      		clr r1
+ 1113 073c 840F      		add r24,r20
+ 1114 073e 911D      		adc r25,__zero_reg__
+ 1115 0740 EC8D      		ldd r30,Y+28
+ 1116 0742 FD8D      		ldd r31,Y+29
+ 1117 0744 E80F      		add r30,r24
+ 1118 0746 F91F      		adc r31,r25
+ 1119 0748 00C0      		rjmp .L106
+ 1120               	.L107:
+ 1121 074a 8181      		ldd r24,Z+1
+ 1122 074c 8193      		st Z+,r24
+ 1123 074e 4F5F      		subi r20,lo8(-(1))
+ 1124               	.L106:
+ 1125 0750 242F      		mov r18,r20
+ 1126 0752 30E0      		ldi r19,lo8(0)
+ 1127 0754 898D      		ldd r24,Y+25
+ 1128 0756 90E0      		ldi r25,lo8(0)
+ 1129 0758 0197      		sbiw r24,1
+ 1130 075a 2817      		cp r18,r24
+ 1131 075c 3907      		cpc r19,r25
+ 1132 075e 04F0      		brlt .L107
+ 1133               	.L129:
+ 1134 0760 B082      		st Z,r11
+ 1135 0762 00C0      		rjmp .L126
+ 1136               	.L91:
+ 1137 0764 5E8A      		std Y+22,r5
+ 1138 0766 00C0      		rjmp .L71
+ 1139               	.L92:
+ 1140 0768 CE01      		movw r24,r28
+GAS LISTING C:\Temp/ccmzrweV.s 			page 21
+
+
+ 1141 076a 0E94 0000 		call TermClear
+ 1142 076e 00E0      		ldi r16,lo8(termid)
+ 1143 0770 10E0      		ldi r17,hi8(termid)
+ 1144 0772 00C0      		rjmp .L108
+ 1145               	.L109:
+ 1146 0774 EA81      		ldd r30,Y+2
+ 1147 0776 FB81      		ldd r31,Y+3
+ 1148 0778 0995      		icall
+ 1149 077a 0F5F      		subi r16,lo8(-(1))
+ 1150 077c 1F4F      		sbci r17,hi8(-(1))
+ 1151               	.L108:
+ 1152 077e F801      		movw r30,r16
+ 1153               	/* #APP */
+ 1154               	 ;  275 "../../nut/dev/term.c" 1
+ 1155 0780 8491      		lpm r24, Z
+ 1156               		
+ 1157               	 ;  0 "" 2
+ 1158               	/* #NOAPP */
+ 1159 0782 8823      		tst r24
+ 1160 0784 01F4      		brne .L109
+ 1161 0786 00C0      		rjmp .L71
+ 1162               	.L94:
+ 1163 0788 8A89      		ldd r24,Y+18
+ 1164 078a 9B89      		ldd r25,Y+19
+ 1165 078c AC89      		ldd r26,Y+20
+ 1166 078e BD89      		ldd r27,Y+21
+ 1167 0790 8160      		ori r24,lo8(1)
+ 1168 0792 8A8B      		std Y+18,r24
+ 1169 0794 9B8B      		std Y+19,r25
+ 1170 0796 AC8B      		std Y+20,r26
+ 1171 0798 BD8B      		std Y+21,r27
+ 1172 079a E889      		ldd r30,Y+16
+ 1173 079c F989      		ldd r31,Y+17
+ 1174 079e 81E0      		ldi r24,lo8(1)
+ 1175 07a0 00C0      		rjmp .L122
+ 1176               	.L95:
+ 1177 07a2 8A89      		ldd r24,Y+18
+ 1178 07a4 9B89      		ldd r25,Y+19
+ 1179 07a6 AC89      		ldd r26,Y+20
+ 1180 07a8 BD89      		ldd r27,Y+21
+ 1181 07aa 8E7F      		andi r24,lo8(-2)
+ 1182 07ac 8A8B      		std Y+18,r24
+ 1183 07ae 9B8B      		std Y+19,r25
+ 1184 07b0 AC8B      		std Y+20,r26
+ 1185 07b2 BD8B      		std Y+21,r27
+ 1186 07b4 E889      		ldd r30,Y+16
+ 1187 07b6 F989      		ldd r31,Y+17
+ 1188 07b8 80E0      		ldi r24,lo8(0)
+ 1189 07ba 00C0      		rjmp .L122
+ 1190               	.L93:
+ 1191 07bc 4B8D      		ldd r20,Y+27
+ 1192 07be 4423      		tst r20
+ 1193 07c0 01F0      		breq .L110
+ 1194 07c2 898D      		ldd r24,Y+25
+ 1195 07c4 2A8D      		ldd r18,Y+26
+ 1196 07c6 829F      		mul r24,r18
+ 1197 07c8 C001      		movw r24,r0
+GAS LISTING C:\Temp/ccmzrweV.s 			page 22
+
+
+ 1198 07ca 1124      		clr r1
+ 1199 07cc 2C8D      		ldd r18,Y+28
+ 1200 07ce 3D8D      		ldd r19,Y+29
+ 1201 07d0 280F      		add r18,r24
+ 1202 07d2 391F      		adc r19,r25
+ 1203 07d4 50E0      		ldi r21,lo8(0)
+ 1204 07d6 60E2      		ldi r22,lo8(32)
+ 1205 07d8 70E0      		ldi r23,hi8(32)
+ 1206 07da C901      		movw r24,r18
+ 1207 07dc 0E94 0000 		call memset
+ 1208               	.L110:
+ 1209 07e0 10E0      		ldi r17,lo8(0)
+ 1210 07e2 00C0      		rjmp .L111
+ 1211               	.L112:
+ 1212 07e4 498D      		ldd r20,Y+25
+ 1213 07e6 149F      		mul r17,r20
+ 1214 07e8 C001      		movw r24,r0
+ 1215 07ea 1124      		clr r1
+ 1216 07ec 2C8D      		ldd r18,Y+28
+ 1217 07ee 3D8D      		ldd r19,Y+29
+ 1218 07f0 280F      		add r18,r24
+ 1219 07f2 391F      		adc r19,r25
+ 1220 07f4 50E0      		ldi r21,lo8(0)
+ 1221 07f6 60E2      		ldi r22,lo8(32)
+ 1222 07f8 70E0      		ldi r23,hi8(32)
+ 1223 07fa C901      		movw r24,r18
+ 1224 07fc 0E94 0000 		call memset
+ 1225 0800 1F5F      		subi r17,lo8(-(1))
+ 1226               	.L111:
+ 1227 0802 8A8D      		ldd r24,Y+26
+ 1228 0804 1817      		cp r17,r24
+ 1229 0806 00F0      		brlo .L112
+ 1230 0808 00C0      		rjmp .L126
+ 1231               	.L96:
+ 1232 080a 4B8D      		ldd r20,Y+27
+ 1233 080c 4423      		tst r20
+ 1234 080e 01F4      		brne .+2
+ 1235 0810 00C0      		rjmp .L71
+ 1236 0812 898D      		ldd r24,Y+25
+ 1237 0814 2A8D      		ldd r18,Y+26
+ 1238 0816 829F      		mul r24,r18
+ 1239 0818 C001      		movw r24,r0
+ 1240 081a 1124      		clr r1
+ 1241 081c 2C8D      		ldd r18,Y+28
+ 1242 081e 3D8D      		ldd r19,Y+29
+ 1243 0820 280F      		add r18,r24
+ 1244 0822 391F      		adc r19,r25
+ 1245 0824 50E0      		ldi r21,lo8(0)
+ 1246               	.L128:
+ 1247 0826 60E2      		ldi r22,lo8(32)
+ 1248 0828 70E0      		ldi r23,hi8(32)
+ 1249 082a C901      		movw r24,r18
+ 1250 082c 0E94 0000 		call memset
+ 1251               	.L126:
+ 1252 0830 CE01      		movw r24,r28
+ 1253 0832 0E94 0000 		call TermRefresh
+ 1254 0836 00C0      		rjmp .L71
+GAS LISTING C:\Temp/ccmzrweV.s 			page 23
+
+
+ 1255               	.L77:
+ 1256 0838 8230      		cpi r24,lo8(2)
+ 1257 083a 01F4      		brne .L113
+ 1258 083c AE8A      		std Y+22,r10
+ 1259 083e 1032      		cpi r17,lo8(32)
+ 1260 0840 00F4      		brsh .L114
+ 1261 0842 1A8E      		std Y+26,__zero_reg__
+ 1262 0844 00C0      		rjmp .L71
+ 1263               	.L114:
+ 1264 0846 4F89      		ldd r20,Y+23
+ 1265 0848 812F      		mov r24,r17
+ 1266 084a 90E0      		ldi r25,lo8(0)
+ 1267 084c 4F97      		sbiw r24,31
+ 1268 084e 242F      		mov r18,r20
+ 1269 0850 30E0      		ldi r19,lo8(0)
+ 1270 0852 2817      		cp r18,r24
+ 1271 0854 3907      		cpc r19,r25
+ 1272 0856 04F4      		brge .L115
+ 1273 0858 4150      		subi r20,lo8(-(-1))
+ 1274 085a 4A8F      		std Y+26,r20
+ 1275 085c 00C0      		rjmp .L71
+ 1276               	.L115:
+ 1277 085e 1052      		subi r17,lo8(-(-32))
+ 1278 0860 1A8F      		std Y+26,r17
+ 1279 0862 00C0      		rjmp .L71
+ 1280               	.L113:
+ 1281 0864 8330      		cpi r24,lo8(3)
+ 1282 0866 01F4      		brne .L67
+ 1283 0868 1E8A      		std Y+22,__zero_reg__
+ 1284 086a 1032      		cpi r17,lo8(32)
+ 1285 086c 00F4      		brsh .L116
+ 1286 086e 1B8E      		std Y+27,__zero_reg__
+ 1287 0870 00C0      		rjmp .L117
+ 1288               	.L116:
+ 1289 0872 498D      		ldd r20,Y+25
+ 1290 0874 812F      		mov r24,r17
+ 1291 0876 90E0      		ldi r25,lo8(0)
+ 1292 0878 4F97      		sbiw r24,31
+ 1293 087a 242F      		mov r18,r20
+ 1294 087c 30E0      		ldi r19,lo8(0)
+ 1295 087e 2817      		cp r18,r24
+ 1296 0880 3907      		cpc r19,r25
+ 1297 0882 04F4      		brge .L118
+ 1298 0884 4150      		subi r20,lo8(-(-1))
+ 1299 0886 4B8F      		std Y+27,r20
+ 1300 0888 00C0      		rjmp .L117
+ 1301               	.L118:
+ 1302 088a 1052      		subi r17,lo8(-(-32))
+ 1303 088c 1B8F      		std Y+27,r17
+ 1304               	.L117:
+ 1305 088e 888D      		ldd r24,Y+24
+ 1306 0890 9A8D      		ldd r25,Y+26
+ 1307               	.L131:
+ 1308 0892 899F      		mul r24,r25
+ 1309 0894 802D      		mov r24,r0
+ 1310 0896 1124      		clr r1
+ 1311 0898 9B8D      		ldd r25,Y+27
+GAS LISTING C:\Temp/ccmzrweV.s 			page 24
+
+
+ 1312 089a E885      		ldd r30,Y+8
+ 1313 089c F985      		ldd r31,Y+9
+ 1314 089e 890F      		add r24,r25
+ 1315 08a0 00C0      		rjmp .L122
+ 1316               	.L67:
+ 1317 08a2 EA81      		ldd r30,Y+2
+ 1318 08a4 FB81      		ldd r31,Y+3
+ 1319 08a6 812F      		mov r24,r17
+ 1320 08a8 0995      		icall
+ 1321 08aa 8A89      		ldd r24,Y+18
+ 1322 08ac 9B89      		ldd r25,Y+19
+ 1323 08ae AC89      		ldd r26,Y+20
+ 1324 08b0 BD89      		ldd r27,Y+21
+ 1325 08b2 A1FF      		sbrs r26,1
+ 1326 08b4 00C0      		rjmp .L71
+ 1327 08b6 898D      		ldd r24,Y+25
+ 1328 08b8 2A8D      		ldd r18,Y+26
+ 1329 08ba 829F      		mul r24,r18
+ 1330 08bc C001      		movw r24,r0
+ 1331 08be 1124      		clr r1
+ 1332 08c0 2B8D      		ldd r18,Y+27
+ 1333 08c2 EC8D      		ldd r30,Y+28
+ 1334 08c4 FD8D      		ldd r31,Y+29
+ 1335 08c6 E80F      		add r30,r24
+ 1336 08c8 F91F      		adc r31,r25
+ 1337 08ca E20F      		add r30,r18
+ 1338 08cc F11D      		adc r31,__zero_reg__
+ 1339 08ce 1083      		st Z,r17
+ 1340 08d0 8B8D      		ldd r24,Y+27
+ 1341 08d2 8F5F      		subi r24,lo8(-(1))
+ 1342 08d4 8B8F      		std Y+27,r24
+ 1343 08d6 298D      		ldd r18,Y+25
+ 1344 08d8 8217      		cp r24,r18
+ 1345 08da 00F0      		brlo .L71
+ 1346 08dc 2150      		subi r18,lo8(-(-1))
+ 1347 08de 2B8F      		std Y+27,r18
+ 1348 08e0 888D      		ldd r24,Y+24
+ 1349 08e2 9A8D      		ldd r25,Y+26
+ 1350 08e4 899F      		mul r24,r25
+ 1351 08e6 802D      		mov r24,r0
+ 1352 08e8 1124      		clr r1
+ 1353 08ea E885      		ldd r30,Y+8
+ 1354 08ec F985      		ldd r31,Y+9
+ 1355 08ee 820F      		add r24,r18
+ 1356               	.L122:
+ 1357 08f0 0995      		icall
+ 1358               	.L71:
+ 1359 08f2 0894      		sec
+ 1360 08f4 C11C      		adc r12,__zero_reg__
+ 1361 08f6 D11C      		adc r13,__zero_reg__
+ 1362 08f8 0894      		sec
+ 1363 08fa E11C      		adc r14,__zero_reg__
+ 1364 08fc F11C      		adc r15,__zero_reg__
+ 1365               	.L64:
+ 1366 08fe E814      		cp r14,r8
+ 1367 0900 F904      		cpc r15,r9
+ 1368 0902 04F4      		brge .+2
+GAS LISTING C:\Temp/ccmzrweV.s 			page 25
+
+
+ 1369 0904 00C0      		rjmp .L119
+ 1370               	.L63:
+ 1371 0906 C701      		movw r24,r14
+ 1372               	/* epilogue start */
+ 1373 0908 DF91      		pop r29
+ 1374 090a CF91      		pop r28
+ 1375 090c 1F91      		pop r17
+ 1376 090e 0F91      		pop r16
+ 1377 0910 FF90      		pop r15
+ 1378 0912 EF90      		pop r14
+ 1379 0914 DF90      		pop r13
+ 1380 0916 CF90      		pop r12
+ 1381 0918 BF90      		pop r11
+ 1382 091a AF90      		pop r10
+ 1383 091c 9F90      		pop r9
+ 1384 091e 8F90      		pop r8
+ 1385 0920 7F90      		pop r7
+ 1386 0922 6F90      		pop r6
+ 1387 0924 5F90      		pop r5
+ 1388 0926 0895      		ret
+ 1389               		.size	TermPut, .-TermPut
+ 1390               	.global	TermWrite_P
+ 1391               		.type	TermWrite_P, @function
+ 1392               	TermWrite_P:
+ 1393               	/* prologue: function */
+ 1394               	/* frame size = 0 */
+ 1395 0928 21E0      		ldi r18,lo8(1)
+ 1396 092a 30E0      		ldi r19,hi8(1)
+ 1397 092c FC01      		movw r30,r24
+ 1398 092e 8281      		ldd r24,Z+2
+ 1399 0930 9381      		ldd r25,Z+3
+ 1400 0932 0E94 0000 		call TermPut
+ 1401               	/* epilogue start */
+ 1402 0936 0895      		ret
+ 1403               		.size	TermWrite_P, .-TermWrite_P
+ 1404               	.global	TermWrite
+ 1405               		.type	TermWrite, @function
+ 1406               	TermWrite:
+ 1407               	/* prologue: function */
+ 1408               	/* frame size = 0 */
+ 1409 0938 20E0      		ldi r18,lo8(0)
+ 1410 093a 30E0      		ldi r19,hi8(0)
+ 1411 093c FC01      		movw r30,r24
+ 1412 093e 8281      		ldd r24,Z+2
+ 1413 0940 9381      		ldd r25,Z+3
+ 1414 0942 0E94 0000 		call TermPut
+ 1415               	/* epilogue start */
+ 1416 0946 0895      		ret
+ 1417               		.size	TermWrite, .-TermWrite
+ 1418               		.section	.progmem.data,"a",@progbits
+ 1419               		.type	termid, @object
+ 1420               		.size	termid, 9
+ 1421               	termid:
+ 1422 0000 5465 726D 		.string	"Term 1.0"
+ 1422      2031 2E30 
+ 1422      00
+GAS LISTING C:\Temp/ccmzrweV.s 			page 26
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 term.c
+  C:\Temp/ccmzrweV.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccmzrweV.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccmzrweV.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccmzrweV.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccmzrweV.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccmzrweV.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccmzrweV.s:12     .text:00000000 TermRefreshLineEnd
+  C:\Temp/ccmzrweV.s:86     .text:0000007e TermRefresh
+  C:\Temp/ccmzrweV.s:123    .text:000000b8 TermIOCtl
+  C:\Temp/ccmzrweV.s:398    .text:000002ae TermClose
+  C:\Temp/ccmzrweV.s:421    .text:000002cc TermOpen
+  C:\Temp/ccmzrweV.s:485    .text:0000033a TermClear
+  C:\Temp/ccmzrweV.s:523    .text:0000037a TermInit
+  C:\Temp/ccmzrweV.s:559    .text:000003ba TermInsertLine
+  C:\Temp/ccmzrweV.s:611    .text:00000418 TermDeleteLine
+  C:\Temp/ccmzrweV.s:678    .text:00000494 TermPut
+  C:\Temp/ccmzrweV.s:1421   .progmem.data:00000000 termid
+  C:\Temp/ccmzrweV.s:1392   .text:00000928 TermWrite_P
+  C:\Temp/ccmzrweV.s:1406   .text:00000938 TermWrite
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+free
+malloc
+memset
+memcpy

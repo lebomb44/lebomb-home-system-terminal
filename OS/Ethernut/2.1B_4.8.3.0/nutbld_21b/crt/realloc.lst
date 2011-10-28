@@ -1,0 +1,54 @@
+GAS LISTING C:\Temp/ccnwfq3q.s 			page 1
+
+
+   1               		.file	"realloc.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	realloc
+  12               		.type	realloc, @function
+  13               	realloc:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 AB01      		movw r20,r22
+  17 0002 BC01      		movw r22,r24
+  18 0004 80E0      		ldi r24,lo8(heapFreeList)
+  19 0006 90E0      		ldi r25,hi8(heapFreeList)
+  20 0008 0E94 0000 		call NutHeapRootRealloc
+  21 000c 9C01      		movw r18,r24
+  22 000e 0097      		sbiw r24,0
+  23 0010 01F4      		brne .L2
+  24 0012 8CE0      		ldi r24,lo8(12)
+  25 0014 90E0      		ldi r25,hi8(12)
+  26 0016 9093 0000 		sts (errno)+1,r25
+  27 001a 8093 0000 		sts errno,r24
+  28               	.L2:
+  29 001e C901      		movw r24,r18
+  30               	/* epilogue start */
+  31 0020 0895      		ret
+  32               		.size	realloc, .-realloc
+GAS LISTING C:\Temp/ccnwfq3q.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 realloc.c
+  C:\Temp/ccnwfq3q.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccnwfq3q.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccnwfq3q.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccnwfq3q.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccnwfq3q.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccnwfq3q.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccnwfq3q.s:13     .text:00000000 realloc
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+heapFreeList
+NutHeapRootRealloc
+errno

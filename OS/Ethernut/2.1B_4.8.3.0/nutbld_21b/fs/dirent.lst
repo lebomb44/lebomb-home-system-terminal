@@ -1,0 +1,311 @@
+GAS LISTING C:\Temp/ccvsGvoW.s 			page 1
+
+
+   1               		.file	"dirent.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	readdir
+  12               		.type	readdir, @function
+  13               	readdir:
+  14 0000 CF93      		push r28
+  15 0002 DF93      		push r29
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0004 EC01      		movw r28,r24
+  19 0006 E881      		ld r30,Y
+  20 0008 F981      		ldd r31,Y+1
+  21 000a 0280      		ldd __tmp_reg__,Z+2
+  22 000c F381      		ldd r31,Z+3
+  23 000e E02D      		mov r30,__tmp_reg__
+  24 0010 2589      		ldd r18,Z+21
+  25 0012 3689      		ldd r19,Z+22
+  26 0014 AC01      		movw r20,r24
+  27 0016 65E1      		ldi r22,lo8(4373)
+  28 0018 71E1      		ldi r23,hi8(4373)
+  29 001a CF01      		movw r24,r30
+  30 001c F901      		movw r30,r18
+  31 001e 0995      		icall
+  32 0020 892B      		or r24,r25
+  33 0022 01F0      		breq .L2
+  34 0024 40E0      		ldi r20,lo8(0)
+  35 0026 50E0      		ldi r21,hi8(0)
+  36 0028 00C0      		rjmp .L3
+  37               	.L2:
+  38 002a 4A81      		ldd r20,Y+2
+  39 002c 5B81      		ldd r21,Y+3
+  40               	.L3:
+  41 002e CA01      		movw r24,r20
+  42               	/* epilogue start */
+  43 0030 DF91      		pop r29
+  44 0032 CF91      		pop r28
+  45 0034 0895      		ret
+  46               		.size	readdir, .-readdir
+  47               	.global	closedir
+  48               		.type	closedir, @function
+  49               	closedir:
+  50 0036 CF93      		push r28
+  51 0038 DF93      		push r29
+  52               	/* prologue: function */
+  53               	/* frame size = 0 */
+  54 003a EC01      		movw r28,r24
+  55 003c 0097      		sbiw r24,0
+  56 003e 01F0      		breq .L6
+  57 0040 E881      		ld r30,Y
+GAS LISTING C:\Temp/ccvsGvoW.s 			page 2
+
+
+  58 0042 F981      		ldd r31,Y+1
+  59 0044 0280      		ldd __tmp_reg__,Z+2
+  60 0046 F381      		ldd r31,Z+3
+  61 0048 E02D      		mov r30,__tmp_reg__
+  62 004a 2589      		ldd r18,Z+21
+  63 004c 3689      		ldd r19,Z+22
+  64 004e AC01      		movw r20,r24
+  65 0050 64E1      		ldi r22,lo8(4372)
+  66 0052 71E1      		ldi r23,hi8(4372)
+  67 0054 CF01      		movw r24,r30
+  68 0056 F901      		movw r30,r18
+  69 0058 0995      		icall
+  70 005a 8A81      		ldd r24,Y+2
+  71 005c 9B81      		ldd r25,Y+3
+  72 005e 0097      		sbiw r24,0
+  73 0060 01F0      		breq .L7
+  74 0062 0E94 0000 		call free
+  75               	.L7:
+  76 0066 CE01      		movw r24,r28
+  77 0068 0E94 0000 		call free
+  78               	.L6:
+  79 006c 80E0      		ldi r24,lo8(0)
+  80 006e 90E0      		ldi r25,hi8(0)
+  81               	/* epilogue start */
+  82 0070 DF91      		pop r29
+  83 0072 CF91      		pop r28
+  84 0074 0895      		ret
+  85               		.size	closedir, .-closedir
+  86               	.global	opendir
+  87               		.type	opendir, @function
+  88               	opendir:
+  89 0076 6F92      		push r6
+  90 0078 7F92      		push r7
+  91 007a 8F92      		push r8
+  92 007c 9F92      		push r9
+  93 007e AF92      		push r10
+  94 0080 BF92      		push r11
+  95 0082 CF92      		push r12
+  96 0084 DF92      		push r13
+  97 0086 EF92      		push r14
+  98 0088 FF92      		push r15
+  99 008a 0F93      		push r16
+ 100 008c 1F93      		push r17
+ 101 008e DF93      		push r29
+ 102 0090 CF93      		push r28
+ 103 0092 CDB7      		in r28,__SP_L__
+ 104 0094 DEB7      		in r29,__SP_H__
+ 105 0096 2997      		sbiw r28,9
+ 106 0098 0FB6      		in __tmp_reg__,__SREG__
+ 107 009a F894      		cli
+ 108 009c DEBF      		out __SP_H__,r29
+ 109 009e 0FBE      		out __SREG__,__tmp_reg__
+ 110 00a0 CDBF      		out __SP_L__,r28
+ 111               	/* prologue: function */
+ 112               	/* frame size = 9 */
+ 113 00a2 5C01      		movw r10,r24
+ 114 00a4 FE01      		movw r30,r28
+GAS LISTING C:\Temp/ccvsGvoW.s 			page 3
+
+
+ 115 00a6 3196      		adiw r30,1
+ 116 00a8 7C01      		movw r14,r24
+ 117 00aa AE01      		movw r20,r28
+ 118 00ac 475F      		subi r20,lo8(-(9))
+ 119 00ae 5F4F      		sbci r21,hi8(-(9))
+ 120 00b0 00C0      		rjmp .L10
+ 121               	.L12:
+ 122 00b2 8193      		st Z+,r24
+ 123 00b4 0894      		sec
+ 124 00b6 E11C      		adc r14,__zero_reg__
+ 125 00b8 F11C      		adc r15,__zero_reg__
+ 126               	.L10:
+ 127 00ba 2E2D      		mov r18,r14
+ 128 00bc 2A19      		sub r18,r10
+ 129 00be D701      		movw r26,r14
+ 130 00c0 8C91      		ld r24,X
+ 131 00c2 8823      		tst r24
+ 132 00c4 01F0      		breq .L11
+ 133 00c6 8A33      		cpi r24,lo8(58)
+ 134 00c8 01F0      		breq .L11
+ 135 00ca E417      		cp r30,r20
+ 136 00cc F507      		cpc r31,r21
+ 137 00ce 01F4      		brne .L12
+ 138               	.L11:
+ 139 00d0 3701      		movw r6,r14
+ 140 00d2 CE01      		movw r24,r28
+ 141 00d4 0196      		adiw r24,1
+ 142 00d6 FC01      		movw r30,r24
+ 143 00d8 E20F      		add r30,r18
+ 144 00da F11D      		adc r31,__zero_reg__
+ 145 00dc 1082      		st Z,__zero_reg__
+ 146 00de 0E94 0000 		call NutDeviceLookup
+ 147 00e2 4C01      		movw r8,r24
+ 148 00e4 0097      		sbiw r24,0
+ 149 00e6 01F4      		brne .L13
+ 150 00e8 83E1      		ldi r24,lo8(19)
+ 151 00ea 90E0      		ldi r25,hi8(19)
+ 152 00ec 00C0      		rjmp .L21
+ 153               	.L13:
+ 154 00ee 86E0      		ldi r24,lo8(6)
+ 155 00f0 90E0      		ldi r25,hi8(6)
+ 156 00f2 0E94 0000 		call malloc
+ 157 00f6 8C01      		movw r16,r24
+ 158 00f8 6C01      		movw r12,r24
+ 159 00fa 0097      		sbiw r24,0
+ 160 00fc 01F4      		brne .L15
+ 161 00fe 8CE0      		ldi r24,lo8(12)
+ 162 0100 90E0      		ldi r25,hi8(12)
+ 163 0102 9093 0000 		sts (errno)+1,r25
+ 164 0106 8093 0000 		sts errno,r24
+ 165 010a 00C0      		rjmp .L14
+ 166               	.L15:
+ 167 010c 86E0      		ldi r24,lo8(6)
+ 168 010e F801      		movw r30,r16
+ 169 0110 1192      		st Z+,__zero_reg__
+ 170 0112 8A95      	        dec r24
+ 171 0114 01F4      		brne .-6
+GAS LISTING C:\Temp/ccvsGvoW.s 			page 4
+
+
+ 172 0116 D501      		movw r26,r10
+ 173 0118 1196      		adiw r26,1
+ 174 011a FD01      		movw r30,r26
+ 175 011c 0190      		ld __tmp_reg__,Z+
+ 176 011e 0020      		tst __tmp_reg__
+ 177 0120 01F4      		brne .-6
+ 178 0122 3197      		sbiw r30,1
+ 179 0124 EA1B      		sub r30,r26
+ 180 0126 FB0B      		sbc r31,r27
+ 181 0128 D801      		movw r26,r16
+ 182 012a 1596      		adiw r26,4+1
+ 183 012c FC93      		st X,r31
+ 184 012e EE93      		st -X,r30
+ 185 0130 1497      		sbiw r26,4
+ 186 0132 E850      		subi r30,lo8(264)
+ 187 0134 F140      		sbci r31,hi8(264)
+ 188 0136 00F4      		brsh .L16
+ 189 0138 88E0      		ldi r24,lo8(264)
+ 190 013a 91E0      		ldi r25,hi8(264)
+ 191 013c F801      		movw r30,r16
+ 192 013e 9583      		std Z+5,r25
+ 193 0140 8483      		std Z+4,r24
+ 194               	.L16:
+ 195 0142 D801      		movw r26,r16
+ 196 0144 1496      		adiw r26,4
+ 197 0146 8D91      		ld r24,X+
+ 198 0148 9C91      		ld r25,X
+ 199 014a 1597      		sbiw r26,4+1
+ 200 014c 0E94 0000 		call malloc
+ 201 0150 9C01      		movw r18,r24
+ 202 0152 F801      		movw r30,r16
+ 203 0154 9383      		std Z+3,r25
+ 204 0156 8283      		std Z+2,r24
+ 205 0158 0097      		sbiw r24,0
+ 206 015a 01F4      		brne .L17
+ 207 015c C801      		movw r24,r16
+ 208 015e 0E94 0000 		call free
+ 209 0162 8CE0      		ldi r24,lo8(12)
+ 210 0164 90E0      		ldi r25,hi8(12)
+ 211               	.L21:
+ 212 0166 9093 0000 		sts (errno)+1,r25
+ 213 016a 8093 0000 		sts errno,r24
+ 214 016e 00C0      		rjmp .L20
+ 215               	.L17:
+ 216 0170 D701      		movw r26,r14
+ 217 0172 8C91      		ld r24,X
+ 218 0174 8A33      		cpi r24,lo8(58)
+ 219 0176 01F4      		brne .L18
+ 220 0178 3701      		movw r6,r14
+ 221 017a 0894      		sec
+ 222 017c 611C      		adc r6,__zero_reg__
+ 223 017e 711C      		adc r7,__zero_reg__
+ 224               	.L18:
+ 225 0180 B301      		movw r22,r6
+ 226 0182 C901      		movw r24,r18
+ 227 0184 0E94 0000 		call strcpy
+ 228 0188 D401      		movw r26,r8
+GAS LISTING C:\Temp/ccvsGvoW.s 			page 5
+
+
+ 229 018a 5596      		adiw r26,21
+ 230 018c ED91      		ld r30,X+
+ 231 018e FC91      		ld r31,X
+ 232 0190 5697      		sbiw r26,21+1
+ 233 0192 A801      		movw r20,r16
+ 234 0194 63E1      		ldi r22,lo8(4371)
+ 235 0196 71E1      		ldi r23,hi8(4371)
+ 236 0198 C401      		movw r24,r8
+ 237 019a 0995      		icall
+ 238 019c 892B      		or r24,r25
+ 239 019e 01F0      		breq .L14
+ 240 01a0 F801      		movw r30,r16
+ 241 01a2 8281      		ldd r24,Z+2
+ 242 01a4 9381      		ldd r25,Z+3
+ 243 01a6 0E94 0000 		call free
+ 244 01aa C801      		movw r24,r16
+ 245 01ac 0E94 0000 		call free
+ 246               	.L20:
+ 247 01b0 CC24      		clr r12
+ 248 01b2 DD24      		clr r13
+ 249               	.L14:
+ 250 01b4 C601      		movw r24,r12
+ 251               	/* epilogue start */
+ 252 01b6 2996      		adiw r28,9
+ 253 01b8 0FB6      		in __tmp_reg__,__SREG__
+ 254 01ba F894      		cli
+ 255 01bc DEBF      		out __SP_H__,r29
+ 256 01be 0FBE      		out __SREG__,__tmp_reg__
+ 257 01c0 CDBF      		out __SP_L__,r28
+ 258 01c2 CF91      		pop r28
+ 259 01c4 DF91      		pop r29
+ 260 01c6 1F91      		pop r17
+ 261 01c8 0F91      		pop r16
+ 262 01ca FF90      		pop r15
+ 263 01cc EF90      		pop r14
+ 264 01ce DF90      		pop r13
+ 265 01d0 CF90      		pop r12
+ 266 01d2 BF90      		pop r11
+ 267 01d4 AF90      		pop r10
+ 268 01d6 9F90      		pop r9
+ 269 01d8 8F90      		pop r8
+ 270 01da 7F90      		pop r7
+ 271 01dc 6F90      		pop r6
+ 272 01de 0895      		ret
+ 273               		.size	opendir, .-opendir
+GAS LISTING C:\Temp/ccvsGvoW.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 dirent.c
+  C:\Temp/ccvsGvoW.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccvsGvoW.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccvsGvoW.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccvsGvoW.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccvsGvoW.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccvsGvoW.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccvsGvoW.s:13     .text:00000000 readdir
+  C:\Temp/ccvsGvoW.s:49     .text:00000036 closedir
+  C:\Temp/ccvsGvoW.s:88     .text:00000076 opendir
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+free
+NutDeviceLookup
+malloc
+errno
+strcpy

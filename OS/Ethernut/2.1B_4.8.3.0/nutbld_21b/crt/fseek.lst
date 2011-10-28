@@ -1,0 +1,42 @@
+GAS LISTING C:\Temp/cc9E9aDR.s 			page 1
+
+
+   1               		.file	"fseek.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	fseek
+  12               		.type	fseek, @function
+  13               	fseek:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 FC01      		movw r30,r24
+  17 0002 8081      		ld r24,Z
+  18 0004 9181      		ldd r25,Z+1
+  19 0006 0E94 0000 		call _seek
+  20               	/* epilogue start */
+  21 000a 0895      		ret
+  22               		.size	fseek, .-fseek
+GAS LISTING C:\Temp/cc9E9aDR.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 fseek.c
+  C:\Temp/cc9E9aDR.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cc9E9aDR.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cc9E9aDR.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cc9E9aDR.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cc9E9aDR.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cc9E9aDR.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cc9E9aDR.s:13     .text:00000000 fseek
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+_seek

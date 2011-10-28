@@ -1,0 +1,103 @@
+GAS LISTING C:\Temp/cczoxOwf.s 			page 1
+
+
+   1               		.file	"filelength.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	_filelength
+  12               		.type	_filelength, @function
+  13               	_filelength:
+  14 0000 DF93      		push r29
+  15 0002 CF93      		push r28
+  16 0004 00D0      		rcall .
+  17 0006 00D0      		rcall .
+  18 0008 CDB7      		in r28,__SP_L__
+  19 000a DEB7      		in r29,__SP_H__
+  20               	/* prologue: function */
+  21               	/* frame size = 4 */
+  22 000c FC01      		movw r30,r24
+  23 000e A281      		ldd r26,Z+2
+  24 0010 B381      		ldd r27,Z+3
+  25 0012 1097      		sbiw r26,0
+  26 0014 01F4      		brne .L2
+  27 0016 2385      		ldd r18,Z+11
+  28 0018 3485      		ldd r19,Z+12
+  29 001a 2115      		cp r18,__zero_reg__
+  30 001c 3105      		cpc r19,__zero_reg__
+  31 001e 01F0      		breq .L7
+  32 0020 AE01      		movw r20,r28
+  33 0022 4F5F      		subi r20,lo8(-(1))
+  34 0024 5F4F      		sbci r21,hi8(-(1))
+  35 0026 6AE0      		ldi r22,lo8(10)
+  36 0028 70E0      		ldi r23,hi8(10)
+  37 002a F901      		movw r30,r18
+  38 002c 0995      		icall
+  39 002e 892B      		or r24,r25
+  40 0030 01F4      		brne .L7
+  41 0032 2981      		ldd r18,Y+1
+  42 0034 3A81      		ldd r19,Y+2
+  43 0036 4B81      		ldd r20,Y+3
+  44 0038 5C81      		ldd r21,Y+4
+  45 003a 00C0      		rjmp .L4
+  46               	.L2:
+  47 003c 9196      		adiw r26,33
+  48 003e 2D91      		ld r18,X+
+  49 0040 3C91      		ld r19,X
+  50 0042 9297      		sbiw r26,33+1
+  51 0044 2115      		cp r18,__zero_reg__
+  52 0046 3105      		cpc r19,__zero_reg__
+  53 0048 01F4      		brne .L5
+  54               	.L7:
+  55 004a 89E0      		ldi r24,lo8(9)
+  56 004c 90E0      		ldi r25,hi8(9)
+  57 004e 9093 0000 		sts (errno)+1,r25
+GAS LISTING C:\Temp/cczoxOwf.s 			page 2
+
+
+  58 0052 8093 0000 		sts errno,r24
+  59 0056 2FEF      		ldi r18,lo8(-1)
+  60 0058 3FEF      		ldi r19,hi8(-1)
+  61 005a 4FEF      		ldi r20,hlo8(-1)
+  62 005c 5FEF      		ldi r21,hhi8(-1)
+  63 005e 00C0      		rjmp .L4
+  64               	.L5:
+  65 0060 F901      		movw r30,r18
+  66 0062 0995      		icall
+  67 0064 9B01      		movw r18,r22
+  68 0066 AC01      		movw r20,r24
+  69               	.L4:
+  70 0068 B901      		movw r22,r18
+  71 006a CA01      		movw r24,r20
+  72               	/* epilogue start */
+  73 006c 0F90      		pop __tmp_reg__
+  74 006e 0F90      		pop __tmp_reg__
+  75 0070 0F90      		pop __tmp_reg__
+  76 0072 0F90      		pop __tmp_reg__
+  77 0074 CF91      		pop r28
+  78 0076 DF91      		pop r29
+  79 0078 0895      		ret
+  80               		.size	_filelength, .-_filelength
+GAS LISTING C:\Temp/cczoxOwf.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 filelength.c
+  C:\Temp/cczoxOwf.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cczoxOwf.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cczoxOwf.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cczoxOwf.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cczoxOwf.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cczoxOwf.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cczoxOwf.s:13     .text:00000000 _filelength
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+errno

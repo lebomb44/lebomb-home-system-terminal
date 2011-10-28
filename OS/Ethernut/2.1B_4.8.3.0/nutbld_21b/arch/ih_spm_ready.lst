@@ -1,0 +1,146 @@
+GAS LISTING C:\Temp/ccEzJdLp.s 			page 1
+
+
+   1               		.file	"ih_spm_ready.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	AvrSpmRdyIrqCtl, @function
+  12               	AvrSpmRdyIrqCtl:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 FB01      		movw r30,r22
+  16 0002 4091 6800 		lds r20,104
+  17 0006 E398      		cbi 60-32,3
+  18 0008 8131      		cpi r24,17
+  19 000a 9105      		cpc r25,__zero_reg__
+  20 000c 01F0      		breq .L4
+  21 000e 8231      		cpi r24,18
+  22 0010 9105      		cpc r25,__zero_reg__
+  23 0012 04F4      		brge .L6
+  24 0014 892B      		or r24,r25
+  25 0016 01F0      		breq .L3
+  26 0018 00C0      		rjmp .L2
+  27               	.L6:
+  28 001a 8231      		cpi r24,18
+  29 001c 9105      		cpc r25,__zero_reg__
+  30 001e 01F0      		breq .L3
+  31 0020 8097      		sbiw r24,32
+  32 0022 01F4      		brne .L2
+  33 0024 00C0      		rjmp .L11
+  34               	.L3:
+  35 0026 20E0      		ldi r18,lo8(0)
+  36 0028 30E0      		ldi r19,hi8(0)
+  37 002a 00C0      		rjmp .L7
+  38               	.L4:
+  39 002c 20E0      		ldi r18,lo8(0)
+  40 002e 30E0      		ldi r19,hi8(0)
+  41 0030 00C0      		rjmp .L8
+  42               	.L2:
+  43 0032 2FEF      		ldi r18,lo8(-1)
+  44 0034 3FEF      		ldi r19,hi8(-1)
+  45 0036 00C0      		rjmp .L9
+  46               	.L11:
+  47 0038 1182      		std Z+1,__zero_reg__
+  48 003a 1082      		st Z,__zero_reg__
+  49 003c 20E0      		ldi r18,lo8(0)
+  50 003e 30E0      		ldi r19,hi8(0)
+  51               	.L9:
+  52 0040 47FF      		sbrs r20,7
+  53 0042 00C0      		rjmp .L7
+  54               	.L8:
+  55 0044 8091 6800 		lds r24,104
+  56 0048 8068      		ori r24,lo8(-128)
+  57 004a 8093 6800 		sts 104,r24
+GAS LISTING C:\Temp/ccEzJdLp.s 			page 2
+
+
+  58               	.L7:
+  59 004e C901      		movw r24,r18
+  60               	/* epilogue start */
+  61 0050 0895      		ret
+  62               		.size	AvrSpmRdyIrqCtl, .-AvrSpmRdyIrqCtl
+  63               	.global	__vector_34
+  64               		.type	__vector_34, @function
+  65               	__vector_34:
+  66 0052 1F92      		push __zero_reg__
+  67 0054 0F92      		push r0
+  68 0056 0FB6      		in r0,__SREG__
+  69 0058 0F92      		push r0
+  70 005a 0BB6      		in r0,91-32
+  71 005c 0F92      		push r0
+  72 005e 1124      		clr __zero_reg__
+  73 0060 2F93      		push r18
+  74 0062 3F93      		push r19
+  75 0064 4F93      		push r20
+  76 0066 5F93      		push r21
+  77 0068 6F93      		push r22
+  78 006a 7F93      		push r23
+  79 006c 8F93      		push r24
+  80 006e 9F93      		push r25
+  81 0070 AF93      		push r26
+  82 0072 BF93      		push r27
+  83 0074 EF93      		push r30
+  84 0076 FF93      		push r31
+  85               	/* prologue: Signal */
+  86               	/* frame size = 0 */
+  87 0078 80E0      		ldi r24,lo8(sig_SPM_READY)
+  88 007a 90E0      		ldi r25,hi8(sig_SPM_READY)
+  89 007c 0E94 0000 		call CallHandler
+  90               	/* epilogue start */
+  91 0080 FF91      		pop r31
+  92 0082 EF91      		pop r30
+  93 0084 BF91      		pop r27
+  94 0086 AF91      		pop r26
+  95 0088 9F91      		pop r25
+  96 008a 8F91      		pop r24
+  97 008c 7F91      		pop r23
+  98 008e 6F91      		pop r22
+  99 0090 5F91      		pop r21
+ 100 0092 4F91      		pop r20
+ 101 0094 3F91      		pop r19
+ 102 0096 2F91      		pop r18
+ 103 0098 0F90      		pop r0
+ 104 009a 0BBE      		out 91-32,r0
+ 105 009c 0F90      		pop r0
+ 106 009e 0FBE      		out __SREG__,r0
+ 107 00a0 0F90      		pop r0
+ 108 00a2 1F90      		pop __zero_reg__
+ 109 00a4 1895      		reti
+ 110               		.size	__vector_34, .-__vector_34
+ 111               	.global	sig_SPM_READY
+ 112               		.data
+ 113               		.type	sig_SPM_READY, @object
+ 114               		.size	sig_SPM_READY, 6
+GAS LISTING C:\Temp/ccEzJdLp.s 			page 3
+
+
+ 115               	sig_SPM_READY:
+ 116 0000 0000      		.word	0
+ 117 0002 0000      		.word	0
+ 118 0004 0000      		.word	gs(AvrSpmRdyIrqCtl)
+GAS LISTING C:\Temp/ccEzJdLp.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ih_spm_ready.c
+  C:\Temp/ccEzJdLp.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccEzJdLp.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccEzJdLp.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccEzJdLp.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccEzJdLp.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccEzJdLp.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccEzJdLp.s:12     .text:00000000 AvrSpmRdyIrqCtl
+  C:\Temp/ccEzJdLp.s:65     .text:00000052 __vector_34
+  C:\Temp/ccEzJdLp.s:115    .data:00000000 sig_SPM_READY
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+CallHandler

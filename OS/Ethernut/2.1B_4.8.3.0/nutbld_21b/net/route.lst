@@ -1,0 +1,492 @@
+GAS LISTING C:\Temp/ccGc7x3V.s 			page 1
+
+
+   1               		.file	"route.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutIpRouteQuery
+  12               		.type	NutIpRouteQuery, @function
+  13               	NutIpRouteQuery:
+  14 0000 DF92      		push r13
+  15 0002 EF92      		push r14
+  16 0004 FF92      		push r15
+  17 0006 0F93      		push r16
+  18 0008 1F93      		push r17
+  19 000a CF93      		push r28
+  20 000c DF93      		push r29
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23 000e 7B01      		movw r14,r22
+  24 0010 8C01      		movw r16,r24
+  25 0012 EA01      		movw r28,r20
+  26 0014 4115      		cp r20,__zero_reg__
+  27 0016 5105      		cpc r21,__zero_reg__
+  28 0018 01F0      		breq .L2
+  29 001a 1882      		st Y,__zero_reg__
+  30 001c 1982      		std Y+1,__zero_reg__
+  31 001e 1A82      		std Y+2,__zero_reg__
+  32 0020 1B82      		std Y+3,__zero_reg__
+  33               	.L2:
+  34 0022 8FEF      		ldi r24,lo8(-1)
+  35 0024 E816      		cp r14,r24
+  36 0026 8FEF      		ldi r24,hi8(-1)
+  37 0028 F806      		cpc r15,r24
+  38 002a 8FEF      		ldi r24,hlo8(-1)
+  39 002c 0807      		cpc r16,r24
+  40 002e 8FEF      		ldi r24,hhi8(-1)
+  41 0030 1807      		cpc r17,r24
+  42 0032 01F4      		brne .L3
+  43 0034 E091 0000 		lds r30,rteList
+  44 0038 F091 0000 		lds r31,(rteList)+1
+  45 003c 3097      		sbiw r30,0
+  46 003e 01F4      		brne .L4
+  47 0040 00C0      		rjmp .L5
+  48               	.L3:
+  49 0042 D090 0000 		lds r13,rteList
+  50 0046 7091 0000 		lds r23,rteList+1
+  51 004a 60E0      		ldi r22,lo8(0)
+  52               	.L10:
+  53 004c 8D2D      		mov r24,r13
+  54 004e 972F      		mov r25,r23
+  55 0050 9C01      		movw r18,r24
+  56 0052 F901      		movw r30,r18
+  57 0054 00C0      		rjmp .L6
+GAS LISTING C:\Temp/ccGc7x3V.s 			page 2
+
+
+  58               	.L8:
+  59 0056 8681      		ldd r24,Z+6
+  60 0058 9781      		ldd r25,Z+7
+  61 005a A085      		ldd r26,Z+8
+  62 005c B185      		ldd r27,Z+9
+  63 005e 8E21      		and r24,r14
+  64 0060 9F21      		and r25,r15
+  65 0062 A023      		and r26,r16
+  66 0064 B123      		and r27,r17
+  67 0066 2281      		ldd r18,Z+2
+  68 0068 3381      		ldd r19,Z+3
+  69 006a 4481      		ldd r20,Z+4
+  70 006c 5581      		ldd r21,Z+5
+  71 006e 8217      		cp r24,r18
+  72 0070 9307      		cpc r25,r19
+  73 0072 A407      		cpc r26,r20
+  74 0074 B507      		cpc r27,r21
+  75 0076 01F0      		breq .L7
+  76 0078 0190      		ld __tmp_reg__,Z+
+  77 007a F081      		ld r31,Z
+  78 007c E02D      		mov r30,__tmp_reg__
+  79               	.L6:
+  80 007e 3097      		sbiw r30,0
+  81 0080 01F4      		brne .L8
+  82 0082 00C0      		rjmp .L5
+  83               	.L7:
+  84 0084 2097      		sbiw r28,0
+  85 0086 01F0      		breq .L9
+  86 0088 8285      		ldd r24,Z+10
+  87 008a 9385      		ldd r25,Z+11
+  88 008c A485      		ldd r26,Z+12
+  89 008e B585      		ldd r27,Z+13
+  90 0090 0097      		sbiw r24,0
+  91 0092 A105      		cpc r26,__zero_reg__
+  92 0094 B105      		cpc r27,__zero_reg__
+  93 0096 01F0      		breq .L9
+  94 0098 8883      		st Y,r24
+  95 009a 9983      		std Y+1,r25
+  96 009c AA83      		std Y+2,r26
+  97 009e BB83      		std Y+3,r27
+  98               	.L9:
+  99 00a0 8685      		ldd r24,Z+14
+ 100 00a2 9785      		ldd r25,Z+15
+ 101 00a4 892B      		or r24,r25
+ 102 00a6 01F4      		brne .L4
+ 103 00a8 6F5F      		subi r22,lo8(-(1))
+ 104 00aa E284      		ldd r14,Z+10
+ 105 00ac F384      		ldd r15,Z+11
+ 106 00ae 0485      		ldd r16,Z+12
+ 107 00b0 1585      		ldd r17,Z+13
+ 108 00b2 6430      		cpi r22,lo8(4)
+ 109 00b4 01F4      		brne .L10
+ 110 00b6 00C0      		rjmp .L5
+ 111               	.L4:
+ 112 00b8 2685      		ldd r18,Z+14
+ 113 00ba 3785      		ldd r19,Z+15
+ 114 00bc 00C0      		rjmp .L11
+GAS LISTING C:\Temp/ccGc7x3V.s 			page 3
+
+
+ 115               	.L5:
+ 116 00be 20E0      		ldi r18,lo8(0)
+ 117 00c0 30E0      		ldi r19,hi8(0)
+ 118               	.L11:
+ 119 00c2 C901      		movw r24,r18
+ 120               	/* epilogue start */
+ 121 00c4 DF91      		pop r29
+ 122 00c6 CF91      		pop r28
+ 123 00c8 1F91      		pop r17
+ 124 00ca 0F91      		pop r16
+ 125 00cc FF90      		pop r15
+ 126 00ce EF90      		pop r14
+ 127 00d0 DF90      		pop r13
+ 128 00d2 0895      		ret
+ 129               		.size	NutIpRouteQuery, .-NutIpRouteQuery
+ 130               	.global	NutIpRouteAdd
+ 131               		.type	NutIpRouteAdd, @function
+ 132               	NutIpRouteAdd:
+ 133 00d4 2F92      		push r2
+ 134 00d6 3F92      		push r3
+ 135 00d8 4F92      		push r4
+ 136 00da 5F92      		push r5
+ 137 00dc 6F92      		push r6
+ 138 00de 7F92      		push r7
+ 139 00e0 8F92      		push r8
+ 140 00e2 9F92      		push r9
+ 141 00e4 AF92      		push r10
+ 142 00e6 BF92      		push r11
+ 143 00e8 CF92      		push r12
+ 144 00ea DF92      		push r13
+ 145 00ec EF92      		push r14
+ 146 00ee FF92      		push r15
+ 147 00f0 0F93      		push r16
+ 148 00f2 1F93      		push r17
+ 149 00f4 CF93      		push r28
+ 150 00f6 DF93      		push r29
+ 151               	/* prologue: function */
+ 152               	/* frame size = 0 */
+ 153 00f8 2B01      		movw r4,r22
+ 154 00fa 3C01      		movw r6,r24
+ 155 00fc 4901      		movw r8,r18
+ 156 00fe 5A01      		movw r10,r20
+ 157 0100 1601      		movw r2,r12
+ 158 0102 C091 0000 		lds r28,rteList
+ 159 0106 D091 0000 		lds r29,(rteList)+1
+ 160 010a 80E0      		ldi r24,lo8(rteList)
+ 161 010c C82E      		mov r12,r24
+ 162 010e 80E0      		ldi r24,hi8(rteList)
+ 163 0110 D82E      		mov r13,r24
+ 164 0112 00C0      		rjmp .L15
+ 165               	.L17:
+ 166 0114 6E01      		movw r12,r28
+ 167 0116 0990      		ld __tmp_reg__,Y+
+ 168 0118 D881      		ld r29,Y
+ 169 011a C02D      		mov r28,__tmp_reg__
+ 170               	.L15:
+ 171 011c 2097      		sbiw r28,0
+GAS LISTING C:\Temp/ccGc7x3V.s 			page 4
+
+
+ 172 011e 01F0      		breq .L16
+ 173 0120 8E81      		ldd r24,Y+6
+ 174 0122 9F81      		ldd r25,Y+7
+ 175 0124 A885      		ldd r26,Y+8
+ 176 0126 B985      		ldd r27,Y+9
+ 177 0128 8816      		cp r8,r24
+ 178 012a 9906      		cpc r9,r25
+ 179 012c AA06      		cpc r10,r26
+ 180 012e BB06      		cpc r11,r27
+ 181 0130 00F0      		brlo .L17
+ 182               	.L16:
+ 183 0132 80E1      		ldi r24,lo8(16)
+ 184 0134 90E0      		ldi r25,hi8(16)
+ 185 0136 0E94 0000 		call malloc
+ 186 013a FC01      		movw r30,r24
+ 187 013c 0097      		sbiw r24,0
+ 188 013e 01F4      		brne .L18
+ 189 0140 2FEF      		ldi r18,lo8(-1)
+ 190 0142 3FEF      		ldi r19,hi8(-1)
+ 191 0144 00C0      		rjmp .L19
+ 192               	.L18:
+ 193 0146 4820      		and r4,r8
+ 194 0148 5920      		and r5,r9
+ 195 014a 6A20      		and r6,r10
+ 196 014c 7B20      		and r7,r11
+ 197 014e 4282      		std Z+2,r4
+ 198 0150 5382      		std Z+3,r5
+ 199 0152 6482      		std Z+4,r6
+ 200 0154 7582      		std Z+5,r7
+ 201 0156 8682      		std Z+6,r8
+ 202 0158 9782      		std Z+7,r9
+ 203 015a A086      		std Z+8,r10
+ 204 015c B186      		std Z+9,r11
+ 205 015e E286      		std Z+10,r14
+ 206 0160 F386      		std Z+11,r15
+ 207 0162 0487      		std Z+12,r16
+ 208 0164 1587      		std Z+13,r17
+ 209 0166 3786      		std Z+15,r3
+ 210 0168 2686      		std Z+14,r2
+ 211 016a D183      		std Z+1,r29
+ 212 016c C083      		st Z,r28
+ 213 016e D601      		movw r26,r12
+ 214 0170 8D93      		st X+,r24
+ 215 0172 9C93      		st X,r25
+ 216 0174 20E0      		ldi r18,lo8(0)
+ 217 0176 30E0      		ldi r19,hi8(0)
+ 218               	.L19:
+ 219 0178 C901      		movw r24,r18
+ 220               	/* epilogue start */
+ 221 017a DF91      		pop r29
+ 222 017c CF91      		pop r28
+ 223 017e 1F91      		pop r17
+ 224 0180 0F91      		pop r16
+ 225 0182 FF90      		pop r15
+ 226 0184 EF90      		pop r14
+ 227 0186 DF90      		pop r13
+ 228 0188 CF90      		pop r12
+GAS LISTING C:\Temp/ccGc7x3V.s 			page 5
+
+
+ 229 018a BF90      		pop r11
+ 230 018c AF90      		pop r10
+ 231 018e 9F90      		pop r9
+ 232 0190 8F90      		pop r8
+ 233 0192 7F90      		pop r7
+ 234 0194 6F90      		pop r6
+ 235 0196 5F90      		pop r5
+ 236 0198 4F90      		pop r4
+ 237 019a 3F90      		pop r3
+ 238 019c 2F90      		pop r2
+ 239 019e 0895      		ret
+ 240               		.size	NutIpRouteAdd, .-NutIpRouteAdd
+ 241               	.global	NutIpRouteList
+ 242               		.type	NutIpRouteList, @function
+ 243               	NutIpRouteList:
+ 244 01a0 CF93      		push r28
+ 245 01a2 DF93      		push r29
+ 246               	/* prologue: function */
+ 247               	/* frame size = 0 */
+ 248 01a4 EC01      		movw r28,r24
+ 249 01a6 1982      		std Y+1,__zero_reg__
+ 250 01a8 1882      		st Y,__zero_reg__
+ 251 01aa E091 0000 		lds r30,rteList
+ 252 01ae F091 0000 		lds r31,(rteList)+1
+ 253 01b2 00C0      		rjmp .L22
+ 254               	.L23:
+ 255 01b4 0196      		adiw r24,1
+ 256 01b6 9983      		std Y+1,r25
+ 257 01b8 8883      		st Y,r24
+ 258 01ba 0190      		ld __tmp_reg__,Z+
+ 259 01bc F081      		ld r31,Z
+ 260 01be E02D      		mov r30,__tmp_reg__
+ 261               	.L22:
+ 262 01c0 8881      		ld r24,Y
+ 263 01c2 9981      		ldd r25,Y+1
+ 264 01c4 3097      		sbiw r30,0
+ 265 01c6 01F4      		brne .L23
+ 266 01c8 24E0      		ldi r18,4
+ 267 01ca 880F      	1:	lsl r24
+ 268 01cc 991F      		rol r25
+ 269 01ce 2A95      		dec r18
+ 270 01d0 01F4      		brne 1b
+ 271 01d2 0E94 0000 		call malloc
+ 272 01d6 9C01      		movw r18,r24
+ 273 01d8 0097      		sbiw r24,0
+ 274 01da 01F0      		breq .L24
+ 275 01dc E091 0000 		lds r30,rteList
+ 276 01e0 F091 0000 		lds r31,(rteList)+1
+ 277 01e4 00C0      		rjmp .L25
+ 278               	.L27:
+ 279 01e6 E901      		movw r28,r18
+ 280 01e8 DF01      		movw r26,r30
+ 281 01ea 80E1      		ldi r24,lo8(16)
+ 282               	.L26:
+ 283 01ec 0D90      		ld r0,X+
+ 284 01ee 0992      		st Y+,r0
+ 285 01f0 8150      		subi r24,lo8(-(-1))
+GAS LISTING C:\Temp/ccGc7x3V.s 			page 6
+
+
+ 286 01f2 01F4      		brne .L26
+ 287 01f4 205F      		subi r18,lo8(-(16))
+ 288 01f6 3F4F      		sbci r19,hi8(-(16))
+ 289 01f8 0190      		ld __tmp_reg__,Z+
+ 290 01fa F081      		ld r31,Z
+ 291 01fc E02D      		mov r30,__tmp_reg__
+ 292               	.L25:
+ 293 01fe 3097      		sbiw r30,0
+ 294 0200 01F4      		brne .L27
+ 295 0202 00C0      		rjmp .L28
+ 296               	.L24:
+ 297 0204 1982      		std Y+1,__zero_reg__
+ 298 0206 1882      		st Y,__zero_reg__
+ 299               	.L28:
+ 300 0208 C901      		movw r24,r18
+ 301               	/* epilogue start */
+ 302 020a DF91      		pop r29
+ 303 020c CF91      		pop r28
+ 304 020e 0895      		ret
+ 305               		.size	NutIpRouteList, .-NutIpRouteList
+ 306               	.global	NutIpRouteDel
+ 307               		.type	NutIpRouteDel, @function
+ 308               	NutIpRouteDel:
+ 309 0210 4F92      		push r4
+ 310 0212 5F92      		push r5
+ 311 0214 6F92      		push r6
+ 312 0216 7F92      		push r7
+ 313 0218 8F92      		push r8
+ 314 021a 9F92      		push r9
+ 315 021c AF92      		push r10
+ 316 021e BF92      		push r11
+ 317 0220 CF92      		push r12
+ 318 0222 DF92      		push r13
+ 319 0224 EF92      		push r14
+ 320 0226 FF92      		push r15
+ 321 0228 0F93      		push r16
+ 322 022a 1F93      		push r17
+ 323               	/* prologue: function */
+ 324               	/* frame size = 0 */
+ 325 022c 2B01      		movw r4,r22
+ 326 022e 3C01      		movw r6,r24
+ 327 0230 4901      		movw r8,r18
+ 328 0232 5A01      		movw r10,r20
+ 329 0234 2FEF      		ldi r18,lo8(-1)
+ 330 0236 3FEF      		ldi r19,hi8(-1)
+ 331 0238 00C0      		rjmp .L32
+ 332               	.L34:
+ 333 023a 8281      		ldd r24,Z+2
+ 334 023c 9381      		ldd r25,Z+3
+ 335 023e A481      		ldd r26,Z+4
+ 336 0240 B581      		ldd r27,Z+5
+ 337 0242 8415      		cp r24,r4
+ 338 0244 9505      		cpc r25,r5
+ 339 0246 A605      		cpc r26,r6
+ 340 0248 B705      		cpc r27,r7
+ 341 024a 01F4      		brne .L33
+ 342 024c 8681      		ldd r24,Z+6
+GAS LISTING C:\Temp/ccGc7x3V.s 			page 7
+
+
+ 343 024e 9781      		ldd r25,Z+7
+ 344 0250 A085      		ldd r26,Z+8
+ 345 0252 B185      		ldd r27,Z+9
+ 346 0254 8815      		cp r24,r8
+ 347 0256 9905      		cpc r25,r9
+ 348 0258 AA05      		cpc r26,r10
+ 349 025a BB05      		cpc r27,r11
+ 350 025c 01F4      		brne .L33
+ 351 025e 8285      		ldd r24,Z+10
+ 352 0260 9385      		ldd r25,Z+11
+ 353 0262 A485      		ldd r26,Z+12
+ 354 0264 B585      		ldd r27,Z+13
+ 355 0266 8E15      		cp r24,r14
+ 356 0268 9F05      		cpc r25,r15
+ 357 026a A007      		cpc r26,r16
+ 358 026c B107      		cpc r27,r17
+ 359 026e 01F4      		brne .L33
+ 360 0270 8685      		ldd r24,Z+14
+ 361 0272 9785      		ldd r25,Z+15
+ 362 0274 8C15      		cp r24,r12
+ 363 0276 9D05      		cpc r25,r13
+ 364 0278 01F4      		brne .L33
+ 365 027a 8081      		ld r24,Z
+ 366 027c 9181      		ldd r25,Z+1
+ 367 027e 9093 0000 		sts (rteList)+1,r25
+ 368 0282 8093 0000 		sts rteList,r24
+ 369 0286 CF01      		movw r24,r30
+ 370 0288 0E94 0000 		call free
+ 371 028c 20E0      		ldi r18,lo8(0)
+ 372 028e 30E0      		ldi r19,hi8(0)
+ 373               	.L33:
+ 374 0290 E091 0000 		lds r30,rteList
+ 375 0294 F091 0000 		lds r31,(rteList)+1
+ 376 0298 8081      		ld r24,Z
+ 377 029a 9181      		ldd r25,Z+1
+ 378 029c 9093 0000 		sts (rteList)+1,r25
+ 379 02a0 8093 0000 		sts rteList,r24
+ 380               	.L32:
+ 381 02a4 E091 0000 		lds r30,rteList
+ 382 02a8 F091 0000 		lds r31,(rteList)+1
+ 383 02ac 3097      		sbiw r30,0
+ 384 02ae 01F4      		brne .L34
+ 385 02b0 C901      		movw r24,r18
+ 386               	/* epilogue start */
+ 387 02b2 1F91      		pop r17
+ 388 02b4 0F91      		pop r16
+ 389 02b6 FF90      		pop r15
+ 390 02b8 EF90      		pop r14
+ 391 02ba DF90      		pop r13
+ 392 02bc CF90      		pop r12
+ 393 02be BF90      		pop r11
+ 394 02c0 AF90      		pop r10
+ 395 02c2 9F90      		pop r9
+ 396 02c4 8F90      		pop r8
+ 397 02c6 7F90      		pop r7
+ 398 02c8 6F90      		pop r6
+ 399 02ca 5F90      		pop r5
+GAS LISTING C:\Temp/ccGc7x3V.s 			page 8
+
+
+ 400 02cc 4F90      		pop r4
+ 401 02ce 0895      		ret
+ 402               		.size	NutIpRouteDel, .-NutIpRouteDel
+ 403               	.global	NutIpRouteDelAll
+ 404               		.type	NutIpRouteDelAll, @function
+ 405               	NutIpRouteDelAll:
+ 406 02d0 CF93      		push r28
+ 407 02d2 DF93      		push r29
+ 408               	/* prologue: function */
+ 409               	/* frame size = 0 */
+ 410 02d4 EC01      		movw r28,r24
+ 411 02d6 00C0      		rjmp .L42
+ 412               	.L40:
+ 413 02d8 8685      		ldd r24,Z+14
+ 414 02da 9785      		ldd r25,Z+15
+ 415 02dc 8C17      		cp r24,r28
+ 416 02de 9D07      		cpc r25,r29
+ 417 02e0 01F0      		breq .L38
+ 418 02e2 2097      		sbiw r28,0
+ 419 02e4 01F4      		brne .L39
+ 420               	.L38:
+ 421 02e6 8081      		ld r24,Z
+ 422 02e8 9181      		ldd r25,Z+1
+ 423 02ea 9093 0000 		sts (rteList)+1,r25
+ 424 02ee 8093 0000 		sts rteList,r24
+ 425 02f2 CF01      		movw r24,r30
+ 426 02f4 0E94 0000 		call free
+ 427 02f8 00C0      		rjmp .L42
+ 428               	.L39:
+ 429 02fa 8081      		ld r24,Z
+ 430 02fc 9181      		ldd r25,Z+1
+ 431 02fe 9093 0000 		sts (rteList)+1,r25
+ 432 0302 8093 0000 		sts rteList,r24
+ 433               	.L42:
+ 434 0306 E091 0000 		lds r30,rteList
+ 435 030a F091 0000 		lds r31,(rteList)+1
+ 436 030e 3097      		sbiw r30,0
+ 437 0310 01F4      		brne .L40
+ 438 0312 80E0      		ldi r24,lo8(0)
+ 439 0314 90E0      		ldi r25,hi8(0)
+ 440               	/* epilogue start */
+ 441 0316 DF91      		pop r29
+ 442 0318 CF91      		pop r28
+ 443 031a 0895      		ret
+ 444               		.size	NutIpRouteDelAll, .-NutIpRouteDelAll
+ 445               		.comm rteList,2,1
+GAS LISTING C:\Temp/ccGc7x3V.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 route.c
+  C:\Temp/ccGc7x3V.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccGc7x3V.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccGc7x3V.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccGc7x3V.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccGc7x3V.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccGc7x3V.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccGc7x3V.s:13     .text:00000000 NutIpRouteQuery
+                            *COM*:00000002 rteList
+  C:\Temp/ccGc7x3V.s:132    .text:000000d4 NutIpRouteAdd
+  C:\Temp/ccGc7x3V.s:243    .text:000001a0 NutIpRouteList
+  C:\Temp/ccGc7x3V.s:308    .text:00000210 NutIpRouteDel
+  C:\Temp/ccGc7x3V.s:405    .text:000002d0 NutIpRouteDelAll
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+malloc
+free

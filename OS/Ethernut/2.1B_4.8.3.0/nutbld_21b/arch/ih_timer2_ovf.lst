@@ -1,0 +1,186 @@
+GAS LISTING C:\Temp/cc4Y2Mtf.s 			page 1
+
+
+   1               		.file	"ih_timer2_ovf.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	AvrTimer2OvfIrqCtl, @function
+  12               	AvrTimer2OvfIrqCtl:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 9C01      		movw r18,r24
+  16 0002 FB01      		movw r30,r22
+  17 0004 47B7      		in r20,87-32
+  18 0006 4074      		andi r20,lo8(64)
+  19 0008 87B7      		in r24,87-32
+  20 000a 8F7B      		andi r24,lo8(-65)
+  21 000c 87BF      		out 87-32,r24
+  22 000e 2031      		cpi r18,16
+  23 0010 3105      		cpc r19,__zero_reg__
+  24 0012 01F0      		breq .L5
+  25 0014 2131      		cpi r18,17
+  26 0016 3105      		cpc r19,__zero_reg__
+  27 0018 04F4      		brge .L9
+  28 001a 2115      		cp r18,__zero_reg__
+  29 001c 3105      		cpc r19,__zero_reg__
+  30 001e 01F0      		breq .L3
+  31 0020 2130      		cpi r18,1
+  32 0022 3105      		cpc r19,__zero_reg__
+  33 0024 01F4      		brne .L2
+  34 0026 00C0      		rjmp .L4
+  35               	.L9:
+  36 0028 2231      		cpi r18,18
+  37 002a 3105      		cpc r19,__zero_reg__
+  38 002c 01F0      		breq .L7
+  39 002e 2231      		cpi r18,18
+  40 0030 3105      		cpc r19,__zero_reg__
+  41 0032 04F0      		brlt .L17
+  42 0034 2032      		cpi r18,32
+  43 0036 3105      		cpc r19,__zero_reg__
+  44 0038 01F0      		breq .L18
+  45               	.L2:
+  46 003a 2FEF      		ldi r18,lo8(-1)
+  47 003c 3FEF      		ldi r19,hi8(-1)
+  48 003e 00C0      		rjmp .L11
+  49               	.L3:
+  50 0040 40E0      		ldi r20,lo8(0)
+  51               	.L4:
+  52 0042 80E4      		ldi r24,lo8(64)
+  53 0044 86BF      		out 86-32,r24
+  54 0046 00C0      		rjmp .L16
+  55               	.L5:
+  56 0048 06B6      		in __tmp_reg__,86-32
+  57 004a 06FE      		sbrs __tmp_reg__,6
+GAS LISTING C:\Temp/cc4Y2Mtf.s 			page 2
+
+
+  58 004c 00C0      		rjmp .L12
+  59 004e 81E0      		ldi r24,lo8(1)
+  60 0050 90E0      		ldi r25,hi8(1)
+  61 0052 9183      		std Z+1,r25
+  62 0054 8083      		st Z,r24
+  63 0056 00C0      		rjmp .L13
+  64               	.L12:
+  65 0058 1182      		std Z+1,__zero_reg__
+  66 005a 1082      		st Z,__zero_reg__
+  67               	.L13:
+  68 005c 4423      		tst r20
+  69 005e 01F0      		breq .L7
+  70 0060 8081      		ld r24,Z
+  71 0062 9181      		ldd r25,Z+1
+  72 0064 8068      		ori r24,lo8(128)
+  73 0066 9183      		std Z+1,r25
+  74 0068 8083      		st Z,r24
+  75               	.L17:
+  76 006a 20E0      		ldi r18,lo8(0)
+  77 006c 30E0      		ldi r19,hi8(0)
+  78 006e 00C0      		rjmp .L10
+  79               	.L18:
+  80 0070 89E0      		ldi r24,lo8(9)
+  81 0072 90E0      		ldi r25,hi8(9)
+  82 0074 9183      		std Z+1,r25
+  83 0076 8083      		st Z,r24
+  84               	.L16:
+  85 0078 20E0      		ldi r18,lo8(0)
+  86 007a 30E0      		ldi r19,hi8(0)
+  87               	.L11:
+  88 007c 4423      		tst r20
+  89 007e 01F0      		breq .L14
+  90               	.L10:
+  91 0080 87B7      		in r24,87-32
+  92 0082 8064      		ori r24,lo8(64)
+  93 0084 87BF      		out 87-32,r24
+  94 0086 00C0      		rjmp .L14
+  95               	.L7:
+  96 0088 20E0      		ldi r18,lo8(0)
+  97 008a 30E0      		ldi r19,hi8(0)
+  98               	.L14:
+  99 008c C901      		movw r24,r18
+ 100               	/* epilogue start */
+ 101 008e 0895      		ret
+ 102               		.size	AvrTimer2OvfIrqCtl, .-AvrTimer2OvfIrqCtl
+ 103               	.global	__vector_10
+ 104               		.type	__vector_10, @function
+ 105               	__vector_10:
+ 106 0090 1F92      		push __zero_reg__
+ 107 0092 0F92      		push r0
+ 108 0094 0FB6      		in r0,__SREG__
+ 109 0096 0F92      		push r0
+ 110 0098 0BB6      		in r0,91-32
+ 111 009a 0F92      		push r0
+ 112 009c 1124      		clr __zero_reg__
+ 113 009e 2F93      		push r18
+ 114 00a0 3F93      		push r19
+GAS LISTING C:\Temp/cc4Y2Mtf.s 			page 3
+
+
+ 115 00a2 4F93      		push r20
+ 116 00a4 5F93      		push r21
+ 117 00a6 6F93      		push r22
+ 118 00a8 7F93      		push r23
+ 119 00aa 8F93      		push r24
+ 120 00ac 9F93      		push r25
+ 121 00ae AF93      		push r26
+ 122 00b0 BF93      		push r27
+ 123 00b2 EF93      		push r30
+ 124 00b4 FF93      		push r31
+ 125               	/* prologue: Signal */
+ 126               	/* frame size = 0 */
+ 127 00b6 80E0      		ldi r24,lo8(sig_OVERFLOW2)
+ 128 00b8 90E0      		ldi r25,hi8(sig_OVERFLOW2)
+ 129 00ba 0E94 0000 		call CallHandler
+ 130               	/* epilogue start */
+ 131 00be FF91      		pop r31
+ 132 00c0 EF91      		pop r30
+ 133 00c2 BF91      		pop r27
+ 134 00c4 AF91      		pop r26
+ 135 00c6 9F91      		pop r25
+ 136 00c8 8F91      		pop r24
+ 137 00ca 7F91      		pop r23
+ 138 00cc 6F91      		pop r22
+ 139 00ce 5F91      		pop r21
+ 140 00d0 4F91      		pop r20
+ 141 00d2 3F91      		pop r19
+ 142 00d4 2F91      		pop r18
+ 143 00d6 0F90      		pop r0
+ 144 00d8 0BBE      		out 91-32,r0
+ 145 00da 0F90      		pop r0
+ 146 00dc 0FBE      		out __SREG__,r0
+ 147 00de 0F90      		pop r0
+ 148 00e0 1F90      		pop __zero_reg__
+ 149 00e2 1895      		reti
+ 150               		.size	__vector_10, .-__vector_10
+ 151               	.global	sig_OVERFLOW2
+ 152               		.data
+ 153               		.type	sig_OVERFLOW2, @object
+ 154               		.size	sig_OVERFLOW2, 6
+ 155               	sig_OVERFLOW2:
+ 156 0000 0000      		.word	0
+ 157 0002 0000      		.word	0
+ 158 0004 0000      		.word	gs(AvrTimer2OvfIrqCtl)
+GAS LISTING C:\Temp/cc4Y2Mtf.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ih_timer2_ovf.c
+  C:\Temp/cc4Y2Mtf.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cc4Y2Mtf.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cc4Y2Mtf.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cc4Y2Mtf.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cc4Y2Mtf.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cc4Y2Mtf.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cc4Y2Mtf.s:12     .text:00000000 AvrTimer2OvfIrqCtl
+  C:\Temp/cc4Y2Mtf.s:105    .text:00000090 __vector_10
+  C:\Temp/cc4Y2Mtf.s:155    .data:00000000 sig_OVERFLOW2
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+CallHandler

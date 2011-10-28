@@ -1,0 +1,224 @@
+GAS LISTING C:\Temp/ccW3IhWT.s 			page 1
+
+
+   1               		.file	"debug0.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	DebugInit, @function
+  12               	DebugInit:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 88E1      		ldi r24,lo8(24)
+  16 0002 8AB9      		out 42-32,r24
+  17 0004 80E0      		ldi r24,lo8(0)
+  18 0006 90E0      		ldi r25,hi8(0)
+  19               	/* epilogue start */
+  20 0008 0895      		ret
+  21               		.size	DebugInit, .-DebugInit
+  22               		.type	DebugWrite, @function
+  23               	DebugWrite:
+  24               	/* prologue: function */
+  25               	/* frame size = 0 */
+  26 000a FB01      		movw r30,r22
+  27 000c CA01      		movw r24,r20
+  28 000e 00C0      		rjmp .L4
+  29               	.L7:
+  30 0010 2081      		ld r18,Z
+  31               	.L11:
+  32 0012 5D9B      		sbis 43-32,5
+  33 0014 00C0      		rjmp .L11
+  34 0016 2CB9      		out 44-32,r18
+  35 0018 2A30      		cpi r18,lo8(10)
+  36 001a 01F4      		brne .L6
+  37 001c 2DE0      		ldi r18,lo8(13)
+  38 001e 00C0      		rjmp .L11
+  39               	.L6:
+  40 0020 3196      		adiw r30,1
+  41               	.L4:
+  42 0022 0197      		sbiw r24,1
+  43 0024 2FEF      		ldi r18,hi8(-1)
+  44 0026 8F3F      		cpi r24,lo8(-1)
+  45 0028 9207      		cpc r25,r18
+  46 002a 01F4      		brne .L7
+  47 002c CA01      		movw r24,r20
+  48               	/* epilogue start */
+  49 002e 0895      		ret
+  50               		.size	DebugWrite, .-DebugWrite
+  51               		.type	DebugWrite_P, @function
+  52               	DebugWrite_P:
+  53               	/* prologue: function */
+  54               	/* frame size = 0 */
+  55 0030 FB01      		movw r30,r22
+  56 0032 CA01      		movw r24,r20
+  57 0034 00C0      		rjmp .L13
+GAS LISTING C:\Temp/ccW3IhWT.s 			page 2
+
+
+  58               	.L16:
+  59               	/* #APP */
+  60               	 ;  177 "../../nut/arch/avr/dev/debug0.c" 1
+  61 0036 2491      		lpm r18, Z
+  62               		
+  63               	 ;  0 "" 2
+  64               	/* #NOAPP */
+  65               	.L20:
+  66 0038 5D9B      		sbis 43-32,5
+  67 003a 00C0      		rjmp .L20
+  68 003c 2CB9      		out 44-32,r18
+  69 003e 2A30      		cpi r18,lo8(10)
+  70 0040 01F4      		brne .L15
+  71 0042 2DE0      		ldi r18,lo8(13)
+  72 0044 00C0      		rjmp .L20
+  73               	.L15:
+  74 0046 3196      		adiw r30,1
+  75               	.L13:
+  76 0048 0197      		sbiw r24,1
+  77 004a 2FEF      		ldi r18,hi8(-1)
+  78 004c 8F3F      		cpi r24,lo8(-1)
+  79 004e 9207      		cpc r25,r18
+  80 0050 01F4      		brne .L16
+  81 0052 CA01      		movw r24,r20
+  82               	/* epilogue start */
+  83 0054 0895      		ret
+  84               		.size	DebugWrite_P, .-DebugWrite_P
+  85               		.type	DebugOpen, @function
+  86               	DebugOpen:
+  87               	/* prologue: function */
+  88               	/* frame size = 0 */
+  89 0056 1092 0000 		sts (dbgfile)+1,__zero_reg__
+  90 005a 1092 0000 		sts dbgfile,__zero_reg__
+  91 005e 9093 0000 		sts (dbgfile+2)+1,r25
+  92 0062 8093 0000 		sts dbgfile+2,r24
+  93 0066 1092 0000 		sts (dbgfile+4)+1,__zero_reg__
+  94 006a 1092 0000 		sts dbgfile+4,__zero_reg__
+  95 006e 80E0      		ldi r24,lo8(dbgfile)
+  96 0070 90E0      		ldi r25,hi8(dbgfile)
+  97               	/* epilogue start */
+  98 0072 0895      		ret
+  99               		.size	DebugOpen, .-DebugOpen
+ 100               		.type	DebugClose, @function
+ 101               	DebugClose:
+ 102               	/* prologue: function */
+ 103               	/* frame size = 0 */
+ 104 0074 80E0      		ldi r24,lo8(0)
+ 105 0076 90E0      		ldi r25,hi8(0)
+ 106               	/* epilogue start */
+ 107 0078 0895      		ret
+ 108               		.size	DebugClose, .-DebugClose
+ 109               		.type	DebugIOCtl, @function
+ 110               	DebugIOCtl:
+ 111 007a CF93      		push r28
+ 112 007c DF93      		push r29
+ 113               	/* prologue: function */
+ 114               	/* frame size = 0 */
+GAS LISTING C:\Temp/ccW3IhWT.s 			page 3
+
+
+ 115 007e EA01      		movw r28,r20
+ 116 0080 6150      		subi r22,lo8(257)
+ 117 0082 7140      		sbci r23,hi8(257)
+ 118 0084 01F0      		breq .L26
+ 119 0086 2FEF      		ldi r18,lo8(-1)
+ 120 0088 3FEF      		ldi r19,hi8(-1)
+ 121 008a 00C0      		rjmp .L27
+ 122               	.L26:
+ 123 008c 0E94 0000 		call NutGetCpuClock
+ 124 0090 660F      		lsl r22
+ 125 0092 771F      		rol r23
+ 126 0094 881F      		rol r24
+ 127 0096 991F      		rol r25
+ 128 0098 2881      		ld r18,Y
+ 129 009a 3981      		ldd r19,Y+1
+ 130 009c 4A81      		ldd r20,Y+2
+ 131 009e 5B81      		ldd r21,Y+3
+ 132 00a0 E4E0      		ldi r30,4
+ 133 00a2 220F      	1:	lsl r18
+ 134 00a4 331F      		rol r19
+ 135 00a6 441F      		rol r20
+ 136 00a8 551F      		rol r21
+ 137 00aa EA95      		dec r30
+ 138 00ac 01F4      		brne 1b
+ 139 00ae 0E94 0000 		call __udivmodsi4
+ 140 00b2 2F5F      		subi r18,lo8(-(1))
+ 141 00b4 3F4F      		sbci r19,hi8(-(1))
+ 142 00b6 4F4F      		sbci r20,hlo8(-(1))
+ 143 00b8 5F4F      		sbci r21,hhi8(-(1))
+ 144 00ba 5695      		lsr r21
+ 145 00bc 4795      		ror r20
+ 146 00be 3795      		ror r19
+ 147 00c0 2795      		ror r18
+ 148 00c2 2150      		subi r18,lo8(-(-1))
+ 149 00c4 29B9      		out 41-32,r18
+ 150 00c6 20E0      		ldi r18,lo8(0)
+ 151 00c8 30E0      		ldi r19,hi8(0)
+ 152               	.L27:
+ 153 00ca C901      		movw r24,r18
+ 154               	/* epilogue start */
+ 155 00cc DF91      		pop r29
+ 156 00ce CF91      		pop r28
+ 157 00d0 0895      		ret
+ 158               		.size	DebugIOCtl, .-DebugIOCtl
+ 159               	.global	devDebug0
+ 160               		.data
+ 161               		.type	devDebug0, @object
+ 162               		.size	devDebug0, 35
+ 163               	devDebug0:
+ 164 0000 0000      		.word	0
+ 165 0002 75        		.byte	117
+ 166 0003 61        		.byte	97
+ 167 0004 72        		.byte	114
+ 168 0005 74        		.byte	116
+ 169 0006 30        		.byte	48
+ 170 0007 00        		.byte	0
+ 171 0008 00        		.byte	0
+GAS LISTING C:\Temp/ccW3IhWT.s 			page 4
+
+
+ 172 0009 00        		.byte	0
+ 173 000a 00        		.byte	0
+ 174 000b 00        		.byte	0
+ 175 000c 0000      		.word	0
+ 176 000e 00        		.byte	0
+ 177 000f 0000      		.word	0
+ 178 0011 0000      		.word	0
+ 179 0013 0000      		.word	gs(DebugInit)
+ 180 0015 0000      		.word	gs(DebugIOCtl)
+ 181 0017 0000      		.word	0
+ 182 0019 0000      		.word	gs(DebugWrite)
+ 183 001b 0000      		.word	gs(DebugWrite_P)
+ 184 001d 0000      		.word	gs(DebugOpen)
+ 185 001f 0000      		.word	gs(DebugClose)
+ 186 0021 0000      		.word	0
+ 187               		.lcomm dbgfile,6
+GAS LISTING C:\Temp/ccW3IhWT.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 debug0.c
+  C:\Temp/ccW3IhWT.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccW3IhWT.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccW3IhWT.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccW3IhWT.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccW3IhWT.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccW3IhWT.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccW3IhWT.s:12     .text:00000000 DebugInit
+  C:\Temp/ccW3IhWT.s:23     .text:0000000a DebugWrite
+  C:\Temp/ccW3IhWT.s:52     .text:00000030 DebugWrite_P
+  C:\Temp/ccW3IhWT.s:86     .text:00000056 DebugOpen
+                             .bss:00000000 dbgfile
+  C:\Temp/ccW3IhWT.s:101    .text:00000074 DebugClose
+  C:\Temp/ccW3IhWT.s:110    .text:0000007a DebugIOCtl
+  C:\Temp/ccW3IhWT.s:163    .data:00000000 devDebug0
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutGetCpuClock
+__udivmodsi4

@@ -1,0 +1,186 @@
+GAS LISTING C:\Temp/ccvhRWVS.s 			page 1
+
+
+   1               		.file	"snmp_auth.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	SnmpAuthBuild
+  12               		.type	SnmpAuthBuild, @function
+  13               	SnmpAuthBuild:
+  14 0000 EF92      		push r14
+  15 0002 FF92      		push r15
+  16 0004 0F93      		push r16
+  17 0006 1F93      		push r17
+  18 0008 CF93      		push r28
+  19 000a DF93      		push r29
+  20               	/* prologue: function */
+  21               	/* frame size = 0 */
+  22 000c EC01      		movw r28,r24
+  23 000e CB01      		movw r24,r22
+  24 0010 7A01      		movw r14,r20
+  25 0012 A901      		movw r20,r18
+  26 0014 2C81      		ldd r18,Y+4
+  27 0016 3D81      		ldd r19,Y+5
+  28 0018 2B5F      		subi r18,lo8(-(5))
+  29 001a 3F4F      		sbci r19,hi8(-(5))
+  30 001c 240F      		add r18,r20
+  31 001e 351F      		adc r19,r21
+  32 0020 40E3      		ldi r20,lo8(48)
+  33 0022 B701      		movw r22,r14
+  34 0024 0E94 0000 		call AsnSequenceBuild
+  35 0028 FC01      		movw r30,r24
+  36 002a 0097      		sbiw r24,0
+  37 002c 01F0      		breq .L2
+  38 002e 9E01      		movw r18,r28
+  39 0030 42E0      		ldi r20,lo8(2)
+  40 0032 B701      		movw r22,r14
+  41 0034 0E94 0000 		call AsnIntegerBuild
+  42 0038 FC01      		movw r30,r24
+  43 003a 0097      		sbiw r24,0
+  44 003c 01F0      		breq .L2
+  45 003e 0C81      		ldd r16,Y+4
+  46 0040 1D81      		ldd r17,Y+5
+  47 0042 2696      		adiw r28,6
+  48 0044 9E01      		movw r18,r28
+  49 0046 44E0      		ldi r20,lo8(4)
+  50 0048 B701      		movw r22,r14
+  51 004a 0E94 0000 		call AsnOctetStringBuild
+  52 004e FC01      		movw r30,r24
+  53               	.L2:
+  54 0050 CF01      		movw r24,r30
+  55               	/* epilogue start */
+  56 0052 DF91      		pop r29
+  57 0054 CF91      		pop r28
+GAS LISTING C:\Temp/ccvhRWVS.s 			page 2
+
+
+  58 0056 1F91      		pop r17
+  59 0058 0F91      		pop r16
+  60 005a FF90      		pop r15
+  61 005c EF90      		pop r14
+  62 005e 0895      		ret
+  63               		.size	SnmpAuthBuild, .-SnmpAuthBuild
+  64               	.global	SnmpAuthParse
+  65               		.type	SnmpAuthParse, @function
+  66               	SnmpAuthParse:
+  67 0060 4F92      		push r4
+  68 0062 5F92      		push r5
+  69 0064 6F92      		push r6
+  70 0066 7F92      		push r7
+  71 0068 8F92      		push r8
+  72 006a 9F92      		push r9
+  73 006c AF92      		push r10
+  74 006e BF92      		push r11
+  75 0070 CF92      		push r12
+  76 0072 DF92      		push r13
+  77 0074 EF92      		push r14
+  78 0076 FF92      		push r15
+  79 0078 0F93      		push r16
+  80 007a 1F93      		push r17
+  81 007c DF93      		push r29
+  82 007e CF93      		push r28
+  83 0080 0F92      		push __tmp_reg__
+  84 0082 CDB7      		in r28,__SP_L__
+  85 0084 DEB7      		in r29,__SP_H__
+  86               	/* prologue: function */
+  87               	/* frame size = 1 */
+  88 0086 6B01      		movw r12,r22
+  89 0088 2A01      		movw r4,r20
+  90 008a 3901      		movw r6,r18
+  91 008c 4801      		movw r8,r16
+  92 008e 20E3      		ldi r18,lo8(48)
+  93 0090 2983      		std Y+1,r18
+  94 0092 40E3      		ldi r20,lo8(48)
+  95 0094 0E94 0000 		call AsnSequenceParse
+  96 0098 7C01      		movw r14,r24
+  97 009a 0097      		sbiw r24,0
+  98 009c 01F0      		breq .L5
+  99 009e 9801      		movw r18,r16
+ 100 00a0 5E01      		movw r10,r28
+ 101 00a2 0894      		sec
+ 102 00a4 A11C      		adc r10,__zero_reg__
+ 103 00a6 B11C      		adc r11,__zero_reg__
+ 104 00a8 A501      		movw r20,r10
+ 105 00aa B601      		movw r22,r12
+ 106 00ac 0E94 0000 		call AsnIntegerParse
+ 107 00b0 7C01      		movw r14,r24
+ 108 00b2 0097      		sbiw r24,0
+ 109 00b4 01F0      		breq .L5
+ 110 00b6 8301      		movw r16,r6
+ 111 00b8 9201      		movw r18,r4
+ 112 00ba A501      		movw r20,r10
+ 113 00bc B601      		movw r22,r12
+ 114 00be 0E94 0000 		call AsnOctetStringParse
+GAS LISTING C:\Temp/ccvhRWVS.s 			page 3
+
+
+ 115 00c2 7C01      		movw r14,r24
+ 116 00c4 0097      		sbiw r24,0
+ 117 00c6 01F0      		breq .L5
+ 118 00c8 F401      		movw r30,r8
+ 119 00ca 8081      		ld r24,Z
+ 120 00cc 9181      		ldd r25,Z+1
+ 121 00ce A281      		ldd r26,Z+2
+ 122 00d0 B381      		ldd r27,Z+3
+ 123 00d2 0097      		sbiw r24,0
+ 124 00d4 A105      		cpc r26,__zero_reg__
+ 125 00d6 B105      		cpc r27,__zero_reg__
+ 126 00d8 01F4      		brne .L5
+ 127 00da D301      		movw r26,r6
+ 128 00dc ED91      		ld r30,X+
+ 129 00de FC91      		ld r31,X
+ 130 00e0 E40D      		add r30,r4
+ 131 00e2 F51D      		adc r31,r5
+ 132 00e4 1082      		st Z,__zero_reg__
+ 133               	.L5:
+ 134 00e6 C701      		movw r24,r14
+ 135               	/* epilogue start */
+ 136 00e8 0F90      		pop __tmp_reg__
+ 137 00ea CF91      		pop r28
+ 138 00ec DF91      		pop r29
+ 139 00ee 1F91      		pop r17
+ 140 00f0 0F91      		pop r16
+ 141 00f2 FF90      		pop r15
+ 142 00f4 EF90      		pop r14
+ 143 00f6 DF90      		pop r13
+ 144 00f8 CF90      		pop r12
+ 145 00fa BF90      		pop r11
+ 146 00fc AF90      		pop r10
+ 147 00fe 9F90      		pop r9
+ 148 0100 8F90      		pop r8
+ 149 0102 7F90      		pop r7
+ 150 0104 6F90      		pop r6
+ 151 0106 5F90      		pop r5
+ 152 0108 4F90      		pop r4
+ 153 010a 0895      		ret
+ 154               		.size	SnmpAuthParse, .-SnmpAuthParse
+GAS LISTING C:\Temp/ccvhRWVS.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 snmp_auth.c
+  C:\Temp/ccvhRWVS.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccvhRWVS.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccvhRWVS.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccvhRWVS.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccvhRWVS.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccvhRWVS.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccvhRWVS.s:13     .text:00000000 SnmpAuthBuild
+  C:\Temp/ccvhRWVS.s:66     .text:00000060 SnmpAuthParse
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+AsnSequenceBuild
+AsnIntegerBuild
+AsnOctetStringBuild
+AsnSequenceParse
+AsnIntegerParse
+AsnOctetStringParse

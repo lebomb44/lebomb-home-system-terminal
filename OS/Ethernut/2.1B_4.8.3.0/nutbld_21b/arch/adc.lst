@@ -1,0 +1,562 @@
+GAS LISTING C:\Temp/cc1AwWSd.s 			page 1
+
+
+   1               		.file	"adc.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	ADCBufRead
+  12               		.type	ADCBufRead, @function
+  13               	ADCBufRead:
+  14 0000 CF93      		push r28
+  15 0002 DF93      		push r29
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0004 DC01      		movw r26,r24
+  19 0006 EB01      		movw r28,r22
+  20 0008 9296      		adiw r26,34
+  21 000a 9C91      		ld r25,X
+  22 000c 9297      		sbiw r26,34
+  23 000e 9096      		adiw r26,32
+  24 0010 8C91      		ld r24,X
+  25 0012 9097      		sbiw r26,32
+  26 0014 8917      		cp r24,r25
+  27 0016 01F4      		brne .L2
+  28 0018 21E0      		ldi r18,lo8(1)
+  29 001a 30E0      		ldi r19,hi8(1)
+  30 001c 00C0      		rjmp .L3
+  31               	.L2:
+  32 001e 892F      		mov r24,r25
+  33 0020 90E0      		ldi r25,lo8(0)
+  34 0022 FC01      		movw r30,r24
+  35 0024 EE0F      		lsl r30
+  36 0026 FF1F      		rol r31
+  37 0028 EA0F      		add r30,r26
+  38 002a FB1F      		adc r31,r27
+  39 002c 2081      		ld r18,Z
+  40 002e 3181      		ldd r19,Z+1
+  41 0030 3983      		std Y+1,r19
+  42 0032 2883      		st Y,r18
+  43 0034 0196      		adiw r24,1
+  44 0036 8F70      		andi r24,lo8(15)
+  45 0038 9070      		andi r25,hi8(15)
+  46 003a 9396      		adiw r26,34+1
+  47 003c 9C93      		st X,r25
+  48 003e 8E93      		st -X,r24
+  49 0040 9297      		sbiw r26,34
+  50 0042 20E0      		ldi r18,lo8(0)
+  51 0044 30E0      		ldi r19,hi8(0)
+  52               	.L3:
+  53 0046 C901      		movw r24,r18
+  54               	/* epilogue start */
+  55 0048 DF91      		pop r29
+  56 004a CF91      		pop r28
+  57 004c 0895      		ret
+GAS LISTING C:\Temp/cc1AwWSd.s 			page 2
+
+
+  58               		.size	ADCBufRead, .-ADCBufRead
+  59               	.global	ADCBufWrite
+  60               		.type	ADCBufWrite, @function
+  61               	ADCBufWrite:
+  62 004e CF93      		push r28
+  63 0050 DF93      		push r29
+  64               	/* prologue: function */
+  65               	/* frame size = 0 */
+  66 0052 DC01      		movw r26,r24
+  67 0054 EB01      		movw r28,r22
+  68 0056 9096      		adiw r26,32
+  69 0058 8C91      		ld r24,X
+  70 005a 9097      		sbiw r26,32
+  71 005c E82F      		mov r30,r24
+  72 005e F0E0      		ldi r31,lo8(0)
+  73 0060 3196      		adiw r30,1
+  74 0062 9F01      		movw r18,r30
+  75 0064 2F70      		andi r18,lo8(15)
+  76 0066 3070      		andi r19,hi8(15)
+  77 0068 3197      		sbiw r30,1
+  78 006a 9296      		adiw r26,34
+  79 006c 8C91      		ld r24,X
+  80 006e 9297      		sbiw r26,34
+  81 0070 90E0      		ldi r25,lo8(0)
+  82 0072 2817      		cp r18,r24
+  83 0074 3907      		cpc r19,r25
+  84 0076 01F4      		brne .L6
+  85 0078 21E0      		ldi r18,lo8(1)
+  86 007a 30E0      		ldi r19,hi8(1)
+  87 007c 00C0      		rjmp .L7
+  88               	.L6:
+  89 007e EE0F      		lsl r30
+  90 0080 FF1F      		rol r31
+  91 0082 EA0F      		add r30,r26
+  92 0084 FB1F      		adc r31,r27
+  93 0086 8881      		ld r24,Y
+  94 0088 9981      		ldd r25,Y+1
+  95 008a 9183      		std Z+1,r25
+  96 008c 8083      		st Z,r24
+  97 008e 9196      		adiw r26,32+1
+  98 0090 3C93      		st X,r19
+  99 0092 2E93      		st -X,r18
+ 100 0094 9097      		sbiw r26,32
+ 101 0096 20E0      		ldi r18,lo8(0)
+ 102 0098 30E0      		ldi r19,hi8(0)
+ 103               	.L7:
+ 104 009a C901      		movw r24,r18
+ 105               	/* epilogue start */
+ 106 009c DF91      		pop r29
+ 107 009e CF91      		pop r28
+ 108 00a0 0895      		ret
+ 109               		.size	ADCBufWrite, .-ADCBufWrite
+ 110               	.global	ADCBufInit
+ 111               		.type	ADCBufInit, @function
+ 112               	ADCBufInit:
+ 113               	/* prologue: function */
+ 114               	/* frame size = 0 */
+GAS LISTING C:\Temp/cc1AwWSd.s 			page 3
+
+
+ 115 00a2 FC01      		movw r30,r24
+ 116 00a4 11A2      		std Z+33,__zero_reg__
+ 117 00a6 10A2      		std Z+32,__zero_reg__
+ 118 00a8 13A2      		std Z+35,__zero_reg__
+ 119 00aa 12A2      		std Z+34,__zero_reg__
+ 120               	/* epilogue start */
+ 121 00ac 0895      		ret
+ 122               		.size	ADCBufInit, .-ADCBufInit
+ 123               		.type	ADCInterrupt, @function
+ 124               	ADCInterrupt:
+ 125 00ae DF93      		push r29
+ 126 00b0 CF93      		push r28
+ 127 00b2 00D0      		rcall .
+ 128 00b4 CDB7      		in r28,__SP_L__
+ 129 00b6 DEB7      		in r29,__SP_H__
+ 130               	/* prologue: function */
+ 131               	/* frame size = 2 */
+ 132 00b8 84B1      		in r24,36-32
+ 133 00ba 95B1      		in r25,(36)+1-32
+ 134 00bc 9A83      		std Y+2,r25
+ 135 00be 8983      		std Y+1,r24
+ 136 00c0 BE01      		movw r22,r28
+ 137 00c2 6F5F      		subi r22,lo8(-(1))
+ 138 00c4 7F4F      		sbci r23,hi8(-(1))
+ 139 00c6 8091 0000 		lds r24,ADC_buffer
+ 140 00ca 9091 0000 		lds r25,(ADC_buffer)+1
+ 141 00ce 0E94 0000 		call ADCBufWrite
+ 142               	/* epilogue start */
+ 143 00d2 0F90      		pop __tmp_reg__
+ 144 00d4 0F90      		pop __tmp_reg__
+ 145 00d6 CF91      		pop r28
+ 146 00d8 DF91      		pop r29
+ 147 00da 0895      		ret
+ 148               		.size	ADCInterrupt, .-ADCInterrupt
+ 149               	.global	ADCSetRef
+ 150               		.type	ADCSetRef, @function
+ 151               	ADCSetRef:
+ 152               	/* prologue: function */
+ 153               	/* frame size = 0 */
+ 154 00dc 9C01      		movw r18,r24
+ 155 00de 8091 0000 		lds r24,current_mode
+ 156 00e2 9091 0000 		lds r25,(current_mode)+1
+ 157 00e6 0197      		sbiw r24,1
+ 158 00e8 01F4      		brne .L14
+ 159 00ea 3798      		cbi 38-32,7
+ 160 00ec 3698      		cbi 38-32,6
+ 161 00ee 379A      		sbi 38-32,7
+ 162               	.L14:
+ 163 00f0 2130      		cpi r18,1
+ 164 00f2 3105      		cpc r19,__zero_reg__
+ 165 00f4 01F0      		breq .L17
+ 166 00f6 2130      		cpi r18,1
+ 167 00f8 3105      		cpc r19,__zero_reg__
+ 168 00fa 00F0      		brlo .L16
+ 169 00fc 2230      		cpi r18,2
+ 170 00fe 3105      		cpc r19,__zero_reg__
+ 171 0100 01F4      		brne .L19
+GAS LISTING C:\Temp/cc1AwWSd.s 			page 4
+
+
+ 172 0102 00C0      		rjmp .L20
+ 173               	.L16:
+ 174 0104 3F98      		cbi 39-32,7
+ 175 0106 3E9A      		sbi 39-32,6
+ 176 0108 0895      		ret
+ 177               	.L17:
+ 178 010a 3F98      		cbi 39-32,7
+ 179 010c 3E98      		cbi 39-32,6
+ 180 010e 0895      		ret
+ 181               	.L20:
+ 182 0110 3F9A      		sbi 39-32,7
+ 183 0112 3E9A      		sbi 39-32,6
+ 184               	.L19:
+ 185 0114 0895      		ret
+ 186               		.size	ADCSetRef, .-ADCSetRef
+ 187               	.global	ADCSetMode
+ 188               		.type	ADCSetMode, @function
+ 189               	ADCSetMode:
+ 190               	/* prologue: function */
+ 191               	/* frame size = 0 */
+ 192 0116 9C01      		movw r18,r24
+ 193 0118 8091 0000 		lds r24,current_mode
+ 194 011c 9091 0000 		lds r25,(current_mode)+1
+ 195 0120 0197      		sbiw r24,1
+ 196 0122 01F4      		brne .L22
+ 197 0124 3798      		cbi 38-32,7
+ 198 0126 3698      		cbi 38-32,6
+ 199 0128 379A      		sbi 38-32,7
+ 200               	.L22:
+ 201 012a 2130      		cpi r18,1
+ 202 012c 3105      		cpc r19,__zero_reg__
+ 203 012e 01F0      		breq .L24
+ 204 0130 2230      		cpi r18,2
+ 205 0132 3105      		cpc r19,__zero_reg__
+ 206 0134 01F4      		brne .L23
+ 207 0136 00C0      		rjmp .L27
+ 208               	.L24:
+ 209 0138 359A      		sbi 38-32,5
+ 210 013a 00C0      		rjmp .L23
+ 211               	.L27:
+ 212 013c 3598      		cbi 38-32,5
+ 213               	.L23:
+ 214 013e 3093 0000 		sts (current_mode)+1,r19
+ 215 0142 2093 0000 		sts current_mode,r18
+ 216               	/* epilogue start */
+ 217 0146 0895      		ret
+ 218               		.size	ADCSetMode, .-ADCSetMode
+ 219               	.global	ADCSetPrescale
+ 220               		.type	ADCSetPrescale, @function
+ 221               	ADCSetPrescale:
+ 222               	/* prologue: function */
+ 223               	/* frame size = 0 */
+ 224 0148 282F      		mov r18,r24
+ 225 014a 8091 0000 		lds r24,current_mode
+ 226 014e 9091 0000 		lds r25,(current_mode)+1
+ 227 0152 0197      		sbiw r24,1
+ 228 0154 01F4      		brne .L29
+GAS LISTING C:\Temp/cc1AwWSd.s 			page 5
+
+
+ 229 0156 3798      		cbi 38-32,7
+ 230 0158 3698      		cbi 38-32,6
+ 231 015a 379A      		sbi 38-32,7
+ 232               	.L29:
+ 233 015c 2138      		cpi r18,lo8(-127)
+ 234 015e 00F4      		brsh .L30
+ 235 0160 2430      		cpi r18,lo8(4)
+ 236 0162 01F0      		breq .L34
+ 237 0164 2530      		cpi r18,lo8(5)
+ 238 0166 00F4      		brsh .L38
+ 239 0168 2230      		cpi r18,lo8(2)
+ 240 016a 01F0      		breq .L32
+ 241 016c 2330      		cpi r18,lo8(3)
+ 242 016e 00F4      		brsh .L33
+ 243 0170 2223      		tst r18
+ 244 0172 01F0      		breq .L31
+ 245 0174 00C0      		rjmp .L30
+ 246               	.L38:
+ 247 0176 2630      		cpi r18,lo8(6)
+ 248 0178 01F0      		breq .L36
+ 249 017a 2630      		cpi r18,lo8(6)
+ 250 017c 00F0      		brlo .L35
+ 251 017e 2730      		cpi r18,lo8(7)
+ 252 0180 01F4      		brne .L30
+ 253 0182 00C0      		rjmp .L47
+ 254               	.L31:
+ 255 0184 3298      		cbi 38-32,2
+ 256 0186 00C0      		rjmp .L44
+ 257               	.L32:
+ 258 0188 3298      		cbi 38-32,2
+ 259 018a 00C0      		rjmp .L45
+ 260               	.L33:
+ 261 018c 3298      		cbi 38-32,2
+ 262 018e 00C0      		rjmp .L46
+ 263               	.L34:
+ 264 0190 329A      		sbi 38-32,2
+ 265               	.L44:
+ 266 0192 3198      		cbi 38-32,1
+ 267 0194 00C0      		rjmp .L42
+ 268               	.L35:
+ 269 0196 329A      		sbi 38-32,2
+ 270 0198 3198      		cbi 38-32,1
+ 271 019a 00C0      		rjmp .L43
+ 272               	.L36:
+ 273 019c 329A      		sbi 38-32,2
+ 274               	.L45:
+ 275 019e 319A      		sbi 38-32,1
+ 276               	.L42:
+ 277 01a0 3098      		cbi 38-32,0
+ 278 01a2 00C0      		rjmp .L41
+ 279               	.L47:
+ 280 01a4 329A      		sbi 38-32,2
+ 281               	.L46:
+ 282 01a6 319A      		sbi 38-32,1
+ 283               	.L43:
+ 284 01a8 309A      		sbi 38-32,0
+ 285               	.L41:
+GAS LISTING C:\Temp/cc1AwWSd.s 			page 6
+
+
+ 286 01aa 80E0      		ldi r24,lo8(0)
+ 287 01ac 0895      		ret
+ 288               	.L30:
+ 289 01ae 81E0      		ldi r24,lo8(1)
+ 290 01b0 0895      		ret
+ 291               		.size	ADCSetPrescale, .-ADCSetPrescale
+ 292               	.global	ADCSetChannel
+ 293               		.type	ADCSetChannel, @function
+ 294               	ADCSetChannel:
+ 295               	/* prologue: function */
+ 296               	/* frame size = 0 */
+ 297 01b2 97B1      		in r25,39-32
+ 298 01b4 987F      		andi r25,lo8(-8)
+ 299 01b6 982B      		or r25,r24
+ 300 01b8 97B9      		out 39-32,r25
+ 301               	/* epilogue start */
+ 302 01ba 0895      		ret
+ 303               		.size	ADCSetChannel, .-ADCSetChannel
+ 304               	.global	ADCBufferFlush
+ 305               		.type	ADCBufferFlush, @function
+ 306               	ADCBufferFlush:
+ 307               	/* prologue: function */
+ 308               	/* frame size = 0 */
+ 309 01bc E091 0000 		lds r30,ADC_buffer
+ 310 01c0 F091 0000 		lds r31,(ADC_buffer)+1
+ 311 01c4 11A2      		std Z+33,__zero_reg__
+ 312 01c6 10A2      		std Z+32,__zero_reg__
+ 313 01c8 13A2      		std Z+35,__zero_reg__
+ 314 01ca 12A2      		std Z+34,__zero_reg__
+ 315               	/* epilogue start */
+ 316 01cc 0895      		ret
+ 317               		.size	ADCBufferFlush, .-ADCBufferFlush
+ 318               	.global	ADCStartConversion
+ 319               		.type	ADCStartConversion, @function
+ 320               	ADCStartConversion:
+ 321               	/* prologue: function */
+ 322               	/* frame size = 0 */
+ 323 01ce 369A      		sbi 38-32,6
+ 324               	/* epilogue start */
+ 325 01d0 0895      		ret
+ 326               		.size	ADCStartConversion, .-ADCStartConversion
+ 327               	.global	ADCStartLowNoiseConversion
+ 328               		.type	ADCStartLowNoiseConversion, @function
+ 329               	ADCStartLowNoiseConversion:
+ 330               	/* prologue: function */
+ 331               	/* frame size = 0 */
+ 332 01d2 82E0      		ldi r24,lo8(2)
+ 333 01d4 90E0      		ldi r25,hi8(2)
+ 334 01d6 0E94 0000 		call ADCSetMode
+ 335 01da 25B7      		in r18,85-32
+ 336 01dc 85B7      		in r24,85-32
+ 337 01de 837E      		andi r24,lo8(-29)
+ 338 01e0 9091 0000 		lds r25,adc_sleep_mode
+ 339 01e4 892B      		or r24,r25
+ 340 01e6 85BF      		out 85-32,r24
+ 341 01e8 85B7      		in r24,85-32
+ 342 01ea 8062      		ori r24,lo8(32)
+GAS LISTING C:\Temp/cc1AwWSd.s 			page 7
+
+
+ 343 01ec 85BF      		out 85-32,r24
+ 344               	/* #APP */
+ 345               	 ;  337 "../../nut/arch/avr/dev/adc.c" 1
+ 346 01ee 8895      		sleep
+ 347               		
+ 348               	 ;  0 "" 2
+ 349               	/* #NOAPP */
+ 350 01f0 85B7      		in r24,85-32
+ 351 01f2 8F7D      		andi r24,lo8(-33)
+ 352 01f4 85BF      		out 85-32,r24
+ 353 01f6 85B7      		in r24,85-32
+ 354 01f8 2C71      		andi r18,lo8(28)
+ 355 01fa 837E      		andi r24,lo8(-29)
+ 356 01fc 282B      		or r18,r24
+ 357 01fe 25BF      		out 85-32,r18
+ 358               	/* epilogue start */
+ 359 0200 0895      		ret
+ 360               		.size	ADCStartLowNoiseConversion, .-ADCStartLowNoiseConversion
+ 361               	.global	ADCStopConversion
+ 362               		.type	ADCStopConversion, @function
+ 363               	ADCStopConversion:
+ 364               	/* prologue: function */
+ 365               	/* frame size = 0 */
+ 366 0202 8091 0000 		lds r24,current_mode
+ 367 0206 9091 0000 		lds r25,(current_mode)+1
+ 368 020a 0197      		sbiw r24,1
+ 369 020c 01F4      		brne .L58
+ 370 020e 3798      		cbi 38-32,7
+ 371 0210 3698      		cbi 38-32,6
+ 372 0212 379A      		sbi 38-32,7
+ 373               	.L58:
+ 374 0214 0895      		ret
+ 375               		.size	ADCStopConversion, .-ADCStopConversion
+ 376               	.global	ADCRead
+ 377               		.type	ADCRead, @function
+ 378               	ADCRead:
+ 379 0216 CF93      		push r28
+ 380 0218 DF93      		push r29
+ 381               	/* prologue: function */
+ 382               	/* frame size = 0 */
+ 383 021a EC01      		movw r28,r24
+ 384 021c A091 0000 		lds r26,ADC_buffer
+ 385 0220 B091 0000 		lds r27,(ADC_buffer)+1
+ 386 0224 9296      		adiw r26,34
+ 387 0226 9C91      		ld r25,X
+ 388 0228 9297      		sbiw r26,34
+ 389 022a 9096      		adiw r26,32
+ 390 022c 8C91      		ld r24,X
+ 391 022e 9097      		sbiw r26,32
+ 392 0230 8917      		cp r24,r25
+ 393 0232 01F4      		brne .L60
+ 394 0234 81E0      		ldi r24,lo8(1)
+ 395 0236 90E0      		ldi r25,hi8(1)
+ 396 0238 00C0      		rjmp .L61
+ 397               	.L60:
+ 398 023a 892F      		mov r24,r25
+ 399 023c 90E0      		ldi r25,lo8(0)
+GAS LISTING C:\Temp/cc1AwWSd.s 			page 8
+
+
+ 400 023e FC01      		movw r30,r24
+ 401 0240 EE0F      		lsl r30
+ 402 0242 FF1F      		rol r31
+ 403 0244 EA0F      		add r30,r26
+ 404 0246 FB1F      		adc r31,r27
+ 405 0248 2081      		ld r18,Z
+ 406 024a 3181      		ldd r19,Z+1
+ 407 024c 3983      		std Y+1,r19
+ 408 024e 2883      		st Y,r18
+ 409 0250 0196      		adiw r24,1
+ 410 0252 8F70      		andi r24,lo8(15)
+ 411 0254 9070      		andi r25,hi8(15)
+ 412 0256 9396      		adiw r26,34+1
+ 413 0258 9C93      		st X,r25
+ 414 025a 8E93      		st -X,r24
+ 415 025c 9297      		sbiw r26,34
+ 416 025e 80E0      		ldi r24,lo8(0)
+ 417 0260 90E0      		ldi r25,hi8(0)
+ 418               	.L61:
+ 419               	/* epilogue start */
+ 420 0262 DF91      		pop r29
+ 421 0264 CF91      		pop r28
+ 422 0266 0895      		ret
+ 423               		.size	ADCRead, .-ADCRead
+ 424               	.global	ADCGetMode
+ 425               		.type	ADCGetMode, @function
+ 426               	ADCGetMode:
+ 427               	/* prologue: function */
+ 428               	/* frame size = 0 */
+ 429 0268 8091 0000 		lds r24,current_mode
+ 430 026c 9091 0000 		lds r25,current_mode+1
+ 431               	/* epilogue start */
+ 432 0270 0895      		ret
+ 433               		.size	ADCGetMode, .-ADCGetMode
+ 434               	.global	ADCInit
+ 435               		.type	ADCInit, @function
+ 436               	ADCInit:
+ 437               	/* prologue: function */
+ 438               	/* frame size = 0 */
+ 439 0272 8091 0000 		lds r24,ADC_buffer
+ 440 0276 9091 0000 		lds r25,(ADC_buffer)+1
+ 441 027a 892B      		or r24,r25
+ 442 027c 01F4      		brne .L67
+ 443 027e 87B1      		in r24,39-32
+ 444 0280 887F      		andi r24,lo8(-8)
+ 445 0282 87B9      		out 39-32,r24
+ 446 0284 80E0      		ldi r24,lo8(0)
+ 447 0286 90E0      		ldi r25,hi8(0)
+ 448 0288 0E94 0000 		call ADCSetRef
+ 449 028c 82E0      		ldi r24,lo8(2)
+ 450 028e 90E0      		ldi r25,hi8(2)
+ 451 0290 0E94 0000 		call ADCSetMode
+ 452 0294 86E0      		ldi r24,lo8(6)
+ 453 0296 0E94 0000 		call ADCSetPrescale
+ 454 029a 62E2      		ldi r22,lo8(34)
+ 455 029c 70E0      		ldi r23,hi8(34)
+ 456 029e 80E0      		ldi r24,lo8(heapFreeList)
+GAS LISTING C:\Temp/cc1AwWSd.s 			page 9
+
+
+ 457 02a0 90E0      		ldi r25,hi8(heapFreeList)
+ 458 02a2 0E94 0000 		call NutHeapRootAlloc
+ 459 02a6 FC01      		movw r30,r24
+ 460 02a8 9093 0000 		sts (ADC_buffer)+1,r25
+ 461 02ac 8093 0000 		sts ADC_buffer,r24
+ 462 02b0 11A2      		std Z+33,__zero_reg__
+ 463 02b2 10A2      		std Z+32,__zero_reg__
+ 464 02b4 13A2      		std Z+35,__zero_reg__
+ 465 02b6 12A2      		std Z+34,__zero_reg__
+ 466 02b8 40E0      		ldi r20,lo8(0)
+ 467 02ba 50E0      		ldi r21,hi8(0)
+ 468 02bc 60E0      		ldi r22,lo8(gs(ADCInterrupt))
+ 469 02be 70E0      		ldi r23,hi8(gs(ADCInterrupt))
+ 470 02c0 80E0      		ldi r24,lo8(sig_ADC)
+ 471 02c2 90E0      		ldi r25,hi8(sig_ADC)
+ 472 02c4 0E94 0000 		call NutRegisterIrqHandler
+ 473 02c8 892B      		or r24,r25
+ 474 02ca 01F4      		brne .L67
+ 475 02cc 379A      		sbi 38-32,7
+ 476 02ce 339A      		sbi 38-32,3
+ 477               	.L67:
+ 478 02d0 0895      		ret
+ 479               		.size	ADCInit, .-ADCInit
+ 480               	.global	adc_sleep_mode
+ 481               		.data
+ 482               		.type	adc_sleep_mode, @object
+ 483               		.size	adc_sleep_mode, 1
+ 484               	adc_sleep_mode:
+ 485 0000 08        		.byte	8
+ 486               	.global	current_mode
+ 487               	.global	current_mode
+ 488               		.section .bss
+ 489               		.type	current_mode, @object
+ 490               		.size	current_mode, 2
+ 491               	current_mode:
+ 492 0000 0000      		.skip 2,0
+ 493               	.global	ADC_buffer
+ 494               	.global	ADC_buffer
+ 495               		.type	ADC_buffer, @object
+ 496               		.size	ADC_buffer, 2
+ 497               	ADC_buffer:
+ 498 0002 0000      		.skip 2,0
+GAS LISTING C:\Temp/cc1AwWSd.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 adc.c
+  C:\Temp/cc1AwWSd.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cc1AwWSd.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cc1AwWSd.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cc1AwWSd.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cc1AwWSd.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cc1AwWSd.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cc1AwWSd.s:13     .text:00000000 ADCBufRead
+  C:\Temp/cc1AwWSd.s:61     .text:0000004e ADCBufWrite
+  C:\Temp/cc1AwWSd.s:112    .text:000000a2 ADCBufInit
+  C:\Temp/cc1AwWSd.s:124    .text:000000ae ADCInterrupt
+  C:\Temp/cc1AwWSd.s:497    .bss:00000002 ADC_buffer
+  C:\Temp/cc1AwWSd.s:151    .text:000000dc ADCSetRef
+  C:\Temp/cc1AwWSd.s:491    .bss:00000000 current_mode
+  C:\Temp/cc1AwWSd.s:189    .text:00000116 ADCSetMode
+  C:\Temp/cc1AwWSd.s:221    .text:00000148 ADCSetPrescale
+  C:\Temp/cc1AwWSd.s:294    .text:000001b2 ADCSetChannel
+  C:\Temp/cc1AwWSd.s:306    .text:000001bc ADCBufferFlush
+  C:\Temp/cc1AwWSd.s:320    .text:000001ce ADCStartConversion
+  C:\Temp/cc1AwWSd.s:329    .text:000001d2 ADCStartLowNoiseConversion
+  C:\Temp/cc1AwWSd.s:484    .data:00000000 adc_sleep_mode
+  C:\Temp/cc1AwWSd.s:363    .text:00000202 ADCStopConversion
+  C:\Temp/cc1AwWSd.s:378    .text:00000216 ADCRead
+  C:\Temp/cc1AwWSd.s:426    .text:00000268 ADCGetMode
+  C:\Temp/cc1AwWSd.s:436    .text:00000272 ADCInit
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+heapFreeList
+NutHeapRootAlloc
+sig_ADC
+NutRegisterIrqHandler

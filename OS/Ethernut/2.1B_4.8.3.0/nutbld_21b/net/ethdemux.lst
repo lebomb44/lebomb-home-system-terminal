@@ -1,0 +1,212 @@
+GAS LISTING C:\Temp/ccrclSU3.s 			page 1
+
+
+   1               		.file	"ethdemux.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	NutEtherDemux, @function
+  12               	NutEtherDemux:
+  13 0000 CF92      		push r12
+  14 0002 DF92      		push r13
+  15 0004 EF92      		push r14
+  16 0006 FF92      		push r15
+  17 0008 0F93      		push r16
+  18 000a 1F93      		push r17
+  19 000c CF93      		push r28
+  20 000e DF93      		push r29
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23 0010 6C01      		movw r12,r24
+  24 0012 7B01      		movw r14,r22
+  25 0014 DB01      		movw r26,r22
+  26 0016 1396      		adiw r26,3
+  27 0018 ED91      		ld r30,X+
+  28 001a FC91      		ld r31,X
+  29 001c 1497      		sbiw r26,3+1
+  30 001e 0485      		ldd r16,Z+12
+  31 0020 1585      		ldd r17,Z+13
+  32               	/* #APP */
+  33               	 ;  295 "../../nut/include/sys/types.h" 1
+  34 0022 002E      		mov __tmp_reg__, r16
+  35 0024 012F      		mov r16, r17
+  36 0026 102D      		mov r17, __tmp_reg__
+  37               		
+  38               	 ;  0 "" 2
+  39               	/* #NOAPP */
+  40 0028 C091 0000 		lds r28,eth_prot
+  41 002c D091 0000 		lds r29,(eth_prot)+1
+  42 0030 00C0      		rjmp .L2
+  43               	.L5:
+  44 0032 8C81      		ldd r24,Y+4
+  45 0034 9D81      		ldd r25,Y+5
+  46 0036 8023      		and r24,r16
+  47 0038 9123      		and r25,r17
+  48 003a 2A81      		ldd r18,Y+2
+  49 003c 3B81      		ldd r19,Y+3
+  50 003e 8217      		cp r24,r18
+  51 0040 9307      		cpc r25,r19
+  52 0042 01F4      		brne .L3
+  53 0044 EE81      		ldd r30,Y+6
+  54 0046 FF81      		ldd r31,Y+7
+  55 0048 3097      		sbiw r30,0
+  56 004a 01F0      		breq .L3
+  57 004c B701      		movw r22,r14
+GAS LISTING C:\Temp/ccrclSU3.s 			page 2
+
+
+  58 004e C601      		movw r24,r12
+  59 0050 0995      		icall
+  60 0052 892B      		or r24,r25
+  61 0054 01F4      		brne .L3
+  62 0056 20E0      		ldi r18,lo8(0)
+  63 0058 30E0      		ldi r19,hi8(0)
+  64 005a 00C0      		rjmp .L4
+  65               	.L3:
+  66 005c 0990      		ld __tmp_reg__,Y+
+  67 005e D881      		ld r29,Y
+  68 0060 C02D      		mov r28,__tmp_reg__
+  69               	.L2:
+  70 0062 2097      		sbiw r28,0
+  71 0064 01F4      		brne .L5
+  72 0066 2FEF      		ldi r18,lo8(-1)
+  73 0068 3FEF      		ldi r19,hi8(-1)
+  74               	.L4:
+  75 006a C901      		movw r24,r18
+  76               	/* epilogue start */
+  77 006c DF91      		pop r29
+  78 006e CF91      		pop r28
+  79 0070 1F91      		pop r17
+  80 0072 0F91      		pop r16
+  81 0074 FF90      		pop r15
+  82 0076 EF90      		pop r14
+  83 0078 DF90      		pop r13
+  84 007a CF90      		pop r12
+  85 007c 0895      		ret
+  86               		.size	NutEtherDemux, .-NutEtherDemux
+  87               	.global	NutRegisterEthHandler
+  88               		.type	NutRegisterEthHandler, @function
+  89               	NutRegisterEthHandler:
+  90 007e EF92      		push r14
+  91 0080 FF92      		push r15
+  92 0082 0F93      		push r16
+  93 0084 1F93      		push r17
+  94 0086 CF93      		push r28
+  95 0088 DF93      		push r29
+  96               	/* prologue: function */
+  97               	/* frame size = 0 */
+  98 008a EC01      		movw r28,r24
+  99 008c 8B01      		movw r16,r22
+ 100 008e 7A01      		movw r14,r20
+ 101 0090 A091 0000 		lds r26,eth_prot
+ 102 0094 B091 0000 		lds r27,(eth_prot)+1
+ 103 0098 00C0      		rjmp .L8
+ 104               	.L11:
+ 105 009a 1296      		adiw r26,2
+ 106 009c 8D91      		ld r24,X+
+ 107 009e 9C91      		ld r25,X
+ 108 00a0 1397      		sbiw r26,2+1
+ 109 00a2 8C17      		cp r24,r28
+ 110 00a4 9D07      		cpc r25,r29
+ 111 00a6 01F4      		brne .L9
+ 112 00a8 1496      		adiw r26,4
+ 113 00aa 8D91      		ld r24,X+
+ 114 00ac 9C91      		ld r25,X
+GAS LISTING C:\Temp/ccrclSU3.s 			page 3
+
+
+ 115 00ae 1597      		sbiw r26,4+1
+ 116 00b0 8017      		cp r24,r16
+ 117 00b2 9107      		cpc r25,r17
+ 118 00b4 01F0      		breq .L10
+ 119               	.L9:
+ 120 00b6 0D90      		ld __tmp_reg__,X+
+ 121 00b8 BC91      		ld r27,X
+ 122 00ba A02D      		mov r26,__tmp_reg__
+ 123               	.L8:
+ 124 00bc 1097      		sbiw r26,0
+ 125 00be 01F4      		brne .L11
+ 126 00c0 00C0      		rjmp .L18
+ 127               	.L14:
+ 128 00c2 D383      		std Z+3,r29
+ 129 00c4 C283      		std Z+2,r28
+ 130 00c6 1583      		std Z+5,r17
+ 131 00c8 0483      		std Z+4,r16
+ 132 00ca 8091 0000 		lds r24,eth_prot
+ 133 00ce 9091 0000 		lds r25,(eth_prot)+1
+ 134 00d2 0097      		sbiw r24,0
+ 135 00d4 01F4      		brne .L13
+ 136 00d6 B093 0000 		sts (eth_prot)+1,r27
+ 137 00da A093 0000 		sts eth_prot,r26
+ 138 00de 80E0      		ldi r24,lo8(gs(NutEtherDemux))
+ 139 00e0 90E0      		ldi r25,hi8(gs(NutEtherDemux))
+ 140 00e2 9093 0000 		sts (ether_demux)+1,r25
+ 141 00e6 8093 0000 		sts ether_demux,r24
+ 142 00ea 00C0      		rjmp .L10
+ 143               	.L13:
+ 144 00ec 1196      		adiw r26,1
+ 145 00ee 9C93      		st X,r25
+ 146 00f0 8E93      		st -X,r24
+ 147 00f2 B093 0000 		sts (eth_prot)+1,r27
+ 148 00f6 A093 0000 		sts eth_prot,r26
+ 149               	.L10:
+ 150 00fa 1796      		adiw r26,6+1
+ 151 00fc FC92      		st X,r15
+ 152 00fe EE92      		st -X,r14
+ 153 0100 1697      		sbiw r26,6
+ 154 0102 20E0      		ldi r18,lo8(0)
+ 155 0104 30E0      		ldi r19,hi8(0)
+ 156               	.L15:
+ 157 0106 C901      		movw r24,r18
+ 158               	/* epilogue start */
+ 159 0108 DF91      		pop r29
+ 160 010a CF91      		pop r28
+ 161 010c 1F91      		pop r17
+ 162 010e 0F91      		pop r16
+ 163 0110 FF90      		pop r15
+ 164 0112 EF90      		pop r14
+ 165 0114 0895      		ret
+ 166               	.L18:
+ 167 0116 68E0      		ldi r22,lo8(8)
+ 168 0118 70E0      		ldi r23,hi8(8)
+ 169 011a 81E0      		ldi r24,lo8(1)
+ 170 011c 90E0      		ldi r25,hi8(1)
+ 171 011e 0E94 0000 		call calloc
+GAS LISTING C:\Temp/ccrclSU3.s 			page 4
+
+
+ 172 0122 FC01      		movw r30,r24
+ 173 0124 DC01      		movw r26,r24
+ 174 0126 0097      		sbiw r24,0
+ 175 0128 01F4      		brne .L14
+ 176 012a 2FEF      		ldi r18,lo8(-1)
+ 177 012c 3FEF      		ldi r19,hi8(-1)
+ 178 012e 00C0      		rjmp .L15
+ 179               		.size	NutRegisterEthHandler, .-NutRegisterEthHandler
+ 180               		.lcomm eth_prot,2
+GAS LISTING C:\Temp/ccrclSU3.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ethdemux.c
+  C:\Temp/ccrclSU3.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccrclSU3.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccrclSU3.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccrclSU3.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccrclSU3.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccrclSU3.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccrclSU3.s:12     .text:00000000 NutEtherDemux
+                             .bss:00000000 eth_prot
+  C:\Temp/ccrclSU3.s:89     .text:0000007e NutRegisterEthHandler
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+ether_demux
+calloc

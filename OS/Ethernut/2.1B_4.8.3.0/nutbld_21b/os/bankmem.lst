@@ -1,0 +1,535 @@
+GAS LISTING C:\Temp/cceAunOe.s 			page 1
+
+
+   1               		.file	"bankmem.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutSegBufReset
+  12               		.type	NutSegBufReset, @function
+  13               	NutSegBufReset:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 8091 0000 		lds r24,segbuf_start
+  17 0004 9091 0000 		lds r25,segbuf_start+1
+  18 0008 8093 0000 		sts segbuf_wp,r24
+  19 000c 9093 0000 		sts segbuf_wp+1,r25
+  20 0010 8093 0000 		sts segbuf_rp,r24
+  21 0014 9093 0000 		sts segbuf_rp+1,r25
+  22 0018 1092 0000 		sts segbuf_ws,__zero_reg__
+  23 001c 1092 0000 		sts segbuf_rs,__zero_reg__
+  24 0020 1092 00FF 		sts -256,__zero_reg__
+  25 0024 21E0      		ldi r18,lo8(1)
+  26 0026 2093 0000 		sts segbuf_empty,r18
+  27 002a 1092 0000 		sts segbuf_used,__zero_reg__
+  28 002e 1092 0000 		sts (segbuf_used)+1,__zero_reg__
+  29 0032 1092 0000 		sts (segbuf_used)+2,__zero_reg__
+  30 0036 1092 0000 		sts (segbuf_used)+3,__zero_reg__
+  31               	/* epilogue start */
+  32 003a 0895      		ret
+  33               		.size	NutSegBufReset, .-NutSegBufReset
+  34               	.global	NutSegBufInit
+  35               		.type	NutSegBufInit, @function
+  36               	NutSegBufInit:
+  37               	/* prologue: function */
+  38               	/* frame size = 0 */
+  39 003c 20E0      		ldi r18,lo8(-32768)
+  40 003e 30E8      		ldi r19,hi8(-32768)
+  41 0040 3093 0000 		sts (segbuf_start)+1,r19
+  42 0044 2093 0000 		sts segbuf_start,r18
+  43 0048 80E0      		ldi r24,lo8(-16384)
+  44 004a 90EC      		ldi r25,hi8(-16384)
+  45 004c 9093 0000 		sts (segbuf_end)+1,r25
+  46 0050 8093 0000 		sts segbuf_end,r24
+  47 0054 80E0      		ldi r24,lo8(491520)
+  48 0056 90E8      		ldi r25,hi8(491520)
+  49 0058 A7E0      		ldi r26,hlo8(491520)
+  50 005a B0E0      		ldi r27,hhi8(491520)
+  51 005c 8093 0000 		sts segbuf_total,r24
+  52 0060 9093 0000 		sts (segbuf_total)+1,r25
+  53 0064 A093 0000 		sts (segbuf_total)+2,r26
+  54 0068 B093 0000 		sts (segbuf_total)+3,r27
+  55 006c 3093 0000 		sts (segbuf_wp)+1,r19
+  56 0070 2093 0000 		sts segbuf_wp,r18
+  57 0074 3093 0000 		sts (segbuf_rp)+1,r19
+GAS LISTING C:\Temp/cceAunOe.s 			page 2
+
+
+  58 0078 2093 0000 		sts segbuf_rp,r18
+  59 007c 1092 0000 		sts segbuf_ws,__zero_reg__
+  60 0080 1092 0000 		sts segbuf_rs,__zero_reg__
+  61 0084 1092 00FF 		sts -256,__zero_reg__
+  62 0088 81E0      		ldi r24,lo8(1)
+  63 008a 8093 0000 		sts segbuf_empty,r24
+  64 008e 1092 0000 		sts segbuf_used,__zero_reg__
+  65 0092 1092 0000 		sts (segbuf_used)+1,__zero_reg__
+  66 0096 1092 0000 		sts (segbuf_used)+2,__zero_reg__
+  67 009a 1092 0000 		sts (segbuf_used)+3,__zero_reg__
+  68 009e 80E0      		ldi r24,lo8(-32768)
+  69 00a0 90E8      		ldi r25,hi8(-32768)
+  70               	/* epilogue start */
+  71 00a2 0895      		ret
+  72               		.size	NutSegBufInit, .-NutSegBufInit
+  73               	.global	NutSegBufWriteRequest
+  74               		.type	NutSegBufWriteRequest, @function
+  75               	NutSegBufWriteRequest:
+  76               	/* prologue: function */
+  77               	/* frame size = 0 */
+  78 00a4 FC01      		movw r30,r24
+  79 00a6 8091 0000 		lds r24,segbuf_empty
+  80 00aa 8823      		tst r24
+  81 00ac 01F4      		brne .L6
+  82 00ae 9091 0000 		lds r25,segbuf_ws
+  83 00b2 8091 0000 		lds r24,segbuf_rs
+  84 00b6 9817      		cp r25,r24
+  85 00b8 01F4      		brne .L6
+  86 00ba 2091 0000 		lds r18,segbuf_wp
+  87 00be 3091 0000 		lds r19,(segbuf_wp)+1
+  88 00c2 8091 0000 		lds r24,segbuf_rp
+  89 00c6 9091 0000 		lds r25,(segbuf_rp)+1
+  90 00ca 8217      		cp r24,r18
+  91 00cc 9307      		cpc r25,r19
+  92 00ce 00F4      		brsh .L7
+  93               	.L6:
+  94 00d0 8091 0000 		lds r24,segbuf_end
+  95 00d4 9091 0000 		lds r25,(segbuf_end)+1
+  96 00d8 2091 0000 		lds r18,segbuf_wp
+  97 00dc 3091 0000 		lds r19,(segbuf_wp)+1
+  98               	.L7:
+  99 00e0 821B      		sub r24,r18
+ 100 00e2 930B      		sbc r25,r19
+ 101 00e4 9183      		std Z+1,r25
+ 102 00e6 8083      		st Z,r24
+ 103 00e8 8091 0000 		lds r24,segbuf_ws
+ 104 00ec E82F      		mov r30,r24
+ 105 00ee FF27      		clr r31
+ 106 00f0 E7FD      		sbrc r30,7
+ 107 00f2 F095      		com r31
+ 108 00f4 E050      		subi r30,lo8(-(-256))
+ 109 00f6 F140      		sbci r31,hi8(-(-256))
+ 110 00f8 8083      		st Z,r24
+ 111 00fa 8091 0000 		lds r24,segbuf_wp
+ 112 00fe 9091 0000 		lds r25,segbuf_wp+1
+ 113               	/* epilogue start */
+ 114 0102 0895      		ret
+GAS LISTING C:\Temp/cceAunOe.s 			page 3
+
+
+ 115               		.size	NutSegBufWriteRequest, .-NutSegBufWriteRequest
+ 116               	.global	NutSegBufReadRequest
+ 117               		.type	NutSegBufReadRequest, @function
+ 118               	NutSegBufReadRequest:
+ 119               	/* prologue: function */
+ 120               	/* frame size = 0 */
+ 121 0104 FC01      		movw r30,r24
+ 122 0106 8091 0000 		lds r24,segbuf_empty
+ 123 010a 8823      		tst r24
+ 124 010c 01F0      		breq .L11
+ 125 010e 1182      		std Z+1,__zero_reg__
+ 126 0110 1082      		st Z,__zero_reg__
+ 127 0112 00C0      		rjmp .L12
+ 128               	.L11:
+ 129 0114 9091 0000 		lds r25,segbuf_ws
+ 130 0118 8091 0000 		lds r24,segbuf_rs
+ 131 011c 9817      		cp r25,r24
+ 132 011e 01F4      		brne .L13
+ 133 0120 2091 0000 		lds r18,segbuf_rp
+ 134 0124 3091 0000 		lds r19,(segbuf_rp)+1
+ 135 0128 8091 0000 		lds r24,segbuf_wp
+ 136 012c 9091 0000 		lds r25,(segbuf_wp)+1
+ 137 0130 2817      		cp r18,r24
+ 138 0132 3907      		cpc r19,r25
+ 139 0134 00F0      		brlo .L14
+ 140               	.L13:
+ 141 0136 8091 0000 		lds r24,segbuf_end
+ 142 013a 9091 0000 		lds r25,(segbuf_end)+1
+ 143 013e 2091 0000 		lds r18,segbuf_rp
+ 144 0142 3091 0000 		lds r19,(segbuf_rp)+1
+ 145 0146 821B      		sub r24,r18
+ 146 0148 930B      		sbc r25,r19
+ 147 014a 9183      		std Z+1,r25
+ 148 014c 8083      		st Z,r24
+ 149 014e 00C0      		rjmp .L12
+ 150               	.L14:
+ 151 0150 821B      		sub r24,r18
+ 152 0152 930B      		sbc r25,r19
+ 153 0154 9183      		std Z+1,r25
+ 154 0156 8083      		st Z,r24
+ 155 0158 892B      		or r24,r25
+ 156 015a 01F4      		brne .L12
+ 157 015c 81E0      		ldi r24,lo8(1)
+ 158 015e 8093 0000 		sts segbuf_empty,r24
+ 159               	.L12:
+ 160 0162 8091 0000 		lds r24,segbuf_rs
+ 161 0166 E82F      		mov r30,r24
+ 162 0168 FF27      		clr r31
+ 163 016a E7FD      		sbrc r30,7
+ 164 016c F095      		com r31
+ 165 016e E050      		subi r30,lo8(-(-256))
+ 166 0170 F140      		sbci r31,hi8(-(-256))
+ 167 0172 8083      		st Z,r24
+ 168 0174 8091 0000 		lds r24,segbuf_rp
+ 169 0178 9091 0000 		lds r25,segbuf_rp+1
+ 170               	/* epilogue start */
+ 171 017c 0895      		ret
+GAS LISTING C:\Temp/cceAunOe.s 			page 4
+
+
+ 172               		.size	NutSegBufReadRequest, .-NutSegBufReadRequest
+ 173               	.global	NutSegBufWriteCommit
+ 174               		.type	NutSegBufWriteCommit, @function
+ 175               	NutSegBufWriteCommit:
+ 176               	/* prologue: function */
+ 177               	/* frame size = 0 */
+ 178 017e 0097      		sbiw r24,0
+ 179 0180 01F4      		brne .+2
+ 180 0182 00C0      		rjmp .L17
+ 181 0184 6091 0000 		lds r22,segbuf_wp
+ 182 0188 7091 0000 		lds r23,(segbuf_wp)+1
+ 183 018c 680F      		add r22,r24
+ 184 018e 791F      		adc r23,r25
+ 185 0190 7093 0000 		sts (segbuf_wp)+1,r23
+ 186 0194 6093 0000 		sts segbuf_wp,r22
+ 187 0198 1092 0000 		sts segbuf_empty,__zero_reg__
+ 188 019c 9C01      		movw r18,r24
+ 189 019e 40E0      		ldi r20,lo8(0)
+ 190 01a0 50E0      		ldi r21,hi8(0)
+ 191 01a2 8091 0000 		lds r24,segbuf_used
+ 192 01a6 9091 0000 		lds r25,(segbuf_used)+1
+ 193 01aa A091 0000 		lds r26,(segbuf_used)+2
+ 194 01ae B091 0000 		lds r27,(segbuf_used)+3
+ 195 01b2 820F      		add r24,r18
+ 196 01b4 931F      		adc r25,r19
+ 197 01b6 A41F      		adc r26,r20
+ 198 01b8 B51F      		adc r27,r21
+ 199 01ba 8093 0000 		sts segbuf_used,r24
+ 200 01be 9093 0000 		sts (segbuf_used)+1,r25
+ 201 01c2 A093 0000 		sts (segbuf_used)+2,r26
+ 202 01c6 B093 0000 		sts (segbuf_used)+3,r27
+ 203 01ca 8091 0000 		lds r24,segbuf_end
+ 204 01ce 9091 0000 		lds r25,(segbuf_end)+1
+ 205 01d2 6817      		cp r22,r24
+ 206 01d4 7907      		cpc r23,r25
+ 207 01d6 01F4      		brne .L17
+ 208 01d8 8091 0000 		lds r24,segbuf_start
+ 209 01dc 9091 0000 		lds r25,(segbuf_start)+1
+ 210 01e0 9093 0000 		sts (segbuf_wp)+1,r25
+ 211 01e4 8093 0000 		sts segbuf_wp,r24
+ 212 01e8 8091 0000 		lds r24,segbuf_ws
+ 213 01ec 8F5F      		subi r24,lo8(-(1))
+ 214 01ee 8093 0000 		sts segbuf_ws,r24
+ 215 01f2 8E31      		cpi r24,lo8(30)
+ 216 01f4 04F0      		brlt .L18
+ 217 01f6 1092 0000 		sts segbuf_ws,__zero_reg__
+ 218               	.L18:
+ 219 01fa 8091 0000 		lds r24,segbuf_ws
+ 220 01fe E82F      		mov r30,r24
+ 221 0200 FF27      		clr r31
+ 222 0202 E7FD      		sbrc r30,7
+ 223 0204 F095      		com r31
+ 224 0206 E050      		subi r30,lo8(-(-256))
+ 225 0208 F140      		sbci r31,hi8(-(-256))
+ 226 020a 8083      		st Z,r24
+ 227               	.L17:
+ 228 020c 8091 0000 		lds r24,segbuf_wp
+GAS LISTING C:\Temp/cceAunOe.s 			page 5
+
+
+ 229 0210 9091 0000 		lds r25,segbuf_wp+1
+ 230               	/* epilogue start */
+ 231 0214 0895      		ret
+ 232               		.size	NutSegBufWriteCommit, .-NutSegBufWriteCommit
+ 233               	.global	NutSegBufReadCommit
+ 234               		.type	NutSegBufReadCommit, @function
+ 235               	NutSegBufReadCommit:
+ 236               	/* prologue: function */
+ 237               	/* frame size = 0 */
+ 238 0216 0097      		sbiw r24,0
+ 239 0218 01F4      		brne .+2
+ 240 021a 00C0      		rjmp .L21
+ 241 021c 6091 0000 		lds r22,segbuf_rp
+ 242 0220 7091 0000 		lds r23,(segbuf_rp)+1
+ 243 0224 680F      		add r22,r24
+ 244 0226 791F      		adc r23,r25
+ 245 0228 7093 0000 		sts (segbuf_rp)+1,r23
+ 246 022c 6093 0000 		sts segbuf_rp,r22
+ 247 0230 9C01      		movw r18,r24
+ 248 0232 40E0      		ldi r20,lo8(0)
+ 249 0234 50E0      		ldi r21,hi8(0)
+ 250 0236 8091 0000 		lds r24,segbuf_used
+ 251 023a 9091 0000 		lds r25,(segbuf_used)+1
+ 252 023e A091 0000 		lds r26,(segbuf_used)+2
+ 253 0242 B091 0000 		lds r27,(segbuf_used)+3
+ 254 0246 821B      		sub r24,r18
+ 255 0248 930B      		sbc r25,r19
+ 256 024a A40B      		sbc r26,r20
+ 257 024c B50B      		sbc r27,r21
+ 258 024e 8093 0000 		sts segbuf_used,r24
+ 259 0252 9093 0000 		sts (segbuf_used)+1,r25
+ 260 0256 A093 0000 		sts (segbuf_used)+2,r26
+ 261 025a B093 0000 		sts (segbuf_used)+3,r27
+ 262 025e 8091 0000 		lds r24,segbuf_end
+ 263 0262 9091 0000 		lds r25,(segbuf_end)+1
+ 264 0266 6817      		cp r22,r24
+ 265 0268 7907      		cpc r23,r25
+ 266 026a 01F4      		brne .L22
+ 267 026c 8091 0000 		lds r24,segbuf_start
+ 268 0270 9091 0000 		lds r25,(segbuf_start)+1
+ 269 0274 9093 0000 		sts (segbuf_rp)+1,r25
+ 270 0278 8093 0000 		sts segbuf_rp,r24
+ 271 027c 8091 0000 		lds r24,segbuf_rs
+ 272 0280 8F5F      		subi r24,lo8(-(1))
+ 273 0282 8093 0000 		sts segbuf_rs,r24
+ 274 0286 8E31      		cpi r24,lo8(30)
+ 275 0288 04F0      		brlt .L23
+ 276 028a 1092 0000 		sts segbuf_rs,__zero_reg__
+ 277               	.L23:
+ 278 028e 8091 0000 		lds r24,segbuf_rs
+ 279 0292 E82F      		mov r30,r24
+ 280 0294 FF27      		clr r31
+ 281 0296 E7FD      		sbrc r30,7
+ 282 0298 F095      		com r31
+ 283 029a E050      		subi r30,lo8(-(-256))
+ 284 029c F140      		sbci r31,hi8(-(-256))
+ 285 029e 8083      		st Z,r24
+GAS LISTING C:\Temp/cceAunOe.s 			page 6
+
+
+ 286               	.L22:
+ 287 02a0 2091 0000 		lds r18,segbuf_rp
+ 288 02a4 3091 0000 		lds r19,(segbuf_rp)+1
+ 289 02a8 8091 0000 		lds r24,segbuf_wp
+ 290 02ac 9091 0000 		lds r25,(segbuf_wp)+1
+ 291 02b0 2817      		cp r18,r24
+ 292 02b2 3907      		cpc r19,r25
+ 293 02b4 01F4      		brne .L21
+ 294 02b6 9091 0000 		lds r25,segbuf_rs
+ 295 02ba 8091 0000 		lds r24,segbuf_ws
+ 296 02be 9817      		cp r25,r24
+ 297 02c0 01F4      		brne .L21
+ 298 02c2 81E0      		ldi r24,lo8(1)
+ 299 02c4 8093 0000 		sts segbuf_empty,r24
+ 300               	.L21:
+ 301 02c8 8091 0000 		lds r24,segbuf_rp
+ 302 02cc 9091 0000 		lds r25,segbuf_rp+1
+ 303               	/* epilogue start */
+ 304 02d0 0895      		ret
+ 305               		.size	NutSegBufReadCommit, .-NutSegBufReadCommit
+ 306               	.global	NutSegBufWriteLast
+ 307               		.type	NutSegBufWriteLast, @function
+ 308               	NutSegBufWriteLast:
+ 309               	/* prologue: function */
+ 310               	/* frame size = 0 */
+ 311 02d2 0097      		sbiw r24,0
+ 312 02d4 01F0      		breq .L26
+ 313 02d6 6091 0000 		lds r22,segbuf_wp
+ 314 02da 7091 0000 		lds r23,(segbuf_wp)+1
+ 315 02de 680F      		add r22,r24
+ 316 02e0 791F      		adc r23,r25
+ 317 02e2 7093 0000 		sts (segbuf_wp)+1,r23
+ 318 02e6 6093 0000 		sts segbuf_wp,r22
+ 319 02ea 9C01      		movw r18,r24
+ 320 02ec 40E0      		ldi r20,lo8(0)
+ 321 02ee 50E0      		ldi r21,hi8(0)
+ 322 02f0 8091 0000 		lds r24,segbuf_used
+ 323 02f4 9091 0000 		lds r25,(segbuf_used)+1
+ 324 02f8 A091 0000 		lds r26,(segbuf_used)+2
+ 325 02fc B091 0000 		lds r27,(segbuf_used)+3
+ 326 0300 820F      		add r24,r18
+ 327 0302 931F      		adc r25,r19
+ 328 0304 A41F      		adc r26,r20
+ 329 0306 B51F      		adc r27,r21
+ 330 0308 8093 0000 		sts segbuf_used,r24
+ 331 030c 9093 0000 		sts (segbuf_used)+1,r25
+ 332 0310 A093 0000 		sts (segbuf_used)+2,r26
+ 333 0314 B093 0000 		sts (segbuf_used)+3,r27
+ 334 0318 1092 0000 		sts segbuf_empty,__zero_reg__
+ 335 031c 8091 0000 		lds r24,segbuf_end
+ 336 0320 9091 0000 		lds r25,(segbuf_end)+1
+ 337 0324 6817      		cp r22,r24
+ 338 0326 7907      		cpc r23,r25
+ 339 0328 01F4      		brne .L26
+ 340 032a 8091 0000 		lds r24,segbuf_start
+ 341 032e 9091 0000 		lds r25,(segbuf_start)+1
+ 342 0332 9093 0000 		sts (segbuf_wp)+1,r25
+GAS LISTING C:\Temp/cceAunOe.s 			page 7
+
+
+ 343 0336 8093 0000 		sts segbuf_wp,r24
+ 344 033a 8091 0000 		lds r24,segbuf_ws
+ 345 033e 8F5F      		subi r24,lo8(-(1))
+ 346 0340 8093 0000 		sts segbuf_ws,r24
+ 347 0344 8E31      		cpi r24,lo8(30)
+ 348 0346 04F0      		brlt .L26
+ 349 0348 1092 0000 		sts segbuf_ws,__zero_reg__
+ 350               	.L26:
+ 351 034c 8091 0000 		lds r24,segbuf_rs
+ 352 0350 E82F      		mov r30,r24
+ 353 0352 FF27      		clr r31
+ 354 0354 E7FD      		sbrc r30,7
+ 355 0356 F095      		com r31
+ 356 0358 E050      		subi r30,lo8(-(-256))
+ 357 035a F140      		sbci r31,hi8(-(-256))
+ 358 035c 8083      		st Z,r24
+ 359               	/* epilogue start */
+ 360 035e 0895      		ret
+ 361               		.size	NutSegBufWriteLast, .-NutSegBufWriteLast
+ 362               	.global	NutSegBufReadLast
+ 363               		.type	NutSegBufReadLast, @function
+ 364               	NutSegBufReadLast:
+ 365               	/* prologue: function */
+ 366               	/* frame size = 0 */
+ 367 0360 0097      		sbiw r24,0
+ 368 0362 01F4      		brne .+2
+ 369 0364 00C0      		rjmp .L29
+ 370 0366 6091 0000 		lds r22,segbuf_rp
+ 371 036a 7091 0000 		lds r23,(segbuf_rp)+1
+ 372 036e 680F      		add r22,r24
+ 373 0370 791F      		adc r23,r25
+ 374 0372 7093 0000 		sts (segbuf_rp)+1,r23
+ 375 0376 6093 0000 		sts segbuf_rp,r22
+ 376 037a 9C01      		movw r18,r24
+ 377 037c 40E0      		ldi r20,lo8(0)
+ 378 037e 50E0      		ldi r21,hi8(0)
+ 379 0380 8091 0000 		lds r24,segbuf_used
+ 380 0384 9091 0000 		lds r25,(segbuf_used)+1
+ 381 0388 A091 0000 		lds r26,(segbuf_used)+2
+ 382 038c B091 0000 		lds r27,(segbuf_used)+3
+ 383 0390 821B      		sub r24,r18
+ 384 0392 930B      		sbc r25,r19
+ 385 0394 A40B      		sbc r26,r20
+ 386 0396 B50B      		sbc r27,r21
+ 387 0398 8093 0000 		sts segbuf_used,r24
+ 388 039c 9093 0000 		sts (segbuf_used)+1,r25
+ 389 03a0 A093 0000 		sts (segbuf_used)+2,r26
+ 390 03a4 B093 0000 		sts (segbuf_used)+3,r27
+ 391 03a8 8091 0000 		lds r24,segbuf_end
+ 392 03ac 9091 0000 		lds r25,(segbuf_end)+1
+ 393 03b0 6817      		cp r22,r24
+ 394 03b2 7907      		cpc r23,r25
+ 395 03b4 01F4      		brne .L30
+ 396 03b6 8091 0000 		lds r24,segbuf_start
+ 397 03ba 9091 0000 		lds r25,(segbuf_start)+1
+ 398 03be 9093 0000 		sts (segbuf_rp)+1,r25
+ 399 03c2 8093 0000 		sts segbuf_rp,r24
+GAS LISTING C:\Temp/cceAunOe.s 			page 8
+
+
+ 400 03c6 8091 0000 		lds r24,segbuf_rs
+ 401 03ca 8F5F      		subi r24,lo8(-(1))
+ 402 03cc 8093 0000 		sts segbuf_rs,r24
+ 403 03d0 8E31      		cpi r24,lo8(30)
+ 404 03d2 04F0      		brlt .L30
+ 405 03d4 1092 0000 		sts segbuf_rs,__zero_reg__
+ 406               	.L30:
+ 407 03d8 2091 0000 		lds r18,segbuf_rp
+ 408 03dc 3091 0000 		lds r19,(segbuf_rp)+1
+ 409 03e0 8091 0000 		lds r24,segbuf_wp
+ 410 03e4 9091 0000 		lds r25,(segbuf_wp)+1
+ 411 03e8 2817      		cp r18,r24
+ 412 03ea 3907      		cpc r19,r25
+ 413 03ec 01F4      		brne .L29
+ 414 03ee 9091 0000 		lds r25,segbuf_rs
+ 415 03f2 8091 0000 		lds r24,segbuf_ws
+ 416 03f6 9817      		cp r25,r24
+ 417 03f8 01F4      		brne .L29
+ 418 03fa 81E0      		ldi r24,lo8(1)
+ 419 03fc 8093 0000 		sts segbuf_empty,r24
+ 420               	.L29:
+ 421 0400 8091 0000 		lds r24,segbuf_ws
+ 422 0404 E82F      		mov r30,r24
+ 423 0406 FF27      		clr r31
+ 424 0408 E7FD      		sbrc r30,7
+ 425 040a F095      		com r31
+ 426 040c E050      		subi r30,lo8(-(-256))
+ 427 040e F140      		sbci r31,hi8(-(-256))
+ 428 0410 8083      		st Z,r24
+ 429               	/* epilogue start */
+ 430 0412 0895      		ret
+ 431               		.size	NutSegBufReadLast, .-NutSegBufReadLast
+ 432               	.global	NutSegBufAvailable
+ 433               		.type	NutSegBufAvailable, @function
+ 434               	NutSegBufAvailable:
+ 435               	/* prologue: function */
+ 436               	/* frame size = 0 */
+ 437 0414 2091 0000 		lds r18,segbuf_total
+ 438 0418 3091 0000 		lds r19,(segbuf_total)+1
+ 439 041c 4091 0000 		lds r20,(segbuf_total)+2
+ 440 0420 5091 0000 		lds r21,(segbuf_total)+3
+ 441 0424 8091 0000 		lds r24,segbuf_used
+ 442 0428 9091 0000 		lds r25,(segbuf_used)+1
+ 443 042c A091 0000 		lds r26,(segbuf_used)+2
+ 444 0430 B091 0000 		lds r27,(segbuf_used)+3
+ 445 0434 281B      		sub r18,r24
+ 446 0436 390B      		sbc r19,r25
+ 447 0438 4A0B      		sbc r20,r26
+ 448 043a 5B0B      		sbc r21,r27
+ 449 043c B901      		movw r22,r18
+ 450 043e CA01      		movw r24,r20
+ 451               	/* epilogue start */
+ 452 0440 0895      		ret
+ 453               		.size	NutSegBufAvailable, .-NutSegBufAvailable
+ 454               	.global	NutSegBufUsed
+ 455               		.type	NutSegBufUsed, @function
+ 456               	NutSegBufUsed:
+GAS LISTING C:\Temp/cceAunOe.s 			page 9
+
+
+ 457               	/* prologue: function */
+ 458               	/* frame size = 0 */
+ 459 0442 6091 0000 		lds r22,segbuf_used
+ 460 0446 7091 0000 		lds r23,segbuf_used+1
+ 461 044a 8091 0000 		lds r24,segbuf_used+2
+ 462 044e 9091 0000 		lds r25,segbuf_used+3
+ 463               	/* epilogue start */
+ 464 0452 0895      		ret
+ 465               		.size	NutSegBufUsed, .-NutSegBufUsed
+ 466               		.lcomm segbuf_empty,1
+ 467               		.lcomm segbuf_total,4
+ 468               		.lcomm segbuf_used,4
+ 469               		.lcomm segbuf_start,2
+ 470               		.lcomm segbuf_end,2
+ 471               		.lcomm segbuf_wp,2
+ 472               		.lcomm segbuf_ws,1
+ 473               		.lcomm segbuf_rp,2
+ 474               		.lcomm segbuf_rs,1
+GAS LISTING C:\Temp/cceAunOe.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 bankmem.c
+  C:\Temp/cceAunOe.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cceAunOe.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cceAunOe.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cceAunOe.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cceAunOe.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cceAunOe.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cceAunOe.s:13     .text:00000000 NutSegBufReset
+  C:\Temp/cceAunOe.s:468    .bss:00000009 segbuf_start
+  C:\Temp/cceAunOe.s:470    .bss:0000000d segbuf_wp
+  C:\Temp/cceAunOe.s:472    .bss:00000010 segbuf_rp
+  C:\Temp/cceAunOe.s:471    .bss:0000000f segbuf_ws
+  C:\Temp/cceAunOe.s:473    .bss:00000012 segbuf_rs
+                             .bss:00000000 segbuf_empty
+  C:\Temp/cceAunOe.s:467    .bss:00000005 segbuf_used
+  C:\Temp/cceAunOe.s:36     .text:0000003c NutSegBufInit
+  C:\Temp/cceAunOe.s:469    .bss:0000000b segbuf_end
+  C:\Temp/cceAunOe.s:466    .bss:00000001 segbuf_total
+  C:\Temp/cceAunOe.s:75     .text:000000a4 NutSegBufWriteRequest
+  C:\Temp/cceAunOe.s:118    .text:00000104 NutSegBufReadRequest
+  C:\Temp/cceAunOe.s:175    .text:0000017e NutSegBufWriteCommit
+  C:\Temp/cceAunOe.s:235    .text:00000216 NutSegBufReadCommit
+  C:\Temp/cceAunOe.s:308    .text:000002d2 NutSegBufWriteLast
+  C:\Temp/cceAunOe.s:364    .text:00000360 NutSegBufReadLast
+  C:\Temp/cceAunOe.s:434    .text:00000414 NutSegBufAvailable
+  C:\Temp/cceAunOe.s:456    .text:00000442 NutSegBufUsed
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

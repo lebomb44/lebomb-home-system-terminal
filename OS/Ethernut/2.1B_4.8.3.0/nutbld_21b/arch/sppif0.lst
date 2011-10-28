@@ -1,0 +1,372 @@
+GAS LISTING C:\Temp/ccTvfVEd.s 			page 1
+
+
+   1               		.file	"sppif0.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	Sppi0SetMode
+  12               		.type	Sppi0SetMode, @function
+  13               	Sppi0SetMode:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 8430      		cpi r24,lo8(4)
+  17 0002 00F4      		brsh .L2
+  18 0004 6430      		cpi r22,lo8(4)
+  19 0006 00F4      		brsh .L2
+  20 0008 E82F      		mov r30,r24
+  21 000a F0E0      		ldi r31,lo8(0)
+  22 000c DF01      		movw r26,r30
+  23 000e A050      		subi r26,lo8(-(sppi0_spcr))
+  24 0010 B040      		sbci r27,hi8(-(sppi0_spcr))
+  25 0012 660F      		lsl r22
+  26 0014 660F      		lsl r22
+  27 0016 6365      		ori r22,lo8(83)
+  28 0018 6C93      		st X,r22
+  29 001a E050      		subi r30,lo8(-(sppi0_spsr))
+  30 001c F040      		sbci r31,hi8(-(sppi0_spsr))
+  31 001e 1082      		st Z,__zero_reg__
+  32 0020 20E0      		ldi r18,lo8(0)
+  33 0022 30E0      		ldi r19,hi8(0)
+  34 0024 00C0      		rjmp .L3
+  35               	.L2:
+  36 0026 2FEF      		ldi r18,lo8(-1)
+  37 0028 3FEF      		ldi r19,hi8(-1)
+  38               	.L3:
+  39 002a C901      		movw r24,r18
+  40               	/* epilogue start */
+  41 002c 0895      		ret
+  42               		.size	Sppi0SetMode, .-Sppi0SetMode
+  43               	.global	Sppi0Enable
+  44               		.type	Sppi0Enable, @function
+  45               	Sppi0Enable:
+  46               	/* prologue: function */
+  47               	/* frame size = 0 */
+  48 002e A82F      		mov r26,r24
+  49 0030 B0E0      		ldi r27,lo8(0)
+  50 0032 FD01      		movw r30,r26
+  51 0034 E050      		subi r30,lo8(-(sppi0_spcr))
+  52 0036 F040      		sbci r31,hi8(-(sppi0_spcr))
+  53 0038 E081      		ld r30,Z
+  54 003a E3FF      		sbrs r30,3
+  55 003c 00C0      		rjmp .L6
+  56 003e C198      		cbi 56-32,1
+  57 0040 00C0      		rjmp .L7
+GAS LISTING C:\Temp/ccTvfVEd.s 			page 2
+
+
+  58               	.L6:
+  59 0042 C19A      		sbi 56-32,1
+  60               	.L7:
+  61 0044 B99A      		sbi 55-32,1
+  62 0046 C298      		cbi 56-32,2
+  63 0048 BA9A      		sbi 55-32,2
+  64 004a C39A      		sbi 56-32,3
+  65 004c B89B      		sbis 55-32,0
+  66 004e C09A      		sbi 56-32,0
+  67               	.L8:
+  68 0050 EDB9      		out 45-32,r30
+  69 0052 A050      		subi r26,lo8(-(sppi0_spsr))
+  70 0054 B040      		sbci r27,hi8(-(sppi0_spsr))
+  71 0056 8C91      		ld r24,X
+  72 0058 8EB9      		out 46-32,r24
+  73 005a 8EB1      		in r24,46-32
+  74 005c 8FB1      		in r24,47-32
+  75               	/* epilogue start */
+  76 005e 0895      		ret
+  77               		.size	Sppi0Enable, .-Sppi0Enable
+  78               	.global	Sppi0ChipReset
+  79               		.type	Sppi0ChipReset, @function
+  80               	Sppi0ChipReset:
+  81               	/* prologue: function */
+  82               	/* frame size = 0 */
+  83 0060 8130      		cpi r24,lo8(1)
+  84 0062 01F4      		brne .L11
+  85 0064 6623      		tst r22
+  86 0066 01F0      		breq .L12
+  87 0068 C69A      		sbi 56-32,6
+  88 006a 00C0      		rjmp .L13
+  89               	.L12:
+  90 006c C698      		cbi 56-32,6
+  91               	.L13:
+  92 006e BE9A      		sbi 55-32,6
+  93 0070 0895      		ret
+  94               	.L11:
+  95 0072 8230      		cpi r24,lo8(2)
+  96 0074 01F4      		brne .L17
+  97 0076 6623      		tst r22
+  98 0078 01F0      		breq .L15
+  99 007a 949A      		sbi 50-32,4
+ 100 007c 00C0      		rjmp .L16
+ 101               	.L15:
+ 102 007e 9498      		cbi 50-32,4
+ 103               	.L16:
+ 104 0080 8C9A      		sbi 49-32,4
+ 105               	.L17:
+ 106 0082 0895      		ret
+ 107               		.size	Sppi0ChipReset, .-Sppi0ChipReset
+ 108               	.global	Sppi0ChipSelect
+ 109               		.type	Sppi0ChipSelect, @function
+ 110               	Sppi0ChipSelect:
+ 111               	/* prologue: function */
+ 112               	/* frame size = 0 */
+ 113 0084 8823      		tst r24
+ 114 0086 01F4      		brne .L19
+GAS LISTING C:\Temp/ccTvfVEd.s 			page 3
+
+
+ 115 0088 6623      		tst r22
+ 116 008a 01F0      		breq .L20
+ 117 008c C49A      		sbi 56-32,4
+ 118 008e 00C0      		rjmp .L21
+ 119               	.L20:
+ 120 0090 C498      		cbi 56-32,4
+ 121               	.L21:
+ 122 0092 BC9A      		sbi 55-32,4
+ 123 0094 0895      		ret
+ 124               	.L19:
+ 125 0096 8130      		cpi r24,lo8(1)
+ 126 0098 01F4      		brne .L23
+ 127 009a 6623      		tst r22
+ 128 009c 01F0      		breq .L24
+ 129 009e C09A      		sbi 56-32,0
+ 130 00a0 00C0      		rjmp .L25
+ 131               	.L24:
+ 132 00a2 C098      		cbi 56-32,0
+ 133               	.L25:
+ 134 00a4 B89A      		sbi 55-32,0
+ 135 00a6 0895      		ret
+ 136               	.L23:
+ 137 00a8 8230      		cpi r24,lo8(2)
+ 138 00aa 01F4      		brne .L28
+ 139 00ac 6623      		tst r22
+ 140 00ae 01F0      		breq .L26
+ 141 00b0 979A      		sbi 50-32,7
+ 142 00b2 00C0      		rjmp .L27
+ 143               	.L26:
+ 144 00b4 9798      		cbi 50-32,7
+ 145               	.L27:
+ 146 00b6 8F9A      		sbi 49-32,7
+ 147               	.L28:
+ 148 00b8 0895      		ret
+ 149               		.size	Sppi0ChipSelect, .-Sppi0ChipSelect
+ 150               	.global	Sppi0SelectDevice
+ 151               		.type	Sppi0SelectDevice, @function
+ 152               	Sppi0SelectDevice:
+ 153 00ba 1F93      		push r17
+ 154               	/* prologue: function */
+ 155               	/* frame size = 0 */
+ 156 00bc 182F      		mov r17,r24
+ 157 00be 0E94 0000 		call Sppi0Enable
+ 158 00c2 61E0      		ldi r22,lo8(1)
+ 159 00c4 812F      		mov r24,r17
+ 160 00c6 0E94 0000 		call Sppi0ChipSelect
+ 161               	/* epilogue start */
+ 162 00ca 1F91      		pop r17
+ 163 00cc 0895      		ret
+ 164               		.size	Sppi0SelectDevice, .-Sppi0SelectDevice
+ 165               	.global	Sppi0DeselectDevice
+ 166               		.type	Sppi0DeselectDevice, @function
+ 167               	Sppi0DeselectDevice:
+ 168               	/* prologue: function */
+ 169               	/* frame size = 0 */
+ 170 00ce 60E0      		ldi r22,lo8(0)
+ 171 00d0 0E94 0000 		call Sppi0ChipSelect
+GAS LISTING C:\Temp/ccTvfVEd.s 			page 4
+
+
+ 172               	/* epilogue start */
+ 173 00d4 0895      		ret
+ 174               		.size	Sppi0DeselectDevice, .-Sppi0DeselectDevice
+ 175               	.global	Sppi0NegSelectDevice
+ 176               		.type	Sppi0NegSelectDevice, @function
+ 177               	Sppi0NegSelectDevice:
+ 178 00d6 1F93      		push r17
+ 179               	/* prologue: function */
+ 180               	/* frame size = 0 */
+ 181 00d8 182F      		mov r17,r24
+ 182 00da 0E94 0000 		call Sppi0Enable
+ 183 00de 60E0      		ldi r22,lo8(0)
+ 184 00e0 812F      		mov r24,r17
+ 185 00e2 0E94 0000 		call Sppi0ChipSelect
+ 186               	/* epilogue start */
+ 187 00e6 1F91      		pop r17
+ 188 00e8 0895      		ret
+ 189               		.size	Sppi0NegSelectDevice, .-Sppi0NegSelectDevice
+ 190               	.global	Sppi0NegDeselectDevice
+ 191               		.type	Sppi0NegDeselectDevice, @function
+ 192               	Sppi0NegDeselectDevice:
+ 193               	/* prologue: function */
+ 194               	/* frame size = 0 */
+ 195 00ea 61E0      		ldi r22,lo8(1)
+ 196 00ec 0E94 0000 		call Sppi0ChipSelect
+ 197               	/* epilogue start */
+ 198 00f0 0895      		ret
+ 199               		.size	Sppi0NegDeselectDevice, .-Sppi0NegDeselectDevice
+ 200               	.global	Sppi0Byte
+ 201               		.type	Sppi0Byte, @function
+ 202               	Sppi0Byte:
+ 203               	/* prologue: function */
+ 204               	/* frame size = 0 */
+ 205 00f2 8FB9      		out 47-32,r24
+ 206               	.L38:
+ 207 00f4 779B      		sbis 46-32,7
+ 208 00f6 00C0      		rjmp .L38
+ 209 00f8 8FB1      		in r24,47-32
+ 210               	/* epilogue start */
+ 211 00fa 0895      		ret
+ 212               		.size	Sppi0Byte, .-Sppi0Byte
+ 213               	.global	Sppi0Transact
+ 214               		.type	Sppi0Transact, @function
+ 215               	Sppi0Transact:
+ 216               	/* prologue: function */
+ 217               	/* frame size = 0 */
+ 218 00fc DC01      		movw r26,r24
+ 219 00fe FC01      		movw r30,r24
+ 220 0100 6115      		cp r22,__zero_reg__
+ 221 0102 7105      		cpc r23,__zero_reg__
+ 222 0104 01F0      		breq .L52
+ 223 0106 20E0      		ldi r18,lo8(0)
+ 224 0108 30E0      		ldi r19,hi8(0)
+ 225 010a 00C0      		rjmp .L43
+ 226               	.L45:
+ 227 010c FD01      		movw r30,r26
+ 228 010e E20F      		add r30,r18
+GAS LISTING C:\Temp/ccTvfVEd.s 			page 5
+
+
+ 229 0110 F31F      		adc r31,r19
+ 230 0112 8081      		ld r24,Z
+ 231 0114 8FB9      		out 47-32,r24
+ 232               	.L44:
+ 233 0116 779B      		sbis 46-32,7
+ 234 0118 00C0      		rjmp .L44
+ 235 011a 8FB1      		in r24,47-32
+ 236 011c FB01      		movw r30,r22
+ 237 011e E20F      		add r30,r18
+ 238 0120 F31F      		adc r31,r19
+ 239 0122 8083      		st Z,r24
+ 240 0124 2F5F      		subi r18,lo8(-(1))
+ 241 0126 3F4F      		sbci r19,hi8(-(1))
+ 242 0128 4150      		subi r20,lo8(-(-1))
+ 243 012a 5040      		sbci r21,hi8(-(-1))
+ 244               	.L43:
+ 245 012c 4115      		cp r20,__zero_reg__
+ 246 012e 5105      		cpc r21,__zero_reg__
+ 247 0130 01F4      		brne .L45
+ 248 0132 0895      		ret
+ 249               	.L48:
+ 250 0134 8081      		ld r24,Z
+ 251 0136 8FB9      		out 47-32,r24
+ 252               	.L47:
+ 253 0138 779B      		sbis 46-32,7
+ 254 013a 00C0      		rjmp .L47
+ 255 013c 8FB1      		in r24,47-32
+ 256 013e 3196      		adiw r30,1
+ 257 0140 4150      		subi r20,lo8(-(-1))
+ 258 0142 5040      		sbci r21,hi8(-(-1))
+ 259               	.L52:
+ 260 0144 4115      		cp r20,__zero_reg__
+ 261 0146 5105      		cpc r21,__zero_reg__
+ 262 0148 01F4      		brne .L48
+ 263 014a 0895      		ret
+ 264               		.size	Sppi0Transact, .-Sppi0Transact
+ 265               	.global	Sppi0SetSpeed
+ 266               		.type	Sppi0SetSpeed, @function
+ 267               	Sppi0SetSpeed:
+ 268 014c CF92      		push r12
+ 269 014e DF92      		push r13
+ 270 0150 EF92      		push r14
+ 271 0152 FF92      		push r15
+ 272 0154 1F93      		push r17
+ 273               	/* prologue: function */
+ 274               	/* frame size = 0 */
+ 275 0156 182F      		mov r17,r24
+ 276 0158 6A01      		movw r12,r20
+ 277 015a 7B01      		movw r14,r22
+ 278 015c 0E94 0000 		call NutGetCpuClock
+ 279 0160 A12F      		mov r26,r17
+ 280 0162 B0E0      		ldi r27,lo8(0)
+ 281 0164 FD01      		movw r30,r26
+ 282 0166 E050      		subi r30,lo8(-(sppi0_spcr))
+ 283 0168 F040      		sbci r31,hi8(-(sppi0_spcr))
+ 284 016a 3081      		ld r19,Z
+ 285 016c 20E0      		ldi r18,lo8(0)
+GAS LISTING C:\Temp/ccTvfVEd.s 			page 6
+
+
+ 286               	.L55:
+ 287 016e 9695      		lsr r25
+ 288 0170 8795      		ror r24
+ 289 0172 7795      		ror r23
+ 290 0174 6795      		ror r22
+ 291 0176 C616      		cp r12,r22
+ 292 0178 D706      		cpc r13,r23
+ 293 017a E806      		cpc r14,r24
+ 294 017c F906      		cpc r15,r25
+ 295 017e 00F4      		brsh .L54
+ 296 0180 2F5F      		subi r18,lo8(-(1))
+ 297 0182 2730      		cpi r18,lo8(7)
+ 298 0184 01F4      		brne .L55
+ 299               	.L54:
+ 300 0186 FD01      		movw r30,r26
+ 301 0188 E050      		subi r30,lo8(-(sppi0_spcr))
+ 302 018a F040      		sbci r31,hi8(-(sppi0_spcr))
+ 303 018c 822F      		mov r24,r18
+ 304 018e 8695      		lsr r24
+ 305 0190 3C7F      		andi r19,lo8(-4)
+ 306 0192 832B      		or r24,r19
+ 307 0194 8083      		st Z,r24
+ 308 0196 2630      		cpi r18,lo8(6)
+ 309 0198 00F4      		brsh .L57
+ 310 019a A050      		subi r26,lo8(-(sppi0_spsr))
+ 311 019c B040      		sbci r27,hi8(-(sppi0_spsr))
+ 312 019e 2095      		com r18
+ 313 01a0 2170      		andi r18,lo8(1)
+ 314 01a2 2C93      		st X,r18
+ 315               	.L57:
+ 316               	/* epilogue start */
+ 317 01a4 1F91      		pop r17
+ 318 01a6 FF90      		pop r15
+ 319 01a8 EF90      		pop r14
+ 320 01aa DF90      		pop r13
+ 321 01ac CF90      		pop r12
+ 322 01ae 0895      		ret
+ 323               		.size	Sppi0SetSpeed, .-Sppi0SetSpeed
+ 324               		.lcomm sppi0_spcr,4
+ 325               		.lcomm sppi0_spsr,4
+GAS LISTING C:\Temp/ccTvfVEd.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 sppif0.c
+  C:\Temp/ccTvfVEd.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccTvfVEd.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccTvfVEd.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccTvfVEd.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccTvfVEd.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccTvfVEd.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccTvfVEd.s:13     .text:00000000 Sppi0SetMode
+                             .bss:00000000 sppi0_spcr
+  C:\Temp/ccTvfVEd.s:324    .bss:00000004 sppi0_spsr
+  C:\Temp/ccTvfVEd.s:45     .text:0000002e Sppi0Enable
+  C:\Temp/ccTvfVEd.s:80     .text:00000060 Sppi0ChipReset
+  C:\Temp/ccTvfVEd.s:110    .text:00000084 Sppi0ChipSelect
+  C:\Temp/ccTvfVEd.s:152    .text:000000ba Sppi0SelectDevice
+  C:\Temp/ccTvfVEd.s:167    .text:000000ce Sppi0DeselectDevice
+  C:\Temp/ccTvfVEd.s:177    .text:000000d6 Sppi0NegSelectDevice
+  C:\Temp/ccTvfVEd.s:192    .text:000000ea Sppi0NegDeselectDevice
+  C:\Temp/ccTvfVEd.s:202    .text:000000f2 Sppi0Byte
+  C:\Temp/ccTvfVEd.s:215    .text:000000fc Sppi0Transact
+  C:\Temp/ccTvfVEd.s:267    .text:0000014c Sppi0SetSpeed
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutGetCpuClock

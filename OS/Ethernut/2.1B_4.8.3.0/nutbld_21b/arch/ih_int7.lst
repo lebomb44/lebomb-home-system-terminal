@@ -1,0 +1,264 @@
+GAS LISTING C:\Temp/cctyi5bg.s 			page 1
+
+
+   1               		.file	"ih_int7.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	AvrInterrupt7Ctl, @function
+  12               	AvrInterrupt7Ctl:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 9C01      		movw r18,r24
+  16 0002 FB01      		movw r30,r22
+  17 0004 49B7      		in r20,89-32
+  18 0006 4078      		andi r20,lo8(-128)
+  19 0008 89B7      		in r24,89-32
+  20 000a 8F77      		andi r24,lo8(127)
+  21 000c 89BF      		out 89-32,r24
+  22 000e 2131      		cpi r18,17
+  23 0010 3105      		cpc r19,__zero_reg__
+  24 0012 01F0      		breq .L24
+  25 0014 2231      		cpi r18,18
+  26 0016 3105      		cpc r19,__zero_reg__
+  27 0018 04F4      		brge .L11
+  28 001a 2130      		cpi r18,1
+  29 001c 3105      		cpc r19,__zero_reg__
+  30 001e 01F0      		breq .L4
+  31 0020 2031      		cpi r18,16
+  32 0022 3105      		cpc r19,__zero_reg__
+  33 0024 01F0      		breq .L5
+  34 0026 232B      		or r18,r19
+  35 0028 01F0      		breq .L3
+  36 002a 00C0      		rjmp .L2
+  37               	.L11:
+  38 002c 2831      		cpi r18,24
+  39 002e 3105      		cpc r19,__zero_reg__
+  40 0030 01F0      		breq .L8
+  41 0032 2931      		cpi r18,25
+  42 0034 3105      		cpc r19,__zero_reg__
+  43 0036 04F4      		brge .L12
+  44 0038 2231      		cpi r18,18
+  45 003a 3105      		cpc r19,__zero_reg__
+  46 003c 01F0      		breq .+2
+  47 003e 00C0      		rjmp .L2
+  48 0040 00C0      		rjmp .L7
+  49               	.L12:
+  50 0042 2931      		cpi r18,25
+  51 0044 3105      		cpc r19,__zero_reg__
+  52 0046 01F0      		breq .L9
+  53 0048 2032      		cpi r18,32
+  54 004a 3105      		cpc r19,__zero_reg__
+  55 004c 01F0      		breq .+2
+  56 004e 00C0      		rjmp .L2
+  57 0050 00C0      		rjmp .L29
+GAS LISTING C:\Temp/cctyi5bg.s 			page 2
+
+
+  58               	.L3:
+  59 0052 8AB7      		in r24,90-32
+  60 0054 8F7B      		andi r24,lo8(-65)
+  61 0056 8ABF      		out 90-32,r24
+  62 0058 8AB7      		in r24,90-32
+  63 005a 8F77      		andi r24,lo8(127)
+  64 005c 8ABF      		out 90-32,r24
+  65               	.L4:
+  66 005e 80E8      		ldi r24,lo8(-128)
+  67 0060 88BF      		out 88-32,r24
+  68 0062 00C0      		rjmp .L23
+  69               	.L5:
+  70 0064 08B6      		in __tmp_reg__,88-32
+  71 0066 07FE      		sbrs __tmp_reg__,7
+  72 0068 00C0      		rjmp .L15
+  73 006a 81E0      		ldi r24,lo8(1)
+  74 006c 90E0      		ldi r25,hi8(1)
+  75 006e 9183      		std Z+1,r25
+  76 0070 8083      		st Z,r24
+  77 0072 00C0      		rjmp .L16
+  78               	.L15:
+  79 0074 1182      		std Z+1,__zero_reg__
+  80 0076 1082      		st Z,__zero_reg__
+  81               	.L16:
+  82 0078 4423      		tst r20
+  83 007a 01F4      		brne .+2
+  84 007c 00C0      		rjmp .L7
+  85 007e 8081      		ld r24,Z
+  86 0080 9181      		ldd r25,Z+1
+  87 0082 8068      		ori r24,lo8(128)
+  88 0084 9183      		std Z+1,r25
+  89 0086 8083      		st Z,r24
+  90               	.L24:
+  91 0088 20E0      		ldi r18,lo8(0)
+  92 008a 30E0      		ldi r19,hi8(0)
+  93 008c 00C0      		rjmp .L13
+  94               	.L8:
+  95 008e 8AB7      		in r24,90-32
+  96 0090 8078      		andi r24,lo8(-128)
+  97 0092 8038      		cpi r24,lo8(-128)
+  98 0094 01F4      		brne .L17
+  99 0096 85E0      		ldi r24,lo8(5)
+ 100 0098 90E0      		ldi r25,hi8(5)
+ 101 009a 00C0      		rjmp .L25
+ 102               	.L17:
+ 103 009c 81E0      		ldi r24,lo8(1)
+ 104 009e 90E0      		ldi r25,hi8(1)
+ 105 00a0 00C0      		rjmp .L25
+ 106               	.L9:
+ 107 00a2 6081      		ld r22,Z
+ 108 00a4 7181      		ldd r23,Z+1
+ 109 00a6 6130      		cpi r22,1
+ 110 00a8 7105      		cpc r23,__zero_reg__
+ 111 00aa 01F4      		brne .L18
+ 112 00ac 8AB7      		in r24,90-32
+ 113 00ae 8F7B      		andi r24,lo8(-65)
+ 114 00b0 00C0      		rjmp .L28
+GAS LISTING C:\Temp/cctyi5bg.s 			page 3
+
+
+ 115               	.L18:
+ 116 00b2 6730      		cpi r22,7
+ 117 00b4 7105      		cpc r23,__zero_reg__
+ 118 00b6 01F4      		brne .L19
+ 119 00b8 8AB7      		in r24,90-32
+ 120 00ba 8064      		ori r24,lo8(64)
+ 121               	.L28:
+ 122 00bc 8ABF      		out 90-32,r24
+ 123 00be 8AB7      		in r24,90-32
+ 124 00c0 8F77      		andi r24,lo8(127)
+ 125 00c2 00C0      		rjmp .L26
+ 126               	.L19:
+ 127 00c4 6530      		cpi r22,5
+ 128 00c6 7105      		cpc r23,__zero_reg__
+ 129 00c8 01F4      		brne .L20
+ 130 00ca 8AB7      		in r24,90-32
+ 131 00cc 8F7B      		andi r24,lo8(-65)
+ 132               	.L27:
+ 133 00ce 8ABF      		out 90-32,r24
+ 134 00d0 8AB7      		in r24,90-32
+ 135 00d2 8068      		ori r24,lo8(-128)
+ 136               	.L26:
+ 137 00d4 8ABF      		out 90-32,r24
+ 138               	.L23:
+ 139 00d6 20E0      		ldi r18,lo8(0)
+ 140 00d8 30E0      		ldi r19,hi8(0)
+ 141 00da 00C0      		rjmp .L14
+ 142               	.L20:
+ 143 00dc 6630      		cpi r22,6
+ 144 00de 7105      		cpc r23,__zero_reg__
+ 145 00e0 01F4      		brne .L2
+ 146 00e2 8AB7      		in r24,90-32
+ 147 00e4 8064      		ori r24,lo8(64)
+ 148 00e6 00C0      		rjmp .L27
+ 149               	.L29:
+ 150 00e8 87E0      		ldi r24,lo8(7)
+ 151 00ea 90E0      		ldi r25,hi8(7)
+ 152               	.L25:
+ 153 00ec 9183      		std Z+1,r25
+ 154 00ee 8083      		st Z,r24
+ 155 00f0 00C0      		rjmp .L23
+ 156               	.L2:
+ 157 00f2 2FEF      		ldi r18,lo8(-1)
+ 158 00f4 3FEF      		ldi r19,hi8(-1)
+ 159               	.L14:
+ 160 00f6 4423      		tst r20
+ 161 00f8 01F0      		breq .L21
+ 162               	.L13:
+ 163 00fa 89B7      		in r24,89-32
+ 164 00fc 8068      		ori r24,lo8(-128)
+ 165 00fe 89BF      		out 89-32,r24
+ 166 0100 00C0      		rjmp .L21
+ 167               	.L7:
+ 168 0102 20E0      		ldi r18,lo8(0)
+ 169 0104 30E0      		ldi r19,hi8(0)
+ 170               	.L21:
+ 171 0106 C901      		movw r24,r18
+GAS LISTING C:\Temp/cctyi5bg.s 			page 4
+
+
+ 172               	/* epilogue start */
+ 173 0108 0895      		ret
+ 174               		.size	AvrInterrupt7Ctl, .-AvrInterrupt7Ctl
+ 175               	.global	__vector_8
+ 176               		.type	__vector_8, @function
+ 177               	__vector_8:
+ 178 010a 1F92      		push __zero_reg__
+ 179 010c 0F92      		push r0
+ 180 010e 0FB6      		in r0,__SREG__
+ 181 0110 0F92      		push r0
+ 182 0112 0BB6      		in r0,91-32
+ 183 0114 0F92      		push r0
+ 184 0116 1124      		clr __zero_reg__
+ 185 0118 2F93      		push r18
+ 186 011a 3F93      		push r19
+ 187 011c 4F93      		push r20
+ 188 011e 5F93      		push r21
+ 189 0120 6F93      		push r22
+ 190 0122 7F93      		push r23
+ 191 0124 8F93      		push r24
+ 192 0126 9F93      		push r25
+ 193 0128 AF93      		push r26
+ 194 012a BF93      		push r27
+ 195 012c EF93      		push r30
+ 196 012e FF93      		push r31
+ 197               	/* prologue: Signal */
+ 198               	/* frame size = 0 */
+ 199 0130 80E0      		ldi r24,lo8(sig_INTERRUPT7)
+ 200 0132 90E0      		ldi r25,hi8(sig_INTERRUPT7)
+ 201 0134 0E94 0000 		call CallHandler
+ 202               	/* epilogue start */
+ 203 0138 FF91      		pop r31
+ 204 013a EF91      		pop r30
+ 205 013c BF91      		pop r27
+ 206 013e AF91      		pop r26
+ 207 0140 9F91      		pop r25
+ 208 0142 8F91      		pop r24
+ 209 0144 7F91      		pop r23
+ 210 0146 6F91      		pop r22
+ 211 0148 5F91      		pop r21
+ 212 014a 4F91      		pop r20
+ 213 014c 3F91      		pop r19
+ 214 014e 2F91      		pop r18
+ 215 0150 0F90      		pop r0
+ 216 0152 0BBE      		out 91-32,r0
+ 217 0154 0F90      		pop r0
+ 218 0156 0FBE      		out __SREG__,r0
+ 219 0158 0F90      		pop r0
+ 220 015a 1F90      		pop __zero_reg__
+ 221 015c 1895      		reti
+ 222               		.size	__vector_8, .-__vector_8
+ 223               	.global	sig_INTERRUPT7
+ 224               		.data
+ 225               		.type	sig_INTERRUPT7, @object
+ 226               		.size	sig_INTERRUPT7, 6
+ 227               	sig_INTERRUPT7:
+ 228 0000 0000      		.word	0
+GAS LISTING C:\Temp/cctyi5bg.s 			page 5
+
+
+ 229 0002 0000      		.word	0
+ 230 0004 0000      		.word	gs(AvrInterrupt7Ctl)
+GAS LISTING C:\Temp/cctyi5bg.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ih_int7.c
+  C:\Temp/cctyi5bg.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cctyi5bg.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cctyi5bg.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cctyi5bg.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cctyi5bg.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cctyi5bg.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cctyi5bg.s:12     .text:00000000 AvrInterrupt7Ctl
+  C:\Temp/cctyi5bg.s:177    .text:0000010a __vector_8
+  C:\Temp/cctyi5bg.s:227    .data:00000000 sig_INTERRUPT7
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+CallHandler

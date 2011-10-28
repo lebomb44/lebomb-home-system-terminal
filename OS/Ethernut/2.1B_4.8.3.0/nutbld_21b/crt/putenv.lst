@@ -1,0 +1,77 @@
+GAS LISTING C:\Temp/ccHO9aDR.s 			page 1
+
+
+   1               		.file	"putenv.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	putenv
+  12               		.type	putenv, @function
+  13               	putenv:
+  14 0000 0F93      		push r16
+  15 0002 1F93      		push r17
+  16 0004 CF93      		push r28
+  17 0006 DF93      		push r29
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 0008 0E94 0000 		call strdup
+  21 000c EC01      		movw r28,r24
+  22 000e 0097      		sbiw r24,0
+  23 0010 01F4      		brne .L2
+  24 0012 0FEF      		ldi r16,lo8(-1)
+  25 0014 1FEF      		ldi r17,hi8(-1)
+  26 0016 00C0      		rjmp .L3
+  27               	.L2:
+  28 0018 6DE3      		ldi r22,lo8(61)
+  29 001a 70E0      		ldi r23,hi8(61)
+  30 001c 0E94 0000 		call strchr
+  31 0020 FC01      		movw r30,r24
+  32 0022 BC01      		movw r22,r24
+  33 0024 0097      		sbiw r24,0
+  34 0026 01F0      		breq .L4
+  35 0028 1082      		st Z,__zero_reg__
+  36 002a 6F5F      		subi r22,lo8(-(1))
+  37 002c 7F4F      		sbci r23,hi8(-(1))
+  38               	.L4:
+  39 002e 41E0      		ldi r20,lo8(1)
+  40 0030 50E0      		ldi r21,hi8(1)
+  41 0032 CE01      		movw r24,r28
+  42 0034 0E94 0000 		call setenv
+  43 0038 8C01      		movw r16,r24
+  44 003a CE01      		movw r24,r28
+  45 003c 0E94 0000 		call free
+  46               	.L3:
+  47 0040 C801      		movw r24,r16
+  48               	/* epilogue start */
+  49 0042 DF91      		pop r29
+  50 0044 CF91      		pop r28
+  51 0046 1F91      		pop r17
+  52 0048 0F91      		pop r16
+  53 004a 0895      		ret
+  54               		.size	putenv, .-putenv
+GAS LISTING C:\Temp/ccHO9aDR.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 putenv.c
+  C:\Temp/ccHO9aDR.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccHO9aDR.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccHO9aDR.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccHO9aDR.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccHO9aDR.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccHO9aDR.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccHO9aDR.s:13     .text:00000000 putenv
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+strdup
+strchr
+setenv
+free

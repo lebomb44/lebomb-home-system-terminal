@@ -1,0 +1,417 @@
+GAS LISTING C:\Temp/cc0eKrYC.s 			page 1
+
+
+   1               		.file	"gmtime.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	gmtime_r
+  12               		.type	gmtime_r, @function
+  13               	gmtime_r:
+  14 0000 4F92      		push r4
+  15 0002 5F92      		push r5
+  16 0004 6F92      		push r6
+  17 0006 7F92      		push r7
+  18 0008 8F92      		push r8
+  19 000a 9F92      		push r9
+  20 000c AF92      		push r10
+  21 000e BF92      		push r11
+  22 0010 CF92      		push r12
+  23 0012 DF92      		push r13
+  24 0014 EF92      		push r14
+  25 0016 FF92      		push r15
+  26 0018 0F93      		push r16
+  27 001a 1F93      		push r17
+  28 001c CF93      		push r28
+  29 001e DF93      		push r29
+  30               	/* prologue: function */
+  31               	/* frame size = 0 */
+  32 0020 FC01      		movw r30,r24
+  33 0022 2B01      		movw r4,r22
+  34 0024 8081      		ld r24,Z
+  35 0026 9181      		ldd r25,Z+1
+  36 0028 2281      		ldd r18,Z+2
+  37 002a 3381      		ldd r19,Z+3
+  38 002c 6115      		cp r22,__zero_reg__
+  39 002e 7105      		cpc r23,__zero_reg__
+  40 0030 01F4      		brne .L2
+  41 0032 2FEF      		ldi r18,lo8(-1)
+  42 0034 3FEF      		ldi r19,hi8(-1)
+  43 0036 00C0      		rjmp .L3
+  44               	.L2:
+  45 0038 3C01      		movw r6,r24
+  46 003a 4901      		movw r8,r18
+  47 003c C401      		movw r24,r8
+  48 003e B301      		movw r22,r6
+  49 0040 20E8      		ldi r18,lo8(126230400)
+  50 0042 3FE1      		ldi r19,hi8(126230400)
+  51 0044 46E8      		ldi r20,hlo8(126230400)
+  52 0046 57E0      		ldi r21,hhi8(126230400)
+  53 0048 0E94 0000 		call __udivmodsi4
+  54 004c 7901      		movw r14,r18
+  55 004e 8A01      		movw r16,r20
+  56 0050 C801      		movw r24,r16
+  57 0052 B701      		movw r22,r14
+GAS LISTING C:\Temp/cc0eKrYC.s 			page 2
+
+
+  58 0054 20E8      		ldi r18,lo8(126230400)
+  59 0056 3FE1      		ldi r19,hi8(126230400)
+  60 0058 46E8      		ldi r20,hlo8(126230400)
+  61 005a 57E0      		ldi r21,hhi8(126230400)
+  62 005c 0E94 0000 		call __mulsi3
+  63 0060 6401      		movw r12,r8
+  64 0062 5301      		movw r10,r6
+  65 0064 A61A      		sub r10,r22
+  66 0066 B70A      		sbc r11,r23
+  67 0068 C80A      		sbc r12,r24
+  68 006a D90A      		sbc r13,r25
+  69 006c D801      		movw r26,r16
+  70 006e C701      		movw r24,r14
+  71 0070 32E0      		ldi r19,2
+  72 0072 880F      	1:	lsl r24
+  73 0074 991F      		rol r25
+  74 0076 AA1F      		rol r26
+  75 0078 BB1F      		rol r27
+  76 007a 3A95      		dec r19
+  77 007c 01F4      		brne 1b
+  78 007e 8A5B      		subi r24,lo8(-(70))
+  79 0080 9F4F      		sbci r25,hi8(-(70))
+  80 0082 AF4F      		sbci r26,hlo8(-(70))
+  81 0084 BF4F      		sbci r27,hhi8(-(70))
+  82 0086 20E8      		ldi r18,lo8(31536000)
+  83 0088 A216      		cp r10,r18
+  84 008a 23E3      		ldi r18,hi8(31536000)
+  85 008c B206      		cpc r11,r18
+  86 008e 21EE      		ldi r18,hlo8(31536000)
+  87 0090 C206      		cpc r12,r18
+  88 0092 21E0      		ldi r18,hhi8(31536000)
+  89 0094 D206      		cpc r13,r18
+  90 0096 04F0      		brlt .L4
+  91 0098 0196      		adiw r24,1
+  92 009a A11D      		adc r26,__zero_reg__
+  93 009c B11D      		adc r27,__zero_reg__
+  94 009e 20E8      		ldi r18,lo8(-31536000)
+  95 00a0 3CEC      		ldi r19,hi8(-31536000)
+  96 00a2 4EE1      		ldi r20,hlo8(-31536000)
+  97 00a4 5EEF      		ldi r21,hhi8(-31536000)
+  98 00a6 A20E      		add r10,r18
+  99 00a8 B31E      		adc r11,r19
+ 100 00aa C41E      		adc r12,r20
+ 101 00ac D51E      		adc r13,r21
+ 102 00ae 30E8      		ldi r19,lo8(31536000)
+ 103 00b0 A316      		cp r10,r19
+ 104 00b2 33E3      		ldi r19,hi8(31536000)
+ 105 00b4 B306      		cpc r11,r19
+ 106 00b6 31EE      		ldi r19,hlo8(31536000)
+ 107 00b8 C306      		cpc r12,r19
+ 108 00ba 31E0      		ldi r19,hhi8(31536000)
+ 109 00bc D306      		cpc r13,r19
+ 110 00be 04F0      		brlt .L4
+ 111 00c0 0196      		adiw r24,1
+ 112 00c2 A11D      		adc r26,__zero_reg__
+ 113 00c4 B11D      		adc r27,__zero_reg__
+ 114 00c6 20E8      		ldi r18,lo8(-31536000)
+GAS LISTING C:\Temp/cc0eKrYC.s 			page 3
+
+
+ 115 00c8 3CEC      		ldi r19,hi8(-31536000)
+ 116 00ca 4EE1      		ldi r20,hlo8(-31536000)
+ 117 00cc 5EEF      		ldi r21,hhi8(-31536000)
+ 118 00ce A20E      		add r10,r18
+ 119 00d0 B31E      		adc r11,r19
+ 120 00d2 C41E      		adc r12,r20
+ 121 00d4 D51E      		adc r13,r21
+ 122 00d6 30E0      		ldi r19,lo8(31622400)
+ 123 00d8 A316      		cp r10,r19
+ 124 00da 35E8      		ldi r19,hi8(31622400)
+ 125 00dc B306      		cpc r11,r19
+ 126 00de 32EE      		ldi r19,hlo8(31622400)
+ 127 00e0 C306      		cpc r12,r19
+ 128 00e2 31E0      		ldi r19,hhi8(31622400)
+ 129 00e4 D306      		cpc r13,r19
+ 130 00e6 04F4      		brge .L5
+ 131 00e8 11E0      		ldi r17,lo8(1)
+ 132 00ea 00C0      		rjmp .L6
+ 133               	.L5:
+ 134 00ec 0196      		adiw r24,1
+ 135 00ee A11D      		adc r26,__zero_reg__
+ 136 00f0 B11D      		adc r27,__zero_reg__
+ 137 00f2 20E0      		ldi r18,lo8(-31622400)
+ 138 00f4 3BE7      		ldi r19,hi8(-31622400)
+ 139 00f6 4DE1      		ldi r20,hlo8(-31622400)
+ 140 00f8 5EEF      		ldi r21,hhi8(-31622400)
+ 141 00fa A20E      		add r10,r18
+ 142 00fc B31E      		adc r11,r19
+ 143 00fe C41E      		adc r12,r20
+ 144 0100 D51E      		adc r13,r21
+ 145               	.L4:
+ 146 0102 10E0      		ldi r17,lo8(0)
+ 147               	.L6:
+ 148 0104 F201      		movw r30,r4
+ 149 0106 9387      		std Z+11,r25
+ 150 0108 8287      		std Z+10,r24
+ 151 010a C601      		movw r24,r12
+ 152 010c B501      		movw r22,r10
+ 153 010e 20E8      		ldi r18,lo8(86400)
+ 154 0110 31E5      		ldi r19,hi8(86400)
+ 155 0112 41E0      		ldi r20,hlo8(86400)
+ 156 0114 50E0      		ldi r21,hhi8(86400)
+ 157 0116 0E94 0000 		call __udivmodsi4
+ 158 011a 7901      		movw r14,r18
+ 159 011c F201      		movw r30,r4
+ 160 011e 3787      		std Z+15,r19
+ 161 0120 2687      		std Z+14,r18
+ 162 0122 B901      		movw r22,r18
+ 163 0124 8827      		clr r24
+ 164 0126 77FD      		sbrc r23,7
+ 165 0128 8095      		com r24
+ 166 012a 982F      		mov r25,r24
+ 167 012c 20E8      		ldi r18,lo8(86400)
+ 168 012e 31E5      		ldi r19,hi8(86400)
+ 169 0130 41E0      		ldi r20,hlo8(86400)
+ 170 0132 50E0      		ldi r21,hhi8(86400)
+ 171 0134 0E94 0000 		call __mulsi3
+GAS LISTING C:\Temp/cc0eKrYC.s 			page 4
+
+
+ 172 0138 A61A      		sub r10,r22
+ 173 013a B70A      		sbc r11,r23
+ 174 013c C80A      		sbc r12,r24
+ 175 013e D90A      		sbc r13,r25
+ 176 0140 1123      		tst r17
+ 177 0142 01F4      		brne .L7
+ 178 0144 C0E0      		ldi r28,lo8(_days)
+ 179 0146 D0E0      		ldi r29,hi8(_days)
+ 180 0148 00C0      		rjmp .L8
+ 181               	.L7:
+ 182 014a C0E0      		ldi r28,lo8(_lpdays)
+ 183 014c D0E0      		ldi r29,hi8(_lpdays)
+ 184               	.L8:
+ 185 014e FE01      		movw r30,r28
+ 186 0150 21E0      		ldi r18,lo8(1)
+ 187 0152 30E0      		ldi r19,hi8(1)
+ 188 0154 40E0      		ldi r20,hlo8(1)
+ 189 0156 50E0      		ldi r21,hhi8(1)
+ 190 0158 00C0      		rjmp .L9
+ 191               	.L10:
+ 192 015a 2F5F      		subi r18,lo8(-(1))
+ 193 015c 3F4F      		sbci r19,hi8(-(1))
+ 194 015e 4F4F      		sbci r20,hlo8(-(1))
+ 195 0160 5F4F      		sbci r21,hhi8(-(1))
+ 196               	.L9:
+ 197 0162 8281      		ldd r24,Z+2
+ 198 0164 9381      		ldd r25,Z+3
+ 199 0166 3296      		adiw r30,2
+ 200 0168 8E15      		cp r24,r14
+ 201 016a 9F05      		cpc r25,r15
+ 202 016c 04F0      		brlt .L10
+ 203 016e DA01      		movw r26,r20
+ 204 0170 C901      		movw r24,r18
+ 205 0172 0197      		sbiw r24,1
+ 206 0174 A109      		sbc r26,__zero_reg__
+ 207 0176 B109      		sbc r27,__zero_reg__
+ 208 0178 F201      		movw r30,r4
+ 209 017a 9187      		std Z+9,r25
+ 210 017c 8087      		std Z+8,r24
+ 211 017e 880F      		lsl r24
+ 212 0180 991F      		rol r25
+ 213 0182 C80F      		add r28,r24
+ 214 0184 D91F      		adc r29,r25
+ 215 0186 8685      		ldd r24,Z+14
+ 216 0188 9785      		ldd r25,Z+15
+ 217 018a 2881      		ld r18,Y
+ 218 018c 3981      		ldd r19,Y+1
+ 219 018e 821B      		sub r24,r18
+ 220 0190 930B      		sbc r25,r19
+ 221 0192 9783      		std Z+7,r25
+ 222 0194 8683      		std Z+6,r24
+ 223 0196 C401      		movw r24,r8
+ 224 0198 B301      		movw r22,r6
+ 225 019a 20E8      		ldi r18,lo8(86400)
+ 226 019c 31E5      		ldi r19,hi8(86400)
+ 227 019e 41E0      		ldi r20,hlo8(86400)
+ 228 01a0 50E0      		ldi r21,hhi8(86400)
+GAS LISTING C:\Temp/cc0eKrYC.s 			page 5
+
+
+ 229 01a2 0E94 0000 		call __udivmodsi4
+ 230 01a6 DA01      		movw r26,r20
+ 231 01a8 C901      		movw r24,r18
+ 232 01aa 0496      		adiw r24,4
+ 233 01ac 67E0      		ldi r22,lo8(7)
+ 234 01ae 70E0      		ldi r23,hi8(7)
+ 235 01b0 0E94 0000 		call __divmodhi4
+ 236 01b4 F201      		movw r30,r4
+ 237 01b6 9587      		std Z+13,r25
+ 238 01b8 8487      		std Z+12,r24
+ 239 01ba C601      		movw r24,r12
+ 240 01bc B501      		movw r22,r10
+ 241 01be 20E1      		ldi r18,lo8(3600)
+ 242 01c0 3EE0      		ldi r19,hi8(3600)
+ 243 01c2 40E0      		ldi r20,hlo8(3600)
+ 244 01c4 50E0      		ldi r21,hhi8(3600)
+ 245 01c6 0E94 0000 		call __divmodsi4
+ 246 01ca F201      		movw r30,r4
+ 247 01cc 3583      		std Z+5,r19
+ 248 01ce 2483      		std Z+4,r18
+ 249 01d0 4427      		clr r20
+ 250 01d2 37FD      		sbrc r19,7
+ 251 01d4 4095      		com r20
+ 252 01d6 542F      		mov r21,r20
+ 253 01d8 CA01      		movw r24,r20
+ 254 01da B901      		movw r22,r18
+ 255 01dc 20EF      		ldi r18,lo8(-3600)
+ 256 01de 31EF      		ldi r19,hi8(-3600)
+ 257 01e0 4FEF      		ldi r20,hlo8(-3600)
+ 258 01e2 5FEF      		ldi r21,hhi8(-3600)
+ 259 01e4 0E94 0000 		call __mulsi3
+ 260 01e8 7B01      		movw r14,r22
+ 261 01ea 8C01      		movw r16,r24
+ 262 01ec EA0C      		add r14,r10
+ 263 01ee FB1C      		adc r15,r11
+ 264 01f0 0C1D      		adc r16,r12
+ 265 01f2 1D1D      		adc r17,r13
+ 266 01f4 C801      		movw r24,r16
+ 267 01f6 B701      		movw r22,r14
+ 268 01f8 2CE3      		ldi r18,lo8(60)
+ 269 01fa 30E0      		ldi r19,hi8(60)
+ 270 01fc 40E0      		ldi r20,hlo8(60)
+ 271 01fe 50E0      		ldi r21,hhi8(60)
+ 272 0200 0E94 0000 		call __divmodsi4
+ 273 0204 B901      		movw r22,r18
+ 274 0206 F201      		movw r30,r4
+ 275 0208 3383      		std Z+3,r19
+ 276 020a 2283      		std Z+2,r18
+ 277 020c 84EC      		ldi r24,lo8(-60)
+ 278 020e 9FEF      		ldi r25,hi8(-60)
+ 279 0210 9C01      		movw r18,r24
+ 280 0212 629F      		mul r22,r18
+ 281 0214 C001      		movw r24,r0
+ 282 0216 639F      		mul r22,r19
+ 283 0218 900D      		add r25,r0
+ 284 021a 729F      		mul r23,r18
+ 285 021c 900D      		add r25,r0
+GAS LISTING C:\Temp/cc0eKrYC.s 			page 6
+
+
+ 286 021e 1124      		clr r1
+ 287 0220 8E0D      		add r24,r14
+ 288 0222 9F1D      		adc r25,r15
+ 289 0224 9183      		std Z+1,r25
+ 290 0226 8083      		st Z,r24
+ 291 0228 118A      		std Z+17,__zero_reg__
+ 292 022a 108A      		std Z+16,__zero_reg__
+ 293 022c 20E0      		ldi r18,lo8(0)
+ 294 022e 30E0      		ldi r19,hi8(0)
+ 295               	.L3:
+ 296 0230 C901      		movw r24,r18
+ 297               	/* epilogue start */
+ 298 0232 DF91      		pop r29
+ 299 0234 CF91      		pop r28
+ 300 0236 1F91      		pop r17
+ 301 0238 0F91      		pop r16
+ 302 023a FF90      		pop r15
+ 303 023c EF90      		pop r14
+ 304 023e DF90      		pop r13
+ 305 0240 CF90      		pop r12
+ 306 0242 BF90      		pop r11
+ 307 0244 AF90      		pop r10
+ 308 0246 9F90      		pop r9
+ 309 0248 8F90      		pop r8
+ 310 024a 7F90      		pop r7
+ 311 024c 6F90      		pop r6
+ 312 024e 5F90      		pop r5
+ 313 0250 4F90      		pop r4
+ 314 0252 0895      		ret
+ 315               		.size	gmtime_r, .-gmtime_r
+ 316               	.global	gmtime
+ 317               		.type	gmtime, @function
+ 318               	gmtime:
+ 319               	/* prologue: function */
+ 320               	/* frame size = 0 */
+ 321 0254 60E0      		ldi r22,lo8(_tb)
+ 322 0256 70E0      		ldi r23,hi8(_tb)
+ 323 0258 0E94 0000 		call gmtime_r
+ 324 025c 892B      		or r24,r25
+ 325 025e 01F0      		breq .L13
+ 326 0260 20E0      		ldi r18,lo8(0)
+ 327 0262 30E0      		ldi r19,hi8(0)
+ 328 0264 00C0      		rjmp .L14
+ 329               	.L13:
+ 330 0266 20E0      		ldi r18,lo8(_tb)
+ 331 0268 30E0      		ldi r19,hi8(_tb)
+ 332               	.L14:
+ 333 026a C901      		movw r24,r18
+ 334               	/* epilogue start */
+ 335 026c 0895      		ret
+ 336               		.size	gmtime, .-gmtime
+ 337               	.global	_lpdays
+ 338               		.data
+ 339               		.type	_lpdays, @object
+ 340               		.size	_lpdays, 26
+ 341               	_lpdays:
+ 342 0000 FFFF      		.word	-1
+GAS LISTING C:\Temp/cc0eKrYC.s 			page 7
+
+
+ 343 0002 1E00      		.word	30
+ 344 0004 3B00      		.word	59
+ 345 0006 5A00      		.word	90
+ 346 0008 7800      		.word	120
+ 347 000a 9700      		.word	151
+ 348 000c B500      		.word	181
+ 349 000e D400      		.word	212
+ 350 0010 F300      		.word	243
+ 351 0012 1101      		.word	273
+ 352 0014 3001      		.word	304
+ 353 0016 4E01      		.word	334
+ 354 0018 6D01      		.word	365
+ 355               	.global	_days
+ 356               		.type	_days, @object
+ 357               		.size	_days, 26
+ 358               	_days:
+ 359 001a FFFF      		.word	-1
+ 360 001c 1E00      		.word	30
+ 361 001e 3A00      		.word	58
+ 362 0020 5900      		.word	89
+ 363 0022 7700      		.word	119
+ 364 0024 9600      		.word	150
+ 365 0026 B400      		.word	180
+ 366 0028 D300      		.word	211
+ 367 002a F200      		.word	242
+ 368 002c 1001      		.word	272
+ 369 002e 2F01      		.word	303
+ 370 0030 4D01      		.word	333
+ 371 0032 6C01      		.word	364
+ 372               		.comm _tb,18,1
+GAS LISTING C:\Temp/cc0eKrYC.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 gmtime.c
+  C:\Temp/cc0eKrYC.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cc0eKrYC.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cc0eKrYC.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cc0eKrYC.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cc0eKrYC.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cc0eKrYC.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cc0eKrYC.s:13     .text:00000000 gmtime_r
+  C:\Temp/cc0eKrYC.s:358    .data:0000001a _days
+  C:\Temp/cc0eKrYC.s:341    .data:00000000 _lpdays
+  C:\Temp/cc0eKrYC.s:318    .text:00000254 gmtime
+                            *COM*:00000012 _tb
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+__udivmodsi4
+__mulsi3
+__divmodhi4
+__divmodsi4

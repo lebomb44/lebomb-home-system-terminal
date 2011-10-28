@@ -1,0 +1,726 @@
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 1
+
+
+   1               		.file	"getf.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	_getf
+  12               		.type	_getf, @function
+  13               	_getf:
+  14 0000 2F92      		push r2
+  15 0002 3F92      		push r3
+  16 0004 4F92      		push r4
+  17 0006 5F92      		push r5
+  18 0008 6F92      		push r6
+  19 000a 7F92      		push r7
+  20 000c 8F92      		push r8
+  21 000e 9F92      		push r9
+  22 0010 AF92      		push r10
+  23 0012 BF92      		push r11
+  24 0014 CF92      		push r12
+  25 0016 DF92      		push r13
+  26 0018 EF92      		push r14
+  27 001a FF92      		push r15
+  28 001c 0F93      		push r16
+  29 001e 1F93      		push r17
+  30 0020 DF93      		push r29
+  31 0022 CF93      		push r28
+  32 0024 CDB7      		in r28,__SP_L__
+  33 0026 DEB7      		in r29,__SP_H__
+  34 0028 6497      		sbiw r28,20
+  35 002a 0FB6      		in __tmp_reg__,__SREG__
+  36 002c F894      		cli
+  37 002e DEBF      		out __SP_H__,r29
+  38 0030 0FBE      		out __SREG__,__tmp_reg__
+  39 0032 CDBF      		out __SP_L__,r28
+  40               	/* prologue: function */
+  41               	/* frame size = 20 */
+  42 0034 2C01      		movw r4,r24
+  43 0036 3B01      		movw r6,r22
+  44 0038 1A01      		movw r2,r20
+  45 003a 5901      		movw r10,r18
+  46 003c 1B8A      		std Y+19,__zero_reg__
+  47 003e CC24      		clr r12
+  48               	.L10:
+  49 0040 DD24      		clr r13
+  50               	.L82:
+  51 0042 D101      		movw r26,r2
+  52 0044 1C91      		ld r17,X
+  53 0046 1123      		tst r17
+  54 0048 01F4      		brne .+2
+  55 004a 00C0      		rjmp .L91
+  56               	.L3:
+  57 004c 0894      		sec
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 2
+
+
+  58 004e 211C      		adc r2,__zero_reg__
+  59 0050 311C      		adc r3,__zero_reg__
+  60 0052 812F      		mov r24,r17
+  61 0054 90E0      		ldi r25,lo8(0)
+  62 0056 0E94 0000 		call isspace
+  63 005a 892B      		or r24,r25
+  64 005c 01F0      		breq .L5
+  65               	.L75:
+  66 005e 41E0      		ldi r20,lo8(1)
+  67 0060 50E0      		ldi r21,hi8(1)
+  68 0062 BE01      		movw r22,r28
+  69 0064 6F5F      		subi r22,lo8(-(1))
+  70 0066 7F4F      		sbci r23,hi8(-(1))
+  71 0068 C301      		movw r24,r6
+  72 006a F201      		movw r30,r4
+  73 006c 0995      		icall
+  74 006e 0197      		sbiw r24,1
+  75 0070 01F4      		brne .L82
+  76 0072 8981      		ldd r24,Y+1
+  77 0074 90E0      		ldi r25,lo8(0)
+  78 0076 0E94 0000 		call isspace
+  79 007a 892B      		or r24,r25
+  80 007c 01F4      		brne .L75
+  81 007e DD24      		clr r13
+  82 0080 D394      		inc r13
+  83 0082 00C0      		rjmp .L82
+  84               	.L5:
+  85 0084 1532      		cpi r17,lo8(37)
+  86 0086 01F0      		breq .L7
+  87 0088 DD20      		tst r13
+  88 008a 01F4      		brne .L8
+  89 008c 41E0      		ldi r20,lo8(1)
+  90 008e 50E0      		ldi r21,hi8(1)
+  91 0090 BE01      		movw r22,r28
+  92 0092 6F5F      		subi r22,lo8(-(1))
+  93 0094 7F4F      		sbci r23,hi8(-(1))
+  94 0096 C301      		movw r24,r6
+  95 0098 F201      		movw r30,r4
+  96 009a 0995      		icall
+  97 009c 0197      		sbiw r24,1
+  98 009e 01F0      		breq .L8
+  99 00a0 BB89      		ldd r27,Y+19
+ 100 00a2 BB23      		tst r27
+ 101 00a4 01F0      		breq .+2
+ 102 00a6 00C0      		rjmp .L91
+ 103 00a8 00C0      		rjmp .L9
+ 104               	.L8:
+ 105 00aa 8981      		ldd r24,Y+1
+ 106 00ac 8117      		cp r24,r17
+ 107 00ae 01F0      		breq .L10
+ 108 00b0 00C0      		rjmp .L91
+ 109               	.L7:
+ 110 00b2 F101      		movw r30,r2
+ 111 00b4 2191      		ld r18,Z+
+ 112 00b6 1F01      		movw r2,r30
+ 113 00b8 2532      		cpi r18,lo8(37)
+ 114 00ba 01F4      		brne .L11
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 3
+
+
+ 115 00bc DD20      		tst r13
+ 116 00be 01F4      		brne .L12
+ 117 00c0 41E0      		ldi r20,lo8(1)
+ 118 00c2 50E0      		ldi r21,hi8(1)
+ 119 00c4 BE01      		movw r22,r28
+ 120 00c6 6F5F      		subi r22,lo8(-(1))
+ 121 00c8 7F4F      		sbci r23,hi8(-(1))
+ 122 00ca C301      		movw r24,r6
+ 123 00cc F201      		movw r30,r4
+ 124 00ce 0995      		icall
+ 125 00d0 0197      		sbiw r24,1
+ 126 00d2 01F0      		breq .+2
+ 127 00d4 00C0      		rjmp .L35
+ 128               	.L12:
+ 129 00d6 8981      		ldd r24,Y+1
+ 130 00d8 8532      		cpi r24,lo8(37)
+ 131 00da 01F4      		brne .+2
+ 132 00dc 00C0      		rjmp .L10
+ 133 00de 00C0      		rjmp .L91
+ 134               	.L11:
+ 135 00e0 00E0      		ldi r16,lo8(0)
+ 136 00e2 10E0      		ldi r17,hi8(0)
+ 137 00e4 FF24      		clr r15
+ 138 00e6 1A8A      		std Y+18,__zero_reg__
+ 139               	.L18:
+ 140 00e8 2A32      		cpi r18,lo8(42)
+ 141 00ea 01F4      		brne .L13
+ 142 00ec 82E0      		ldi r24,lo8(2)
+ 143 00ee F82A      		or r15,r24
+ 144 00f0 00C0      		rjmp .L14
+ 145               	.L13:
+ 146 00f2 2C36      		cpi r18,lo8(108)
+ 147 00f4 01F4      		brne .L15
+ 148 00f6 91E0      		ldi r25,lo8(1)
+ 149 00f8 F92A      		or r15,r25
+ 150 00fa 00C0      		rjmp .L14
+ 151               	.L15:
+ 152 00fc 2836      		cpi r18,lo8(104)
+ 153 00fe 01F4      		brne .L16
+ 154 0100 AA89      		ldd r26,Y+18
+ 155 0102 AF5F      		subi r26,lo8(-(1))
+ 156 0104 AA8B      		std Y+18,r26
+ 157 0106 00C0      		rjmp .L14
+ 158               	.L16:
+ 159 0108 822F      		mov r24,r18
+ 160 010a 8053      		subi r24,lo8(-(-48))
+ 161 010c 8A30      		cpi r24,lo8(10)
+ 162 010e 00F4      		brsh .L17
+ 163 0110 C801      		movw r24,r16
+ 164 0112 A3E0      		ldi r26,3
+ 165 0114 880F      	1:	lsl r24
+ 166 0116 991F      		rol r25
+ 167 0118 AA95      		dec r26
+ 168 011a 01F4      		brne 1b
+ 169 011c 000F      		lsl r16
+ 170 011e 111F      		rol r17
+ 171 0120 080F      		add r16,r24
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 4
+
+
+ 172 0122 191F      		adc r17,r25
+ 173 0124 020F      		add r16,r18
+ 174 0126 111D      		adc r17,__zero_reg__
+ 175 0128 0053      		subi r16,lo8(-(-48))
+ 176 012a 1040      		sbci r17,hi8(-(-48))
+ 177               	.L14:
+ 178 012c F101      		movw r30,r2
+ 179 012e 2191      		ld r18,Z+
+ 180 0130 1F01      		movw r2,r30
+ 181 0132 00C0      		rjmp .L18
+ 182               	.L17:
+ 183 0134 2936      		cpi r18,lo8(105)
+ 184 0136 01F0      		breq .L22
+ 185 0138 2A36      		cpi r18,lo8(106)
+ 186 013a 00F4      		brsh .L25
+ 187 013c 2835      		cpi r18,lo8(88)
+ 188 013e 01F0      		breq .L20
+ 189 0140 2336      		cpi r18,lo8(99)
+ 190 0142 01F4      		brne .+2
+ 191 0144 00C0      		rjmp .L21
+ 192 0146 2223      		tst r18
+ 193 0148 01F4      		brne .+2
+ 194 014a 00C0      		rjmp .L9
+ 195 014c 00C0      		rjmp .L19
+ 196               	.L25:
+ 197 014e 2337      		cpi r18,lo8(115)
+ 198 0150 01F0      		breq .L24
+ 199 0152 2837      		cpi r18,lo8(120)
+ 200 0154 01F0      		breq .L20
+ 201 0156 2F36      		cpi r18,lo8(111)
+ 202 0158 01F4      		brne .L19
+ 203 015a 00C0      		rjmp .L94
+ 204               	.L24:
+ 205 015c F2E0      		ldi r31,lo8(2)
+ 206 015e FC8B      		std Y+20,r31
+ 207 0160 00C0      		rjmp .L85
+ 208               	.L19:
+ 209 0162 83E0      		ldi r24,lo8(3)
+ 210 0164 8C8B      		std Y+20,r24
+ 211               	.L85:
+ 212 0166 EAE0      		ldi r30,lo8(10)
+ 213 0168 EE2E      		mov r14,r30
+ 214 016a 00C0      		rjmp .L26
+ 215               	.L22:
+ 216 016c 93E0      		ldi r25,lo8(3)
+ 217 016e 9C8B      		std Y+20,r25
+ 218 0170 EE24      		clr r14
+ 219 0172 00C0      		rjmp .L26
+ 220               	.L94:
+ 221 0174 A3E0      		ldi r26,lo8(3)
+ 222 0176 AC8B      		std Y+20,r26
+ 223 0178 78E0      		ldi r23,lo8(8)
+ 224 017a E72E      		mov r14,r23
+ 225 017c 00C0      		rjmp .L26
+ 226               	.L20:
+ 227 017e B0E1      		ldi r27,lo8(16)
+ 228 0180 FB2A      		or r15,r27
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 5
+
+
+ 229 0182 E3E0      		ldi r30,lo8(3)
+ 230 0184 EC8B      		std Y+20,r30
+ 231 0186 60E1      		ldi r22,lo8(16)
+ 232 0188 E62E      		mov r14,r22
+ 233               	.L26:
+ 234 018a DD20      		tst r13
+ 235 018c 01F0      		breq .+2
+ 236 018e 00C0      		rjmp .L76
+ 237 0190 00C0      		rjmp .L95
+ 238               	.L72:
+ 239 0192 F1FC      		sbrc r15,1
+ 240 0194 00C0      		rjmp .L80
+ 241 0196 00C0      		rjmp .L96
+ 242               	.L32:
+ 243 0198 DD20      		tst r13
+ 244 019a 01F4      		brne .L31
+ 245 019c 40E1      		ldi r20,lo8(16)
+ 246 019e 50E0      		ldi r21,hi8(16)
+ 247 01a0 BE01      		movw r22,r28
+ 248 01a2 6E5F      		subi r22,lo8(-(2))
+ 249 01a4 7F4F      		sbci r23,hi8(-(2))
+ 250 01a6 C301      		movw r24,r6
+ 251 01a8 F201      		movw r30,r4
+ 252 01aa 0995      		icall
+ 253 01ac 1816      		cp __zero_reg__,r24
+ 254 01ae 1906      		cpc __zero_reg__,r25
+ 255 01b0 04F4      		brge .L35
+ 256               	.L31:
+ 257 01b2 0051      		subi r16,lo8(-(-16))
+ 258 01b4 1040      		sbci r17,hi8(-(-16))
+ 259               	.L80:
+ 260 01b6 0131      		cpi r16,17
+ 261 01b8 1105      		cpc r17,__zero_reg__
+ 262 01ba 00F4      		brsh .L32
+ 263 01bc 0115      		cp r16,__zero_reg__
+ 264 01be 1105      		cpc r17,__zero_reg__
+ 265 01c0 01F0      		breq .L33
+ 266 01c2 DD20      		tst r13
+ 267 01c4 01F4      		brne .L33
+ 268 01c6 A801      		movw r20,r16
+ 269 01c8 BE01      		movw r22,r28
+ 270 01ca 6E5F      		subi r22,lo8(-(2))
+ 271 01cc 7F4F      		sbci r23,hi8(-(2))
+ 272 01ce C301      		movw r24,r6
+ 273 01d0 F201      		movw r30,r4
+ 274 01d2 0995      		icall
+ 275 01d4 1816      		cp __zero_reg__,r24
+ 276 01d6 1906      		cpc __zero_reg__,r25
+ 277 01d8 04F0      		brlt .L33
+ 278 01da 8B89      		ldd r24,Y+19
+ 279 01dc 8823      		tst r24
+ 280 01de 01F0      		breq .+2
+ 281 01e0 00C0      		rjmp .L91
+ 282 01e2 00C0      		rjmp .L9
+ 283               	.L96:
+ 284 01e4 DD20      		tst r13
+ 285 01e6 01F4      		brne .L34
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 6
+
+
+ 286 01e8 D501      		movw r26,r10
+ 287 01ea 6D91      		ld r22,X+
+ 288 01ec 7C91      		ld r23,X
+ 289 01ee A801      		movw r20,r16
+ 290 01f0 C301      		movw r24,r6
+ 291 01f2 F201      		movw r30,r4
+ 292 01f4 0995      		icall
+ 293 01f6 1816      		cp __zero_reg__,r24
+ 294 01f8 1906      		cpc __zero_reg__,r25
+ 295 01fa 04F4      		brge .L35
+ 296 01fc E2E0      		ldi r30,lo8(2)
+ 297 01fe F0E0      		ldi r31,hi8(2)
+ 298 0200 AE0E      		add r10,r30
+ 299 0202 BF1E      		adc r11,r31
+ 300 0204 00C0      		rjmp .L34
+ 301               	.L35:
+ 302 0206 FB89      		ldd r31,Y+19
+ 303 0208 FF23      		tst r31
+ 304 020a 01F0      		breq .+2
+ 305 020c 00C0      		rjmp .L91
+ 306 020e 00C0      		rjmp .L9
+ 307               	.L34:
+ 308 0210 C394      		inc r12
+ 309               	.L33:
+ 310 0212 8B89      		ldd r24,Y+19
+ 311 0214 8F5F      		subi r24,lo8(-(1))
+ 312 0216 8B8B      		std Y+19,r24
+ 313 0218 00C0      		rjmp .L10
+ 314               	.L95:
+ 315 021a 41E0      		ldi r20,lo8(1)
+ 316 021c 50E0      		ldi r21,hi8(1)
+ 317 021e BE01      		movw r22,r28
+ 318 0220 6F5F      		subi r22,lo8(-(1))
+ 319 0222 7F4F      		sbci r23,hi8(-(1))
+ 320 0224 C301      		movw r24,r6
+ 321 0226 F201      		movw r30,r4
+ 322 0228 0995      		icall
+ 323 022a 0197      		sbiw r24,1
+ 324 022c 01F0      		breq .L76
+ 325 022e 9B89      		ldd r25,Y+19
+ 326 0230 9923      		tst r25
+ 327 0232 01F0      		breq .+2
+ 328 0234 00C0      		rjmp .L91
+ 329 0236 00C0      		rjmp .L9
+ 330               	.L36:
+ 331 0238 41E0      		ldi r20,lo8(1)
+ 332 023a 50E0      		ldi r21,hi8(1)
+ 333 023c BE01      		movw r22,r28
+ 334 023e 6F5F      		subi r22,lo8(-(1))
+ 335 0240 7F4F      		sbci r23,hi8(-(1))
+ 336 0242 C301      		movw r24,r6
+ 337 0244 F201      		movw r30,r4
+ 338 0246 0995      		icall
+ 339 0248 0197      		sbiw r24,1
+ 340 024a 01F0      		breq .L76
+ 341 024c AB89      		ldd r26,Y+19
+ 342 024e AA23      		tst r26
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 7
+
+
+ 343 0250 01F0      		breq .+2
+ 344 0252 00C0      		rjmp .L91
+ 345 0254 00C0      		rjmp .L9
+ 346               	.L76:
+ 347 0256 8981      		ldd r24,Y+1
+ 348 0258 90E0      		ldi r25,lo8(0)
+ 349 025a 0E94 0000 		call isspace
+ 350 025e 892B      		or r24,r25
+ 351 0260 01F4      		brne .L36
+ 352 0262 BC89      		ldd r27,Y+20
+ 353 0264 B230      		cpi r27,lo8(2)
+ 354 0266 01F0      		breq .+2
+ 355 0268 00C0      		rjmp .L37
+ 356 026a 0115      		cp r16,__zero_reg__
+ 357 026c 1105      		cpc r17,__zero_reg__
+ 358 026e 01F4      		brne .L38
+ 359 0270 0FEF      		ldi r16,lo8(-1)
+ 360 0272 1FEF      		ldi r17,hi8(-1)
+ 361               	.L38:
+ 362 0274 F1FC      		sbrc r15,1
+ 363 0276 00C0      		rjmp .L81
+ 364 0278 00C0      		rjmp .L97
+ 365               	.L42:
+ 366 027a 0150      		subi r16,lo8(-(-1))
+ 367 027c 1040      		sbci r17,hi8(-(-1))
+ 368 027e 01F0      		breq .L41
+ 369 0280 41E0      		ldi r20,lo8(1)
+ 370 0282 50E0      		ldi r21,hi8(1)
+ 371 0284 BE01      		movw r22,r28
+ 372 0286 6F5F      		subi r22,lo8(-(1))
+ 373 0288 7F4F      		sbci r23,hi8(-(1))
+ 374 028a C301      		movw r24,r6
+ 375 028c F201      		movw r30,r4
+ 376 028e 0995      		icall
+ 377 0290 0197      		sbiw r24,1
+ 378 0292 01F4      		brne .L41
+ 379               	.L81:
+ 380 0294 8981      		ldd r24,Y+1
+ 381 0296 90E0      		ldi r25,lo8(0)
+ 382 0298 0E94 0000 		call isspace
+ 383 029c 892B      		or r24,r25
+ 384 029e 01F0      		breq .L42
+ 385 02a0 00C0      		rjmp .L41
+ 386               	.L97:
+ 387 02a2 F501      		movw r30,r10
+ 388 02a4 E080      		ld r14,Z
+ 389 02a6 F180      		ldd r15,Z+1
+ 390 02a8 00C0      		rjmp .L43
+ 391               	.L45:
+ 392 02aa D701      		movw r26,r14
+ 393 02ac DD92      		st X+,r13
+ 394 02ae 7D01      		movw r14,r26
+ 395 02b0 0150      		subi r16,lo8(-(-1))
+ 396 02b2 1040      		sbci r17,hi8(-(-1))
+ 397 02b4 01F0      		breq .L44
+ 398 02b6 41E0      		ldi r20,lo8(1)
+ 399 02b8 50E0      		ldi r21,hi8(1)
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 8
+
+
+ 400 02ba BE01      		movw r22,r28
+ 401 02bc 6F5F      		subi r22,lo8(-(1))
+ 402 02be 7F4F      		sbci r23,hi8(-(1))
+ 403 02c0 C301      		movw r24,r6
+ 404 02c2 F201      		movw r30,r4
+ 405 02c4 0995      		icall
+ 406 02c6 0197      		sbiw r24,1
+ 407 02c8 01F4      		brne .L44
+ 408               	.L43:
+ 409 02ca D980      		ldd r13,Y+1
+ 410 02cc 8D2D      		mov r24,r13
+ 411 02ce 90E0      		ldi r25,lo8(0)
+ 412 02d0 0E94 0000 		call isspace
+ 413 02d4 892B      		or r24,r25
+ 414 02d6 01F0      		breq .L45
+ 415               	.L44:
+ 416 02d8 E2E0      		ldi r30,lo8(2)
+ 417 02da F0E0      		ldi r31,hi8(2)
+ 418 02dc AE0E      		add r10,r30
+ 419 02de BF1E      		adc r11,r31
+ 420 02e0 D701      		movw r26,r14
+ 421 02e2 1C92      		st X,__zero_reg__
+ 422 02e4 C394      		inc r12
+ 423               	.L41:
+ 424 02e6 BB89      		ldd r27,Y+19
+ 425 02e8 BF5F      		subi r27,lo8(-(1))
+ 426 02ea BB8B      		std Y+19,r27
+ 427 02ec 00C0      		rjmp .L10
+ 428               	.L37:
+ 429 02ee C801      		movw r24,r16
+ 430 02f0 0197      		sbiw r24,1
+ 431 02f2 0F97      		sbiw r24,15
+ 432 02f4 00F0      		brlo .L46
+ 433 02f6 0FE0      		ldi r16,lo8(15)
+ 434 02f8 10E0      		ldi r17,hi8(15)
+ 435               	.L46:
+ 436 02fa ECE2      		ldi r30,lo8(44)
+ 437 02fc FE2A      		or r15,r30
+ 438 02fe 52E0      		ldi r21,lo8(2)
+ 439 0300 852E      		mov r8,r21
+ 440 0302 912C      		mov r9,__zero_reg__
+ 441 0304 8C0E      		add r8,r28
+ 442 0306 9D1E      		adc r9,r29
+ 443 0308 00C0      		rjmp .L47
+ 444               	.L65:
+ 445 030a 9981      		ldd r25,Y+1
+ 446 030c 9033      		cpi r25,lo8(48)
+ 447 030e 01F4      		brne .L48
+ 448 0310 EE20      		tst r14
+ 449 0312 01F4      		brne .L49
+ 450 0314 F0E1      		ldi r31,lo8(16)
+ 451 0316 FF2A      		or r15,r31
+ 452 0318 48E0      		ldi r20,lo8(8)
+ 453 031a E42E      		mov r14,r20
+ 454               	.L49:
+ 455 031c F5FE      		sbrs r15,5
+ 456 031e 00C0      		rjmp .L86
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 9
+
+
+ 457 0320 83ED      		ldi r24,lo8(-45)
+ 458 0322 F822      		and r15,r24
+ 459 0324 00C0      		rjmp .L51
+ 460               	.L48:
+ 461 0326 892F      		mov r24,r25
+ 462 0328 8153      		subi r24,lo8(-(-49))
+ 463 032a 8730      		cpi r24,lo8(7)
+ 464 032c 00F4      		brsh .L52
+ 465 032e EE20      		tst r14
+ 466 0330 01F4      		brne .L53
+ 467 0332 3AE0      		ldi r19,lo8(10)
+ 468 0334 E32E      		mov r14,r19
+ 469               	.L53:
+ 470 0336 B3EE      		ldi r27,lo8(-29)
+ 471 0338 00C0      		rjmp .L87
+ 472               	.L52:
+ 473 033a 892F      		mov r24,r25
+ 474 033c 8853      		subi r24,lo8(-(-56))
+ 475 033e 8230      		cpi r24,lo8(2)
+ 476 0340 00F4      		brsh .L54
+ 477 0342 EE20      		tst r14
+ 478 0344 01F4      		brne .L55
+ 479 0346 2AE0      		ldi r18,lo8(10)
+ 480 0348 E22E      		mov r14,r18
+ 481 034a 00C0      		rjmp .L56
+ 482               	.L55:
+ 483 034c E8E0      		ldi r30,lo8(8)
+ 484 034e EE15      		cp r30,r14
+ 485 0350 00F4      		brsh .L57
+ 486               	.L56:
+ 487 0352 F3EE      		ldi r31,lo8(-29)
+ 488 0354 FF22      		and r15,r31
+ 489 0356 00C0      		rjmp .L51
+ 490               	.L54:
+ 491 0358 892F      		mov r24,r25
+ 492 035a 8154      		subi r24,lo8(-(-65))
+ 493 035c 8630      		cpi r24,lo8(6)
+ 494 035e 00F0      		brlo .L58
+ 495 0360 8052      		subi r24,lo8(-(-32))
+ 496 0362 8630      		cpi r24,lo8(6)
+ 497 0364 00F4      		brsh .L59
+ 498               	.L58:
+ 499 0366 8AE0      		ldi r24,lo8(10)
+ 500 0368 8E15      		cp r24,r14
+ 501 036a 00F4      		brsh .L57
+ 502               	.L86:
+ 503 036c A3EE      		ldi r26,lo8(-29)
+ 504 036e FA22      		and r15,r26
+ 505 0370 00C0      		rjmp .L51
+ 506               	.L59:
+ 507 0372 9D32      		cpi r25,lo8(45)
+ 508 0374 01F0      		breq .L60
+ 509 0376 9B32      		cpi r25,lo8(43)
+ 510 0378 01F4      		brne .L61
+ 511               	.L60:
+ 512 037a F2FE      		sbrs r15,2
+ 513 037c 00C0      		rjmp .L57
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 10
+
+
+ 514 037e BBEF      		ldi r27,lo8(-5)
+ 515               	.L87:
+ 516 0380 FB22      		and r15,r27
+ 517 0382 00C0      		rjmp .L51
+ 518               	.L61:
+ 519 0384 9837      		cpi r25,lo8(120)
+ 520 0386 01F0      		breq .L62
+ 521 0388 9835      		cpi r25,lo8(88)
+ 522 038a 01F0      		breq .L62
+ 523 038c DD24      		clr r13
+ 524 038e D394      		inc r13
+ 525 0390 00C0      		rjmp .L63
+ 526               	.L62:
+ 527 0392 F4FE      		sbrs r15,4
+ 528 0394 00C0      		rjmp .L57
+ 529 0396 EFEE      		ldi r30,lo8(-17)
+ 530 0398 FE22      		and r15,r30
+ 531 039a 80E1      		ldi r24,lo8(16)
+ 532 039c E82E      		mov r14,r24
+ 533               	.L51:
+ 534 039e D401      		movw r26,r8
+ 535 03a0 9D93      		st X+,r25
+ 536 03a2 4D01      		movw r8,r26
+ 537 03a4 0230      		cpi r16,2
+ 538 03a6 1105      		cpc r17,__zero_reg__
+ 539 03a8 00F0      		brlo .L64
+ 540 03aa 41E0      		ldi r20,lo8(1)
+ 541 03ac 50E0      		ldi r21,hi8(1)
+ 542 03ae BE01      		movw r22,r28
+ 543 03b0 6F5F      		subi r22,lo8(-(1))
+ 544 03b2 7F4F      		sbci r23,hi8(-(1))
+ 545 03b4 C301      		movw r24,r6
+ 546 03b6 F201      		movw r30,r4
+ 547 03b8 0995      		icall
+ 548 03ba 0197      		sbiw r24,1
+ 549 03bc 01F4      		brne .L57
+ 550               	.L64:
+ 551 03be 0150      		subi r16,lo8(-(-1))
+ 552 03c0 1040      		sbci r17,hi8(-(-1))
+ 553               	.L47:
+ 554 03c2 0115      		cp r16,__zero_reg__
+ 555 03c4 1105      		cpc r17,__zero_reg__
+ 556 03c6 01F0      		breq .+2
+ 557 03c8 00C0      		rjmp .L65
+ 558               	.L57:
+ 559 03ca DD24      		clr r13
+ 560               	.L63:
+ 561 03cc F3FE      		sbrs r15,3
+ 562 03ce 00C0      		rjmp .L66
+ 563               	.L91:
+ 564 03d0 2C2D      		mov r18,r12
+ 565 03d2 30E0      		ldi r19,lo8(0)
+ 566 03d4 00C0      		rjmp .L4
+ 567               	.L66:
+ 568 03d6 F1FC      		sbrc r15,1
+ 569 03d8 00C0      		rjmp .L67
+ 570 03da F401      		movw r30,r8
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 11
+
+
+ 571 03dc 1082      		st Z,__zero_reg__
+ 572 03de 4E2D      		mov r20,r14
+ 573 03e0 50E0      		ldi r21,lo8(0)
+ 574 03e2 60E0      		ldi r22,lo8(0)
+ 575 03e4 70E0      		ldi r23,hi8(0)
+ 576 03e6 CE01      		movw r24,r28
+ 577 03e8 0296      		adiw r24,2
+ 578 03ea 0E94 0000 		call strtol
+ 579 03ee F0FE      		sbrs r15,0
+ 580 03f0 00C0      		rjmp .L68
+ 581 03f2 D501      		movw r26,r10
+ 582 03f4 ED91      		ld r30,X+
+ 583 03f6 FC91      		ld r31,X
+ 584 03f8 6083      		st Z,r22
+ 585 03fa 7183      		std Z+1,r23
+ 586 03fc 8283      		std Z+2,r24
+ 587 03fe 9383      		std Z+3,r25
+ 588 0400 00C0      		rjmp .L88
+ 589               	.L68:
+ 590 0402 FA89      		ldd r31,Y+18
+ 591 0404 F130      		cpi r31,lo8(1)
+ 592 0406 01F4      		brne .L70
+ 593 0408 D501      		movw r26,r10
+ 594 040a ED91      		ld r30,X+
+ 595 040c FC91      		ld r31,X
+ 596 040e CB01      		movw r24,r22
+ 597 0410 6083      		st Z,r22
+ 598 0412 9183      		std Z+1,r25
+ 599               	.L88:
+ 600 0414 E2E0      		ldi r30,lo8(2)
+ 601 0416 F0E0      		ldi r31,hi8(2)
+ 602 0418 AE0E      		add r10,r30
+ 603 041a BF1E      		adc r11,r31
+ 604 041c 00C0      		rjmp .L69
+ 605               	.L70:
+ 606 041e 9501      		movw r18,r10
+ 607 0420 2E5F      		subi r18,lo8(-(2))
+ 608 0422 3F4F      		sbci r19,hi8(-(2))
+ 609 0424 FA89      		ldd r31,Y+18
+ 610 0426 FF23      		tst r31
+ 611 0428 01F0      		breq .L71
+ 612 042a D501      		movw r26,r10
+ 613 042c ED91      		ld r30,X+
+ 614 042e FC91      		ld r31,X
+ 615 0430 6083      		st Z,r22
+ 616 0432 00C0      		rjmp .L89
+ 617               	.L71:
+ 618 0434 D501      		movw r26,r10
+ 619 0436 ED91      		ld r30,X+
+ 620 0438 FC91      		ld r31,X
+ 621 043a CB01      		movw r24,r22
+ 622 043c 6083      		st Z,r22
+ 623 043e 9183      		std Z+1,r25
+ 624               	.L89:
+ 625 0440 5901      		movw r10,r18
+ 626               	.L69:
+ 627 0442 C394      		inc r12
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 12
+
+
+ 628               	.L67:
+ 629 0444 BB89      		ldd r27,Y+19
+ 630 0446 BF5F      		subi r27,lo8(-(1))
+ 631 0448 BB8B      		std Y+19,r27
+ 632 044a 00C0      		rjmp .L82
+ 633               	.L9:
+ 634 044c 2FEF      		ldi r18,lo8(-1)
+ 635 044e 3FEF      		ldi r19,hi8(-1)
+ 636               	.L4:
+ 637 0450 C901      		movw r24,r18
+ 638               	/* epilogue start */
+ 639 0452 6496      		adiw r28,20
+ 640 0454 0FB6      		in __tmp_reg__,__SREG__
+ 641 0456 F894      		cli
+ 642 0458 DEBF      		out __SP_H__,r29
+ 643 045a 0FBE      		out __SREG__,__tmp_reg__
+ 644 045c CDBF      		out __SP_L__,r28
+ 645 045e CF91      		pop r28
+ 646 0460 DF91      		pop r29
+ 647 0462 1F91      		pop r17
+ 648 0464 0F91      		pop r16
+ 649 0466 FF90      		pop r15
+ 650 0468 EF90      		pop r14
+ 651 046a DF90      		pop r13
+ 652 046c CF90      		pop r12
+ 653 046e BF90      		pop r11
+ 654 0470 AF90      		pop r10
+ 655 0472 9F90      		pop r9
+ 656 0474 8F90      		pop r8
+ 657 0476 7F90      		pop r7
+ 658 0478 6F90      		pop r6
+ 659 047a 5F90      		pop r5
+ 660 047c 4F90      		pop r4
+ 661 047e 3F90      		pop r3
+ 662 0480 2F90      		pop r2
+ 663 0482 0895      		ret
+ 664               	.L21:
+ 665 0484 0115      		cp r16,__zero_reg__
+ 666 0486 1105      		cpc r17,__zero_reg__
+ 667 0488 01F0      		breq .+2
+ 668 048a 00C0      		rjmp .L72
+ 669 048c 01E0      		ldi r16,lo8(1)
+ 670 048e 10E0      		ldi r17,hi8(1)
+ 671 0490 00C0      		rjmp .L72
+ 672               		.size	_getf, .-_getf
+GAS LISTING C:\Temp/cc9bfXWj.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 getf.c
+  C:\Temp/cc9bfXWj.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cc9bfXWj.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cc9bfXWj.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cc9bfXWj.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cc9bfXWj.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cc9bfXWj.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cc9bfXWj.s:13     .text:00000000 _getf
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+isspace
+strtol

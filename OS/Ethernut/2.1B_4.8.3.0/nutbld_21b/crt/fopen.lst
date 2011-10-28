@@ -1,0 +1,152 @@
+GAS LISTING C:\Temp/cchrKl2B.s 			page 1
+
+
+   1               		.file	"fopen.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	fopen
+  12               		.type	fopen, @function
+  13               	fopen:
+  14 0000 CF92      		push r12
+  15 0002 DF92      		push r13
+  16 0004 EF92      		push r14
+  17 0006 FF92      		push r15
+  18 0008 0F93      		push r16
+  19 000a 1F93      		push r17
+  20 000c CF93      		push r28
+  21 000e DF93      		push r29
+  22               	/* prologue: function */
+  23               	/* frame size = 0 */
+  24 0010 6C01      		movw r12,r24
+  25 0012 CB01      		movw r24,r22
+  26 0014 0E94 0000 		call _fmode
+  27 0018 7C01      		movw r14,r24
+  28 001a 2FEF      		ldi r18,hi8(-1)
+  29 001c 8F3F      		cpi r24,lo8(-1)
+  30 001e 9207      		cpc r25,r18
+  31 0020 01F4      		brne .+2
+  32 0022 00C0      		rjmp .L2
+  33 0024 E0E0      		ldi r30,lo8(__iob+6)
+  34 0026 F0E0      		ldi r31,hi8(__iob+6)
+  35 0028 03E0      		ldi r16,lo8(3)
+  36 002a 10E0      		ldi r17,hi8(3)
+  37 002c 00C0      		rjmp .L3
+  38               	.L5:
+  39 002e 0F5F      		subi r16,lo8(-(1))
+  40 0030 1F4F      		sbci r17,hi8(-(1))
+  41 0032 3296      		adiw r30,2
+  42 0034 0830      		cpi r16,8
+  43 0036 1105      		cpc r17,__zero_reg__
+  44 0038 01F4      		brne .L3
+  45 003a 87E1      		ldi r24,lo8(23)
+  46 003c 90E0      		ldi r25,hi8(23)
+  47 003e 9093 0000 		sts (errno)+1,r25
+  48 0042 8093 0000 		sts errno,r24
+  49 0046 00C0      		rjmp .L2
+  50               	.L3:
+  51 0048 8081      		ld r24,Z
+  52 004a 9181      		ldd r25,Z+1
+  53 004c 892B      		or r24,r25
+  54 004e 01F4      		brne .L5
+  55 0050 87E0      		ldi r24,lo8(7)
+  56 0052 90E0      		ldi r25,hi8(7)
+  57 0054 0E94 0000 		call malloc
+GAS LISTING C:\Temp/cchrKl2B.s 			page 2
+
+
+  58 0058 EC01      		movw r28,r24
+  59 005a 000F      		lsl r16
+  60 005c 111F      		rol r17
+  61 005e 0050      		subi r16,lo8(-(__iob))
+  62 0060 1040      		sbci r17,hi8(-(__iob))
+  63 0062 D801      		movw r26,r16
+  64 0064 CD93      		st X+,r28
+  65 0066 DC93      		st X,r29
+  66 0068 2097      		sbiw r28,0
+  67 006a 01F0      		breq .L2
+  68 006c B701      		movw r22,r14
+  69 006e C601      		movw r24,r12
+  70 0070 0E94 0000 		call _open
+  71 0074 9983      		std Y+1,r25
+  72 0076 8883      		st Y,r24
+  73 0078 D801      		movw r26,r16
+  74 007a ED91      		ld r30,X+
+  75 007c FC91      		ld r31,X
+  76 007e 8F5F      		subi r24,lo8(-1)
+  77 0080 9F4F      		sbci r25,hi8(-1)
+  78 0082 01F4      		brne .L6
+  79 0084 CF01      		movw r24,r30
+  80 0086 0E94 0000 		call free
+  81 008a F801      		movw r30,r16
+  82 008c 1182      		std Z+1,__zero_reg__
+  83 008e 1082      		st Z,__zero_reg__
+  84 0090 00C0      		rjmp .L2
+  85               	.L6:
+  86 0092 F382      		std Z+3,r15
+  87 0094 E282      		std Z+2,r14
+  88 0096 1482      		std Z+4,__zero_reg__
+  89 0098 D801      		movw r26,r16
+  90 009a ED91      		ld r30,X+
+  91 009c FC91      		ld r31,X
+  92 009e 1682      		std Z+6,__zero_reg__
+  93 00a0 1582      		std Z+5,__zero_reg__
+  94 00a2 00C0      		rjmp .L4
+  95               	.L2:
+  96 00a4 E0E0      		ldi r30,lo8(0)
+  97 00a6 F0E0      		ldi r31,hi8(0)
+  98               	.L4:
+  99 00a8 CF01      		movw r24,r30
+ 100               	/* epilogue start */
+ 101 00aa DF91      		pop r29
+ 102 00ac CF91      		pop r28
+ 103 00ae 1F91      		pop r17
+ 104 00b0 0F91      		pop r16
+ 105 00b2 FF90      		pop r15
+ 106 00b4 EF90      		pop r14
+ 107 00b6 DF90      		pop r13
+ 108 00b8 CF90      		pop r12
+ 109 00ba 0895      		ret
+ 110               		.size	fopen, .-fopen
+ 111               	.global	__iob
+ 112               		.data
+ 113               		.type	__iob, @object
+ 114               		.size	__iob, 16
+GAS LISTING C:\Temp/cchrKl2B.s 			page 3
+
+
+ 115               	__iob:
+ 116 0000 0100      		.word	1
+ 117 0002 0200      		.word	2
+ 118 0004 0300      		.word	3
+ 119 0006 0000 0000 		.skip 10,0
+ 119      0000 0000 
+ 119      0000 
+GAS LISTING C:\Temp/cchrKl2B.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 fopen.c
+  C:\Temp/cchrKl2B.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cchrKl2B.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cchrKl2B.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cchrKl2B.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cchrKl2B.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cchrKl2B.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cchrKl2B.s:13     .text:00000000 fopen
+  C:\Temp/cchrKl2B.s:115    .data:00000000 __iob
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+_fmode
+errno
+malloc
+_open
+free

@@ -1,0 +1,121 @@
+GAS LISTING C:\Temp/ccGBfVEd.s 			page 1
+
+
+   1               		.file	"pppout.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutPppOutput
+  12               		.type	NutPppOutput, @function
+  13               	NutPppOutput:
+  14 0000 CF92      		push r12
+  15 0002 DF92      		push r13
+  16 0004 EF92      		push r14
+  17 0006 FF92      		push r15
+  18 0008 0F93      		push r16
+  19 000a 1F93      		push r17
+  20 000c CF93      		push r28
+  21 000e DF93      		push r29
+  22               	/* prologue: function */
+  23               	/* frame size = 0 */
+  24 0010 FC01      		movw r30,r24
+  25 0012 EB01      		movw r28,r22
+  26 0014 7901      		movw r14,r18
+  27 0016 C784      		ldd r12,Z+15
+  28 0018 D088      		ldd r13,Z+16
+  29 001a 0189      		ldd r16,Z+17
+  30 001c 1289      		ldd r17,Z+18
+  31 001e 44E0      		ldi r20,lo8(4)
+  32 0020 50E0      		ldi r21,hi8(4)
+  33 0022 60E1      		ldi r22,lo8(16)
+  34 0024 C901      		movw r24,r18
+  35 0026 0E94 0000 		call NutNetBufAlloc
+  36 002a 892B      		or r24,r25
+  37 002c 01F0      		breq .L6
+  38               	.L2:
+  39 002e D701      		movw r26,r14
+  40 0030 1396      		adiw r26,3
+  41 0032 ED91      		ld r30,X+
+  42 0034 FC91      		ld r31,X
+  43 0036 1497      		sbiw r26,3+1
+  44 0038 8FEF      		ldi r24,lo8(-1)
+  45 003a 8083      		st Z,r24
+  46 003c 83E0      		ldi r24,lo8(3)
+  47 003e 8183      		std Z+1,r24
+  48               	/* #APP */
+  49               	 ;  295 "../../nut/include/sys/types.h" 1
+  50 0040 0C2E      		mov __tmp_reg__, r28
+  51 0042 CD2F      		mov r28, r29
+  52 0044 D02D      		mov r29, __tmp_reg__
+  53               		
+  54               	 ;  0 "" 2
+  55               	/* #NOAPP */
+  56 0046 D383      		std Z+3,r29
+  57 0048 C283      		std Z+2,r28
+GAS LISTING C:\Temp/ccGBfVEd.s 			page 2
+
+
+  58 004a F601      		movw r30,r12
+  59 004c 21A1      		ldd r18,Z+33
+  60 004e 32A1      		ldd r19,Z+34
+  61 0050 2115      		cp r18,__zero_reg__
+  62 0052 3105      		cpc r19,__zero_reg__
+  63 0054 01F0      		breq .L4
+  64 0056 015C      		subi r16,lo8(-(63))
+  65 0058 1F4F      		sbci r17,hi8(-(63))
+  66 005a D801      		movw r26,r16
+  67 005c ED91      		ld r30,X+
+  68 005e FC91      		ld r31,X
+  69 0060 B701      		movw r22,r14
+  70 0062 8281      		ldd r24,Z+2
+  71 0064 9381      		ldd r25,Z+3
+  72 0066 F901      		movw r30,r18
+  73 0068 0995      		icall
+  74 006a 892B      		or r24,r25
+  75 006c 01F4      		brne .L4
+  76 006e 20E0      		ldi r18,lo8(0)
+  77 0070 30E0      		ldi r19,hi8(0)
+  78 0072 00C0      		rjmp .L3
+  79               	.L4:
+  80 0074 C701      		movw r24,r14
+  81 0076 0E94 0000 		call NutNetBufFree
+  82               	.L6:
+  83 007a 2FEF      		ldi r18,lo8(-1)
+  84 007c 3FEF      		ldi r19,hi8(-1)
+  85               	.L3:
+  86 007e C901      		movw r24,r18
+  87               	/* epilogue start */
+  88 0080 DF91      		pop r29
+  89 0082 CF91      		pop r28
+  90 0084 1F91      		pop r17
+  91 0086 0F91      		pop r16
+  92 0088 FF90      		pop r15
+  93 008a EF90      		pop r14
+  94 008c DF90      		pop r13
+  95 008e CF90      		pop r12
+  96 0090 0895      		ret
+  97               		.size	NutPppOutput, .-NutPppOutput
+GAS LISTING C:\Temp/ccGBfVEd.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pppout.c
+  C:\Temp/ccGBfVEd.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccGBfVEd.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccGBfVEd.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccGBfVEd.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccGBfVEd.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccGBfVEd.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccGBfVEd.s:13     .text:00000000 NutPppOutput
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutNetBufAlloc
+NutNetBufFree

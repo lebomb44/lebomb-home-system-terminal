@@ -1,0 +1,2425 @@
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 1
+
+
+   1               		.file	"ide.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	CFInterrupt, @function
+  12               	CFInterrupt:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 E091 0000 		lds r30,hCFChangeInt
+  16 0004 F091 0000 		lds r31,(hCFChangeInt)+1
+  17 0008 3097      		sbiw r30,0
+  18 000a 01F4      		brne .L2
+  19 000c 8FEF      		ldi r24,lo8(-1)
+  20 000e 9FEF      		ldi r25,hi8(-1)
+  21 0010 9093 0000 		sts (hCFChangeInt)+1,r25
+  22 0014 8093 0000 		sts hCFChangeInt,r24
+  23 0018 0895      		ret
+  24               	.L2:
+  25 001a 8FEF      		ldi r24,hi8(-1)
+  26 001c EF3F      		cpi r30,lo8(-1)
+  27 001e F807      		cpc r31,r24
+  28 0020 01F0      		breq .L4
+  29 0022 8481      		ldd r24,Z+4
+  30 0024 9581      		ldd r25,Z+5
+  31 0026 0196      		adiw r24,1
+  32 0028 9583      		std Z+5,r25
+  33 002a 8483      		std Z+4,r24
+  34               	.L4:
+  35 002c 0895      		ret
+  36               		.size	CFInterrupt, .-CFInterrupt
+  37               		.type	IDEInterrupt, @function
+  38               	IDEInterrupt:
+  39               	/* prologue: function */
+  40               	/* frame size = 0 */
+  41 002e E091 0000 		lds r30,pIDE
+  42 0032 F091 0000 		lds r31,(pIDE)+1
+  43 0036 8781      		ldd r24,Z+7
+  44 0038 8093 0000 		sts gbIntStatus,r24
+  45 003c E091 0000 		lds r30,hIDEEvent
+  46 0040 F091 0000 		lds r31,(hIDEEvent)+1
+  47 0044 3097      		sbiw r30,0
+  48 0046 01F4      		brne .L6
+  49 0048 8FEF      		ldi r24,lo8(-1)
+  50 004a 9FEF      		ldi r25,hi8(-1)
+  51 004c 9093 0000 		sts (hIDEEvent)+1,r25
+  52 0050 8093 0000 		sts hIDEEvent,r24
+  53 0054 0895      		ret
+  54               	.L6:
+  55 0056 8FEF      		ldi r24,hi8(-1)
+  56 0058 EF3F      		cpi r30,lo8(-1)
+  57 005a F807      		cpc r31,r24
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 2
+
+
+  58 005c 01F0      		breq .L8
+  59 005e 8481      		ldd r24,Z+4
+  60 0060 9581      		ldd r25,Z+5
+  61 0062 0196      		adiw r24,1
+  62 0064 9583      		std Z+5,r25
+  63 0066 8483      		std Z+4,r24
+  64               	.L8:
+  65 0068 0895      		ret
+  66               		.size	IDEInterrupt, .-IDEInterrupt
+  67               		.type	WaitNotBusy, @function
+  68               	WaitNotBusy:
+  69 006a EF92      		push r14
+  70 006c FF92      		push r15
+  71 006e 0F93      		push r16
+  72 0070 1F93      		push r17
+  73               	/* prologue: function */
+  74               	/* frame size = 0 */
+  75 0072 9B01      		movw r18,r22
+  76 0074 AC01      		movw r20,r24
+  77 0076 E091 0000 		lds r30,pIDE
+  78 007a F091 0000 		lds r31,(pIDE)+1
+  79 007e 8781      		ldd r24,Z+7
+  80 0080 8878      		andi r24,lo8(-120)
+  81 0082 01F0      		breq .L10
+  82 0084 CA01      		movw r24,r20
+  83 0086 B901      		movw r22,r18
+  84 0088 2AE0      		ldi r18,lo8(10)
+  85 008a 30E0      		ldi r19,hi8(10)
+  86 008c 40E0      		ldi r20,hlo8(10)
+  87 008e 50E0      		ldi r21,hhi8(10)
+  88 0090 0E94 0000 		call __mulsi3
+  89 0094 21E7      		ldi r18,lo8(625)
+  90 0096 32E0      		ldi r19,hi8(625)
+  91 0098 40E0      		ldi r20,hlo8(625)
+  92 009a 50E0      		ldi r21,hhi8(625)
+  93 009c 0E94 0000 		call __udivmodsi4
+  94 00a0 7901      		movw r14,r18
+  95 00a2 8A01      		movw r16,r20
+  96 00a4 0E94 0000 		call NutGetTickCount
+  97 00a8 0894      		sec
+  98 00aa E11C      		adc r14,__zero_reg__
+  99 00ac F11C      		adc r15,__zero_reg__
+ 100 00ae 011D      		adc r16,__zero_reg__
+ 101 00b0 111D      		adc r17,__zero_reg__
+ 102 00b2 E60E      		add r14,r22
+ 103 00b4 F71E      		adc r15,r23
+ 104 00b6 081F      		adc r16,r24
+ 105 00b8 191F      		adc r17,r25
+ 106 00ba 00C0      		rjmp .L12
+ 107               	.L14:
+ 108 00bc 0E94 0000 		call NutGetTickCount
+ 109 00c0 E616      		cp r14,r22
+ 110 00c2 F706      		cpc r15,r23
+ 111 00c4 0807      		cpc r16,r24
+ 112 00c6 1907      		cpc r17,r25
+ 113 00c8 00F4      		brsh .L12
+ 114 00ca 24E0      		ldi r18,lo8(4)
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 3
+
+
+ 115 00cc 30E0      		ldi r19,hi8(4)
+ 116 00ce 00C0      		rjmp .L13
+ 117               	.L12:
+ 118 00d0 E091 0000 		lds r30,pIDE
+ 119 00d4 F091 0000 		lds r31,(pIDE)+1
+ 120 00d8 8781      		ldd r24,Z+7
+ 121 00da 8878      		andi r24,lo8(-120)
+ 122 00dc 01F4      		brne .L14
+ 123               	.L10:
+ 124 00de 20E0      		ldi r18,lo8(0)
+ 125 00e0 30E0      		ldi r19,hi8(0)
+ 126               	.L13:
+ 127 00e2 C901      		movw r24,r18
+ 128               	/* epilogue start */
+ 129 00e4 1F91      		pop r17
+ 130 00e6 0F91      		pop r16
+ 131 00e8 FF90      		pop r15
+ 132 00ea EF90      		pop r14
+ 133 00ec 0895      		ret
+ 134               		.size	WaitNotBusy, .-WaitNotBusy
+ 135               		.type	SelectDevice, @function
+ 136               	SelectDevice:
+ 137 00ee 1F93      		push r17
+ 138               	/* prologue: function */
+ 139               	/* frame size = 0 */
+ 140 00f0 182F      		mov r17,r24
+ 141 00f2 68EC      		ldi r22,lo8(200)
+ 142 00f4 70E0      		ldi r23,hi8(200)
+ 143 00f6 80E0      		ldi r24,hlo8(200)
+ 144 00f8 90E0      		ldi r25,hhi8(200)
+ 145 00fa 0E94 0000 		call WaitNotBusy
+ 146 00fe 892B      		or r24,r25
+ 147 0100 01F0      		breq .L17
+ 148 0102 44E0      		ldi r20,lo8(4)
+ 149 0104 50E0      		ldi r21,hi8(4)
+ 150 0106 00C0      		rjmp .L18
+ 151               	.L17:
+ 152 0108 E091 0000 		lds r30,pIDE
+ 153 010c F091 0000 		lds r31,(pIDE)+1
+ 154 0110 1295      		swap r17
+ 155 0112 107F      		andi r17,lo8(-16)
+ 156 0114 1056      		subi r17,lo8(-(-96))
+ 157 0116 1683      		std Z+6,r17
+ 158               	/* #APP */
+ 159               	 ;  213 "../../nut/arch/avr/dev/ide.c" 1
+ 160 0118 0000      		nop
+ 161               	 ;  0 "" 2
+ 162               	 ;  214 "../../nut/arch/avr/dev/ide.c" 1
+ 163 011a 0000      		nop
+ 164               	 ;  0 "" 2
+ 165               	 ;  215 "../../nut/arch/avr/dev/ide.c" 1
+ 166 011c 0000      		nop
+ 167               	 ;  0 "" 2
+ 168               	 ;  216 "../../nut/arch/avr/dev/ide.c" 1
+ 169 011e 0000      		nop
+ 170               	 ;  0 "" 2
+ 171               	 ;  217 "../../nut/arch/avr/dev/ide.c" 1
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 4
+
+
+ 172 0120 0000      		nop
+ 173               	 ;  0 "" 2
+ 174               	 ;  218 "../../nut/arch/avr/dev/ide.c" 1
+ 175 0122 0000      		nop
+ 176               	 ;  0 "" 2
+ 177               	 ;  219 "../../nut/arch/avr/dev/ide.c" 1
+ 178 0124 0000      		nop
+ 179               	 ;  0 "" 2
+ 180               	 ;  220 "../../nut/arch/avr/dev/ide.c" 1
+ 181 0126 0000      		nop
+ 182               	 ;  0 "" 2
+ 183               	/* #NOAPP */
+ 184 0128 68EC      		ldi r22,lo8(200)
+ 185 012a 70E0      		ldi r23,hi8(200)
+ 186 012c 80E0      		ldi r24,hlo8(200)
+ 187 012e 90E0      		ldi r25,hhi8(200)
+ 188 0130 0E94 0000 		call WaitNotBusy
+ 189 0134 AC01      		movw r20,r24
+ 190 0136 0097      		sbiw r24,0
+ 191 0138 01F0      		breq .L19
+ 192               	.L18:
+ 193 013a E091 0000 		lds r30,pIDE
+ 194 013e F091 0000 		lds r31,(pIDE)+1
+ 195 0142 DF01      		movw r26,r30
+ 196 0144 1796      		adiw r26,7
+ 197 0146 8781      		ldd r24,Z+7
+ 198 0148 83FF      		sbrs r24,3
+ 199 014a 00C0      		rjmp .L19
+ 200 014c 20E0      		ldi r18,lo8(512)
+ 201 014e 32E0      		ldi r19,hi8(512)
+ 202 0150 E050      		subi r30,lo8(-(768))
+ 203 0152 FD4F      		sbci r31,hi8(-(768))
+ 204 0154 00C0      		rjmp .L20
+ 205               	.L21:
+ 206 0156 8081      		ld r24,Z
+ 207 0158 8081      		ld r24,Z
+ 208 015a 8C91      		ld r24,X
+ 209 015c 2150      		subi r18,lo8(-(-1))
+ 210 015e 3040      		sbci r19,hi8(-(-1))
+ 211               	.L20:
+ 212 0160 83FF      		sbrs r24,3
+ 213 0162 00C0      		rjmp .L19
+ 214 0164 2115      		cp r18,__zero_reg__
+ 215 0166 3105      		cpc r19,__zero_reg__
+ 216 0168 01F4      		brne .L21
+ 217               	.L19:
+ 218 016a CA01      		movw r24,r20
+ 219               	/* epilogue start */
+ 220 016c 1F91      		pop r17
+ 221 016e 0895      		ret
+ 222               		.size	SelectDevice, .-SelectDevice
+ 223               		.type	ATAPISendCommand, @function
+ 224               	ATAPISendCommand:
+ 225 0170 8F92      		push r8
+ 226 0172 9F92      		push r9
+ 227 0174 AF92      		push r10
+ 228 0176 BF92      		push r11
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 5
+
+
+ 229 0178 CF92      		push r12
+ 230 017a DF92      		push r13
+ 231 017c EF92      		push r14
+ 232 017e FF92      		push r15
+ 233 0180 0F93      		push r16
+ 234 0182 1F93      		push r17
+ 235 0184 CF93      		push r28
+ 236 0186 DF93      		push r29
+ 237               	/* prologue: function */
+ 238               	/* frame size = 0 */
+ 239 0188 EC01      		movw r28,r24
+ 240 018a 5B01      		movw r10,r22
+ 241 018c 4A01      		movw r8,r20
+ 242 018e 8B81      		ldd r24,Y+3
+ 243 0190 C884      		ldd r12,Y+8
+ 244 0192 D984      		ldd r13,Y+9
+ 245 0194 DA01      		movw r26,r20
+ 246 0196 1D92      		st X+,__zero_reg__
+ 247 0198 1C92      		st X,__zero_reg__
+ 248 019a 0E94 0000 		call SelectDevice
+ 249 019e 892B      		or r24,r25
+ 250 01a0 01F0      		breq .+2
+ 251 01a2 00C0      		rjmp .L24
+ 252               	/* #APP */
+ 253               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 254 01a4 0FB6      		in  __tmp_reg__, __SREG__
+ 255 01a6 F894      		cli
+ 256 01a8 0F92      		push __tmp_reg__
+ 257               		
+ 258               	 ;  0 "" 2
+ 259               	/* #NOAPP */
+ 260 01aa 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 261 01ae 1092 0000 		sts hIDEEvent,__zero_reg__
+ 262               	/* #APP */
+ 263               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 264 01b2 0F90      		pop __tmp_reg__
+ 265 01b4 0FBE      		out __SREG__, __tmp_reg__
+ 266               		
+ 267               	 ;  0 "" 2
+ 268               	/* #NOAPP */
+ 269 01b6 68E8      		ldi r22,lo8(5000)
+ 270 01b8 73E1      		ldi r23,hi8(5000)
+ 271 01ba 80E0      		ldi r24,hlo8(5000)
+ 272 01bc 90E0      		ldi r25,hhi8(5000)
+ 273 01be 0E94 0000 		call WaitNotBusy
+ 274 01c2 892B      		or r24,r25
+ 275 01c4 01F0      		breq .+2
+ 276 01c6 00C0      		rjmp .L24
+ 277 01c8 E091 0000 		lds r30,pIDE
+ 278 01cc F091 0000 		lds r31,(pIDE)+1
+ 279 01d0 1182      		std Z+1,__zero_reg__
+ 280 01d2 1282      		std Z+2,__zero_reg__
+ 281 01d4 1382      		std Z+3,__zero_reg__
+ 282 01d6 C482      		std Z+4,r12
+ 283 01d8 D582      		std Z+5,r13
+ 284 01da 80EA      		ldi r24,lo8(-96)
+ 285 01dc 8783      		std Z+7,r24
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 6
+
+
+ 286 01de 8881      		ld r24,Y
+ 287 01e0 83FF      		sbrs r24,3
+ 288 01e2 00C0      		rjmp .L25
+ 289 01e4 48E8      		ldi r20,lo8(5000)
+ 290 01e6 53E1      		ldi r21,hi8(5000)
+ 291 01e8 60E0      		ldi r22,hlo8(5000)
+ 292 01ea 70E0      		ldi r23,hhi8(5000)
+ 293 01ec 80E0      		ldi r24,lo8(hIDEEvent)
+ 294 01ee 90E0      		ldi r25,hi8(hIDEEvent)
+ 295 01f0 0E94 0000 		call NutEventWait
+ 296 01f4 8F5F      		subi r24,lo8(-1)
+ 297 01f6 9F4F      		sbci r25,hi8(-1)
+ 298 01f8 01F4      		brne .+2
+ 299 01fa 00C0      		rjmp .L24
+ 300               	/* #APP */
+ 301               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 302 01fc 0FB6      		in  __tmp_reg__, __SREG__
+ 303 01fe F894      		cli
+ 304 0200 0F92      		push __tmp_reg__
+ 305               		
+ 306               	 ;  0 "" 2
+ 307               	/* #NOAPP */
+ 308 0202 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 309 0206 1092 0000 		sts hIDEEvent,__zero_reg__
+ 310               	/* #APP */
+ 311               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 312 020a 0F90      		pop __tmp_reg__
+ 313 020c 0FBE      		out __SREG__, __tmp_reg__
+ 314               		
+ 315               	 ;  0 "" 2
+ 316               	/* #NOAPP */
+ 317 020e 00C0      		rjmp .L26
+ 318               	.L25:
+ 319 0210 8781      		ldd r24,Z+7
+ 320 0212 8878      		andi r24,lo8(-120)
+ 321 0214 8830      		cpi r24,lo8(8)
+ 322 0216 01F0      		breq .L26
+ 323 0218 0E94 0000 		call NutGetTickCount
+ 324 021c 7B01      		movw r14,r22
+ 325 021e 8C01      		movw r16,r24
+ 326 0220 81E5      		ldi r24,lo8(81)
+ 327 0222 90E0      		ldi r25,hi8(81)
+ 328 0224 A0E0      		ldi r26,hlo8(81)
+ 329 0226 B0E0      		ldi r27,hhi8(81)
+ 330 0228 E80E      		add r14,r24
+ 331 022a F91E      		adc r15,r25
+ 332 022c 0A1F      		adc r16,r26
+ 333 022e 1B1F      		adc r17,r27
+ 334 0230 00C0      		rjmp .L41
+ 335               	.L28:
+ 336 0232 0E94 0000 		call NutGetTickCount
+ 337 0236 E616      		cp r14,r22
+ 338 0238 F706      		cpc r15,r23
+ 339 023a 0807      		cpc r16,r24
+ 340 023c 1907      		cpc r17,r25
+ 341 023e 00F4      		brsh .+2
+ 342 0240 00C0      		rjmp .L24
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 7
+
+
+ 343               	.L41:
+ 344 0242 E091 0000 		lds r30,pIDE
+ 345 0246 F091 0000 		lds r31,(pIDE)+1
+ 346 024a 8781      		ldd r24,Z+7
+ 347 024c 8878      		andi r24,lo8(-120)
+ 348 024e 8830      		cpi r24,lo8(8)
+ 349 0250 01F4      		brne .L28
+ 350               	.L26:
+ 351 0252 8091 0000 		lds r24,pIDE
+ 352 0256 9091 0000 		lds r25,(pIDE)+1
+ 353 025a EC01      		movw r28,r24
+ 354 025c C050      		subi r28,lo8(-(512))
+ 355 025e DE4F      		sbci r29,hi8(-(512))
+ 356 0260 DC01      		movw r26,r24
+ 357 0262 A050      		subi r26,lo8(-(256))
+ 358 0264 BF4F      		sbci r27,hi8(-(256))
+ 359 0266 E0E0      		ldi r30,lo8(aATAPICmd)
+ 360 0268 F0E0      		ldi r31,hi8(aATAPICmd)
+ 361               	.L29:
+ 362 026a 8181      		ldd r24,Z+1
+ 363 026c 8883      		st Y,r24
+ 364 026e 8081      		ld r24,Z
+ 365 0270 8C93      		st X,r24
+ 366 0272 3296      		adiw r30,2
+ 367 0274 90E0      		ldi r25,hi8(aATAPICmd+12)
+ 368 0276 E030      		cpi r30,lo8(aATAPICmd+12)
+ 369 0278 F907      		cpc r31,r25
+ 370 027a 01F4      		brne .L29
+ 371 027c 48E8      		ldi r20,lo8(5000)
+ 372 027e 53E1      		ldi r21,hi8(5000)
+ 373 0280 60E0      		ldi r22,hlo8(5000)
+ 374 0282 70E0      		ldi r23,hhi8(5000)
+ 375 0284 80E0      		ldi r24,lo8(hIDEEvent)
+ 376 0286 90E0      		ldi r25,hi8(hIDEEvent)
+ 377 0288 0E94 0000 		call NutEventWait
+ 378 028c 8F5F      		subi r24,lo8(-1)
+ 379 028e 9F4F      		sbci r25,hi8(-1)
+ 380 0290 01F4      		brne .+2
+ 381 0292 00C0      		rjmp .L30
+ 382 0294 8091 0000 		lds r24,gbIntStatus
+ 383 0298 80FD      		sbrc r24,0
+ 384 029a 00C0      		rjmp .L24
+ 385 029c 8091 0000 		lds r24,gbIntStatus
+ 386 02a0 83FF      		sbrs r24,3
+ 387 02a2 00C0      		rjmp .L30
+ 388               	/* #APP */
+ 389               	 ;  213 "../../nut/arch/avr/dev/ide.c" 1
+ 390 02a4 0000      		nop
+ 391               	 ;  0 "" 2
+ 392               	 ;  214 "../../nut/arch/avr/dev/ide.c" 1
+ 393 02a6 0000      		nop
+ 394               	 ;  0 "" 2
+ 395               	 ;  215 "../../nut/arch/avr/dev/ide.c" 1
+ 396 02a8 0000      		nop
+ 397               	 ;  0 "" 2
+ 398               	 ;  216 "../../nut/arch/avr/dev/ide.c" 1
+ 399 02aa 0000      		nop
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 8
+
+
+ 400               	 ;  0 "" 2
+ 401               	 ;  217 "../../nut/arch/avr/dev/ide.c" 1
+ 402 02ac 0000      		nop
+ 403               	 ;  0 "" 2
+ 404               	 ;  218 "../../nut/arch/avr/dev/ide.c" 1
+ 405 02ae 0000      		nop
+ 406               	 ;  0 "" 2
+ 407               	 ;  219 "../../nut/arch/avr/dev/ide.c" 1
+ 408 02b0 0000      		nop
+ 409               	 ;  0 "" 2
+ 410               	 ;  220 "../../nut/arch/avr/dev/ide.c" 1
+ 411 02b2 0000      		nop
+ 412               	 ;  0 "" 2
+ 413               	/* #NOAPP */
+ 414 02b4 A091 0000 		lds r26,pIDE
+ 415 02b8 B091 0000 		lds r27,(pIDE)+1
+ 416 02bc 1596      		adiw r26,5
+ 417 02be 8C91      		ld r24,X
+ 418 02c0 1597      		sbiw r26,5
+ 419 02c2 382F      		mov r19,r24
+ 420 02c4 20E0      		ldi r18,lo8(0)
+ 421 02c6 1496      		adiw r26,4
+ 422 02c8 8C91      		ld r24,X
+ 423 02ca 1497      		sbiw r26,4
+ 424 02cc 482F      		mov r20,r24
+ 425 02ce 50E0      		ldi r21,lo8(0)
+ 426 02d0 422B      		or r20,r18
+ 427 02d2 532B      		or r21,r19
+ 428 02d4 C416      		cp r12,r20
+ 429 02d6 D506      		cpc r13,r21
+ 430 02d8 00F4      		brsh .L31
+ 431 02da A601      		movw r20,r12
+ 432               	.L31:
+ 433 02dc A114      		cp r10,__zero_reg__
+ 434 02de B104      		cpc r11,__zero_reg__
+ 435 02e0 01F4      		brne .L32
+ 436 02e2 80E0      		ldi r24,lo8(0)
+ 437 02e4 90E0      		ldi r25,hi8(0)
+ 438 02e6 ED01      		movw r28,r26
+ 439 02e8 C050      		subi r28,lo8(-(768))
+ 440 02ea DD4F      		sbci r29,hi8(-(768))
+ 441 02ec FD01      		movw r30,r26
+ 442 02ee E050      		subi r30,lo8(-(1024))
+ 443 02f0 FC4F      		sbci r31,hi8(-(1024))
+ 444 02f2 00C0      		rjmp .L33
+ 445               	.L32:
+ 446 02f4 F501      		movw r30,r10
+ 447 02f6 20E0      		ldi r18,lo8(0)
+ 448 02f8 30E0      		ldi r19,hi8(0)
+ 449 02fa BD01      		movw r22,r26
+ 450 02fc 6050      		subi r22,lo8(-(768))
+ 451 02fe 7D4F      		sbci r23,hi8(-(768))
+ 452 0300 8D01      		movw r16,r26
+ 453 0302 0050      		subi r16,lo8(-(1024))
+ 454 0304 1C4F      		sbci r17,hi8(-(1024))
+ 455 0306 00C0      		rjmp .L34
+ 456               	.L35:
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 9
+
+
+ 457 0308 EB01      		movw r28,r22
+ 458 030a 8881      		ld r24,Y
+ 459 030c 8083      		st Z,r24
+ 460 030e E801      		movw r28,r16
+ 461 0310 8881      		ld r24,Y
+ 462 0312 8183      		std Z+1,r24
+ 463 0314 2E5F      		subi r18,lo8(-(2))
+ 464 0316 3F4F      		sbci r19,hi8(-(2))
+ 465 0318 3296      		adiw r30,2
+ 466               	.L34:
+ 467 031a 2417      		cp r18,r20
+ 468 031c 3507      		cpc r19,r21
+ 469 031e 00F0      		brlo .L35
+ 470 0320 00C0      		rjmp .L36
+ 471               	.L37:
+ 472 0322 2881      		ld r18,Y
+ 473 0324 2081      		ld r18,Z
+ 474 0326 0296      		adiw r24,2
+ 475               	.L33:
+ 476 0328 8417      		cp r24,r20
+ 477 032a 9507      		cpc r25,r21
+ 478 032c 00F0      		brlo .L37
+ 479               	.L36:
+ 480 032e F401      		movw r30,r8
+ 481 0330 5183      		std Z+1,r21
+ 482 0332 4083      		st Z,r20
+ 483 0334 1796      		adiw r26,7
+ 484 0336 8C91      		ld r24,X
+ 485 0338 00C0      		rjmp .L30
+ 486               	.L24:
+ 487 033a 21E0      		ldi r18,lo8(1)
+ 488 033c 30E0      		ldi r19,hi8(1)
+ 489 033e 00C0      		rjmp .L38
+ 490               	.L30:
+ 491 0340 20E0      		ldi r18,lo8(0)
+ 492 0342 30E0      		ldi r19,hi8(0)
+ 493               	.L38:
+ 494 0344 C901      		movw r24,r18
+ 495               	/* epilogue start */
+ 496 0346 DF91      		pop r29
+ 497 0348 CF91      		pop r28
+ 498 034a 1F91      		pop r17
+ 499 034c 0F91      		pop r16
+ 500 034e FF90      		pop r15
+ 501 0350 EF90      		pop r14
+ 502 0352 DF90      		pop r13
+ 503 0354 CF90      		pop r12
+ 504 0356 BF90      		pop r11
+ 505 0358 AF90      		pop r10
+ 506 035a 9F90      		pop r9
+ 507 035c 8F90      		pop r8
+ 508 035e 0895      		ret
+ 509               		.size	ATAPISendCommand, .-ATAPISendCommand
+ 510               	.global	IDEATAPISetCDSpeed
+ 511               		.type	IDEATAPISetCDSpeed, @function
+ 512               	IDEATAPISetCDSpeed:
+ 513 0360 DF93      		push r29
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 10
+
+
+ 514 0362 CF93      		push r28
+ 515 0364 00D0      		rcall .
+ 516 0366 CDB7      		in r28,__SP_L__
+ 517 0368 DEB7      		in r29,__SP_H__
+ 518               	/* prologue: function */
+ 519               	/* frame size = 2 */
+ 520 036a 8823      		tst r24
+ 521 036c 01F0      		breq .L43
+ 522 036e 22E0      		ldi r18,lo8(2)
+ 523 0370 30E0      		ldi r19,hi8(2)
+ 524 0372 00C0      		rjmp .L44
+ 525               	.L43:
+ 526 0374 9091 0000 		lds r25,sDrive
+ 527 0378 8091 0000 		lds r24,sDrive+1
+ 528 037c 282F      		mov r18,r24
+ 529 037e 3327      		clr r19
+ 530 0380 27FD      		sbrc r18,7
+ 531 0382 3095      		com r19
+ 532 0384 2095      		com r18
+ 533 0386 3095      		com r19
+ 534 0388 2227      		clr r18
+ 535 038a 330F      		lsl r19
+ 536 038c 221F      		rol r18
+ 537 038e 3327      		clr r19
+ 538 0390 220F      		lsl r18
+ 539 0392 331F      		rol r19
+ 540 0394 92FF      		sbrs r25,2
+ 541 0396 00C0      		rjmp .L47
+ 542 0398 2115      		cp r18,__zero_reg__
+ 543 039a 3105      		cpc r19,__zero_reg__
+ 544 039c 01F4      		brne .L44
+ 545 039e 8CE0      		ldi r24,lo8(12)
+ 546 03a0 E0E0      		ldi r30,lo8(aATAPICmd)
+ 547 03a2 F0E0      		ldi r31,hi8(aATAPICmd)
+ 548 03a4 DF01      		movw r26,r30
+ 549 03a6 1D92      		st X+,__zero_reg__
+ 550 03a8 8A95      	        dec r24
+ 551 03aa 01F4      		brne .-6
+ 552 03ac 8BEB      		ldi r24,lo8(-69)
+ 553 03ae 8093 0000 		sts aATAPICmd,r24
+ 554 03b2 7093 0000 		sts aATAPICmd+2,r23
+ 555 03b6 6093 0000 		sts aATAPICmd+3,r22
+ 556 03ba AE01      		movw r20,r28
+ 557 03bc 4F5F      		subi r20,lo8(-(1))
+ 558 03be 5F4F      		sbci r21,hi8(-(1))
+ 559 03c0 60E0      		ldi r22,lo8(0)
+ 560 03c2 70E0      		ldi r23,hi8(0)
+ 561 03c4 80E0      		ldi r24,lo8(sDrive)
+ 562 03c6 90E0      		ldi r25,hi8(sDrive)
+ 563 03c8 0E94 0000 		call ATAPISendCommand
+ 564 03cc 9C01      		movw r18,r24
+ 565               	.L44:
+ 566 03ce C901      		movw r24,r18
+ 567               	/* epilogue start */
+ 568 03d0 0F90      		pop __tmp_reg__
+ 569 03d2 0F90      		pop __tmp_reg__
+ 570 03d4 CF91      		pop r28
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 11
+
+
+ 571 03d6 DF91      		pop r29
+ 572 03d8 0895      		ret
+ 573               	.L47:
+ 574 03da 28E0      		ldi r18,lo8(8)
+ 575 03dc 30E0      		ldi r19,hi8(8)
+ 576 03de 00C0      		rjmp .L44
+ 577               		.size	IDEATAPISetCDSpeed, .-IDEATAPISetCDSpeed
+ 578               		.type	DeviceDiag, @function
+ 579               	DeviceDiag:
+ 580 03e0 CF93      		push r28
+ 581 03e2 DF93      		push r29
+ 582               	/* prologue: function */
+ 583               	/* frame size = 0 */
+ 584 03e4 EC01      		movw r28,r24
+ 585 03e6 80E0      		ldi r24,lo8(0)
+ 586 03e8 0E94 0000 		call SelectDevice
+ 587 03ec 892B      		or r24,r25
+ 588 03ee 01F4      		brne .L50
+ 589               	/* #APP */
+ 590               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 591 03f0 0FB6      		in  __tmp_reg__, __SREG__
+ 592 03f2 F894      		cli
+ 593 03f4 0F92      		push __tmp_reg__
+ 594               		
+ 595               	 ;  0 "" 2
+ 596               	/* #NOAPP */
+ 597 03f6 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 598 03fa 1092 0000 		sts hIDEEvent,__zero_reg__
+ 599               	/* #APP */
+ 600               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 601 03fe 0F90      		pop __tmp_reg__
+ 602 0400 0FBE      		out __SREG__, __tmp_reg__
+ 603               		
+ 604               	 ;  0 "" 2
+ 605               	/* #NOAPP */
+ 606 0402 E091 0000 		lds r30,pIDE
+ 607 0406 F091 0000 		lds r31,(pIDE)+1
+ 608 040a 8281      		ldd r24,Z+2
+ 609 040c 8381      		ldd r24,Z+3
+ 610 040e 8481      		ldd r24,Z+4
+ 611 0410 9581      		ldd r25,Z+5
+ 612 0412 8431      		cpi r24,lo8(20)
+ 613 0414 01F4      		brne .L51
+ 614 0416 9B3E      		cpi r25,lo8(-21)
+ 615 0418 01F0      		breq .L52
+ 616               	.L51:
+ 617 041a 80E9      		ldi r24,lo8(-112)
+ 618 041c 8783      		std Z+7,r24
+ 619 041e 40E1      		ldi r20,lo8(10000)
+ 620 0420 57E2      		ldi r21,hi8(10000)
+ 621 0422 60E0      		ldi r22,hlo8(10000)
+ 622 0424 70E0      		ldi r23,hhi8(10000)
+ 623 0426 80E0      		ldi r24,lo8(hIDEEvent)
+ 624 0428 90E0      		ldi r25,hi8(hIDEEvent)
+ 625 042a 0E94 0000 		call NutEventWait
+ 626 042e 8F5F      		subi r24,lo8(-1)
+ 627 0430 9F4F      		sbci r25,hi8(-1)
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 12
+
+
+ 628 0432 01F0      		breq .L50
+ 629 0434 E091 0000 		lds r30,pIDE
+ 630 0438 F091 0000 		lds r31,(pIDE)+1
+ 631 043c 8181      		ldd r24,Z+1
+ 632 043e 20E0      		ldi r18,lo8(0)
+ 633 0440 30E0      		ldi r19,hi8(0)
+ 634 0442 8130      		cpi r24,lo8(1)
+ 635 0444 01F0      		breq .L54
+ 636               	.L50:
+ 637 0446 21E0      		ldi r18,lo8(1)
+ 638 0448 30E0      		ldi r19,hi8(1)
+ 639               	.L54:
+ 640 044a C901      		movw r24,r18
+ 641               	/* epilogue start */
+ 642 044c DF91      		pop r29
+ 643 044e CF91      		pop r28
+ 644 0450 0895      		ret
+ 645               	.L52:
+ 646 0452 84E0      		ldi r24,lo8(4)
+ 647 0454 90E0      		ldi r25,hi8(4)
+ 648 0456 9983      		std Y+1,r25
+ 649 0458 8883      		st Y,r24
+ 650 045a 20E0      		ldi r18,lo8(0)
+ 651 045c 30E0      		ldi r19,hi8(0)
+ 652 045e 00C0      		rjmp .L54
+ 653               		.size	DeviceDiag, .-DeviceDiag
+ 654               	.global	IDELock
+ 655               		.type	IDELock, @function
+ 656               	IDELock:
+ 657               	/* prologue: function */
+ 658               	/* frame size = 0 */
+ 659 0460 40E0      		ldi r20,lo8(0)
+ 660 0462 50E0      		ldi r21,hi8(0)
+ 661 0464 60E0      		ldi r22,hlo8(0)
+ 662 0466 70E0      		ldi r23,hhi8(0)
+ 663 0468 80E0      		ldi r24,lo8(hIDESemaphore)
+ 664 046a 90E0      		ldi r25,hi8(hIDESemaphore)
+ 665 046c 0E94 0000 		call NutEventWait
+ 666               	/* epilogue start */
+ 667 0470 0895      		ret
+ 668               		.size	IDELock, .-IDELock
+ 669               		.type	HardwareReset, @function
+ 670               	HardwareReset:
+ 671 0472 CF93      		push r28
+ 672 0474 DF93      		push r29
+ 673               	/* prologue: function */
+ 674               	/* frame size = 0 */
+ 675 0476 EC01      		movw r28,r24
+ 676 0478 8A81      		ldd r24,Y+2
+ 677 047a 8330      		cpi r24,lo8(3)
+ 678 047c 01F4      		brne .L59
+ 679 047e 959A      		sbi 50-32,5
+ 680               	/* #APP */
+ 681               	 ;  258 "../../nut/arch/avr/dev/ide.c" 1
+ 682 0480 0000      		nop
+ 683               	 ;  0 "" 2
+ 684               	/* #NOAPP */
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 13
+
+
+ 685 0482 68EE      		ldi r22,lo8(1000)
+ 686 0484 73E0      		ldi r23,hi8(1000)
+ 687 0486 80E0      		ldi r24,hlo8(1000)
+ 688 0488 90E0      		ldi r25,hhi8(1000)
+ 689 048a 0E94 0000 		call NutSleep
+ 690 048e 9598      		cbi 50-32,5
+ 691               	/* #APP */
+ 692               	 ;  266 "../../nut/arch/avr/dev/ide.c" 1
+ 693 0490 0000      		nop
+ 694               	 ;  0 "" 2
+ 695               	/* #NOAPP */
+ 696 0492 00C0      		rjmp .L64
+ 697               	.L59:
+ 698 0494 9598      		cbi 50-32,5
+ 699               	/* #APP */
+ 700               	 ;  274 "../../nut/arch/avr/dev/ide.c" 1
+ 701 0496 0000      		nop
+ 702               	 ;  0 "" 2
+ 703               	/* #NOAPP */
+ 704 0498 68EE      		ldi r22,lo8(1000)
+ 705 049a 73E0      		ldi r23,hi8(1000)
+ 706 049c 80E0      		ldi r24,hlo8(1000)
+ 707 049e 90E0      		ldi r25,hhi8(1000)
+ 708 04a0 0E94 0000 		call NutSleep
+ 709 04a4 959A      		sbi 50-32,5
+ 710               	/* #APP */
+ 711               	 ;  282 "../../nut/arch/avr/dev/ide.c" 1
+ 712 04a6 0000      		nop
+ 713               	 ;  0 "" 2
+ 714               	/* #NOAPP */
+ 715 04a8 8A81      		ldd r24,Y+2
+ 716 04aa 8230      		cpi r24,lo8(2)
+ 717 04ac 01F4      		brne .L61
+ 718               	.L64:
+ 719 04ae 68EE      		ldi r22,lo8(1000)
+ 720 04b0 73E0      		ldi r23,hi8(1000)
+ 721 04b2 80E0      		ldi r24,hlo8(1000)
+ 722 04b4 90E0      		ldi r25,hhi8(1000)
+ 723 04b6 00C0      		rjmp .L63
+ 724               	.L61:
+ 725 04b8 60E1      		ldi r22,lo8(10000)
+ 726 04ba 77E2      		ldi r23,hi8(10000)
+ 727 04bc 80E0      		ldi r24,hlo8(10000)
+ 728 04be 90E0      		ldi r25,hhi8(10000)
+ 729               	.L63:
+ 730 04c0 0E94 0000 		call NutSleep
+ 731               	/* epilogue start */
+ 732 04c4 DF91      		pop r29
+ 733 04c6 CF91      		pop r28
+ 734 04c8 0895      		ret
+ 735               		.size	HardwareReset, .-HardwareReset
+ 736               	.global	IDESemaInit
+ 737               		.type	IDESemaInit, @function
+ 738               	IDESemaInit:
+ 739               	/* prologue: function */
+ 740               	/* frame size = 0 */
+ 741 04ca 80E0      		ldi r24,lo8(hIDESemaphore)
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 14
+
+
+ 742 04cc 90E0      		ldi r25,hi8(hIDESemaphore)
+ 743 04ce 0E94 0000 		call NutEventPost
+ 744               	/* epilogue start */
+ 745 04d2 0895      		ret
+ 746               		.size	IDESemaInit, .-IDESemaInit
+ 747               		.data
+ 748               	.LC0:
+ 749 0000 6366 6368 		.string	"cfchange"
+ 749      616E 6765 
+ 749      00
+ 750               		.text
+ 751               	.global	IDEInit
+ 752               		.type	IDEInit, @function
+ 753               	IDEInit:
+ 754 04d4 0F93      		push r16
+ 755 04d6 1F93      		push r17
+ 756 04d8 CF93      		push r28
+ 757 04da DF93      		push r29
+ 758               	/* prologue: function */
+ 759               	/* frame size = 0 */
+ 760 04dc EC01      		movw r28,r24
+ 761 04de 8B01      		movw r16,r22
+ 762 04e0 5093 0000 		sts (pUserMountFunc)+1,r21
+ 763 04e4 4093 0000 		sts pUserMountFunc,r20
+ 764 04e8 3093 0000 		sts (pUserUnMountFunc)+1,r19
+ 765 04ec 2093 0000 		sts pUserUnMountFunc,r18
+ 766 04f0 0097      		sbiw r24,0
+ 767 04f2 01F4      		brne .L68
+ 768 04f4 C0E0      		ldi r28,lo8(-8192)
+ 769 04f6 D0EE      		ldi r29,hi8(-8192)
+ 770               	.L68:
+ 771 04f8 82E0      		ldi r24,lo8(2)
+ 772 04fa 8093 6D00 		sts 109,r24
+ 773 04fe 80E2      		ldi r24,lo8(32)
+ 774 0500 81BB      		out 49-32,r24
+ 775 0502 8AE0      		ldi r24,lo8(10)
+ 776 0504 E0E0      		ldi r30,lo8(sDrive)
+ 777 0506 F0E0      		ldi r31,hi8(sDrive)
+ 778 0508 DF01      		movw r26,r30
+ 779 050a 1D92      		st X+,__zero_reg__
+ 780 050c 8A95      	        dec r24
+ 781 050e 01F4      		brne .-6
+ 782 0510 1092 0000 		sts sDrive+3,__zero_reg__
+ 783 0514 0093 0000 		sts sDrive+2,r16
+ 784 0518 80E0      		ldi r24,lo8(hIDESemaphore)
+ 785 051a 90E0      		ldi r25,hi8(hIDESemaphore)
+ 786 051c 0E94 0000 		call NutEventPost
+ 787 0520 D093 0000 		sts (pIDE)+1,r29
+ 788 0524 C093 0000 		sts pIDE,r28
+ 789               	/* #APP */
+ 790               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 791 0528 0FB6      		in  __tmp_reg__, __SREG__
+ 792 052a F894      		cli
+ 793 052c 0F92      		push __tmp_reg__
+ 794               		
+ 795               	 ;  0 "" 2
+ 796               	/* #NOAPP */
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 15
+
+
+ 797 052e 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 798 0532 1092 0000 		sts hIDEEvent,__zero_reg__
+ 799               	/* #APP */
+ 800               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 801 0536 0F90      		pop __tmp_reg__
+ 802 0538 0FBE      		out __SREG__, __tmp_reg__
+ 803               		
+ 804               	 ;  0 "" 2
+ 805               	 ;  1230 "../../nut/arch/avr/dev/ide.c" 1
+ 806 053a 0FB6      		in  __tmp_reg__, __SREG__
+ 807 053c F894      		cli
+ 808 053e 0F92      		push __tmp_reg__
+ 809               		
+ 810               	 ;  0 "" 2
+ 811               	/* #NOAPP */
+ 812 0540 1092 0000 		sts gbIntStatus,__zero_reg__
+ 813 0544 40E0      		ldi r20,lo8(0)
+ 814 0546 50E0      		ldi r21,hi8(0)
+ 815 0548 60E0      		ldi r22,lo8(gs(IDEInterrupt))
+ 816 054a 70E0      		ldi r23,hi8(gs(IDEInterrupt))
+ 817 054c 80E0      		ldi r24,lo8(sig_INTERRUPT7)
+ 818 054e 90E0      		ldi r25,hi8(sig_INTERRUPT7)
+ 819 0550 0E94 0000 		call NutRegisterIrqHandler
+ 820 0554 892B      		or r24,r25
+ 821 0556 01F4      		brne .L69
+ 822 0558 8AB7      		in r24,90-32
+ 823 055a 806C      		ori r24,lo8(-64)
+ 824 055c 8ABF      		out 90-32,r24
+ 825 055e 89B7      		in r24,89-32
+ 826 0560 8068      		ori r24,lo8(-128)
+ 827 0562 89BF      		out 89-32,r24
+ 828               	.L69:
+ 829 0564 0130      		cpi r16,1
+ 830 0566 1105      		cpc r17,__zero_reg__
+ 831 0568 01F0      		breq .L71
+ 832 056a 0330      		cpi r16,3
+ 833 056c 1105      		cpc r17,__zero_reg__
+ 834 056e 01F4      		brne .L70
+ 835 0570 00C0      		rjmp .L77
+ 836               	.L71:
+ 837 0572 8FEF      		ldi r24,lo8(-1)
+ 838 0574 8CBF      		out 92-32,r24
+ 839 0576 00C0      		rjmp .L70
+ 840               	.L77:
+ 841 0578 8AB7      		in r24,90-32
+ 842 057a 8F7C      		andi r24,lo8(-49)
+ 843 057c 8ABF      		out 90-32,r24
+ 844 057e 0E99      		sbic 33-32,6
+ 845 0580 00C0      		rjmp .L73
+ 846 0582 1092 0000 		sts gbCFMountStatus,__zero_reg__
+ 847 0586 8AB7      		in r24,90-32
+ 848 0588 8063      		ori r24,lo8(48)
+ 849 058a 00C0      		rjmp .L76
+ 850               	.L73:
+ 851 058c 81E0      		ldi r24,lo8(1)
+ 852 058e 8093 0000 		sts gbCFMountStatus,r24
+ 853 0592 8AB7      		in r24,90-32
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 16
+
+
+ 854 0594 8062      		ori r24,lo8(32)
+ 855               	.L76:
+ 856 0596 8ABF      		out 90-32,r24
+ 857 0598 40E0      		ldi r20,lo8(0)
+ 858 059a 50E0      		ldi r21,hi8(0)
+ 859 059c 60E0      		ldi r22,lo8(gs(CFInterrupt))
+ 860 059e 70E0      		ldi r23,hi8(gs(CFInterrupt))
+ 861 05a0 80E0      		ldi r24,lo8(sig_INTERRUPT6)
+ 862 05a2 90E0      		ldi r25,hi8(sig_INTERRUPT6)
+ 863 05a4 0E94 0000 		call NutRegisterIrqHandler
+ 864 05a8 892B      		or r24,r25
+ 865 05aa 01F4      		brne .L70
+ 866 05ac 20E8      		ldi r18,lo8(640)
+ 867 05ae 32E0      		ldi r19,hi8(640)
+ 868 05b0 40E0      		ldi r20,lo8(0)
+ 869 05b2 50E0      		ldi r21,hi8(0)
+ 870 05b4 60E0      		ldi r22,lo8(gs(CFChange))
+ 871 05b6 70E0      		ldi r23,hi8(gs(CFChange))
+ 872 05b8 80E0      		ldi r24,lo8(.LC0)
+ 873 05ba 90E0      		ldi r25,hi8(.LC0)
+ 874 05bc 0E94 0000 		call NutThreadCreate
+ 875 05c0 89B7      		in r24,89-32
+ 876 05c2 8064      		ori r24,lo8(64)
+ 877 05c4 89BF      		out 89-32,r24
+ 878               	.L70:
+ 879               	/* #APP */
+ 880               	 ;  1313 "../../nut/arch/avr/dev/ide.c" 1
+ 881 05c6 0F90      		pop __tmp_reg__
+ 882 05c8 0FBE      		out __SREG__, __tmp_reg__
+ 883               		
+ 884               	 ;  0 "" 2
+ 885               	/* #NOAPP */
+ 886 05ca 80E0      		ldi r24,lo8(sDrive)
+ 887 05cc 90E0      		ldi r25,hi8(sDrive)
+ 888 05ce 0E94 0000 		call HardwareReset
+ 889 05d2 80E0      		ldi r24,lo8(0)
+ 890 05d4 90E0      		ldi r25,hi8(0)
+ 891               	/* epilogue start */
+ 892 05d6 DF91      		pop r29
+ 893 05d8 CF91      		pop r28
+ 894 05da 1F91      		pop r17
+ 895 05dc 0F91      		pop r16
+ 896 05de 0895      		ret
+ 897               		.size	IDEInit, .-IDEInit
+ 898               	.global	IDEFree
+ 899               		.type	IDEFree, @function
+ 900               	IDEFree:
+ 901               	/* prologue: function */
+ 902               	/* frame size = 0 */
+ 903 05e0 80E0      		ldi r24,lo8(hIDESemaphore)
+ 904 05e2 90E0      		ldi r25,hi8(hIDESemaphore)
+ 905 05e4 0E94 0000 		call NutEventPost
+ 906               	/* epilogue start */
+ 907 05e8 0895      		ret
+ 908               		.size	IDEFree, .-IDEFree
+ 909               	.global	IDEReadSectors
+ 910               		.type	IDEReadSectors, @function
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 17
+
+
+ 911               	IDEReadSectors:
+ 912 05ea 2F92      		push r2
+ 913 05ec 3F92      		push r3
+ 914 05ee 4F92      		push r4
+ 915 05f0 5F92      		push r5
+ 916 05f2 6F92      		push r6
+ 917 05f4 7F92      		push r7
+ 918 05f6 8F92      		push r8
+ 919 05f8 9F92      		push r9
+ 920 05fa AF92      		push r10
+ 921 05fc BF92      		push r11
+ 922 05fe CF92      		push r12
+ 923 0600 DF92      		push r13
+ 924 0602 EF92      		push r14
+ 925 0604 FF92      		push r15
+ 926 0606 0F93      		push r16
+ 927 0608 1F93      		push r17
+ 928 060a DF93      		push r29
+ 929 060c CF93      		push r28
+ 930 060e CDB7      		in r28,__SP_L__
+ 931 0610 DEB7      		in r29,__SP_H__
+ 932 0612 2A97      		sbiw r28,10
+ 933 0614 0FB6      		in __tmp_reg__,__SREG__
+ 934 0616 F894      		cli
+ 935 0618 DEBF      		out __SP_H__,r29
+ 936 061a 0FBE      		out __SREG__,__tmp_reg__
+ 937 061c CDBF      		out __SP_L__,r28
+ 938               	/* prologue: function */
+ 939               	/* frame size = 10 */
+ 940 061e 8A87      		std Y+10,r24
+ 941 0620 B62E      		mov r11,r22
+ 942 0622 A72E      		mov r10,r23
+ 943 0624 6901      		movw r12,r18
+ 944 0626 7A01      		movw r14,r20
+ 945 0628 2801      		movw r4,r16
+ 946 062a 40E0      		ldi r20,lo8(0)
+ 947 062c 50E0      		ldi r21,hi8(0)
+ 948 062e 60E0      		ldi r22,hlo8(0)
+ 949 0630 70E0      		ldi r23,hhi8(0)
+ 950 0632 80E0      		ldi r24,lo8(hIDESemaphore)
+ 951 0634 90E0      		ldi r25,hi8(hIDESemaphore)
+ 952 0636 0E94 0000 		call NutEventWait
+ 953 063a 2A85      		ldd r18,Y+10
+ 954 063c 2223      		tst r18
+ 955 063e 01F0      		breq .L81
+ 956 0640 82E0      		ldi r24,lo8(2)
+ 957 0642 90E0      		ldi r25,hi8(2)
+ 958 0644 9987      		std Y+9,r25
+ 959 0646 8887      		std Y+8,r24
+ 960 0648 6624      		clr r6
+ 961 064a 7724      		clr r7
+ 962 064c 00C0      		rjmp .L82
+ 963               	.L81:
+ 964 064e 8091 0000 		lds r24,sDrive
+ 965 0652 9091 0000 		lds r25,(sDrive)+1
+ 966 0656 97FD      		sbrc r25,7
+ 967 0658 00C0      		rjmp .L83
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 18
+
+
+ 968 065a A2E0      		ldi r26,lo8(2)
+ 969 065c B0E0      		ldi r27,hi8(2)
+ 970 065e B987      		std Y+9,r27
+ 971 0660 A887      		std Y+8,r26
+ 972 0662 00C0      		rjmp .L113
+ 973               	.L83:
+ 974 0664 C801      		movw r24,r16
+ 975 0666 A0E0      		ldi r26,lo8(0)
+ 976 0668 B0E0      		ldi r27,hi8(0)
+ 977 066a 8C0D      		add r24,r12
+ 978 066c 9D1D      		adc r25,r13
+ 979 066e AE1D      		adc r26,r14
+ 980 0670 BF1D      		adc r27,r15
+ 981 0672 2091 0000 		lds r18,sDrive+4
+ 982 0676 3091 0000 		lds r19,(sDrive+4)+1
+ 983 067a 4091 0000 		lds r20,(sDrive+4)+2
+ 984 067e 5091 0000 		lds r21,(sDrive+4)+3
+ 985 0682 2817      		cp r18,r24
+ 986 0684 3907      		cpc r19,r25
+ 987 0686 4A07      		cpc r20,r26
+ 988 0688 5B07      		cpc r21,r27
+ 989 068a 00F4      		brsh .L84
+ 990 068c E3E0      		ldi r30,lo8(3)
+ 991 068e F0E0      		ldi r31,hi8(3)
+ 992 0690 F987      		std Y+9,r31
+ 993 0692 E887      		std Y+8,r30
+ 994 0694 00C0      		rjmp .L113
+ 995               	.L84:
+ 996 0696 1986      		std Y+9,__zero_reg__
+ 997 0698 1886      		std Y+8,__zero_reg__
+ 998               	.L113:
+ 999 069a B0E0      		ldi r27,lo8(sDrive)
+ 1000 069c 6B2E      		mov r6,r27
+ 1001 069e B0E0      		ldi r27,hi8(sDrive)
+ 1002 06a0 7B2E      		mov r7,r27
+ 1003               	.L82:
+ 1004 06a2 D301      		movw r26,r6
+ 1005 06a4 8C91      		ld r24,X
+ 1006 06a6 82FF      		sbrs r24,2
+ 1007 06a8 00C0      		rjmp .L85
+ 1008 06aa B2E0      		ldi r27,lo8(2)
+ 1009 06ac 4B16      		cp r4,r27
+ 1010 06ae 5104      		cpc r5,__zero_reg__
+ 1011 06b0 00F4      		brsh .+2
+ 1012 06b2 00C0      		rjmp .L86
+ 1013 06b4 03E0      		ldi r16,lo8(3)
+ 1014 06b6 10E0      		ldi r17,hi8(3)
+ 1015 06b8 00C0      		rjmp .L87
+ 1016               	.L85:
+ 1017 06ba E885      		ldd r30,Y+8
+ 1018 06bc F985      		ldd r31,Y+9
+ 1019 06be EF2B      		or r30,r31
+ 1020 06c0 01F0      		breq .L88
+ 1021 06c2 00C0      		rjmp .L89
+ 1022               	.L112:
+ 1023 06c4 E0E0      		ldi r30,lo8(aATAPICmd)
+ 1024 06c6 F0E0      		ldi r31,hi8(aATAPICmd)
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 19
+
+
+ 1025 06c8 8CE0      		ldi r24,lo8(12)
+ 1026 06ca DF01      		movw r26,r30
+ 1027 06cc 1D92      		st X+,__zero_reg__
+ 1028 06ce 8A95      	        dec r24
+ 1029 06d0 01F4      		brne .-6
+ 1030 06d2 88EA      		ldi r24,lo8(-88)
+ 1031 06d4 8093 0000 		sts aATAPICmd,r24
+ 1032 06d8 3596      		adiw r30,5
+ 1033 06da 85E0      		ldi r24,lo8(5)
+ 1034 06dc 90E0      		ldi r25,hi8(5)
+ 1035 06de 00C0      		rjmp .L90
+ 1036               	.L91:
+ 1037 06e0 C082      		st Z,r12
+ 1038 06e2 CD2C      		mov r12,r13
+ 1039 06e4 DE2C      		mov r13,r14
+ 1040 06e6 EF2C      		mov r14,r15
+ 1041 06e8 FF24      		clr r15
+ 1042 06ea 3197      		sbiw r30,1
+ 1043 06ec C901      		movw r24,r18
+ 1044               	.L90:
+ 1045 06ee 9C01      		movw r18,r24
+ 1046 06f0 2150      		subi r18,lo8(-(-1))
+ 1047 06f2 3040      		sbci r19,hi8(-(-1))
+ 1048 06f4 C114      		cp r12,__zero_reg__
+ 1049 06f6 D104      		cpc r13,__zero_reg__
+ 1050 06f8 E104      		cpc r14,__zero_reg__
+ 1051 06fa F104      		cpc r15,__zero_reg__
+ 1052 06fc 01F4      		brne .L91
+ 1053 06fe 9A83      		std Y+2,r25
+ 1054 0700 8983      		std Y+1,r24
+ 1055 0702 81E0      		ldi r24,lo8(1)
+ 1056 0704 8093 0000 		sts aATAPICmd+9,r24
+ 1057 0708 AE01      		movw r20,r28
+ 1058 070a 4F5F      		subi r20,lo8(-(1))
+ 1059 070c 5F4F      		sbci r21,hi8(-(1))
+ 1060 070e 6B2D      		mov r22,r11
+ 1061 0710 7A2D      		mov r23,r10
+ 1062 0712 C301      		movw r24,r6
+ 1063 0714 0E94 0000 		call ATAPISendCommand
+ 1064 0718 8C01      		movw r16,r24
+ 1065 071a 0097      		sbiw r24,0
+ 1066 071c 01F0      		breq .+2
+ 1067 071e 00C0      		rjmp .L92
+ 1068 0720 2981      		ldd r18,Y+1
+ 1069 0722 3A81      		ldd r19,Y+2
+ 1070 0724 F301      		movw r30,r6
+ 1071 0726 8085      		ldd r24,Z+8
+ 1072 0728 9185      		ldd r25,Z+9
+ 1073 072a 2817      		cp r18,r24
+ 1074 072c 3907      		cpc r19,r25
+ 1075 072e 01F0      		breq .+2
+ 1076 0730 00C0      		rjmp .L92
+ 1077 0732 00C0      		rjmp .L87
+ 1078               	.L88:
+ 1079 0734 2B2D      		mov r18,r11
+ 1080 0736 3A2D      		mov r19,r10
+ 1081 0738 C901      		movw r24,r18
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 20
+
+
+ 1082 073a 9F83      		std Y+7,r25
+ 1083 073c 8E83      		std Y+6,r24
+ 1084 073e 8AE0      		ldi r24,lo8(10)
+ 1085 0740 3A85      		ldd r19,Y+10
+ 1086 0742 389F      		mul r19,r24
+ 1087 0744 9001      		movw r18,r0
+ 1088 0746 1124      		clr r1
+ 1089 0748 2050      		subi r18,lo8(-(sDrive))
+ 1090 074a 3040      		sbci r19,hi8(-(sDrive))
+ 1091 074c 3D83      		std Y+5,r19
+ 1092 074e 2C83      		std Y+4,r18
+ 1093 0750 8A85      		ldd r24,Y+10
+ 1094 0752 8295      		swap r24
+ 1095 0754 807F      		andi r24,lo8(-16)
+ 1096 0756 806E      		ori r24,lo8(-32)
+ 1097 0758 8B83      		std Y+3,r24
+ 1098 075a 00C0      		rjmp .L93
+ 1099               	.L106:
+ 1100 075c 9FEF      		ldi r25,lo8(255)
+ 1101 075e 4916      		cp r4,r25
+ 1102 0760 5104      		cpc r5,__zero_reg__
+ 1103 0762 01F0      		breq .L94
+ 1104 0764 00F0      		brlo .L94
+ 1105 0766 212C      		mov r2,__zero_reg__
+ 1106 0768 E1E0      		ldi r30,hi8(256)
+ 1107 076a 3E2E      		mov r3,r30
+ 1108 076c 00C0      		rjmp .L95
+ 1109               	.L94:
+ 1110 076e 1201      		movw r2,r4
+ 1111               	.L95:
+ 1112 0770 8A85      		ldd r24,Y+10
+ 1113 0772 0E94 0000 		call SelectDevice
+ 1114 0776 9C01      		movw r18,r24
+ 1115 0778 AC81      		ldd r26,Y+4
+ 1116 077a BD81      		ldd r27,Y+5
+ 1117 077c 8C91      		ld r24,X
+ 1118 077e 80FF      		sbrs r24,0
+ 1119 0780 00C0      		rjmp .L96
+ 1120 0782 2115      		cp r18,__zero_reg__
+ 1121 0784 3105      		cpc r19,__zero_reg__
+ 1122 0786 01F0      		breq .+2
+ 1123 0788 00C0      		rjmp .L97
+ 1124               	/* #APP */
+ 1125               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 1126 078a 0FB6      		in  __tmp_reg__, __SREG__
+ 1127 078c F894      		cli
+ 1128 078e 0F92      		push __tmp_reg__
+ 1129               		
+ 1130               	 ;  0 "" 2
+ 1131               	/* #NOAPP */
+ 1132 0790 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 1133 0794 1092 0000 		sts hIDEEvent,__zero_reg__
+ 1134               	/* #APP */
+ 1135               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 1136 0798 0F90      		pop __tmp_reg__
+ 1137 079a 0FBE      		out __SREG__, __tmp_reg__
+ 1138               		
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 21
+
+
+ 1139               	 ;  0 "" 2
+ 1140               	/* #NOAPP */
+ 1141 079c 8F2D      		mov r24,r15
+ 1142 079e 9927      		clr r25
+ 1143 07a0 AA27      		clr r26
+ 1144 07a2 BB27      		clr r27
+ 1145 07a4 EB81      		ldd r30,Y+3
+ 1146 07a6 8E2B      		or r24,r30
+ 1147 07a8 E091 0000 		lds r30,pIDE
+ 1148 07ac F091 0000 		lds r31,(pIDE)+1
+ 1149 07b0 8683      		std Z+6,r24
+ 1150 07b2 C701      		movw r24,r14
+ 1151 07b4 AA27      		clr r26
+ 1152 07b6 BB27      		clr r27
+ 1153 07b8 8583      		std Z+5,r24
+ 1154 07ba BB27      		clr r27
+ 1155 07bc AF2D      		mov r26,r15
+ 1156 07be 9E2D      		mov r25,r14
+ 1157 07c0 8D2D      		mov r24,r13
+ 1158 07c2 8483      		std Z+4,r24
+ 1159 07c4 C382      		std Z+3,r12
+ 1160 07c6 2282      		std Z+2,r2
+ 1161 07c8 20E2      		ldi r18,lo8(32)
+ 1162 07ca 2783      		std Z+7,r18
+ 1163 07cc 8E80      		ldd r8,Y+6
+ 1164 07ce 9F80      		ldd r9,Y+7
+ 1165 07d0 AA24      		clr r10
+ 1166 07d2 BB24      		clr r11
+ 1167               	.L105:
+ 1168 07d4 40E1      		ldi r20,lo8(10000)
+ 1169 07d6 57E2      		ldi r21,hi8(10000)
+ 1170 07d8 60E0      		ldi r22,hlo8(10000)
+ 1171 07da 70E0      		ldi r23,hhi8(10000)
+ 1172 07dc 80E0      		ldi r24,lo8(hIDEEvent)
+ 1173 07de 90E0      		ldi r25,hi8(hIDEEvent)
+ 1174 07e0 0E94 0000 		call NutEventWait
+ 1175 07e4 8F5F      		subi r24,lo8(-1)
+ 1176 07e6 9F4F      		sbci r25,hi8(-1)
+ 1177 07e8 01F4      		brne .+2
+ 1178 07ea 00C0      		rjmp .L99
+ 1179 07ec 8091 0000 		lds r24,gbIntStatus
+ 1180 07f0 E091 0000 		lds r30,pIDE
+ 1181 07f4 F091 0000 		lds r31,(pIDE)+1
+ 1182 07f8 80FF      		sbrs r24,0
+ 1183 07fa 00C0      		rjmp .L100
+ 1184 07fc 8181      		ldd r24,Z+1
+ 1185 07fe 01E0      		ldi r16,lo8(1)
+ 1186 0800 10E0      		ldi r17,hi8(1)
+ 1187 0802 00C0      		rjmp .L101
+ 1188               	.L100:
+ 1189 0804 BF01      		movw r22,r30
+ 1190 0806 6050      		subi r22,lo8(-(768))
+ 1191 0808 7D4F      		sbci r23,hi8(-(768))
+ 1192 080a AF01      		movw r20,r30
+ 1193 080c 4050      		subi r20,lo8(-(1024))
+ 1194 080e 5C4F      		sbci r21,hi8(-(1024))
+ 1195 0810 F401      		movw r30,r8
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 22
+
+
+ 1196 0812 20E0      		ldi r18,lo8(0)
+ 1197 0814 30E0      		ldi r19,hi8(0)
+ 1198               	.L104:
+ 1199 0816 DB01      		movw r26,r22
+ 1200 0818 8C91      		ld r24,X
+ 1201 081a 8083      		st Z,r24
+ 1202 081c AC81      		ldd r26,Y+4
+ 1203 081e BD81      		ldd r27,Y+5
+ 1204 0820 1296      		adiw r26,2
+ 1205 0822 8C91      		ld r24,X
+ 1206 0824 8330      		cpi r24,lo8(3)
+ 1207 0826 01F4      		brne .L102
+ 1208 0828 DB01      		movw r26,r22
+ 1209 082a 00C0      		rjmp .L114
+ 1210               	.L102:
+ 1211 082c DA01      		movw r26,r20
+ 1212               	.L114:
+ 1213 082e 8C91      		ld r24,X
+ 1214 0830 8183      		std Z+1,r24
+ 1215 0832 2E5F      		subi r18,lo8(-(2))
+ 1216 0834 3F4F      		sbci r19,hi8(-(2))
+ 1217 0836 3296      		adiw r30,2
+ 1218 0838 B2E0      		ldi r27,hi8(512)
+ 1219 083a 2030      		cpi r18,lo8(512)
+ 1220 083c 3B07      		cpc r19,r27
+ 1221 083e 01F4      		brne .L104
+ 1222 0840 E0E0      		ldi r30,lo8(512)
+ 1223 0842 F2E0      		ldi r31,hi8(512)
+ 1224 0844 8E0E      		add r8,r30
+ 1225 0846 9F1E      		adc r9,r31
+ 1226 0848 00E0      		ldi r16,lo8(0)
+ 1227 084a 10E0      		ldi r17,hi8(0)
+ 1228               	.L107:
+ 1229 084c 0894      		sec
+ 1230 084e A11C      		adc r10,__zero_reg__
+ 1231 0850 B11C      		adc r11,__zero_reg__
+ 1232 0852 A214      		cp r10,r2
+ 1233 0854 B304      		cpc r11,r3
+ 1234 0856 00F4      		brsh .+2
+ 1235 0858 00C0      		rjmp .L105
+ 1236               	.L101:
+ 1237 085a E091 0000 		lds r30,pIDE
+ 1238 085e F091 0000 		lds r31,(pIDE)+1
+ 1239 0862 8781      		ldd r24,Z+7
+ 1240 0864 0115      		cp r16,__zero_reg__
+ 1241 0866 1105      		cpc r17,__zero_reg__
+ 1242 0868 01F4      		brne .L87
+ 1243 086a C101      		movw r24,r2
+ 1244 086c A0E0      		ldi r26,lo8(0)
+ 1245 086e B0E0      		ldi r27,hi8(0)
+ 1246 0870 C80E      		add r12,r24
+ 1247 0872 D91E      		adc r13,r25
+ 1248 0874 EA1E      		adc r14,r26
+ 1249 0876 FB1E      		adc r15,r27
+ 1250 0878 4218      		sub r4,r2
+ 1251 087a 5308      		sbc r5,r3
+ 1252 087c D301      		movw r26,r6
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 23
+
+
+ 1253 087e 1896      		adiw r26,8
+ 1254 0880 8D91      		ld r24,X+
+ 1255 0882 9C91      		ld r25,X
+ 1256 0884 1997      		sbiw r26,8+1
+ 1257 0886 FC01      		movw r30,r24
+ 1258 0888 2E9E      		mul r2,r30
+ 1259 088a C001      		movw r24,r0
+ 1260 088c 2F9E      		mul r2,r31
+ 1261 088e 900D      		add r25,r0
+ 1262 0890 3E9E      		mul r3,r30
+ 1263 0892 900D      		add r25,r0
+ 1264 0894 1124      		clr r1
+ 1265 0896 2E81      		ldd r18,Y+6
+ 1266 0898 3F81      		ldd r19,Y+7
+ 1267 089a 280F      		add r18,r24
+ 1268 089c 391F      		adc r19,r25
+ 1269 089e 3F83      		std Y+7,r19
+ 1270 08a0 2E83      		std Y+6,r18
+ 1271               	.L93:
+ 1272 08a2 4114      		cp r4,__zero_reg__
+ 1273 08a4 5104      		cpc r5,__zero_reg__
+ 1274 08a6 01F0      		breq .+2
+ 1275 08a8 00C0      		rjmp .L106
+ 1276 08aa 00C0      		rjmp .L89
+ 1277               	.L92:
+ 1278 08ac 01E0      		ldi r16,lo8(1)
+ 1279 08ae 10E0      		ldi r17,hi8(1)
+ 1280 08b0 00C0      		rjmp .L87
+ 1281               	.L89:
+ 1282 08b2 0885      		ldd r16,Y+8
+ 1283 08b4 1985      		ldd r17,Y+9
+ 1284               	.L87:
+ 1285 08b6 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1286 08b8 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1287 08ba 0E94 0000 		call NutEventPost
+ 1288 08be C801      		movw r24,r16
+ 1289               	/* epilogue start */
+ 1290 08c0 2A96      		adiw r28,10
+ 1291 08c2 0FB6      		in __tmp_reg__,__SREG__
+ 1292 08c4 F894      		cli
+ 1293 08c6 DEBF      		out __SP_H__,r29
+ 1294 08c8 0FBE      		out __SREG__,__tmp_reg__
+ 1295 08ca CDBF      		out __SP_L__,r28
+ 1296 08cc CF91      		pop r28
+ 1297 08ce DF91      		pop r29
+ 1298 08d0 1F91      		pop r17
+ 1299 08d2 0F91      		pop r16
+ 1300 08d4 FF90      		pop r15
+ 1301 08d6 EF90      		pop r14
+ 1302 08d8 DF90      		pop r13
+ 1303 08da CF90      		pop r12
+ 1304 08dc BF90      		pop r11
+ 1305 08de AF90      		pop r10
+ 1306 08e0 9F90      		pop r9
+ 1307 08e2 8F90      		pop r8
+ 1308 08e4 7F90      		pop r7
+ 1309 08e6 6F90      		pop r6
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 24
+
+
+ 1310 08e8 5F90      		pop r5
+ 1311 08ea 4F90      		pop r4
+ 1312 08ec 3F90      		pop r3
+ 1313 08ee 2F90      		pop r2
+ 1314 08f0 0895      		ret
+ 1315               	.L99:
+ 1316 08f2 E091 0000 		lds r30,pIDE
+ 1317 08f6 F091 0000 		lds r31,(pIDE)+1
+ 1318 08fa 8781      		ldd r24,Z+7
+ 1319 08fc 8181      		ldd r24,Z+1
+ 1320 08fe 01E0      		ldi r16,lo8(1)
+ 1321 0900 10E0      		ldi r17,hi8(1)
+ 1322 0902 00C0      		rjmp .L107
+ 1323               	.L96:
+ 1324 0904 21E0      		ldi r18,lo8(1)
+ 1325 0906 30E0      		ldi r19,hi8(1)
+ 1326               	.L97:
+ 1327 0908 8901      		movw r16,r18
+ 1328 090a 00C0      		rjmp .L87
+ 1329               	.L86:
+ 1330 090c 8885      		ldd r24,Y+8
+ 1331 090e 9985      		ldd r25,Y+9
+ 1332 0910 892B      		or r24,r25
+ 1333 0912 01F4      		brne .+2
+ 1334 0914 00C0      		rjmp .L112
+ 1335 0916 00C0      		rjmp .L89
+ 1336               		.size	IDEReadSectors, .-IDEReadSectors
+ 1337               	.global	IDEGetTotalSectors
+ 1338               		.type	IDEGetTotalSectors, @function
+ 1339               	IDEGetTotalSectors:
+ 1340 0918 EF92      		push r14
+ 1341 091a FF92      		push r15
+ 1342 091c 0F93      		push r16
+ 1343 091e 1F93      		push r17
+ 1344               	/* prologue: function */
+ 1345               	/* frame size = 0 */
+ 1346 0920 182F      		mov r17,r24
+ 1347 0922 40E0      		ldi r20,lo8(0)
+ 1348 0924 50E0      		ldi r21,hi8(0)
+ 1349 0926 60E0      		ldi r22,hlo8(0)
+ 1350 0928 70E0      		ldi r23,hhi8(0)
+ 1351 092a 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1352 092c 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1353 092e 0E94 0000 		call NutEventWait
+ 1354 0932 1123      		tst r17
+ 1355 0934 01F0      		breq .L116
+ 1356 0936 EE24      		clr r14
+ 1357 0938 FF24      		clr r15
+ 1358 093a 8701      		movw r16,r14
+ 1359 093c 00C0      		rjmp .L117
+ 1360               	.L116:
+ 1361 093e E090 0000 		lds r14,sDrive+4
+ 1362 0942 F090 0000 		lds r15,(sDrive+4)+1
+ 1363 0946 0091 0000 		lds r16,(sDrive+4)+2
+ 1364 094a 1091 0000 		lds r17,(sDrive+4)+3
+ 1365 094e 80EC      		ldi r24,lo8(-64)
+ 1366 0950 9FEF      		ldi r25,hi8(-64)
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 25
+
+
+ 1367 0952 AFEF      		ldi r26,hlo8(-64)
+ 1368 0954 BFEF      		ldi r27,hhi8(-64)
+ 1369 0956 E80E      		add r14,r24
+ 1370 0958 F91E      		adc r15,r25
+ 1371 095a 0A1F      		adc r16,r26
+ 1372 095c 1B1F      		adc r17,r27
+ 1373               	.L117:
+ 1374 095e 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1375 0960 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1376 0962 0E94 0000 		call NutEventPost
+ 1377 0966 B701      		movw r22,r14
+ 1378 0968 C801      		movw r24,r16
+ 1379               	/* epilogue start */
+ 1380 096a 1F91      		pop r17
+ 1381 096c 0F91      		pop r16
+ 1382 096e FF90      		pop r15
+ 1383 0970 EF90      		pop r14
+ 1384 0972 0895      		ret
+ 1385               		.size	IDEGetTotalSectors, .-IDEGetTotalSectors
+ 1386               	.global	IDEUnMountDevice
+ 1387               		.type	IDEUnMountDevice, @function
+ 1388               	IDEUnMountDevice:
+ 1389 0974 1F93      		push r17
+ 1390 0976 CF93      		push r28
+ 1391 0978 DF93      		push r29
+ 1392               	/* prologue: function */
+ 1393               	/* frame size = 0 */
+ 1394 097a 182F      		mov r17,r24
+ 1395 097c 40E0      		ldi r20,lo8(0)
+ 1396 097e 50E0      		ldi r21,hi8(0)
+ 1397 0980 60E0      		ldi r22,hlo8(0)
+ 1398 0982 70E0      		ldi r23,hhi8(0)
+ 1399 0984 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1400 0986 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1401 0988 0E94 0000 		call NutEventWait
+ 1402 098c 1123      		tst r17
+ 1403 098e 01F0      		breq .L120
+ 1404 0990 C1E0      		ldi r28,lo8(1)
+ 1405 0992 D0E0      		ldi r29,hi8(1)
+ 1406 0994 00C0      		rjmp .L121
+ 1407               	.L120:
+ 1408 0996 1092 0000 		sts (sDrive)+1,__zero_reg__
+ 1409 099a 1092 0000 		sts sDrive,__zero_reg__
+ 1410 099e C0E0      		ldi r28,lo8(0)
+ 1411 09a0 D0E0      		ldi r29,hi8(0)
+ 1412               	.L121:
+ 1413 09a2 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1414 09a4 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1415 09a6 0E94 0000 		call NutEventPost
+ 1416 09aa CE01      		movw r24,r28
+ 1417               	/* epilogue start */
+ 1418 09ac DF91      		pop r29
+ 1419 09ae CF91      		pop r28
+ 1420 09b0 1F91      		pop r17
+ 1421 09b2 0895      		ret
+ 1422               		.size	IDEUnMountDevice, .-IDEUnMountDevice
+ 1423               	.global	IDEIsZIPDevice
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 26
+
+
+ 1424               		.type	IDEIsZIPDevice, @function
+ 1425               	IDEIsZIPDevice:
+ 1426 09b4 1F93      		push r17
+ 1427 09b6 CF93      		push r28
+ 1428 09b8 DF93      		push r29
+ 1429               	/* prologue: function */
+ 1430               	/* frame size = 0 */
+ 1431 09ba 182F      		mov r17,r24
+ 1432 09bc 40E0      		ldi r20,lo8(0)
+ 1433 09be 50E0      		ldi r21,hi8(0)
+ 1434 09c0 60E0      		ldi r22,hlo8(0)
+ 1435 09c2 70E0      		ldi r23,hhi8(0)
+ 1436 09c4 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1437 09c6 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1438 09c8 0E94 0000 		call NutEventWait
+ 1439 09cc 1123      		tst r17
+ 1440 09ce 01F4      		brne .L124
+ 1441 09d0 8091 0000 		lds r24,sDrive
+ 1442 09d4 9091 0000 		lds r25,(sDrive)+1
+ 1443 09d8 97FF      		sbrs r25,7
+ 1444 09da 00C0      		rjmp .L124
+ 1445 09dc EC01      		movw r28,r24
+ 1446 09de CD2F      		mov r28,r29
+ 1447 09e0 DD27      		clr r29
+ 1448 09e2 C295      		swap r28
+ 1449 09e4 C695      		lsr r28
+ 1450 09e6 C770      		andi r28,0x07
+ 1451 09e8 C170      		andi r28,lo8(1)
+ 1452 09ea D070      		andi r29,hi8(1)
+ 1453 09ec 00C0      		rjmp .L125
+ 1454               	.L124:
+ 1455 09ee C0E0      		ldi r28,lo8(0)
+ 1456 09f0 D0E0      		ldi r29,hi8(0)
+ 1457               	.L125:
+ 1458 09f2 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1459 09f4 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1460 09f6 0E94 0000 		call NutEventPost
+ 1461 09fa CE01      		movw r24,r28
+ 1462               	/* epilogue start */
+ 1463 09fc DF91      		pop r29
+ 1464 09fe CF91      		pop r28
+ 1465 0a00 1F91      		pop r17
+ 1466 0a02 0895      		ret
+ 1467               		.size	IDEIsZIPDevice, .-IDEIsZIPDevice
+ 1468               	.global	IDEIsCDROMDevice
+ 1469               		.type	IDEIsCDROMDevice, @function
+ 1470               	IDEIsCDROMDevice:
+ 1471 0a04 1F93      		push r17
+ 1472 0a06 CF93      		push r28
+ 1473 0a08 DF93      		push r29
+ 1474               	/* prologue: function */
+ 1475               	/* frame size = 0 */
+ 1476 0a0a 182F      		mov r17,r24
+ 1477 0a0c 40E0      		ldi r20,lo8(0)
+ 1478 0a0e 50E0      		ldi r21,hi8(0)
+ 1479 0a10 60E0      		ldi r22,hlo8(0)
+ 1480 0a12 70E0      		ldi r23,hhi8(0)
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 27
+
+
+ 1481 0a14 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1482 0a16 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1483 0a18 0E94 0000 		call NutEventWait
+ 1484 0a1c 1123      		tst r17
+ 1485 0a1e 01F4      		brne .L128
+ 1486 0a20 8091 0000 		lds r24,sDrive
+ 1487 0a24 9091 0000 		lds r25,(sDrive)+1
+ 1488 0a28 97FF      		sbrs r25,7
+ 1489 0a2a 00C0      		rjmp .L128
+ 1490 0a2c EC01      		movw r28,r24
+ 1491 0a2e CD2F      		mov r28,r29
+ 1492 0a30 DD27      		clr r29
+ 1493 0a32 C295      		swap r28
+ 1494 0a34 CF70      		andi r28,0x0f
+ 1495 0a36 C170      		andi r28,lo8(1)
+ 1496 0a38 D070      		andi r29,hi8(1)
+ 1497 0a3a 00C0      		rjmp .L129
+ 1498               	.L128:
+ 1499 0a3c C0E0      		ldi r28,lo8(0)
+ 1500 0a3e D0E0      		ldi r29,hi8(0)
+ 1501               	.L129:
+ 1502 0a40 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1503 0a42 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1504 0a44 0E94 0000 		call NutEventPost
+ 1505 0a48 CE01      		movw r24,r28
+ 1506               	/* epilogue start */
+ 1507 0a4a DF91      		pop r29
+ 1508 0a4c CF91      		pop r28
+ 1509 0a4e 1F91      		pop r17
+ 1510 0a50 0895      		ret
+ 1511               		.size	IDEIsCDROMDevice, .-IDEIsCDROMDevice
+ 1512               	.global	IDEGetSectorSize
+ 1513               		.type	IDEGetSectorSize, @function
+ 1514               	IDEGetSectorSize:
+ 1515 0a52 1F93      		push r17
+ 1516 0a54 CF93      		push r28
+ 1517 0a56 DF93      		push r29
+ 1518               	/* prologue: function */
+ 1519               	/* frame size = 0 */
+ 1520 0a58 182F      		mov r17,r24
+ 1521 0a5a 40E0      		ldi r20,lo8(0)
+ 1522 0a5c 50E0      		ldi r21,hi8(0)
+ 1523 0a5e 60E0      		ldi r22,hlo8(0)
+ 1524 0a60 70E0      		ldi r23,hhi8(0)
+ 1525 0a62 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1526 0a64 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1527 0a66 0E94 0000 		call NutEventWait
+ 1528 0a6a 1123      		tst r17
+ 1529 0a6c 01F0      		breq .L132
+ 1530 0a6e C0E0      		ldi r28,lo8(0)
+ 1531 0a70 D0E0      		ldi r29,hi8(0)
+ 1532 0a72 00C0      		rjmp .L133
+ 1533               	.L132:
+ 1534 0a74 C091 0000 		lds r28,sDrive+8
+ 1535 0a78 D091 0000 		lds r29,(sDrive+8)+1
+ 1536               	.L133:
+ 1537 0a7c 80E0      		ldi r24,lo8(hIDESemaphore)
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 28
+
+
+ 1538 0a7e 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1539 0a80 0E94 0000 		call NutEventPost
+ 1540 0a84 CE01      		movw r24,r28
+ 1541               	/* epilogue start */
+ 1542 0a86 DF91      		pop r29
+ 1543 0a88 CF91      		pop r28
+ 1544 0a8a 1F91      		pop r17
+ 1545 0a8c 0895      		ret
+ 1546               		.size	IDEGetSectorSize, .-IDEGetSectorSize
+ 1547               	.global	IDEMountDevice
+ 1548               		.type	IDEMountDevice, @function
+ 1549               	IDEMountDevice:
+ 1550 0a8e 5F92      		push r5
+ 1551 0a90 6F92      		push r6
+ 1552 0a92 7F92      		push r7
+ 1553 0a94 8F92      		push r8
+ 1554 0a96 9F92      		push r9
+ 1555 0a98 AF92      		push r10
+ 1556 0a9a BF92      		push r11
+ 1557 0a9c CF92      		push r12
+ 1558 0a9e DF92      		push r13
+ 1559 0aa0 EF92      		push r14
+ 1560 0aa2 FF92      		push r15
+ 1561 0aa4 0F93      		push r16
+ 1562 0aa6 1F93      		push r17
+ 1563 0aa8 DF93      		push r29
+ 1564 0aaa CF93      		push r28
+ 1565 0aac 00D0      		rcall .
+ 1566 0aae 00D0      		rcall .
+ 1567 0ab0 CDB7      		in r28,__SP_L__
+ 1568 0ab2 DEB7      		in r29,__SP_H__
+ 1569               	/* prologue: function */
+ 1570               	/* frame size = 4 */
+ 1571 0ab4 182F      		mov r17,r24
+ 1572 0ab6 5B01      		movw r10,r22
+ 1573 0ab8 40E0      		ldi r20,lo8(0)
+ 1574 0aba 50E0      		ldi r21,hi8(0)
+ 1575 0abc 60E0      		ldi r22,hlo8(0)
+ 1576 0abe 70E0      		ldi r23,hhi8(0)
+ 1577 0ac0 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1578 0ac2 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1579 0ac4 0E94 0000 		call NutEventWait
+ 1580 0ac8 1123      		tst r17
+ 1581 0aca 01F0      		breq .L136
+ 1582 0acc 51E0      		ldi r21,lo8(1)
+ 1583 0ace C52E      		mov r12,r21
+ 1584 0ad0 D12C      		mov r13,__zero_reg__
+ 1585 0ad2 00C0      		rjmp .L137
+ 1586               	.L136:
+ 1587 0ad4 1092 0000 		sts (sDrive)+1,__zero_reg__
+ 1588 0ad8 1092 0000 		sts sDrive,__zero_reg__
+ 1589 0adc 1092 0000 		sts sDrive+4,__zero_reg__
+ 1590 0ae0 1092 0000 		sts (sDrive+4)+1,__zero_reg__
+ 1591 0ae4 1092 0000 		sts (sDrive+4)+2,__zero_reg__
+ 1592 0ae8 1092 0000 		sts (sDrive+4)+3,__zero_reg__
+ 1593 0aec 80E0      		ldi r24,lo8(sDrive)
+ 1594 0aee 90E0      		ldi r25,hi8(sDrive)
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 29
+
+
+ 1595 0af0 0E94 0000 		call DeviceDiag
+ 1596 0af4 9C01      		movw r18,r24
+ 1597 0af6 8091 0000 		lds r24,sDrive
+ 1598 0afa 82FF      		sbrs r24,2
+ 1599 0afc 00C0      		rjmp .L138
+ 1600 0afe 80E0      		ldi r24,lo8(2048)
+ 1601 0b00 98E0      		ldi r25,hi8(2048)
+ 1602 0b02 9093 0000 		sts (sDrive+8)+1,r25
+ 1603 0b06 8093 0000 		sts sDrive+8,r24
+ 1604 0b0a 5090 0000 		lds r5,sDrive+3
+ 1605 0b0e 852D      		mov r24,r5
+ 1606 0b10 0E94 0000 		call SelectDevice
+ 1607 0b14 892B      		or r24,r25
+ 1608 0b16 01F0      		breq .+2
+ 1609 0b18 00C0      		rjmp .L139
+ 1610               	/* #APP */
+ 1611               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 1612 0b1a 0FB6      		in  __tmp_reg__, __SREG__
+ 1613 0b1c F894      		cli
+ 1614 0b1e 0F92      		push __tmp_reg__
+ 1615               		
+ 1616               	 ;  0 "" 2
+ 1617               	/* #NOAPP */
+ 1618 0b20 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 1619 0b24 1092 0000 		sts hIDEEvent,__zero_reg__
+ 1620               	/* #APP */
+ 1621               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 1622 0b28 0F90      		pop __tmp_reg__
+ 1623 0b2a 0FBE      		out __SREG__, __tmp_reg__
+ 1624               		
+ 1625               	 ;  0 "" 2
+ 1626               	/* #NOAPP */
+ 1627 0b2c E091 0000 		lds r30,pIDE
+ 1628 0b30 F091 0000 		lds r31,(pIDE)+1
+ 1629 0b34 81EA      		ldi r24,lo8(-95)
+ 1630 0b36 8783      		std Z+7,r24
+ 1631 0b38 40E1      		ldi r20,lo8(10000)
+ 1632 0b3a 57E2      		ldi r21,hi8(10000)
+ 1633 0b3c 60E0      		ldi r22,hlo8(10000)
+ 1634 0b3e 70E0      		ldi r23,hhi8(10000)
+ 1635 0b40 80E0      		ldi r24,lo8(hIDEEvent)
+ 1636 0b42 90E0      		ldi r25,hi8(hIDEEvent)
+ 1637 0b44 0E94 0000 		call NutEventWait
+ 1638 0b48 8F5F      		subi r24,lo8(-1)
+ 1639 0b4a 9F4F      		sbci r25,hi8(-1)
+ 1640 0b4c 01F4      		brne .+2
+ 1641 0b4e 00C0      		rjmp .L139
+ 1642 0b50 8091 0000 		lds r24,gbIntStatus
+ 1643 0b54 83FF      		sbrs r24,3
+ 1644 0b56 00C0      		rjmp .L140
+ 1645 0b58 1A82      		std Y+2,__zero_reg__
+ 1646 0b5a 1982      		std Y+1,__zero_reg__
+ 1647 0b5c 00C0      		rjmp .L141
+ 1648               	.L144:
+ 1649 0b5e E050      		subi r30,lo8(-(768))
+ 1650 0b60 FD4F      		sbci r31,hi8(-(768))
+ 1651 0b62 8081      		ld r24,Z
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 30
+
+
+ 1652 0b64 D501      		movw r26,r10
+ 1653 0b66 A20F      		add r26,r18
+ 1654 0b68 B31F      		adc r27,r19
+ 1655 0b6a 8C93      		st X,r24
+ 1656 0b6c 8091 0000 		lds r24,sDrive+2
+ 1657 0b70 E091 0000 		lds r30,pIDE
+ 1658 0b74 F091 0000 		lds r31,(pIDE)+1
+ 1659 0b78 8330      		cpi r24,lo8(3)
+ 1660 0b7a 01F4      		brne .L142
+ 1661 0b7c E050      		subi r30,lo8(-(768))
+ 1662 0b7e FD4F      		sbci r31,hi8(-(768))
+ 1663 0b80 00C0      		rjmp .L169
+ 1664               	.L142:
+ 1665 0b82 E050      		subi r30,lo8(-(1024))
+ 1666 0b84 FC4F      		sbci r31,hi8(-(1024))
+ 1667               	.L169:
+ 1668 0b86 8081      		ld r24,Z
+ 1669 0b88 1196      		adiw r26,1
+ 1670 0b8a 8C93      		st X,r24
+ 1671 0b8c 8981      		ldd r24,Y+1
+ 1672 0b8e 9A81      		ldd r25,Y+2
+ 1673 0b90 0296      		adiw r24,2
+ 1674 0b92 9A83      		std Y+2,r25
+ 1675 0b94 8983      		std Y+1,r24
+ 1676               	.L141:
+ 1677 0b96 2981      		ldd r18,Y+1
+ 1678 0b98 3A81      		ldd r19,Y+2
+ 1679 0b9a E091 0000 		lds r30,pIDE
+ 1680 0b9e F091 0000 		lds r31,(pIDE)+1
+ 1681 0ba2 42E0      		ldi r20,hi8(512)
+ 1682 0ba4 2030      		cpi r18,lo8(512)
+ 1683 0ba6 3407      		cpc r19,r20
+ 1684 0ba8 00F0      		brlo .L144
+ 1685 0baa 8781      		ldd r24,Z+7
+ 1686 0bac 1092 0000 		sts (sDrive)+1,__zero_reg__
+ 1687 0bb0 1092 0000 		sts sDrive,__zero_reg__
+ 1688 0bb4 D501      		movw r26,r10
+ 1689 0bb6 2D91      		ld r18,X+
+ 1690 0bb8 3C91      		ld r19,X
+ 1691 0bba C901      		movw r24,r18
+ 1692 0bbc 8076      		andi r24,lo8(96)
+ 1693 0bbe 9070      		andi r25,hi8(96)
+ 1694 0bc0 8097      		sbiw r24,32
+ 1695 0bc2 01F4      		brne .L145
+ 1696 0bc4 88E0      		ldi r24,lo8(8)
+ 1697 0bc6 90E0      		ldi r25,hi8(8)
+ 1698 0bc8 9093 0000 		sts (sDrive)+1,r25
+ 1699 0bcc 8093 0000 		sts sDrive,r24
+ 1700               	.L145:
+ 1701 0bd0 C901      		movw r24,r18
+ 1702 0bd2 8070      		andi r24,lo8(7936)
+ 1703 0bd4 9F71      		andi r25,hi8(7936)
+ 1704 0bd6 0097      		sbiw r24,0
+ 1705 0bd8 01F4      		brne .L146
+ 1706 0bda 8091 0000 		lds r24,sDrive
+ 1707 0bde 9091 0000 		lds r25,(sDrive)+1
+ 1708 0be2 9062      		ori r25,hi8(8192)
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 31
+
+
+ 1709 0be4 00C0      		rjmp .L170
+ 1710               	.L146:
+ 1711 0be6 8050      		subi r24,lo8(1280)
+ 1712 0be8 9540      		sbci r25,hi8(1280)
+ 1713 0bea 01F4      		brne .L147
+ 1714 0bec 8091 0000 		lds r24,sDrive
+ 1715 0bf0 9091 0000 		lds r25,(sDrive)+1
+ 1716 0bf4 9065      		ori r25,hi8(20480)
+ 1717               	.L170:
+ 1718 0bf6 9093 0000 		sts (sDrive)+1,r25
+ 1719 0bfa 8093 0000 		sts sDrive,r24
+ 1720               	.L147:
+ 1721 0bfe C901      		movw r24,r18
+ 1722 0c00 8070      		andi r24,lo8(-16384)
+ 1723 0c02 907C      		andi r25,hi8(-16384)
+ 1724 0c04 8050      		subi r24,lo8(-32768)
+ 1725 0c06 9048      		sbci r25,hi8(-32768)
+ 1726 0c08 01F4      		brne .L148
+ 1727 0c0a 8091 0000 		lds r24,sDrive
+ 1728 0c0e 9091 0000 		lds r25,(sDrive)+1
+ 1729 0c12 8460      		ori r24,lo8(4)
+ 1730 0c14 9093 0000 		sts (sDrive)+1,r25
+ 1731 0c18 8093 0000 		sts sDrive,r24
+ 1732               	.L148:
+ 1733 0c1c 2370      		andi r18,lo8(3)
+ 1734 0c1e 3070      		andi r19,hi8(3)
+ 1735 0c20 232B      		or r18,r19
+ 1736 0c22 01F0      		breq .+2
+ 1737 0c24 00C0      		rjmp .L140
+ 1738 0c26 8091 0000 		lds r24,sDrive
+ 1739 0c2a 9091 0000 		lds r25,(sDrive)+1
+ 1740 0c2e 9068      		ori r25,hi8(-32768)
+ 1741 0c30 9093 0000 		sts (sDrive)+1,r25
+ 1742 0c34 8093 0000 		sts sDrive,r24
+ 1743 0c38 04E0      		ldi r16,lo8(4)
+ 1744 0c3a 10E0      		ldi r17,hi8(4)
+ 1745 0c3c 40E0      		ldi r20,lo8(aATAPICmd)
+ 1746 0c3e 842E      		mov r8,r20
+ 1747 0c40 40E0      		ldi r20,hi8(aATAPICmd)
+ 1748 0c42 942E      		mov r9,r20
+ 1749 0c44 3CE0      		ldi r19,lo8(12)
+ 1750 0c46 632E      		mov r6,r19
+ 1751 0c48 25E2      		ldi r18,lo8(37)
+ 1752 0c4a 722E      		mov r7,r18
+ 1753 0c4c 93E0      		ldi r25,lo8(3)
+ 1754 0c4e E92E      		mov r14,r25
+ 1755 0c50 F12C      		mov r15,__zero_reg__
+ 1756 0c52 EC0E      		add r14,r28
+ 1757 0c54 FD1E      		adc r15,r29
+ 1758               	.L152:
+ 1759 0c56 D401      		movw r26,r8
+ 1760 0c58 E62D      		mov r30,r6
+ 1761 0c5a 1D92      		st X+,__zero_reg__
+ 1762 0c5c EA95      	        dec r30
+ 1763 0c5e 01F4      		brne .-6
+ 1764 0c60 7092 0000 		sts aATAPICmd,r7
+ 1765 0c64 A701      		movw r20,r14
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 32
+
+
+ 1766 0c66 B501      		movw r22,r10
+ 1767 0c68 80E0      		ldi r24,lo8(sDrive)
+ 1768 0c6a 90E0      		ldi r25,hi8(sDrive)
+ 1769 0c6c 0E94 0000 		call ATAPISendCommand
+ 1770 0c70 6C01      		movw r12,r24
+ 1771 0c72 0097      		sbiw r24,0
+ 1772 0c74 01F0      		breq .+2
+ 1773 0c76 00C0      		rjmp .L149
+ 1774 0c78 8B81      		ldd r24,Y+3
+ 1775 0c7a 9C81      		ldd r25,Y+4
+ 1776 0c7c 0897      		sbiw r24,8
+ 1777 0c7e 01F0      		breq .+2
+ 1778 0c80 00C0      		rjmp .L149
+ 1779 0c82 D501      		movw r26,r10
+ 1780 0c84 2C91      		ld r18,X
+ 1781 0c86 30E0      		ldi r19,lo8(0)
+ 1782 0c88 40E0      		ldi r20,lo8(0)
+ 1783 0c8a 50E0      		ldi r21,hi8(0)
+ 1784 0c8c 542F      		mov r21,r20
+ 1785 0c8e 432F      		mov r20,r19
+ 1786 0c90 322F      		mov r19,r18
+ 1787 0c92 2227      		clr r18
+ 1788 0c94 1196      		adiw r26,1
+ 1789 0c96 8C91      		ld r24,X
+ 1790 0c98 90E0      		ldi r25,lo8(0)
+ 1791 0c9a A0E0      		ldi r26,lo8(0)
+ 1792 0c9c B0E0      		ldi r27,hi8(0)
+ 1793 0c9e 822B      		or r24,r18
+ 1794 0ca0 932B      		or r25,r19
+ 1795 0ca2 A42B      		or r26,r20
+ 1796 0ca4 B52B      		or r27,r21
+ 1797 0ca6 BA2F      		mov r27,r26
+ 1798 0ca8 A92F      		mov r26,r25
+ 1799 0caa 982F      		mov r25,r24
+ 1800 0cac 8827      		clr r24
+ 1801 0cae F501      		movw r30,r10
+ 1802 0cb0 2281      		ldd r18,Z+2
+ 1803 0cb2 30E0      		ldi r19,lo8(0)
+ 1804 0cb4 40E0      		ldi r20,lo8(0)
+ 1805 0cb6 50E0      		ldi r21,hi8(0)
+ 1806 0cb8 822B      		or r24,r18
+ 1807 0cba 932B      		or r25,r19
+ 1808 0cbc A42B      		or r26,r20
+ 1809 0cbe B52B      		or r27,r21
+ 1810 0cc0 EE24      		clr r14
+ 1811 0cc2 F82E      		mov r15,r24
+ 1812 0cc4 092F      		mov r16,r25
+ 1813 0cc6 1A2F      		mov r17,r26
+ 1814 0cc8 8381      		ldd r24,Z+3
+ 1815 0cca 90E0      		ldi r25,lo8(0)
+ 1816 0ccc A0E0      		ldi r26,lo8(0)
+ 1817 0cce B0E0      		ldi r27,hi8(0)
+ 1818 0cd0 E82A      		or r14,r24
+ 1819 0cd2 F92A      		or r15,r25
+ 1820 0cd4 0A2B      		or r16,r26
+ 1821 0cd6 1B2B      		or r17,r27
+ 1822 0cd8 2481      		ldd r18,Z+4
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 33
+
+
+ 1823 0cda 30E0      		ldi r19,lo8(0)
+ 1824 0cdc 40E0      		ldi r20,lo8(0)
+ 1825 0cde 50E0      		ldi r21,hi8(0)
+ 1826 0ce0 542F      		mov r21,r20
+ 1827 0ce2 432F      		mov r20,r19
+ 1828 0ce4 322F      		mov r19,r18
+ 1829 0ce6 2227      		clr r18
+ 1830 0ce8 8581      		ldd r24,Z+5
+ 1831 0cea 90E0      		ldi r25,lo8(0)
+ 1832 0cec A0E0      		ldi r26,lo8(0)
+ 1833 0cee B0E0      		ldi r27,hi8(0)
+ 1834 0cf0 282B      		or r18,r24
+ 1835 0cf2 392B      		or r19,r25
+ 1836 0cf4 4A2B      		or r20,r26
+ 1837 0cf6 5B2B      		or r21,r27
+ 1838 0cf8 542F      		mov r21,r20
+ 1839 0cfa 432F      		mov r20,r19
+ 1840 0cfc 322F      		mov r19,r18
+ 1841 0cfe 2227      		clr r18
+ 1842 0d00 8681      		ldd r24,Z+6
+ 1843 0d02 90E0      		ldi r25,lo8(0)
+ 1844 0d04 A0E0      		ldi r26,lo8(0)
+ 1845 0d06 B0E0      		ldi r27,hi8(0)
+ 1846 0d08 282B      		or r18,r24
+ 1847 0d0a 392B      		or r19,r25
+ 1848 0d0c 4A2B      		or r20,r26
+ 1849 0d0e 5B2B      		or r21,r27
+ 1850 0d10 542F      		mov r21,r20
+ 1851 0d12 432F      		mov r20,r19
+ 1852 0d14 322F      		mov r19,r18
+ 1853 0d16 2227      		clr r18
+ 1854 0d18 8781      		ldd r24,Z+7
+ 1855 0d1a 90E0      		ldi r25,lo8(0)
+ 1856 0d1c A0E0      		ldi r26,lo8(0)
+ 1857 0d1e B0E0      		ldi r27,hi8(0)
+ 1858 0d20 282B      		or r18,r24
+ 1859 0d22 392B      		or r19,r25
+ 1860 0d24 4A2B      		or r20,r26
+ 1861 0d26 5B2B      		or r21,r27
+ 1862 0d28 2130      		cpi r18,lo8(2049)
+ 1863 0d2a F8E0      		ldi r31,hi8(2049)
+ 1864 0d2c 3F07      		cpc r19,r31
+ 1865 0d2e F0E0      		ldi r31,hlo8(2049)
+ 1866 0d30 4F07      		cpc r20,r31
+ 1867 0d32 F0E0      		ldi r31,hhi8(2049)
+ 1868 0d34 5F07      		cpc r21,r31
+ 1869 0d36 00F0      		brlo .L150
+ 1870 0d38 20E0      		ldi r18,lo8(2048)
+ 1871 0d3a 38E0      		ldi r19,hi8(2048)
+ 1872 0d3c 40E0      		ldi r20,hlo8(2048)
+ 1873 0d3e 50E0      		ldi r21,hhi8(2048)
+ 1874               	.L150:
+ 1875 0d40 3093 0000 		sts (sDrive+8)+1,r19
+ 1876 0d44 2093 0000 		sts sDrive+8,r18
+ 1877 0d48 00C0      		rjmp .L151
+ 1878               	.L149:
+ 1879 0d4a 0150      		subi r16,lo8(-(-1))
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 34
+
+
+ 1880 0d4c 1040      		sbci r17,hi8(-(-1))
+ 1881 0d4e 60ED      		ldi r22,lo8(2000)
+ 1882 0d50 77E0      		ldi r23,hi8(2000)
+ 1883 0d52 80E0      		ldi r24,hlo8(2000)
+ 1884 0d54 90E0      		ldi r25,hhi8(2000)
+ 1885 0d56 0E94 0000 		call NutSleep
+ 1886 0d5a 0115      		cp r16,__zero_reg__
+ 1887 0d5c 1105      		cpc r17,__zero_reg__
+ 1888 0d5e 01F0      		breq .+2
+ 1889 0d60 00C0      		rjmp .L152
+ 1890 0d62 C114      		cp r12,__zero_reg__
+ 1891 0d64 D104      		cpc r13,__zero_reg__
+ 1892 0d66 01F4      		brne .L153
+ 1893 0d68 EE24      		clr r14
+ 1894 0d6a FF24      		clr r15
+ 1895 0d6c 8701      		movw r16,r14
+ 1896               	.L151:
+ 1897 0d6e E092 0000 		sts sDrive+4,r14
+ 1898 0d72 F092 0000 		sts (sDrive+4)+1,r15
+ 1899 0d76 0093 0000 		sts (sDrive+4)+2,r16
+ 1900 0d7a 1093 0000 		sts (sDrive+4)+3,r17
+ 1901 0d7e 8CE0      		ldi r24,lo8(12)
+ 1902 0d80 E0E0      		ldi r30,lo8(aATAPICmd)
+ 1903 0d82 F0E0      		ldi r31,hi8(aATAPICmd)
+ 1904 0d84 DF01      		movw r26,r30
+ 1905 0d86 1D92      		st X+,__zero_reg__
+ 1906 0d88 8A95      	        dec r24
+ 1907 0d8a 01F4      		brne .-6
+ 1908 0d8c 8AE5      		ldi r24,lo8(90)
+ 1909 0d8e 8093 0000 		sts aATAPICmd,r24
+ 1910 0d92 8AE2      		ldi r24,lo8(42)
+ 1911 0d94 8093 0000 		sts aATAPICmd+2,r24
+ 1912 0d98 88E0      		ldi r24,lo8(8)
+ 1913 0d9a 8093 0000 		sts aATAPICmd+7,r24
+ 1914 0d9e 1092 0000 		sts aATAPICmd+8,__zero_reg__
+ 1915 0da2 AE01      		movw r20,r28
+ 1916 0da4 4F5F      		subi r20,lo8(-(1))
+ 1917 0da6 5F4F      		sbci r21,hi8(-(1))
+ 1918 0da8 B501      		movw r22,r10
+ 1919 0daa 80E0      		ldi r24,lo8(sDrive)
+ 1920 0dac 90E0      		ldi r25,hi8(sDrive)
+ 1921 0dae 0E94 0000 		call ATAPISendCommand
+ 1922 0db2 66E9      		ldi r22,lo8(150)
+ 1923 0db4 70E0      		ldi r23,hi8(150)
+ 1924 0db6 852D      		mov r24,r5
+ 1925 0db8 0E94 0000 		call IDEATAPISetCDSpeed
+ 1926 0dbc 00C0      		rjmp .L154
+ 1927               	.L153:
+ 1928 0dbe 1092 0000 		sts sDrive+4,__zero_reg__
+ 1929 0dc2 1092 0000 		sts (sDrive+4)+1,__zero_reg__
+ 1930 0dc6 1092 0000 		sts (sDrive+4)+2,__zero_reg__
+ 1931 0dca 1092 0000 		sts (sDrive+4)+3,__zero_reg__
+ 1932 0dce 00C0      		rjmp .L154
+ 1933               	.L140:
+ 1934 0dd0 41E0      		ldi r20,lo8(1)
+ 1935 0dd2 C42E      		mov r12,r20
+ 1936 0dd4 D12C      		mov r13,__zero_reg__
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 35
+
+
+ 1937               	.L154:
+ 1938 0dd6 8091 0000 		lds r24,gbIntStatus
+ 1939 0dda 80FF      		sbrs r24,0
+ 1940 0ddc 00C0      		rjmp .L155
+ 1941 0dde E091 0000 		lds r30,pIDE
+ 1942 0de2 F091 0000 		lds r31,(pIDE)+1
+ 1943 0de6 8181      		ldd r24,Z+1
+ 1944 0de8 00C0      		rjmp .L155
+ 1945               	.L139:
+ 1946 0dea 31E0      		ldi r19,lo8(1)
+ 1947 0dec C32E      		mov r12,r19
+ 1948 0dee D12C      		mov r13,__zero_reg__
+ 1949               	.L155:
+ 1950 0df0 8091 0000 		lds r24,sDrive
+ 1951 0df4 9091 0000 		lds r25,(sDrive)+1
+ 1952 0df8 9923      		tst r25
+ 1953 0dfa 04F0      		brlt .+2
+ 1954 0dfc 00C0      		rjmp .L137
+ 1955 0dfe 00C0      		rjmp .L156
+ 1956               	.L138:
+ 1957 0e00 232B      		or r18,r19
+ 1958 0e02 01F0      		breq .L157
+ 1959 0e04 80E0      		ldi r24,lo8(sDrive)
+ 1960 0e06 90E0      		ldi r25,hi8(sDrive)
+ 1961 0e08 0E94 0000 		call DeviceDiag
+ 1962 0e0c 6C01      		movw r12,r24
+ 1963 0e0e 0097      		sbiw r24,0
+ 1964 0e10 01F0      		breq .+2
+ 1965 0e12 00C0      		rjmp .L137
+ 1966               	.L157:
+ 1967 0e14 80E0      		ldi r24,lo8(512)
+ 1968 0e16 92E0      		ldi r25,hi8(512)
+ 1969 0e18 9093 0000 		sts (sDrive+8)+1,r25
+ 1970 0e1c 8093 0000 		sts sDrive+8,r24
+ 1971 0e20 8091 0000 		lds r24,sDrive+3
+ 1972 0e24 0E94 0000 		call SelectDevice
+ 1973 0e28 892B      		or r24,r25
+ 1974 0e2a 01F0      		breq .+2
+ 1975 0e2c 00C0      		rjmp .L158
+ 1976               	/* #APP */
+ 1977               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 1978 0e2e 0FB6      		in  __tmp_reg__, __SREG__
+ 1979 0e30 F894      		cli
+ 1980 0e32 0F92      		push __tmp_reg__
+ 1981               		
+ 1982               	 ;  0 "" 2
+ 1983               	/* #NOAPP */
+ 1984 0e34 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 1985 0e38 1092 0000 		sts hIDEEvent,__zero_reg__
+ 1986               	/* #APP */
+ 1987               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 1988 0e3c 0F90      		pop __tmp_reg__
+ 1989 0e3e 0FBE      		out __SREG__, __tmp_reg__
+ 1990               		
+ 1991               	 ;  0 "" 2
+ 1992               	/* #NOAPP */
+ 1993 0e40 E091 0000 		lds r30,pIDE
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 36
+
+
+ 1994 0e44 F091 0000 		lds r31,(pIDE)+1
+ 1995 0e48 8CEE      		ldi r24,lo8(-20)
+ 1996 0e4a 8783      		std Z+7,r24
+ 1997 0e4c 40E1      		ldi r20,lo8(10000)
+ 1998 0e4e 57E2      		ldi r21,hi8(10000)
+ 1999 0e50 60E0      		ldi r22,hlo8(10000)
+ 2000 0e52 70E0      		ldi r23,hhi8(10000)
+ 2001 0e54 80E0      		ldi r24,lo8(hIDEEvent)
+ 2002 0e56 90E0      		ldi r25,hi8(hIDEEvent)
+ 2003 0e58 0E94 0000 		call NutEventWait
+ 2004 0e5c 8F5F      		subi r24,lo8(-1)
+ 2005 0e5e 9F4F      		sbci r25,hi8(-1)
+ 2006 0e60 01F4      		brne .+2
+ 2007 0e62 00C0      		rjmp .L158
+ 2008 0e64 8091 0000 		lds r24,gbIntStatus
+ 2009 0e68 83FD      		sbrc r24,3
+ 2010 0e6a 00C0      		rjmp .L159
+ 2011 0e6c 21E0      		ldi r18,lo8(1)
+ 2012 0e6e C22E      		mov r12,r18
+ 2013 0e70 D12C      		mov r13,__zero_reg__
+ 2014 0e72 00C0      		rjmp .L160
+ 2015               	.L159:
+ 2016 0e74 D501      		movw r26,r10
+ 2017 0e76 20E0      		ldi r18,lo8(0)
+ 2018 0e78 30E0      		ldi r19,hi8(0)
+ 2019               	.L163:
+ 2020 0e7a E091 0000 		lds r30,pIDE
+ 2021 0e7e F091 0000 		lds r31,(pIDE)+1
+ 2022 0e82 E050      		subi r30,lo8(-(768))
+ 2023 0e84 FD4F      		sbci r31,hi8(-(768))
+ 2024 0e86 8081      		ld r24,Z
+ 2025 0e88 8C93      		st X,r24
+ 2026 0e8a 8091 0000 		lds r24,sDrive+2
+ 2027 0e8e E091 0000 		lds r30,pIDE
+ 2028 0e92 F091 0000 		lds r31,(pIDE)+1
+ 2029 0e96 8330      		cpi r24,lo8(3)
+ 2030 0e98 01F4      		brne .L161
+ 2031 0e9a E050      		subi r30,lo8(-(768))
+ 2032 0e9c FD4F      		sbci r31,hi8(-(768))
+ 2033 0e9e 00C0      		rjmp .L171
+ 2034               	.L161:
+ 2035 0ea0 E050      		subi r30,lo8(-(1024))
+ 2036 0ea2 FC4F      		sbci r31,hi8(-(1024))
+ 2037               	.L171:
+ 2038 0ea4 8081      		ld r24,Z
+ 2039 0ea6 1196      		adiw r26,1
+ 2040 0ea8 8C93      		st X,r24
+ 2041 0eaa 1197      		sbiw r26,1
+ 2042 0eac 2E5F      		subi r18,lo8(-(2))
+ 2043 0eae 3F4F      		sbci r19,hi8(-(2))
+ 2044 0eb0 1296      		adiw r26,2
+ 2045 0eb2 E2E0      		ldi r30,hi8(512)
+ 2046 0eb4 2030      		cpi r18,lo8(512)
+ 2047 0eb6 3E07      		cpc r19,r30
+ 2048 0eb8 01F4      		brne .L163
+ 2049 0eba E091 0000 		lds r30,pIDE
+ 2050 0ebe F091 0000 		lds r31,(pIDE)+1
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 37
+
+
+ 2051 0ec2 8781      		ldd r24,Z+7
+ 2052 0ec4 88E7      		ldi r24,lo8(120)
+ 2053 0ec6 90E0      		ldi r25,hi8(120)
+ 2054 0ec8 A80E      		add r10,r24
+ 2055 0eca B91E      		adc r11,r25
+ 2056 0ecc D501      		movw r26,r10
+ 2057 0ece 2D91      		ld r18,X+
+ 2058 0ed0 3D91      		ld r19,X+
+ 2059 0ed2 4D91      		ld r20,X+
+ 2060 0ed4 5C91      		ld r21,X
+ 2061 0ed6 2115      		cp r18,__zero_reg__
+ 2062 0ed8 3105      		cpc r19,__zero_reg__
+ 2063 0eda 4105      		cpc r20,__zero_reg__
+ 2064 0edc 5105      		cpc r21,__zero_reg__
+ 2065 0ede 01F0      		breq .L172
+ 2066               	.L164:
+ 2067 0ee0 81E0      		ldi r24,lo8(-32767)
+ 2068 0ee2 90E8      		ldi r25,hi8(-32767)
+ 2069 0ee4 9093 0000 		sts (sDrive)+1,r25
+ 2070 0ee8 8093 0000 		sts sDrive,r24
+ 2071 0eec 2093 0000 		sts sDrive+4,r18
+ 2072 0ef0 3093 0000 		sts (sDrive+4)+1,r19
+ 2073 0ef4 4093 0000 		sts (sDrive+4)+2,r20
+ 2074 0ef8 5093 0000 		sts (sDrive+4)+3,r21
+ 2075               	.L172:
+ 2076 0efc CC24      		clr r12
+ 2077 0efe DD24      		clr r13
+ 2078               	.L160:
+ 2079 0f00 8091 0000 		lds r24,gbIntStatus
+ 2080 0f04 80FF      		sbrs r24,0
+ 2081 0f06 00C0      		rjmp .L165
+ 2082 0f08 E091 0000 		lds r30,pIDE
+ 2083 0f0c F091 0000 		lds r31,(pIDE)+1
+ 2084 0f10 8181      		ldd r24,Z+1
+ 2085 0f12 00C0      		rjmp .L165
+ 2086               	.L158:
+ 2087 0f14 91E0      		ldi r25,lo8(1)
+ 2088 0f16 C92E      		mov r12,r25
+ 2089 0f18 D12C      		mov r13,__zero_reg__
+ 2090               	.L165:
+ 2091 0f1a 8091 0000 		lds r24,sDrive
+ 2092 0f1e 9091 0000 		lds r25,(sDrive)+1
+ 2093 0f22 97FF      		sbrs r25,7
+ 2094 0f24 00C0      		rjmp .L137
+ 2095               	.L156:
+ 2096 0f26 CC24      		clr r12
+ 2097 0f28 DD24      		clr r13
+ 2098               	.L137:
+ 2099 0f2a 80E0      		ldi r24,lo8(hIDESemaphore)
+ 2100 0f2c 90E0      		ldi r25,hi8(hIDESemaphore)
+ 2101 0f2e 0E94 0000 		call NutEventPost
+ 2102 0f32 C601      		movw r24,r12
+ 2103               	/* epilogue start */
+ 2104 0f34 0F90      		pop __tmp_reg__
+ 2105 0f36 0F90      		pop __tmp_reg__
+ 2106 0f38 0F90      		pop __tmp_reg__
+ 2107 0f3a 0F90      		pop __tmp_reg__
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 38
+
+
+ 2108 0f3c CF91      		pop r28
+ 2109 0f3e DF91      		pop r29
+ 2110 0f40 1F91      		pop r17
+ 2111 0f42 0F91      		pop r16
+ 2112 0f44 FF90      		pop r15
+ 2113 0f46 EF90      		pop r14
+ 2114 0f48 DF90      		pop r13
+ 2115 0f4a CF90      		pop r12
+ 2116 0f4c BF90      		pop r11
+ 2117 0f4e AF90      		pop r10
+ 2118 0f50 9F90      		pop r9
+ 2119 0f52 8F90      		pop r8
+ 2120 0f54 7F90      		pop r7
+ 2121 0f56 6F90      		pop r6
+ 2122 0f58 5F90      		pop r5
+ 2123 0f5a 0895      		ret
+ 2124               		.size	IDEMountDevice, .-IDEMountDevice
+ 2125               	.global	CFChange
+ 2126               		.type	CFChange, @function
+ 2127               	CFChange:
+ 2128               	/* prologue: function */
+ 2129               	/* frame size = 0 */
+ 2130 0f5c 11E0      		ldi r17,lo8(1)
+ 2131               	.L181:
+ 2132 0f5e 40E0      		ldi r20,lo8(0)
+ 2133 0f60 50E0      		ldi r21,hi8(0)
+ 2134 0f62 60E0      		ldi r22,hlo8(0)
+ 2135 0f64 70E0      		ldi r23,hhi8(0)
+ 2136 0f66 80E0      		ldi r24,lo8(hCFChangeInt)
+ 2137 0f68 90E0      		ldi r25,hi8(hCFChangeInt)
+ 2138 0f6a 0E94 0000 		call NutEventWaitNext
+ 2139 0f6e 60ED      		ldi r22,lo8(2000)
+ 2140 0f70 77E0      		ldi r23,hi8(2000)
+ 2141 0f72 80E0      		ldi r24,hlo8(2000)
+ 2142 0f74 90E0      		ldi r25,hhi8(2000)
+ 2143 0f76 0E94 0000 		call NutSleep
+ 2144 0f7a 91B1      		in r25,33-32
+ 2145 0f7c 9074      		andi r25,lo8(64)
+ 2146 0f7e 8091 0000 		lds r24,gbCFMountStatus
+ 2147 0f82 9817      		cp r25,r24
+ 2148 0f84 01F0      		breq .L181
+ 2149 0f86 9923      		tst r25
+ 2150 0f88 01F4      		brne .L175
+ 2151 0f8a 1092 0000 		sts gbCFMountStatus,__zero_reg__
+ 2152 0f8e 80E0      		ldi r24,lo8(sDrive)
+ 2153 0f90 90E0      		ldi r25,hi8(sDrive)
+ 2154 0f92 0E94 0000 		call HardwareReset
+ 2155 0f96 60E0      		ldi r22,lo8(512)
+ 2156 0f98 72E0      		ldi r23,hi8(512)
+ 2157 0f9a 80E0      		ldi r24,lo8(heapFreeList)
+ 2158 0f9c 90E0      		ldi r25,hi8(heapFreeList)
+ 2159 0f9e 0E94 0000 		call NutHeapRootAlloc
+ 2160 0fa2 EC01      		movw r28,r24
+ 2161 0fa4 0097      		sbiw r24,0
+ 2162 0fa6 01F0      		breq .L176
+ 2163 0fa8 BC01      		movw r22,r24
+ 2164 0faa 80E0      		ldi r24,lo8(0)
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 39
+
+
+ 2165 0fac 0E94 0000 		call IDEMountDevice
+ 2166 0fb0 BE01      		movw r22,r28
+ 2167 0fb2 80E0      		ldi r24,lo8(heapFreeList)
+ 2168 0fb4 90E0      		ldi r25,hi8(heapFreeList)
+ 2169 0fb6 0E94 0000 		call NutHeapRootFree
+ 2170 0fba E091 0000 		lds r30,pUserMountFunc
+ 2171 0fbe F091 0000 		lds r31,(pUserMountFunc)+1
+ 2172 0fc2 3097      		sbiw r30,0
+ 2173 0fc4 01F0      		breq .L176
+ 2174 0fc6 80E0      		ldi r24,lo8(0)
+ 2175 0fc8 90E0      		ldi r25,hi8(0)
+ 2176 0fca 0995      		icall
+ 2177               	.L176:
+ 2178               	/* #APP */
+ 2179               	 ;  1153 "../../nut/arch/avr/dev/ide.c" 1
+ 2180 0fcc 0FB6      		in  __tmp_reg__, __SREG__
+ 2181 0fce F894      		cli
+ 2182 0fd0 0F92      		push __tmp_reg__
+ 2183               		
+ 2184               	 ;  0 "" 2
+ 2185               	/* #NOAPP */
+ 2186 0fd2 8AB7      		in r24,90-32
+ 2187 0fd4 8F7C      		andi r24,lo8(-49)
+ 2188 0fd6 8ABF      		out 90-32,r24
+ 2189 0fd8 8AB7      		in r24,90-32
+ 2190 0fda 8063      		ori r24,lo8(48)
+ 2191 0fdc 8ABF      		out 90-32,r24
+ 2192               	/* #APP */
+ 2193               	 ;  1156 "../../nut/arch/avr/dev/ide.c" 1
+ 2194 0fde 0F90      		pop __tmp_reg__
+ 2195 0fe0 0FBE      		out __SREG__, __tmp_reg__
+ 2196               		
+ 2197               	 ;  0 "" 2
+ 2198               	/* #NOAPP */
+ 2199 0fe2 00C0      		rjmp .L181
+ 2200               	.L175:
+ 2201 0fe4 1093 0000 		sts gbCFMountStatus,r17
+ 2202 0fe8 80E0      		ldi r24,lo8(0)
+ 2203 0fea 0E94 0000 		call IDEUnMountDevice
+ 2204 0fee E091 0000 		lds r30,pUserUnMountFunc
+ 2205 0ff2 F091 0000 		lds r31,(pUserUnMountFunc)+1
+ 2206 0ff6 3097      		sbiw r30,0
+ 2207 0ff8 01F0      		breq .L177
+ 2208 0ffa 80E0      		ldi r24,lo8(0)
+ 2209 0ffc 90E0      		ldi r25,hi8(0)
+ 2210 0ffe 0995      		icall
+ 2211               	.L177:
+ 2212               	/* #APP */
+ 2213               	 ;  1170 "../../nut/arch/avr/dev/ide.c" 1
+ 2214 1000 0FB6      		in  __tmp_reg__, __SREG__
+ 2215 1002 F894      		cli
+ 2216 1004 0F92      		push __tmp_reg__
+ 2217               		
+ 2218               	 ;  0 "" 2
+ 2219               	/* #NOAPP */
+ 2220 1006 8AB7      		in r24,90-32
+ 2221 1008 8F7C      		andi r24,lo8(-49)
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 40
+
+
+ 2222 100a 8ABF      		out 90-32,r24
+ 2223 100c 8AB7      		in r24,90-32
+ 2224 100e 8062      		ori r24,lo8(32)
+ 2225 1010 8ABF      		out 90-32,r24
+ 2226               	/* #APP */
+ 2227               	 ;  1173 "../../nut/arch/avr/dev/ide.c" 1
+ 2228 1012 0F90      		pop __tmp_reg__
+ 2229 1014 0FBE      		out __SREG__, __tmp_reg__
+ 2230               		
+ 2231               	 ;  0 "" 2
+ 2232               	/* #NOAPP */
+ 2233 1016 00C0      		rjmp .L181
+ 2234               		.size	CFChange, .-CFChange
+ 2235               		.lcomm gbIntStatus,1
+ 2236               		.lcomm pUserMountFunc,2
+ 2237               		.lcomm pUserUnMountFunc,2
+ 2238               		.lcomm gbCFMountStatus,1
+ 2239               		.lcomm hIDEEvent,2
+ 2240               		.lcomm pIDE,2
+ 2241               		.lcomm sDrive,10
+ 2242               		.lcomm hIDESemaphore,2
+ 2243               		.lcomm hCFChangeInt,2
+ 2244               		.lcomm aATAPICmd,12
+GAS LISTING C:\Temp/ccii3Mtf.s 			page 41
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ide.c
+  C:\Temp/ccii3Mtf.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccii3Mtf.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccii3Mtf.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccii3Mtf.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccii3Mtf.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccii3Mtf.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccii3Mtf.s:12     .text:00000000 CFInterrupt
+  C:\Temp/ccii3Mtf.s:2242   .bss:00000016 hCFChangeInt
+  C:\Temp/ccii3Mtf.s:38     .text:0000002e IDEInterrupt
+  C:\Temp/ccii3Mtf.s:2239   .bss:00000008 pIDE
+                             .bss:00000000 gbIntStatus
+  C:\Temp/ccii3Mtf.s:2238   .bss:00000006 hIDEEvent
+  C:\Temp/ccii3Mtf.s:68     .text:0000006a WaitNotBusy
+  C:\Temp/ccii3Mtf.s:136    .text:000000ee SelectDevice
+  C:\Temp/ccii3Mtf.s:224    .text:00000170 ATAPISendCommand
+  C:\Temp/ccii3Mtf.s:2243   .bss:00000018 aATAPICmd
+  C:\Temp/ccii3Mtf.s:512    .text:00000360 IDEATAPISetCDSpeed
+  C:\Temp/ccii3Mtf.s:2240   .bss:0000000a sDrive
+  C:\Temp/ccii3Mtf.s:579    .text:000003e0 DeviceDiag
+  C:\Temp/ccii3Mtf.s:656    .text:00000460 IDELock
+  C:\Temp/ccii3Mtf.s:2241   .bss:00000014 hIDESemaphore
+  C:\Temp/ccii3Mtf.s:670    .text:00000472 HardwareReset
+  C:\Temp/ccii3Mtf.s:738    .text:000004ca IDESemaInit
+  C:\Temp/ccii3Mtf.s:753    .text:000004d4 IDEInit
+  C:\Temp/ccii3Mtf.s:2235   .bss:00000001 pUserMountFunc
+  C:\Temp/ccii3Mtf.s:2236   .bss:00000003 pUserUnMountFunc
+  C:\Temp/ccii3Mtf.s:2237   .bss:00000005 gbCFMountStatus
+  C:\Temp/ccii3Mtf.s:2127   .text:00000f5c CFChange
+  C:\Temp/ccii3Mtf.s:900    .text:000005e0 IDEFree
+  C:\Temp/ccii3Mtf.s:911    .text:000005ea IDEReadSectors
+  C:\Temp/ccii3Mtf.s:1339   .text:00000918 IDEGetTotalSectors
+  C:\Temp/ccii3Mtf.s:1388   .text:00000974 IDEUnMountDevice
+  C:\Temp/ccii3Mtf.s:1425   .text:000009b4 IDEIsZIPDevice
+  C:\Temp/ccii3Mtf.s:1470   .text:00000a04 IDEIsCDROMDevice
+  C:\Temp/ccii3Mtf.s:1514   .text:00000a52 IDEGetSectorSize
+  C:\Temp/ccii3Mtf.s:1549   .text:00000a8e IDEMountDevice
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+__mulsi3
+__udivmodsi4
+NutGetTickCount
+NutEventWait
+NutSleep
+NutEventPost
+sig_INTERRUPT7
+NutRegisterIrqHandler
+sig_INTERRUPT6
+NutThreadCreate
+NutEventWaitNext
+heapFreeList
+NutHeapRootAlloc
+NutHeapRootFree

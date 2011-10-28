@@ -1,0 +1,157 @@
+GAS LISTING C:\Temp/ccgjr1O0.s 			page 1
+
+
+   1               		.file	"time.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	stime
+  12               		.type	stime, @function
+  13               	stime:
+  14 0000 EF92      		push r14
+  15 0002 FF92      		push r15
+  16 0004 0F93      		push r16
+  17 0006 1F93      		push r17
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 0008 8C01      		movw r16,r24
+  21 000a 0E94 0000 		call gmtime
+  22 000e 0E94 0000 		call NutRtcSetTime
+  23 0012 F801      		movw r30,r16
+  24 0014 E080      		ld r14,Z
+  25 0016 F180      		ldd r15,Z+1
+  26 0018 0281      		ldd r16,Z+2
+  27 001a 1381      		ldd r17,Z+3
+  28 001c 0E94 0000 		call NutGetSeconds
+  29 0020 E61A      		sub r14,r22
+  30 0022 F70A      		sbc r15,r23
+  31 0024 080B      		sbc r16,r24
+  32 0026 190B      		sbc r17,r25
+  33 0028 E092 0000 		sts epo_offs,r14
+  34 002c F092 0000 		sts (epo_offs)+1,r15
+  35 0030 0093 0000 		sts (epo_offs)+2,r16
+  36 0034 1093 0000 		sts (epo_offs)+3,r17
+  37 0038 80E0      		ldi r24,lo8(0)
+  38 003a 90E0      		ldi r25,hi8(0)
+  39               	/* epilogue start */
+  40 003c 1F91      		pop r17
+  41 003e 0F91      		pop r16
+  42 0040 FF90      		pop r15
+  43 0042 EF90      		pop r14
+  44 0044 0895      		ret
+  45               		.size	stime, .-stime
+  46               	.global	time
+  47               		.type	time, @function
+  48               	time:
+  49 0046 8F92      		push r8
+  50 0048 9F92      		push r9
+  51 004a AF92      		push r10
+  52 004c BF92      		push r11
+  53 004e CF92      		push r12
+  54 0050 DF92      		push r13
+  55 0052 EF92      		push r14
+  56 0054 FF92      		push r15
+  57 0056 0F93      		push r16
+GAS LISTING C:\Temp/ccgjr1O0.s 			page 2
+
+
+  58 0058 1F93      		push r17
+  59 005a CF93      		push r28
+  60 005c DF93      		push r29
+  61               	/* prologue: function */
+  62               	/* frame size = 0 */
+  63 005e 4C01      		movw r8,r24
+  64 0060 E090 0000 		lds r14,epo_offs
+  65 0064 F090 0000 		lds r15,(epo_offs)+1
+  66 0068 0091 0000 		lds r16,(epo_offs)+2
+  67 006c 1091 0000 		lds r17,(epo_offs)+3
+  68 0070 0E94 0000 		call NutGetSeconds
+  69 0074 5B01      		movw r10,r22
+  70 0076 6C01      		movw r12,r24
+  71 0078 AE0C      		add r10,r14
+  72 007a BF1C      		adc r11,r15
+  73 007c C01E      		adc r12,r16
+  74 007e D11E      		adc r13,r17
+  75 0080 82E1      		ldi r24,lo8(18)
+  76 0082 90E0      		ldi r25,hi8(18)
+  77 0084 0E94 0000 		call malloc
+  78 0088 EC01      		movw r28,r24
+  79 008a 0097      		sbiw r24,0
+  80 008c 01F0      		breq .L4
+  81 008e 8FEF      		ldi r24,lo8(-1)
+  82 0090 9FEF      		ldi r25,hi8(-1)
+  83 0092 998B      		std Y+17,r25
+  84 0094 888B      		std Y+16,r24
+  85 0096 CE01      		movw r24,r28
+  86 0098 0E94 0000 		call NutRtcGetTime
+  87 009c 892B      		or r24,r25
+  88 009e 01F4      		brne .L5
+  89 00a0 CE01      		movw r24,r28
+  90 00a2 0E94 0000 		call _mkgmtime
+  91 00a6 5B01      		movw r10,r22
+  92 00a8 6C01      		movw r12,r24
+  93               	.L5:
+  94 00aa CE01      		movw r24,r28
+  95 00ac 0E94 0000 		call free
+  96               	.L4:
+  97 00b0 8114      		cp r8,__zero_reg__
+  98 00b2 9104      		cpc r9,__zero_reg__
+  99 00b4 01F0      		breq .L6
+ 100 00b6 F401      		movw r30,r8
+ 101 00b8 A082      		st Z,r10
+ 102 00ba B182      		std Z+1,r11
+ 103 00bc C282      		std Z+2,r12
+ 104 00be D382      		std Z+3,r13
+ 105               	.L6:
+ 106 00c0 B501      		movw r22,r10
+ 107 00c2 C601      		movw r24,r12
+ 108               	/* epilogue start */
+ 109 00c4 DF91      		pop r29
+ 110 00c6 CF91      		pop r28
+ 111 00c8 1F91      		pop r17
+ 112 00ca 0F91      		pop r16
+ 113 00cc FF90      		pop r15
+ 114 00ce EF90      		pop r14
+GAS LISTING C:\Temp/ccgjr1O0.s 			page 3
+
+
+ 115 00d0 DF90      		pop r13
+ 116 00d2 CF90      		pop r12
+ 117 00d4 BF90      		pop r11
+ 118 00d6 AF90      		pop r10
+ 119 00d8 9F90      		pop r9
+ 120 00da 8F90      		pop r8
+ 121 00dc 0895      		ret
+ 122               		.size	time, .-time
+ 123               		.lcomm epo_offs,4
+GAS LISTING C:\Temp/ccgjr1O0.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 time.c
+  C:\Temp/ccgjr1O0.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccgjr1O0.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccgjr1O0.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccgjr1O0.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccgjr1O0.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccgjr1O0.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccgjr1O0.s:13     .text:00000000 stime
+                             .bss:00000000 epo_offs
+  C:\Temp/ccgjr1O0.s:48     .text:00000046 time
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+gmtime
+NutRtcSetTime
+NutGetSeconds
+malloc
+NutRtcGetTime
+_mkgmtime
+free

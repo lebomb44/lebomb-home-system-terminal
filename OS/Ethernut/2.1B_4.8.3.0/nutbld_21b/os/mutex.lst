@@ -1,0 +1,198 @@
+GAS LISTING C:\Temp/ccQVvWSd.s 			page 1
+
+
+   1               		.file	"mutex.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutMutexInit
+  12               		.type	NutMutexInit, @function
+  13               	NutMutexInit:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 FC01      		movw r30,r24
+  17 0002 1382      		std Z+3,__zero_reg__
+  18 0004 1282      		std Z+2,__zero_reg__
+  19 0006 1582      		std Z+5,__zero_reg__
+  20 0008 1482      		std Z+4,__zero_reg__
+  21 000a 1182      		std Z+1,__zero_reg__
+  22 000c 1082      		st Z,__zero_reg__
+  23               	/* epilogue start */
+  24 000e 0895      		ret
+  25               		.size	NutMutexInit, .-NutMutexInit
+  26               	.global	NutMutexDestroy
+  27               		.type	NutMutexDestroy, @function
+  28               	NutMutexDestroy:
+  29               	/* prologue: function */
+  30               	/* frame size = 0 */
+  31 0010 FC01      		movw r30,r24
+  32 0012 8481      		ldd r24,Z+4
+  33 0014 9581      		ldd r25,Z+5
+  34 0016 892B      		or r24,r25
+  35 0018 01F0      		breq .L4
+  36 001a 2281      		ldd r18,Z+2
+  37 001c 3381      		ldd r19,Z+3
+  38 001e 8091 0000 		lds r24,runningThread
+  39 0022 9091 0000 		lds r25,(runningThread)+1
+  40 0026 2817      		cp r18,r24
+  41 0028 3907      		cpc r19,r25
+  42 002a 01F0      		breq .L4
+  43 002c 2FEF      		ldi r18,lo8(-1)
+  44 002e 3FEF      		ldi r19,hi8(-1)
+  45 0030 00C0      		rjmp .L5
+  46               	.L4:
+  47 0032 20E0      		ldi r18,lo8(0)
+  48 0034 30E0      		ldi r19,hi8(0)
+  49               	.L5:
+  50 0036 C901      		movw r24,r18
+  51               	/* epilogue start */
+  52 0038 0895      		ret
+  53               		.size	NutMutexDestroy, .-NutMutexDestroy
+  54               	.global	NutMutexUnlock
+  55               		.type	NutMutexUnlock, @function
+  56               	NutMutexUnlock:
+  57               	/* prologue: function */
+GAS LISTING C:\Temp/ccQVvWSd.s 			page 2
+
+
+  58               	/* frame size = 0 */
+  59 003a FC01      		movw r30,r24
+  60 003c 2281      		ldd r18,Z+2
+  61 003e 3381      		ldd r19,Z+3
+  62 0040 8091 0000 		lds r24,runningThread
+  63 0044 9091 0000 		lds r25,(runningThread)+1
+  64 0048 2817      		cp r18,r24
+  65 004a 3907      		cpc r19,r25
+  66 004c 01F0      		breq .L8
+  67 004e 2FEF      		ldi r18,lo8(-1)
+  68 0050 3FEF      		ldi r19,hi8(-1)
+  69 0052 00C0      		rjmp .L9
+  70               	.L8:
+  71 0054 8481      		ldd r24,Z+4
+  72 0056 9581      		ldd r25,Z+5
+  73 0058 0197      		sbiw r24,1
+  74 005a 9583      		std Z+5,r25
+  75 005c 8483      		std Z+4,r24
+  76 005e 892B      		or r24,r25
+  77 0060 01F4      		brne .L12
+  78               	.L10:
+  79 0062 CF01      		movw r24,r30
+  80 0064 0E94 0000 		call NutEventPost
+  81               	.L12:
+  82 0068 20E0      		ldi r18,lo8(0)
+  83 006a 30E0      		ldi r19,hi8(0)
+  84               	.L9:
+  85 006c C901      		movw r24,r18
+  86               	/* epilogue start */
+  87 006e 0895      		ret
+  88               		.size	NutMutexUnlock, .-NutMutexUnlock
+  89               	.global	NutMutexLock
+  90               		.type	NutMutexLock, @function
+  91               	NutMutexLock:
+  92 0070 0F93      		push r16
+  93 0072 1F93      		push r17
+  94 0074 CF93      		push r28
+  95 0076 DF93      		push r29
+  96               	/* prologue: function */
+  97               	/* frame size = 0 */
+  98 0078 EC01      		movw r28,r24
+  99 007a 2A81      		ldd r18,Y+2
+ 100 007c 3B81      		ldd r19,Y+3
+ 101 007e 8091 0000 		lds r24,runningThread
+ 102 0082 9091 0000 		lds r25,(runningThread)+1
+ 103 0086 2817      		cp r18,r24
+ 104 0088 3907      		cpc r19,r25
+ 105 008a 01F0      		breq .L14
+ 106 008c 8E01      		movw r16,r28
+ 107 008e 00C0      		rjmp .L15
+ 108               	.L16:
+ 109 0090 40E0      		ldi r20,lo8(0)
+ 110 0092 50E0      		ldi r21,hi8(0)
+ 111 0094 60E0      		ldi r22,hlo8(0)
+ 112 0096 70E0      		ldi r23,hhi8(0)
+ 113 0098 C801      		movw r24,r16
+ 114 009a 0E94 0000 		call NutEventWaitNext
+GAS LISTING C:\Temp/ccQVvWSd.s 			page 3
+
+
+ 115               	.L15:
+ 116 009e 8C81      		ldd r24,Y+4
+ 117 00a0 9D81      		ldd r25,Y+5
+ 118 00a2 892B      		or r24,r25
+ 119 00a4 01F4      		brne .L16
+ 120               	.L14:
+ 121 00a6 8091 0000 		lds r24,runningThread
+ 122 00aa 9091 0000 		lds r25,(runningThread)+1
+ 123 00ae 9B83      		std Y+3,r25
+ 124 00b0 8A83      		std Y+2,r24
+ 125 00b2 8C81      		ldd r24,Y+4
+ 126 00b4 9D81      		ldd r25,Y+5
+ 127 00b6 0196      		adiw r24,1
+ 128 00b8 9D83      		std Y+5,r25
+ 129 00ba 8C83      		std Y+4,r24
+ 130               	/* epilogue start */
+ 131 00bc DF91      		pop r29
+ 132 00be CF91      		pop r28
+ 133 00c0 1F91      		pop r17
+ 134 00c2 0F91      		pop r16
+ 135 00c4 0895      		ret
+ 136               		.size	NutMutexLock, .-NutMutexLock
+ 137               	.global	NutMutexTrylock
+ 138               		.type	NutMutexTrylock, @function
+ 139               	NutMutexTrylock:
+ 140               	/* prologue: function */
+ 141               	/* frame size = 0 */
+ 142 00c6 FC01      		movw r30,r24
+ 143 00c8 8481      		ldd r24,Z+4
+ 144 00ca 9581      		ldd r25,Z+5
+ 145 00cc 892B      		or r24,r25
+ 146 00ce 01F0      		breq .L19
+ 147 00d0 2281      		ldd r18,Z+2
+ 148 00d2 3381      		ldd r19,Z+3
+ 149 00d4 8091 0000 		lds r24,runningThread
+ 150 00d8 9091 0000 		lds r25,(runningThread)+1
+ 151 00dc 2817      		cp r18,r24
+ 152 00de 3907      		cpc r19,r25
+ 153 00e0 01F0      		breq .L19
+ 154 00e2 2FEF      		ldi r18,lo8(-1)
+ 155 00e4 3FEF      		ldi r19,hi8(-1)
+ 156 00e6 00C0      		rjmp .L20
+ 157               	.L19:
+ 158 00e8 CF01      		movw r24,r30
+ 159 00ea 0E94 0000 		call NutMutexLock
+ 160 00ee 20E0      		ldi r18,lo8(0)
+ 161 00f0 30E0      		ldi r19,hi8(0)
+ 162               	.L20:
+ 163 00f2 C901      		movw r24,r18
+ 164               	/* epilogue start */
+ 165 00f4 0895      		ret
+ 166               		.size	NutMutexTrylock, .-NutMutexTrylock
+GAS LISTING C:\Temp/ccQVvWSd.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mutex.c
+  C:\Temp/ccQVvWSd.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccQVvWSd.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccQVvWSd.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccQVvWSd.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccQVvWSd.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccQVvWSd.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccQVvWSd.s:13     .text:00000000 NutMutexInit
+  C:\Temp/ccQVvWSd.s:28     .text:00000010 NutMutexDestroy
+  C:\Temp/ccQVvWSd.s:56     .text:0000003a NutMutexUnlock
+  C:\Temp/ccQVvWSd.s:91     .text:00000070 NutMutexLock
+  C:\Temp/ccQVvWSd.s:139    .text:000000c6 NutMutexTrylock
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+runningThread
+NutEventPost
+NutEventWaitNext

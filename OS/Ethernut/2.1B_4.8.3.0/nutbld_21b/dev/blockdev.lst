@@ -1,0 +1,844 @@
+GAS LISTING C:\Temp/ccigGDF8.s 			page 1
+
+
+   1               		.file	"blockdev.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutBlockDeviceInit
+  12               		.type	NutBlockDeviceInit, @function
+  13               	NutBlockDeviceInit:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 80E0      		ldi r24,lo8(0)
+  17 0002 90E0      		ldi r25,hi8(0)
+  18               	/* epilogue start */
+  19 0004 0895      		ret
+  20               		.size	NutBlockDeviceInit, .-NutBlockDeviceInit
+  21               	.global	NutBlockDeviceIOCtl
+  22               		.type	NutBlockDeviceIOCtl, @function
+  23               	NutBlockDeviceIOCtl:
+  24 0006 CF93      		push r28
+  25 0008 DF93      		push r29
+  26               	/* prologue: function */
+  27               	/* frame size = 0 */
+  28 000a DC01      		movw r26,r24
+  29 000c 82E1      		ldi r24,hi8(4610)
+  30 000e 6230      		cpi r22,lo8(4610)
+  31 0010 7807      		cpc r23,r24
+  32 0012 01F0      		breq .L5
+  33 0014 E2E1      		ldi r30,hi8(4611)
+  34 0016 6330      		cpi r22,lo8(4611)
+  35 0018 7E07      		cpc r23,r30
+  36 001a 01F4      		brne .L9
+  37 001c FA01      		movw r30,r20
+  38 001e A081      		ld r26,Z
+  39 0020 B181      		ldd r27,Z+1
+  40 0022 1496      		adiw r26,4
+  41 0024 2D91      		ld r18,X+
+  42 0026 3C91      		ld r19,X
+  43 0028 1597      		sbiw r26,4+1
+  44 002a 8281      		ldd r24,Z+2
+  45 002c 9381      		ldd r25,Z+3
+  46 002e A481      		ldd r26,Z+4
+  47 0030 B581      		ldd r27,Z+5
+  48 0032 E901      		movw r28,r18
+  49 0034 8C87      		std Y+12,r24
+  50 0036 9D87      		std Y+13,r25
+  51 0038 AE87      		std Y+14,r26
+  52 003a BF87      		std Y+15,r27
+  53 003c 00C0      		rjmp .L10
+  54               	.L5:
+  55 003e FA01      		movw r30,r20
+  56 0040 A081      		ld r26,Z
+  57 0042 B181      		ldd r27,Z+1
+GAS LISTING C:\Temp/ccigGDF8.s 			page 2
+
+
+  58 0044 1496      		adiw r26,4
+  59 0046 2D91      		ld r18,X+
+  60 0048 3C91      		ld r19,X
+  61 004a 1597      		sbiw r26,4+1
+  62 004c E901      		movw r28,r18
+  63 004e 8A81      		ldd r24,Y+2
+  64 0050 9B81      		ldd r25,Y+3
+  65 0052 AC81      		ldd r26,Y+4
+  66 0054 BD81      		ldd r27,Y+5
+  67 0056 8283      		std Z+2,r24
+  68 0058 9383      		std Z+3,r25
+  69 005a A483      		std Z+4,r26
+  70 005c B583      		std Z+5,r27
+  71 005e 8E81      		ldd r24,Y+6
+  72 0060 9F81      		ldd r25,Y+7
+  73 0062 AA27      		clr r26
+  74 0064 97FD      		sbrc r25,7
+  75 0066 A095      		com r26
+  76 0068 BA2F      		mov r27,r26
+  77 006a 8683      		std Z+6,r24
+  78 006c 9783      		std Z+7,r25
+  79 006e A087      		std Z+8,r26
+  80 0070 B187      		std Z+9,r27
+  81 0072 8889      		ldd r24,Y+16
+  82 0074 9989      		ldd r25,Y+17
+  83 0076 9387      		std Z+11,r25
+  84 0078 8287      		std Z+10,r24
+  85               	.L10:
+  86 007a 20E0      		ldi r18,lo8(0)
+  87 007c 30E0      		ldi r19,hi8(0)
+  88 007e 00C0      		rjmp .L7
+  89               	.L9:
+  90 0080 5196      		adiw r26,17
+  91 0082 ED91      		ld r30,X+
+  92 0084 FC91      		ld r31,X
+  93 0086 5297      		sbiw r26,17+1
+  94 0088 008C      		ldd __tmp_reg__,Z+24
+  95 008a F18D      		ldd r31,Z+25
+  96 008c E02D      		mov r30,__tmp_reg__
+  97 008e CD01      		movw r24,r26
+  98 0090 0995      		icall
+  99 0092 9C01      		movw r18,r24
+ 100               	.L7:
+ 101 0094 C901      		movw r24,r18
+ 102               	/* epilogue start */
+ 103 0096 DF91      		pop r29
+ 104 0098 CF91      		pop r28
+ 105 009a 0895      		ret
+ 106               		.size	NutBlockDeviceIOCtl, .-NutBlockDeviceIOCtl
+ 107               	.global	NutBlockDeviceRead
+ 108               		.type	NutBlockDeviceRead, @function
+ 109               	NutBlockDeviceRead:
+ 110 009c 6F92      		push r6
+ 111 009e 7F92      		push r7
+ 112 00a0 8F92      		push r8
+ 113 00a2 9F92      		push r9
+ 114 00a4 AF92      		push r10
+GAS LISTING C:\Temp/ccigGDF8.s 			page 3
+
+
+ 115 00a6 BF92      		push r11
+ 116 00a8 CF92      		push r12
+ 117 00aa DF92      		push r13
+ 118 00ac EF92      		push r14
+ 119 00ae FF92      		push r15
+ 120 00b0 0F93      		push r16
+ 121 00b2 1F93      		push r17
+ 122 00b4 CF93      		push r28
+ 123 00b6 DF93      		push r29
+ 124               	/* prologue: function */
+ 125               	/* frame size = 0 */
+ 126 00b8 5C01      		movw r10,r24
+ 127 00ba 4A01      		movw r8,r20
+ 128 00bc 4115      		cp r20,__zero_reg__
+ 129 00be 5105      		cpc r21,__zero_reg__
+ 130 00c0 01F4      		brne .L12
+ 131 00c2 EE24      		clr r14
+ 132 00c4 FF24      		clr r15
+ 133 00c6 00C0      		rjmp .L13
+ 134               	.L12:
+ 135 00c8 6B01      		movw r12,r22
+ 136 00ca D501      		movw r26,r10
+ 137 00cc 1296      		adiw r26,2
+ 138 00ce ED91      		ld r30,X+
+ 139 00d0 FC91      		ld r31,X
+ 140 00d2 1397      		sbiw r26,2+1
+ 141 00d4 6188      		ldd r6,Z+17
+ 142 00d6 7288      		ldd r7,Z+18
+ 143 00d8 1496      		adiw r26,4
+ 144 00da CD91      		ld r28,X+
+ 145 00dc DC91      		ld r29,X
+ 146 00de 1597      		sbiw r26,4+1
+ 147 00e0 EE24      		clr r14
+ 148 00e2 FF24      		clr r15
+ 149 00e4 00C0      		rjmp .L14
+ 150               	.L16:
+ 151 00e6 4C85      		ldd r20,Y+12
+ 152 00e8 5D85      		ldd r21,Y+13
+ 153 00ea 6E85      		ldd r22,Y+14
+ 154 00ec 7F85      		ldd r23,Y+15
+ 155 00ee 8A81      		ldd r24,Y+2
+ 156 00f0 9B81      		ldd r25,Y+3
+ 157 00f2 AC81      		ldd r26,Y+4
+ 158 00f4 BD81      		ldd r27,Y+5
+ 159 00f6 4817      		cp r20,r24
+ 160 00f8 5907      		cpc r21,r25
+ 161 00fa 6A07      		cpc r22,r26
+ 162 00fc 7B07      		cpc r23,r27
+ 163 00fe 00F4      		brsh .L15
+ 164 0100 0E81      		ldd r16,Y+6
+ 165 0102 1F81      		ldd r17,Y+7
+ 166 0104 8885      		ldd r24,Y+8
+ 167 0106 9985      		ldd r25,Y+9
+ 168 0108 AA85      		ldd r26,Y+10
+ 169 010a BB85      		ldd r27,Y+11
+ 170 010c 480F      		add r20,r24
+ 171 010e 591F      		adc r21,r25
+GAS LISTING C:\Temp/ccigGDF8.s 			page 4
+
+
+ 172 0110 6A1F      		adc r22,r26
+ 173 0112 7B1F      		adc r23,r27
+ 174 0114 D301      		movw r26,r6
+ 175 0116 5296      		adiw r26,18
+ 176 0118 ED91      		ld r30,X+
+ 177 011a FC91      		ld r31,X
+ 178 011c 5397      		sbiw r26,18+1
+ 179 011e 9601      		movw r18,r12
+ 180 0120 D501      		movw r26,r10
+ 181 0122 1296      		adiw r26,2
+ 182 0124 8D91      		ld r24,X+
+ 183 0126 9C91      		ld r25,X
+ 184 0128 1397      		sbiw r26,2+1
+ 185 012a 0995      		icall
+ 186 012c 9C01      		movw r18,r24
+ 187 012e 8E81      		ldd r24,Y+6
+ 188 0130 9F81      		ldd r25,Y+7
+ 189 0132 2817      		cp r18,r24
+ 190 0134 3907      		cpc r19,r25
+ 191 0136 01F4      		brne .L15
+ 192 0138 8C85      		ldd r24,Y+12
+ 193 013a 9D85      		ldd r25,Y+13
+ 194 013c AE85      		ldd r26,Y+14
+ 195 013e BF85      		ldd r27,Y+15
+ 196 0140 0196      		adiw r24,1
+ 197 0142 A11D      		adc r26,__zero_reg__
+ 198 0144 B11D      		adc r27,__zero_reg__
+ 199 0146 8C87      		std Y+12,r24
+ 200 0148 9D87      		std Y+13,r25
+ 201 014a AE87      		std Y+14,r26
+ 202 014c BF87      		std Y+15,r27
+ 203 014e C20E      		add r12,r18
+ 204 0150 D31E      		adc r13,r19
+ 205 0152 0894      		sec
+ 206 0154 E11C      		adc r14,__zero_reg__
+ 207 0156 F11C      		adc r15,__zero_reg__
+ 208               	.L14:
+ 209 0158 E814      		cp r14,r8
+ 210 015a F904      		cpc r15,r9
+ 211 015c 04F0      		brlt .L16
+ 212               	.L15:
+ 213 015e E114      		cp r14,__zero_reg__
+ 214 0160 F104      		cpc r15,__zero_reg__
+ 215 0162 01F4      		brne .L13
+ 216 0164 EE24      		clr r14
+ 217 0166 EA94      		dec r14
+ 218 0168 FE2C      		mov r15,r14
+ 219               	.L13:
+ 220 016a C701      		movw r24,r14
+ 221               	/* epilogue start */
+ 222 016c DF91      		pop r29
+ 223 016e CF91      		pop r28
+ 224 0170 1F91      		pop r17
+ 225 0172 0F91      		pop r16
+ 226 0174 FF90      		pop r15
+ 227 0176 EF90      		pop r14
+ 228 0178 DF90      		pop r13
+GAS LISTING C:\Temp/ccigGDF8.s 			page 5
+
+
+ 229 017a CF90      		pop r12
+ 230 017c BF90      		pop r11
+ 231 017e AF90      		pop r10
+ 232 0180 9F90      		pop r9
+ 233 0182 8F90      		pop r8
+ 234 0184 7F90      		pop r7
+ 235 0186 6F90      		pop r6
+ 236 0188 0895      		ret
+ 237               		.size	NutBlockDeviceRead, .-NutBlockDeviceRead
+ 238               	.global	NutBlockDeviceWrite
+ 239               		.type	NutBlockDeviceWrite, @function
+ 240               	NutBlockDeviceWrite:
+ 241 018a 6F92      		push r6
+ 242 018c 7F92      		push r7
+ 243 018e 8F92      		push r8
+ 244 0190 9F92      		push r9
+ 245 0192 AF92      		push r10
+ 246 0194 BF92      		push r11
+ 247 0196 CF92      		push r12
+ 248 0198 DF92      		push r13
+ 249 019a EF92      		push r14
+ 250 019c FF92      		push r15
+ 251 019e 0F93      		push r16
+ 252 01a0 1F93      		push r17
+ 253 01a2 CF93      		push r28
+ 254 01a4 DF93      		push r29
+ 255               	/* prologue: function */
+ 256               	/* frame size = 0 */
+ 257 01a6 5C01      		movw r10,r24
+ 258 01a8 4A01      		movw r8,r20
+ 259 01aa 4115      		cp r20,__zero_reg__
+ 260 01ac 5105      		cpc r21,__zero_reg__
+ 261 01ae 01F4      		brne .L19
+ 262 01b0 EE24      		clr r14
+ 263 01b2 FF24      		clr r15
+ 264 01b4 00C0      		rjmp .L20
+ 265               	.L19:
+ 266 01b6 6B01      		movw r12,r22
+ 267 01b8 D501      		movw r26,r10
+ 268 01ba 1496      		adiw r26,4
+ 269 01bc CD91      		ld r28,X+
+ 270 01be DC91      		ld r29,X
+ 271 01c0 1597      		sbiw r26,4+1
+ 272 01c2 1296      		adiw r26,2
+ 273 01c4 ED91      		ld r30,X+
+ 274 01c6 FC91      		ld r31,X
+ 275 01c8 1397      		sbiw r26,2+1
+ 276 01ca 6188      		ldd r6,Z+17
+ 277 01cc 7288      		ldd r7,Z+18
+ 278 01ce EE24      		clr r14
+ 279 01d0 FF24      		clr r15
+ 280 01d2 00C0      		rjmp .L21
+ 281               	.L23:
+ 282 01d4 4C85      		ldd r20,Y+12
+ 283 01d6 5D85      		ldd r21,Y+13
+ 284 01d8 6E85      		ldd r22,Y+14
+ 285 01da 7F85      		ldd r23,Y+15
+GAS LISTING C:\Temp/ccigGDF8.s 			page 6
+
+
+ 286 01dc 8A81      		ldd r24,Y+2
+ 287 01de 9B81      		ldd r25,Y+3
+ 288 01e0 AC81      		ldd r26,Y+4
+ 289 01e2 BD81      		ldd r27,Y+5
+ 290 01e4 4817      		cp r20,r24
+ 291 01e6 5907      		cpc r21,r25
+ 292 01e8 6A07      		cpc r22,r26
+ 293 01ea 7B07      		cpc r23,r27
+ 294 01ec 00F4      		brsh .L22
+ 295 01ee 0E81      		ldd r16,Y+6
+ 296 01f0 1F81      		ldd r17,Y+7
+ 297 01f2 8885      		ldd r24,Y+8
+ 298 01f4 9985      		ldd r25,Y+9
+ 299 01f6 AA85      		ldd r26,Y+10
+ 300 01f8 BB85      		ldd r27,Y+11
+ 301 01fa 480F      		add r20,r24
+ 302 01fc 591F      		adc r21,r25
+ 303 01fe 6A1F      		adc r22,r26
+ 304 0200 7B1F      		adc r23,r27
+ 305 0202 D301      		movw r26,r6
+ 306 0204 5496      		adiw r26,20
+ 307 0206 ED91      		ld r30,X+
+ 308 0208 FC91      		ld r31,X
+ 309 020a 5597      		sbiw r26,20+1
+ 310 020c 9601      		movw r18,r12
+ 311 020e D501      		movw r26,r10
+ 312 0210 1296      		adiw r26,2
+ 313 0212 8D91      		ld r24,X+
+ 314 0214 9C91      		ld r25,X
+ 315 0216 1397      		sbiw r26,2+1
+ 316 0218 0995      		icall
+ 317 021a 9C01      		movw r18,r24
+ 318 021c 8E81      		ldd r24,Y+6
+ 319 021e 9F81      		ldd r25,Y+7
+ 320 0220 2817      		cp r18,r24
+ 321 0222 3907      		cpc r19,r25
+ 322 0224 01F4      		brne .L22
+ 323 0226 8C85      		ldd r24,Y+12
+ 324 0228 9D85      		ldd r25,Y+13
+ 325 022a AE85      		ldd r26,Y+14
+ 326 022c BF85      		ldd r27,Y+15
+ 327 022e 0196      		adiw r24,1
+ 328 0230 A11D      		adc r26,__zero_reg__
+ 329 0232 B11D      		adc r27,__zero_reg__
+ 330 0234 8C87      		std Y+12,r24
+ 331 0236 9D87      		std Y+13,r25
+ 332 0238 AE87      		std Y+14,r26
+ 333 023a BF87      		std Y+15,r27
+ 334 023c C20E      		add r12,r18
+ 335 023e D31E      		adc r13,r19
+ 336 0240 0894      		sec
+ 337 0242 E11C      		adc r14,__zero_reg__
+ 338 0244 F11C      		adc r15,__zero_reg__
+ 339               	.L21:
+ 340 0246 E814      		cp r14,r8
+ 341 0248 F904      		cpc r15,r9
+ 342 024a 04F0      		brlt .L23
+GAS LISTING C:\Temp/ccigGDF8.s 			page 7
+
+
+ 343               	.L22:
+ 344 024c E114      		cp r14,__zero_reg__
+ 345 024e F104      		cpc r15,__zero_reg__
+ 346 0250 01F4      		brne .L20
+ 347 0252 EE24      		clr r14
+ 348 0254 EA94      		dec r14
+ 349 0256 FE2C      		mov r15,r14
+ 350               	.L20:
+ 351 0258 C701      		movw r24,r14
+ 352               	/* epilogue start */
+ 353 025a DF91      		pop r29
+ 354 025c CF91      		pop r28
+ 355 025e 1F91      		pop r17
+ 356 0260 0F91      		pop r16
+ 357 0262 FF90      		pop r15
+ 358 0264 EF90      		pop r14
+ 359 0266 DF90      		pop r13
+ 360 0268 CF90      		pop r12
+ 361 026a BF90      		pop r11
+ 362 026c AF90      		pop r10
+ 363 026e 9F90      		pop r9
+ 364 0270 8F90      		pop r8
+ 365 0272 7F90      		pop r7
+ 366 0274 6F90      		pop r6
+ 367 0276 0895      		ret
+ 368               		.size	NutBlockDeviceWrite, .-NutBlockDeviceWrite
+ 369               	.global	NutBlockDeviceWrite_P
+ 370               		.type	NutBlockDeviceWrite_P, @function
+ 371               	NutBlockDeviceWrite_P:
+ 372 0278 6F92      		push r6
+ 373 027a 7F92      		push r7
+ 374 027c 8F92      		push r8
+ 375 027e 9F92      		push r9
+ 376 0280 AF92      		push r10
+ 377 0282 BF92      		push r11
+ 378 0284 CF92      		push r12
+ 379 0286 DF92      		push r13
+ 380 0288 EF92      		push r14
+ 381 028a FF92      		push r15
+ 382 028c 0F93      		push r16
+ 383 028e 1F93      		push r17
+ 384 0290 CF93      		push r28
+ 385 0292 DF93      		push r29
+ 386               	/* prologue: function */
+ 387               	/* frame size = 0 */
+ 388 0294 5C01      		movw r10,r24
+ 389 0296 4A01      		movw r8,r20
+ 390 0298 4115      		cp r20,__zero_reg__
+ 391 029a 5105      		cpc r21,__zero_reg__
+ 392 029c 01F4      		brne .L26
+ 393 029e C0E0      		ldi r28,lo8(0)
+ 394 02a0 D0E0      		ldi r29,hi8(0)
+ 395 02a2 00C0      		rjmp .L27
+ 396               	.L26:
+ 397 02a4 DC01      		movw r26,r24
+ 398 02a6 1496      		adiw r26,4
+ 399 02a8 ED90      		ld r14,X+
+GAS LISTING C:\Temp/ccigGDF8.s 			page 8
+
+
+ 400 02aa FC90      		ld r15,X
+ 401 02ac 1597      		sbiw r26,4+1
+ 402 02ae 1296      		adiw r26,2
+ 403 02b0 ED91      		ld r30,X+
+ 404 02b2 FC91      		ld r31,X
+ 405 02b4 1397      		sbiw r26,2+1
+ 406 02b6 6188      		ldd r6,Z+17
+ 407 02b8 7288      		ldd r7,Z+18
+ 408 02ba 6B01      		movw r12,r22
+ 409 02bc C0E0      		ldi r28,lo8(0)
+ 410 02be D0E0      		ldi r29,hi8(0)
+ 411 02c0 00C0      		rjmp .L28
+ 412               	.L30:
+ 413 02c2 F701      		movw r30,r14
+ 414 02c4 4485      		ldd r20,Z+12
+ 415 02c6 5585      		ldd r21,Z+13
+ 416 02c8 6685      		ldd r22,Z+14
+ 417 02ca 7785      		ldd r23,Z+15
+ 418 02cc 8281      		ldd r24,Z+2
+ 419 02ce 9381      		ldd r25,Z+3
+ 420 02d0 A481      		ldd r26,Z+4
+ 421 02d2 B581      		ldd r27,Z+5
+ 422 02d4 4817      		cp r20,r24
+ 423 02d6 5907      		cpc r21,r25
+ 424 02d8 6A07      		cpc r22,r26
+ 425 02da 7B07      		cpc r23,r27
+ 426 02dc 00F4      		brsh .L29
+ 427 02de 0681      		ldd r16,Z+6
+ 428 02e0 1781      		ldd r17,Z+7
+ 429 02e2 8085      		ldd r24,Z+8
+ 430 02e4 9185      		ldd r25,Z+9
+ 431 02e6 A285      		ldd r26,Z+10
+ 432 02e8 B385      		ldd r27,Z+11
+ 433 02ea 480F      		add r20,r24
+ 434 02ec 591F      		adc r21,r25
+ 435 02ee 6A1F      		adc r22,r26
+ 436 02f0 7B1F      		adc r23,r27
+ 437 02f2 D301      		movw r26,r6
+ 438 02f4 5696      		adiw r26,22
+ 439 02f6 ED91      		ld r30,X+
+ 440 02f8 FC91      		ld r31,X
+ 441 02fa 5797      		sbiw r26,22+1
+ 442 02fc 9601      		movw r18,r12
+ 443 02fe D501      		movw r26,r10
+ 444 0300 1296      		adiw r26,2
+ 445 0302 8D91      		ld r24,X+
+ 446 0304 9C91      		ld r25,X
+ 447 0306 1397      		sbiw r26,2+1
+ 448 0308 0995      		icall
+ 449 030a 9C01      		movw r18,r24
+ 450 030c F701      		movw r30,r14
+ 451 030e 8681      		ldd r24,Z+6
+ 452 0310 9781      		ldd r25,Z+7
+ 453 0312 2817      		cp r18,r24
+ 454 0314 3907      		cpc r19,r25
+ 455 0316 01F4      		brne .L29
+ 456 0318 8485      		ldd r24,Z+12
+GAS LISTING C:\Temp/ccigGDF8.s 			page 9
+
+
+ 457 031a 9585      		ldd r25,Z+13
+ 458 031c A685      		ldd r26,Z+14
+ 459 031e B785      		ldd r27,Z+15
+ 460 0320 0196      		adiw r24,1
+ 461 0322 A11D      		adc r26,__zero_reg__
+ 462 0324 B11D      		adc r27,__zero_reg__
+ 463 0326 8487      		std Z+12,r24
+ 464 0328 9587      		std Z+13,r25
+ 465 032a A687      		std Z+14,r26
+ 466 032c B787      		std Z+15,r27
+ 467 032e C20E      		add r12,r18
+ 468 0330 D31E      		adc r13,r19
+ 469 0332 2196      		adiw r28,1
+ 470               	.L28:
+ 471 0334 C815      		cp r28,r8
+ 472 0336 D905      		cpc r29,r9
+ 473 0338 04F0      		brlt .L30
+ 474               	.L29:
+ 475 033a 2097      		sbiw r28,0
+ 476 033c 01F4      		brne .L27
+ 477 033e CFEF      		ldi r28,lo8(-1)
+ 478 0340 DFEF      		ldi r29,hi8(-1)
+ 479               	.L27:
+ 480 0342 CE01      		movw r24,r28
+ 481               	/* epilogue start */
+ 482 0344 DF91      		pop r29
+ 483 0346 CF91      		pop r28
+ 484 0348 1F91      		pop r17
+ 485 034a 0F91      		pop r16
+ 486 034c FF90      		pop r15
+ 487 034e EF90      		pop r14
+ 488 0350 DF90      		pop r13
+ 489 0352 CF90      		pop r12
+ 490 0354 BF90      		pop r11
+ 491 0356 AF90      		pop r10
+ 492 0358 9F90      		pop r9
+ 493 035a 8F90      		pop r8
+ 494 035c 7F90      		pop r7
+ 495 035e 6F90      		pop r6
+ 496 0360 0895      		ret
+ 497               		.size	NutBlockDeviceWrite_P, .-NutBlockDeviceWrite_P
+ 498               	.global	NutBlockDeviceSize
+ 499               		.type	NutBlockDeviceSize, @function
+ 500               	NutBlockDeviceSize:
+ 501               	/* prologue: function */
+ 502               	/* frame size = 0 */
+ 503 0362 DC01      		movw r26,r24
+ 504 0364 1496      		adiw r26,4
+ 505 0366 ED91      		ld r30,X+
+ 506 0368 FC91      		ld r31,X
+ 507 036a 1597      		sbiw r26,4+1
+ 508 036c 6681      		ldd r22,Z+6
+ 509 036e 7781      		ldd r23,Z+7
+ 510 0370 8827      		clr r24
+ 511 0372 77FD      		sbrc r23,7
+ 512 0374 8095      		com r24
+ 513 0376 982F      		mov r25,r24
+GAS LISTING C:\Temp/ccigGDF8.s 			page 10
+
+
+ 514 0378 2281      		ldd r18,Z+2
+ 515 037a 3381      		ldd r19,Z+3
+ 516 037c 4481      		ldd r20,Z+4
+ 517 037e 5581      		ldd r21,Z+5
+ 518 0380 0E94 0000 		call __mulsi3
+ 519               	/* epilogue start */
+ 520 0384 0895      		ret
+ 521               		.size	NutBlockDeviceSize, .-NutBlockDeviceSize
+ 522               	.global	NutBlockDeviceClose
+ 523               		.type	NutBlockDeviceClose, @function
+ 524               	NutBlockDeviceClose:
+ 525 0386 EF92      		push r14
+ 526 0388 FF92      		push r15
+ 527 038a 0F93      		push r16
+ 528 038c 1F93      		push r17
+ 529 038e CF93      		push r28
+ 530 0390 DF93      		push r29
+ 531               	/* prologue: function */
+ 532               	/* frame size = 0 */
+ 533 0392 7C01      		movw r14,r24
+ 534 0394 DC01      		movw r26,r24
+ 535 0396 1496      		adiw r26,4
+ 536 0398 0D91      		ld r16,X+
+ 537 039a 1C91      		ld r17,X
+ 538 039c 1597      		sbiw r26,4+1
+ 539 039e 0115      		cp r16,__zero_reg__
+ 540 03a0 1105      		cpc r17,__zero_reg__
+ 541 03a2 01F4      		brne .L35
+ 542 03a4 CFEF      		ldi r28,lo8(-1)
+ 543 03a6 DFEF      		ldi r29,hi8(-1)
+ 544 03a8 00C0      		rjmp .L36
+ 545               	.L35:
+ 546 03aa D801      		movw r26,r16
+ 547 03ac ED91      		ld r30,X+
+ 548 03ae FC91      		ld r31,X
+ 549 03b0 2589      		ldd r18,Z+21
+ 550 03b2 3689      		ldd r19,Z+22
+ 551 03b4 40E0      		ldi r20,lo8(0)
+ 552 03b6 50E0      		ldi r21,hi8(0)
+ 553 03b8 61E3      		ldi r22,lo8(4401)
+ 554 03ba 71E1      		ldi r23,hi8(4401)
+ 555 03bc CF01      		movw r24,r30
+ 556 03be F901      		movw r30,r18
+ 557 03c0 0995      		icall
+ 558 03c2 EC01      		movw r28,r24
+ 559 03c4 C801      		movw r24,r16
+ 560 03c6 0E94 0000 		call free
+ 561               	.L36:
+ 562 03ca C701      		movw r24,r14
+ 563 03cc 0E94 0000 		call free
+ 564 03d0 CE01      		movw r24,r28
+ 565               	/* epilogue start */
+ 566 03d2 DF91      		pop r29
+ 567 03d4 CF91      		pop r28
+ 568 03d6 1F91      		pop r17
+ 569 03d8 0F91      		pop r16
+ 570 03da FF90      		pop r15
+GAS LISTING C:\Temp/ccigGDF8.s 			page 11
+
+
+ 571 03dc EF90      		pop r14
+ 572 03de 0895      		ret
+ 573               		.size	NutBlockDeviceClose, .-NutBlockDeviceClose
+ 574               	.global	NutBlockDeviceOpen
+ 575               		.type	NutBlockDeviceOpen, @function
+ 576               	NutBlockDeviceOpen:
+ 577 03e0 8F92      		push r8
+ 578 03e2 9F92      		push r9
+ 579 03e4 AF92      		push r10
+ 580 03e6 BF92      		push r11
+ 581 03e8 CF92      		push r12
+ 582 03ea DF92      		push r13
+ 583 03ec EF92      		push r14
+ 584 03ee FF92      		push r15
+ 585 03f0 0F93      		push r16
+ 586 03f2 1F93      		push r17
+ 587 03f4 DF93      		push r29
+ 588 03f6 CF93      		push r28
+ 589 03f8 00D0      		rcall .
+ 590 03fa 0F92      		push __tmp_reg__
+ 591 03fc CDB7      		in r28,__SP_L__
+ 592 03fe DEB7      		in r29,__SP_H__
+ 593               	/* prologue: function */
+ 594               	/* frame size = 3 */
+ 595 0400 4C01      		movw r8,r24
+ 596 0402 FB01      		movw r30,r22
+ 597 0404 8081      		ld r24,Z
+ 598 0406 8823      		tst r24
+ 599 0408 01F0      		breq .L39
+ 600               	.L51:
+ 601 040a 3196      		adiw r30,1
+ 602 040c 8081      		ld r24,Z
+ 603 040e 8823      		tst r24
+ 604 0410 01F0      		breq .L39
+ 605 0412 8F32      		cpi r24,lo8(47)
+ 606 0414 01F4      		brne .L51
+ 607 0416 00C0      		rjmp .L55
+ 608               	.L39:
+ 609 0418 8081      		ld r24,Z
+ 610 041a 8823      		tst r24
+ 611 041c 01F0      		breq .L42
+ 612 041e CF01      		movw r24,r30
+ 613 0420 0E94 0000 		call NutDeviceLookup
+ 614 0424 6C01      		movw r12,r24
+ 615 0426 0097      		sbiw r24,0
+ 616 0428 01F4      		brne .L44
+ 617 042a 00C0      		rjmp .L43
+ 618               	.L42:
+ 619 042c C090 0000 		lds r12,nutDeviceList
+ 620 0430 D090 0000 		lds r13,(nutDeviceList)+1
+ 621 0434 00C0      		rjmp .L45
+ 622               	.L46:
+ 623 0436 D601      		movw r26,r12
+ 624 0438 1B96      		adiw r26,11
+ 625 043a 8C91      		ld r24,X
+ 626 043c 1B97      		sbiw r26,11
+ 627 043e 8031      		cpi r24,lo8(16)
+GAS LISTING C:\Temp/ccigGDF8.s 			page 12
+
+
+ 628 0440 01F0      		breq .L44
+ 629 0442 CD90      		ld r12,X+
+ 630 0444 DC90      		ld r13,X
+ 631               	.L45:
+ 632 0446 C114      		cp r12,__zero_reg__
+ 633 0448 D104      		cpc r13,__zero_reg__
+ 634 044a 01F4      		brne .L46
+ 635               	.L43:
+ 636 044c 83E1      		ldi r24,lo8(19)
+ 637 044e 90E0      		ldi r25,hi8(19)
+ 638 0450 9093 0000 		sts (errno)+1,r25
+ 639 0454 8093 0000 		sts errno,r24
+ 640 0458 00C0      		rjmp .L54
+ 641               	.L44:
+ 642 045a 82E1      		ldi r24,lo8(18)
+ 643 045c 90E0      		ldi r25,hi8(18)
+ 644 045e 0E94 0000 		call malloc
+ 645 0462 7C01      		movw r14,r24
+ 646 0464 0097      		sbiw r24,0
+ 647 0466 01F4      		brne .+2
+ 648 0468 00C0      		rjmp .L54
+ 649               	.L48:
+ 650 046a F401      		movw r30,r8
+ 651 046c 6189      		ldd r22,Z+17
+ 652 046e 7289      		ldd r23,Z+18
+ 653 0470 DC01      		movw r26,r24
+ 654 0472 1196      		adiw r26,1
+ 655 0474 DC92      		st X,r13
+ 656 0476 CE92      		st -X,r12
+ 657 0478 FB01      		movw r30,r22
+ 658 047a 2285      		ldd r18,Z+10
+ 659 047c 3385      		ldd r19,Z+11
+ 660 047e 4485      		ldd r20,Z+12
+ 661 0480 5585      		ldd r21,Z+13
+ 662 0482 1896      		adiw r26,8
+ 663 0484 2D93      		st X+,r18
+ 664 0486 3D93      		st X+,r19
+ 665 0488 4D93      		st X+,r20
+ 666 048a 5C93      		st X,r21
+ 667 048c 1B97      		sbiw r26,8+3
+ 668 048e 8281      		ldd r24,Z+2
+ 669 0490 9381      		ldd r25,Z+3
+ 670 0492 A481      		ldd r26,Z+4
+ 671 0494 B581      		ldd r27,Z+5
+ 672 0496 821B      		sub r24,r18
+ 673 0498 930B      		sbc r25,r19
+ 674 049a A40B      		sbc r26,r20
+ 675 049c B50B      		sbc r27,r21
+ 676 049e 2685      		ldd r18,Z+14
+ 677 04a0 3785      		ldd r19,Z+15
+ 678 04a2 4089      		ldd r20,Z+16
+ 679 04a4 5189      		ldd r21,Z+17
+ 680 04a6 821B      		sub r24,r18
+ 681 04a8 930B      		sbc r25,r19
+ 682 04aa A40B      		sbc r26,r20
+ 683 04ac B50B      		sbc r27,r21
+ 684 04ae F701      		movw r30,r14
+GAS LISTING C:\Temp/ccigGDF8.s 			page 13
+
+
+ 685 04b0 8283      		std Z+2,r24
+ 686 04b2 9383      		std Z+3,r25
+ 687 04b4 A483      		std Z+4,r26
+ 688 04b6 B583      		std Z+5,r27
+ 689 04b8 D701      		movw r26,r14
+ 690 04ba 1C96      		adiw r26,12
+ 691 04bc 1D92      		st X+,__zero_reg__
+ 692 04be 1D92      		st X+,__zero_reg__
+ 693 04c0 1D92      		st X+,__zero_reg__
+ 694 04c2 1C92      		st X,__zero_reg__
+ 695 04c4 1F97      		sbiw r26,12+3
+ 696 04c6 FB01      		movw r30,r22
+ 697 04c8 8681      		ldd r24,Z+6
+ 698 04ca 9781      		ldd r25,Z+7
+ 699 04cc 1796      		adiw r26,6+1
+ 700 04ce 9C93      		st X,r25
+ 701 04d0 8E93      		st -X,r24
+ 702 04d2 1697      		sbiw r26,6
+ 703 04d4 0E94 0000 		call malloc
+ 704 04d8 D701      		movw r26,r14
+ 705 04da 5196      		adiw r26,16+1
+ 706 04dc 9C93      		st X,r25
+ 707 04de 8E93      		st -X,r24
+ 708 04e0 5097      		sbiw r26,16
+ 709 04e2 0097      		sbiw r24,0
+ 710 04e4 01F0      		breq .L49
+ 711 04e6 86E0      		ldi r24,lo8(6)
+ 712 04e8 90E0      		ldi r25,hi8(6)
+ 713 04ea 0E94 0000 		call malloc
+ 714 04ee 8C01      		movw r16,r24
+ 715 04f0 5C01      		movw r10,r24
+ 716 04f2 0097      		sbiw r24,0
+ 717 04f4 01F0      		breq .L49
+ 718 04f6 FC01      		movw r30,r24
+ 719 04f8 1182      		std Z+1,__zero_reg__
+ 720 04fa 1082      		st Z,__zero_reg__
+ 721 04fc 9382      		std Z+3,r9
+ 722 04fe 8282      		std Z+2,r8
+ 723 0500 F582      		std Z+5,r15
+ 724 0502 E482      		std Z+4,r14
+ 725 0504 9A83      		std Y+2,r25
+ 726 0506 8983      		std Y+1,r24
+ 727 0508 1B82      		std Y+3,__zero_reg__
+ 728 050a D601      		movw r26,r12
+ 729 050c 5596      		adiw r26,21
+ 730 050e ED91      		ld r30,X+
+ 731 0510 FC91      		ld r31,X
+ 732 0512 5697      		sbiw r26,21+1
+ 733 0514 AE01      		movw r20,r28
+ 734 0516 4F5F      		subi r20,lo8(-(1))
+ 735 0518 5F4F      		sbci r21,hi8(-(1))
+ 736 051a 60E3      		ldi r22,lo8(4400)
+ 737 051c 71E1      		ldi r23,hi8(4400)
+ 738 051e C601      		movw r24,r12
+ 739 0520 0995      		icall
+ 740 0522 892B      		or r24,r25
+ 741 0524 01F0      		breq .L47
+GAS LISTING C:\Temp/ccigGDF8.s 			page 14
+
+
+ 742 0526 C801      		movw r24,r16
+ 743 0528 0E94 0000 		call free
+ 744               	.L49:
+ 745 052c C701      		movw r24,r14
+ 746 052e 0E94 0000 		call free
+ 747               	.L54:
+ 748 0532 AA24      		clr r10
+ 749 0534 AA94      		dec r10
+ 750 0536 BA2C      		mov r11,r10
+ 751               	.L47:
+ 752 0538 C501      		movw r24,r10
+ 753               	/* epilogue start */
+ 754 053a 0F90      		pop __tmp_reg__
+ 755 053c 0F90      		pop __tmp_reg__
+ 756 053e 0F90      		pop __tmp_reg__
+ 757 0540 CF91      		pop r28
+ 758 0542 DF91      		pop r29
+ 759 0544 1F91      		pop r17
+ 760 0546 0F91      		pop r16
+ 761 0548 FF90      		pop r15
+ 762 054a EF90      		pop r14
+ 763 054c DF90      		pop r13
+ 764 054e CF90      		pop r12
+ 765 0550 BF90      		pop r11
+ 766 0552 AF90      		pop r10
+ 767 0554 9F90      		pop r9
+ 768 0556 8F90      		pop r8
+ 769 0558 0895      		ret
+ 770               	.L55:
+ 771 055a 3196      		adiw r30,1
+ 772 055c 00C0      		rjmp .L39
+ 773               		.size	NutBlockDeviceOpen, .-NutBlockDeviceOpen
+GAS LISTING C:\Temp/ccigGDF8.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 blockdev.c
+  C:\Temp/ccigGDF8.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccigGDF8.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccigGDF8.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccigGDF8.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccigGDF8.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccigGDF8.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccigGDF8.s:13     .text:00000000 NutBlockDeviceInit
+  C:\Temp/ccigGDF8.s:23     .text:00000006 NutBlockDeviceIOCtl
+  C:\Temp/ccigGDF8.s:109    .text:0000009c NutBlockDeviceRead
+  C:\Temp/ccigGDF8.s:240    .text:0000018a NutBlockDeviceWrite
+  C:\Temp/ccigGDF8.s:371    .text:00000278 NutBlockDeviceWrite_P
+  C:\Temp/ccigGDF8.s:500    .text:00000362 NutBlockDeviceSize
+  C:\Temp/ccigGDF8.s:524    .text:00000386 NutBlockDeviceClose
+  C:\Temp/ccigGDF8.s:576    .text:000003e0 NutBlockDeviceOpen
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+__mulsi3
+free
+NutDeviceLookup
+nutDeviceList
+errno
+malloc

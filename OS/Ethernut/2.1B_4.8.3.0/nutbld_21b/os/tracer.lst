@@ -1,0 +1,1544 @@
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 1
+
+
+   1               		.file	"tracer.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	NutTraceTimer1IRQ, @function
+  12               	NutTraceTimer1IRQ:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 8091 0000 		lds r24,micros_high
+  16 0004 9091 0000 		lds r25,(micros_high)+1
+  17 0008 0196      		adiw r24,1
+  18 000a 9093 0000 		sts (micros_high)+1,r25
+  19 000e 8093 0000 		sts micros_high,r24
+  20               	/* epilogue start */
+  21 0012 0895      		ret
+  22               		.size	NutTraceTimer1IRQ, .-NutTraceTimer1IRQ
+  23               	.global	NutTraceClear
+  24               		.type	NutTraceClear, @function
+  25               	NutTraceClear:
+  26               	/* prologue: function */
+  27               	/* frame size = 0 */
+  28 0014 1092 0000 		sts trace_isfull,__zero_reg__
+  29 0018 1092 0000 		sts (trace_head)+1,__zero_reg__
+  30 001c 1092 0000 		sts trace_head,__zero_reg__
+  31 0020 3091 0000 		lds r19,trace_mode
+  32 0024 3323      		tst r19
+  33 0026 01F4      		brne .+2
+  34 0028 00C0      		rjmp .L6
+  35 002a 2091 0000 		lds r18,trace_mask+8
+  36 002e 2130      		cpi r18,lo8(1)
+  37 0030 01F4      		brne .L6
+  38               	/* #APP */
+  39               	 ;  173 "../../nut/os/tracer.c" 1
+  40 0032 0FB6      		in  __tmp_reg__, __SREG__
+  41 0034 0F92      		push __tmp_reg__
+  42 0036 F894      		cli
+  43               		
+  44               	 ;  0 "" 2
+  45               	/* #NOAPP */
+  46 0038 E091 0000 		lds r30,trace_items
+  47 003c F091 0000 		lds r31,(trace_items)+1
+  48 0040 F093 0000 		sts (trace_current)+1,r31
+  49 0044 E093 0000 		sts trace_current,r30
+  50 0048 81E0      		ldi r24,lo8(1)
+  51 004a 90E0      		ldi r25,hi8(1)
+  52 004c 9093 0000 		sts (trace_head)+1,r25
+  53 0050 8093 0000 		sts trace_head,r24
+  54 0054 88E0      		ldi r24,lo8(8)
+  55 0056 8083      		st Z,r24
+  56 0058 1282      		std Z+2,__zero_reg__
+  57 005a 1182      		std Z+1,__zero_reg__
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 2
+
+
+  58 005c 8091 0000 		lds r24,micros_high
+  59 0060 9091 0000 		lds r25,(micros_high)+1
+  60 0064 9483      		std Z+4,r25
+  61 0066 8383      		std Z+3,r24
+  62 0068 8CB5      		in r24,76-32
+  63 006a 9DB5      		in r25,(76)+1-32
+  64 006c 9683      		std Z+6,r25
+  65 006e 8583      		std Z+5,r24
+  66 0070 8091 0000 		lds r24,trace_size
+  67 0074 9091 0000 		lds r25,(trace_size)+1
+  68 0078 0297      		sbiw r24,2
+  69 007a 04F4      		brge .L5
+  70 007c 2093 0000 		sts trace_isfull,r18
+  71 0080 1092 0000 		sts (trace_head)+1,__zero_reg__
+  72 0084 1092 0000 		sts trace_head,__zero_reg__
+  73 0088 3230      		cpi r19,lo8(2)
+  74 008a 01F4      		brne .L5
+  75 008c 1092 0000 		sts trace_mode,__zero_reg__
+  76               	.L5:
+  77               	/* #APP */
+  78               	 ;  173 "../../nut/os/tracer.c" 1
+  79 0090 0F90      		pop __tmp_reg__
+  80 0092 0FBE      		out __SREG__, __tmp_reg__
+  81               		
+  82               	 ;  0 "" 2
+  83               	/* #NOAPP */
+  84               	.L6:
+  85 0094 0895      		ret
+  86               		.size	NutTraceClear, .-NutTraceClear
+  87               	.global	NutTraceStop
+  88               		.type	NutTraceStop, @function
+  89               	NutTraceStop:
+  90               	/* prologue: function */
+  91               	/* frame size = 0 */
+  92 0096 8091 0000 		lds r24,trace_mode
+  93 009a 8823      		tst r24
+  94 009c 01F4      		brne .+2
+  95 009e 00C0      		rjmp .L8
+  96 00a0 4091 0000 		lds r20,trace_mask+9
+  97 00a4 4130      		cpi r20,lo8(1)
+  98 00a6 01F0      		breq .+2
+  99 00a8 00C0      		rjmp .L8
+ 100               	/* #APP */
+ 101               	 ;  178 "../../nut/os/tracer.c" 1
+ 102 00aa 0FB6      		in  __tmp_reg__, __SREG__
+ 103 00ac 0F92      		push __tmp_reg__
+ 104 00ae F894      		cli
+ 105               		
+ 106               	 ;  0 "" 2
+ 107               	/* #NOAPP */
+ 108 00b0 2091 0000 		lds r18,trace_head
+ 109 00b4 3091 0000 		lds r19,(trace_head)+1
+ 110 00b8 C901      		movw r24,r18
+ 111 00ba 53E0      		ldi r21,3
+ 112 00bc 880F      	1:	lsl r24
+ 113 00be 991F      		rol r25
+ 114 00c0 5A95      		dec r21
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 3
+
+
+ 115 00c2 01F4      		brne 1b
+ 116 00c4 821B      		sub r24,r18
+ 117 00c6 930B      		sbc r25,r19
+ 118 00c8 E091 0000 		lds r30,trace_items
+ 119 00cc F091 0000 		lds r31,(trace_items)+1
+ 120 00d0 E80F      		add r30,r24
+ 121 00d2 F91F      		adc r31,r25
+ 122 00d4 F093 0000 		sts (trace_current)+1,r31
+ 123 00d8 E093 0000 		sts trace_current,r30
+ 124 00dc 2F5F      		subi r18,lo8(-(1))
+ 125 00de 3F4F      		sbci r19,hi8(-(1))
+ 126 00e0 3093 0000 		sts (trace_head)+1,r19
+ 127 00e4 2093 0000 		sts trace_head,r18
+ 128 00e8 89E0      		ldi r24,lo8(9)
+ 129 00ea 8083      		st Z,r24
+ 130 00ec 1282      		std Z+2,__zero_reg__
+ 131 00ee 1182      		std Z+1,__zero_reg__
+ 132 00f0 8091 0000 		lds r24,micros_high
+ 133 00f4 9091 0000 		lds r25,(micros_high)+1
+ 134 00f8 9483      		std Z+4,r25
+ 135 00fa 8383      		std Z+3,r24
+ 136 00fc 8CB5      		in r24,76-32
+ 137 00fe 9DB5      		in r25,(76)+1-32
+ 138 0100 9683      		std Z+6,r25
+ 139 0102 8583      		std Z+5,r24
+ 140 0104 8091 0000 		lds r24,trace_size
+ 141 0108 9091 0000 		lds r25,(trace_size)+1
+ 142 010c 2817      		cp r18,r24
+ 143 010e 3907      		cpc r19,r25
+ 144 0110 04F0      		brlt .L9
+ 145 0112 4093 0000 		sts trace_isfull,r20
+ 146 0116 1092 0000 		sts (trace_head)+1,__zero_reg__
+ 147 011a 1092 0000 		sts trace_head,__zero_reg__
+ 148               	.L9:
+ 149               	/* #APP */
+ 150               	 ;  178 "../../nut/os/tracer.c" 1
+ 151 011e 0F90      		pop __tmp_reg__
+ 152 0120 0FBE      		out __SREG__, __tmp_reg__
+ 153               		
+ 154               	 ;  0 "" 2
+ 155               	/* #NOAPP */
+ 156               	.L8:
+ 157 0122 1092 0000 		sts trace_mode,__zero_reg__
+ 158               	/* epilogue start */
+ 159 0126 0895      		ret
+ 160               		.size	NutTraceStop, .-NutTraceStop
+ 161               	.global	NutTraceGetPC
+ 162               		.type	NutTraceGetPC, @function
+ 163               	NutTraceGetPC:
+ 164               	/* prologue: function */
+ 165               	/* frame size = 0 */
+ 166 0128 EDB7      		in r30,93-32
+ 167 012a FEB7      		in r31,(93)+1-32
+ 168 012c 8181      		ldd r24,Z+1
+ 169 012e 9927      		clr r25
+ 170 0130 87FD      		sbrc r24,7
+ 171 0132 9095      		com r25
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 4
+
+
+ 172 0134 982F      		mov r25,r24
+ 173 0136 8827      		clr r24
+ 174 0138 EDB7      		in r30,93-32
+ 175 013a FEB7      		in r31,(93)+1-32
+ 176 013c 2281      		ldd r18,Z+2
+ 177 013e 30E0      		ldi r19,lo8(0)
+ 178 0140 282B      		or r18,r24
+ 179 0142 392B      		or r19,r25
+ 180 0144 220F      		lsl r18
+ 181 0146 331F      		rol r19
+ 182 0148 C901      		movw r24,r18
+ 183               	/* epilogue start */
+ 184 014a 0895      		ret
+ 185               		.size	NutTraceGetPC, .-NutTraceGetPC
+ 186               	.global	NutTraceMaskSet
+ 187               		.type	NutTraceMaskSet, @function
+ 188               	NutTraceMaskSet:
+ 189               	/* prologue: function */
+ 190               	/* frame size = 0 */
+ 191 014c FC01      		movw r30,r24
+ 192 014e 8B30      		cpi r24,11
+ 193 0150 9105      		cpc r25,__zero_reg__
+ 194 0152 04F4      		brge .L15
+ 195 0154 E050      		subi r30,lo8(-(trace_mask))
+ 196 0156 F040      		sbci r31,hi8(-(trace_mask))
+ 197 0158 81E0      		ldi r24,lo8(1)
+ 198 015a 8083      		st Z,r24
+ 199               	.L15:
+ 200 015c 0895      		ret
+ 201               		.size	NutTraceMaskSet, .-NutTraceMaskSet
+ 202               	.global	NutTraceMaskClear
+ 203               		.type	NutTraceMaskClear, @function
+ 204               	NutTraceMaskClear:
+ 205               	/* prologue: function */
+ 206               	/* frame size = 0 */
+ 207 015e FC01      		movw r30,r24
+ 208 0160 8B30      		cpi r24,11
+ 209 0162 9105      		cpc r25,__zero_reg__
+ 210 0164 04F4      		brge .L18
+ 211 0166 E050      		subi r30,lo8(-(trace_mask))
+ 212 0168 F040      		sbci r31,hi8(-(trace_mask))
+ 213 016a 1082      		st Z,__zero_reg__
+ 214               	.L18:
+ 215 016c 0895      		ret
+ 216               		.size	NutTraceMaskClear, .-NutTraceMaskClear
+ 217               	.global	NutTraceRegisterUserTag
+ 218               		.type	NutTraceRegisterUserTag, @function
+ 219               	NutTraceRegisterUserTag:
+ 220               	/* prologue: function */
+ 221               	/* frame size = 0 */
+ 222 016e 9C01      		movw r18,r24
+ 223 0170 8A30      		cpi r24,10
+ 224 0172 9105      		cpc r25,__zero_reg__
+ 225 0174 04F0      		brlt .L20
+ 226 0176 2FEF      		ldi r18,lo8(-1)
+ 227 0178 3FEF      		ldi r19,hi8(-1)
+ 228 017a 00C0      		rjmp .L21
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 5
+
+
+ 229               	.L20:
+ 230 017c FC01      		movw r30,r24
+ 231 017e EE0F      		lsl r30
+ 232 0180 FF1F      		rol r31
+ 233 0182 E050      		subi r30,lo8(-(user_string))
+ 234 0184 F040      		sbci r31,hi8(-(user_string))
+ 235 0186 7183      		std Z+1,r23
+ 236 0188 6083      		st Z,r22
+ 237               	.L21:
+ 238 018a C901      		movw r24,r18
+ 239               	/* epilogue start */
+ 240 018c 0895      		ret
+ 241               		.size	NutTraceRegisterUserTag, .-NutTraceRegisterUserTag
+ 242               		.data
+ 243               	.LC0:
+ 244 0000 5452 4143 		.string	"TRACEMASK"
+ 244      454D 4153 
+ 244      4B00 
+ 245               	.LC1:
+ 246 000a 2025 6420 		.string	" %d %s "
+ 246      2573 2000 
+ 247               	.LC2:
+ 248 0012 4F4E 00   		.string	"ON"
+ 249               	.LC3:
+ 250 0015 4F46 4600 		.string	"OFF"
+ 251               		.text
+ 252               	.global	NutTraceMaskPrint
+ 253               		.type	NutTraceMaskPrint, @function
+ 254               	NutTraceMaskPrint:
+ 255 018e EF92      		push r14
+ 256 0190 FF92      		push r15
+ 257 0192 0F93      		push r16
+ 258 0194 1F93      		push r17
+ 259 0196 CF93      		push r28
+ 260 0198 DF93      		push r29
+ 261               	/* prologue: function */
+ 262               	/* frame size = 0 */
+ 263 019a 80E0      		ldi r24,lo8(.LC0)
+ 264 019c 90E0      		ldi r25,hi8(.LC0)
+ 265 019e 0E94 0000 		call puts
+ 266 01a2 00E0      		ldi r16,lo8(tag_string)
+ 267 01a4 10E0      		ldi r17,hi8(tag_string)
+ 268 01a6 C0E0      		ldi r28,lo8(0)
+ 269 01a8 D0E0      		ldi r29,hi8(0)
+ 270 01aa B0E0      		ldi r27,lo8(.LC1)
+ 271 01ac EB2E      		mov r14,r27
+ 272 01ae B0E0      		ldi r27,hi8(.LC1)
+ 273 01b0 FB2E      		mov r15,r27
+ 274               	.L26:
+ 275 01b2 F801      		movw r30,r16
+ 276 01b4 8081      		ld r24,Z
+ 277 01b6 9181      		ldd r25,Z+1
+ 278 01b8 9F93      		push r25
+ 279 01ba 8F93      		push r24
+ 280 01bc DF93      		push r29
+ 281 01be CF93      		push r28
+ 282 01c0 FF92      		push r15
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 6
+
+
+ 283 01c2 EF92      		push r14
+ 284 01c4 0E94 0000 		call printf
+ 285 01c8 FE01      		movw r30,r28
+ 286 01ca E050      		subi r30,lo8(-(trace_mask))
+ 287 01cc F040      		sbci r31,hi8(-(trace_mask))
+ 288 01ce 8DB7      		in r24,__SP_L__
+ 289 01d0 9EB7      		in r25,__SP_H__
+ 290 01d2 0696      		adiw r24,6
+ 291 01d4 0FB6      		in __tmp_reg__,__SREG__
+ 292 01d6 F894      		cli
+ 293 01d8 9EBF      		out __SP_H__,r25
+ 294 01da 0FBE      		out __SREG__,__tmp_reg__
+ 295 01dc 8DBF      		out __SP_L__,r24
+ 296 01de 8081      		ld r24,Z
+ 297 01e0 8823      		tst r24
+ 298 01e2 01F0      		breq .L24
+ 299 01e4 80E0      		ldi r24,lo8(.LC2)
+ 300 01e6 90E0      		ldi r25,hi8(.LC2)
+ 301 01e8 00C0      		rjmp .L29
+ 302               	.L24:
+ 303 01ea 80E0      		ldi r24,lo8(.LC3)
+ 304 01ec 90E0      		ldi r25,hi8(.LC3)
+ 305               	.L29:
+ 306 01ee 0E94 0000 		call puts
+ 307 01f2 2196      		adiw r28,1
+ 308 01f4 0E5F      		subi r16,lo8(-(2))
+ 309 01f6 1F4F      		sbci r17,hi8(-(2))
+ 310 01f8 CB30      		cpi r28,11
+ 311 01fa D105      		cpc r29,__zero_reg__
+ 312 01fc 01F4      		brne .L26
+ 313               	/* epilogue start */
+ 314 01fe DF91      		pop r29
+ 315 0200 CF91      		pop r28
+ 316 0202 1F91      		pop r17
+ 317 0204 0F91      		pop r16
+ 318 0206 FF90      		pop r15
+ 319 0208 EF90      		pop r14
+ 320 020a 0895      		ret
+ 321               		.size	NutTraceMaskPrint, .-NutTraceMaskPrint
+ 322               		.data
+ 323               	.LC4:
+ 324 0019 0A54 5241 		.string	"\nTRACE"
+ 324      4345 00
+ 325               	.LC5:
+ 326 0020 206E 6F74 		.string	" not initialized!\n"
+ 326      2069 6E69 
+ 326      7469 616C 
+ 326      697A 6564 
+ 326      210A 00
+ 327               	.LC6:
+ 328 0033 2063 6F6E 		.string	" contains %d items, "
+ 328      7461 696E 
+ 328      7320 2564 
+ 328      2069 7465 
+ 328      6D73 2C20 
+ 329               	.LC7:
+ 330 0048 2070 7269 		.string	" printing %d items.\n"
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 7
+
+
+ 330      6E74 696E 
+ 330      6720 2564 
+ 330      2069 7465 
+ 330      6D73 2E0A 
+ 331               	.LC8:
+ 332 005d 5469 6D65 		.string	"Time [s:ms:us]"
+ 332      205B 733A 
+ 332      6D73 3A75 
+ 332      735D 00
+ 333               	.LC9:
+ 334 006c 5043 2F49 		.string	"PC/Info"
+ 334      6E66 6F00 
+ 335               	.LC10:
+ 336 0074 5441 4700 		.string	"TAG"
+ 337               	.LC11:
+ 338 0078 252D 3230 		.string	"%-20s%-12s%-12s\n"
+ 338      7325 2D31 
+ 338      3273 252D 
+ 338      3132 730A 
+ 338      00
+ 339               	.LC12:
+ 340 0089 2D2D 2D2D 		.string	"-----------------------------------------------"
+ 340      2D2D 2D2D 
+ 340      2D2D 2D2D 
+ 340      2D2D 2D2D 
+ 340      2D2D 2D2D 
+ 341               	.LC13:
+ 342 00b9 252D 3230 		.string	"%-20s%-15s%7u:%03u:%03u\n"
+ 342      7325 2D31 
+ 342      3573 2537 
+ 342      753A 2530 
+ 342      3375 3A25 
+ 343               	.LC14:
+ 344 00d2 252D 3230 		.string	"%-20s%-#15x%7u:%03u:%03u\n"
+ 344      7325 2D23 
+ 344      3135 7825 
+ 344      3775 3A25 
+ 344      3033 753A 
+ 345               		.text
+ 346               	.global	NutTracePrint
+ 347               		.type	NutTracePrint, @function
+ 348               	NutTracePrint:
+ 349 020c 2F92      		push r2
+ 350 020e 3F92      		push r3
+ 351 0210 4F92      		push r4
+ 352 0212 5F92      		push r5
+ 353 0214 6F92      		push r6
+ 354 0216 7F92      		push r7
+ 355 0218 8F92      		push r8
+ 356 021a 9F92      		push r9
+ 357 021c AF92      		push r10
+ 358 021e BF92      		push r11
+ 359 0220 CF92      		push r12
+ 360 0222 DF92      		push r13
+ 361 0224 EF92      		push r14
+ 362 0226 FF92      		push r15
+ 363 0228 0F93      		push r16
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 8
+
+
+ 364 022a 1F93      		push r17
+ 365 022c DF93      		push r29
+ 366 022e CF93      		push r28
+ 367 0230 00D0      		rcall .
+ 368 0232 00D0      		rcall .
+ 369 0234 0F92      		push __tmp_reg__
+ 370 0236 CDB7      		in r28,__SP_L__
+ 371 0238 DEB7      		in r29,__SP_H__
+ 372               	/* prologue: function */
+ 373               	/* frame size = 5 */
+ 374 023a 6C01      		movw r12,r24
+ 375 023c 2091 0000 		lds r18,trace_mode
+ 376 0240 2B83      		std Y+3,r18
+ 377 0242 1092 0000 		sts trace_mode,__zero_reg__
+ 378 0246 80E0      		ldi r24,lo8(.LC4)
+ 379 0248 90E0      		ldi r25,hi8(.LC4)
+ 380 024a 9F93      		push r25
+ 381 024c 8F93      		push r24
+ 382 024e 0E94 0000 		call printf
+ 383 0252 2091 0000 		lds r18,trace_size
+ 384 0256 3091 0000 		lds r19,(trace_size)+1
+ 385 025a 0F90      		pop __tmp_reg__
+ 386 025c 0F90      		pop __tmp_reg__
+ 387 025e 2115      		cp r18,__zero_reg__
+ 388 0260 3105      		cpc r19,__zero_reg__
+ 389 0262 01F4      		brne .L31
+ 390 0264 80E0      		ldi r24,lo8(.LC5)
+ 391 0266 90E0      		ldi r25,hi8(.LC5)
+ 392 0268 0E94 0000 		call puts
+ 393 026c 00C0      		rjmp .L48
+ 394               	.L31:
+ 395 026e 8091 0000 		lds r24,trace_isfull
+ 396 0272 8823      		tst r24
+ 397 0274 01F4      		brne .L33
+ 398 0276 2091 0000 		lds r18,trace_head
+ 399 027a 3091 0000 		lds r19,(trace_head)+1
+ 400               	.L33:
+ 401 027e 3F93      		push r19
+ 402 0280 2F93      		push r18
+ 403 0282 80E0      		ldi r24,lo8(.LC6)
+ 404 0284 90E0      		ldi r25,hi8(.LC6)
+ 405 0286 9F93      		push r25
+ 406 0288 8F93      		push r24
+ 407 028a 0E94 0000 		call printf
+ 408 028e 0F90      		pop __tmp_reg__
+ 409 0290 0F90      		pop __tmp_reg__
+ 410 0292 0F90      		pop __tmp_reg__
+ 411 0294 0F90      		pop __tmp_reg__
+ 412 0296 C114      		cp r12,__zero_reg__
+ 413 0298 D104      		cpc r13,__zero_reg__
+ 414 029a 01F4      		brne .L34
+ 415 029c C090 0000 		lds r12,trace_size
+ 416 02a0 D090 0000 		lds r13,(trace_size)+1
+ 417               	.L34:
+ 418 02a4 8091 0000 		lds r24,trace_isfull
+ 419 02a8 8823      		tst r24
+ 420 02aa 01F0      		breq .L35
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 9
+
+
+ 421 02ac 8091 0000 		lds r24,trace_size
+ 422 02b0 9091 0000 		lds r25,(trace_size)+1
+ 423 02b4 00C0      		rjmp .L51
+ 424               	.L35:
+ 425 02b6 8091 0000 		lds r24,trace_head
+ 426 02ba 9091 0000 		lds r25,(trace_head)+1
+ 427               	.L51:
+ 428 02be 8C15      		cp r24,r12
+ 429 02c0 9D05      		cpc r25,r13
+ 430 02c2 04F4      		brge .L37
+ 431 02c4 6C01      		movw r12,r24
+ 432               	.L37:
+ 433 02c6 DF92      		push r13
+ 434 02c8 CF92      		push r12
+ 435 02ca 80E0      		ldi r24,lo8(.LC7)
+ 436 02cc 90E0      		ldi r25,hi8(.LC7)
+ 437 02ce 9F93      		push r25
+ 438 02d0 8F93      		push r24
+ 439 02d2 0E94 0000 		call printf
+ 440 02d6 80E0      		ldi r24,lo8(.LC8)
+ 441 02d8 90E0      		ldi r25,hi8(.LC8)
+ 442 02da 9F93      		push r25
+ 443 02dc 8F93      		push r24
+ 444 02de 80E0      		ldi r24,lo8(.LC9)
+ 445 02e0 90E0      		ldi r25,hi8(.LC9)
+ 446 02e2 9F93      		push r25
+ 447 02e4 8F93      		push r24
+ 448 02e6 80E0      		ldi r24,lo8(.LC10)
+ 449 02e8 90E0      		ldi r25,hi8(.LC10)
+ 450 02ea 9F93      		push r25
+ 451 02ec 8F93      		push r24
+ 452 02ee 80E0      		ldi r24,lo8(.LC11)
+ 453 02f0 90E0      		ldi r25,hi8(.LC11)
+ 454 02f2 9F93      		push r25
+ 455 02f4 8F93      		push r24
+ 456 02f6 0E94 0000 		call printf
+ 457 02fa 80E0      		ldi r24,lo8(.LC12)
+ 458 02fc 90E0      		ldi r25,hi8(.LC12)
+ 459 02fe 0E94 0000 		call puts
+ 460 0302 1601      		movw r2,r12
+ 461 0304 0894      		sec
+ 462 0306 2108      		sbc r2,__zero_reg__
+ 463 0308 3108      		sbc r3,__zero_reg__
+ 464 030a 8DB7      		in r24,__SP_L__
+ 465 030c 9EB7      		in r25,__SP_H__
+ 466 030e 0C96      		adiw r24,12
+ 467 0310 0FB6      		in __tmp_reg__,__SREG__
+ 468 0312 F894      		cli
+ 469 0314 9EBF      		out __SP_H__,r25
+ 470 0316 0FBE      		out __SREG__,__tmp_reg__
+ 471 0318 8DBF      		out __SP_L__,r24
+ 472 031a 00C0      		rjmp .L39
+ 473               	.L47:
+ 474 031c 2091 0000 		lds r18,trace_head
+ 475 0320 3091 0000 		lds r19,(trace_head)+1
+ 476 0324 2150      		subi r18,lo8(-(-1))
+ 477 0326 3040      		sbci r19,hi8(-(-1))
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 10
+
+
+ 478 0328 2219      		sub r18,r2
+ 479 032a 3309      		sbc r19,r3
+ 480 032c 37FF      		sbrs r19,7
+ 481 032e 00C0      		rjmp .L40
+ 482 0330 8091 0000 		lds r24,trace_size
+ 483 0334 9091 0000 		lds r25,(trace_size)+1
+ 484 0338 280F      		add r18,r24
+ 485 033a 391F      		adc r19,r25
+ 486               	.L40:
+ 487 033c C901      		movw r24,r18
+ 488 033e 43E0      		ldi r20,3
+ 489 0340 880F      	1:	lsl r24
+ 490 0342 991F      		rol r25
+ 491 0344 4A95      		dec r20
+ 492 0346 01F4      		brne 1b
+ 493 0348 821B      		sub r24,r18
+ 494 034a 930B      		sbc r25,r19
+ 495 034c A091 0000 		lds r26,trace_items
+ 496 0350 B091 0000 		lds r27,(trace_items)+1
+ 497 0354 A80F      		add r26,r24
+ 498 0356 B91F      		adc r27,r25
+ 499 0358 BD83      		std Y+5,r27
+ 500 035a AC83      		std Y+4,r26
+ 501 035c 1396      		adiw r26,3
+ 502 035e ED90      		ld r14,X+
+ 503 0360 FC90      		ld r15,X
+ 504 0362 1497      		sbiw r26,3+1
+ 505 0364 00E0      		ldi r16,lo8(0)
+ 506 0366 10E0      		ldi r17,hi8(0)
+ 507 0368 8701      		movw r16,r14
+ 508 036a FF24      		clr r15
+ 509 036c EE24      		clr r14
+ 510 036e 1596      		adiw r26,5
+ 511 0370 8D91      		ld r24,X+
+ 512 0372 9C91      		ld r25,X
+ 513 0374 1697      		sbiw r26,5+1
+ 514 0376 A0E0      		ldi r26,lo8(0)
+ 515 0378 B0E0      		ldi r27,hi8(0)
+ 516 037a E82A      		or r14,r24
+ 517 037c F92A      		or r15,r25
+ 518 037e 0A2B      		or r16,r26
+ 519 0380 1B2B      		or r17,r27
+ 520 0382 C801      		movw r24,r16
+ 521 0384 B701      		movw r22,r14
+ 522 0386 28EE      		ldi r18,lo8(1000)
+ 523 0388 33E0      		ldi r19,hi8(1000)
+ 524 038a 40E0      		ldi r20,hlo8(1000)
+ 525 038c 50E0      		ldi r21,hhi8(1000)
+ 526 038e 0E94 0000 		call __udivmodsi4
+ 527 0392 3B01      		movw r6,r22
+ 528 0394 4C01      		movw r8,r24
+ 529 0396 7A83      		std Y+2,r23
+ 530 0398 6983      		std Y+1,r22
+ 531 039a C801      		movw r24,r16
+ 532 039c B701      		movw r22,r14
+ 533 039e 28EE      		ldi r18,lo8(1000)
+ 534 03a0 33E0      		ldi r19,hi8(1000)
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 11
+
+
+ 535 03a2 40E0      		ldi r20,hlo8(1000)
+ 536 03a4 50E0      		ldi r21,hhi8(1000)
+ 537 03a6 0E94 0000 		call __udivmodsi4
+ 538 03aa CA01      		movw r24,r20
+ 539 03ac B901      		movw r22,r18
+ 540 03ae 28EE      		ldi r18,lo8(1000)
+ 541 03b0 33E0      		ldi r19,hi8(1000)
+ 542 03b2 40E0      		ldi r20,hlo8(1000)
+ 543 03b4 50E0      		ldi r21,hhi8(1000)
+ 544 03b6 0E94 0000 		call __udivmodsi4
+ 545 03ba 5B01      		movw r10,r22
+ 546 03bc 6C01      		movw r12,r24
+ 547 03be 2B01      		movw r4,r22
+ 548 03c0 C801      		movw r24,r16
+ 549 03c2 B701      		movw r22,r14
+ 550 03c4 20E4      		ldi r18,lo8(1000000)
+ 551 03c6 32E4      		ldi r19,hi8(1000000)
+ 552 03c8 4FE0      		ldi r20,hlo8(1000000)
+ 553 03ca 50E0      		ldi r21,hhi8(1000000)
+ 554 03cc 0E94 0000 		call __udivmodsi4
+ 555 03d0 C901      		movw r24,r18
+ 556 03d2 EC81      		ldd r30,Y+4
+ 557 03d4 FD81      		ldd r31,Y+5
+ 558 03d6 6081      		ld r22,Z
+ 559 03d8 6830      		cpi r22,lo8(8)
+ 560 03da 00F4      		brsh .L45
+ 561 03dc 6630      		cpi r22,lo8(6)
+ 562 03de 00F4      		brsh .L43
+ 563 03e0 6230      		cpi r22,lo8(2)
+ 564 03e2 00F4      		brsh .+2
+ 565 03e4 00C0      		rjmp .L41
+ 566 03e6 00C0      		rjmp .L54
+ 567               	.L45:
+ 568 03e8 6A30      		cpi r22,lo8(10)
+ 569 03ea 01F0      		breq .+2
+ 570 03ec 00C0      		rjmp .L41
+ 571 03ee 00C0      		rjmp .L55
+ 572               	.L54:
+ 573 03f0 7F92      		push r7
+ 574 03f2 6F92      		push r6
+ 575 03f4 BF92      		push r11
+ 576 03f6 AF92      		push r10
+ 577 03f8 3F93      		push r19
+ 578 03fa 2F93      		push r18
+ 579 03fc AC81      		ldd r26,Y+4
+ 580 03fe BD81      		ldd r27,Y+5
+ 581 0400 1196      		adiw r26,1
+ 582 0402 8D91      		ld r24,X+
+ 583 0404 9C91      		ld r25,X
+ 584 0406 1297      		sbiw r26,1+1
+ 585 0408 0696      		adiw r24,6
+ 586 040a 00C0      		rjmp .L52
+ 587               	.L43:
+ 588 040c 7F92      		push r7
+ 589 040e 6F92      		push r6
+ 590 0410 BF92      		push r11
+ 591 0412 AF92      		push r10
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 12
+
+
+ 592 0414 3F93      		push r19
+ 593 0416 2F93      		push r18
+ 594 0418 AC81      		ldd r26,Y+4
+ 595 041a BD81      		ldd r27,Y+5
+ 596 041c 1196      		adiw r26,1
+ 597 041e ED91      		ld r30,X+
+ 598 0420 FC91      		ld r31,X
+ 599 0422 1297      		sbiw r26,1+1
+ 600 0424 EE0F      		lsl r30
+ 601 0426 FF1F      		rol r31
+ 602 0428 E050      		subi r30,lo8(-(int_string))
+ 603 042a F040      		sbci r31,hi8(-(int_string))
+ 604 042c 8081      		ld r24,Z
+ 605 042e 9181      		ldd r25,Z+1
+ 606               	.L52:
+ 607 0430 9F93      		push r25
+ 608 0432 8F93      		push r24
+ 609 0434 E62F      		mov r30,r22
+ 610 0436 F0E0      		ldi r31,lo8(0)
+ 611 0438 EE0F      		lsl r30
+ 612 043a FF1F      		rol r31
+ 613 043c E050      		subi r30,lo8(-(tag_string))
+ 614 043e F040      		sbci r31,hi8(-(tag_string))
+ 615 0440 8081      		ld r24,Z
+ 616 0442 9181      		ldd r25,Z+1
+ 617               	.L53:
+ 618 0444 9F93      		push r25
+ 619 0446 8F93      		push r24
+ 620 0448 E0E0      		ldi r30,lo8(.LC13)
+ 621 044a F0E0      		ldi r31,hi8(.LC13)
+ 622 044c FF93      		push r31
+ 623 044e EF93      		push r30
+ 624 0450 0E94 0000 		call printf
+ 625 0454 2DB7      		in r18,__SP_L__
+ 626 0456 3EB7      		in r19,__SP_H__
+ 627 0458 245F      		subi r18,lo8(-(12))
+ 628 045a 3F4F      		sbci r19,hi8(-(12))
+ 629 045c 0FB6      		in __tmp_reg__,__SREG__
+ 630 045e F894      		cli
+ 631 0460 3EBF      		out __SP_H__,r19
+ 632 0462 0FBE      		out __SREG__,__tmp_reg__
+ 633 0464 2DBF      		out __SP_L__,r18
+ 634 0466 00C0      		rjmp .L46
+ 635               	.L55:
+ 636 0468 7F92      		push r7
+ 637 046a 6F92      		push r6
+ 638 046c BF92      		push r11
+ 639 046e AF92      		push r10
+ 640 0470 3F93      		push r19
+ 641 0472 2F93      		push r18
+ 642 0474 AC81      		ldd r26,Y+4
+ 643 0476 BD81      		ldd r27,Y+5
+ 644 0478 1196      		adiw r26,1
+ 645 047a ED91      		ld r30,X+
+ 646 047c FC91      		ld r31,X
+ 647 047e 1297      		sbiw r26,1+1
+ 648 0480 EE0F      		lsl r30
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 13
+
+
+ 649 0482 FF1F      		rol r31
+ 650 0484 E050      		subi r30,lo8(-(user_string))
+ 651 0486 F040      		sbci r31,hi8(-(user_string))
+ 652 0488 8081      		ld r24,Z
+ 653 048a 9181      		ldd r25,Z+1
+ 654 048c 9F93      		push r25
+ 655 048e 8F93      		push r24
+ 656 0490 8091 0000 		lds r24,tag_string+20
+ 657 0494 9091 0000 		lds r25,(tag_string+20)+1
+ 658 0498 00C0      		rjmp .L53
+ 659               	.L41:
+ 660 049a A981      		ldd r26,Y+1
+ 661 049c BA81      		ldd r27,Y+2
+ 662 049e BF93      		push r27
+ 663 04a0 AF93      		push r26
+ 664 04a2 5F92      		push r5
+ 665 04a4 4F92      		push r4
+ 666 04a6 9F93      		push r25
+ 667 04a8 8F93      		push r24
+ 668 04aa EC81      		ldd r30,Y+4
+ 669 04ac FD81      		ldd r31,Y+5
+ 670 04ae 8181      		ldd r24,Z+1
+ 671 04b0 9281      		ldd r25,Z+2
+ 672 04b2 9F93      		push r25
+ 673 04b4 8F93      		push r24
+ 674 04b6 E62F      		mov r30,r22
+ 675 04b8 F0E0      		ldi r31,lo8(0)
+ 676 04ba EE0F      		lsl r30
+ 677 04bc FF1F      		rol r31
+ 678 04be E050      		subi r30,lo8(-(tag_string))
+ 679 04c0 F040      		sbci r31,hi8(-(tag_string))
+ 680 04c2 8081      		ld r24,Z
+ 681 04c4 9181      		ldd r25,Z+1
+ 682 04c6 9F93      		push r25
+ 683 04c8 8F93      		push r24
+ 684 04ca 20E0      		ldi r18,lo8(.LC14)
+ 685 04cc 30E0      		ldi r19,hi8(.LC14)
+ 686 04ce 3F93      		push r19
+ 687 04d0 2F93      		push r18
+ 688 04d2 0E94 0000 		call printf
+ 689 04d6 8DB7      		in r24,__SP_L__
+ 690 04d8 9EB7      		in r25,__SP_H__
+ 691 04da 0C96      		adiw r24,12
+ 692 04dc 0FB6      		in __tmp_reg__,__SREG__
+ 693 04de F894      		cli
+ 694 04e0 9EBF      		out __SP_H__,r25
+ 695 04e2 0FBE      		out __SREG__,__tmp_reg__
+ 696 04e4 8DBF      		out __SP_L__,r24
+ 697               	.L46:
+ 698 04e6 0894      		sec
+ 699 04e8 2108      		sbc r2,__zero_reg__
+ 700 04ea 3108      		sbc r3,__zero_reg__
+ 701               	.L39:
+ 702 04ec 37FE      		sbrs r3,7
+ 703 04ee 00C0      		rjmp .L47
+ 704 04f0 9B81      		ldd r25,Y+3
+ 705 04f2 9093 0000 		sts trace_mode,r25
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 14
+
+
+ 706               	.L48:
+ 707               	/* epilogue start */
+ 708 04f6 0F90      		pop __tmp_reg__
+ 709 04f8 0F90      		pop __tmp_reg__
+ 710 04fa 0F90      		pop __tmp_reg__
+ 711 04fc 0F90      		pop __tmp_reg__
+ 712 04fe 0F90      		pop __tmp_reg__
+ 713 0500 CF91      		pop r28
+ 714 0502 DF91      		pop r29
+ 715 0504 1F91      		pop r17
+ 716 0506 0F91      		pop r16
+ 717 0508 FF90      		pop r15
+ 718 050a EF90      		pop r14
+ 719 050c DF90      		pop r13
+ 720 050e CF90      		pop r12
+ 721 0510 BF90      		pop r11
+ 722 0512 AF90      		pop r10
+ 723 0514 9F90      		pop r9
+ 724 0516 8F90      		pop r8
+ 725 0518 7F90      		pop r7
+ 726 051a 6F90      		pop r6
+ 727 051c 5F90      		pop r5
+ 728 051e 4F90      		pop r4
+ 729 0520 3F90      		pop r3
+ 730 0522 2F90      		pop r2
+ 731 0524 0895      		ret
+ 732               		.size	NutTracePrint, .-NutTracePrint
+ 733               		.data
+ 734               	.LC15:
+ 735 00ec 5452 4143 		.string	"TRACE STATUS"
+ 735      4520 5354 
+ 735      4154 5553 
+ 735      00
+ 736               	.LC16:
+ 737 00f9 204D 6F64 		.string	" Mode is %s\n"
+ 737      6520 6973 
+ 737      2025 730A 
+ 737      00
+ 738               	.LC17:
+ 739 0106 2053 697A 		.string	" Size is %d\n"
+ 739      6520 6973 
+ 739      2025 640A 
+ 739      00
+ 740               	.LC18:
+ 741 0113 2069 7320 		.string	" is full"
+ 741      6675 6C6C 
+ 741      00
+ 742               	.LC19:
+ 743 011c 2063 6F6E 		.string	" contains %d elements\n"
+ 743      7461 696E 
+ 743      7320 2564 
+ 743      2065 6C65 
+ 743      6D65 6E74 
+ 744               		.text
+ 745               	.global	NutTraceStatusPrint
+ 746               		.type	NutTraceStatusPrint, @function
+ 747               	NutTraceStatusPrint:
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 15
+
+
+ 748               	/* prologue: function */
+ 749               	/* frame size = 0 */
+ 750 0526 80E0      		ldi r24,lo8(.LC15)
+ 751 0528 90E0      		ldi r25,hi8(.LC15)
+ 752 052a 0E94 0000 		call puts
+ 753 052e E091 0000 		lds r30,trace_mode
+ 754 0532 FF27      		clr r31
+ 755 0534 E7FD      		sbrc r30,7
+ 756 0536 F095      		com r31
+ 757 0538 EE0F      		lsl r30
+ 758 053a FF1F      		rol r31
+ 759 053c E050      		subi r30,lo8(-(mode_string))
+ 760 053e F040      		sbci r31,hi8(-(mode_string))
+ 761 0540 8081      		ld r24,Z
+ 762 0542 9181      		ldd r25,Z+1
+ 763 0544 9F93      		push r25
+ 764 0546 8F93      		push r24
+ 765 0548 80E0      		ldi r24,lo8(.LC16)
+ 766 054a 90E0      		ldi r25,hi8(.LC16)
+ 767 054c 9F93      		push r25
+ 768 054e 8F93      		push r24
+ 769 0550 0E94 0000 		call printf
+ 770 0554 8091 0000 		lds r24,trace_size
+ 771 0558 9091 0000 		lds r25,(trace_size)+1
+ 772 055c 9F93      		push r25
+ 773 055e 8F93      		push r24
+ 774 0560 80E0      		ldi r24,lo8(.LC17)
+ 775 0562 90E0      		ldi r25,hi8(.LC17)
+ 776 0564 9F93      		push r25
+ 777 0566 8F93      		push r24
+ 778 0568 0E94 0000 		call printf
+ 779 056c 8DB7      		in r24,__SP_L__
+ 780 056e 9EB7      		in r25,__SP_H__
+ 781 0570 0896      		adiw r24,8
+ 782 0572 0FB6      		in __tmp_reg__,__SREG__
+ 783 0574 F894      		cli
+ 784 0576 9EBF      		out __SP_H__,r25
+ 785 0578 0FBE      		out __SREG__,__tmp_reg__
+ 786 057a 8DBF      		out __SP_L__,r24
+ 787 057c 8091 0000 		lds r24,trace_isfull
+ 788 0580 8823      		tst r24
+ 789 0582 01F0      		breq .L57
+ 790 0584 80E0      		ldi r24,lo8(.LC18)
+ 791 0586 90E0      		ldi r25,hi8(.LC18)
+ 792 0588 0E94 0000 		call puts
+ 793 058c 0895      		ret
+ 794               	.L57:
+ 795 058e 8091 0000 		lds r24,trace_head
+ 796 0592 9091 0000 		lds r25,(trace_head)+1
+ 797 0596 9F93      		push r25
+ 798 0598 8F93      		push r24
+ 799 059a 80E0      		ldi r24,lo8(.LC19)
+ 800 059c 90E0      		ldi r25,hi8(.LC19)
+ 801 059e 9F93      		push r25
+ 802 05a0 8F93      		push r24
+ 803 05a2 0E94 0000 		call printf
+ 804 05a6 0F90      		pop __tmp_reg__
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 16
+
+
+ 805 05a8 0F90      		pop __tmp_reg__
+ 806 05aa 0F90      		pop __tmp_reg__
+ 807 05ac 0F90      		pop __tmp_reg__
+ 808 05ae 0895      		ret
+ 809               		.size	NutTraceStatusPrint, .-NutTraceStatusPrint
+ 810               	.global	NutTraceInit
+ 811               		.type	NutTraceInit, @function
+ 812               	NutTraceInit:
+ 813 05b0 1F93      		push r17
+ 814 05b2 CF93      		push r28
+ 815 05b4 DF93      		push r29
+ 816               	/* prologue: function */
+ 817               	/* frame size = 0 */
+ 818 05b6 EC01      		movw r28,r24
+ 819 05b8 162F      		mov r17,r22
+ 820 05ba 8091 0000 		lds r24,trace_isinit
+ 821 05be 8823      		tst r24
+ 822 05c0 01F4      		brne .L61
+ 823 05c2 82E0      		ldi r24,lo8(2)
+ 824 05c4 8EBD      		out 78-32,r24
+ 825 05c6 40E0      		ldi r20,lo8(0)
+ 826 05c8 50E0      		ldi r21,hi8(0)
+ 827 05ca 60E0      		ldi r22,lo8(gs(NutTraceTimer1IRQ))
+ 828 05cc 70E0      		ldi r23,hi8(gs(NutTraceTimer1IRQ))
+ 829 05ce 80E0      		ldi r24,lo8(sig_OVERFLOW1)
+ 830 05d0 90E0      		ldi r25,hi8(sig_OVERFLOW1)
+ 831 05d2 0E94 0000 		call NutRegisterIrqHandler
+ 832 05d6 87B7      		in r24,87-32
+ 833 05d8 8460      		ori r24,lo8(4)
+ 834 05da 87BF      		out 87-32,r24
+ 835 05dc 81E0      		ldi r24,lo8(1)
+ 836 05de 8093 0000 		sts trace_isinit,r24
+ 837               	.L61:
+ 838 05e2 2097      		sbiw r28,0
+ 839 05e4 01F4      		brne .L62
+ 840 05e6 C4EF      		ldi r28,lo8(500)
+ 841 05e8 D1E0      		ldi r29,hi8(500)
+ 842               	.L62:
+ 843 05ea 8091 0000 		lds r24,trace_size
+ 844 05ee 9091 0000 		lds r25,(trace_size)+1
+ 845 05f2 C817      		cp r28,r24
+ 846 05f4 D907      		cpc r29,r25
+ 847 05f6 01F0      		breq .L63
+ 848 05f8 6091 0000 		lds r22,trace_items
+ 849 05fc 7091 0000 		lds r23,(trace_items)+1
+ 850 0600 6115      		cp r22,__zero_reg__
+ 851 0602 7105      		cpc r23,__zero_reg__
+ 852 0604 01F0      		breq .L64
+ 853 0606 80E0      		ldi r24,lo8(heapFreeList)
+ 854 0608 90E0      		ldi r25,hi8(heapFreeList)
+ 855 060a 0E94 0000 		call NutHeapRootFree
+ 856               	.L64:
+ 857 060e BE01      		movw r22,r28
+ 858 0610 E3E0      		ldi r30,3
+ 859 0612 660F      	1:	lsl r22
+ 860 0614 771F      		rol r23
+ 861 0616 EA95      		dec r30
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 17
+
+
+ 862 0618 01F4      		brne 1b
+ 863 061a 6C1B      		sub r22,r28
+ 864 061c 7D0B      		sbc r23,r29
+ 865 061e 80E0      		ldi r24,lo8(heapFreeList)
+ 866 0620 90E0      		ldi r25,hi8(heapFreeList)
+ 867 0622 0E94 0000 		call NutHeapRootAlloc
+ 868 0626 9093 0000 		sts (trace_items)+1,r25
+ 869 062a 8093 0000 		sts trace_items,r24
+ 870 062e 0097      		sbiw r24,0
+ 871 0630 01F4      		brne .L65
+ 872 0632 1092 0000 		sts (trace_size)+1,__zero_reg__
+ 873 0636 1092 0000 		sts trace_size,__zero_reg__
+ 874 063a 20E0      		ldi r18,lo8(0)
+ 875 063c 30E0      		ldi r19,hi8(0)
+ 876 063e 00C0      		rjmp .L66
+ 877               	.L65:
+ 878 0640 D093 0000 		sts (trace_size)+1,r29
+ 879 0644 C093 0000 		sts trace_size,r28
+ 880               	.L63:
+ 881 0648 1093 0000 		sts trace_mode,r17
+ 882 064c 0E94 0000 		call NutTraceClear
+ 883 0650 2091 0000 		lds r18,trace_size
+ 884 0654 3091 0000 		lds r19,(trace_size)+1
+ 885               	.L66:
+ 886 0658 C901      		movw r24,r18
+ 887               	/* epilogue start */
+ 888 065a DF91      		pop r29
+ 889 065c CF91      		pop r28
+ 890 065e 1F91      		pop r17
+ 891 0660 0895      		ret
+ 892               		.size	NutTraceInit, .-NutTraceInit
+ 893               		.data
+ 894               	.LC20:
+ 895 0133 7072 696E 		.string	"print%d"
+ 895      7425 6400 
+ 896               	.LC21:
+ 897 013b 7072 696E 		.string	"print"
+ 897      7400 
+ 898               	.LC22:
+ 899 0141 6F6E 6573 		.string	"oneshot"
+ 899      686F 7400 
+ 900               	.LC23:
+ 901 0149 5452 4143 		.string	"TRACE mode %s, restarted\n"
+ 901      4520 6D6F 
+ 901      6465 2025 
+ 901      732C 2072 
+ 901      6573 7461 
+ 902               	.LC24:
+ 903 0163 6369 7263 		.string	"circular"
+ 903      756C 6172 
+ 903      00
+ 904               	.LC25:
+ 905 016c 7369 7A65 		.string	"size%d"
+ 905      2564 00
+ 906               	.LC26:
+ 907 0173 5452 4143 		.string	"TRACE new size: %d\n"
+ 907      4520 6E65 
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 18
+
+
+ 907      7720 7369 
+ 907      7A65 3A20 
+ 907      2564 0A00 
+ 908               	.LC27:
+ 909 0187 7374 6F70 		.string	"stop"
+ 909      00
+ 910               	.LC28:
+ 911 018c 5452 4143 		.string	"TRACE stopped"
+ 911      4520 7374 
+ 911      6F70 7065 
+ 911      6400 
+ 912               	.LC29:
+ 913 019a 6D61 736B 		.string	"mask%d"
+ 913      2564 00
+ 914               	.LC30:
+ 915 01a1 6D61 736B 		.string	"mask"
+ 915      00
+ 916               	.LC31:
+ 917 01a6 5359 4E54 		.ascii	"SYNTAX: trace"
+ 917      4158 3A20 
+ 917      7472 6163 
+ 917      65
+ 918 01b3 205B 7072 		.string	" [print [<size>]|oneshot|circular|size <size>|stop|mask [<tag>]]"
+ 918      696E 7420 
+ 918      5B3C 7369 
+ 918      7A65 3E5D 
+ 918      7C6F 6E65 
+ 919               		.text
+ 920               	.global	NutTraceTerminal
+ 921               		.type	NutTraceTerminal, @function
+ 922               	NutTraceTerminal:
+ 923 0662 EF92      		push r14
+ 924 0664 FF92      		push r15
+ 925 0666 0F93      		push r16
+ 926 0668 1F93      		push r17
+ 927 066a DF93      		push r29
+ 928 066c CF93      		push r28
+ 929 066e 00D0      		rcall .
+ 930 0670 CDB7      		in r28,__SP_L__
+ 931 0672 DEB7      		in r29,__SP_H__
+ 932               	/* prologue: function */
+ 933               	/* frame size = 2 */
+ 934 0674 8C01      		movw r16,r24
+ 935 0676 7E01      		movw r14,r28
+ 936 0678 0894      		sec
+ 937 067a E11C      		adc r14,__zero_reg__
+ 938 067c F11C      		adc r15,__zero_reg__
+ 939 067e FF92      		push r15
+ 940 0680 EF92      		push r14
+ 941 0682 80E0      		ldi r24,lo8(.LC20)
+ 942 0684 90E0      		ldi r25,hi8(.LC20)
+ 943 0686 9F93      		push r25
+ 944 0688 8F93      		push r24
+ 945 068a 1F93      		push r17
+ 946 068c 0F93      		push r16
+ 947 068e 0E94 0000 		call sscanf
+ 948 0692 2DB7      		in r18,__SP_L__
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 19
+
+
+ 949 0694 3EB7      		in r19,__SP_H__
+ 950 0696 2A5F      		subi r18,lo8(-(6))
+ 951 0698 3F4F      		sbci r19,hi8(-(6))
+ 952 069a 0FB6      		in __tmp_reg__,__SREG__
+ 953 069c F894      		cli
+ 954 069e 3EBF      		out __SP_H__,r19
+ 955 06a0 0FBE      		out __SREG__,__tmp_reg__
+ 956 06a2 2DBF      		out __SP_L__,r18
+ 957 06a4 0197      		sbiw r24,1
+ 958 06a6 01F4      		brne .L69
+ 959 06a8 8981      		ldd r24,Y+1
+ 960 06aa 9A81      		ldd r25,Y+2
+ 961 06ac 00C0      		rjmp .L82
+ 962               	.L69:
+ 963 06ae 45E0      		ldi r20,lo8(5)
+ 964 06b0 50E0      		ldi r21,hi8(5)
+ 965 06b2 60E0      		ldi r22,lo8(.LC21)
+ 966 06b4 70E0      		ldi r23,hi8(.LC21)
+ 967 06b6 C801      		movw r24,r16
+ 968 06b8 0E94 0000 		call strncmp
+ 969 06bc 0097      		sbiw r24,0
+ 970 06be 01F4      		brne .L71
+ 971 06c0 80E0      		ldi r24,lo8(0)
+ 972 06c2 90E0      		ldi r25,hi8(0)
+ 973               	.L82:
+ 974 06c4 0E94 0000 		call NutTracePrint
+ 975 06c8 00C0      		rjmp .L80
+ 976               	.L71:
+ 977 06ca 47E0      		ldi r20,lo8(7)
+ 978 06cc 50E0      		ldi r21,hi8(7)
+ 979 06ce 60E0      		ldi r22,lo8(.LC22)
+ 980 06d0 70E0      		ldi r23,hi8(.LC22)
+ 981 06d2 C801      		movw r24,r16
+ 982 06d4 0E94 0000 		call strncmp
+ 983 06d8 0097      		sbiw r24,0
+ 984 06da 01F4      		brne .L72
+ 985 06dc 62E0      		ldi r22,lo8(2)
+ 986 06de 00C0      		rjmp .L85
+ 987               	.L72:
+ 988 06e0 48E0      		ldi r20,lo8(8)
+ 989 06e2 50E0      		ldi r21,hi8(8)
+ 990 06e4 60E0      		ldi r22,lo8(.LC24)
+ 991 06e6 70E0      		ldi r23,hi8(.LC24)
+ 992 06e8 C801      		movw r24,r16
+ 993 06ea 0E94 0000 		call strncmp
+ 994 06ee 0097      		sbiw r24,0
+ 995 06f0 01F4      		brne .L73
+ 996 06f2 61E0      		ldi r22,lo8(1)
+ 997               	.L85:
+ 998 06f4 8091 0000 		lds r24,trace_size
+ 999 06f8 9091 0000 		lds r25,(trace_size)+1
+ 1000 06fc 0E94 0000 		call NutTraceInit
+ 1001 0700 E091 0000 		lds r30,trace_mode
+ 1002 0704 FF27      		clr r31
+ 1003 0706 E7FD      		sbrc r30,7
+ 1004 0708 F095      		com r31
+ 1005 070a EE0F      		lsl r30
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 20
+
+
+ 1006 070c FF1F      		rol r31
+ 1007 070e E050      		subi r30,lo8(-(mode_string))
+ 1008 0710 F040      		sbci r31,hi8(-(mode_string))
+ 1009 0712 8081      		ld r24,Z
+ 1010 0714 9181      		ldd r25,Z+1
+ 1011 0716 9F93      		push r25
+ 1012 0718 8F93      		push r24
+ 1013 071a 80E0      		ldi r24,lo8(.LC23)
+ 1014 071c 90E0      		ldi r25,hi8(.LC23)
+ 1015 071e 00C0      		rjmp .L84
+ 1016               	.L73:
+ 1017 0720 FF92      		push r15
+ 1018 0722 EF92      		push r14
+ 1019 0724 80E0      		ldi r24,lo8(.LC25)
+ 1020 0726 90E0      		ldi r25,hi8(.LC25)
+ 1021 0728 9F93      		push r25
+ 1022 072a 8F93      		push r24
+ 1023 072c 1F93      		push r17
+ 1024 072e 0F93      		push r16
+ 1025 0730 0E94 0000 		call sscanf
+ 1026 0734 2DB7      		in r18,__SP_L__
+ 1027 0736 3EB7      		in r19,__SP_H__
+ 1028 0738 2A5F      		subi r18,lo8(-(6))
+ 1029 073a 3F4F      		sbci r19,hi8(-(6))
+ 1030 073c 0FB6      		in __tmp_reg__,__SREG__
+ 1031 073e F894      		cli
+ 1032 0740 3EBF      		out __SP_H__,r19
+ 1033 0742 0FBE      		out __SREG__,__tmp_reg__
+ 1034 0744 2DBF      		out __SP_L__,r18
+ 1035 0746 0197      		sbiw r24,1
+ 1036 0748 01F4      		brne .L74
+ 1037 074a 6091 0000 		lds r22,trace_mode
+ 1038 074e 8981      		ldd r24,Y+1
+ 1039 0750 9A81      		ldd r25,Y+2
+ 1040 0752 0E94 0000 		call NutTraceInit
+ 1041 0756 9F93      		push r25
+ 1042 0758 8F93      		push r24
+ 1043 075a 80E0      		ldi r24,lo8(.LC26)
+ 1044 075c 90E0      		ldi r25,hi8(.LC26)
+ 1045               	.L84:
+ 1046 075e 9F93      		push r25
+ 1047 0760 8F93      		push r24
+ 1048 0762 0E94 0000 		call printf
+ 1049 0766 0F90      		pop __tmp_reg__
+ 1050 0768 0F90      		pop __tmp_reg__
+ 1051 076a 0F90      		pop __tmp_reg__
+ 1052 076c 0F90      		pop __tmp_reg__
+ 1053 076e 00C0      		rjmp .L80
+ 1054               	.L74:
+ 1055 0770 44E0      		ldi r20,lo8(4)
+ 1056 0772 50E0      		ldi r21,hi8(4)
+ 1057 0774 60E0      		ldi r22,lo8(.LC27)
+ 1058 0776 70E0      		ldi r23,hi8(.LC27)
+ 1059 0778 C801      		movw r24,r16
+ 1060 077a 0E94 0000 		call strncmp
+ 1061 077e 0097      		sbiw r24,0
+ 1062 0780 01F4      		brne .L75
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 21
+
+
+ 1063 0782 0E94 0000 		call NutTraceStop
+ 1064 0786 80E0      		ldi r24,lo8(.LC28)
+ 1065 0788 90E0      		ldi r25,hi8(.LC28)
+ 1066 078a 00C0      		rjmp .L83
+ 1067               	.L75:
+ 1068 078c FF92      		push r15
+ 1069 078e EF92      		push r14
+ 1070 0790 80E0      		ldi r24,lo8(.LC29)
+ 1071 0792 90E0      		ldi r25,hi8(.LC29)
+ 1072 0794 9F93      		push r25
+ 1073 0796 8F93      		push r24
+ 1074 0798 1F93      		push r17
+ 1075 079a 0F93      		push r16
+ 1076 079c 0E94 0000 		call sscanf
+ 1077 07a0 2DB7      		in r18,__SP_L__
+ 1078 07a2 3EB7      		in r19,__SP_H__
+ 1079 07a4 2A5F      		subi r18,lo8(-(6))
+ 1080 07a6 3F4F      		sbci r19,hi8(-(6))
+ 1081 07a8 0FB6      		in __tmp_reg__,__SREG__
+ 1082 07aa F894      		cli
+ 1083 07ac 3EBF      		out __SP_H__,r19
+ 1084 07ae 0FBE      		out __SREG__,__tmp_reg__
+ 1085 07b0 2DBF      		out __SP_L__,r18
+ 1086 07b2 0197      		sbiw r24,1
+ 1087 07b4 01F4      		brne .L76
+ 1088 07b6 8981      		ldd r24,Y+1
+ 1089 07b8 9A81      		ldd r25,Y+2
+ 1090 07ba 8B30      		cpi r24,11
+ 1091 07bc 9105      		cpc r25,__zero_reg__
+ 1092 07be 04F4      		brge .L81
+ 1093 07c0 FC01      		movw r30,r24
+ 1094 07c2 E050      		subi r30,lo8(-(trace_mask))
+ 1095 07c4 F040      		sbci r31,hi8(-(trace_mask))
+ 1096 07c6 90E0      		ldi r25,lo8(0)
+ 1097 07c8 8081      		ld r24,Z
+ 1098 07ca 8823      		tst r24
+ 1099 07cc 01F4      		brne .L78
+ 1100 07ce 91E0      		ldi r25,lo8(1)
+ 1101               	.L78:
+ 1102 07d0 9083      		st Z,r25
+ 1103 07d2 0E94 0000 		call NutTraceClear
+ 1104 07d6 00C0      		rjmp .L81
+ 1105               	.L76:
+ 1106 07d8 44E0      		ldi r20,lo8(4)
+ 1107 07da 50E0      		ldi r21,hi8(4)
+ 1108 07dc 60E0      		ldi r22,lo8(.LC30)
+ 1109 07de 70E0      		ldi r23,hi8(.LC30)
+ 1110 07e0 C801      		movw r24,r16
+ 1111 07e2 0E94 0000 		call strncmp
+ 1112 07e6 0097      		sbiw r24,0
+ 1113 07e8 01F4      		brne .L79
+ 1114               	.L81:
+ 1115 07ea 0E94 0000 		call NutTraceMaskPrint
+ 1116 07ee 00C0      		rjmp .L80
+ 1117               	.L79:
+ 1118 07f0 0E94 0000 		call NutTraceStatusPrint
+ 1119 07f4 80E0      		ldi r24,lo8(.LC31)
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 22
+
+
+ 1120 07f6 90E0      		ldi r25,hi8(.LC31)
+ 1121               	.L83:
+ 1122 07f8 0E94 0000 		call puts
+ 1123               	.L80:
+ 1124               	/* epilogue start */
+ 1125 07fc 0F90      		pop __tmp_reg__
+ 1126 07fe 0F90      		pop __tmp_reg__
+ 1127 0800 CF91      		pop r28
+ 1128 0802 DF91      		pop r29
+ 1129 0804 1F91      		pop r17
+ 1130 0806 0F91      		pop r16
+ 1131 0808 FF90      		pop r15
+ 1132 080a EF90      		pop r14
+ 1133 080c 0895      		ret
+ 1134               		.size	NutTraceTerminal, .-NutTraceTerminal
+ 1135               	.global	micros_high
+ 1136               	.global	micros_high
+ 1137               		.section .bss
+ 1138               		.type	micros_high, @object
+ 1139               		.size	micros_high, 2
+ 1140               	micros_high:
+ 1141 0000 0000      		.skip 2,0
+ 1142               	.global	trace_items
+ 1143               	.global	trace_items
+ 1144               		.type	trace_items, @object
+ 1145               		.size	trace_items, 2
+ 1146               	trace_items:
+ 1147 0002 0000      		.skip 2,0
+ 1148               	.global	trace_current
+ 1149               	.global	trace_current
+ 1150               		.type	trace_current, @object
+ 1151               		.size	trace_current, 2
+ 1152               	trace_current:
+ 1153 0004 0000      		.skip 2,0
+ 1154               	.global	trace_head
+ 1155               	.global	trace_head
+ 1156               		.type	trace_head, @object
+ 1157               		.size	trace_head, 2
+ 1158               	trace_head:
+ 1159 0006 0000      		.skip 2,0
+ 1160               	.global	trace_size
+ 1161               	.global	trace_size
+ 1162               		.type	trace_size, @object
+ 1163               		.size	trace_size, 2
+ 1164               	trace_size:
+ 1165 0008 0000      		.skip 2,0
+ 1166               	.global	trace_isfull
+ 1167               	.global	trace_isfull
+ 1168               		.type	trace_isfull, @object
+ 1169               		.size	trace_isfull, 1
+ 1170               	trace_isfull:
+ 1171 000a 00        		.skip 1,0
+ 1172               	.global	trace_isinit
+ 1173               	.global	trace_isinit
+ 1174               		.type	trace_isinit, @object
+ 1175               		.size	trace_isinit, 1
+ 1176               	trace_isinit:
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 23
+
+
+ 1177 000b 00        		.skip 1,0
+ 1178               	.global	trace_mode
+ 1179               	.global	trace_mode
+ 1180               		.type	trace_mode, @object
+ 1181               		.size	trace_mode, 1
+ 1182               	trace_mode:
+ 1183 000c 00        		.skip 1,0
+ 1184               	.global	trace_mask
+ 1185               		.data
+ 1186               		.type	trace_mask, @object
+ 1187               		.size	trace_mask, 11
+ 1188               	trace_mask:
+ 1189 01f4 00        		.byte	0
+ 1190 01f5 00        		.byte	0
+ 1191 01f6 01        		.byte	1
+ 1192 01f7 01        		.byte	1
+ 1193 01f8 01        		.byte	1
+ 1194 01f9 01        		.byte	1
+ 1195 01fa 00        		.byte	0
+ 1196 01fb 00        		.byte	0
+ 1197 01fc 01        		.byte	1
+ 1198 01fd 01        		.byte	1
+ 1199 01fe 01        		.byte	1
+ 1200               	.global	tag_string
+ 1201               	.LC32:
+ 1202 01ff 4372 6974 		.string	"Critical  Enter"
+ 1202      6963 616C 
+ 1202      2020 456E 
+ 1202      7465 7200 
+ 1203               	.LC33:
+ 1204 020f 4372 6974 		.string	"Critical  Exit"
+ 1204      6963 616C 
+ 1204      2020 4578 
+ 1204      6974 00
+ 1205               	.LC34:
+ 1206 021e 5468 7265 		.string	"Thread    Yield"
+ 1206      6164 2020 
+ 1206      2020 5969 
+ 1206      656C 6400 
+ 1207               	.LC35:
+ 1208 022e 5468 7265 		.string	"Thread    SetPrio"
+ 1208      6164 2020 
+ 1208      2020 5365 
+ 1208      7450 7269 
+ 1208      6F00 
+ 1209               	.LC36:
+ 1210 0240 5468 7265 		.string	"Thread    Wait"
+ 1210      6164 2020 
+ 1210      2020 5761 
+ 1210      6974 00
+ 1211               	.LC37:
+ 1212 024f 5468 7265 		.string	"Thread    Sleep"
+ 1212      6164 2020 
+ 1212      2020 536C 
+ 1212      6565 7000 
+ 1213               	.LC38:
+ 1214 025f 496E 7465 		.string	"Interrupt Enter"
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 24
+
+
+ 1214      7272 7570 
+ 1214      7420 456E 
+ 1214      7465 7200 
+ 1215               	.LC39:
+ 1216 026f 496E 7465 		.string	"Interrupt Exit"
+ 1216      7272 7570 
+ 1216      7420 4578 
+ 1216      6974 00
+ 1217               	.LC40:
+ 1218 027e 5472 6163 		.string	"Trace Start"
+ 1218      6520 5374 
+ 1218      6172 7400 
+ 1219               	.LC41:
+ 1220 028a 5472 6163 		.string	"Trace Stop"
+ 1220      6520 5374 
+ 1220      6F70 00
+ 1221               	.LC42:
+ 1222 0295 5573 6572 		.string	"User *"
+ 1222      202A 00
+ 1223               		.type	tag_string, @object
+ 1224               		.size	tag_string, 22
+ 1225               	tag_string:
+ 1226 029c 0000      		.word	.LC32
+ 1227 029e 0000      		.word	.LC33
+ 1228 02a0 0000      		.word	.LC34
+ 1229 02a2 0000      		.word	.LC35
+ 1230 02a4 0000      		.word	.LC36
+ 1231 02a6 0000      		.word	.LC37
+ 1232 02a8 0000      		.word	.LC38
+ 1233 02aa 0000      		.word	.LC39
+ 1234 02ac 0000      		.word	.LC40
+ 1235 02ae 0000      		.word	.LC41
+ 1236 02b0 0000      		.word	.LC42
+ 1237               	.global	int_string
+ 1238               	.LC43:
+ 1239 02b2 5541 5254 		.string	"UART0_CTS"
+ 1239      305F 4354 
+ 1239      5300 
+ 1240               	.LC44:
+ 1241 02bc 5541 5254 		.string	"UART0_RXCOMPL"
+ 1241      305F 5258 
+ 1241      434F 4D50 
+ 1241      4C00 
+ 1242               	.LC45:
+ 1243 02ca 5541 5254 		.string	"UART0_TXEMPTY"
+ 1243      305F 5458 
+ 1243      454D 5054 
+ 1243      5900 
+ 1244               	.LC46:
+ 1245 02d8 5541 5254 		.string	"UART1_CTS"
+ 1245      315F 4354 
+ 1245      5300 
+ 1246               	.LC47:
+ 1247 02e2 5541 5254 		.string	"UART1_RXCOMPL"
+ 1247      315F 5258 
+ 1247      434F 4D50 
+ 1247      4C00 
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 25
+
+
+ 1248               	.LC48:
+ 1249 02f0 5541 5254 		.string	"UART1_TXEMPTY"
+ 1249      315F 5458 
+ 1249      454D 5054 
+ 1249      5900 
+ 1250               	.LC49:
+ 1251 02fe 5449 4D45 		.string	"TIMER0_OVERFL"
+ 1251      5230 5F4F 
+ 1251      5645 5246 
+ 1251      4C00 
+ 1252               	.LC50:
+ 1253 030c 5449 4D45 		.string	"TIMER1_OVERFL"
+ 1253      5231 5F4F 
+ 1253      5645 5246 
+ 1253      4C00 
+ 1254               	.LC51:
+ 1255 031a 5355 4152 		.string	"SUART_TIMER"
+ 1255      545F 5449 
+ 1255      4D45 5200 
+ 1256               	.LC52:
+ 1257 0326 5355 4152 		.string	"SUART_RX"
+ 1257      545F 5258 
+ 1257      00
+ 1258               		.type	int_string, @object
+ 1259               		.size	int_string, 20
+ 1260               	int_string:
+ 1261 032f 0000      		.word	.LC43
+ 1262 0331 0000      		.word	.LC44
+ 1263 0333 0000      		.word	.LC45
+ 1264 0335 0000      		.word	.LC46
+ 1265 0337 0000      		.word	.LC47
+ 1266 0339 0000      		.word	.LC48
+ 1267 033b 0000      		.word	.LC49
+ 1268 033d 0000      		.word	.LC50
+ 1269 033f 0000      		.word	.LC51
+ 1270 0341 0000      		.word	.LC52
+ 1271               	.global	mode_string
+ 1272               	.LC53:
+ 1273 0343 4349 5243 		.string	"CIRCULAR"
+ 1273      554C 4152 
+ 1273      00
+ 1274               	.LC54:
+ 1275 034c 4F4E 4553 		.string	"ONESHOT"
+ 1275      484F 5400 
+ 1276               		.type	mode_string, @object
+ 1277               		.size	mode_string, 6
+ 1278               	mode_string:
+ 1279 0354 0000      		.word	.LC3
+ 1280 0356 0000      		.word	.LC53
+ 1281 0358 0000      		.word	.LC54
+ 1282               		.comm user_string,20,1
+GAS LISTING C:\Temp/ccfSWvvG.s 			page 26
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tracer.c
+  C:\Temp/ccfSWvvG.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccfSWvvG.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccfSWvvG.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccfSWvvG.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccfSWvvG.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccfSWvvG.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccfSWvvG.s:12     .text:00000000 NutTraceTimer1IRQ
+  C:\Temp/ccfSWvvG.s:1140   .bss:00000000 micros_high
+  C:\Temp/ccfSWvvG.s:25     .text:00000014 NutTraceClear
+  C:\Temp/ccfSWvvG.s:1170   .bss:0000000a trace_isfull
+  C:\Temp/ccfSWvvG.s:1158   .bss:00000006 trace_head
+  C:\Temp/ccfSWvvG.s:1182   .bss:0000000c trace_mode
+  C:\Temp/ccfSWvvG.s:1188   .data:000001f4 trace_mask
+  C:\Temp/ccfSWvvG.s:1146   .bss:00000002 trace_items
+  C:\Temp/ccfSWvvG.s:1152   .bss:00000004 trace_current
+  C:\Temp/ccfSWvvG.s:1164   .bss:00000008 trace_size
+  C:\Temp/ccfSWvvG.s:89     .text:00000096 NutTraceStop
+  C:\Temp/ccfSWvvG.s:163    .text:00000128 NutTraceGetPC
+  C:\Temp/ccfSWvvG.s:188    .text:0000014c NutTraceMaskSet
+  C:\Temp/ccfSWvvG.s:204    .text:0000015e NutTraceMaskClear
+  C:\Temp/ccfSWvvG.s:219    .text:0000016e NutTraceRegisterUserTag
+                            *COM*:00000014 user_string
+  C:\Temp/ccfSWvvG.s:254    .text:0000018e NutTraceMaskPrint
+  C:\Temp/ccfSWvvG.s:1225   .data:0000029c tag_string
+  C:\Temp/ccfSWvvG.s:348    .text:0000020c NutTracePrint
+  C:\Temp/ccfSWvvG.s:1260   .data:0000032f int_string
+  C:\Temp/ccfSWvvG.s:747    .text:00000526 NutTraceStatusPrint
+  C:\Temp/ccfSWvvG.s:1278   .data:00000354 mode_string
+  C:\Temp/ccfSWvvG.s:812    .text:000005b0 NutTraceInit
+  C:\Temp/ccfSWvvG.s:1176   .bss:0000000b trace_isinit
+  C:\Temp/ccfSWvvG.s:922    .text:00000662 NutTraceTerminal
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+puts
+printf
+__udivmodsi4
+sig_OVERFLOW1
+NutRegisterIrqHandler
+heapFreeList
+NutHeapRootFree
+NutHeapRootAlloc
+sscanf
+strncmp

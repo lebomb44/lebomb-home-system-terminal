@@ -1,0 +1,234 @@
+GAS LISTING C:\Temp/ccE6kE3a.s 			page 1
+
+
+   1               		.file	"base64_decode.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutDecodeBase64
+  12               		.type	NutDecodeBase64, @function
+  13               	NutDecodeBase64:
+  14 0000 CF93      		push r28
+  15 0002 DF93      		push r29
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0004 AC01      		movw r20,r24
+  19 0006 EC01      		movw r28,r24
+  20 0008 DC01      		movw r26,r24
+  21 000a 2FEF      		ldi r18,lo8(-1)
+  22 000c 80E0      		ldi r24,lo8(0)
+  23 000e 00C0      		rjmp .L2
+  24               	.L8:
+  25 0010 E032      		cpi r30,lo8(32)
+  26 0012 04F0      		brlt .L3
+  27 0014 FF27      		clr r31
+  28 0016 E7FD      		sbrc r30,7
+  29 0018 F095      		com r31
+  30 001a E050      		subi r30,lo8(-(base64dtab-32))
+  31 001c F040      		sbci r31,hi8(-(base64dtab-32))
+  32               	/* #APP */
+  33               	 ;  128 "../../nut/gorp/base64/base64_decode.c" 1
+  34 001e E491      		lpm r30, Z
+  35               		
+  36               	 ;  0 "" 2
+  37               	/* #NOAPP */
+  38 0020 EF3F      		cpi r30,lo8(-1)
+  39 0022 01F0      		breq .L3
+  40 0024 382F      		mov r19,r24
+  41 0026 3F5F      		subi r19,lo8(-(1))
+  42 0028 8230      		cpi r24,lo8(2)
+  43 002a 01F0      		breq .L6
+  44 002c 8330      		cpi r24,lo8(3)
+  45 002e 01F0      		breq .L7
+  46 0030 8130      		cpi r24,lo8(1)
+  47 0032 01F4      		brne .L10
+  48               	.L5:
+  49 0034 8E2F      		mov r24,r30
+  50 0036 9927      		clr r25
+  51 0038 87FD      		sbrc r24,7
+  52 003a 9095      		com r25
+  53 003c 8073      		andi r24,lo8(48)
+  54 003e 9070      		andi r25,hi8(48)
+  55 0040 74E0      		ldi r23,4
+  56 0042 9595      	1:	asr r25
+  57 0044 8795      		ror r24
+GAS LISTING C:\Temp/ccE6kE3a.s 			page 2
+
+
+  58 0046 7A95      		dec r23
+  59 0048 01F4      		brne 1b
+  60 004a 220F      		lsl r18
+  61 004c 220F      		lsl r18
+  62               	.L11:
+  63 004e 282B      		or r18,r24
+  64 0050 2D93      		st X+,r18
+  65               	.L10:
+  66 0052 2E2F      		mov r18,r30
+  67 0054 832F      		mov r24,r19
+  68 0056 00C0      		rjmp .L3
+  69               	.L6:
+  70 0058 8E2F      		mov r24,r30
+  71 005a 9927      		clr r25
+  72 005c 87FD      		sbrc r24,7
+  73 005e 9095      		com r25
+  74 0060 8C73      		andi r24,lo8(60)
+  75 0062 9070      		andi r25,hi8(60)
+  76 0064 9595      		asr r25
+  77 0066 8795      		ror r24
+  78 0068 9595      		asr r25
+  79 006a 8795      		ror r24
+  80 006c 2295      		swap r18
+  81 006e 207F      		andi r18,lo8(-16)
+  82 0070 00C0      		rjmp .L11
+  83               	.L7:
+  84 0072 2295      		swap r18
+  85 0074 220F      		lsl r18
+  86 0076 220F      		lsl r18
+  87 0078 207C      		andi r18,lo8(-64)
+  88 007a 2E2B      		or r18,r30
+  89 007c 2D93      		st X+,r18
+  90 007e 2E2F      		mov r18,r30
+  91 0080 80E0      		ldi r24,lo8(0)
+  92               	.L3:
+  93 0082 2196      		adiw r28,1
+  94               	.L2:
+  95 0084 E881      		ld r30,Y
+  96 0086 EE23      		tst r30
+  97 0088 01F0      		breq .+2
+  98 008a 00C0      		rjmp .L8
+  99 008c 1C92      		st X,__zero_reg__
+ 100 008e CA01      		movw r24,r20
+ 101               	/* epilogue start */
+ 102 0090 DF91      		pop r29
+ 103 0092 CF91      		pop r28
+ 104 0094 0895      		ret
+ 105               		.size	NutDecodeBase64, .-NutDecodeBase64
+ 106               		.section	.progmem.data,"a",@progbits
+ 107               		.type	base64dtab, @object
+ 108               		.size	base64dtab, 96
+ 109               	base64dtab:
+ 110 0000 FF        		.byte	-1
+ 111 0001 FF        		.byte	-1
+ 112 0002 FF        		.byte	-1
+ 113 0003 FF        		.byte	-1
+ 114 0004 FF        		.byte	-1
+GAS LISTING C:\Temp/ccE6kE3a.s 			page 3
+
+
+ 115 0005 FF        		.byte	-1
+ 116 0006 FF        		.byte	-1
+ 117 0007 FF        		.byte	-1
+ 118 0008 FF        		.byte	-1
+ 119 0009 FF        		.byte	-1
+ 120 000a FF        		.byte	-1
+ 121 000b 3E        		.byte	62
+ 122 000c FF        		.byte	-1
+ 123 000d FF        		.byte	-1
+ 124 000e FF        		.byte	-1
+ 125 000f 3F        		.byte	63
+ 126 0010 34        		.byte	52
+ 127 0011 35        		.byte	53
+ 128 0012 36        		.byte	54
+ 129 0013 37        		.byte	55
+ 130 0014 38        		.byte	56
+ 131 0015 39        		.byte	57
+ 132 0016 3A        		.byte	58
+ 133 0017 3B        		.byte	59
+ 134 0018 3C        		.byte	60
+ 135 0019 3D        		.byte	61
+ 136 001a FF        		.byte	-1
+ 137 001b FF        		.byte	-1
+ 138 001c FF        		.byte	-1
+ 139 001d FF        		.byte	-1
+ 140 001e FF        		.byte	-1
+ 141 001f FF        		.byte	-1
+ 142 0020 FF        		.byte	-1
+ 143 0021 00        		.byte	0
+ 144 0022 01        		.byte	1
+ 145 0023 02        		.byte	2
+ 146 0024 03        		.byte	3
+ 147 0025 04        		.byte	4
+ 148 0026 05        		.byte	5
+ 149 0027 06        		.byte	6
+ 150 0028 07        		.byte	7
+ 151 0029 08        		.byte	8
+ 152 002a 09        		.byte	9
+ 153 002b 0A        		.byte	10
+ 154 002c 0B        		.byte	11
+ 155 002d 0C        		.byte	12
+ 156 002e 0D        		.byte	13
+ 157 002f 0E        		.byte	14
+ 158 0030 0F        		.byte	15
+ 159 0031 10        		.byte	16
+ 160 0032 11        		.byte	17
+ 161 0033 12        		.byte	18
+ 162 0034 13        		.byte	19
+ 163 0035 14        		.byte	20
+ 164 0036 15        		.byte	21
+ 165 0037 16        		.byte	22
+ 166 0038 17        		.byte	23
+ 167 0039 18        		.byte	24
+ 168 003a 19        		.byte	25
+ 169 003b FF        		.byte	-1
+ 170 003c FF        		.byte	-1
+ 171 003d FF        		.byte	-1
+GAS LISTING C:\Temp/ccE6kE3a.s 			page 4
+
+
+ 172 003e FF        		.byte	-1
+ 173 003f FF        		.byte	-1
+ 174 0040 FF        		.byte	-1
+ 175 0041 1A        		.byte	26
+ 176 0042 1B        		.byte	27
+ 177 0043 1C        		.byte	28
+ 178 0044 1D        		.byte	29
+ 179 0045 1E        		.byte	30
+ 180 0046 1F        		.byte	31
+ 181 0047 20        		.byte	32
+ 182 0048 21        		.byte	33
+ 183 0049 22        		.byte	34
+ 184 004a 23        		.byte	35
+ 185 004b 24        		.byte	36
+ 186 004c 25        		.byte	37
+ 187 004d 26        		.byte	38
+ 188 004e 27        		.byte	39
+ 189 004f 28        		.byte	40
+ 190 0050 29        		.byte	41
+ 191 0051 2A        		.byte	42
+ 192 0052 2B        		.byte	43
+ 193 0053 2C        		.byte	44
+ 194 0054 2D        		.byte	45
+ 195 0055 2E        		.byte	46
+ 196 0056 2F        		.byte	47
+ 197 0057 30        		.byte	48
+ 198 0058 31        		.byte	49
+ 199 0059 32        		.byte	50
+ 200 005a 33        		.byte	51
+ 201 005b FF        		.byte	-1
+ 202 005c FF        		.byte	-1
+ 203 005d FF        		.byte	-1
+ 204 005e FF        		.byte	-1
+ 205 005f FF        		.byte	-1
+GAS LISTING C:\Temp/ccE6kE3a.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 base64_decode.c
+  C:\Temp/ccE6kE3a.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccE6kE3a.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccE6kE3a.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccE6kE3a.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccE6kE3a.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccE6kE3a.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccE6kE3a.s:13     .text:00000000 NutDecodeBase64
+  C:\Temp/ccE6kE3a.s:109    .progmem.data:00000000 base64dtab
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

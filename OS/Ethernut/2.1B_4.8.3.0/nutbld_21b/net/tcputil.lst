@@ -1,0 +1,157 @@
+GAS LISTING C:\Temp/ccTf8BGa.s 			page 1
+
+
+   1               		.file	"tcputil.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	IsInLimits
+  12               		.type	IsInLimits, @function
+  13               	IsInLimits:
+  14 0000 EF92      		push r14
+  15 0002 FF92      		push r15
+  16 0004 0F93      		push r16
+  17 0006 1F93      		push r17
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 0008 E216      		cp r14,r18
+  21 000a F306      		cpc r15,r19
+  22 000c 0407      		cpc r16,r20
+  23 000e 1507      		cpc r17,r21
+  24 0010 00F0      		brlo .L2
+  25 0012 6217      		cp r22,r18
+  26 0014 7307      		cpc r23,r19
+  27 0016 8407      		cpc r24,r20
+  28 0018 9507      		cpc r25,r21
+  29 001a 00F0      		brlo .L3
+  30 001c 20E0      		ldi r18,lo8(0)
+  31 001e 30E0      		ldi r19,hi8(0)
+  32 0020 E616      		cp r14,r22
+  33 0022 F706      		cpc r15,r23
+  34 0024 0807      		cpc r16,r24
+  35 0026 1907      		cpc r17,r25
+  36 0028 00F0      		brlo .L5
+  37 002a 00C0      		rjmp .L8
+  38               	.L2:
+  39 002c 2617      		cp r18,r22
+  40 002e 3707      		cpc r19,r23
+  41 0030 4807      		cpc r20,r24
+  42 0032 5907      		cpc r21,r25
+  43 0034 00F0      		brlo .L3
+  44 0036 20E0      		ldi r18,lo8(0)
+  45 0038 30E0      		ldi r19,hi8(0)
+  46 003a 6E15      		cp r22,r14
+  47 003c 7F05      		cpc r23,r15
+  48 003e 8007      		cpc r24,r16
+  49 0040 9107      		cpc r25,r17
+  50 0042 00F0      		brlo .L5
+  51               	.L8:
+  52 0044 21E0      		ldi r18,lo8(1)
+  53 0046 30E0      		ldi r19,hi8(1)
+  54 0048 00C0      		rjmp .L5
+  55               	.L3:
+  56 004a 20E0      		ldi r18,lo8(0)
+  57 004c 30E0      		ldi r19,hi8(0)
+GAS LISTING C:\Temp/ccTf8BGa.s 			page 2
+
+
+  58               	.L5:
+  59 004e C901      		movw r24,r18
+  60               	/* epilogue start */
+  61 0050 1F91      		pop r17
+  62 0052 0F91      		pop r16
+  63 0054 FF90      		pop r15
+  64 0056 EF90      		pop r14
+  65 0058 0895      		ret
+  66               		.size	IsInLimits, .-IsInLimits
+  67               	.global	NutTcpCalcRtt
+  68               		.type	NutTcpCalcRtt, @function
+  69               	NutTcpCalcRtt:
+  70 005a 0F93      		push r16
+  71 005c 1F93      		push r17
+  72 005e CF93      		push r28
+  73 0060 DF93      		push r29
+  74               	/* prologue: function */
+  75               	/* frame size = 0 */
+  76 0062 EC01      		movw r28,r24
+  77 0064 8C01      		movw r16,r24
+  78 0066 025A      		subi r16,lo8(-(94))
+  79 0068 1F4F      		sbci r17,hi8(-(94))
+  80 006a F801      		movw r30,r16
+  81 006c 8081      		ld r24,Z
+  82 006e 9181      		ldd r25,Z+1
+  83 0070 892B      		or r24,r25
+  84 0072 01F0      		breq .L13
+  85 0074 0E94 0000 		call NutGetMillis
+  86 0078 C85A      		subi r28,lo8(-(88))
+  87 007a DF4F      		sbci r29,hi8(-(88))
+  88 007c 8881      		ld r24,Y
+  89 007e 9981      		ldd r25,Y+1
+  90 0080 C855      		subi r28,lo8(-(-88))
+  91 0082 D040      		sbci r29,hi8(-(-88))
+  92 0084 880F      		lsl r24
+  93 0086 991F      		rol r25
+  94 0088 F801      		movw r30,r16
+  95 008a 2081      		ld r18,Z
+  96 008c 3181      		ldd r19,Z+1
+  97 008e 821B      		sub r24,r18
+  98 0090 930B      		sbc r25,r19
+  99 0092 860F      		add r24,r22
+ 100 0094 971F      		adc r25,r23
+ 101 0096 880F      		lsl r24
+ 102 0098 991F      		rol r25
+ 103 009a 880F      		lsl r24
+ 104 009c 991F      		rol r25
+ 105 009e F7E0      		ldi r31,hi8(2000)
+ 106 00a0 803D      		cpi r24,lo8(2000)
+ 107 00a2 9F07      		cpc r25,r31
+ 108 00a4 00F4      		brsh .L11
+ 109 00a6 88EC      		ldi r24,lo8(200)
+ 110 00a8 90E0      		ldi r25,hi8(200)
+ 111 00aa 00C0      		rjmp .L12
+ 112               	.L11:
+ 113 00ac 6AE0      		ldi r22,lo8(10)
+ 114 00ae 70E0      		ldi r23,hi8(10)
+GAS LISTING C:\Temp/ccTf8BGa.s 			page 3
+
+
+ 115 00b0 0E94 0000 		call __udivmodhi4
+ 116 00b4 CB01      		movw r24,r22
+ 117               	.L12:
+ 118 00b6 C85A      		subi r28,lo8(-(88))
+ 119 00b8 DF4F      		sbci r29,hi8(-(88))
+ 120 00ba 9983      		std Y+1,r25
+ 121 00bc 8883      		st Y,r24
+ 122               	.L13:
+ 123               	/* epilogue start */
+ 124 00be DF91      		pop r29
+ 125 00c0 CF91      		pop r28
+ 126 00c2 1F91      		pop r17
+ 127 00c4 0F91      		pop r16
+ 128 00c6 0895      		ret
+ 129               		.size	NutTcpCalcRtt, .-NutTcpCalcRtt
+GAS LISTING C:\Temp/ccTf8BGa.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tcputil.c
+  C:\Temp/ccTf8BGa.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccTf8BGa.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccTf8BGa.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccTf8BGa.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccTf8BGa.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccTf8BGa.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccTf8BGa.s:13     .text:00000000 IsInLimits
+  C:\Temp/ccTf8BGa.s:69     .text:0000005a NutTcpCalcRtt
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutGetMillis
+__udivmodhi4

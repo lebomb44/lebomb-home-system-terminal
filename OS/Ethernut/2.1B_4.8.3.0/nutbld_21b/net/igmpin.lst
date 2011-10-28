@@ -1,0 +1,62 @@
+GAS LISTING C:\Temp/cct7F5wb.s 			page 1
+
+
+   1               		.file	"igmpin.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutIgmpInput
+  12               		.type	NutIgmpInput, @function
+  13               	NutIgmpInput:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 FB01      		movw r30,r22
+  17 0002 A385      		ldd r26,Z+11
+  18 0004 B485      		ldd r27,Z+12
+  19 0006 1097      		sbiw r26,0
+  20 0008 01F0      		breq .L2
+  21 000a 8585      		ldd r24,Z+13
+  22 000c 9685      		ldd r25,Z+14
+  23 000e 0897      		sbiw r24,8
+  24 0010 04F4      		brge .L3
+  25               	.L2:
+  26 0012 CF01      		movw r24,r30
+  27 0014 0E94 0000 		call NutNetBufFree
+  28 0018 0895      		ret
+  29               	.L3:
+  30 001a 8C91      		ld r24,X
+  31 001c 8131      		cpi r24,lo8(17)
+  32 001e 00F0      		brlo .L5
+  33 0020 8331      		cpi r24,lo8(19)
+  34 0022 00F0      		brlo .L6
+  35 0024 8631      		cpi r24,lo8(22)
+  36 0026 01F0      		breq .L6
+  37               	.L5:
+  38 0028 CF01      		movw r24,r30
+  39 002a 0E94 0000 		call NutNetBufFree
+  40               	.L6:
+  41 002e 0895      		ret
+  42               		.size	NutIgmpInput, .-NutIgmpInput
+GAS LISTING C:\Temp/cct7F5wb.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 igmpin.c
+  C:\Temp/cct7F5wb.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cct7F5wb.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cct7F5wb.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cct7F5wb.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cct7F5wb.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cct7F5wb.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cct7F5wb.s:13     .text:00000000 NutIgmpInput
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutNetBufFree

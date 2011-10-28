@@ -1,0 +1,282 @@
+GAS LISTING C:\Temp/ccana7rn.s 			page 1
+
+
+   1               		.file	"irsony.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	__vector_10
+  12               		.type	__vector_10, @function
+  13               	__vector_10:
+  14 0000 1F92      		push __zero_reg__
+  15 0002 0F92      		push r0
+  16 0004 0FB6      		in r0,__SREG__
+  17 0006 0F92      		push r0
+  18 0008 1124      		clr __zero_reg__
+  19 000a 8F93      		push r24
+  20 000c 9F93      		push r25
+  21               	/* prologue: Signal */
+  22               	/* frame size = 0 */
+  23 000e 80EF      		ldi r24,lo8(-16)
+  24 0010 84BD      		out 68-32,r24
+  25 0012 8091 0000 		lds r24,irticks
+  26 0016 9091 0000 		lds r25,(irticks)+1
+  27 001a 0196      		adiw r24,1
+  28 001c 9093 0000 		sts (irticks)+1,r25
+  29 0020 8093 0000 		sts irticks,r24
+  30 0024 892B      		or r24,r25
+  31 0026 01F4      		brne .L3
+  32 0028 1092 0000 		sts irbitnum,__zero_reg__
+  33 002c 87B7      		in r24,87-32
+  34 002e 8F7B      		andi r24,lo8(-65)
+  35 0030 87BF      		out 87-32,r24
+  36               	.L3:
+  37               	/* epilogue start */
+  38 0032 9F91      		pop r25
+  39 0034 8F91      		pop r24
+  40 0036 0F90      		pop r0
+  41 0038 0FBE      		out __SREG__,r0
+  42 003a 0F90      		pop r0
+  43 003c 1F90      		pop __zero_reg__
+  44 003e 1895      		reti
+  45               		.size	__vector_10, .-__vector_10
+  46               	.global	__vector_5
+  47               		.type	__vector_5, @function
+  48               	__vector_5:
+  49 0040 1F92      		push __zero_reg__
+  50 0042 0F92      		push r0
+  51 0044 0FB6      		in r0,__SREG__
+  52 0046 0F92      		push r0
+  53 0048 0BB6      		in r0,91-32
+  54 004a 0F92      		push r0
+  55 004c 1124      		clr __zero_reg__
+  56 004e 2F93      		push r18
+  57 0050 3F93      		push r19
+GAS LISTING C:\Temp/ccana7rn.s 			page 2
+
+
+  58 0052 4F93      		push r20
+  59 0054 5F93      		push r21
+  60 0056 6F93      		push r22
+  61 0058 7F93      		push r23
+  62 005a 8F93      		push r24
+  63 005c 9F93      		push r25
+  64 005e AF93      		push r26
+  65 0060 BF93      		push r27
+  66 0062 EF93      		push r30
+  67 0064 FF93      		push r31
+  68               	/* prologue: Signal */
+  69               	/* frame size = 0 */
+  70 0066 2091 0000 		lds r18,irticks
+  71 006a 3091 0000 		lds r19,(irticks)+1
+  72 006e 1092 0000 		sts (irticks)+1,__zero_reg__
+  73 0072 1092 0000 		sts irticks,__zero_reg__
+  74 0076 8091 0000 		lds r24,irbitnum
+  75 007a 0C9B      		sbis 33-32,4
+  76 007c 00C0      		rjmp .L5
+  77 007e 482F      		mov r20,r24
+  78 0080 4F5F      		subi r20,lo8(-(1))
+  79 0082 4093 0000 		sts irbitnum,r20
+  80 0086 8823      		tst r24
+  81 0088 01F4      		brne .L6
+  82 008a 1092 0000 		sts (ccode.1621)+1,__zero_reg__
+  83 008e 1092 0000 		sts ccode.1621,__zero_reg__
+  84 0092 C901      		movw r24,r18
+  85 0094 63E0      		ldi r22,lo8(3)
+  86 0096 70E0      		ldi r23,hi8(3)
+  87 0098 0E94 0000 		call __udivmodhi4
+  88 009c 7093 0000 		sts (minset.1620)+1,r23
+  89 00a0 6093 0000 		sts minset.1620,r22
+  90 00a4 00C0      		rjmp .L12
+  91               	.L6:
+  92 00a6 8091 0000 		lds r24,minset.1620
+  93 00aa 9091 0000 		lds r25,(minset.1620)+1
+  94 00ae 2817      		cp r18,r24
+  95 00b0 3907      		cpc r19,r25
+  96 00b2 00F0      		brlo .L8
+  97 00b4 8091 0000 		lds r24,ccode.1621
+  98 00b8 9091 0000 		lds r25,(ccode.1621)+1
+  99 00bc 9061      		ori r25,hi8(4096)
+ 100 00be 9093 0000 		sts (ccode.1621)+1,r25
+ 101 00c2 8093 0000 		sts ccode.1621,r24
+ 102               	.L8:
+ 103 00c6 2091 0000 		lds r18,ccode.1621
+ 104 00ca 3091 0000 		lds r19,(ccode.1621)+1
+ 105 00ce 3695      		lsr r19
+ 106 00d0 2795      		ror r18
+ 107 00d2 3093 0000 		sts (ccode.1621)+1,r19
+ 108 00d6 2093 0000 		sts ccode.1621,r18
+ 109 00da 4D30      		cpi r20,lo8(13)
+ 110 00dc 00F4      		brsh .+2
+ 111 00de 00C0      		rjmp .L12
+ 112 00e0 87B7      		in r24,87-32
+ 113 00e2 8F7B      		andi r24,lo8(-65)
+ 114 00e4 87BF      		out 87-32,r24
+GAS LISTING C:\Temp/ccana7rn.s 			page 3
+
+
+ 115 00e6 1092 0000 		sts irbitnum,__zero_reg__
+ 116 00ea 8091 0000 		lds r24,ncode.1623
+ 117 00ee 482F      		mov r20,r24
+ 118 00f0 4F5F      		subi r20,lo8(-(1))
+ 119 00f2 4093 0000 		sts ncode.1623,r20
+ 120 00f6 8823      		tst r24
+ 121 00f8 01F0      		breq .L9
+ 122 00fa 8091 0000 		lds r24,lcode.1622
+ 123 00fe 9091 0000 		lds r25,(lcode.1622)+1
+ 124 0102 8217      		cp r24,r18
+ 125 0104 9307      		cpc r25,r19
+ 126 0106 01F0      		breq .L10
+ 127 0108 1092 0000 		sts ncode.1623,__zero_reg__
+ 128 010c 00C0      		rjmp .L12
+ 129               	.L10:
+ 130 010e 4230      		cpi r20,lo8(2)
+ 131 0110 00F0      		brlo .L12
+ 132 0112 1092 0000 		sts ncode.1623,__zero_reg__
+ 133 0116 A0E0      		ldi r26,lo8(0)
+ 134 0118 B0E0      		ldi r27,hi8(0)
+ 135 011a 8093 0000 		sts nut_ircode,r24
+ 136 011e 9093 0000 		sts (nut_ircode)+1,r25
+ 137 0122 A093 0000 		sts (nut_ircode)+2,r26
+ 138 0126 B093 0000 		sts (nut_ircode)+3,r27
+ 139 012a E091 0000 		lds r30,nut_irqueue
+ 140 012e F091 0000 		lds r31,(nut_irqueue)+1
+ 141 0132 3097      		sbiw r30,0
+ 142 0134 01F4      		brne .L11
+ 143 0136 8FEF      		ldi r24,lo8(-1)
+ 144 0138 9FEF      		ldi r25,hi8(-1)
+ 145 013a 9093 0000 		sts (nut_irqueue)+1,r25
+ 146 013e 8093 0000 		sts nut_irqueue,r24
+ 147 0142 00C0      		rjmp .L12
+ 148               	.L11:
+ 149 0144 8FEF      		ldi r24,hi8(-1)
+ 150 0146 EF3F      		cpi r30,lo8(-1)
+ 151 0148 F807      		cpc r31,r24
+ 152 014a 01F0      		breq .L12
+ 153 014c 8481      		ldd r24,Z+4
+ 154 014e 9581      		ldd r25,Z+5
+ 155 0150 0196      		adiw r24,1
+ 156 0152 9583      		std Z+5,r25
+ 157 0154 8483      		std Z+4,r24
+ 158 0156 00C0      		rjmp .L12
+ 159               	.L9:
+ 160 0158 3093 0000 		sts (lcode.1622)+1,r19
+ 161 015c 2093 0000 		sts lcode.1622,r18
+ 162 0160 00C0      		rjmp .L12
+ 163               	.L5:
+ 164 0162 8823      		tst r24
+ 165 0164 01F4      		brne .L12
+ 166 0166 87B7      		in r24,87-32
+ 167 0168 8064      		ori r24,lo8(64)
+ 168 016a 87BF      		out 87-32,r24
+ 169               	.L12:
+ 170               	/* epilogue start */
+ 171 016c FF91      		pop r31
+GAS LISTING C:\Temp/ccana7rn.s 			page 4
+
+
+ 172 016e EF91      		pop r30
+ 173 0170 BF91      		pop r27
+ 174 0172 AF91      		pop r26
+ 175 0174 9F91      		pop r25
+ 176 0176 8F91      		pop r24
+ 177 0178 7F91      		pop r23
+ 178 017a 6F91      		pop r22
+ 179 017c 5F91      		pop r21
+ 180 017e 4F91      		pop r20
+ 181 0180 3F91      		pop r19
+ 182 0182 2F91      		pop r18
+ 183 0184 0F90      		pop r0
+ 184 0186 0BBE      		out 91-32,r0
+ 185 0188 0F90      		pop r0
+ 186 018a 0FBE      		out __SREG__,r0
+ 187 018c 0F90      		pop r0
+ 188 018e 1F90      		pop __zero_reg__
+ 189 0190 1895      		reti
+ 190               		.size	__vector_5, .-__vector_5
+ 191               	.global	NutIrInitSony
+ 192               		.type	NutIrInitSony, @function
+ 193               	NutIrInitSony:
+ 194               	/* prologue: function */
+ 195               	/* frame size = 0 */
+ 196               	/* #APP */
+ 197               	 ;  170 "../../nut/arch/avr/dev/irsony.c" 1
+ 198 0192 0FB6      		in  __tmp_reg__, __SREG__
+ 199 0194 F894      		cli
+ 200 0196 0F92      		push __tmp_reg__
+ 201               		
+ 202               	 ;  0 "" 2
+ 203               	/* #NOAPP */
+ 204 0198 80EF      		ldi r24,lo8(-16)
+ 205 019a 84BD      		out 68-32,r24
+ 206 019c 81E0      		ldi r24,lo8(1)
+ 207 019e 85BD      		out 69-32,r24
+ 208 01a0 87B7      		in r24,87-32
+ 209 01a2 8064      		ori r24,lo8(64)
+ 210 01a4 87BF      		out 87-32,r24
+ 211 01a6 1498      		cbi 34-32,4
+ 212 01a8 8AB7      		in r24,90-32
+ 213 01aa 8160      		ori r24,lo8(1)
+ 214 01ac 8ABF      		out 90-32,r24
+ 215 01ae 8AB7      		in r24,90-32
+ 216 01b0 8D7F      		andi r24,lo8(-3)
+ 217 01b2 8ABF      		out 90-32,r24
+ 218 01b4 89B7      		in r24,89-32
+ 219 01b6 8061      		ori r24,lo8(16)
+ 220 01b8 89BF      		out 89-32,r24
+ 221               	/* #APP */
+ 222               	 ;  186 "../../nut/arch/avr/dev/irsony.c" 1
+ 223 01ba 0F90      		pop __tmp_reg__
+ 224 01bc 0FBE      		out __SREG__, __tmp_reg__
+ 225               		
+ 226               	 ;  0 "" 2
+ 227               	/* #NOAPP */
+ 228 01be 80E0      		ldi r24,lo8(0)
+GAS LISTING C:\Temp/ccana7rn.s 			page 5
+
+
+ 229 01c0 90E0      		ldi r25,hi8(0)
+ 230               	/* epilogue start */
+ 231 01c2 0895      		ret
+ 232               		.size	NutIrInitSony, .-NutIrInitSony
+ 233               		.lcomm ncode.1623,1
+ 234               		.lcomm lcode.1622,2
+ 235               		.lcomm ccode.1621,2
+ 236               		.lcomm minset.1620,2
+ 237               		.lcomm irticks,2
+ 238               		.lcomm irbitnum,1
+ 239               		.comm nut_ircode,4,1
+ 240               		.comm nut_irqueue,2,1
+GAS LISTING C:\Temp/ccana7rn.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 irsony.c
+  C:\Temp/ccana7rn.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccana7rn.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccana7rn.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccana7rn.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccana7rn.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccana7rn.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccana7rn.s:13     .text:00000000 __vector_10
+  C:\Temp/ccana7rn.s:236    .bss:00000007 irticks
+  C:\Temp/ccana7rn.s:237    .bss:00000009 irbitnum
+  C:\Temp/ccana7rn.s:48     .text:00000040 __vector_5
+  C:\Temp/ccana7rn.s:234    .bss:00000003 ccode.1621
+  C:\Temp/ccana7rn.s:235    .bss:00000005 minset.1620
+                             .bss:00000000 ncode.1623
+  C:\Temp/ccana7rn.s:233    .bss:00000001 lcode.1622
+                            *COM*:00000004 nut_ircode
+                            *COM*:00000002 nut_irqueue
+  C:\Temp/ccana7rn.s:193    .text:00000192 NutIrInitSony
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+__udivmodhi4

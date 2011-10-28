@@ -1,0 +1,145 @@
+GAS LISTING C:\Temp/ccew8BGa.s 			page 1
+
+
+   1               		.file	"semaphore.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutSemInit
+  12               		.type	NutSemInit, @function
+  13               	NutSemInit:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 FC01      		movw r30,r24
+  17 0002 1182      		std Z+1,__zero_reg__
+  18 0004 1082      		st Z,__zero_reg__
+  19 0006 7383      		std Z+3,r23
+  20 0008 6283      		std Z+2,r22
+  21               	/* epilogue start */
+  22 000a 0895      		ret
+  23               		.size	NutSemInit, .-NutSemInit
+  24               	.global	NutSemDestroy
+  25               		.type	NutSemDestroy, @function
+  26               	NutSemDestroy:
+  27               	/* prologue: function */
+  28               	/* frame size = 0 */
+  29 000c FC01      		movw r30,r24
+  30 000e 0190      		ld __tmp_reg__,Z+
+  31 0010 F081      		ld r31,Z
+  32 0012 E02D      		mov r30,__tmp_reg__
+  33 0014 8FEF      		ldi r24,hi8(-1)
+  34 0016 EF3F      		cpi r30,lo8(-1)
+  35 0018 F807      		cpc r31,r24
+  36 001a 01F0      		breq .L4
+  37 001c EF2B      		or r30,r31
+  38 001e 01F0      		breq .L4
+  39 0020 2FEF      		ldi r18,lo8(-1)
+  40 0022 3FEF      		ldi r19,hi8(-1)
+  41 0024 00C0      		rjmp .L5
+  42               	.L4:
+  43 0026 20E0      		ldi r18,lo8(0)
+  44 0028 30E0      		ldi r19,hi8(0)
+  45               	.L5:
+  46 002a C901      		movw r24,r18
+  47               	/* epilogue start */
+  48 002c 0895      		ret
+  49               		.size	NutSemDestroy, .-NutSemDestroy
+  50               	.global	NutSemPost
+  51               		.type	NutSemPost, @function
+  52               	NutSemPost:
+  53               	/* prologue: function */
+  54               	/* frame size = 0 */
+  55 002e FC01      		movw r30,r24
+  56 0030 8281      		ldd r24,Z+2
+  57 0032 9381      		ldd r25,Z+3
+GAS LISTING C:\Temp/ccew8BGa.s 			page 2
+
+
+  58 0034 0196      		adiw r24,1
+  59 0036 9383      		std Z+3,r25
+  60 0038 8283      		std Z+2,r24
+  61 003a 1816      		cp __zero_reg__,r24
+  62 003c 1906      		cpc __zero_reg__,r25
+  63 003e 04F0      		brlt .L9
+  64 0040 CF01      		movw r24,r30
+  65 0042 0E94 0000 		call NutEventPost
+  66               	.L9:
+  67 0046 0895      		ret
+  68               		.size	NutSemPost, .-NutSemPost
+  69               	.global	NutSemWait
+  70               		.type	NutSemWait, @function
+  71               	NutSemWait:
+  72               	/* prologue: function */
+  73               	/* frame size = 0 */
+  74 0048 FC01      		movw r30,r24
+  75 004a 8281      		ldd r24,Z+2
+  76 004c 9381      		ldd r25,Z+3
+  77 004e 0197      		sbiw r24,1
+  78 0050 9383      		std Z+3,r25
+  79 0052 8283      		std Z+2,r24
+  80 0054 97FF      		sbrs r25,7
+  81 0056 00C0      		rjmp .L12
+  82 0058 40E0      		ldi r20,lo8(0)
+  83 005a 50E0      		ldi r21,hi8(0)
+  84 005c 60E0      		ldi r22,hlo8(0)
+  85 005e 70E0      		ldi r23,hhi8(0)
+  86 0060 CF01      		movw r24,r30
+  87 0062 0E94 0000 		call NutEventWaitNext
+  88               	.L12:
+  89 0066 0895      		ret
+  90               		.size	NutSemWait, .-NutSemWait
+  91               	.global	NutSemTryWait
+  92               		.type	NutSemTryWait, @function
+  93               	NutSemTryWait:
+  94               	/* prologue: function */
+  95               	/* frame size = 0 */
+  96 0068 FC01      		movw r30,r24
+  97 006a 8281      		ldd r24,Z+2
+  98 006c 9381      		ldd r25,Z+3
+  99 006e 1816      		cp __zero_reg__,r24
+ 100 0070 1906      		cpc __zero_reg__,r25
+ 101 0072 04F0      		brlt .L14
+ 102 0074 2FEF      		ldi r18,lo8(-1)
+ 103 0076 3FEF      		ldi r19,hi8(-1)
+ 104 0078 00C0      		rjmp .L15
+ 105               	.L14:
+ 106 007a CF01      		movw r24,r30
+ 107 007c 0E94 0000 		call NutSemWait
+ 108 0080 20E0      		ldi r18,lo8(0)
+ 109 0082 30E0      		ldi r19,hi8(0)
+ 110               	.L15:
+ 111 0084 C901      		movw r24,r18
+ 112               	/* epilogue start */
+ 113 0086 0895      		ret
+ 114               		.size	NutSemTryWait, .-NutSemTryWait
+GAS LISTING C:\Temp/ccew8BGa.s 			page 3
+
+
+GAS LISTING C:\Temp/ccew8BGa.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 semaphore.c
+  C:\Temp/ccew8BGa.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccew8BGa.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccew8BGa.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccew8BGa.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccew8BGa.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccew8BGa.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccew8BGa.s:13     .text:00000000 NutSemInit
+  C:\Temp/ccew8BGa.s:26     .text:0000000c NutSemDestroy
+  C:\Temp/ccew8BGa.s:52     .text:0000002e NutSemPost
+  C:\Temp/ccew8BGa.s:71     .text:00000048 NutSemWait
+  C:\Temp/ccew8BGa.s:93     .text:00000068 NutSemTryWait
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutEventPost
+NutEventWaitNext

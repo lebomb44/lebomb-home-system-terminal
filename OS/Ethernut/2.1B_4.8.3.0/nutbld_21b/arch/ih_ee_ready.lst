@@ -1,0 +1,143 @@
+GAS LISTING C:\Temp/ccTfSzhk.s 			page 1
+
+
+   1               		.file	"ih_ee_ready.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	AvrEepromRdyIrqCtl, @function
+  12               	AvrEepromRdyIrqCtl:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 FB01      		movw r30,r22
+  16 0002 4CB3      		in r20,60-32
+  17 0004 E398      		cbi 60-32,3
+  18 0006 8131      		cpi r24,17
+  19 0008 9105      		cpc r25,__zero_reg__
+  20 000a 01F0      		breq .L4
+  21 000c 8231      		cpi r24,18
+  22 000e 9105      		cpc r25,__zero_reg__
+  23 0010 04F4      		brge .L6
+  24 0012 892B      		or r24,r25
+  25 0014 01F0      		breq .L3
+  26 0016 00C0      		rjmp .L2
+  27               	.L6:
+  28 0018 8231      		cpi r24,18
+  29 001a 9105      		cpc r25,__zero_reg__
+  30 001c 01F0      		breq .L3
+  31 001e 8097      		sbiw r24,32
+  32 0020 01F4      		brne .L2
+  33 0022 00C0      		rjmp .L11
+  34               	.L3:
+  35 0024 20E0      		ldi r18,lo8(0)
+  36 0026 30E0      		ldi r19,hi8(0)
+  37 0028 00C0      		rjmp .L7
+  38               	.L4:
+  39 002a 20E0      		ldi r18,lo8(0)
+  40 002c 30E0      		ldi r19,hi8(0)
+  41 002e 00C0      		rjmp .L8
+  42               	.L2:
+  43 0030 2FEF      		ldi r18,lo8(-1)
+  44 0032 3FEF      		ldi r19,hi8(-1)
+  45 0034 00C0      		rjmp .L9
+  46               	.L11:
+  47 0036 1182      		std Z+1,__zero_reg__
+  48 0038 1082      		st Z,__zero_reg__
+  49 003a 20E0      		ldi r18,lo8(0)
+  50 003c 30E0      		ldi r19,hi8(0)
+  51               	.L9:
+  52 003e 43FD      		sbrc r20,3
+  53               	.L8:
+  54 0040 E39A      		sbi 60-32,3
+  55               	.L7:
+  56 0042 C901      		movw r24,r18
+  57               	/* epilogue start */
+GAS LISTING C:\Temp/ccTfSzhk.s 			page 2
+
+
+  58 0044 0895      		ret
+  59               		.size	AvrEepromRdyIrqCtl, .-AvrEepromRdyIrqCtl
+  60               	.global	__vector_22
+  61               		.type	__vector_22, @function
+  62               	__vector_22:
+  63 0046 1F92      		push __zero_reg__
+  64 0048 0F92      		push r0
+  65 004a 0FB6      		in r0,__SREG__
+  66 004c 0F92      		push r0
+  67 004e 0BB6      		in r0,91-32
+  68 0050 0F92      		push r0
+  69 0052 1124      		clr __zero_reg__
+  70 0054 2F93      		push r18
+  71 0056 3F93      		push r19
+  72 0058 4F93      		push r20
+  73 005a 5F93      		push r21
+  74 005c 6F93      		push r22
+  75 005e 7F93      		push r23
+  76 0060 8F93      		push r24
+  77 0062 9F93      		push r25
+  78 0064 AF93      		push r26
+  79 0066 BF93      		push r27
+  80 0068 EF93      		push r30
+  81 006a FF93      		push r31
+  82               	/* prologue: Signal */
+  83               	/* frame size = 0 */
+  84 006c 80E0      		ldi r24,lo8(sig_EEPROM_READY)
+  85 006e 90E0      		ldi r25,hi8(sig_EEPROM_READY)
+  86 0070 0E94 0000 		call CallHandler
+  87               	/* epilogue start */
+  88 0074 FF91      		pop r31
+  89 0076 EF91      		pop r30
+  90 0078 BF91      		pop r27
+  91 007a AF91      		pop r26
+  92 007c 9F91      		pop r25
+  93 007e 8F91      		pop r24
+  94 0080 7F91      		pop r23
+  95 0082 6F91      		pop r22
+  96 0084 5F91      		pop r21
+  97 0086 4F91      		pop r20
+  98 0088 3F91      		pop r19
+  99 008a 2F91      		pop r18
+ 100 008c 0F90      		pop r0
+ 101 008e 0BBE      		out 91-32,r0
+ 102 0090 0F90      		pop r0
+ 103 0092 0FBE      		out __SREG__,r0
+ 104 0094 0F90      		pop r0
+ 105 0096 1F90      		pop __zero_reg__
+ 106 0098 1895      		reti
+ 107               		.size	__vector_22, .-__vector_22
+ 108               	.global	sig_EEPROM_READY
+ 109               		.data
+ 110               		.type	sig_EEPROM_READY, @object
+ 111               		.size	sig_EEPROM_READY, 6
+ 112               	sig_EEPROM_READY:
+ 113 0000 0000      		.word	0
+ 114 0002 0000      		.word	0
+GAS LISTING C:\Temp/ccTfSzhk.s 			page 3
+
+
+ 115 0004 0000      		.word	gs(AvrEepromRdyIrqCtl)
+GAS LISTING C:\Temp/ccTfSzhk.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ih_ee_ready.c
+  C:\Temp/ccTfSzhk.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccTfSzhk.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccTfSzhk.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccTfSzhk.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccTfSzhk.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccTfSzhk.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccTfSzhk.s:12     .text:00000000 AvrEepromRdyIrqCtl
+  C:\Temp/ccTfSzhk.s:62     .text:00000046 __vector_22
+  C:\Temp/ccTfSzhk.s:112    .data:00000000 sig_EEPROM_READY
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+CallHandler

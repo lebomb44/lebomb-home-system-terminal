@@ -1,0 +1,1254 @@
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 1
+
+
+   1               		.file	"resolv.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutDnsGetConfig2
+  12               		.type	NutDnsGetConfig2, @function
+  13               	NutDnsGetConfig2:
+  14 0000 CF93      		push r28
+  15 0002 DF93      		push r29
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0004 FC01      		movw r30,r24
+  19 0006 DB01      		movw r26,r22
+  20 0008 EA01      		movw r28,r20
+  21 000a 0097      		sbiw r24,0
+  22 000c 01F0      		breq .L2
+  23 000e 8091 0000 		lds r24,doc
+  24 0012 9091 0000 		lds r25,(doc)+1
+  25 0016 9183      		std Z+1,r25
+  26 0018 8083      		st Z,r24
+  27               	.L2:
+  28 001a 1097      		sbiw r26,0
+  29 001c 01F0      		breq .L3
+  30 001e 8091 0000 		lds r24,doc+2
+  31 0022 9091 0000 		lds r25,(doc+2)+1
+  32 0026 8D93      		st X+,r24
+  33 0028 9C93      		st X,r25
+  34               	.L3:
+  35 002a 2097      		sbiw r28,0
+  36 002c 01F0      		breq .L4
+  37 002e 8091 0000 		lds r24,doc+4
+  38 0032 9091 0000 		lds r25,(doc+4)+1
+  39 0036 A091 0000 		lds r26,(doc+4)+2
+  40 003a B091 0000 		lds r27,(doc+4)+3
+  41 003e 8883      		st Y,r24
+  42 0040 9983      		std Y+1,r25
+  43 0042 AA83      		std Y+2,r26
+  44 0044 BB83      		std Y+3,r27
+  45               	.L4:
+  46 0046 2115      		cp r18,__zero_reg__
+  47 0048 3105      		cpc r19,__zero_reg__
+  48 004a 01F0      		breq .L6
+  49 004c 8091 0000 		lds r24,doc+8
+  50 0050 9091 0000 		lds r25,(doc+8)+1
+  51 0054 A091 0000 		lds r26,(doc+8)+2
+  52 0058 B091 0000 		lds r27,(doc+8)+3
+  53 005c F901      		movw r30,r18
+  54 005e 8083      		st Z,r24
+  55 0060 9183      		std Z+1,r25
+  56 0062 A283      		std Z+2,r26
+  57 0064 B383      		std Z+3,r27
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 2
+
+
+  58               	.L6:
+  59               	/* epilogue start */
+  60 0066 DF91      		pop r29
+  61 0068 CF91      		pop r28
+  62 006a 0895      		ret
+  63               		.size	NutDnsGetConfig2, .-NutDnsGetConfig2
+  64               	.global	NutDnsConfig2
+  65               		.type	NutDnsConfig2, @function
+  66               	NutDnsConfig2:
+  67 006c 8F92      		push r8
+  68 006e 9F92      		push r9
+  69 0070 AF92      		push r10
+  70 0072 BF92      		push r11
+  71 0074 CF92      		push r12
+  72 0076 DF92      		push r13
+  73 0078 EF92      		push r14
+  74 007a FF92      		push r15
+  75 007c 0F93      		push r16
+  76 007e 1F93      		push r17
+  77 0080 CF93      		push r28
+  78 0082 DF93      		push r29
+  79               	/* prologue: function */
+  80               	/* frame size = 0 */
+  81 0084 EC01      		movw r28,r24
+  82 0086 4B01      		movw r8,r22
+  83 0088 5901      		movw r10,r18
+  84 008a 6A01      		movw r12,r20
+  85 008c 8091 0000 		lds r24,doc
+  86 0090 9091 0000 		lds r25,(doc)+1
+  87 0094 0097      		sbiw r24,0
+  88 0096 01F0      		breq .L8
+  89 0098 0E94 0000 		call free
+  90 009c 1092 0000 		sts (doc)+1,__zero_reg__
+  91 00a0 1092 0000 		sts doc,__zero_reg__
+  92               	.L8:
+  93 00a4 8091 0000 		lds r24,doc+2
+  94 00a8 9091 0000 		lds r25,(doc+2)+1
+  95 00ac 0097      		sbiw r24,0
+  96 00ae 01F0      		breq .L9
+  97 00b0 0E94 0000 		call free
+  98 00b4 1092 0000 		sts (doc+2)+1,__zero_reg__
+  99 00b8 1092 0000 		sts doc+2,__zero_reg__
+ 100               	.L9:
+ 101 00bc 2097      		sbiw r28,0
+ 102 00be 01F0      		breq .L10
+ 103 00c0 CE01      		movw r24,r28
+ 104 00c2 0E94 0000 		call strdup
+ 105 00c6 8093 0000 		sts doc,r24
+ 106 00ca 9093 0000 		sts doc+1,r25
+ 107               	.L10:
+ 108 00ce 8114      		cp r8,__zero_reg__
+ 109 00d0 9104      		cpc r9,__zero_reg__
+ 110 00d2 01F0      		breq .L11
+ 111 00d4 C401      		movw r24,r8
+ 112 00d6 0E94 0000 		call strdup
+ 113 00da 8093 0000 		sts doc+2,r24
+ 114 00de 9093 0000 		sts doc+3,r25
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 3
+
+
+ 115               	.L11:
+ 116 00e2 A092 0000 		sts doc+4,r10
+ 117 00e6 B092 0000 		sts (doc+4)+1,r11
+ 118 00ea C092 0000 		sts (doc+4)+2,r12
+ 119 00ee D092 0000 		sts (doc+4)+3,r13
+ 120 00f2 E092 0000 		sts doc+8,r14
+ 121 00f6 F092 0000 		sts (doc+8)+1,r15
+ 122 00fa 0093 0000 		sts (doc+8)+2,r16
+ 123 00fe 1093 0000 		sts (doc+8)+3,r17
+ 124               	/* epilogue start */
+ 125 0102 DF91      		pop r29
+ 126 0104 CF91      		pop r28
+ 127 0106 1F91      		pop r17
+ 128 0108 0F91      		pop r16
+ 129 010a FF90      		pop r15
+ 130 010c EF90      		pop r14
+ 131 010e DF90      		pop r13
+ 132 0110 CF90      		pop r12
+ 133 0112 BF90      		pop r11
+ 134 0114 AF90      		pop r10
+ 135 0116 9F90      		pop r9
+ 136 0118 8F90      		pop r8
+ 137 011a 0895      		ret
+ 138               		.size	NutDnsConfig2, .-NutDnsConfig2
+ 139               	.global	NutDnsConfig
+ 140               		.type	NutDnsConfig, @function
+ 141               	NutDnsConfig:
+ 142 011c EF92      		push r14
+ 143 011e FF92      		push r15
+ 144 0120 0F93      		push r16
+ 145 0122 1F93      		push r17
+ 146               	/* prologue: function */
+ 147               	/* frame size = 0 */
+ 148 0124 EE24      		clr r14
+ 149 0126 FF24      		clr r15
+ 150 0128 8701      		movw r16,r14
+ 151 012a 0E94 0000 		call NutDnsConfig2
+ 152               	/* epilogue start */
+ 153 012e 1F91      		pop r17
+ 154 0130 0F91      		pop r16
+ 155 0132 FF90      		pop r15
+ 156 0134 EF90      		pop r14
+ 157 0136 0895      		ret
+ 158               		.size	NutDnsConfig, .-NutDnsConfig
+ 159               		.type	ScanName, @function
+ 160               	ScanName:
+ 161 0138 EF92      		push r14
+ 162 013a FF92      		push r15
+ 163 013c 0F93      		push r16
+ 164 013e 1F93      		push r17
+ 165 0140 CF93      		push r28
+ 166 0142 DF93      		push r29
+ 167               	/* prologue: function */
+ 168               	/* frame size = 0 */
+ 169 0144 EC01      		movw r28,r24
+ 170 0146 7B01      		movw r14,r22
+ 171 0148 DB01      		movw r26,r22
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 4
+
+
+ 172 014a 8D91      		ld r24,X+
+ 173 014c 9C91      		ld r25,X
+ 174 014e 0097      		sbiw r24,0
+ 175 0150 01F0      		breq .L16
+ 176 0152 0E94 0000 		call free
+ 177 0156 F701      		movw r30,r14
+ 178 0158 1182      		std Z+1,__zero_reg__
+ 179 015a 1082      		st Z,__zero_reg__
+ 180               	.L16:
+ 181 015c 8881      		ld r24,Y
+ 182 015e 807C      		andi r24,lo8(-64)
+ 183 0160 803C      		cpi r24,lo8(-64)
+ 184 0162 01F4      		brne .L17
+ 185 0164 02E0      		ldi r16,lo8(2)
+ 186 0166 10E0      		ldi r17,hi8(2)
+ 187 0168 00C0      		rjmp .L18
+ 188               	.L17:
+ 189 016a DE01      		movw r26,r28
+ 190 016c 0D90      		ld __tmp_reg__,X+
+ 191 016e 0020      		tst __tmp_reg__
+ 192 0170 01F4      		brne .-6
+ 193 0172 8D01      		movw r16,r26
+ 194 0174 0C1B      		sub r16,r28
+ 195 0176 1D0B      		sbc r17,r29
+ 196 0178 C801      		movw r24,r16
+ 197 017a 0E94 0000 		call malloc
+ 198 017e DC01      		movw r26,r24
+ 199 0180 F701      		movw r30,r14
+ 200 0182 9183      		std Z+1,r25
+ 201 0184 8083      		st Z,r24
+ 202 0186 FE01      		movw r30,r28
+ 203 0188 9191      		ld r25,Z+
+ 204 018a 3EE2      		ldi r19,lo8(46)
+ 205 018c 00C0      		rjmp .L19
+ 206               	.L22:
+ 207 018e AD01      		movw r20,r26
+ 208 0190 BF01      		movw r22,r30
+ 209 0192 292F      		mov r18,r25
+ 210               	.L20:
+ 211 0194 EB01      		movw r28,r22
+ 212 0196 8991      		ld r24,Y+
+ 213 0198 BE01      		movw r22,r28
+ 214 019a EA01      		movw r28,r20
+ 215 019c 8993      		st Y+,r24
+ 216 019e AE01      		movw r20,r28
+ 217 01a0 2150      		subi r18,lo8(-(-1))
+ 218 01a2 01F4      		brne .L20
+ 219 01a4 892F      		mov r24,r25
+ 220 01a6 90E0      		ldi r25,lo8(0)
+ 221 01a8 A80F      		add r26,r24
+ 222 01aa B91F      		adc r27,r25
+ 223 01ac E80F      		add r30,r24
+ 224 01ae F91F      		adc r31,r25
+ 225 01b0 9081      		ld r25,Z
+ 226 01b2 9111      		cpse r25,__zero_reg__
+ 227 01b4 3D93      		st X+,r19
+ 228               	.L21:
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 5
+
+
+ 229 01b6 3196      		adiw r30,1
+ 230               	.L19:
+ 231 01b8 9923      		tst r25
+ 232 01ba 01F4      		brne .L22
+ 233 01bc 1C92      		st X,__zero_reg__
+ 234               	.L18:
+ 235 01be C801      		movw r24,r16
+ 236               	/* epilogue start */
+ 237 01c0 DF91      		pop r29
+ 238 01c2 CF91      		pop r28
+ 239 01c4 1F91      		pop r17
+ 240 01c6 0F91      		pop r16
+ 241 01c8 FF90      		pop r15
+ 242 01ca EF90      		pop r14
+ 243 01cc 0895      		ret
+ 244               		.size	ScanName, .-ScanName
+ 245               	.global	NutDnsGetResource
+ 246               		.type	NutDnsGetResource, @function
+ 247               	NutDnsGetResource:
+ 248 01ce 2F92      		push r2
+ 249 01d0 3F92      		push r3
+ 250 01d2 4F92      		push r4
+ 251 01d4 5F92      		push r5
+ 252 01d6 6F92      		push r6
+ 253 01d8 7F92      		push r7
+ 254 01da 8F92      		push r8
+ 255 01dc 9F92      		push r9
+ 256 01de AF92      		push r10
+ 257 01e0 BF92      		push r11
+ 258 01e2 CF92      		push r12
+ 259 01e4 DF92      		push r13
+ 260 01e6 EF92      		push r14
+ 261 01e8 FF92      		push r15
+ 262 01ea 0F93      		push r16
+ 263 01ec 1F93      		push r17
+ 264 01ee DF93      		push r29
+ 265 01f0 CF93      		push r28
+ 266 01f2 CDB7      		in r28,__SP_L__
+ 267 01f4 DEB7      		in r29,__SP_H__
+ 268 01f6 C054      		subi r28,lo8(-(-64))
+ 269 01f8 D040      		sbci r29,hi8(-(-64))
+ 270 01fa 0FB6      		in __tmp_reg__,__SREG__
+ 271 01fc F894      		cli
+ 272 01fe DEBF      		out __SP_H__,r29
+ 273 0200 0FBE      		out __SREG__,__tmp_reg__
+ 274 0202 CDBF      		out __SP_L__,r28
+ 275               	/* prologue: function */
+ 276               	/* frame size = 64 */
+ 277 0204 9E87      		std Y+14,r25
+ 278 0206 8D87      		std Y+13,r24
+ 279 0208 788B      		std Y+16,r23
+ 280 020a 6F87      		std Y+15,r22
+ 281 020c 8091 0000 		lds r24,doc+4
+ 282 0210 9091 0000 		lds r25,(doc+4)+1
+ 283 0214 A091 0000 		lds r26,(doc+4)+2
+ 284 0218 B091 0000 		lds r27,(doc+4)+3
+ 285 021c 0097      		sbiw r24,0
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 6
+
+
+ 286 021e A105      		cpc r26,__zero_reg__
+ 287 0220 B105      		cpc r27,__zero_reg__
+ 288 0222 01F4      		brne .L26
+ 289 0224 8091 0000 		lds r24,doc+8
+ 290 0228 9091 0000 		lds r25,(doc+8)+1
+ 291 022c A091 0000 		lds r26,(doc+8)+2
+ 292 0230 B091 0000 		lds r27,(doc+8)+3
+ 293 0234 0097      		sbiw r24,0
+ 294 0236 A105      		cpc r26,__zero_reg__
+ 295 0238 B105      		cpc r27,__zero_reg__
+ 296 023a 01F4      		brne .+2
+ 297 023c 00C0      		rjmp .L27
+ 298               	.L26:
+ 299 023e 80E0      		ldi r24,lo8(0)
+ 300 0240 90E0      		ldi r25,hi8(0)
+ 301 0242 0E94 0000 		call NutUdpCreateSocket
+ 302 0246 9887      		std Y+8,r25
+ 303 0248 8F83      		std Y+7,r24
+ 304 024a 892B      		or r24,r25
+ 305 024c 01F4      		brne .+2
+ 306 024e 00C0      		rjmp .L27
+ 307 0250 80E0      		ldi r24,lo8(512)
+ 308 0252 92E0      		ldi r25,hi8(512)
+ 309 0254 0E94 0000 		call malloc
+ 310 0258 4C01      		movw r8,r24
+ 311 025a 1A86      		std Y+10,__zero_reg__
+ 312 025c 1986      		std Y+9,__zero_reg__
+ 313 025e AA24      		clr r10
+ 314 0260 BB24      		clr r11
+ 315 0262 6624      		clr r6
+ 316 0264 7724      		clr r7
+ 317 0266 4424      		clr r4
+ 318 0268 5524      		clr r5
+ 319 026a 9C01      		movw r18,r24
+ 320 026c 2F5F      		subi r18,lo8(-(1))
+ 321 026e 3F4F      		sbci r19,hi8(-(1))
+ 322 0270 38A7      		std Y+40,r19
+ 323 0272 2FA3      		std Y+39,r18
+ 324 0274 AC01      		movw r20,r24
+ 325 0276 4E5F      		subi r20,lo8(-(2))
+ 326 0278 5F4F      		sbci r21,hi8(-(2))
+ 327 027a 5AA7      		std Y+42,r21
+ 328 027c 49A7      		std Y+41,r20
+ 329 027e BC01      		movw r22,r24
+ 330 0280 6D5F      		subi r22,lo8(-(3))
+ 331 0282 7F4F      		sbci r23,hi8(-(3))
+ 332 0284 7CA7      		std Y+44,r23
+ 333 0286 6BA7      		std Y+43,r22
+ 334 0288 0496      		adiw r24,4
+ 335 028a 9EA7      		std Y+46,r25
+ 336 028c 8DA7      		std Y+45,r24
+ 337 028e D401      		movw r26,r8
+ 338 0290 1596      		adiw r26,5
+ 339 0292 B8AB      		std Y+48,r27
+ 340 0294 AFA7      		std Y+47,r26
+ 341 0296 F401      		movw r30,r8
+ 342 0298 3696      		adiw r30,6
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 7
+
+
+ 343 029a FAAB      		std Y+50,r31
+ 344 029c E9AB      		std Y+49,r30
+ 345 029e 9401      		movw r18,r8
+ 346 02a0 295F      		subi r18,lo8(-(7))
+ 347 02a2 3F4F      		sbci r19,hi8(-(7))
+ 348 02a4 3CAB      		std Y+52,r19
+ 349 02a6 2BAB      		std Y+51,r18
+ 350 02a8 A401      		movw r20,r8
+ 351 02aa 485F      		subi r20,lo8(-(8))
+ 352 02ac 5F4F      		sbci r21,hi8(-(8))
+ 353 02ae 5EAB      		std Y+54,r21
+ 354 02b0 4DAB      		std Y+53,r20
+ 355 02b2 B401      		movw r22,r8
+ 356 02b4 675F      		subi r22,lo8(-(9))
+ 357 02b6 7F4F      		sbci r23,hi8(-(9))
+ 358 02b8 78AF      		std Y+56,r23
+ 359 02ba 6FAB      		std Y+55,r22
+ 360 02bc C401      		movw r24,r8
+ 361 02be 0A96      		adiw r24,10
+ 362 02c0 9AAF      		std Y+58,r25
+ 363 02c2 89AF      		std Y+57,r24
+ 364 02c4 D401      		movw r26,r8
+ 365 02c6 1B96      		adiw r26,11
+ 366 02c8 BCAF      		std Y+60,r27
+ 367 02ca ABAF      		std Y+59,r26
+ 368 02cc F401      		movw r30,r8
+ 369 02ce 3C96      		adiw r30,12
+ 370 02d0 FEAF      		std Y+62,r31
+ 371 02d2 EDAF      		std Y+61,r30
+ 372 02d4 9401      		movw r18,r8
+ 373 02d6 235F      		subi r18,lo8(-(13))
+ 374 02d8 3F4F      		sbci r19,hi8(-(13))
+ 375 02da 2196      		adiw r28,63-62
+ 376 02dc 3FAF      		std Y+63,r19
+ 377 02de 2EAF      		std Y+62,r18
+ 378 02e0 2197      		sbiw r28,63-62
+ 379               	.L50:
+ 380 02e2 8985      		ldd r24,Y+9
+ 381 02e4 9A85      		ldd r25,Y+10
+ 382 02e6 182F      		mov r17,r24
+ 383 02e8 4985      		ldd r20,Y+9
+ 384 02ea 5A85      		ldd r21,Y+10
+ 385 02ec 4F5F      		subi r20,lo8(-(1))
+ 386 02ee 5F4F      		sbci r21,hi8(-(1))
+ 387 02f0 5A87      		std Y+10,r21
+ 388 02f2 4987      		std Y+9,r20
+ 389 02f4 A114      		cp r10,__zero_reg__
+ 390 02f6 B104      		cpc r11,__zero_reg__
+ 391 02f8 01F4      		brne .L28
+ 392 02fa 6CE0      		ldi r22,lo8(12)
+ 393 02fc 70E0      		ldi r23,hi8(12)
+ 394 02fe 81E0      		ldi r24,lo8(1)
+ 395 0300 90E0      		ldi r25,hi8(1)
+ 396 0302 0E94 0000 		call calloc
+ 397 0306 5C01      		movw r10,r24
+ 398 0308 0097      		sbiw r24,0
+ 399 030a 01F0      		breq .L29
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 8
+
+
+ 400               	.L28:
+ 401 030c E985      		ldd r30,Y+9
+ 402 030e FA85      		ldd r31,Y+10
+ 403 0310 D501      		movw r26,r10
+ 404 0312 1196      		adiw r26,1
+ 405 0314 FC93      		st X,r31
+ 406 0316 EE93      		st -X,r30
+ 407 0318 20E0      		ldi r18,lo8(256)
+ 408 031a 31E0      		ldi r19,hi8(256)
+ 409 031c 1396      		adiw r26,2+1
+ 410 031e 3C93      		st X,r19
+ 411 0320 2E93      		st -X,r18
+ 412 0322 1297      		sbiw r26,2
+ 413 0324 41E0      		ldi r20,lo8(1)
+ 414 0326 50E0      		ldi r21,hi8(1)
+ 415 0328 1596      		adiw r26,4+1
+ 416 032a 5C93      		st X,r21
+ 417 032c 4E93      		st -X,r20
+ 418 032e 1497      		sbiw r26,4
+ 419               	.L29:
+ 420 0330 6114      		cp r6,__zero_reg__
+ 421 0332 7104      		cpc r7,__zero_reg__
+ 422 0334 01F4      		brne .L30
+ 423 0336 66E0      		ldi r22,lo8(6)
+ 424 0338 70E0      		ldi r23,hi8(6)
+ 425 033a 81E0      		ldi r24,lo8(1)
+ 426 033c 90E0      		ldi r25,hi8(1)
+ 427 033e 0E94 0000 		call calloc
+ 428 0342 3C01      		movw r6,r24
+ 429 0344 0097      		sbiw r24,0
+ 430 0346 01F0      		breq .L31
+ 431               	.L30:
+ 432 0348 D301      		movw r26,r6
+ 433 034a 8D91      		ld r24,X+
+ 434 034c 9C91      		ld r25,X
+ 435 034e 0097      		sbiw r24,0
+ 436 0350 01F0      		breq .L32
+ 437 0352 0E94 0000 		call free
+ 438               	.L32:
+ 439 0356 8D85      		ldd r24,Y+13
+ 440 0358 9E85      		ldd r25,Y+14
+ 441 035a 0E94 0000 		call strdup
+ 442 035e F301      		movw r30,r6
+ 443 0360 8083      		st Z,r24
+ 444 0362 9183      		std Z+1,r25
+ 445 0364 2F85      		ldd r18,Y+15
+ 446 0366 3889      		ldd r19,Y+16
+ 447 0368 3383      		std Z+3,r19
+ 448 036a 2283      		std Z+2,r18
+ 449 036c 41E0      		ldi r20,lo8(1)
+ 450 036e 50E0      		ldi r21,hi8(1)
+ 451 0370 5583      		std Z+5,r21
+ 452 0372 4483      		std Z+4,r20
+ 453               	.L31:
+ 454 0374 D501      		movw r26,r10
+ 455 0376 9C91      		ld r25,X
+ 456 0378 1196      		adiw r26,1
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 9
+
+
+ 457 037a 8C91      		ld r24,X
+ 458 037c F401      		movw r30,r8
+ 459 037e 8083      		st Z,r24
+ 460 0380 AFA1      		ldd r26,Y+39
+ 461 0382 B8A5      		ldd r27,Y+40
+ 462 0384 9C93      		st X,r25
+ 463 0386 F501      		movw r30,r10
+ 464 0388 9281      		ldd r25,Z+2
+ 465 038a 8381      		ldd r24,Z+3
+ 466 038c A9A5      		ldd r26,Y+41
+ 467 038e BAA5      		ldd r27,Y+42
+ 468 0390 8C93      		st X,r24
+ 469 0392 EBA5      		ldd r30,Y+43
+ 470 0394 FCA5      		ldd r31,Y+44
+ 471 0396 9083      		st Z,r25
+ 472 0398 D501      		movw r26,r10
+ 473 039a 1496      		adiw r26,4
+ 474 039c 9C91      		ld r25,X
+ 475 039e 1497      		sbiw r26,4
+ 476 03a0 1596      		adiw r26,5
+ 477 03a2 8C91      		ld r24,X
+ 478 03a4 EDA5      		ldd r30,Y+45
+ 479 03a6 FEA5      		ldd r31,Y+46
+ 480 03a8 8083      		st Z,r24
+ 481 03aa AFA5      		ldd r26,Y+47
+ 482 03ac B8A9      		ldd r27,Y+48
+ 483 03ae 9C93      		st X,r25
+ 484 03b0 F501      		movw r30,r10
+ 485 03b2 9681      		ldd r25,Z+6
+ 486 03b4 8781      		ldd r24,Z+7
+ 487 03b6 A9A9      		ldd r26,Y+49
+ 488 03b8 BAA9      		ldd r27,Y+50
+ 489 03ba 8C93      		st X,r24
+ 490 03bc EBA9      		ldd r30,Y+51
+ 491 03be FCA9      		ldd r31,Y+52
+ 492 03c0 9083      		st Z,r25
+ 493 03c2 D501      		movw r26,r10
+ 494 03c4 1896      		adiw r26,8
+ 495 03c6 9C91      		ld r25,X
+ 496 03c8 1897      		sbiw r26,8
+ 497 03ca 1996      		adiw r26,9
+ 498 03cc 8C91      		ld r24,X
+ 499 03ce EDA9      		ldd r30,Y+53
+ 500 03d0 FEA9      		ldd r31,Y+54
+ 501 03d2 8083      		st Z,r24
+ 502 03d4 AFA9      		ldd r26,Y+55
+ 503 03d6 B8AD      		ldd r27,Y+56
+ 504 03d8 9C93      		st X,r25
+ 505 03da F501      		movw r30,r10
+ 506 03dc 9285      		ldd r25,Z+10
+ 507 03de 8385      		ldd r24,Z+11
+ 508 03e0 A9AD      		ldd r26,Y+57
+ 509 03e2 BAAD      		ldd r27,Y+58
+ 510 03e4 8C93      		st X,r24
+ 511 03e6 EBAD      		ldd r30,Y+59
+ 512 03e8 FCAD      		ldd r31,Y+60
+ 513 03ea 9083      		st Z,r25
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 10
+
+
+ 514 03ec D301      		movw r26,r6
+ 515 03ee 8C91      		ld r24,X
+ 516 03f0 1196      		adiw r26,1
+ 517 03f2 9C91      		ld r25,X
+ 518 03f4 FC01      		movw r30,r24
+ 519 03f6 DF01      		movw r26,r30
+ 520 03f8 0D90      		ld __tmp_reg__,X+
+ 521 03fa 0020      		tst __tmp_reg__
+ 522 03fc 01F4      		brne .-6
+ 523 03fe AE1B      		sub r26,r30
+ 524 0400 BF0B      		sbc r27,r31
+ 525 0402 1196      		adiw r26,1
+ 526 0404 EDAD      		ldd r30,Y+61
+ 527 0406 FEAD      		ldd r31,Y+62
+ 528 0408 1082      		st Z,__zero_reg__
+ 529 040a 2196      		adiw r28,63-62
+ 530 040c 6EAD      		ldd r22,Y+62
+ 531 040e 7FAD      		ldd r23,Y+63
+ 532 0410 2197      		sbiw r28,63-62
+ 533 0412 7C01      		movw r14,r24
+ 534 0414 4DAD      		ldd r20,Y+61
+ 535 0416 5EAD      		ldd r21,Y+62
+ 536 0418 00C0      		rjmp .L33
+ 537               	.L36:
+ 538 041a C701      		movw r24,r14
+ 539 041c 0196      		adiw r24,1
+ 540 041e 2E32      		cpi r18,lo8(46)
+ 541 0420 01F4      		brne .L34
+ 542 0422 FB01      		movw r30,r22
+ 543 0424 1082      		st Z,__zero_reg__
+ 544 0426 7C01      		movw r14,r24
+ 545 0428 AB01      		movw r20,r22
+ 546 042a 00C0      		rjmp .L35
+ 547               	.L34:
+ 548 042c FB01      		movw r30,r22
+ 549 042e 2083      		st Z,r18
+ 550 0430 7C01      		movw r14,r24
+ 551 0432 FA01      		movw r30,r20
+ 552 0434 8081      		ld r24,Z
+ 553 0436 8F5F      		subi r24,lo8(-(1))
+ 554 0438 8083      		st Z,r24
+ 555               	.L35:
+ 556 043a 6F5F      		subi r22,lo8(-(1))
+ 557 043c 7F4F      		sbci r23,hi8(-(1))
+ 558               	.L33:
+ 559 043e F701      		movw r30,r14
+ 560 0440 2081      		ld r18,Z
+ 561 0442 2223      		tst r18
+ 562 0444 01F4      		brne .L36
+ 563 0446 FB01      		movw r30,r22
+ 564 0448 1082      		st Z,__zero_reg__
+ 565 044a F301      		movw r30,r6
+ 566 044c 9281      		ldd r25,Z+2
+ 567 044e 8381      		ldd r24,Z+3
+ 568 0450 EDAD      		ldd r30,Y+61
+ 569 0452 FEAD      		ldd r31,Y+62
+ 570 0454 EA0F      		add r30,r26
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 11
+
+
+ 571 0456 FB1F      		adc r31,r27
+ 572 0458 8083      		st Z,r24
+ 573 045a 9183      		std Z+1,r25
+ 574 045c 1296      		adiw r26,2
+ 575 045e F301      		movw r30,r6
+ 576 0460 9481      		ldd r25,Z+4
+ 577 0462 8581      		ldd r24,Z+5
+ 578 0464 EDAD      		ldd r30,Y+61
+ 579 0466 FEAD      		ldd r31,Y+62
+ 580 0468 EA0F      		add r30,r26
+ 581 046a FB1F      		adc r31,r27
+ 582 046c 8083      		st Z,r24
+ 583 046e 9183      		std Z+1,r25
+ 584 0470 CD01      		movw r24,r26
+ 585 0472 0E96      		adiw r24,14
+ 586 0474 10FF      		sbrs r17,0
+ 587 0476 00C0      		rjmp .L37
+ 588 0478 4091 0000 		lds r20,doc+8
+ 589 047c 5091 0000 		lds r21,(doc+8)+1
+ 590 0480 6091 0000 		lds r22,(doc+8)+2
+ 591 0484 7091 0000 		lds r23,(doc+8)+3
+ 592 0488 4115      		cp r20,__zero_reg__
+ 593 048a 5105      		cpc r21,__zero_reg__
+ 594 048c 6105      		cpc r22,__zero_reg__
+ 595 048e 7105      		cpc r23,__zero_reg__
+ 596 0490 01F4      		brne .L38
+ 597               	.L37:
+ 598 0492 4091 0000 		lds r20,doc+4
+ 599 0496 5091 0000 		lds r21,(doc+4)+1
+ 600 049a 6091 0000 		lds r22,(doc+4)+2
+ 601 049e 7091 0000 		lds r23,(doc+4)+3
+ 602               	.L38:
+ 603 04a2 7C01      		movw r14,r24
+ 604 04a4 8401      		movw r16,r8
+ 605 04a6 25E3      		ldi r18,lo8(53)
+ 606 04a8 30E0      		ldi r19,hi8(53)
+ 607 04aa 8F81      		ldd r24,Y+7
+ 608 04ac 9885      		ldd r25,Y+8
+ 609 04ae 0E94 0000 		call NutUdpSendTo
+ 610 04b2 97FD      		sbrc r25,7
+ 611 04b4 00C0      		rjmp .L39
+ 612               	.L63:
+ 613 04b6 A8EE      		ldi r26,lo8(1000)
+ 614 04b8 CA2E      		mov r12,r26
+ 615 04ba A3E0      		ldi r26,hi8(1000)
+ 616 04bc DA2E      		mov r13,r26
+ 617 04be E12C      		mov r14,__zero_reg__
+ 618 04c0 F12C      		mov r15,__zero_reg__
+ 619 04c2 00E0      		ldi r16,lo8(512)
+ 620 04c4 12E0      		ldi r17,hi8(512)
+ 621 04c6 9401      		movw r18,r8
+ 622 04c8 AE01      		movw r20,r28
+ 623 04ca 4F5F      		subi r20,lo8(-(1))
+ 624 04cc 5F4F      		sbci r21,hi8(-(1))
+ 625 04ce BE01      		movw r22,r28
+ 626 04d0 6D5F      		subi r22,lo8(-(3))
+ 627 04d2 7F4F      		sbci r23,hi8(-(3))
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 12
+
+
+ 628 04d4 8F81      		ldd r24,Y+7
+ 629 04d6 9885      		ldd r25,Y+8
+ 630 04d8 0E94 0000 		call NutUdpReceiveFrom
+ 631 04dc 1816      		cp __zero_reg__,r24
+ 632 04de 1906      		cpc __zero_reg__,r25
+ 633 04e0 04F0      		brlt .+2
+ 634 04e2 00C0      		rjmp .L41
+ 635 04e4 0D97      		sbiw r24,13
+ 636 04e6 04F0      		brlt .L63
+ 637 04e8 AFA1      		ldd r26,Y+39
+ 638 04ea B8A5      		ldd r27,Y+40
+ 639 04ec 2C91      		ld r18,X
+ 640 04ee 30E0      		ldi r19,lo8(0)
+ 641 04f0 F401      		movw r30,r8
+ 642 04f2 F081      		ld r31,Z
+ 643 04f4 FA8B      		std Y+18,r31
+ 644 04f6 198A      		std Y+17,__zero_reg__
+ 645 04f8 4989      		ldd r20,Y+17
+ 646 04fa 5A89      		ldd r21,Y+18
+ 647 04fc 242B      		or r18,r20
+ 648 04fe 352B      		or r19,r21
+ 649 0500 D501      		movw r26,r10
+ 650 0502 2D93      		st X+,r18
+ 651 0504 3C93      		st X,r19
+ 652 0506 EBA5      		ldd r30,Y+43
+ 653 0508 FCA5      		ldd r31,Y+44
+ 654 050a 8081      		ld r24,Z
+ 655 050c 90E0      		ldi r25,lo8(0)
+ 656 050e A9A5      		ldd r26,Y+41
+ 657 0510 BAA5      		ldd r27,Y+42
+ 658 0512 BC91      		ld r27,X
+ 659 0514 BC8B      		std Y+20,r27
+ 660 0516 1B8A      		std Y+19,__zero_reg__
+ 661 0518 EB89      		ldd r30,Y+19
+ 662 051a FC89      		ldd r31,Y+20
+ 663 051c 8E2B      		or r24,r30
+ 664 051e 9F2B      		or r25,r31
+ 665 0520 D501      		movw r26,r10
+ 666 0522 1396      		adiw r26,2+1
+ 667 0524 9C93      		st X,r25
+ 668 0526 8E93      		st -X,r24
+ 669 0528 1297      		sbiw r26,2
+ 670 052a EFA5      		ldd r30,Y+47
+ 671 052c F8A9      		ldd r31,Y+48
+ 672 052e 8081      		ld r24,Z
+ 673 0530 482F      		mov r20,r24
+ 674 0532 50E0      		ldi r21,lo8(0)
+ 675 0534 ADA5      		ldd r26,Y+45
+ 676 0536 BEA5      		ldd r27,Y+46
+ 677 0538 BC91      		ld r27,X
+ 678 053a BE8B      		std Y+22,r27
+ 679 053c 1D8A      		std Y+21,__zero_reg__
+ 680 053e ED89      		ldd r30,Y+21
+ 681 0540 FE89      		ldd r31,Y+22
+ 682 0542 4E2B      		or r20,r30
+ 683 0544 5F2B      		or r21,r31
+ 684 0546 D501      		movw r26,r10
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 13
+
+
+ 685 0548 1596      		adiw r26,4+1
+ 686 054a 5C93      		st X,r21
+ 687 054c 4E93      		st -X,r20
+ 688 054e 1497      		sbiw r26,4
+ 689 0550 EBA9      		ldd r30,Y+51
+ 690 0552 FCA9      		ldd r31,Y+52
+ 691 0554 8081      		ld r24,Z
+ 692 0556 90E0      		ldi r25,lo8(0)
+ 693 0558 A9A9      		ldd r26,Y+49
+ 694 055a BAA9      		ldd r27,Y+50
+ 695 055c BC91      		ld r27,X
+ 696 055e B88F      		std Y+24,r27
+ 697 0560 1F8A      		std Y+23,__zero_reg__
+ 698 0562 EF89      		ldd r30,Y+23
+ 699 0564 F88D      		ldd r31,Y+24
+ 700 0566 8E2B      		or r24,r30
+ 701 0568 9F2B      		or r25,r31
+ 702 056a D501      		movw r26,r10
+ 703 056c 1796      		adiw r26,6+1
+ 704 056e 9C93      		st X,r25
+ 705 0570 8E93      		st -X,r24
+ 706 0572 1697      		sbiw r26,6
+ 707 0574 EFA9      		ldd r30,Y+55
+ 708 0576 F8AD      		ldd r31,Y+56
+ 709 0578 8081      		ld r24,Z
+ 710 057a 90E0      		ldi r25,lo8(0)
+ 711 057c ADA9      		ldd r26,Y+53
+ 712 057e BEA9      		ldd r27,Y+54
+ 713 0580 BC91      		ld r27,X
+ 714 0582 BA8F      		std Y+26,r27
+ 715 0584 198E      		std Y+25,__zero_reg__
+ 716 0586 E98D      		ldd r30,Y+25
+ 717 0588 FA8D      		ldd r31,Y+26
+ 718 058a 8E2B      		or r24,r30
+ 719 058c 9F2B      		or r25,r31
+ 720 058e D501      		movw r26,r10
+ 721 0590 1996      		adiw r26,8+1
+ 722 0592 9C93      		st X,r25
+ 723 0594 8E93      		st -X,r24
+ 724 0596 1897      		sbiw r26,8
+ 725 0598 EBAD      		ldd r30,Y+59
+ 726 059a FCAD      		ldd r31,Y+60
+ 727 059c 8081      		ld r24,Z
+ 728 059e 90E0      		ldi r25,lo8(0)
+ 729 05a0 A9AD      		ldd r26,Y+57
+ 730 05a2 BAAD      		ldd r27,Y+58
+ 731 05a4 BC91      		ld r27,X
+ 732 05a6 BC8F      		std Y+28,r27
+ 733 05a8 1B8E      		std Y+27,__zero_reg__
+ 734 05aa EB8D      		ldd r30,Y+27
+ 735 05ac FC8D      		ldd r31,Y+28
+ 736 05ae 8E2B      		or r24,r30
+ 737 05b0 9F2B      		or r25,r31
+ 738 05b2 D501      		movw r26,r10
+ 739 05b4 1B96      		adiw r26,10+1
+ 740 05b6 9C93      		st X,r25
+ 741 05b8 8E93      		st -X,r24
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 14
+
+
+ 742 05ba 1A97      		sbiw r26,10
+ 743 05bc E985      		ldd r30,Y+9
+ 744 05be FA85      		ldd r31,Y+10
+ 745 05c0 2E17      		cp r18,r30
+ 746 05c2 3F07      		cpc r19,r31
+ 747 05c4 01F0      		breq .+2
+ 748 05c6 00C0      		rjmp .L63
+ 749 05c8 00C0      		rjmp .L64
+ 750               	.L65:
+ 751 05ca B301      		movw r22,r6
+ 752 05cc 8DAD      		ldd r24,Y+61
+ 753 05ce 9EAD      		ldd r25,Y+62
+ 754 05d0 0E94 0000 		call ScanName
+ 755 05d4 9C01      		movw r18,r24
+ 756 05d6 EDAD      		ldd r30,Y+61
+ 757 05d8 FEAD      		ldd r31,Y+62
+ 758 05da E80F      		add r30,r24
+ 759 05dc F91F      		adc r31,r25
+ 760 05de 8181      		ldd r24,Z+1
+ 761 05e0 90E0      		ldi r25,lo8(0)
+ 762 05e2 4081      		ld r20,Z
+ 763 05e4 4E8F      		std Y+30,r20
+ 764 05e6 1D8E      		std Y+29,__zero_reg__
+ 765 05e8 6D8D      		ldd r22,Y+29
+ 766 05ea 7E8D      		ldd r23,Y+30
+ 767 05ec 862B      		or r24,r22
+ 768 05ee 972B      		or r25,r23
+ 769 05f0 D301      		movw r26,r6
+ 770 05f2 1396      		adiw r26,2+1
+ 771 05f4 9C93      		st X,r25
+ 772 05f6 8E93      		st -X,r24
+ 773 05f8 1297      		sbiw r26,2
+ 774 05fa 2E5F      		subi r18,lo8(-(2))
+ 775 05fc 3F4F      		sbci r19,hi8(-(2))
+ 776 05fe EDAD      		ldd r30,Y+61
+ 777 0600 FEAD      		ldd r31,Y+62
+ 778 0602 E20F      		add r30,r18
+ 779 0604 F31F      		adc r31,r19
+ 780 0606 2250      		subi r18,lo8(-(-2))
+ 781 0608 3040      		sbci r19,hi8(-(-2))
+ 782 060a 8181      		ldd r24,Z+1
+ 783 060c 90E0      		ldi r25,lo8(0)
+ 784 060e B081      		ld r27,Z
+ 785 0610 B8A3      		std Y+32,r27
+ 786 0612 1F8E      		std Y+31,__zero_reg__
+ 787 0614 EF8D      		ldd r30,Y+31
+ 788 0616 F8A1      		ldd r31,Y+32
+ 789 0618 8E2B      		or r24,r30
+ 790 061a 9F2B      		or r25,r31
+ 791 061c D301      		movw r26,r6
+ 792 061e 1596      		adiw r26,4+1
+ 793 0620 9C93      		st X,r25
+ 794 0622 8E93      		st -X,r24
+ 795 0624 1497      		sbiw r26,4
+ 796 0626 F501      		movw r30,r10
+ 797 0628 8681      		ldd r24,Z+6
+ 798 062a 9781      		ldd r25,Z+7
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 15
+
+
+ 799 062c 892B      		or r24,r25
+ 800 062e 01F4      		brne .+2
+ 801 0630 00C0      		rjmp .L39
+ 802 0632 A901      		movw r20,r18
+ 803 0634 405F      		subi r20,lo8(-(16))
+ 804 0636 5F4F      		sbci r21,hi8(-(16))
+ 805 0638 5C87      		std Y+12,r21
+ 806 063a 4B87      		std Y+11,r20
+ 807 063c F1E0      		ldi r31,lo8(1)
+ 808 063e 2F2E      		mov r2,r31
+ 809 0640 312C      		mov r3,__zero_reg__
+ 810 0642 00C0      		rjmp .L43
+ 811               	.L48:
+ 812 0644 4114      		cp r4,__zero_reg__
+ 813 0646 5104      		cpc r5,__zero_reg__
+ 814 0648 01F4      		brne .L44
+ 815 064a 6EE0      		ldi r22,lo8(14)
+ 816 064c 70E0      		ldi r23,hi8(14)
+ 817 064e 81E0      		ldi r24,lo8(1)
+ 818 0650 90E0      		ldi r25,hi8(1)
+ 819 0652 0E94 0000 		call calloc
+ 820 0656 2C01      		movw r4,r24
+ 821               	.L44:
+ 822 0658 CB84      		ldd r12,Y+11
+ 823 065a DC84      		ldd r13,Y+12
+ 824 065c C80C      		add r12,r8
+ 825 065e D91C      		adc r13,r9
+ 826 0660 B201      		movw r22,r4
+ 827 0662 C601      		movw r24,r12
+ 828 0664 0E94 0000 		call ScanName
+ 829 0668 F601      		movw r30,r12
+ 830 066a E80F      		add r30,r24
+ 831 066c F91F      		adc r31,r25
+ 832 066e 2181      		ldd r18,Z+1
+ 833 0670 30E0      		ldi r19,lo8(0)
+ 834 0672 5081      		ld r21,Z
+ 835 0674 5AA3      		std Y+34,r21
+ 836 0676 19A2      		std Y+33,__zero_reg__
+ 837 0678 69A1      		ldd r22,Y+33
+ 838 067a 7AA1      		ldd r23,Y+34
+ 839 067c 262B      		or r18,r22
+ 840 067e 372B      		or r19,r23
+ 841 0680 D201      		movw r26,r4
+ 842 0682 1396      		adiw r26,2+1
+ 843 0684 3C93      		st X,r19
+ 844 0686 2E93      		st -X,r18
+ 845 0688 1297      		sbiw r26,2
+ 846 068a FC01      		movw r30,r24
+ 847 068c 3296      		adiw r30,2
+ 848 068e D601      		movw r26,r12
+ 849 0690 AE0F      		add r26,r30
+ 850 0692 BF1F      		adc r27,r31
+ 851 0694 1196      		adiw r26,1
+ 852 0696 2C91      		ld r18,X
+ 853 0698 1197      		sbiw r26,1
+ 854 069a 30E0      		ldi r19,lo8(0)
+ 855 069c 4C91      		ld r20,X
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 16
+
+
+ 856 069e 4CA3      		std Y+36,r20
+ 857 06a0 1BA2      		std Y+35,__zero_reg__
+ 858 06a2 6BA1      		ldd r22,Y+35
+ 859 06a4 7CA1      		ldd r23,Y+36
+ 860 06a6 262B      		or r18,r22
+ 861 06a8 372B      		or r19,r23
+ 862 06aa D201      		movw r26,r4
+ 863 06ac 1596      		adiw r26,4+1
+ 864 06ae 3C93      		st X,r19
+ 865 06b0 2E93      		st -X,r18
+ 866 06b2 1497      		sbiw r26,4
+ 867 06b4 3296      		adiw r30,2
+ 868 06b6 EC0D      		add r30,r12
+ 869 06b8 FD1D      		adc r31,r13
+ 870 06ba DF01      		movw r26,r30
+ 871 06bc 1196      		adiw r26,1
+ 872 06be E180      		ldd r14,Z+1
+ 873 06c0 FF24      		clr r15
+ 874 06c2 00E0      		ldi r16,lo8(0)
+ 875 06c4 10E0      		ldi r17,hi8(0)
+ 876 06c6 2081      		ld r18,Z
+ 877 06c8 30E0      		ldi r19,lo8(0)
+ 878 06ca 40E0      		ldi r20,lo8(0)
+ 879 06cc 50E0      		ldi r21,hi8(0)
+ 880 06ce 542F      		mov r21,r20
+ 881 06d0 432F      		mov r20,r19
+ 882 06d2 322F      		mov r19,r18
+ 883 06d4 2227      		clr r18
+ 884 06d6 E22A      		or r14,r18
+ 885 06d8 F32A      		or r15,r19
+ 886 06da 042B      		or r16,r20
+ 887 06dc 152B      		or r17,r21
+ 888 06de 102F      		mov r17,r16
+ 889 06e0 0F2D      		mov r16,r15
+ 890 06e2 FE2C      		mov r15,r14
+ 891 06e4 EE24      		clr r14
+ 892 06e6 1196      		adiw r26,1
+ 893 06e8 2C91      		ld r18,X
+ 894 06ea 1197      		sbiw r26,1
+ 895 06ec 30E0      		ldi r19,lo8(0)
+ 896 06ee 40E0      		ldi r20,lo8(0)
+ 897 06f0 50E0      		ldi r21,hi8(0)
+ 898 06f2 E22A      		or r14,r18
+ 899 06f4 F32A      		or r15,r19
+ 900 06f6 042B      		or r16,r20
+ 901 06f8 152B      		or r17,r21
+ 902 06fa 102F      		mov r17,r16
+ 903 06fc 0F2D      		mov r16,r15
+ 904 06fe FE2C      		mov r15,r14
+ 905 0700 EE24      		clr r14
+ 906 0702 1296      		adiw r26,2
+ 907 0704 2C91      		ld r18,X
+ 908 0706 30E0      		ldi r19,lo8(0)
+ 909 0708 40E0      		ldi r20,lo8(0)
+ 910 070a 50E0      		ldi r21,hi8(0)
+ 911 070c E22A      		or r14,r18
+ 912 070e F32A      		or r15,r19
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 17
+
+
+ 913 0710 042B      		or r16,r20
+ 914 0712 152B      		or r17,r21
+ 915 0714 F201      		movw r30,r4
+ 916 0716 E682      		std Z+6,r14
+ 917 0718 F782      		std Z+7,r15
+ 918 071a 0087      		std Z+8,r16
+ 919 071c 1187      		std Z+9,r17
+ 920 071e 0896      		adiw r24,8
+ 921 0720 F601      		movw r30,r12
+ 922 0722 E80F      		add r30,r24
+ 923 0724 F91F      		adc r31,r25
+ 924 0726 2181      		ldd r18,Z+1
+ 925 0728 022F      		mov r16,r18
+ 926 072a 10E0      		ldi r17,lo8(0)
+ 927 072c 2081      		ld r18,Z
+ 928 072e 2EA3      		std Y+38,r18
+ 929 0730 1DA2      		std Y+37,__zero_reg__
+ 930 0732 4DA1      		ldd r20,Y+37
+ 931 0734 5EA1      		ldd r21,Y+38
+ 932 0736 042B      		or r16,r20
+ 933 0738 152B      		or r17,r21
+ 934 073a D201      		movw r26,r4
+ 935 073c 1B96      		adiw r26,10+1
+ 936 073e 1C93      		st X,r17
+ 937 0740 0E93      		st -X,r16
+ 938 0742 1A97      		sbiw r26,10
+ 939 0744 52E0      		ldi r21,lo8(2)
+ 940 0746 E52E      		mov r14,r21
+ 941 0748 F12C      		mov r15,__zero_reg__
+ 942 074a E80E      		add r14,r24
+ 943 074c F91E      		adc r15,r25
+ 944 074e 1C96      		adiw r26,12
+ 945 0750 8D91      		ld r24,X+
+ 946 0752 9C91      		ld r25,X
+ 947 0754 1D97      		sbiw r26,12+1
+ 948 0756 0097      		sbiw r24,0
+ 949 0758 01F0      		breq .L45
+ 950 075a 0E94 0000 		call free
+ 951               	.L45:
+ 952 075e C801      		movw r24,r16
+ 953 0760 0E94 0000 		call malloc
+ 954 0764 F201      		movw r30,r4
+ 955 0766 8487      		std Z+12,r24
+ 956 0768 9587      		std Z+13,r25
+ 957 076a 9601      		movw r18,r12
+ 958 076c 2E0D      		add r18,r14
+ 959 076e 3F1D      		adc r19,r15
+ 960 0770 A801      		movw r20,r16
+ 961 0772 B901      		movw r22,r18
+ 962 0774 0E94 0000 		call memcpy
+ 963 0778 D201      		movw r26,r4
+ 964 077a 1296      		adiw r26,2
+ 965 077c 8D91      		ld r24,X+
+ 966 077e 9C91      		ld r25,X
+ 967 0780 1397      		sbiw r26,2+1
+ 968 0782 0197      		sbiw r24,1
+ 969 0784 01F0      		breq .L47
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 18
+
+
+ 970 0786 E00E      		add r14,r16
+ 971 0788 F11E      		adc r15,r17
+ 972 078a EB85      		ldd r30,Y+11
+ 973 078c FC85      		ldd r31,Y+12
+ 974 078e EE0D      		add r30,r14
+ 975 0790 FF1D      		adc r31,r15
+ 976 0792 FC87      		std Y+12,r31
+ 977 0794 EB87      		std Y+11,r30
+ 978 0796 0894      		sec
+ 979 0798 211C      		adc r2,__zero_reg__
+ 980 079a 311C      		adc r3,__zero_reg__
+ 981               	.L43:
+ 982 079c D501      		movw r26,r10
+ 983 079e 1696      		adiw r26,6
+ 984 07a0 8D91      		ld r24,X+
+ 985 07a2 9C91      		ld r25,X
+ 986 07a4 1797      		sbiw r26,6+1
+ 987 07a6 8215      		cp r24,r2
+ 988 07a8 9305      		cpc r25,r3
+ 989 07aa 04F0      		brlt .+2
+ 990 07ac 00C0      		rjmp .L48
+ 991               	.L47:
+ 992 07ae F201      		movw r30,r4
+ 993 07b0 8285      		ldd r24,Z+10
+ 994 07b2 9385      		ldd r25,Z+11
+ 995 07b4 0497      		sbiw r24,4
+ 996 07b6 01F4      		brne .L41
+ 997 07b8 0484      		ldd __tmp_reg__,Z+12
+ 998 07ba F585      		ldd r31,Z+13
+ 999 07bc E02D      		mov r30,__tmp_reg__
+ 1000 07be 2081      		ld r18,Z
+ 1001 07c0 8181      		ldd r24,Z+1
+ 1002 07c2 90E0      		ldi r25,lo8(0)
+ 1003 07c4 A0E0      		ldi r26,lo8(0)
+ 1004 07c6 B0E0      		ldi r27,hi8(0)
+ 1005 07c8 EE24      		clr r14
+ 1006 07ca F82E      		mov r15,r24
+ 1007 07cc 092F      		mov r16,r25
+ 1008 07ce 1A2F      		mov r17,r26
+ 1009 07d0 8281      		ldd r24,Z+2
+ 1010 07d2 90E0      		ldi r25,lo8(0)
+ 1011 07d4 A0E0      		ldi r26,lo8(0)
+ 1012 07d6 B0E0      		ldi r27,hi8(0)
+ 1013 07d8 DC01      		movw r26,r24
+ 1014 07da 9927      		clr r25
+ 1015 07dc 8827      		clr r24
+ 1016 07de E80E      		add r14,r24
+ 1017 07e0 F91E      		adc r15,r25
+ 1018 07e2 0A1F      		adc r16,r26
+ 1019 07e4 1B1F      		adc r17,r27
+ 1020 07e6 E20E      		add r14,r18
+ 1021 07e8 F11C      		adc r15,__zero_reg__
+ 1022 07ea 011D      		adc r16,__zero_reg__
+ 1023 07ec 111D      		adc r17,__zero_reg__
+ 1024 07ee 8381      		ldd r24,Z+3
+ 1025 07f0 90E0      		ldi r25,lo8(0)
+ 1026 07f2 A0E0      		ldi r26,lo8(0)
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 19
+
+
+ 1027 07f4 B0E0      		ldi r27,hi8(0)
+ 1028 07f6 B82F      		mov r27,r24
+ 1029 07f8 AA27      		clr r26
+ 1030 07fa 9927      		clr r25
+ 1031 07fc 8827      		clr r24
+ 1032 07fe E80E      		add r14,r24
+ 1033 0800 F91E      		adc r15,r25
+ 1034 0802 0A1F      		adc r16,r26
+ 1035 0804 1B1F      		adc r17,r27
+ 1036 0806 00C0      		rjmp .L49
+ 1037               	.L41:
+ 1038 0808 2985      		ldd r18,Y+9
+ 1039 080a 3A85      		ldd r19,Y+10
+ 1040 080c 2630      		cpi r18,6
+ 1041 080e 3105      		cpc r19,__zero_reg__
+ 1042 0810 01F0      		breq .+2
+ 1043 0812 00C0      		rjmp .L50
+ 1044               	.L39:
+ 1045 0814 EE24      		clr r14
+ 1046 0816 FF24      		clr r15
+ 1047 0818 8701      		movw r16,r14
+ 1048               	.L49:
+ 1049 081a A114      		cp r10,__zero_reg__
+ 1050 081c B104      		cpc r11,__zero_reg__
+ 1051 081e 01F0      		breq .L51
+ 1052 0820 C501      		movw r24,r10
+ 1053 0822 0E94 0000 		call free
+ 1054               	.L51:
+ 1055 0826 6114      		cp r6,__zero_reg__
+ 1056 0828 7104      		cpc r7,__zero_reg__
+ 1057 082a 01F0      		breq .L52
+ 1058 082c D301      		movw r26,r6
+ 1059 082e 8D91      		ld r24,X+
+ 1060 0830 9C91      		ld r25,X
+ 1061 0832 0097      		sbiw r24,0
+ 1062 0834 01F0      		breq .L53
+ 1063 0836 0E94 0000 		call free
+ 1064               	.L53:
+ 1065 083a C301      		movw r24,r6
+ 1066 083c 0E94 0000 		call free
+ 1067               	.L52:
+ 1068 0840 4114      		cp r4,__zero_reg__
+ 1069 0842 5104      		cpc r5,__zero_reg__
+ 1070 0844 01F0      		breq .L54
+ 1071 0846 F201      		movw r30,r4
+ 1072 0848 8081      		ld r24,Z
+ 1073 084a 9181      		ldd r25,Z+1
+ 1074 084c 0097      		sbiw r24,0
+ 1075 084e 01F0      		breq .L55
+ 1076 0850 0E94 0000 		call free
+ 1077               	.L55:
+ 1078 0854 D201      		movw r26,r4
+ 1079 0856 1C96      		adiw r26,12
+ 1080 0858 8D91      		ld r24,X+
+ 1081 085a 9C91      		ld r25,X
+ 1082 085c 1D97      		sbiw r26,12+1
+ 1083 085e 0097      		sbiw r24,0
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 20
+
+
+ 1084 0860 01F0      		breq .L56
+ 1085 0862 0E94 0000 		call free
+ 1086               	.L56:
+ 1087 0866 C201      		movw r24,r4
+ 1088 0868 0E94 0000 		call free
+ 1089               	.L54:
+ 1090 086c C401      		movw r24,r8
+ 1091 086e 0E94 0000 		call free
+ 1092 0872 8F81      		ldd r24,Y+7
+ 1093 0874 9885      		ldd r25,Y+8
+ 1094 0876 0E94 0000 		call NutUdpDestroySocket
+ 1095 087a 00C0      		rjmp .L57
+ 1096               	.L27:
+ 1097 087c EE24      		clr r14
+ 1098 087e FF24      		clr r15
+ 1099 0880 8701      		movw r16,r14
+ 1100               	.L57:
+ 1101 0882 B701      		movw r22,r14
+ 1102 0884 C801      		movw r24,r16
+ 1103               	/* epilogue start */
+ 1104 0886 C05C      		subi r28,lo8(-(64))
+ 1105 0888 DF4F      		sbci r29,hi8(-(64))
+ 1106 088a 0FB6      		in __tmp_reg__,__SREG__
+ 1107 088c F894      		cli
+ 1108 088e DEBF      		out __SP_H__,r29
+ 1109 0890 0FBE      		out __SREG__,__tmp_reg__
+ 1110 0892 CDBF      		out __SP_L__,r28
+ 1111 0894 CF91      		pop r28
+ 1112 0896 DF91      		pop r29
+ 1113 0898 1F91      		pop r17
+ 1114 089a 0F91      		pop r16
+ 1115 089c FF90      		pop r15
+ 1116 089e EF90      		pop r14
+ 1117 08a0 DF90      		pop r13
+ 1118 08a2 CF90      		pop r12
+ 1119 08a4 BF90      		pop r11
+ 1120 08a6 AF90      		pop r10
+ 1121 08a8 9F90      		pop r9
+ 1122 08aa 8F90      		pop r8
+ 1123 08ac 7F90      		pop r7
+ 1124 08ae 6F90      		pop r6
+ 1125 08b0 5F90      		pop r5
+ 1126 08b2 4F90      		pop r4
+ 1127 08b4 3F90      		pop r3
+ 1128 08b6 2F90      		pop r2
+ 1129 08b8 0895      		ret
+ 1130               	.L64:
+ 1131 08ba 4130      		cpi r20,1
+ 1132 08bc 5105      		cpc r21,__zero_reg__
+ 1133 08be 01F0      		breq .+2
+ 1134 08c0 00C0      		rjmp .L41
+ 1135 08c2 00C0      		rjmp .L65
+ 1136               		.size	NutDnsGetResource, .-NutDnsGetResource
+ 1137               	.global	NutDnsGetMxByDomain
+ 1138               		.type	NutDnsGetMxByDomain, @function
+ 1139               	NutDnsGetMxByDomain:
+ 1140               	/* prologue: function */
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 21
+
+
+ 1141               	/* frame size = 0 */
+ 1142 08c4 6FE0      		ldi r22,lo8(15)
+ 1143 08c6 70E0      		ldi r23,hi8(15)
+ 1144 08c8 0E94 0000 		call NutDnsGetResource
+ 1145               	/* epilogue start */
+ 1146 08cc 0895      		ret
+ 1147               		.size	NutDnsGetMxByDomain, .-NutDnsGetMxByDomain
+ 1148               	.global	NutDnsGetHostByName
+ 1149               		.type	NutDnsGetHostByName, @function
+ 1150               	NutDnsGetHostByName:
+ 1151               	/* prologue: function */
+ 1152               	/* frame size = 0 */
+ 1153 08ce 61E0      		ldi r22,lo8(1)
+ 1154 08d0 70E0      		ldi r23,hi8(1)
+ 1155 08d2 0E94 0000 		call NutDnsGetResource
+ 1156               	/* epilogue start */
+ 1157 08d6 0895      		ret
+ 1158               		.size	NutDnsGetHostByName, .-NutDnsGetHostByName
+ 1159               		.lcomm doc,12
+GAS LISTING C:\Temp/ccYbGvoW.s 			page 22
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 resolv.c
+  C:\Temp/ccYbGvoW.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccYbGvoW.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccYbGvoW.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccYbGvoW.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccYbGvoW.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccYbGvoW.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccYbGvoW.s:13     .text:00000000 NutDnsGetConfig2
+                             .bss:00000000 doc
+  C:\Temp/ccYbGvoW.s:66     .text:0000006c NutDnsConfig2
+  C:\Temp/ccYbGvoW.s:141    .text:0000011c NutDnsConfig
+  C:\Temp/ccYbGvoW.s:160    .text:00000138 ScanName
+  C:\Temp/ccYbGvoW.s:247    .text:000001ce NutDnsGetResource
+  C:\Temp/ccYbGvoW.s:1139   .text:000008c4 NutDnsGetMxByDomain
+  C:\Temp/ccYbGvoW.s:1150   .text:000008ce NutDnsGetHostByName
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+free
+strdup
+malloc
+NutUdpCreateSocket
+calloc
+NutUdpSendTo
+NutUdpReceiveFrom
+memcpy
+NutUdpDestroySocket

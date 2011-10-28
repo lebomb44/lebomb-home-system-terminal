@@ -1,0 +1,59 @@
+GAS LISTING C:\Temp/ccnRIv96.s 			page 1
+
+
+   1               		.file	"ioctl.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	_ioctl
+  12               		.type	_ioctl, @function
+  13               	_ioctl:
+  14 0000 CF93      		push r28
+  15 0002 DF93      		push r29
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0004 DC01      		movw r26,r24
+  19 0006 1296      		adiw r26,2
+  20 0008 CD91      		ld r28,X+
+  21 000a DC91      		ld r29,X
+  22 000c 1397      		sbiw r26,2+1
+  23 000e 2097      		sbiw r28,0
+  24 0010 01F4      		brne .L2
+  25 0012 1B96      		adiw r26,11
+  26 0014 ED91      		ld r30,X+
+  27 0016 FC91      		ld r31,X
+  28 0018 1C97      		sbiw r26,11+1
+  29 001a 00C0      		rjmp .L5
+  30               	.L2:
+  31 001c ED89      		ldd r30,Y+21
+  32 001e FE89      		ldd r31,Y+22
+  33 0020 CE01      		movw r24,r28
+  34               	.L5:
+  35 0022 0995      		icall
+  36               	/* epilogue start */
+  37 0024 DF91      		pop r29
+  38 0026 CF91      		pop r28
+  39 0028 0895      		ret
+  40               		.size	_ioctl, .-_ioctl
+GAS LISTING C:\Temp/ccnRIv96.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ioctl.c
+  C:\Temp/ccnRIv96.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccnRIv96.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccnRIv96.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccnRIv96.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccnRIv96.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccnRIv96.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccnRIv96.s:13     .text:00000000 _ioctl
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

@@ -1,0 +1,855 @@
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 1
+
+
+   1               		.file	"osdebug.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutTraceOs
+  12               		.type	NutTraceOs, @function
+  13               	NutTraceOs:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 0097      		sbiw r24,0
+  17 0002 01F0      		breq .L2
+  18 0004 9093 0000 		sts (__os_trs)+1,r25
+  19 0008 8093 0000 		sts __os_trs,r24
+  20               	.L2:
+  21 000c 8091 0000 		lds r24,__os_trs
+  22 0010 9091 0000 		lds r25,(__os_trs)+1
+  23 0014 892B      		or r24,r25
+  24 0016 01F0      		breq .L3
+  25 0018 6093 0000 		sts __os_trf,r22
+  26 001c 0895      		ret
+  27               	.L3:
+  28 001e 1092 0000 		sts __os_trf,__zero_reg__
+  29 0022 0895      		ret
+  30               		.size	NutTraceOs, .-NutTraceOs
+  31               	.global	NutTraceHeap
+  32               		.type	NutTraceHeap, @function
+  33               	NutTraceHeap:
+  34               	/* prologue: function */
+  35               	/* frame size = 0 */
+  36 0024 0097      		sbiw r24,0
+  37 0026 01F0      		breq .L7
+  38 0028 9093 0000 		sts (__heap_trs)+1,r25
+  39 002c 8093 0000 		sts __heap_trs,r24
+  40               	.L7:
+  41 0030 8091 0000 		lds r24,__heap_trs
+  42 0034 9091 0000 		lds r25,(__heap_trs)+1
+  43 0038 892B      		or r24,r25
+  44 003a 01F0      		breq .L8
+  45 003c 6093 0000 		sts __heap_trf,r22
+  46 0040 0895      		ret
+  47               	.L8:
+  48 0042 1092 0000 		sts __heap_trf,__zero_reg__
+  49 0046 0895      		ret
+  50               		.size	NutTraceHeap, .-NutTraceHeap
+  51               	.global	NutDumpHeap
+  52               		.type	NutDumpHeap, @function
+  53               	NutDumpHeap:
+  54 0048 CF92      		push r12
+  55 004a DF92      		push r13
+  56 004c EF92      		push r14
+  57 004e FF92      		push r15
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 2
+
+
+  58 0050 0F93      		push r16
+  59 0052 1F93      		push r17
+  60 0054 CF93      		push r28
+  61 0056 DF93      		push r29
+  62               	/* prologue: function */
+  63               	/* frame size = 0 */
+  64 0058 7C01      		movw r14,r24
+  65 005a BC01      		movw r22,r24
+  66 005c 8AE0      		ldi r24,lo8(10)
+  67 005e 90E0      		ldi r25,hi8(10)
+  68 0060 0E94 0000 		call fputc
+  69 0064 C091 0000 		lds r28,heapFreeList
+  70 0068 D091 0000 		lds r29,(heapFreeList)+1
+  71 006c 00E0      		ldi r16,lo8(0)
+  72 006e 10E0      		ldi r17,hi8(0)
+  73 0070 80E0      		ldi r24,lo8(fmt1.1970)
+  74 0072 C82E      		mov r12,r24
+  75 0074 80E0      		ldi r24,hi8(fmt1.1970)
+  76 0076 D82E      		mov r13,r24
+  77 0078 00C0      		rjmp .L12
+  78               	.L14:
+  79 007a 8881      		ld r24,Y
+  80 007c 9981      		ldd r25,Y+1
+  81 007e 080F      		add r16,r24
+  82 0080 191F      		adc r17,r25
+  83 0082 9F93      		push r25
+  84 0084 8F93      		push r24
+  85 0086 DF93      		push r29
+  86 0088 CF93      		push r28
+  87 008a DF92      		push r13
+  88 008c CF92      		push r12
+  89 008e FF92      		push r15
+  90 0090 EF92      		push r14
+  91 0092 0E94 0000 		call fprintf_P
+  92 0096 CE01      		movw r24,r28
+  93 0098 8056      		subi r24,lo8(-(-96))
+  94 009a 9040      		sbci r25,hi8(-(-96))
+  95 009c 2DB7      		in r18,__SP_L__
+  96 009e 3EB7      		in r19,__SP_H__
+  97 00a0 285F      		subi r18,lo8(-(8))
+  98 00a2 3F4F      		sbci r19,hi8(-(8))
+  99 00a4 0FB6      		in __tmp_reg__,__SREG__
+ 100 00a6 F894      		cli
+ 101 00a8 3EBF      		out __SP_H__,r19
+ 102 00aa 0FBE      		out __SREG__,__tmp_reg__
+ 103 00ac 2DBF      		out __SP_L__,r18
+ 104 00ae 805A      		subi r24,lo8(32672)
+ 105 00b0 9F47      		sbci r25,hi8(32672)
+ 106 00b2 00F4      		brsh .L13
+ 107 00b4 0A80      		ldd __tmp_reg__,Y+2
+ 108 00b6 DB81      		ldd r29,Y+3
+ 109 00b8 C02D      		mov r28,__tmp_reg__
+ 110               	.L12:
+ 111 00ba 2097      		sbiw r28,0
+ 112 00bc 01F4      		brne .L14
+ 113               	.L13:
+ 114 00be 80E0      		ldi r24,lo8(heapFreeList)
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 3
+
+
+ 115 00c0 90E0      		ldi r25,hi8(heapFreeList)
+ 116 00c2 0E94 0000 		call NutHeapRootAvailable
+ 117 00c6 8017      		cp r24,r16
+ 118 00c8 9107      		cpc r25,r17
+ 119 00ca 01F0      		breq .L15
+ 120 00cc 9F93      		push r25
+ 121 00ce 8F93      		push r24
+ 122 00d0 1F93      		push r17
+ 123 00d2 0F93      		push r16
+ 124 00d4 80E0      		ldi r24,lo8(fmt2.1971)
+ 125 00d6 90E0      		ldi r25,hi8(fmt2.1971)
+ 126 00d8 9F93      		push r25
+ 127 00da 8F93      		push r24
+ 128 00dc FF92      		push r15
+ 129 00de EF92      		push r14
+ 130 00e0 0E94 0000 		call fprintf_P
+ 131 00e4 8DB7      		in r24,__SP_L__
+ 132 00e6 9EB7      		in r25,__SP_H__
+ 133 00e8 0896      		adiw r24,8
+ 134 00ea 0FB6      		in __tmp_reg__,__SREG__
+ 135 00ec F894      		cli
+ 136 00ee 9EBF      		out __SP_H__,r25
+ 137 00f0 0FBE      		out __SREG__,__tmp_reg__
+ 138 00f2 8DBF      		out __SP_L__,r24
+ 139 00f4 00C0      		rjmp .L17
+ 140               	.L15:
+ 141 00f6 1F93      		push r17
+ 142 00f8 0F93      		push r16
+ 143 00fa 80E0      		ldi r24,lo8(fmt3.1972)
+ 144 00fc 90E0      		ldi r25,hi8(fmt3.1972)
+ 145 00fe 9F93      		push r25
+ 146 0100 8F93      		push r24
+ 147 0102 FF92      		push r15
+ 148 0104 EF92      		push r14
+ 149 0106 0E94 0000 		call fprintf_P
+ 150 010a 2DB7      		in r18,__SP_L__
+ 151 010c 3EB7      		in r19,__SP_H__
+ 152 010e 2A5F      		subi r18,lo8(-(6))
+ 153 0110 3F4F      		sbci r19,hi8(-(6))
+ 154 0112 0FB6      		in __tmp_reg__,__SREG__
+ 155 0114 F894      		cli
+ 156 0116 3EBF      		out __SP_H__,r19
+ 157 0118 0FBE      		out __SREG__,__tmp_reg__
+ 158 011a 2DBF      		out __SP_L__,r18
+ 159               	.L17:
+ 160               	/* epilogue start */
+ 161 011c DF91      		pop r29
+ 162 011e CF91      		pop r28
+ 163 0120 1F91      		pop r17
+ 164 0122 0F91      		pop r16
+ 165 0124 FF90      		pop r15
+ 166 0126 EF90      		pop r14
+ 167 0128 DF90      		pop r13
+ 168 012a CF90      		pop r12
+ 169 012c 0895      		ret
+ 170               		.size	NutDumpHeap, .-NutDumpHeap
+ 171               	.global	NutDumpTimerList
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 4
+
+
+ 172               		.type	NutDumpTimerList, @function
+ 173               	NutDumpTimerList:
+ 174 012e AF92      		push r10
+ 175 0130 BF92      		push r11
+ 176 0132 CF92      		push r12
+ 177 0134 DF92      		push r13
+ 178 0136 EF92      		push r14
+ 179 0138 FF92      		push r15
+ 180 013a 0F93      		push r16
+ 181 013c 1F93      		push r17
+ 182 013e CF93      		push r28
+ 183 0140 DF93      		push r29
+ 184               	/* prologue: function */
+ 185               	/* frame size = 0 */
+ 186 0142 8C01      		movw r16,r24
+ 187 0144 C091 0000 		lds r28,nutTimerList
+ 188 0148 D091 0000 		lds r29,(nutTimerList)+1
+ 189 014c 2097      		sbiw r28,0
+ 190 014e 01F4      		brne .+2
+ 191 0150 00C0      		rjmp .L24
+ 192 0152 BC01      		movw r22,r24
+ 193 0154 80E0      		ldi r24,lo8(theader.1945)
+ 194 0156 90E0      		ldi r25,hi8(theader.1945)
+ 195 0158 0E94 0000 		call fputs_P
+ 196 015c 50E0      		ldi r21,lo8(fmt1.1946)
+ 197 015e A52E      		mov r10,r21
+ 198 0160 50E0      		ldi r21,hi8(fmt1.1946)
+ 199 0162 B52E      		mov r11,r21
+ 200 0164 40E0      		ldi r20,lo8(fmt2.1947)
+ 201 0166 C42E      		mov r12,r20
+ 202 0168 40E0      		ldi r20,hi8(fmt2.1947)
+ 203 016a D42E      		mov r13,r20
+ 204 016c 30E0      		ldi r19,lo8(fmt3.1948)
+ 205 016e E32E      		mov r14,r19
+ 206 0170 30E0      		ldi r19,hi8(fmt3.1948)
+ 207 0172 F32E      		mov r15,r19
+ 208               	.L23:
+ 209 0174 8885      		ldd r24,Y+8
+ 210 0176 9985      		ldd r25,Y+9
+ 211 0178 AA85      		ldd r26,Y+10
+ 212 017a BB85      		ldd r27,Y+11
+ 213 017c BF93      		push r27
+ 214 017e AF93      		push r26
+ 215 0180 9F93      		push r25
+ 216 0182 8F93      		push r24
+ 217 0184 8C81      		ldd r24,Y+4
+ 218 0186 9D81      		ldd r25,Y+5
+ 219 0188 AE81      		ldd r26,Y+6
+ 220 018a BF81      		ldd r27,Y+7
+ 221 018c BF93      		push r27
+ 222 018e AF93      		push r26
+ 223 0190 9F93      		push r25
+ 224 0192 8F93      		push r24
+ 225 0194 DF93      		push r29
+ 226 0196 CF93      		push r28
+ 227 0198 BF92      		push r11
+ 228 019a AF92      		push r10
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 5
+
+
+ 229 019c 1F93      		push r17
+ 230 019e 0F93      		push r16
+ 231 01a0 0E94 0000 		call fprintf_P
+ 232 01a4 8C85      		ldd r24,Y+12
+ 233 01a6 9D85      		ldd r25,Y+13
+ 234 01a8 2DB7      		in r18,__SP_L__
+ 235 01aa 3EB7      		in r19,__SP_H__
+ 236 01ac 225F      		subi r18,lo8(-(14))
+ 237 01ae 3F4F      		sbci r19,hi8(-(14))
+ 238 01b0 0FB6      		in __tmp_reg__,__SREG__
+ 239 01b2 F894      		cli
+ 240 01b4 3EBF      		out __SP_H__,r19
+ 241 01b6 0FBE      		out __SREG__,__tmp_reg__
+ 242 01b8 2DBF      		out __SP_L__,r18
+ 243 01ba 30E0      		ldi r19,hi8(gs(NutThreadWake))
+ 244 01bc 8030      		cpi r24,lo8(gs(NutThreadWake))
+ 245 01be 9307      		cpc r25,r19
+ 246 01c0 01F4      		brne .L20
+ 247 01c2 B801      		movw r22,r16
+ 248 01c4 80E0      		ldi r24,lo8(wname.1943)
+ 249 01c6 90E0      		ldi r25,hi8(wname.1943)
+ 250 01c8 00C0      		rjmp .L26
+ 251               	.L20:
+ 252 01ca 20E0      		ldi r18,hi8(gs(NutEventTimeout))
+ 253 01cc 8030      		cpi r24,lo8(gs(NutEventTimeout))
+ 254 01ce 9207      		cpc r25,r18
+ 255 01d0 01F4      		brne .L22
+ 256 01d2 B801      		movw r22,r16
+ 257 01d4 80E0      		ldi r24,lo8(tname.1944)
+ 258 01d6 90E0      		ldi r25,hi8(tname.1944)
+ 259               	.L26:
+ 260 01d8 0E94 0000 		call fputs_P
+ 261 01dc 00C0      		rjmp .L21
+ 262               	.L22:
+ 263 01de A0E0      		ldi r26,lo8(0)
+ 264 01e0 B0E0      		ldi r27,hi8(0)
+ 265 01e2 880F      		lsl r24
+ 266 01e4 991F      		rol r25
+ 267 01e6 AA1F      		rol r26
+ 268 01e8 BB1F      		rol r27
+ 269 01ea BF93      		push r27
+ 270 01ec AF93      		push r26
+ 271 01ee 9F93      		push r25
+ 272 01f0 8F93      		push r24
+ 273 01f2 DF92      		push r13
+ 274 01f4 CF92      		push r12
+ 275 01f6 1F93      		push r17
+ 276 01f8 0F93      		push r16
+ 277 01fa 0E94 0000 		call fprintf_P
+ 278 01fe 8DB7      		in r24,__SP_L__
+ 279 0200 9EB7      		in r25,__SP_H__
+ 280 0202 0896      		adiw r24,8
+ 281 0204 0FB6      		in __tmp_reg__,__SREG__
+ 282 0206 F894      		cli
+ 283 0208 9EBF      		out __SP_H__,r25
+ 284 020a 0FBE      		out __SREG__,__tmp_reg__
+ 285 020c 8DBF      		out __SP_L__,r24
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 6
+
+
+ 286               	.L21:
+ 287 020e 8E85      		ldd r24,Y+14
+ 288 0210 9F85      		ldd r25,Y+15
+ 289 0212 9F93      		push r25
+ 290 0214 8F93      		push r24
+ 291 0216 FF92      		push r15
+ 292 0218 EF92      		push r14
+ 293 021a 1F93      		push r17
+ 294 021c 0F93      		push r16
+ 295 021e 0E94 0000 		call fprintf_P
+ 296 0222 0990      		ld __tmp_reg__,Y+
+ 297 0224 D881      		ld r29,Y
+ 298 0226 C02D      		mov r28,__tmp_reg__
+ 299 0228 2DB7      		in r18,__SP_L__
+ 300 022a 3EB7      		in r19,__SP_H__
+ 301 022c 2A5F      		subi r18,lo8(-(6))
+ 302 022e 3F4F      		sbci r19,hi8(-(6))
+ 303 0230 0FB6      		in __tmp_reg__,__SREG__
+ 304 0232 F894      		cli
+ 305 0234 3EBF      		out __SP_H__,r19
+ 306 0236 0FBE      		out __SREG__,__tmp_reg__
+ 307 0238 2DBF      		out __SP_L__,r18
+ 308 023a 2097      		sbiw r28,0
+ 309 023c 01F0      		breq .+2
+ 310 023e 00C0      		rjmp .L23
+ 311               	.L24:
+ 312               	/* epilogue start */
+ 313 0240 DF91      		pop r29
+ 314 0242 CF91      		pop r28
+ 315 0244 1F91      		pop r17
+ 316 0246 0F91      		pop r16
+ 317 0248 FF90      		pop r15
+ 318 024a EF90      		pop r14
+ 319 024c DF90      		pop r13
+ 320 024e CF90      		pop r12
+ 321 0250 BF90      		pop r11
+ 322 0252 AF90      		pop r10
+ 323 0254 0895      		ret
+ 324               		.size	NutDumpTimerList, .-NutDumpTimerList
+ 325               		.data
+ 326               	.LC0:
+ 327 0000 4F4B 00   		.string	"OK"
+ 328               	.LC1:
+ 329 0003 4641 494C 		.string	"FAIL"
+ 329      00
+ 330               	.LC2:
+ 331 0008 5349 474E 		.string	"SIGNALED"
+ 331      414C 4544 
+ 331      00
+ 332               		.text
+ 333               	.global	NutDumpThreadList
+ 334               		.type	NutDumpThreadList, @function
+ 335               	NutDumpThreadList:
+ 336 0256 AF92      		push r10
+ 337 0258 BF92      		push r11
+ 338 025a CF92      		push r12
+ 339 025c DF92      		push r13
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 7
+
+
+ 340 025e EF92      		push r14
+ 341 0260 FF92      		push r15
+ 342 0262 0F93      		push r16
+ 343 0264 1F93      		push r17
+ 344 0266 CF93      		push r28
+ 345 0268 DF93      		push r29
+ 346               	/* prologue: function */
+ 347               	/* frame size = 0 */
+ 348 026a 7C01      		movw r14,r24
+ 349 026c BC01      		movw r22,r24
+ 350 026e 80E0      		ldi r24,lo8(qheader)
+ 351 0270 90E0      		ldi r25,hi8(qheader)
+ 352 0272 0E94 0000 		call fputs_P
+ 353 0276 C091 0000 		lds r28,nutThreadList
+ 354 027a D091 0000 		lds r29,(nutThreadList)+1
+ 355 027e E0E0      		ldi r30,lo8(fmt1.1908)
+ 356 0280 AE2E      		mov r10,r30
+ 357 0282 E0E0      		ldi r30,hi8(fmt1.1908)
+ 358 0284 BE2E      		mov r11,r30
+ 359 0286 70E0      		ldi r23,lo8(fmt2.1909)
+ 360 0288 C72E      		mov r12,r23
+ 361 028a 70E0      		ldi r23,hi8(fmt2.1909)
+ 362 028c D72E      		mov r13,r23
+ 363 028e 00C0      		rjmp .L28
+ 364               	.L34:
+ 365 0290 EB89      		ldd r30,Y+19
+ 366 0292 FC89      		ldd r31,Y+20
+ 367 0294 8081      		ld r24,Z
+ 368 0296 9181      		ldd r25,Z+1
+ 369 0298 A281      		ldd r26,Z+2
+ 370 029a B381      		ldd r27,Z+3
+ 371 029c 8F5E      		subi r24,lo8(-559038737)
+ 372 029e 9E4B      		sbci r25,hi8(-559038737)
+ 373 02a0 AD4A      		sbci r26,hlo8(-559038737)
+ 374 02a2 BE4D      		sbci r27,hhi8(-559038737)
+ 375 02a4 01F4      		brne .L29
+ 376 02a6 80E0      		ldi r24,lo8(.LC0)
+ 377 02a8 90E0      		ldi r25,hi8(.LC0)
+ 378 02aa 00C0      		rjmp .L30
+ 379               	.L29:
+ 380 02ac 80E0      		ldi r24,lo8(.LC1)
+ 381 02ae 90E0      		ldi r25,hi8(.LC1)
+ 382               	.L30:
+ 383 02b0 2889      		ldd r18,Y+16
+ 384 02b2 3989      		ldd r19,Y+17
+ 385 02b4 4F89      		ldd r20,Y+23
+ 386 02b6 588D      		ldd r21,Y+24
+ 387 02b8 9F93      		push r25
+ 388 02ba 8F93      		push r24
+ 389 02bc C901      		movw r24,r18
+ 390 02be 8E1B      		sub r24,r30
+ 391 02c0 9F0B      		sbc r25,r31
+ 392 02c2 9F93      		push r25
+ 393 02c4 8F93      		push r24
+ 394 02c6 3F93      		push r19
+ 395 02c8 2F93      		push r18
+ 396 02ca 8D89      		ldd r24,Y+21
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 8
+
+
+ 397 02cc 9E89      		ldd r25,Y+22
+ 398 02ce 9F93      		push r25
+ 399 02d0 8F93      		push r24
+ 400 02d2 5F93      		push r21
+ 401 02d4 4F93      		push r20
+ 402 02d6 EF85      		ldd r30,Y+15
+ 403 02d8 F0E0      		ldi r31,lo8(0)
+ 404 02da EE0F      		lsl r30
+ 405 02dc FF1F      		rol r31
+ 406 02de E050      		subi r30,lo8(-(states))
+ 407 02e0 F040      		sbci r31,hi8(-(states))
+ 408 02e2 8081      		ld r24,Z
+ 409 02e4 9181      		ldd r25,Z+1
+ 410 02e6 9F93      		push r25
+ 411 02e8 8F93      		push r24
+ 412 02ea 8A89      		ldd r24,Y+18
+ 413 02ec 90E0      		ldi r25,lo8(0)
+ 414 02ee 9F93      		push r25
+ 415 02f0 8F93      		push r24
+ 416 02f2 2696      		adiw r28,6
+ 417 02f4 DF93      		push r29
+ 418 02f6 CF93      		push r28
+ 419 02f8 2697      		sbiw r28,6
+ 420 02fa DF93      		push r29
+ 421 02fc CF93      		push r28
+ 422 02fe BF92      		push r11
+ 423 0300 AF92      		push r10
+ 424 0302 FF92      		push r15
+ 425 0304 EF92      		push r14
+ 426 0306 0E94 0000 		call fprintf_P
+ 427 030a 8F89      		ldd r24,Y+23
+ 428 030c 988D      		ldd r25,Y+24
+ 429 030e EDB7      		in r30,__SP_L__
+ 430 0310 FEB7      		in r31,__SP_H__
+ 431 0312 7696      		adiw r30,22
+ 432 0314 0FB6      		in __tmp_reg__,__SREG__
+ 433 0316 F894      		cli
+ 434 0318 FEBF      		out __SP_H__,r31
+ 435 031a 0FBE      		out __SREG__,__tmp_reg__
+ 436 031c EDBF      		out __SP_L__,r30
+ 437 031e 892B      		or r24,r25
+ 438 0320 01F0      		breq .L31
+ 439 0322 EF89      		ldd r30,Y+23
+ 440 0324 F88D      		ldd r31,Y+24
+ 441 0326 0081      		ld r16,Z
+ 442 0328 1181      		ldd r17,Z+1
+ 443 032a FFEF      		ldi r31,hi8(-1)
+ 444 032c 0F3F      		cpi r16,lo8(-1)
+ 445 032e 1F07      		cpc r17,r31
+ 446 0330 01F4      		brne .L36
+ 447 0332 B701      		movw r22,r14
+ 448 0334 80E0      		ldi r24,lo8(.LC2)
+ 449 0336 90E0      		ldi r25,hi8(.LC2)
+ 450 0338 0E94 0000 		call fputs
+ 451 033c 00C0      		rjmp .L31
+ 452               	.L33:
+ 453 033e 1F93      		push r17
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 9
+
+
+ 454 0340 0F93      		push r16
+ 455 0342 DF92      		push r13
+ 456 0344 CF92      		push r12
+ 457 0346 FF92      		push r15
+ 458 0348 EF92      		push r14
+ 459 034a 0E94 0000 		call fprintf_P
+ 460 034e F801      		movw r30,r16
+ 461 0350 0281      		ldd r16,Z+2
+ 462 0352 1381      		ldd r17,Z+3
+ 463 0354 2DB7      		in r18,__SP_L__
+ 464 0356 3EB7      		in r19,__SP_H__
+ 465 0358 2A5F      		subi r18,lo8(-(6))
+ 466 035a 3F4F      		sbci r19,hi8(-(6))
+ 467 035c 0FB6      		in __tmp_reg__,__SREG__
+ 468 035e F894      		cli
+ 469 0360 3EBF      		out __SP_H__,r19
+ 470 0362 0FBE      		out __SREG__,__tmp_reg__
+ 471 0364 2DBF      		out __SP_L__,r18
+ 472               	.L36:
+ 473 0366 0115      		cp r16,__zero_reg__
+ 474 0368 1105      		cpc r17,__zero_reg__
+ 475 036a 01F4      		brne .L33
+ 476               	.L31:
+ 477 036c B701      		movw r22,r14
+ 478 036e 8AE0      		ldi r24,lo8(10)
+ 479 0370 90E0      		ldi r25,hi8(10)
+ 480 0372 0E94 0000 		call fputc
+ 481 0376 0990      		ld __tmp_reg__,Y+
+ 482 0378 D881      		ld r29,Y
+ 483 037a C02D      		mov r28,__tmp_reg__
+ 484               	.L28:
+ 485 037c 2097      		sbiw r28,0
+ 486 037e 01F0      		breq .+2
+ 487 0380 00C0      		rjmp .L34
+ 488               	/* epilogue start */
+ 489 0382 DF91      		pop r29
+ 490 0384 CF91      		pop r28
+ 491 0386 1F91      		pop r17
+ 492 0388 0F91      		pop r16
+ 493 038a FF90      		pop r15
+ 494 038c EF90      		pop r14
+ 495 038e DF90      		pop r13
+ 496 0390 CF90      		pop r12
+ 497 0392 BF90      		pop r11
+ 498 0394 AF90      		pop r10
+ 499 0396 0895      		ret
+ 500               		.size	NutDumpThreadList, .-NutDumpThreadList
+ 501               		.data
+ 502               	.LC3:
+ 503 0011 5349 474E 		.string	"SIGNALED\n"
+ 503      414C 4544 
+ 503      0A00 
+ 504               		.text
+ 505               	.global	NutDumpThreadQueue
+ 506               		.type	NutDumpThreadQueue, @function
+ 507               	NutDumpThreadQueue:
+ 508 0398 EF92      		push r14
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 10
+
+
+ 509 039a FF92      		push r15
+ 510 039c 0F93      		push r16
+ 511 039e 1F93      		push r17
+ 512 03a0 CF93      		push r28
+ 513 03a2 DF93      		push r29
+ 514               	/* prologue: function */
+ 515               	/* frame size = 0 */
+ 516 03a4 8C01      		movw r16,r24
+ 517 03a6 EB01      		movw r28,r22
+ 518 03a8 2FEF      		ldi r18,hi8(-1)
+ 519 03aa 6F3F      		cpi r22,lo8(-1)
+ 520 03ac 7207      		cpc r23,r18
+ 521 03ae 01F0      		breq .+2
+ 522 03b0 00C0      		rjmp .L38
+ 523 03b2 BC01      		movw r22,r24
+ 524 03b4 80E0      		ldi r24,lo8(.LC3)
+ 525 03b6 90E0      		ldi r25,hi8(.LC3)
+ 526 03b8 0E94 0000 		call fputs
+ 527 03bc 00C0      		rjmp .L43
+ 528               	.L42:
+ 529 03be EB89      		ldd r30,Y+19
+ 530 03c0 FC89      		ldd r31,Y+20
+ 531 03c2 8081      		ld r24,Z
+ 532 03c4 9181      		ldd r25,Z+1
+ 533 03c6 A281      		ldd r26,Z+2
+ 534 03c8 B381      		ldd r27,Z+3
+ 535 03ca 8F5E      		subi r24,lo8(-559038737)
+ 536 03cc 9E4B      		sbci r25,hi8(-559038737)
+ 537 03ce AD4A      		sbci r26,hlo8(-559038737)
+ 538 03d0 BE4D      		sbci r27,hhi8(-559038737)
+ 539 03d2 01F0      		breq .L40
+ 540 03d4 8481      		ldd r24,Z+4
+ 541 03d6 9581      		ldd r25,Z+5
+ 542 03d8 A681      		ldd r26,Z+6
+ 543 03da B781      		ldd r27,Z+7
+ 544 03dc 8F5E      		subi r24,lo8(-559038737)
+ 545 03de 9E4B      		sbci r25,hi8(-559038737)
+ 546 03e0 AD4A      		sbci r26,hlo8(-559038737)
+ 547 03e2 BE4D      		sbci r27,hhi8(-559038737)
+ 548 03e4 01F0      		breq .L40
+ 549 03e6 8085      		ldd r24,Z+8
+ 550 03e8 9185      		ldd r25,Z+9
+ 551 03ea A285      		ldd r26,Z+10
+ 552 03ec B385      		ldd r27,Z+11
+ 553 03ee 8F5E      		subi r24,lo8(-559038737)
+ 554 03f0 9E4B      		sbci r25,hi8(-559038737)
+ 555 03f2 AD4A      		sbci r26,hlo8(-559038737)
+ 556 03f4 BE4D      		sbci r27,hhi8(-559038737)
+ 557 03f6 01F0      		breq .L40
+ 558 03f8 8485      		ldd r24,Z+12
+ 559 03fa 9585      		ldd r25,Z+13
+ 560 03fc A685      		ldd r26,Z+14
+ 561 03fe B785      		ldd r27,Z+15
+ 562 0400 8F5E      		subi r24,lo8(-559038737)
+ 563 0402 9E4B      		sbci r25,hi8(-559038737)
+ 564 0404 AD4A      		sbci r26,hlo8(-559038737)
+ 565 0406 BE4D      		sbci r27,hhi8(-559038737)
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 11
+
+
+ 566 0408 01F0      		breq .L40
+ 567 040a 80E0      		ldi r24,lo8(.LC1)
+ 568 040c 90E0      		ldi r25,hi8(.LC1)
+ 569 040e 00C0      		rjmp .L41
+ 570               	.L40:
+ 571 0410 80E0      		ldi r24,lo8(.LC0)
+ 572 0412 90E0      		ldi r25,hi8(.LC0)
+ 573               	.L41:
+ 574 0414 2889      		ldd r18,Y+16
+ 575 0416 3989      		ldd r19,Y+17
+ 576 0418 4F89      		ldd r20,Y+23
+ 577 041a 588D      		ldd r21,Y+24
+ 578 041c 9F93      		push r25
+ 579 041e 8F93      		push r24
+ 580 0420 C901      		movw r24,r18
+ 581 0422 8E1B      		sub r24,r30
+ 582 0424 9F0B      		sbc r25,r31
+ 583 0426 9F93      		push r25
+ 584 0428 8F93      		push r24
+ 585 042a 3F93      		push r19
+ 586 042c 2F93      		push r18
+ 587 042e 8D89      		ldd r24,Y+21
+ 588 0430 9E89      		ldd r25,Y+22
+ 589 0432 9F93      		push r25
+ 590 0434 8F93      		push r24
+ 591 0436 5F93      		push r21
+ 592 0438 4F93      		push r20
+ 593 043a EF85      		ldd r30,Y+15
+ 594 043c F0E0      		ldi r31,lo8(0)
+ 595 043e EE0F      		lsl r30
+ 596 0440 FF1F      		rol r31
+ 597 0442 E050      		subi r30,lo8(-(states))
+ 598 0444 F040      		sbci r31,hi8(-(states))
+ 599 0446 8081      		ld r24,Z
+ 600 0448 9181      		ldd r25,Z+1
+ 601 044a 9F93      		push r25
+ 602 044c 8F93      		push r24
+ 603 044e 8A89      		ldd r24,Y+18
+ 604 0450 90E0      		ldi r25,lo8(0)
+ 605 0452 9F93      		push r25
+ 606 0454 8F93      		push r24
+ 607 0456 2696      		adiw r28,6
+ 608 0458 DF93      		push r29
+ 609 045a CF93      		push r28
+ 610 045c 2697      		sbiw r28,6
+ 611 045e DF93      		push r29
+ 612 0460 CF93      		push r28
+ 613 0462 FF92      		push r15
+ 614 0464 EF92      		push r14
+ 615 0466 1F93      		push r17
+ 616 0468 0F93      		push r16
+ 617 046a 0E94 0000 		call fprintf_P
+ 618 046e 0A80      		ldd __tmp_reg__,Y+2
+ 619 0470 DB81      		ldd r29,Y+3
+ 620 0472 C02D      		mov r28,__tmp_reg__
+ 621 0474 8DB7      		in r24,__SP_L__
+ 622 0476 9EB7      		in r25,__SP_H__
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 12
+
+
+ 623 0478 4696      		adiw r24,22
+ 624 047a 0FB6      		in __tmp_reg__,__SREG__
+ 625 047c F894      		cli
+ 626 047e 9EBF      		out __SP_H__,r25
+ 627 0480 0FBE      		out __SREG__,__tmp_reg__
+ 628 0482 8DBF      		out __SP_L__,r24
+ 629 0484 00C0      		rjmp .L44
+ 630               	.L38:
+ 631 0486 F0E0      		ldi r31,lo8(fmt.1875)
+ 632 0488 EF2E      		mov r14,r31
+ 633 048a F0E0      		ldi r31,hi8(fmt.1875)
+ 634 048c FF2E      		mov r15,r31
+ 635               	.L44:
+ 636 048e 2097      		sbiw r28,0
+ 637 0490 01F0      		breq .+2
+ 638 0492 00C0      		rjmp .L42
+ 639               	.L43:
+ 640               	/* epilogue start */
+ 641 0494 DF91      		pop r29
+ 642 0496 CF91      		pop r28
+ 643 0498 1F91      		pop r17
+ 644 049a 0F91      		pop r16
+ 645 049c FF90      		pop r15
+ 646 049e EF90      		pop r14
+ 647 04a0 0895      		ret
+ 648               		.size	NutDumpThreadQueue, .-NutDumpThreadQueue
+ 649               		.section	.progmem.data,"a",@progbits
+ 650               		.type	fmt3.1972, @object
+ 651               		.size	fmt3.1972, 15
+ 652               	fmt3.1972:
+ 653 0000 2575 2062 		.string	"%u bytes free\n"
+ 653      7974 6573 
+ 653      2066 7265 
+ 653      650A 00
+ 654               		.type	fmt2.1971, @object
+ 655               		.size	fmt2.1971, 29
+ 656               	fmt2.1971:
+ 657 000f 2575 2063 		.string	"%u counted, but %u reported\n"
+ 657      6F75 6E74 
+ 657      6564 2C20 
+ 657      6275 7420 
+ 657      2575 2072 
+ 658               		.type	fmt1.1970, @object
+ 659               		.size	fmt1.1970, 10
+ 660               	fmt1.1970:
+ 661 002c 2530 3478 		.string	"%04x %5d\n"
+ 661      2025 3564 
+ 661      0A00 
+ 662               		.type	fmt3.1948, @object
+ 663               		.size	fmt3.1948, 8
+ 664               	fmt3.1948:
+ 665 0036 2825 3034 		.string	"(%04X)\n"
+ 665      5829 0A00 
+ 666               		.type	fmt2.1947, @object
+ 667               		.size	fmt2.1947, 6
+ 668               	fmt2.1947:
+ 669 003e 2530 356C 		.string	"%05lX"
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 13
+
+
+ 669      5800 
+ 670               		.type	fmt1.1946, @object
+ 671               		.size	fmt1.1946, 14
+ 672               	fmt1.1946:
+ 673 0044 2530 3458 		.string	"%04X%6lu%6lu "
+ 673      2536 6C75 
+ 673      2536 6C75 
+ 673      2000 
+ 674               		.type	theader.1945, @object
+ 675               		.size	theader.1945, 27
+ 676               	theader.1945:
+ 677 0052 4164 6472 		.string	"Addr Ticks  Left Callback\n"
+ 677      2054 6963 
+ 677      6B73 2020 
+ 677      4C65 6674 
+ 677      2043 616C 
+ 678               		.type	tname.1944, @object
+ 679               		.size	tname.1944, 16
+ 680               	tname.1944:
+ 681 006d 4E75 7445 		.string	"NutEventTimeout"
+ 681      7665 6E74 
+ 681      5469 6D65 
+ 681      6F75 7400 
+ 682               		.type	wname.1943, @object
+ 683               		.size	wname.1943, 14
+ 684               	wname.1943:
+ 685 007d 4E75 7454 		.string	"NutThreadWake"
+ 685      6872 6561 
+ 685      6457 616B 
+ 685      6500 
+ 686               		.type	qheader, @object
+ 687               		.size	qheader, 48
+ 688               	qheader:
+ 689 008b 0A48 6E64 		.string	"\nHndl Name     Prio Sta QUE  Timr StkP FreeMem\n"
+ 689      6C20 4E61 
+ 689      6D65 2020 
+ 689      2020 2050 
+ 689      7269 6F20 
+ 690               		.data
+ 691               	.LC4:
+ 692 001b 5452 4D00 		.string	"TRM"
+ 693               	.LC5:
+ 694 001f 5255 4E00 		.string	"RUN"
+ 695               	.LC6:
+ 696 0023 5244 5900 		.string	"RDY"
+ 697               	.LC7:
+ 698 0027 534C 5000 		.string	"SLP"
+ 699               		.type	states, @object
+ 700               		.size	states, 8
+ 701               	states:
+ 702 002b 0000      		.word	.LC4
+ 703 002d 0000      		.word	.LC5
+ 704 002f 0000      		.word	.LC6
+ 705 0031 0000      		.word	.LC7
+ 706               		.section	.progmem.data
+ 707               		.type	fmt2.1909, @object
+ 708               		.size	fmt2.1909, 6
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 14
+
+
+ 709               	fmt2.1909:
+ 710 00bb 2025 3034 		.string	" %04X"
+ 710      5800 
+ 711               		.type	fmt1.1908, @object
+ 712               		.size	fmt1.1908, 39
+ 713               	fmt1.1908:
+ 714 00c1 2530 3458 		.string	"%04X %-8s %4u %s %04X %04X %04X %5u %s"
+ 714      2025 2D38 
+ 714      7320 2534 
+ 714      7520 2573 
+ 714      2025 3034 
+ 715               		.type	fmt.1875, @object
+ 716               		.size	fmt.1875, 40
+ 717               	fmt.1875:
+ 718 00e8 2530 3458 		.string	"%04X %-8s %4u %s %04X %04X %04X %5u %s\n"
+ 718      2025 2D38 
+ 718      7320 2534 
+ 718      7520 2573 
+ 718      2025 3034 
+ 719               		.comm __os_trs,2,1
+ 720               		.comm __os_trf,1,1
+ 721               		.comm __heap_trs,2,1
+ 722               		.comm __heap_trf,1,1
+GAS LISTING C:\Temp/cczMG2Fw.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 osdebug.c
+  C:\Temp/cczMG2Fw.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cczMG2Fw.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cczMG2Fw.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cczMG2Fw.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cczMG2Fw.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cczMG2Fw.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cczMG2Fw.s:13     .text:00000000 NutTraceOs
+                            *COM*:00000002 __os_trs
+                            *COM*:00000001 __os_trf
+  C:\Temp/cczMG2Fw.s:33     .text:00000024 NutTraceHeap
+                            *COM*:00000002 __heap_trs
+                            *COM*:00000001 __heap_trf
+  C:\Temp/cczMG2Fw.s:53     .text:00000048 NutDumpHeap
+  C:\Temp/cczMG2Fw.s:660    .progmem.data:0000002c fmt1.1970
+  C:\Temp/cczMG2Fw.s:656    .progmem.data:0000000f fmt2.1971
+  C:\Temp/cczMG2Fw.s:652    .progmem.data:00000000 fmt3.1972
+  C:\Temp/cczMG2Fw.s:173    .text:0000012e NutDumpTimerList
+  C:\Temp/cczMG2Fw.s:676    .progmem.data:00000052 theader.1945
+  C:\Temp/cczMG2Fw.s:672    .progmem.data:00000044 fmt1.1946
+  C:\Temp/cczMG2Fw.s:668    .progmem.data:0000003e fmt2.1947
+  C:\Temp/cczMG2Fw.s:664    .progmem.data:00000036 fmt3.1948
+  C:\Temp/cczMG2Fw.s:684    .progmem.data:0000007d wname.1943
+  C:\Temp/cczMG2Fw.s:680    .progmem.data:0000006d tname.1944
+  C:\Temp/cczMG2Fw.s:335    .text:00000256 NutDumpThreadList
+  C:\Temp/cczMG2Fw.s:688    .progmem.data:0000008b qheader
+  C:\Temp/cczMG2Fw.s:713    .progmem.data:000000c1 fmt1.1908
+  C:\Temp/cczMG2Fw.s:709    .progmem.data:000000bb fmt2.1909
+  C:\Temp/cczMG2Fw.s:701    .data:0000002b states
+  C:\Temp/cczMG2Fw.s:507    .text:00000398 NutDumpThreadQueue
+  C:\Temp/cczMG2Fw.s:717    .progmem.data:000000e8 fmt.1875
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+fputc
+heapFreeList
+fprintf_P
+NutHeapRootAvailable
+nutTimerList
+fputs_P
+NutThreadWake
+NutEventTimeout
+nutThreadList
+fputs

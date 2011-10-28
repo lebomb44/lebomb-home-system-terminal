@@ -1,0 +1,362 @@
+GAS LISTING C:\Temp/ccVBmnZi.s 			page 1
+
+
+   1               		.file	"uxmltree.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	UxmlTreeAddSibling
+  12               		.type	UxmlTreeAddSibling, @function
+  13               	UxmlTreeAddSibling:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 FC01      		movw r30,r24
+  17 0002 DB01      		movw r26,r22
+  18               	.L2:
+  19 0004 CF01      		movw r24,r30
+  20 0006 0190      		ld __tmp_reg__,Z+
+  21 0008 F081      		ld r31,Z
+  22 000a E02D      		mov r30,__tmp_reg__
+  23 000c 3097      		sbiw r30,0
+  24 000e 01F4      		brne .L2
+  25 0010 FC01      		movw r30,r24
+  26 0012 B183      		std Z+1,r27
+  27 0014 A083      		st Z,r26
+  28 0016 8481      		ldd r24,Z+4
+  29 0018 9581      		ldd r25,Z+5
+  30 001a 1596      		adiw r26,4+1
+  31 001c 9C93      		st X,r25
+  32 001e 8E93      		st -X,r24
+  33 0020 1497      		sbiw r26,4
+  34 0022 CD01      		movw r24,r26
+  35               	/* epilogue start */
+  36 0024 0895      		ret
+  37               		.size	UxmlTreeAddSibling, .-UxmlTreeAddSibling
+  38               	.global	UxmlTreeAddChild
+  39               		.type	UxmlTreeAddChild, @function
+  40               	UxmlTreeAddChild:
+  41 0026 CF93      		push r28
+  42 0028 DF93      		push r29
+  43               	/* prologue: function */
+  44               	/* frame size = 0 */
+  45 002a DC01      		movw r26,r24
+  46 002c EB01      		movw r28,r22
+  47 002e 1296      		adiw r26,2
+  48 0030 ED91      		ld r30,X+
+  49 0032 FC91      		ld r31,X
+  50 0034 1397      		sbiw r26,2+1
+  51 0036 3097      		sbiw r30,0
+  52 0038 01F4      		brne .L9
+  53 003a 1396      		adiw r26,2+1
+  54 003c 7C93      		st X,r23
+  55 003e 6E93      		st -X,r22
+  56 0040 1297      		sbiw r26,2
+  57 0042 9D83      		std Y+5,r25
+GAS LISTING C:\Temp/ccVBmnZi.s 			page 2
+
+
+  58 0044 8C83      		std Y+4,r24
+  59 0046 00C0      		rjmp .L7
+  60               	.L9:
+  61 0048 CF01      		movw r24,r30
+  62 004a 0190      		ld __tmp_reg__,Z+
+  63 004c F081      		ld r31,Z
+  64 004e E02D      		mov r30,__tmp_reg__
+  65 0050 3097      		sbiw r30,0
+  66 0052 01F4      		brne .L9
+  67 0054 FC01      		movw r30,r24
+  68 0056 D183      		std Z+1,r29
+  69 0058 C083      		st Z,r28
+  70 005a 8481      		ldd r24,Z+4
+  71 005c 9581      		ldd r25,Z+5
+  72 005e 9D83      		std Y+5,r25
+  73 0060 8C83      		std Y+4,r24
+  74               	.L7:
+  75 0062 CE01      		movw r24,r28
+  76               	/* epilogue start */
+  77 0064 DF91      		pop r29
+  78 0066 CF91      		pop r28
+  79 0068 0895      		ret
+  80               		.size	UxmlTreeAddChild, .-UxmlTreeAddChild
+  81               	.global	UxmlTreeDestroy
+  82               		.type	UxmlTreeDestroy, @function
+  83               	UxmlTreeDestroy:
+  84 006a CF92      		push r12
+  85 006c DF92      		push r13
+  86 006e EF92      		push r14
+  87 0070 FF92      		push r15
+  88 0072 0F93      		push r16
+  89 0074 1F93      		push r17
+  90 0076 CF93      		push r28
+  91 0078 DF93      		push r29
+  92               	/* prologue: function */
+  93               	/* frame size = 0 */
+  94 007a 8C01      		movw r16,r24
+  95 007c 00C0      		rjmp .L12
+  96               	.L19:
+  97 007e F801      		movw r30,r16
+  98 0080 D080      		ld r13,Z
+  99 0082 C180      		ldd r12,Z+1
+ 100 0084 8281      		ldd r24,Z+2
+ 101 0086 9381      		ldd r25,Z+3
+ 102 0088 0097      		sbiw r24,0
+ 103 008a 01F0      		breq .L13
+ 104 008c 0E94 0000 		call UxmlTreeDestroy
+ 105               	.L13:
+ 106 0090 F801      		movw r30,r16
+ 107 0092 8681      		ldd r24,Z+6
+ 108 0094 9781      		ldd r25,Z+7
+ 109 0096 0097      		sbiw r24,0
+ 110 0098 01F0      		breq .L14
+ 111 009a 0E94 0000 		call free
+ 112               	.L14:
+ 113 009e F801      		movw r30,r16
+ 114 00a0 C085      		ldd r28,Z+8
+GAS LISTING C:\Temp/ccVBmnZi.s 			page 3
+
+
+ 115 00a2 D185      		ldd r29,Z+9
+ 116 00a4 00C0      		rjmp .L15
+ 117               	.L18:
+ 118 00a6 F880      		ld r15,Y
+ 119 00a8 E980      		ldd r14,Y+1
+ 120 00aa 8A81      		ldd r24,Y+2
+ 121 00ac 9B81      		ldd r25,Y+3
+ 122 00ae 0097      		sbiw r24,0
+ 123 00b0 01F0      		breq .L16
+ 124 00b2 0E94 0000 		call free
+ 125               	.L16:
+ 126 00b6 8C81      		ldd r24,Y+4
+ 127 00b8 9D81      		ldd r25,Y+5
+ 128 00ba 0097      		sbiw r24,0
+ 129 00bc 01F0      		breq .L17
+ 130 00be 0E94 0000 		call free
+ 131               	.L17:
+ 132 00c2 CE01      		movw r24,r28
+ 133 00c4 0E94 0000 		call free
+ 134 00c8 8F2D      		mov r24,r15
+ 135 00ca 9E2D      		mov r25,r14
+ 136 00cc 9C01      		movw r18,r24
+ 137 00ce E901      		movw r28,r18
+ 138               	.L15:
+ 139 00d0 2097      		sbiw r28,0
+ 140 00d2 01F4      		brne .L18
+ 141 00d4 C801      		movw r24,r16
+ 142 00d6 0E94 0000 		call free
+ 143 00da 8D2D      		mov r24,r13
+ 144 00dc 9C2D      		mov r25,r12
+ 145 00de 9C01      		movw r18,r24
+ 146 00e0 8901      		movw r16,r18
+ 147               	.L12:
+ 148 00e2 0115      		cp r16,__zero_reg__
+ 149 00e4 1105      		cpc r17,__zero_reg__
+ 150 00e6 01F4      		brne .L19
+ 151               	/* epilogue start */
+ 152 00e8 DF91      		pop r29
+ 153 00ea CF91      		pop r28
+ 154 00ec 1F91      		pop r17
+ 155 00ee 0F91      		pop r16
+ 156 00f0 FF90      		pop r15
+ 157 00f2 EF90      		pop r14
+ 158 00f4 DF90      		pop r13
+ 159 00f6 CF90      		pop r12
+ 160 00f8 0895      		ret
+ 161               		.size	UxmlTreeDestroy, .-UxmlTreeDestroy
+ 162               	.global	UxmlNodeAddAttrib
+ 163               		.type	UxmlNodeAddAttrib, @function
+ 164               	UxmlNodeAddAttrib:
+ 165 00fa AF92      		push r10
+ 166 00fc BF92      		push r11
+ 167 00fe CF92      		push r12
+ 168 0100 DF92      		push r13
+ 169 0102 EF92      		push r14
+ 170 0104 FF92      		push r15
+ 171 0106 0F93      		push r16
+GAS LISTING C:\Temp/ccVBmnZi.s 			page 4
+
+
+ 172 0108 1F93      		push r17
+ 173 010a CF93      		push r28
+ 174 010c DF93      		push r29
+ 175               	/* prologue: function */
+ 176               	/* frame size = 0 */
+ 177 010e 6C01      		movw r12,r24
+ 178 0110 F62E      		mov r15,r22
+ 179 0112 E72E      		mov r14,r23
+ 180 0114 B42E      		mov r11,r20
+ 181 0116 A52E      		mov r10,r21
+ 182 0118 86E0      		ldi r24,lo8(6)
+ 183 011a 90E0      		ldi r25,hi8(6)
+ 184 011c 0E94 0000 		call malloc
+ 185 0120 EC01      		movw r28,r24
+ 186 0122 0097      		sbiw r24,0
+ 187 0124 01F4      		brne .L22
+ 188 0126 2FEF      		ldi r18,lo8(-1)
+ 189 0128 3FEF      		ldi r19,hi8(-1)
+ 190 012a 00C0      		rjmp .L23
+ 191               	.L22:
+ 192 012c 1982      		std Y+1,__zero_reg__
+ 193 012e 1882      		st Y,__zero_reg__
+ 194 0130 EF2D      		mov r30,r15
+ 195 0132 FE2D      		mov r31,r14
+ 196 0134 DF01      		movw r26,r30
+ 197 0136 0D90      		ld __tmp_reg__,X+
+ 198 0138 0020      		tst __tmp_reg__
+ 199 013a 01F4      		brne .-6
+ 200 013c 8D01      		movw r16,r26
+ 201 013e 0E1B      		sub r16,r30
+ 202 0140 1F0B      		sbc r17,r31
+ 203 0142 C801      		movw r24,r16
+ 204 0144 0E94 0000 		call malloc
+ 205 0148 8A83      		std Y+2,r24
+ 206 014a 9B83      		std Y+3,r25
+ 207 014c A801      		movw r20,r16
+ 208 014e 6F2D      		mov r22,r15
+ 209 0150 7E2D      		mov r23,r14
+ 210 0152 0E94 0000 		call memcpy
+ 211 0156 EB2D      		mov r30,r11
+ 212 0158 FA2D      		mov r31,r10
+ 213 015a DF01      		movw r26,r30
+ 214 015c 0D90      		ld __tmp_reg__,X+
+ 215 015e 0020      		tst __tmp_reg__
+ 216 0160 01F4      		brne .-6
+ 217 0162 8D01      		movw r16,r26
+ 218 0164 0E1B      		sub r16,r30
+ 219 0166 1F0B      		sbc r17,r31
+ 220 0168 C801      		movw r24,r16
+ 221 016a 0E94 0000 		call malloc
+ 222 016e 8C83      		std Y+4,r24
+ 223 0170 9D83      		std Y+5,r25
+ 224 0172 A801      		movw r20,r16
+ 225 0174 6B2D      		mov r22,r11
+ 226 0176 7A2D      		mov r23,r10
+ 227 0178 0E94 0000 		call memcpy
+ 228 017c D601      		movw r26,r12
+GAS LISTING C:\Temp/ccVBmnZi.s 			page 5
+
+
+ 229 017e 1896      		adiw r26,8
+ 230 0180 ED91      		ld r30,X+
+ 231 0182 FC91      		ld r31,X
+ 232 0184 1997      		sbiw r26,8+1
+ 233 0186 3097      		sbiw r30,0
+ 234 0188 01F4      		brne .L28
+ 235 018a 1996      		adiw r26,8+1
+ 236 018c DC93      		st X,r29
+ 237 018e CE93      		st -X,r28
+ 238 0190 1897      		sbiw r26,8
+ 239 0192 00C0      		rjmp .L30
+ 240               	.L28:
+ 241 0194 CF01      		movw r24,r30
+ 242 0196 0190      		ld __tmp_reg__,Z+
+ 243 0198 F081      		ld r31,Z
+ 244 019a E02D      		mov r30,__tmp_reg__
+ 245 019c 3097      		sbiw r30,0
+ 246 019e 01F4      		brne .L28
+ 247 01a0 FC01      		movw r30,r24
+ 248 01a2 D183      		std Z+1,r29
+ 249 01a4 C083      		st Z,r28
+ 250               	.L30:
+ 251 01a6 20E0      		ldi r18,lo8(0)
+ 252 01a8 30E0      		ldi r19,hi8(0)
+ 253               	.L23:
+ 254 01aa C901      		movw r24,r18
+ 255               	/* epilogue start */
+ 256 01ac DF91      		pop r29
+ 257 01ae CF91      		pop r28
+ 258 01b0 1F91      		pop r17
+ 259 01b2 0F91      		pop r16
+ 260 01b4 FF90      		pop r15
+ 261 01b6 EF90      		pop r14
+ 262 01b8 DF90      		pop r13
+ 263 01ba CF90      		pop r12
+ 264 01bc BF90      		pop r11
+ 265 01be AF90      		pop r10
+ 266 01c0 0895      		ret
+ 267               		.size	UxmlNodeAddAttrib, .-UxmlNodeAddAttrib
+ 268               	.global	UxmlNodeCreate
+ 269               		.type	UxmlNodeCreate, @function
+ 270               	UxmlNodeCreate:
+ 271 01c2 EF92      		push r14
+ 272 01c4 FF92      		push r15
+ 273 01c6 0F93      		push r16
+ 274 01c8 1F93      		push r17
+ 275 01ca CF93      		push r28
+ 276 01cc DF93      		push r29
+ 277               	/* prologue: function */
+ 278               	/* frame size = 0 */
+ 279 01ce F82E      		mov r15,r24
+ 280 01d0 E92E      		mov r14,r25
+ 281 01d2 8AE0      		ldi r24,lo8(10)
+ 282 01d4 90E0      		ldi r25,hi8(10)
+ 283 01d6 0E94 0000 		call malloc
+ 284 01da EC01      		movw r28,r24
+ 285 01dc 0097      		sbiw r24,0
+GAS LISTING C:\Temp/ccVBmnZi.s 			page 6
+
+
+ 286 01de 01F0      		breq .L32
+ 287 01e0 8AE0      		ldi r24,lo8(10)
+ 288 01e2 DE01      		movw r26,r28
+ 289 01e4 1D92      		st X+,__zero_reg__
+ 290 01e6 8A95      	        dec r24
+ 291 01e8 01F4      		brne .-6
+ 292 01ea EF2D      		mov r30,r15
+ 293 01ec FE2D      		mov r31,r14
+ 294 01ee DF01      		movw r26,r30
+ 295 01f0 0D90      		ld __tmp_reg__,X+
+ 296 01f2 0020      		tst __tmp_reg__
+ 297 01f4 01F4      		brne .-6
+ 298 01f6 8D01      		movw r16,r26
+ 299 01f8 0E1B      		sub r16,r30
+ 300 01fa 1F0B      		sbc r17,r31
+ 301 01fc C801      		movw r24,r16
+ 302 01fe 0E94 0000 		call malloc
+ 303 0202 9F83      		std Y+7,r25
+ 304 0204 8E83      		std Y+6,r24
+ 305 0206 0097      		sbiw r24,0
+ 306 0208 01F0      		breq .L32
+ 307 020a A801      		movw r20,r16
+ 308 020c 6F2D      		mov r22,r15
+ 309 020e 7E2D      		mov r23,r14
+ 310 0210 0E94 0000 		call memcpy
+ 311               	.L32:
+ 312 0214 CE01      		movw r24,r28
+ 313               	/* epilogue start */
+ 314 0216 DF91      		pop r29
+ 315 0218 CF91      		pop r28
+ 316 021a 1F91      		pop r17
+ 317 021c 0F91      		pop r16
+ 318 021e FF90      		pop r15
+ 319 0220 EF90      		pop r14
+ 320 0222 0895      		ret
+ 321               		.size	UxmlNodeCreate, .-UxmlNodeCreate
+GAS LISTING C:\Temp/ccVBmnZi.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 uxmltree.c
+  C:\Temp/ccVBmnZi.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccVBmnZi.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccVBmnZi.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccVBmnZi.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccVBmnZi.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccVBmnZi.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccVBmnZi.s:13     .text:00000000 UxmlTreeAddSibling
+  C:\Temp/ccVBmnZi.s:40     .text:00000026 UxmlTreeAddChild
+  C:\Temp/ccVBmnZi.s:83     .text:0000006a UxmlTreeDestroy
+  C:\Temp/ccVBmnZi.s:164    .text:000000fa UxmlNodeAddAttrib
+  C:\Temp/ccVBmnZi.s:270    .text:000001c2 UxmlNodeCreate
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+free
+malloc
+memcpy

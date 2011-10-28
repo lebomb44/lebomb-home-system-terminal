@@ -1,0 +1,204 @@
+GAS LISTING C:\Temp/ccY0lSU3.s 			page 1
+
+
+   1               		.file	"ostimer.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutArchClockGet
+  12               		.type	NutArchClockGet, @function
+  13               	NutArchClockGet:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 6091 0000 		lds r22,cpu_clock
+  17 0004 7091 0000 		lds r23,cpu_clock+1
+  18 0008 8091 0000 		lds r24,cpu_clock+2
+  19 000c 9091 0000 		lds r25,cpu_clock+3
+  20               	/* epilogue start */
+  21 0010 0895      		ret
+  22               		.size	NutArchClockGet, .-NutArchClockGet
+  23               	.global	NutGetTickClock
+  24               		.type	NutGetTickClock, @function
+  25               	NutGetTickClock:
+  26               	/* prologue: function */
+  27               	/* frame size = 0 */
+  28 0012 60E0      		ldi r22,lo8(1024)
+  29 0014 74E0      		ldi r23,hi8(1024)
+  30 0016 80E0      		ldi r24,hlo8(1024)
+  31 0018 90E0      		ldi r25,hhi8(1024)
+  32               	/* epilogue start */
+  33 001a 0895      		ret
+  34               		.size	NutGetTickClock, .-NutGetTickClock
+  35               	.global	NutTimerMillisToTicks
+  36               		.type	NutTimerMillisToTicks, @function
+  37               	NutTimerMillisToTicks:
+  38               	/* prologue: function */
+  39               	/* frame size = 0 */
+  40 001c 2AE0      		ldi r18,10
+  41 001e 660F      	1:	lsl r22
+  42 0020 771F      		rol r23
+  43 0022 881F      		rol r24
+  44 0024 991F      		rol r25
+  45 0026 2A95      		dec r18
+  46 0028 01F4      		brne 1b
+  47 002a 28EE      		ldi r18,lo8(1000)
+  48 002c 33E0      		ldi r19,hi8(1000)
+  49 002e 40E0      		ldi r20,hlo8(1000)
+  50 0030 50E0      		ldi r21,hhi8(1000)
+  51 0032 0E94 0000 		call __udivmodsi4
+  52 0036 C901      		movw r24,r18
+  53 0038 DA01      		movw r26,r20
+  54 003a 9C01      		movw r18,r24
+  55 003c AD01      		movw r20,r26
+  56 003e 2115      		cp r18,__zero_reg__
+  57 0040 3105      		cpc r19,__zero_reg__
+GAS LISTING C:\Temp/ccY0lSU3.s 			page 2
+
+
+  58 0042 4105      		cpc r20,__zero_reg__
+  59 0044 5105      		cpc r21,__zero_reg__
+  60 0046 01F4      		brne .L6
+  61 0048 21E0      		ldi r18,lo8(1)
+  62 004a 30E0      		ldi r19,hi8(1)
+  63 004c 40E0      		ldi r20,hlo8(1)
+  64 004e 50E0      		ldi r21,hhi8(1)
+  65               	.L6:
+  66 0050 B901      		movw r22,r18
+  67 0052 CA01      		movw r24,r20
+  68               	/* epilogue start */
+  69 0054 0895      		ret
+  70               		.size	NutTimerMillisToTicks, .-NutTimerMillisToTicks
+  71               	.global	NutRegisterTimer
+  72               		.type	NutRegisterTimer, @function
+  73               	NutRegisterTimer:
+  74               	/* prologue: function */
+  75               	/* frame size = 0 */
+  76 0056 BC01      		movw r22,r24
+  77 0058 87B7      		in r24,87-32
+  78 005a 8D7F      		andi r24,lo8(-3)
+  79 005c 87BF      		out 87-32,r24
+  80 005e 80B7      		in r24,80-32
+  81 0060 8860      		ori r24,lo8(8)
+  82 0062 80BF      		out 80-32,r24
+  83 0064 12BE      		out 82-32,__zero_reg__
+  84 0066 82E0      		ldi r24,lo8(2)
+  85 0068 83BF      		out 83-32,r24
+  86               	.L9:
+  87 006a 80B7      		in r24,80-32
+  88 006c 90E0      		ldi r25,lo8(0)
+  89 006e 8770      		andi r24,lo8(7)
+  90 0070 9070      		andi r25,hi8(7)
+  91 0072 892B      		or r24,r25
+  92 0074 01F4      		brne .L9
+  93 0076 81E0      		ldi r24,lo8(1)
+  94 0078 86BF      		out 86-32,r24
+  95               	/* #APP */
+  96               	 ;  293 "../../nut/arch/avr/dev/ostimer.c" 1
+  97 007a 0FB6      		in  __tmp_reg__, __SREG__
+  98 007c F894      		cli
+  99 007e 0F92      		push __tmp_reg__
+ 100               		
+ 101               	 ;  0 "" 2
+ 102               	/* #NOAPP */
+ 103 0080 81E0      		ldi r24,lo8(1)
+ 104 0082 90E0      		ldi r25,hi8(1)
+ 105 0084 A0E0      		ldi r26,hlo8(1)
+ 106 0086 B0E0      		ldi r27,hhi8(1)
+ 107               	/* #APP */
+ 108               	 ;  208 "../../nut/arch/avr/dev/ostimer.c" 1
+ 109               		firstovf:              
+ 110 0088 B6B7      		in r27,54              
+ 111 008a B170      		andi r27,1            
+ 112 008c 01F0      		breq firstovf          
+ 113 008e B6BF      		out 54,r27             
+ 114               	
+GAS LISTING C:\Temp/ccY0lSU3.s 			page 3
+
+
+ 115               	nextovf:               
+ 116 0090 0894      		sec                    
+ 117 0092 811D      		adc r24,__zero_reg__   
+ 118 0094 911D      		adc r25,__zero_reg__   
+ 119 0096 A11D      		adc r26,__zero_reg__   
+ 120 0098 B6B7      		in r27,54              
+ 121 009a B170      		andi r27,1            
+ 122 009c 01F0      		breq nextovf           
+ 123 009e BB27      		clr r27                    
+ 124               	 ;  0 "" 2
+ 125               	 ;  295 "../../nut/arch/avr/dev/ostimer.c" 1
+ 126 00a0 0F90      		pop __tmp_reg__
+ 127 00a2 0FBE      		out __SREG__, __tmp_reg__
+ 128               		
+ 129               	 ;  0 "" 2
+ 130               	/* #NOAPP */
+ 131 00a4 37E0      		ldi r19,7
+ 132 00a6 880F      	1:	lsl r24
+ 133 00a8 991F      		rol r25
+ 134 00aa AA1F      		rol r26
+ 135 00ac BB1F      		rol r27
+ 136 00ae 3A95      		dec r19
+ 137 00b0 01F4      		brne 1b
+ 138 00b2 8093 0000 		sts cpu_clock,r24
+ 139 00b6 9093 0000 		sts (cpu_clock)+1,r25
+ 140 00ba A093 0000 		sts (cpu_clock)+2,r26
+ 141 00be B093 0000 		sts (cpu_clock)+3,r27
+ 142 00c2 87B7      		in r24,87-32
+ 143 00c4 8D7F      		andi r24,lo8(-3)
+ 144 00c6 87BF      		out 87-32,r24
+ 145 00c8 80B7      		in r24,80-32
+ 146 00ca 8860      		ori r24,lo8(8)
+ 147 00cc 80BF      		out 80-32,r24
+ 148 00ce 12BE      		out 82-32,__zero_reg__
+ 149 00d0 89E0      		ldi r24,lo8(9)
+ 150 00d2 83BF      		out 83-32,r24
+ 151 00d4 8FE1      		ldi r24,lo8(31)
+ 152 00d6 81BF      		out 81-32,r24
+ 153               	.L10:
+ 154 00d8 80B7      		in r24,80-32
+ 155 00da 90E0      		ldi r25,lo8(0)
+ 156 00dc 8770      		andi r24,lo8(7)
+ 157 00de 9070      		andi r25,hi8(7)
+ 158 00e0 892B      		or r24,r25
+ 159 00e2 01F4      		brne .L10
+ 160 00e4 82E0      		ldi r24,lo8(2)
+ 161 00e6 86BF      		out 86-32,r24
+ 162 00e8 40E0      		ldi r20,lo8(0)
+ 163 00ea 50E0      		ldi r21,hi8(0)
+ 164 00ec 80E0      		ldi r24,lo8(sig_OUTPUT_COMPARE0)
+ 165 00ee 90E0      		ldi r25,hi8(sig_OUTPUT_COMPARE0)
+ 166 00f0 0E94 0000 		call NutRegisterIrqHandler
+ 167               	/* epilogue start */
+ 168 00f4 0895      		ret
+ 169               		.size	NutRegisterTimer, .-NutRegisterTimer
+ 170               		.lcomm cpu_clock,4
+GAS LISTING C:\Temp/ccY0lSU3.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ostimer.c
+  C:\Temp/ccY0lSU3.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccY0lSU3.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccY0lSU3.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccY0lSU3.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccY0lSU3.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccY0lSU3.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccY0lSU3.s:13     .text:00000000 NutArchClockGet
+                             .bss:00000000 cpu_clock
+  C:\Temp/ccY0lSU3.s:25     .text:00000012 NutGetTickClock
+  C:\Temp/ccY0lSU3.s:37     .text:0000001c NutTimerMillisToTicks
+  C:\Temp/ccY0lSU3.s:73     .text:00000056 NutRegisterTimer
+  C:\Temp/ccY0lSU3.s:109    .text:00000088 firstovf
+  C:\Temp/ccY0lSU3.s:115    .text:00000090 nextovf
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+__udivmodsi4
+sig_OUTPUT_COMPARE0
+NutRegisterIrqHandler

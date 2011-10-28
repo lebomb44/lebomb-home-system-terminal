@@ -1,0 +1,125 @@
+GAS LISTING C:\Temp/ccH56x3V.s 			page 1
+
+
+   1               		.file	"eeprom.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	eeprom_read_byte, @function
+  12               	eeprom_read_byte:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 9C01      		movw r18,r24
+  16               	.L2:
+  17 0002 E199      		sbic 60-32,1
+  18 0004 00C0      		rjmp .L2
+  19 0006 3FBB      		out (62)+1-32,r19
+  20 0008 2EBB      		out 62-32,r18
+  21 000a E09A      		sbi 60-32,0
+  22 000c 8DB3      		in r24,61-32
+  23               	/* epilogue start */
+  24 000e 0895      		ret
+  25               		.size	eeprom_read_byte, .-eeprom_read_byte
+  26               	.global	OnChipNvMemSave
+  27               		.type	OnChipNvMemSave, @function
+  28               	OnChipNvMemSave:
+  29 0010 CF93      		push r28
+  30 0012 DF93      		push r29
+  31               	/* prologue: function */
+  32               	/* frame size = 0 */
+  33 0014 EC01      		movw r28,r24
+  34 0016 20E0      		ldi r18,lo8(0)
+  35 0018 30E0      		ldi r19,hi8(0)
+  36 001a 00C0      		rjmp .L6
+  37               	.L10:
+  38 001c D901      		movw r26,r18
+  39 001e AC0F      		add r26,r28
+  40 0020 BD1F      		adc r27,r29
+  41               	.L7:
+  42 0022 E199      		sbic 60-32,1
+  43 0024 00C0      		rjmp .L7
+  44 0026 BFBB      		out (62)+1-32,r27
+  45 0028 AEBB      		out 62-32,r26
+  46 002a E09A      		sbi 60-32,0
+  47 002c 8DB3      		in r24,61-32
+  48 002e FB01      		movw r30,r22
+  49 0030 E20F      		add r30,r18
+  50 0032 F31F      		adc r31,r19
+  51 0034 E081      		ld r30,Z
+  52 0036 8E17      		cp r24,r30
+  53 0038 01F0      		breq .L8
+  54               	.L12:
+  55 003a E199      		sbic 60-32,1
+  56 003c 00C0      		rjmp .L12
+  57 003e BFBB      		out (62)+1-32,r27
+GAS LISTING C:\Temp/ccH56x3V.s 			page 2
+
+
+  58 0040 AEBB      		out 62-32,r26
+  59 0042 EDBB      		out 61-32,r30
+  60               	/* #APP */
+  61               	 ;  252 "c:/winavr/lib/gcc/../../avr/include/avr/eeprom.h" 1
+  62               		/* START EEPROM WRITE CRITICAL SECTION */
+  63 0044 0FB6      		in	r0, 63		
+  64 0046 F894      		cli				
+  65 0048 E29A      		sbi	28, 2	
+  66 004a E19A      		sbi	28, 1	
+  67 004c 0FBE      		out	63, r0		
+  68               		/* END EEPROM WRITE CRITICAL SECTION */
+  69               	 ;  0 "" 2
+  70               	/* #NOAPP */
+  71               	.L8:
+  72 004e 2F5F      		subi r18,lo8(-(1))
+  73 0050 3F4F      		sbci r19,hi8(-(1))
+  74               	.L6:
+  75 0052 2417      		cp r18,r20
+  76 0054 3507      		cpc r19,r21
+  77 0056 00F0      		brlo .L10
+  78 0058 80E0      		ldi r24,lo8(0)
+  79 005a 90E0      		ldi r25,hi8(0)
+  80               	/* epilogue start */
+  81 005c DF91      		pop r29
+  82 005e CF91      		pop r28
+  83 0060 0895      		ret
+  84               		.size	OnChipNvMemSave, .-OnChipNvMemSave
+  85               	.global	OnChipNvMemLoad
+  86               		.type	OnChipNvMemLoad, @function
+  87               	OnChipNvMemLoad:
+  88               	/* prologue: function */
+  89               	/* frame size = 0 */
+  90 0062 FB01      		movw r30,r22
+  91 0064 20E0      		ldi r18,lo8(gs(eeprom_read_byte))
+  92 0066 30E0      		ldi r19,hi8(gs(eeprom_read_byte))
+  93 0068 BC01      		movw r22,r24
+  94 006a CF01      		movw r24,r30
+  95 006c 0E94 0000 		call __eerd_block
+  96 0070 80E0      		ldi r24,lo8(0)
+  97 0072 90E0      		ldi r25,hi8(0)
+  98               	/* epilogue start */
+  99 0074 0895      		ret
+ 100               		.size	OnChipNvMemLoad, .-OnChipNvMemLoad
+GAS LISTING C:\Temp/ccH56x3V.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 eeprom.c
+  C:\Temp/ccH56x3V.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccH56x3V.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccH56x3V.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccH56x3V.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccH56x3V.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccH56x3V.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccH56x3V.s:12     .text:00000000 eeprom_read_byte
+  C:\Temp/ccH56x3V.s:28     .text:00000010 OnChipNvMemSave
+  C:\Temp/ccH56x3V.s:87     .text:00000062 OnChipNvMemLoad
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+__eerd_block

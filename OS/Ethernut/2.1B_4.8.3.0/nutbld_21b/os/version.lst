@@ -1,0 +1,59 @@
+GAS LISTING C:\Temp/ccW4Vrd6.s 			page 1
+
+
+   1               		.file	"version.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutVersion
+  12               		.type	NutVersion, @function
+  13               	NutVersion:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 60E0      		ldi r22,lo8(67633920)
+  17 0002 73E0      		ldi r23,hi8(67633920)
+  18 0004 88E0      		ldi r24,hlo8(67633920)
+  19 0006 94E0      		ldi r25,hhi8(67633920)
+  20               	/* epilogue start */
+  21 0008 0895      		ret
+  22               		.size	NutVersion, .-NutVersion
+  23               	.global	NutVersionString
+  24               		.type	NutVersionString, @function
+  25               	NutVersionString:
+  26               	/* prologue: function */
+  27               	/* frame size = 0 */
+  28 000a 80E0      		ldi r24,lo8(os_version_string)
+  29 000c 90E0      		ldi r25,hi8(os_version_string)
+  30               	/* epilogue start */
+  31 000e 0895      		ret
+  32               		.size	NutVersionString, .-NutVersionString
+  33               		.data
+  34               		.type	os_version_string, @object
+  35               		.size	os_version_string, 8
+  36               	os_version_string:
+  37 0000 342E 382E 		.string	"4.8.3.0"
+  37      332E 3000 
+GAS LISTING C:\Temp/ccW4Vrd6.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 version.c
+  C:\Temp/ccW4Vrd6.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccW4Vrd6.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccW4Vrd6.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccW4Vrd6.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccW4Vrd6.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccW4Vrd6.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccW4Vrd6.s:13     .text:00000000 NutVersion
+  C:\Temp/ccW4Vrd6.s:25     .text:0000000a NutVersionString
+  C:\Temp/ccW4Vrd6.s:36     .data:00000000 os_version_string
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

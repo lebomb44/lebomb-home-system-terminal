@@ -1,0 +1,3440 @@
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 1
+
+
+   1               		.file	"dhcpc.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutDhcpStatus
+  12               		.type	NutDhcpStatus, @function
+  13               	NutDhcpStatus:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 8091 0000 		lds r24,dhcpState
+  17 0004 90E0      		ldi r25,lo8(0)
+  18               	/* epilogue start */
+  19 0006 0895      		ret
+  20               		.size	NutDhcpStatus, .-NutDhcpStatus
+  21               	.global	NutDhcpError
+  22               		.type	NutDhcpError, @function
+  23               	NutDhcpError:
+  24               	/* prologue: function */
+  25               	/* frame size = 0 */
+  26 0008 8091 0000 		lds r24,dhcpError
+  27 000c 9091 0000 		lds r25,dhcpError+1
+  28 0010 1092 0000 		sts (dhcpError)+1,__zero_reg__
+  29 0014 1092 0000 		sts dhcpError,__zero_reg__
+  30               	/* epilogue start */
+  31 0018 0895      		ret
+  32               		.size	NutDhcpError, .-NutDhcpError
+  33               	.global	NutDhcpIsConfigured
+  34               		.type	NutDhcpIsConfigured, @function
+  35               	NutDhcpIsConfigured:
+  36               	/* prologue: function */
+  37               	/* frame size = 0 */
+  38 001a 20E0      		ldi r18,lo8(0)
+  39 001c 30E0      		ldi r19,hi8(0)
+  40 001e 8091 0000 		lds r24,dhcpState
+  41 0022 8530      		cpi r24,lo8(5)
+  42 0024 01F4      		brne .L6
+  43 0026 21E0      		ldi r18,lo8(1)
+  44 0028 30E0      		ldi r19,hi8(1)
+  45               	.L6:
+  46 002a C901      		movw r24,r18
+  47               	/* epilogue start */
+  48 002c 0895      		ret
+  49               		.size	NutDhcpIsConfigured, .-NutDhcpIsConfigured
+  50               		.data
+  51               	.LC0:
+  52 0000 6468 6370 		.string	"dhcpc"
+  52      6300 
+  53               		.text
+  54               		.type	DhcpKick, @function
+  55               	DhcpKick:
+  56 002e DF92      		push r13
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 2
+
+
+  57 0030 EF92      		push r14
+  58 0032 FF92      		push r15
+  59 0034 0F93      		push r16
+  60 0036 1F93      		push r17
+  61 0038 CF93      		push r28
+  62 003a DF93      		push r29
+  63               	/* prologue: function */
+  64               	/* frame size = 0 */
+  65 003c D62E      		mov r13,r22
+  66 003e 7901      		movw r14,r18
+  67 0040 8A01      		movw r16,r20
+  68 0042 0E94 0000 		call NutDeviceLookup
+  69 0046 EC01      		movw r28,r24
+  70 0048 0097      		sbiw r24,0
+  71 004a 01F0      		breq .L9
+  72 004c 8B85      		ldd r24,Y+11
+  73 004e 8330      		cpi r24,lo8(3)
+  74 0050 01F4      		brne .L9
+  75 0052 EF85      		ldd r30,Y+15
+  76 0054 F889      		ldd r31,Y+16
+  77 0056 3097      		sbiw r30,0
+  78 0058 01F0      		breq .L9
+  79 005a 8081      		ld r24,Z
+  80 005c 8630      		cpi r24,lo8(6)
+  81 005e 01F0      		breq .L10
+  82               	.L9:
+  83 0060 81E1      		ldi r24,lo8(17)
+  84 0062 90E0      		ldi r25,hi8(17)
+  85 0064 9093 0000 		sts (dhcpError)+1,r25
+  86 0068 8093 0000 		sts dhcpError,r24
+  87 006c 2FEF      		ldi r18,lo8(-1)
+  88 006e 3FEF      		ldi r19,hi8(-1)
+  89 0070 00C0      		rjmp .L11
+  90               	.L10:
+  91 0072 0E94 0000 		call NutGetMillis
+  92 0076 6093 0000 		sts dhcpApiStart,r22
+  93 007a 7093 0000 		sts (dhcpApiStart)+1,r23
+  94 007e 8093 0000 		sts (dhcpApiStart)+2,r24
+  95 0082 9093 0000 		sts (dhcpApiStart)+3,r25
+  96 0086 E092 0000 		sts dhcpApiTimeout,r14
+  97 008a F092 0000 		sts (dhcpApiTimeout)+1,r15
+  98 008e 0093 0000 		sts (dhcpApiTimeout)+2,r16
+  99 0092 1093 0000 		sts (dhcpApiTimeout)+3,r17
+ 100 0096 D092 0000 		sts dhcpState,r13
+ 101 009a 8091 0000 		lds r24,dhcpThread
+ 102 009e 9091 0000 		lds r25,(dhcpThread)+1
+ 103 00a2 892B      		or r24,r25
+ 104 00a4 01F4      		brne .L12
+ 105 00a6 20E2      		ldi r18,lo8(288)
+ 106 00a8 31E0      		ldi r19,hi8(288)
+ 107 00aa AE01      		movw r20,r28
+ 108 00ac 60E0      		ldi r22,lo8(gs(NutDhcpClient))
+ 109 00ae 70E0      		ldi r23,hi8(gs(NutDhcpClient))
+ 110 00b0 80E0      		ldi r24,lo8(.LC0)
+ 111 00b2 90E0      		ldi r25,hi8(.LC0)
+ 112 00b4 0E94 0000 		call NutThreadCreate
+ 113 00b8 9093 0000 		sts (dhcpThread)+1,r25
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 3
+
+
+ 114 00bc 8093 0000 		sts dhcpThread,r24
+ 115               	.L12:
+ 116 00c0 80E0      		ldi r24,lo8(dhcpWake)
+ 117 00c2 90E0      		ldi r25,hi8(dhcpWake)
+ 118 00c4 0E94 0000 		call NutEventPost
+ 119 00c8 40E0      		ldi r20,lo8(0)
+ 120 00ca 50E0      		ldi r21,hi8(0)
+ 121 00cc 60E0      		ldi r22,hlo8(0)
+ 122 00ce 70E0      		ldi r23,hhi8(0)
+ 123 00d0 80E0      		ldi r24,lo8(dhcpDone)
+ 124 00d2 90E0      		ldi r25,hi8(dhcpDone)
+ 125 00d4 0E94 0000 		call NutEventWait
+ 126 00d8 20E0      		ldi r18,lo8(0)
+ 127 00da 30E0      		ldi r19,hi8(0)
+ 128               	.L11:
+ 129 00dc C901      		movw r24,r18
+ 130               	/* epilogue start */
+ 131 00de DF91      		pop r29
+ 132 00e0 CF91      		pop r28
+ 133 00e2 1F91      		pop r17
+ 134 00e4 0F91      		pop r16
+ 135 00e6 FF90      		pop r15
+ 136 00e8 EF90      		pop r14
+ 137 00ea DF90      		pop r13
+ 138 00ec 0895      		ret
+ 139               		.size	DhcpKick, .-DhcpKick
+ 140               	.global	NutDhcpInform
+ 141               		.type	NutDhcpInform, @function
+ 142               	NutDhcpInform:
+ 143               	/* prologue: function */
+ 144               	/* frame size = 0 */
+ 145 00ee FC01      		movw r30,r24
+ 146 00f0 9A01      		movw r18,r20
+ 147 00f2 AB01      		movw r20,r22
+ 148 00f4 8091 0000 		lds r24,dhcpState
+ 149 00f8 8823      		tst r24
+ 150 00fa 01F0      		breq .L15
+ 151 00fc 83E0      		ldi r24,lo8(3)
+ 152 00fe 90E0      		ldi r25,hi8(3)
+ 153 0100 9093 0000 		sts (dhcpError)+1,r25
+ 154 0104 8093 0000 		sts dhcpError,r24
+ 155 0108 2FEF      		ldi r18,lo8(-1)
+ 156 010a 3FEF      		ldi r19,hi8(-1)
+ 157 010c 00C0      		rjmp .L16
+ 158               	.L15:
+ 159 010e 68E0      		ldi r22,lo8(8)
+ 160 0110 CF01      		movw r24,r30
+ 161 0112 0E94 0000 		call DhcpKick
+ 162 0116 9C01      		movw r18,r24
+ 163               	.L16:
+ 164 0118 C901      		movw r24,r18
+ 165               	/* epilogue start */
+ 166 011a 0895      		ret
+ 167               		.size	NutDhcpInform, .-NutDhcpInform
+ 168               	.global	NutDhcpRelease
+ 169               		.type	NutDhcpRelease, @function
+ 170               	NutDhcpRelease:
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 4
+
+
+ 171               	/* prologue: function */
+ 172               	/* frame size = 0 */
+ 173 011c FC01      		movw r30,r24
+ 174 011e 9A01      		movw r18,r20
+ 175 0120 AB01      		movw r20,r22
+ 176 0122 8091 0000 		lds r24,dhcpState
+ 177 0126 8530      		cpi r24,lo8(5)
+ 178 0128 01F0      		breq .L19
+ 179 012a 83E0      		ldi r24,lo8(3)
+ 180 012c 90E0      		ldi r25,hi8(3)
+ 181 012e 9093 0000 		sts (dhcpError)+1,r25
+ 182 0132 8093 0000 		sts dhcpError,r24
+ 183 0136 2FEF      		ldi r18,lo8(-1)
+ 184 0138 3FEF      		ldi r19,hi8(-1)
+ 185 013a 00C0      		rjmp .L20
+ 186               	.L19:
+ 187 013c 69E0      		ldi r22,lo8(9)
+ 188 013e CF01      		movw r24,r30
+ 189 0140 0E94 0000 		call DhcpKick
+ 190 0144 9C01      		movw r18,r24
+ 191               	.L20:
+ 192 0146 C901      		movw r24,r18
+ 193               	/* epilogue start */
+ 194 0148 0895      		ret
+ 195               		.size	NutDhcpRelease, .-NutDhcpRelease
+ 196               		.type	DhcpPrepHeader, @function
+ 197               	DhcpPrepHeader:
+ 198 014a CF92      		push r12
+ 199 014c DF92      		push r13
+ 200 014e EF92      		push r14
+ 201 0150 FF92      		push r15
+ 202 0152 0F93      		push r16
+ 203 0154 1F93      		push r17
+ 204 0156 CF93      		push r28
+ 205 0158 DF93      		push r29
+ 206               	/* prologue: function */
+ 207               	/* frame size = 0 */
+ 208 015a FC01      		movw r30,r24
+ 209 015c 84E2      		ldi r24,lo8(548)
+ 210 015e 92E0      		ldi r25,hi8(548)
+ 211 0160 DF01      		movw r26,r30
+ 212 0162 EC01      		movw r28,r24
+ 213 0164 1D92      		st X+,__zero_reg__
+ 214 0166 2197      		sbiw r28,1
+ 215 0168 01F4      		brne .-6
+ 216 016a 81E0      		ldi r24,lo8(1)
+ 217 016c 8083      		st Z,r24
+ 218 016e 8183      		std Z+1,r24
+ 219 0170 86E0      		ldi r24,lo8(6)
+ 220 0172 8283      		std Z+2,r24
+ 221 0174 EF01      		movw r28,r30
+ 222 0176 6C96      		adiw r28,28
+ 223 0178 A0E0      		ldi r26,lo8(confnet+10)
+ 224 017a B0E0      		ldi r27,hi8(confnet+10)
+ 225               	.L23:
+ 226 017c 0D90      		ld r0,X+
+ 227 017e 0992      		st Y+,r0
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 5
+
+
+ 228 0180 8150      		subi r24,lo8(-(-1))
+ 229 0182 01F4      		brne .L23
+ 230 0184 2483      		std Z+4,r18
+ 231 0186 3583      		std Z+5,r19
+ 232 0188 4683      		std Z+6,r20
+ 233 018a 5783      		std Z+7,r21
+ 234               	/* #APP */
+ 235               	 ;  295 "../../nut/include/sys/types.h" 1
+ 236 018c 0C2C      		mov __tmp_reg__, r12
+ 237 018e CD2C      		mov r12, r13
+ 238 0190 D02C      		mov r13, __tmp_reg__
+ 239               		
+ 240               	 ;  0 "" 2
+ 241               	/* #NOAPP */
+ 242 0192 D186      		std Z+9,r13
+ 243 0194 C086      		std Z+8,r12
+ 244 0196 E486      		std Z+12,r14
+ 245 0198 F586      		std Z+13,r15
+ 246 019a 0687      		std Z+14,r16
+ 247 019c 1787      		std Z+15,r17
+ 248 019e E451      		subi r30,lo8(-(236))
+ 249 01a0 FF4F      		sbci r31,hi8(-(236))
+ 250 01a2 93E6      		ldi r25,lo8(99)
+ 251 01a4 9193      		st Z+,r25
+ 252 01a6 DF01      		movw r26,r30
+ 253 01a8 82E8      		ldi r24,lo8(-126)
+ 254 01aa 8193      		st Z+,r24
+ 255 01ac 83E5      		ldi r24,lo8(83)
+ 256 01ae 1196      		adiw r26,1
+ 257 01b0 8C93      		st X,r24
+ 258 01b2 DF01      		movw r26,r30
+ 259 01b4 1196      		adiw r26,1
+ 260 01b6 9183      		std Z+1,r25
+ 261 01b8 FD01      		movw r30,r26
+ 262 01ba 3196      		adiw r30,1
+ 263 01bc 85E3      		ldi r24,lo8(53)
+ 264 01be 1196      		adiw r26,1
+ 265 01c0 8C93      		st X,r24
+ 266 01c2 81E0      		ldi r24,lo8(1)
+ 267 01c4 8183      		std Z+1,r24
+ 268 01c6 6283      		std Z+2,r22
+ 269 01c8 87E0      		ldi r24,lo8(7)
+ 270 01ca 90E0      		ldi r25,hi8(7)
+ 271               	/* epilogue start */
+ 272 01cc DF91      		pop r29
+ 273 01ce CF91      		pop r28
+ 274 01d0 1F91      		pop r17
+ 275 01d2 0F91      		pop r16
+ 276 01d4 FF90      		pop r15
+ 277 01d6 EF90      		pop r14
+ 278 01d8 DF90      		pop r13
+ 279 01da CF90      		pop r12
+ 280 01dc 0895      		ret
+ 281               		.size	DhcpPrepHeader, .-DhcpPrepHeader
+ 282               	.global	NutDhcpIfConfig
+ 283               		.type	NutDhcpIfConfig, @function
+ 284               	NutDhcpIfConfig:
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 6
+
+
+ 285 01de 4F92      		push r4
+ 286 01e0 5F92      		push r5
+ 287 01e2 6F92      		push r6
+ 288 01e4 7F92      		push r7
+ 289 01e6 8F92      		push r8
+ 290 01e8 9F92      		push r9
+ 291 01ea AF92      		push r10
+ 292 01ec BF92      		push r11
+ 293 01ee CF92      		push r12
+ 294 01f0 DF92      		push r13
+ 295 01f2 EF92      		push r14
+ 296 01f4 FF92      		push r15
+ 297 01f6 0F93      		push r16
+ 298 01f8 1F93      		push r17
+ 299 01fa DF93      		push r29
+ 300 01fc CF93      		push r28
+ 301 01fe CDB7      		in r28,__SP_L__
+ 302 0200 DEB7      		in r29,__SP_H__
+ 303 0202 6097      		sbiw r28,16
+ 304 0204 0FB6      		in __tmp_reg__,__SREG__
+ 305 0206 F894      		cli
+ 306 0208 DEBF      		out __SP_H__,r29
+ 307 020a 0FBE      		out __SREG__,__tmp_reg__
+ 308 020c CDBF      		out __SP_L__,r28
+ 309               	/* prologue: function */
+ 310               	/* frame size = 16 */
+ 311 020e 4C01      		movw r8,r24
+ 312 0210 2B01      		movw r4,r22
+ 313 0212 2D87      		std Y+13,r18
+ 314 0214 3E87      		std Y+14,r19
+ 315 0216 4F87      		std Y+15,r20
+ 316 0218 588B      		std Y+16,r21
+ 317 021a 0E94 0000 		call NutDeviceLookup
+ 318 021e 5C01      		movw r10,r24
+ 319 0220 0097      		sbiw r24,0
+ 320 0222 01F0      		breq .L27
+ 321 0224 FC01      		movw r30,r24
+ 322 0226 8385      		ldd r24,Z+11
+ 323 0228 8330      		cpi r24,lo8(3)
+ 324 022a 01F4      		brne .L27
+ 325 022c C784      		ldd r12,Z+15
+ 326 022e D088      		ldd r13,Z+16
+ 327 0230 C114      		cp r12,__zero_reg__
+ 328 0232 D104      		cpc r13,__zero_reg__
+ 329 0234 01F0      		breq .L27
+ 330 0236 F601      		movw r30,r12
+ 331 0238 8081      		ld r24,Z
+ 332 023a 8630      		cpi r24,lo8(6)
+ 333 023c 01F0      		breq .L28
+ 334               	.L27:
+ 335 023e 81E1      		ldi r24,lo8(17)
+ 336 0240 90E0      		ldi r25,hi8(17)
+ 337 0242 00C0      		rjmp .L46
+ 338               	.L28:
+ 339 0244 8E01      		movw r16,r28
+ 340 0246 0F5F      		subi r16,lo8(-(1))
+ 341 0248 1F4F      		sbci r17,hi8(-(1))
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 7
+
+
+ 342 024a F801      		movw r30,r16
+ 343 024c 1192      		st Z+,__zero_reg__
+ 344 024e 8A95      	        dec r24
+ 345 0250 01F4      		brne .-6
+ 346 0252 97E0      		ldi r25,lo8(7)
+ 347 0254 692E      		mov r6,r25
+ 348 0256 712C      		mov r7,__zero_reg__
+ 349 0258 6C0E      		add r6,r28
+ 350 025a 7D1E      		adc r7,r29
+ 351 025c 46E0      		ldi r20,lo8(6)
+ 352 025e 50E0      		ldi r21,hi8(6)
+ 353 0260 6FEF      		ldi r22,lo8(255)
+ 354 0262 70E0      		ldi r23,hi8(255)
+ 355 0264 C301      		movw r24,r6
+ 356 0266 0E94 0000 		call memset
+ 357 026a 85E0      		ldi r24,lo8(5)
+ 358 026c E82E      		mov r14,r24
+ 359 026e F12C      		mov r15,__zero_reg__
+ 360 0270 EC0C      		add r14,r12
+ 361 0272 FD1C      		adc r15,r13
+ 362 0274 46E0      		ldi r20,lo8(6)
+ 363 0276 50E0      		ldi r21,hi8(6)
+ 364 0278 B801      		movw r22,r16
+ 365 027a C701      		movw r24,r14
+ 366 027c 0E94 0000 		call memcmp
+ 367 0280 0097      		sbiw r24,0
+ 368 0282 01F0      		breq .L30
+ 369 0284 46E0      		ldi r20,lo8(6)
+ 370 0286 50E0      		ldi r21,hi8(6)
+ 371 0288 B301      		movw r22,r6
+ 372 028a C701      		movw r24,r14
+ 373 028c 0E94 0000 		call memcmp
+ 374 0290 0097      		sbiw r24,0
+ 375 0292 01F4      		brne .L31
+ 376               	.L30:
+ 377 0294 4114      		cp r4,__zero_reg__
+ 378 0296 5104      		cpc r5,__zero_reg__
+ 379 0298 01F0      		breq .L32
+ 380 029a A0E0      		ldi r26,lo8(confnet+10)
+ 381 029c B0E0      		ldi r27,hi8(confnet+10)
+ 382 029e F201      		movw r30,r4
+ 383 02a0 86E0      		ldi r24,lo8(6)
+ 384               	.L33:
+ 385 02a2 0190      		ld r0,Z+
+ 386 02a4 0D92      		st X+,r0
+ 387 02a6 8150      		subi r24,lo8(-(-1))
+ 388 02a8 01F4      		brne .L33
+ 389 02aa 00C0      		rjmp .L34
+ 390               	.L32:
+ 391 02ac C401      		movw r24,r8
+ 392 02ae 0E94 0000 		call NutNetLoadConfig
+ 393 02b2 892B      		or r24,r25
+ 394 02b4 01F0      		breq .L34
+ 395 02b6 82E0      		ldi r24,lo8(2)
+ 396 02b8 90E0      		ldi r25,hi8(2)
+ 397               	.L46:
+ 398 02ba 9093 0000 		sts (dhcpError)+1,r25
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 8
+
+
+ 399 02be 8093 0000 		sts dhcpError,r24
+ 400 02c2 00C0      		rjmp .L37
+ 401               	.L34:
+ 402 02c4 D701      		movw r26,r14
+ 403 02c6 E0E0      		ldi r30,lo8(confnet+10)
+ 404 02c8 F0E0      		ldi r31,hi8(confnet+10)
+ 405 02ca 86E0      		ldi r24,lo8(6)
+ 406               	.L35:
+ 407 02cc 0190      		ld r0,Z+
+ 408 02ce 0D92      		st X+,r0
+ 409 02d0 8150      		subi r24,lo8(-(-1))
+ 410 02d2 01F4      		brne .L35
+ 411 02d4 64EF      		ldi r22,lo8(500)
+ 412 02d6 71E0      		ldi r23,hi8(500)
+ 413 02d8 80E0      		ldi r24,hlo8(500)
+ 414 02da 90E0      		ldi r25,hhi8(500)
+ 415 02dc 0E94 0000 		call NutSleep
+ 416               	.L31:
+ 417 02e0 2091 0000 		lds r18,confnet+28
+ 418 02e4 3091 0000 		lds r19,(confnet+28)+1
+ 419 02e8 4091 0000 		lds r20,(confnet+28)+2
+ 420 02ec 5091 0000 		lds r21,(confnet+28)+3
+ 421 02f0 E090 0000 		lds r14,confnet+20
+ 422 02f4 F090 0000 		lds r15,(confnet+20)+1
+ 423 02f8 0091 0000 		lds r16,(confnet+20)+2
+ 424 02fc 1091 0000 		lds r17,(confnet+20)+3
+ 425 0300 D801      		movw r26,r16
+ 426 0302 C701      		movw r24,r14
+ 427 0304 8223      		and r24,r18
+ 428 0306 9323      		and r25,r19
+ 429 0308 A423      		and r26,r20
+ 430 030a B523      		and r27,r21
+ 431 030c 0097      		sbiw r24,0
+ 432 030e A105      		cpc r26,__zero_reg__
+ 433 0310 B105      		cpc r27,__zero_reg__
+ 434 0312 01F0      		breq .L36
+ 435 0314 2093 0000 		sts confnet+16,r18
+ 436 0318 3093 0000 		sts (confnet+16)+1,r19
+ 437 031c 4093 0000 		sts (confnet+16)+2,r20
+ 438 0320 5093 0000 		sts (confnet+16)+3,r21
+ 439 0324 00C0      		rjmp .L45
+ 440               	.L36:
+ 441 0326 2D85      		ldd r18,Y+13
+ 442 0328 3E85      		ldd r19,Y+14
+ 443 032a 4F85      		ldd r20,Y+15
+ 444 032c 5889      		ldd r21,Y+16
+ 445 032e 61E0      		ldi r22,lo8(1)
+ 446 0330 C401      		movw r24,r8
+ 447 0332 0E94 0000 		call DhcpKick
+ 448 0336 892B      		or r24,r25
+ 449 0338 01F0      		breq .+2
+ 450 033a 00C0      		rjmp .L37
+ 451 033c 8091 0000 		lds r24,dhcpState
+ 452 0340 8530      		cpi r24,lo8(5)
+ 453 0342 01F4      		brne .L38
+ 454 0344 E091 0000 		lds r30,dhcpConfig
+ 455 0348 F091 0000 		lds r31,(dhcpConfig)+1
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 9
+
+
+ 456 034c C584      		ldd r12,Z+13
+ 457 034e D684      		ldd r13,Z+14
+ 458 0350 E784      		ldd r14,Z+15
+ 459 0352 F088      		ldd r15,Z+16
+ 460 0354 0581      		ldd r16,Z+5
+ 461 0356 1681      		ldd r17,Z+6
+ 462 0358 2781      		ldd r18,Z+7
+ 463 035a 3085      		ldd r19,Z+8
+ 464 035c 4181      		ldd r20,Z+1
+ 465 035e 5281      		ldd r21,Z+2
+ 466 0360 6381      		ldd r22,Z+3
+ 467 0362 7481      		ldd r23,Z+4
+ 468 0364 C501      		movw r24,r10
+ 469 0366 0E94 0000 		call NutNetIfSetup
+ 470 036a E091 0000 		lds r30,dhcpConfig
+ 471 036e F091 0000 		lds r31,(dhcpConfig)+1
+ 472 0372 E588      		ldd r14,Z+21
+ 473 0374 F688      		ldd r15,Z+22
+ 474 0376 0789      		ldd r16,Z+23
+ 475 0378 108D      		ldd r17,Z+24
+ 476 037a 2189      		ldd r18,Z+17
+ 477 037c 3289      		ldd r19,Z+18
+ 478 037e 4389      		ldd r20,Z+19
+ 479 0380 5489      		ldd r21,Z+20
+ 480 0382 60E0      		ldi r22,lo8(0)
+ 481 0384 70E0      		ldi r23,hi8(0)
+ 482 0386 80E0      		ldi r24,lo8(0)
+ 483 0388 90E0      		ldi r25,hi8(0)
+ 484 038a 0E94 0000 		call NutDnsConfig2
+ 485 038e 00C0      		rjmp .L44
+ 486               	.L38:
+ 487 0390 F601      		movw r30,r12
+ 488 0392 8385      		ldd r24,Z+11
+ 489 0394 9485      		ldd r25,Z+12
+ 490 0396 A585      		ldd r26,Z+13
+ 491 0398 B685      		ldd r27,Z+14
+ 492 039a 0097      		sbiw r24,0
+ 493 039c A105      		cpc r26,__zero_reg__
+ 494 039e B105      		cpc r27,__zero_reg__
+ 495 03a0 01F4      		brne .L44
+ 496               	.L39:
+ 497 03a2 2091 0000 		lds r18,confnet+16
+ 498 03a6 3091 0000 		lds r19,(confnet+16)+1
+ 499 03aa 4091 0000 		lds r20,(confnet+16)+2
+ 500 03ae 5091 0000 		lds r21,(confnet+16)+3
+ 501 03b2 E090 0000 		lds r14,confnet+20
+ 502 03b6 F090 0000 		lds r15,(confnet+20)+1
+ 503 03ba 0091 0000 		lds r16,(confnet+20)+2
+ 504 03be 1091 0000 		lds r17,(confnet+20)+3
+ 505 03c2 D801      		movw r26,r16
+ 506 03c4 C701      		movw r24,r14
+ 507 03c6 8223      		and r24,r18
+ 508 03c8 9323      		and r25,r19
+ 509 03ca A423      		and r26,r20
+ 510 03cc B523      		and r27,r21
+ 511 03ce 0097      		sbiw r24,0
+ 512 03d0 A105      		cpc r26,__zero_reg__
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 10
+
+
+ 513 03d2 B105      		cpc r27,__zero_reg__
+ 514 03d4 01F0      		breq .L37
+ 515               	.L45:
+ 516 03d6 A090 0000 		lds r10,confnet+24
+ 517 03da B090 0000 		lds r11,(confnet+24)+1
+ 518 03de C090 0000 		lds r12,(confnet+24)+2
+ 519 03e2 D090 0000 		lds r13,(confnet+24)+3
+ 520 03e6 60E0      		ldi r22,lo8(confnet+10)
+ 521 03e8 70E0      		ldi r23,hi8(confnet+10)
+ 522 03ea C401      		movw r24,r8
+ 523 03ec 0E94 0000 		call NutNetIfConfig2
+ 524               	.L44:
+ 525 03f0 20E0      		ldi r18,lo8(0)
+ 526 03f2 30E0      		ldi r19,hi8(0)
+ 527 03f4 00C0      		rjmp .L29
+ 528               	.L37:
+ 529 03f6 2FEF      		ldi r18,lo8(-1)
+ 530 03f8 3FEF      		ldi r19,hi8(-1)
+ 531               	.L29:
+ 532 03fa C901      		movw r24,r18
+ 533               	/* epilogue start */
+ 534 03fc 6096      		adiw r28,16
+ 535 03fe 0FB6      		in __tmp_reg__,__SREG__
+ 536 0400 F894      		cli
+ 537 0402 DEBF      		out __SP_H__,r29
+ 538 0404 0FBE      		out __SREG__,__tmp_reg__
+ 539 0406 CDBF      		out __SP_L__,r28
+ 540 0408 CF91      		pop r28
+ 541 040a DF91      		pop r29
+ 542 040c 1F91      		pop r17
+ 543 040e 0F91      		pop r16
+ 544 0410 FF90      		pop r15
+ 545 0412 EF90      		pop r14
+ 546 0414 DF90      		pop r13
+ 547 0416 CF90      		pop r12
+ 548 0418 BF90      		pop r11
+ 549 041a AF90      		pop r10
+ 550 041c 9F90      		pop r9
+ 551 041e 8F90      		pop r8
+ 552 0420 7F90      		pop r7
+ 553 0422 6F90      		pop r6
+ 554 0424 5F90      		pop r5
+ 555 0426 4F90      		pop r4
+ 556 0428 0895      		ret
+ 557               		.size	NutDhcpIfConfig, .-NutDhcpIfConfig
+ 558               		.type	ReleaseDynCfg, @function
+ 559               	ReleaseDynCfg:
+ 560 042a CF93      		push r28
+ 561 042c DF93      		push r29
+ 562               	/* prologue: function */
+ 563               	/* frame size = 0 */
+ 564 042e EC01      		movw r28,r24
+ 565 0430 0097      		sbiw r24,0
+ 566 0432 01F0      		breq .L51
+ 567 0434 89A5      		ldd r24,Y+41
+ 568 0436 9AA5      		ldd r25,Y+42
+ 569 0438 0097      		sbiw r24,0
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 11
+
+
+ 570 043a 01F0      		breq .L49
+ 571 043c 0E94 0000 		call free
+ 572               	.L49:
+ 573 0440 8BA5      		ldd r24,Y+43
+ 574 0442 9CA5      		ldd r25,Y+44
+ 575 0444 0097      		sbiw r24,0
+ 576 0446 01F0      		breq .L50
+ 577 0448 0E94 0000 		call free
+ 578               	.L50:
+ 579 044c CE01      		movw r24,r28
+ 580 044e 0E94 0000 		call free
+ 581               	.L51:
+ 582               	/* epilogue start */
+ 583 0452 DF91      		pop r29
+ 584 0454 CF91      		pop r28
+ 585 0456 0895      		ret
+ 586               		.size	ReleaseDynCfg, .-ReleaseDynCfg
+ 587               		.type	copy_str, @function
+ 588               	copy_str:
+ 589 0458 EF92      		push r14
+ 590 045a FF92      		push r15
+ 591 045c 0F93      		push r16
+ 592 045e 1F93      		push r17
+ 593 0460 CF93      		push r28
+ 594 0462 DF93      		push r29
+ 595               	/* prologue: function */
+ 596               	/* frame size = 0 */
+ 597 0464 8C01      		movw r16,r24
+ 598 0466 F62E      		mov r15,r22
+ 599 0468 E72E      		mov r14,r23
+ 600 046a EA01      		movw r28,r20
+ 601 046c DC01      		movw r26,r24
+ 602 046e 8D91      		ld r24,X+
+ 603 0470 9C91      		ld r25,X
+ 604 0472 0097      		sbiw r24,0
+ 605 0474 01F0      		breq .L53
+ 606 0476 0E94 0000 		call free
+ 607               	.L53:
+ 608 047a CE01      		movw r24,r28
+ 609 047c 0196      		adiw r24,1
+ 610 047e 0E94 0000 		call malloc
+ 611 0482 F801      		movw r30,r16
+ 612 0484 9183      		std Z+1,r25
+ 613 0486 8083      		st Z,r24
+ 614 0488 0097      		sbiw r24,0
+ 615 048a 01F0      		breq .L57
+ 616 048c 2097      		sbiw r28,0
+ 617 048e 01F0      		breq .L55
+ 618 0490 AE01      		movw r20,r28
+ 619 0492 6F2D      		mov r22,r15
+ 620 0494 7E2D      		mov r23,r14
+ 621 0496 0E94 0000 		call memcpy
+ 622               	.L55:
+ 623 049a D801      		movw r26,r16
+ 624 049c ED91      		ld r30,X+
+ 625 049e FC91      		ld r31,X
+ 626 04a0 EC0F      		add r30,r28
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 12
+
+
+ 627 04a2 FD1F      		adc r31,r29
+ 628 04a4 1082      		st Z,__zero_reg__
+ 629               	.L57:
+ 630               	/* epilogue start */
+ 631 04a6 DF91      		pop r29
+ 632 04a8 CF91      		pop r28
+ 633 04aa 1F91      		pop r17
+ 634 04ac 0F91      		pop r16
+ 635 04ae FF90      		pop r15
+ 636 04b0 EF90      		pop r14
+ 637 04b2 0895      		ret
+ 638               		.size	copy_str, .-copy_str
+ 639               		.type	ParseReply, @function
+ 640               	ParseReply:
+ 641 04b4 4F92      		push r4
+ 642 04b6 5F92      		push r5
+ 643 04b8 6F92      		push r6
+ 644 04ba 7F92      		push r7
+ 645 04bc 8F92      		push r8
+ 646 04be 9F92      		push r9
+ 647 04c0 BF92      		push r11
+ 648 04c2 CF92      		push r12
+ 649 04c4 DF92      		push r13
+ 650 04c6 EF92      		push r14
+ 651 04c8 FF92      		push r15
+ 652 04ca 0F93      		push r16
+ 653 04cc 1F93      		push r17
+ 654 04ce CF93      		push r28
+ 655 04d0 DF93      		push r29
+ 656               	/* prologue: function */
+ 657               	/* frame size = 0 */
+ 658 04d2 8C01      		movw r16,r24
+ 659 04d4 7B01      		movw r14,r22
+ 660 04d6 8DE2      		ldi r24,lo8(45)
+ 661 04d8 90E0      		ldi r25,hi8(45)
+ 662 04da 0E94 0000 		call malloc
+ 663 04de EC01      		movw r28,r24
+ 664 04e0 4C01      		movw r8,r24
+ 665 04e2 0097      		sbiw r24,0
+ 666 04e4 01F4      		brne .+2
+ 667 04e6 00C0      		rjmp .L59
+ 668 04e8 8DE2      		ldi r24,lo8(45)
+ 669 04ea FE01      		movw r30,r28
+ 670 04ec 1192      		st Z+,__zero_reg__
+ 671 04ee 8A95      	        dec r24
+ 672 04f0 01F4      		brne .-6
+ 673 04f2 80EC      		ldi r24,lo8(43200)
+ 674 04f4 98EA      		ldi r25,hi8(43200)
+ 675 04f6 A0E0      		ldi r26,hlo8(43200)
+ 676 04f8 B0E0      		ldi r27,hhi8(43200)
+ 677 04fa 8DA3      		std Y+37,r24
+ 678 04fc 9EA3      		std Y+38,r25
+ 679 04fe AFA3      		std Y+39,r26
+ 680 0500 B8A7      		std Y+40,r27
+ 681 0502 F801      		movw r30,r16
+ 682 0504 8089      		ldd r24,Z+16
+ 683 0506 9189      		ldd r25,Z+17
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 13
+
+
+ 684 0508 A289      		ldd r26,Z+18
+ 685 050a B389      		ldd r27,Z+19
+ 686 050c 8983      		std Y+1,r24
+ 687 050e 9A83      		std Y+2,r25
+ 688 0510 AB83      		std Y+3,r26
+ 689 0512 BC83      		std Y+4,r27
+ 690 0514 0051      		subi r16,lo8(-(240))
+ 691 0516 1F4F      		sbci r17,hi8(-(240))
+ 692 0518 80E1      		ldi r24,lo8(-240)
+ 693 051a 9FEF      		ldi r25,hi8(-240)
+ 694 051c E80E      		add r14,r24
+ 695 051e F91E      		adc r15,r25
+ 696 0520 69E2      		ldi r22,lo8(41)
+ 697 0522 462E      		mov r4,r22
+ 698 0524 512C      		mov r5,__zero_reg__
+ 699 0526 4C0E      		add r4,r28
+ 700 0528 5D1E      		adc r5,r29
+ 701 052a 5BE2      		ldi r21,lo8(43)
+ 702 052c 652E      		mov r6,r21
+ 703 052e 712C      		mov r7,__zero_reg__
+ 704 0530 6C0E      		add r6,r28
+ 705 0532 7D1E      		adc r7,r29
+ 706 0534 00C0      		rjmp .L80
+ 707               	.L75:
+ 708 0536 3323      		tst r19
+ 709 0538 01F4      		brne .L61
+ 710 053a 0F5F      		subi r16,lo8(-(1))
+ 711 053c 1F4F      		sbci r17,hi8(-(1))
+ 712 053e 0894      		sec
+ 713 0540 E108      		sbc r14,__zero_reg__
+ 714 0542 F108      		sbc r15,__zero_reg__
+ 715 0544 00C0      		rjmp .L80
+ 716               	.L61:
+ 717 0546 F801      		movw r30,r16
+ 718 0548 B180      		ldd r11,Z+1
+ 719 054a CB2C      		mov r12,r11
+ 720 054c DD24      		clr r13
+ 721 054e EC14      		cp r14,r12
+ 722 0550 FD04      		cpc r15,r13
+ 723 0552 04F4      		brge .+2
+ 724 0554 00C0      		rjmp .L62
+ 725 0556 3533      		cpi r19,lo8(53)
+ 726 0558 01F4      		brne .L63
+ 727 055a F1E0      		ldi r31,lo8(1)
+ 728 055c BF16      		cp r11,r31
+ 729 055e 01F0      		breq .+2
+ 730 0560 00C0      		rjmp .L62
+ 731 0562 F801      		movw r30,r16
+ 732 0564 8281      		ldd r24,Z+2
+ 733 0566 8883      		st Y,r24
+ 734 0568 00C0      		rjmp .L64
+ 735               	.L63:
+ 736 056a 3C30      		cpi r19,lo8(12)
+ 737 056c 01F4      		brne .L65
+ 738 056e B801      		movw r22,r16
+ 739 0570 6E5F      		subi r22,lo8(-(2))
+ 740 0572 7F4F      		sbci r23,hi8(-(2))
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 14
+
+
+ 741 0574 A601      		movw r20,r12
+ 742 0576 C201      		movw r24,r4
+ 743 0578 00C0      		rjmp .L82
+ 744               	.L65:
+ 745 057a 3F30      		cpi r19,lo8(15)
+ 746 057c 01F4      		brne .L66
+ 747 057e B801      		movw r22,r16
+ 748 0580 6E5F      		subi r22,lo8(-(2))
+ 749 0582 7F4F      		sbci r23,hi8(-(2))
+ 750 0584 A601      		movw r20,r12
+ 751 0586 C301      		movw r24,r6
+ 752               	.L82:
+ 753 0588 0E94 0000 		call copy_str
+ 754 058c 00C0      		rjmp .L64
+ 755               	.L66:
+ 756 058e F3E0      		ldi r31,lo8(3)
+ 757 0590 FB15      		cp r31,r11
+ 758 0592 00F0      		brlo .+2
+ 759 0594 00C0      		rjmp .L64
+ 760 0596 F801      		movw r30,r16
+ 761 0598 2281      		ldd r18,Z+2
+ 762 059a 8381      		ldd r24,Z+3
+ 763 059c 90E0      		ldi r25,lo8(0)
+ 764 059e A0E0      		ldi r26,lo8(0)
+ 765 05a0 B0E0      		ldi r27,hi8(0)
+ 766 05a2 4427      		clr r20
+ 767 05a4 582F      		mov r21,r24
+ 768 05a6 692F      		mov r22,r25
+ 769 05a8 7A2F      		mov r23,r26
+ 770 05aa 8481      		ldd r24,Z+4
+ 771 05ac 90E0      		ldi r25,lo8(0)
+ 772 05ae A0E0      		ldi r26,lo8(0)
+ 773 05b0 B0E0      		ldi r27,hi8(0)
+ 774 05b2 DC01      		movw r26,r24
+ 775 05b4 9927      		clr r25
+ 776 05b6 8827      		clr r24
+ 777 05b8 480F      		add r20,r24
+ 778 05ba 591F      		adc r21,r25
+ 779 05bc 6A1F      		adc r22,r26
+ 780 05be 7B1F      		adc r23,r27
+ 781 05c0 420F      		add r20,r18
+ 782 05c2 511D      		adc r21,__zero_reg__
+ 783 05c4 611D      		adc r22,__zero_reg__
+ 784 05c6 711D      		adc r23,__zero_reg__
+ 785 05c8 8581      		ldd r24,Z+5
+ 786 05ca 90E0      		ldi r25,lo8(0)
+ 787 05cc A0E0      		ldi r26,lo8(0)
+ 788 05ce B0E0      		ldi r27,hi8(0)
+ 789 05d0 B82F      		mov r27,r24
+ 790 05d2 AA27      		clr r26
+ 791 05d4 9927      		clr r25
+ 792 05d6 8827      		clr r24
+ 793 05d8 480F      		add r20,r24
+ 794 05da 591F      		adc r21,r25
+ 795 05dc 6A1F      		adc r22,r26
+ 796 05de 7B1F      		adc r23,r27
+ 797 05e0 3130      		cpi r19,lo8(1)
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 15
+
+
+ 798 05e2 01F4      		brne .L67
+ 799 05e4 4D83      		std Y+5,r20
+ 800 05e6 5E83      		std Y+6,r21
+ 801 05e8 6F83      		std Y+7,r22
+ 802 05ea 7887      		std Y+8,r23
+ 803 05ec 00C0      		rjmp .L64
+ 804               	.L67:
+ 805 05ee 3C31      		cpi r19,lo8(28)
+ 806 05f0 01F4      		brne .L68
+ 807 05f2 4987      		std Y+9,r20
+ 808 05f4 5A87      		std Y+10,r21
+ 809 05f6 6B87      		std Y+11,r22
+ 810 05f8 7C87      		std Y+12,r23
+ 811 05fa 00C0      		rjmp .L64
+ 812               	.L68:
+ 813 05fc 3330      		cpi r19,lo8(3)
+ 814 05fe 01F4      		brne .L69
+ 815 0600 4D87      		std Y+13,r20
+ 816 0602 5E87      		std Y+14,r21
+ 817 0604 6F87      		std Y+15,r22
+ 818 0606 788B      		std Y+16,r23
+ 819 0608 00C0      		rjmp .L64
+ 820               	.L69:
+ 821 060a 3630      		cpi r19,lo8(6)
+ 822 060c 01F0      		breq .+2
+ 823 060e 00C0      		rjmp .L70
+ 824 0610 498B      		std Y+17,r20
+ 825 0612 5A8B      		std Y+18,r21
+ 826 0614 6B8B      		std Y+19,r22
+ 827 0616 7C8B      		std Y+20,r23
+ 828 0618 F7E0      		ldi r31,lo8(7)
+ 829 061a FB15      		cp r31,r11
+ 830 061c 00F0      		brlo .+2
+ 831 061e 00C0      		rjmp .L64
+ 832 0620 F801      		movw r30,r16
+ 833 0622 2681      		ldd r18,Z+6
+ 834 0624 30E0      		ldi r19,lo8(0)
+ 835 0626 40E0      		ldi r20,lo8(0)
+ 836 0628 50E0      		ldi r21,hi8(0)
+ 837 062a 2D8B      		std Y+21,r18
+ 838 062c 3E8B      		std Y+22,r19
+ 839 062e 4F8B      		std Y+23,r20
+ 840 0630 588F      		std Y+24,r21
+ 841 0632 8781      		ldd r24,Z+7
+ 842 0634 90E0      		ldi r25,lo8(0)
+ 843 0636 A0E0      		ldi r26,lo8(0)
+ 844 0638 B0E0      		ldi r27,hi8(0)
+ 845 063a BA2F      		mov r27,r26
+ 846 063c A92F      		mov r26,r25
+ 847 063e 982F      		mov r25,r24
+ 848 0640 8827      		clr r24
+ 849 0642 820F      		add r24,r18
+ 850 0644 931F      		adc r25,r19
+ 851 0646 A41F      		adc r26,r20
+ 852 0648 B51F      		adc r27,r21
+ 853 064a 8D8B      		std Y+21,r24
+ 854 064c 9E8B      		std Y+22,r25
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 16
+
+
+ 855 064e AF8B      		std Y+23,r26
+ 856 0650 B88F      		std Y+24,r27
+ 857 0652 2085      		ldd r18,Z+8
+ 858 0654 30E0      		ldi r19,lo8(0)
+ 859 0656 40E0      		ldi r20,lo8(0)
+ 860 0658 50E0      		ldi r21,hi8(0)
+ 861 065a A901      		movw r20,r18
+ 862 065c 3327      		clr r19
+ 863 065e 2227      		clr r18
+ 864 0660 280F      		add r18,r24
+ 865 0662 391F      		adc r19,r25
+ 866 0664 4A1F      		adc r20,r26
+ 867 0666 5B1F      		adc r21,r27
+ 868 0668 2D8B      		std Y+21,r18
+ 869 066a 3E8B      		std Y+22,r19
+ 870 066c 4F8B      		std Y+23,r20
+ 871 066e 588F      		std Y+24,r21
+ 872 0670 8185      		ldd r24,Z+9
+ 873 0672 90E0      		ldi r25,lo8(0)
+ 874 0674 A0E0      		ldi r26,lo8(0)
+ 875 0676 B0E0      		ldi r27,hi8(0)
+ 876 0678 B82F      		mov r27,r24
+ 877 067a AA27      		clr r26
+ 878 067c 9927      		clr r25
+ 879 067e 8827      		clr r24
+ 880 0680 280F      		add r18,r24
+ 881 0682 391F      		adc r19,r25
+ 882 0684 4A1F      		adc r20,r26
+ 883 0686 5B1F      		adc r21,r27
+ 884 0688 2D8B      		std Y+21,r18
+ 885 068a 3E8B      		std Y+22,r19
+ 886 068c 4F8B      		std Y+23,r20
+ 887 068e 588F      		std Y+24,r21
+ 888 0690 00C0      		rjmp .L64
+ 889               	.L70:
+ 890 0692 3633      		cpi r19,lo8(54)
+ 891 0694 01F4      		brne .L71
+ 892 0696 498F      		std Y+25,r20
+ 893 0698 5A8F      		std Y+26,r21
+ 894 069a 6B8F      		std Y+27,r22
+ 895 069c 7C8F      		std Y+28,r23
+ 896 069e 00C0      		rjmp .L64
+ 897               	.L71:
+ 898 06a0 3A33      		cpi r19,lo8(58)
+ 899 06a2 01F4      		brne .L72
+ 900               	/* #APP */
+ 901               	 ;  305 "../../nut/include/sys/types.h" 1
+ 902 06a4 042E      		mov __tmp_reg__, r20
+ 903 06a6 472F      		mov r20, r23
+ 904 06a8 702D      		mov r23, __tmp_reg__
+ 905 06aa 052E      		mov __tmp_reg__, r21
+ 906 06ac 562F      		mov r21, r22
+ 907 06ae 602D      		mov r22, __tmp_reg__
+ 908               		
+ 909               	 ;  0 "" 2
+ 910               	/* #NOAPP */
+ 911 06b0 4D8F      		std Y+29,r20
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 17
+
+
+ 912 06b2 5E8F      		std Y+30,r21
+ 913 06b4 6F8F      		std Y+31,r22
+ 914 06b6 78A3      		std Y+32,r23
+ 915 06b8 00C0      		rjmp .L64
+ 916               	.L72:
+ 917 06ba 3B33      		cpi r19,lo8(59)
+ 918 06bc 01F4      		brne .L73
+ 919               	/* #APP */
+ 920               	 ;  305 "../../nut/include/sys/types.h" 1
+ 921 06be 042E      		mov __tmp_reg__, r20
+ 922 06c0 472F      		mov r20, r23
+ 923 06c2 702D      		mov r23, __tmp_reg__
+ 924 06c4 052E      		mov __tmp_reg__, r21
+ 925 06c6 562F      		mov r21, r22
+ 926 06c8 602D      		mov r22, __tmp_reg__
+ 927               		
+ 928               	 ;  0 "" 2
+ 929               	/* #NOAPP */
+ 930 06ca 49A3      		std Y+33,r20
+ 931 06cc 5AA3      		std Y+34,r21
+ 932 06ce 6BA3      		std Y+35,r22
+ 933 06d0 7CA3      		std Y+36,r23
+ 934 06d2 00C0      		rjmp .L64
+ 935               	.L73:
+ 936 06d4 3333      		cpi r19,lo8(51)
+ 937 06d6 01F4      		brne .L64
+ 938               	/* #APP */
+ 939               	 ;  305 "../../nut/include/sys/types.h" 1
+ 940 06d8 042E      		mov __tmp_reg__, r20
+ 941 06da 472F      		mov r20, r23
+ 942 06dc 702D      		mov r23, __tmp_reg__
+ 943 06de 052E      		mov __tmp_reg__, r21
+ 944 06e0 562F      		mov r21, r22
+ 945 06e2 602D      		mov r22, __tmp_reg__
+ 946               		
+ 947               	 ;  0 "" 2
+ 948               	/* #NOAPP */
+ 949 06e4 4DA3      		std Y+37,r20
+ 950 06e6 5EA3      		std Y+38,r21
+ 951 06e8 6FA3      		std Y+39,r22
+ 952 06ea 78A7      		std Y+40,r23
+ 953               	.L64:
+ 954 06ec 8B2D      		mov r24,r11
+ 955 06ee 90E0      		ldi r25,lo8(0)
+ 956 06f0 0296      		adiw r24,2
+ 957 06f2 080F      		add r16,r24
+ 958 06f4 191F      		adc r17,r25
+ 959 06f6 8EEF      		ldi r24,lo8(-2)
+ 960 06f8 9FEF      		ldi r25,hi8(-2)
+ 961 06fa E80E      		add r14,r24
+ 962 06fc F91E      		adc r15,r25
+ 963 06fe EC18      		sub r14,r12
+ 964 0700 FD08      		sbc r15,r13
+ 965               	.L80:
+ 966 0702 F801      		movw r30,r16
+ 967 0704 3081      		ld r19,Z
+ 968 0706 3F3F      		cpi r19,lo8(-1)
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 18
+
+
+ 969 0708 01F4      		brne .+2
+ 970 070a 00C0      		rjmp .L74
+ 971 070c 1E14      		cp __zero_reg__,r14
+ 972 070e 1F04      		cpc __zero_reg__,r15
+ 973 0710 04F4      		brge .+2
+ 974 0712 00C0      		rjmp .L75
+ 975 0714 00C0      		rjmp .L62
+ 976               	.L81:
+ 977 0716 8530      		cpi r24,lo8(5)
+ 978 0718 01F0      		breq .L76
+ 979 071a 8630      		cpi r24,lo8(6)
+ 980 071c 01F0      		breq .L76
+ 981               	.L62:
+ 982 071e CE01      		movw r24,r28
+ 983 0720 0E94 0000 		call ReleaseDynCfg
+ 984 0724 8824      		clr r8
+ 985 0726 9924      		clr r9
+ 986 0728 00C0      		rjmp .L59
+ 987               	.L76:
+ 988 072a 8D8D      		ldd r24,Y+29
+ 989 072c 9E8D      		ldd r25,Y+30
+ 990 072e AF8D      		ldd r26,Y+31
+ 991 0730 B8A1      		ldd r27,Y+32
+ 992 0732 0097      		sbiw r24,0
+ 993 0734 A105      		cpc r26,__zero_reg__
+ 994 0736 B105      		cpc r27,__zero_reg__
+ 995 0738 01F4      		brne .L77
+ 996 073a 8DA1      		ldd r24,Y+37
+ 997 073c 9EA1      		ldd r25,Y+38
+ 998 073e AFA1      		ldd r26,Y+39
+ 999 0740 B8A5      		ldd r27,Y+40
+ 1000 0742 B695      		lsr r27
+ 1001 0744 A795      		ror r26
+ 1002 0746 9795      		ror r25
+ 1003 0748 8795      		ror r24
+ 1004 074a 8D8F      		std Y+29,r24
+ 1005 074c 9E8F      		std Y+30,r25
+ 1006 074e AF8F      		std Y+31,r26
+ 1007 0750 B8A3      		std Y+32,r27
+ 1008               	.L77:
+ 1009 0752 89A1      		ldd r24,Y+33
+ 1010 0754 9AA1      		ldd r25,Y+34
+ 1011 0756 ABA1      		ldd r26,Y+35
+ 1012 0758 BCA1      		ldd r27,Y+36
+ 1013 075a 0097      		sbiw r24,0
+ 1014 075c A105      		cpc r26,__zero_reg__
+ 1015 075e B105      		cpc r27,__zero_reg__
+ 1016 0760 01F4      		brne .L59
+ 1017 0762 8D8D      		ldd r24,Y+29
+ 1018 0764 9E8D      		ldd r25,Y+30
+ 1019 0766 AF8D      		ldd r26,Y+31
+ 1020 0768 B8A1      		ldd r27,Y+32
+ 1021 076a 9C01      		movw r18,r24
+ 1022 076c AD01      		movw r20,r26
+ 1023 076e 5695      		lsr r21
+ 1024 0770 4795      		ror r20
+ 1025 0772 3795      		ror r19
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 19
+
+
+ 1026 0774 2795      		ror r18
+ 1027 0776 7C01      		movw r14,r24
+ 1028 0778 8D01      		movw r16,r26
+ 1029 077a 62E0      		ldi r22,2
+ 1030 077c 1695      	1:	lsr r17
+ 1031 077e 0795      		ror r16
+ 1032 0780 F794      		ror r15
+ 1033 0782 E794      		ror r14
+ 1034 0784 6A95      		dec r22
+ 1035 0786 01F4      		brne 1b
+ 1036 0788 2E0D      		add r18,r14
+ 1037 078a 3F1D      		adc r19,r15
+ 1038 078c 401F      		adc r20,r16
+ 1039 078e 511F      		adc r21,r17
+ 1040 0790 280F      		add r18,r24
+ 1041 0792 391F      		adc r19,r25
+ 1042 0794 4A1F      		adc r20,r26
+ 1043 0796 5B1F      		adc r21,r27
+ 1044 0798 29A3      		std Y+33,r18
+ 1045 079a 3AA3      		std Y+34,r19
+ 1046 079c 4BA3      		std Y+35,r20
+ 1047 079e 5CA3      		std Y+36,r21
+ 1048               	.L59:
+ 1049 07a0 C401      		movw r24,r8
+ 1050               	/* epilogue start */
+ 1051 07a2 DF91      		pop r29
+ 1052 07a4 CF91      		pop r28
+ 1053 07a6 1F91      		pop r17
+ 1054 07a8 0F91      		pop r16
+ 1055 07aa FF90      		pop r15
+ 1056 07ac EF90      		pop r14
+ 1057 07ae DF90      		pop r13
+ 1058 07b0 CF90      		pop r12
+ 1059 07b2 BF90      		pop r11
+ 1060 07b4 9F90      		pop r9
+ 1061 07b6 8F90      		pop r8
+ 1062 07b8 7F90      		pop r7
+ 1063 07ba 6F90      		pop r6
+ 1064 07bc 5F90      		pop r5
+ 1065 07be 4F90      		pop r4
+ 1066 07c0 0895      		ret
+ 1067               	.L74:
+ 1068 07c2 8881      		ld r24,Y
+ 1069 07c4 8230      		cpi r24,lo8(2)
+ 1070 07c6 01F0      		breq .+2
+ 1071 07c8 00C0      		rjmp .L81
+ 1072 07ca 00C0      		rjmp .L76
+ 1073               		.size	ParseReply, .-ParseReply
+ 1074               		.type	DhcpSendRequest, @function
+ 1075               	DhcpSendRequest:
+ 1076 07cc 2F92      		push r2
+ 1077 07ce 3F92      		push r3
+ 1078 07d0 4F92      		push r4
+ 1079 07d2 5F92      		push r5
+ 1080 07d4 6F92      		push r6
+ 1081 07d6 7F92      		push r7
+ 1082 07d8 8F92      		push r8
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 20
+
+
+ 1083 07da 9F92      		push r9
+ 1084 07dc AF92      		push r10
+ 1085 07de BF92      		push r11
+ 1086 07e0 CF92      		push r12
+ 1087 07e2 DF92      		push r13
+ 1088 07e4 EF92      		push r14
+ 1089 07e6 FF92      		push r15
+ 1090 07e8 0F93      		push r16
+ 1091 07ea 1F93      		push r17
+ 1092 07ec DF93      		push r29
+ 1093 07ee CF93      		push r28
+ 1094 07f0 CDB7      		in r28,__SP_L__
+ 1095 07f2 DEB7      		in r29,__SP_H__
+ 1096               	/* prologue: function */
+ 1097               	/* frame size = 0 */
+ 1098 07f4 1C01      		movw r2,r24
+ 1099 07f6 2A01      		movw r4,r20
+ 1100 07f8 3B01      		movw r6,r22
+ 1101 07fa 4901      		movw r8,r18
+ 1102 07fc A801      		movw r20,r16
+ 1103 07fe 9701      		movw r18,r14
+ 1104 0800 8601      		movw r16,r12
+ 1105 0802 7501      		movw r14,r10
+ 1106 0804 CD8C      		ldd r12,Y+29
+ 1107 0806 DE8C      		ldd r13,Y+30
+ 1108 0808 63E0      		ldi r22,lo8(3)
+ 1109 080a C401      		movw r24,r8
+ 1110 080c 0E94 0000 		call DhcpPrepHeader
+ 1111 0810 9C01      		movw r18,r24
+ 1112 0812 8D89      		ldd r24,Y+21
+ 1113 0814 9E89      		ldd r25,Y+22
+ 1114 0816 AF89      		ldd r26,Y+23
+ 1115 0818 B88D      		ldd r27,Y+24
+ 1116 081a 0097      		sbiw r24,0
+ 1117 081c A105      		cpc r26,__zero_reg__
+ 1118 081e B105      		cpc r27,__zero_reg__
+ 1119 0820 01F0      		breq .L84
+ 1120 0822 F401      		movw r30,r8
+ 1121 0824 E20F      		add r30,r18
+ 1122 0826 F31F      		adc r31,r19
+ 1123 0828 E451      		subi r30,lo8(-(236))
+ 1124 082a FF4F      		sbci r31,hi8(-(236))
+ 1125 082c 82E3      		ldi r24,lo8(50)
+ 1126 082e 8083      		st Z,r24
+ 1127 0830 2451      		subi r18,lo8(-(236))
+ 1128 0832 3F4F      		sbci r19,hi8(-(236))
+ 1129 0834 F401      		movw r30,r8
+ 1130 0836 E20F      		add r30,r18
+ 1131 0838 F31F      		adc r31,r19
+ 1132 083a 84E0      		ldi r24,lo8(4)
+ 1133 083c 8183      		std Z+1,r24
+ 1134 083e 8D89      		ldd r24,Y+21
+ 1135 0840 9E89      		ldd r25,Y+22
+ 1136 0842 AF89      		ldd r26,Y+23
+ 1137 0844 B88D      		ldd r27,Y+24
+ 1138 0846 8283      		std Z+2,r24
+ 1139 0848 9383      		std Z+3,r25
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 21
+
+
+ 1140 084a A483      		std Z+4,r26
+ 1141 084c B583      		std Z+5,r27
+ 1142 084e 265E      		subi r18,lo8(-(-230))
+ 1143 0850 3040      		sbci r19,hi8(-(-230))
+ 1144               	.L84:
+ 1145 0852 898D      		ldd r24,Y+25
+ 1146 0854 9A8D      		ldd r25,Y+26
+ 1147 0856 AB8D      		ldd r26,Y+27
+ 1148 0858 BC8D      		ldd r27,Y+28
+ 1149 085a 0097      		sbiw r24,0
+ 1150 085c A105      		cpc r26,__zero_reg__
+ 1151 085e B105      		cpc r27,__zero_reg__
+ 1152 0860 01F0      		breq .L85
+ 1153 0862 F401      		movw r30,r8
+ 1154 0864 E20F      		add r30,r18
+ 1155 0866 F31F      		adc r31,r19
+ 1156 0868 E451      		subi r30,lo8(-(236))
+ 1157 086a FF4F      		sbci r31,hi8(-(236))
+ 1158 086c 86E3      		ldi r24,lo8(54)
+ 1159 086e 8083      		st Z,r24
+ 1160 0870 2451      		subi r18,lo8(-(236))
+ 1161 0872 3F4F      		sbci r19,hi8(-(236))
+ 1162 0874 F401      		movw r30,r8
+ 1163 0876 E20F      		add r30,r18
+ 1164 0878 F31F      		adc r31,r19
+ 1165 087a 84E0      		ldi r24,lo8(4)
+ 1166 087c 8183      		std Z+1,r24
+ 1167 087e 898D      		ldd r24,Y+25
+ 1168 0880 9A8D      		ldd r25,Y+26
+ 1169 0882 AB8D      		ldd r26,Y+27
+ 1170 0884 BC8D      		ldd r27,Y+28
+ 1171 0886 8283      		std Z+2,r24
+ 1172 0888 9383      		std Z+3,r25
+ 1173 088a A483      		std Z+4,r26
+ 1174 088c B583      		std Z+5,r27
+ 1175 088e 265E      		subi r18,lo8(-(-230))
+ 1176 0890 3040      		sbci r19,hi8(-(-230))
+ 1177               	.L85:
+ 1178 0892 F401      		movw r30,r8
+ 1179 0894 E20F      		add r30,r18
+ 1180 0896 F31F      		adc r31,r19
+ 1181 0898 E451      		subi r30,lo8(-(236))
+ 1182 089a FF4F      		sbci r31,hi8(-(236))
+ 1183 089c 87E3      		ldi r24,lo8(55)
+ 1184 089e 8083      		st Z,r24
+ 1185 08a0 2451      		subi r18,lo8(-(236))
+ 1186 08a2 3F4F      		sbci r19,hi8(-(236))
+ 1187 08a4 F401      		movw r30,r8
+ 1188 08a6 E20F      		add r30,r18
+ 1189 08a8 F31F      		adc r31,r19
+ 1190 08aa 2C5E      		subi r18,lo8(-(-236))
+ 1191 08ac 3040      		sbci r19,hi8(-(-236))
+ 1192 08ae DF01      		movw r26,r30
+ 1193 08b0 1196      		adiw r26,1
+ 1194 08b2 93E0      		ldi r25,lo8(3)
+ 1195 08b4 9183      		std Z+1,r25
+ 1196 08b6 FD01      		movw r30,r26
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 22
+
+
+ 1197 08b8 3196      		adiw r30,1
+ 1198 08ba 81E0      		ldi r24,lo8(1)
+ 1199 08bc 1196      		adiw r26,1
+ 1200 08be 8C93      		st X,r24
+ 1201 08c0 9183      		std Z+1,r25
+ 1202 08c2 86E0      		ldi r24,lo8(6)
+ 1203 08c4 8283      		std Z+2,r24
+ 1204 08c6 E5E0      		ldi r30,lo8(5)
+ 1205 08c8 EE2E      		mov r14,r30
+ 1206 08ca F12C      		mov r15,__zero_reg__
+ 1207 08cc E20E      		add r14,r18
+ 1208 08ce F31E      		adc r15,r19
+ 1209 08d0 70E0      		ldi r23,lo8(confos+3)
+ 1210 08d2 C72E      		mov r12,r23
+ 1211 08d4 70E0      		ldi r23,hi8(confos+3)
+ 1212 08d6 D72E      		mov r13,r23
+ 1213 08d8 D601      		movw r26,r12
+ 1214 08da 0D90      		ld __tmp_reg__,X+
+ 1215 08dc 0020      		tst __tmp_reg__
+ 1216 08de 01F4      		brne .-6
+ 1217 08e0 A050      		subi r26,lo8(confos+4)
+ 1218 08e2 B040      		sbci r27,hi8(confos+4)
+ 1219 08e4 1A16      		cp __zero_reg__,r26
+ 1220 08e6 1B06      		cpc __zero_reg__,r27
+ 1221 08e8 04F4      		brge .L86
+ 1222 08ea 0A2F      		mov r16,r26
+ 1223 08ec F401      		movw r30,r8
+ 1224 08ee EE0D      		add r30,r14
+ 1225 08f0 FF1D      		adc r31,r15
+ 1226 08f2 E451      		subi r30,lo8(-(236))
+ 1227 08f4 FF4F      		sbci r31,hi8(-(236))
+ 1228 08f6 8CE0      		ldi r24,lo8(12)
+ 1229 08f8 8083      		st Z,r24
+ 1230 08fa F901      		movw r30,r18
+ 1231 08fc EF50      		subi r30,lo8(-(241))
+ 1232 08fe FF4F      		sbci r31,hi8(-(241))
+ 1233 0900 E80D      		add r30,r8
+ 1234 0902 F91D      		adc r31,r9
+ 1235 0904 A183      		std Z+1,r26
+ 1236 0906 3296      		adiw r30,2
+ 1237 0908 4A2F      		mov r20,r26
+ 1238 090a 50E0      		ldi r21,lo8(0)
+ 1239 090c B601      		movw r22,r12
+ 1240 090e CF01      		movw r24,r30
+ 1241 0910 0E94 0000 		call memcpy
+ 1242 0914 10E0      		ldi r17,lo8(0)
+ 1243 0916 0E5F      		subi r16,lo8(-(2))
+ 1244 0918 1F4F      		sbci r17,hi8(-(2))
+ 1245 091a E00E      		add r14,r16
+ 1246 091c F11E      		adc r15,r17
+ 1247               	.L86:
+ 1248 091e F401      		movw r30,r8
+ 1249 0920 EE0D      		add r30,r14
+ 1250 0922 FF1D      		adc r31,r15
+ 1251 0924 E451      		subi r30,lo8(-(236))
+ 1252 0926 FF4F      		sbci r31,hi8(-(236))
+ 1253 0928 8FEF      		ldi r24,lo8(-1)
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 23
+
+
+ 1254 092a 8083      		st Z,r24
+ 1255 092c C701      		movw r24,r14
+ 1256 092e 8351      		subi r24,lo8(-(237))
+ 1257 0930 9F4F      		sbci r25,hi8(-(237))
+ 1258 0932 21E0      		ldi r18,hi8(300)
+ 1259 0934 8C32      		cpi r24,lo8(300)
+ 1260 0936 9207      		cpc r25,r18
+ 1261 0938 00F4      		brsh .L88
+ 1262 093a 8CE2      		ldi r24,lo8(300)
+ 1263 093c 91E0      		ldi r25,hi8(300)
+ 1264               	.L88:
+ 1265 093e 7C01      		movw r14,r24
+ 1266 0940 8401      		movw r16,r8
+ 1267 0942 23E4      		ldi r18,lo8(67)
+ 1268 0944 30E0      		ldi r19,hi8(67)
+ 1269 0946 B301      		movw r22,r6
+ 1270 0948 A201      		movw r20,r4
+ 1271 094a C101      		movw r24,r2
+ 1272 094c 0E94 0000 		call NutUdpSendTo
+ 1273 0950 97FD      		sbrc r25,7
+ 1274 0952 00C0      		rjmp .L89
+ 1275 0954 20E0      		ldi r18,lo8(0)
+ 1276 0956 30E0      		ldi r19,hi8(0)
+ 1277 0958 00C0      		rjmp .L90
+ 1278               	.L89:
+ 1279 095a 83E1      		ldi r24,lo8(19)
+ 1280 095c 90E0      		ldi r25,hi8(19)
+ 1281 095e 9093 0000 		sts (dhcpError)+1,r25
+ 1282 0962 8093 0000 		sts dhcpError,r24
+ 1283 0966 2FEF      		ldi r18,lo8(-1)
+ 1284 0968 3FEF      		ldi r19,hi8(-1)
+ 1285               	.L90:
+ 1286 096a C901      		movw r24,r18
+ 1287               	/* epilogue start */
+ 1288 096c CF91      		pop r28
+ 1289 096e DF91      		pop r29
+ 1290 0970 1F91      		pop r17
+ 1291 0972 0F91      		pop r16
+ 1292 0974 FF90      		pop r15
+ 1293 0976 EF90      		pop r14
+ 1294 0978 DF90      		pop r13
+ 1295 097a CF90      		pop r12
+ 1296 097c BF90      		pop r11
+ 1297 097e AF90      		pop r10
+ 1298 0980 9F90      		pop r9
+ 1299 0982 8F90      		pop r8
+ 1300 0984 7F90      		pop r7
+ 1301 0986 6F90      		pop r6
+ 1302 0988 5F90      		pop r5
+ 1303 098a 4F90      		pop r4
+ 1304 098c 3F90      		pop r3
+ 1305 098e 2F90      		pop r2
+ 1306 0990 0895      		ret
+ 1307               		.size	DhcpSendRequest, .-DhcpSendRequest
+ 1308               		.type	DhcpRecvMessage, @function
+ 1309               	DhcpRecvMessage:
+ 1310 0992 2F92      		push r2
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 24
+
+
+ 1311 0994 3F92      		push r3
+ 1312 0996 4F92      		push r4
+ 1313 0998 5F92      		push r5
+ 1314 099a 6F92      		push r6
+ 1315 099c 7F92      		push r7
+ 1316 099e 8F92      		push r8
+ 1317 09a0 9F92      		push r9
+ 1318 09a2 AF92      		push r10
+ 1319 09a4 BF92      		push r11
+ 1320 09a6 CF92      		push r12
+ 1321 09a8 DF92      		push r13
+ 1322 09aa EF92      		push r14
+ 1323 09ac FF92      		push r15
+ 1324 09ae 0F93      		push r16
+ 1325 09b0 1F93      		push r17
+ 1326 09b2 DF93      		push r29
+ 1327 09b4 CF93      		push r28
+ 1328 09b6 CDB7      		in r28,__SP_L__
+ 1329 09b8 DEB7      		in r29,__SP_H__
+ 1330 09ba 6097      		sbiw r28,16
+ 1331 09bc 0FB6      		in __tmp_reg__,__SREG__
+ 1332 09be F894      		cli
+ 1333 09c0 DEBF      		out __SP_H__,r29
+ 1334 09c2 0FBE      		out __SREG__,__tmp_reg__
+ 1335 09c4 CDBF      		out __SP_L__,r28
+ 1336               	/* prologue: function */
+ 1337               	/* frame size = 16 */
+ 1338 09c6 9C87      		std Y+12,r25
+ 1339 09c8 8B87      		std Y+11,r24
+ 1340 09ca 4D87      		std Y+13,r20
+ 1341 09cc 5E87      		std Y+14,r21
+ 1342 09ce 6F87      		std Y+15,r22
+ 1343 09d0 788B      		std Y+16,r23
+ 1344 09d2 3901      		movw r6,r18
+ 1345 09d4 4701      		movw r8,r14
+ 1346 09d6 5801      		movw r10,r16
+ 1347 09d8 0E94 0000 		call NutGetMillis
+ 1348 09dc 6F83      		std Y+7,r22
+ 1349 09de 7887      		std Y+8,r23
+ 1350 09e0 8987      		std Y+9,r24
+ 1351 09e2 9A87      		std Y+10,r25
+ 1352 09e4 6701      		movw r12,r14
+ 1353 09e6 7801      		movw r14,r16
+ 1354 09e8 F6E0      		ldi r31,lo8(-250)
+ 1355 09ea 2F2E      		mov r2,r31
+ 1356 09ec FFEF      		ldi r31,hi8(-250)
+ 1357 09ee 3F2E      		mov r3,r31
+ 1358 09f0 FFEF      		ldi r31,hlo8(-250)
+ 1359 09f2 4F2E      		mov r4,r31
+ 1360 09f4 FFEF      		ldi r31,hhi8(-250)
+ 1361 09f6 5F2E      		mov r5,r31
+ 1362 09f8 280C      		add r2,r8
+ 1363 09fa 391C      		adc r3,r9
+ 1364 09fc 4A1C      		adc r4,r10
+ 1365 09fe 5B1C      		adc r5,r11
+ 1366               	.L98:
+ 1367 0a00 04E2      		ldi r16,lo8(548)
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 25
+
+
+ 1368 0a02 12E0      		ldi r17,hi8(548)
+ 1369 0a04 9301      		movw r18,r6
+ 1370 0a06 AE01      		movw r20,r28
+ 1371 0a08 4F5F      		subi r20,lo8(-(1))
+ 1372 0a0a 5F4F      		sbci r21,hi8(-(1))
+ 1373 0a0c BE01      		movw r22,r28
+ 1374 0a0e 6D5F      		subi r22,lo8(-(3))
+ 1375 0a10 7F4F      		sbci r23,hi8(-(3))
+ 1376 0a12 8B85      		ldd r24,Y+11
+ 1377 0a14 9C85      		ldd r25,Y+12
+ 1378 0a16 0E94 0000 		call NutUdpReceiveFrom
+ 1379 0a1a 9C01      		movw r18,r24
+ 1380 0a1c 1816      		cp __zero_reg__,r24
+ 1381 0a1e 1906      		cpc __zero_reg__,r25
+ 1382 0a20 04F0      		brlt .L93
+ 1383 0a22 0097      		sbiw r24,0
+ 1384 0a24 01F0      		breq .L94
+ 1385 0a26 84E1      		ldi r24,lo8(20)
+ 1386 0a28 90E0      		ldi r25,hi8(20)
+ 1387 0a2a 9093 0000 		sts (dhcpError)+1,r25
+ 1388 0a2e 8093 0000 		sts dhcpError,r24
+ 1389 0a32 00C0      		rjmp .L94
+ 1390               	.L93:
+ 1391 0a34 823F      		cpi r24,242
+ 1392 0a36 9105      		cpc r25,__zero_reg__
+ 1393 0a38 00F0      		brlo .L95
+ 1394 0a3a F301      		movw r30,r6
+ 1395 0a3c 8081      		ld r24,Z
+ 1396 0a3e 8230      		cpi r24,lo8(2)
+ 1397 0a40 01F4      		brne .L95
+ 1398 0a42 8481      		ldd r24,Z+4
+ 1399 0a44 9581      		ldd r25,Z+5
+ 1400 0a46 A681      		ldd r26,Z+6
+ 1401 0a48 B781      		ldd r27,Z+7
+ 1402 0a4a 4D85      		ldd r20,Y+13
+ 1403 0a4c 5E85      		ldd r21,Y+14
+ 1404 0a4e 6F85      		ldd r22,Y+15
+ 1405 0a50 7889      		ldd r23,Y+16
+ 1406 0a52 8417      		cp r24,r20
+ 1407 0a54 9507      		cpc r25,r21
+ 1408 0a56 A607      		cpc r26,r22
+ 1409 0a58 B707      		cpc r27,r23
+ 1410 0a5a 01F0      		breq .L94
+ 1411               	.L95:
+ 1412 0a5c 0E94 0000 		call NutGetMillis
+ 1413 0a60 2F81      		ldd r18,Y+7
+ 1414 0a62 3885      		ldd r19,Y+8
+ 1415 0a64 4985      		ldd r20,Y+9
+ 1416 0a66 5A85      		ldd r21,Y+10
+ 1417 0a68 621B      		sub r22,r18
+ 1418 0a6a 730B      		sbc r23,r19
+ 1419 0a6c 840B      		sbc r24,r20
+ 1420 0a6e 950B      		sbc r25,r21
+ 1421 0a70 6215      		cp r22,r2
+ 1422 0a72 7305      		cpc r23,r3
+ 1423 0a74 8405      		cpc r24,r4
+ 1424 0a76 9505      		cpc r25,r5
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 26
+
+
+ 1425 0a78 00F0      		brlo .L97
+ 1426 0a7a 20E0      		ldi r18,lo8(0)
+ 1427 0a7c 30E0      		ldi r19,hi8(0)
+ 1428 0a7e 00C0      		rjmp .L94
+ 1429               	.L97:
+ 1430 0a80 7501      		movw r14,r10
+ 1431 0a82 6401      		movw r12,r8
+ 1432 0a84 C61A      		sub r12,r22
+ 1433 0a86 D70A      		sbc r13,r23
+ 1434 0a88 E80A      		sbc r14,r24
+ 1435 0a8a F90A      		sbc r15,r25
+ 1436 0a8c 00C0      		rjmp .L98
+ 1437               	.L94:
+ 1438 0a8e C901      		movw r24,r18
+ 1439               	/* epilogue start */
+ 1440 0a90 6096      		adiw r28,16
+ 1441 0a92 0FB6      		in __tmp_reg__,__SREG__
+ 1442 0a94 F894      		cli
+ 1443 0a96 DEBF      		out __SP_H__,r29
+ 1444 0a98 0FBE      		out __SREG__,__tmp_reg__
+ 1445 0a9a CDBF      		out __SP_L__,r28
+ 1446 0a9c CF91      		pop r28
+ 1447 0a9e DF91      		pop r29
+ 1448 0aa0 1F91      		pop r17
+ 1449 0aa2 0F91      		pop r16
+ 1450 0aa4 FF90      		pop r15
+ 1451 0aa6 EF90      		pop r14
+ 1452 0aa8 DF90      		pop r13
+ 1453 0aaa CF90      		pop r12
+ 1454 0aac BF90      		pop r11
+ 1455 0aae AF90      		pop r10
+ 1456 0ab0 9F90      		pop r9
+ 1457 0ab2 8F90      		pop r8
+ 1458 0ab4 7F90      		pop r7
+ 1459 0ab6 6F90      		pop r6
+ 1460 0ab8 5F90      		pop r5
+ 1461 0aba 4F90      		pop r4
+ 1462 0abc 3F90      		pop r3
+ 1463 0abe 2F90      		pop r2
+ 1464 0ac0 0895      		ret
+ 1465               		.size	DhcpRecvMessage, .-DhcpRecvMessage
+ 1466               	.global	NutDhcpClient
+ 1467               		.type	NutDhcpClient, @function
+ 1468               	NutDhcpClient:
+ 1469 0ac2 DF93      		push r29
+ 1470 0ac4 CF93      		push r28
+ 1471 0ac6 CDB7      		in r28,__SP_L__
+ 1472 0ac8 DEB7      		in r29,__SP_H__
+ 1473 0aca A097      		sbiw r28,32
+ 1474 0acc 0FB6      		in __tmp_reg__,__SREG__
+ 1475 0ace F894      		cli
+ 1476 0ad0 DEBF      		out __SP_H__,r29
+ 1477 0ad2 0FBE      		out __SREG__,__tmp_reg__
+ 1478 0ad4 CDBF      		out __SP_L__,r28
+ 1479               	/* prologue: function */
+ 1480               	/* frame size = 32 */
+ 1481 0ad6 8C01      		movw r16,r24
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 27
+
+
+ 1482 0ad8 0E94 0000 		call NutGetSeconds
+ 1483 0adc 6B8B      		std Y+19,r22
+ 1484 0ade 7C8B      		std Y+20,r23
+ 1485 0ae0 8D8B      		std Y+21,r24
+ 1486 0ae2 9E8B      		std Y+22,r25
+ 1487 0ae4 2091 0000 		lds r18,confnet+16
+ 1488 0ae8 3091 0000 		lds r19,(confnet+16)+1
+ 1489 0aec 4091 0000 		lds r20,(confnet+16)+2
+ 1490 0af0 5091 0000 		lds r21,(confnet+16)+3
+ 1491 0af4 2B87      		std Y+11,r18
+ 1492 0af6 3C87      		std Y+12,r19
+ 1493 0af8 4D87      		std Y+13,r20
+ 1494 0afa 5E87      		std Y+14,r21
+ 1495 0afc D801      		movw r26,r16
+ 1496 0afe 1F96      		adiw r26,15
+ 1497 0b00 0D90      		ld __tmp_reg__,X+
+ 1498 0b02 BC91      		ld r27,X
+ 1499 0b04 A02D      		mov r26,__tmp_reg__
+ 1500 0b06 BA8F      		std Y+26,r27
+ 1501 0b08 A98F      		std Y+25,r26
+ 1502 0b0a 1A96      		adiw r26,10
+ 1503 0b0c 8C91      		ld r24,X
+ 1504 0b0e 90E0      		ldi r25,lo8(0)
+ 1505 0b10 A0E0      		ldi r26,lo8(0)
+ 1506 0b12 B0E0      		ldi r27,hi8(0)
+ 1507 0b14 BA2F      		mov r27,r26
+ 1508 0b16 A92F      		mov r26,r25
+ 1509 0b18 982F      		mov r25,r24
+ 1510 0b1a 8827      		clr r24
+ 1511 0b1c E98D      		ldd r30,Y+25
+ 1512 0b1e FA8D      		ldd r31,Y+26
+ 1513 0b20 2185      		ldd r18,Z+9
+ 1514 0b22 820F      		add r24,r18
+ 1515 0b24 911D      		adc r25,__zero_reg__
+ 1516 0b26 A11D      		adc r26,__zero_reg__
+ 1517 0b28 B11D      		adc r27,__zero_reg__
+ 1518 0b2a BA2F      		mov r27,r26
+ 1519 0b2c A92F      		mov r26,r25
+ 1520 0b2e 982F      		mov r25,r24
+ 1521 0b30 8827      		clr r24
+ 1522 0b32 2085      		ldd r18,Z+8
+ 1523 0b34 820F      		add r24,r18
+ 1524 0b36 911D      		adc r25,__zero_reg__
+ 1525 0b38 A11D      		adc r26,__zero_reg__
+ 1526 0b3a B11D      		adc r27,__zero_reg__
+ 1527 0b3c 2227      		clr r18
+ 1528 0b3e 382F      		mov r19,r24
+ 1529 0b40 492F      		mov r20,r25
+ 1530 0b42 5A2F      		mov r21,r26
+ 1531 0b44 8781      		ldd r24,Z+7
+ 1532 0b46 280F      		add r18,r24
+ 1533 0b48 311D      		adc r19,__zero_reg__
+ 1534 0b4a 411D      		adc r20,__zero_reg__
+ 1535 0b4c 511D      		adc r21,__zero_reg__
+ 1536 0b4e 2B8F      		std Y+27,r18
+ 1537 0b50 3C8F      		std Y+28,r19
+ 1538 0b52 4D8F      		std Y+29,r20
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 28
+
+
+ 1539 0b54 5E8F      		std Y+30,r21
+ 1540 0b56 18A2      		std Y+32,__zero_reg__
+ 1541 0b58 1F8E      		std Y+31,__zero_reg__
+ 1542 0b5a 6624      		clr r6
+ 1543 0b5c 7724      		clr r7
+ 1544 0b5e 188E      		std Y+24,__zero_reg__
+ 1545 0b60 1F8A      		std Y+23,__zero_reg__
+ 1546 0b62 1F86      		std Y+15,__zero_reg__
+ 1547 0b64 188A      		std Y+16,__zero_reg__
+ 1548 0b66 198A      		std Y+17,__zero_reg__
+ 1549 0b68 1A8A      		std Y+18,__zero_reg__
+ 1550 0b6a 9924      		clr r9
+ 1551 0b6c 30EA      		ldi r19,lo8(4000)
+ 1552 0b6e 232E      		mov r2,r19
+ 1553 0b70 3FE0      		ldi r19,hi8(4000)
+ 1554 0b72 332E      		mov r3,r19
+ 1555 0b74 412C      		mov r4,__zero_reg__
+ 1556 0b76 512C      		mov r5,__zero_reg__
+ 1557 0b78 00C0      		rjmp .L101
+ 1558               	.L109:
+ 1559 0b7a 982C      		mov r9,r8
+ 1560               	.L101:
+ 1561 0b7c 9920      		tst r9
+ 1562 0b7e 01F0      		breq .L102
+ 1563 0b80 220C      		lsl r2
+ 1564 0b82 331C      		rol r3
+ 1565 0b84 441C      		rol r4
+ 1566 0b86 551C      		rol r5
+ 1567 0b88 31E0      		ldi r19,lo8(64001)
+ 1568 0b8a 2316      		cp r2,r19
+ 1569 0b8c 3AEF      		ldi r19,hi8(64001)
+ 1570 0b8e 3306      		cpc r3,r19
+ 1571 0b90 30E0      		ldi r19,hlo8(64001)
+ 1572 0b92 4306      		cpc r4,r19
+ 1573 0b94 30E0      		ldi r19,hhi8(64001)
+ 1574 0b96 5306      		cpc r5,r19
+ 1575 0b98 00F0      		brlo .L103
+ 1576 0b9a 212C      		mov r2,__zero_reg__
+ 1577 0b9c 9AEF      		ldi r25,hi8(64000)
+ 1578 0b9e 392E      		mov r3,r25
+ 1579 0ba0 412C      		mov r4,__zero_reg__
+ 1580 0ba2 512C      		mov r5,__zero_reg__
+ 1581 0ba4 00C0      		rjmp .L195
+ 1582               	.L103:
+ 1583 0ba6 2FEF      		ldi r18,lo8(-1)
+ 1584 0ba8 3FEF      		ldi r19,hi8(-1)
+ 1585 0baa 4FEF      		ldi r20,hlo8(-1)
+ 1586 0bac 5FEF      		ldi r21,hhi8(-1)
+ 1587 0bae 2F83      		std Y+7,r18
+ 1588 0bb0 3887      		std Y+8,r19
+ 1589 0bb2 4987      		std Y+9,r20
+ 1590 0bb4 5A87      		std Y+10,r21
+ 1591 0bb6 00C0      		rjmp .L104
+ 1592               	.L102:
+ 1593 0bb8 8091 0000 		lds r24,dhcpState
+ 1594 0bbc 8330      		cpi r24,lo8(3)
+ 1595 0bbe 01F0      		breq .L105
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 29
+
+
+ 1596 0bc0 8B8D      		ldd r24,Y+27
+ 1597 0bc2 9C8D      		ldd r25,Y+28
+ 1598 0bc4 AD8D      		ldd r26,Y+29
+ 1599 0bc6 BE8D      		ldd r27,Y+30
+ 1600 0bc8 0196      		adiw r24,1
+ 1601 0bca A11D      		adc r26,__zero_reg__
+ 1602 0bcc B11D      		adc r27,__zero_reg__
+ 1603 0bce 8B8F      		std Y+27,r24
+ 1604 0bd0 9C8F      		std Y+28,r25
+ 1605 0bd2 AD8F      		std Y+29,r26
+ 1606 0bd4 BE8F      		std Y+30,r27
+ 1607               	.L105:
+ 1608 0bd6 E091 0000 		lds r30,dhcpConfig
+ 1609 0bda F091 0000 		lds r31,(dhcpConfig)+1
+ 1610 0bde 3097      		sbiw r30,0
+ 1611 0be0 01F0      		breq .L106
+ 1612 0be2 218D      		ldd r18,Z+25
+ 1613 0be4 328D      		ldd r19,Z+26
+ 1614 0be6 438D      		ldd r20,Z+27
+ 1615 0be8 548D      		ldd r21,Z+28
+ 1616 0bea 2F83      		std Y+7,r18
+ 1617 0bec 3887      		std Y+8,r19
+ 1618 0bee 4987      		std Y+9,r20
+ 1619 0bf0 5A87      		std Y+10,r21
+ 1620 0bf2 2115      		cp r18,__zero_reg__
+ 1621 0bf4 3105      		cpc r19,__zero_reg__
+ 1622 0bf6 4105      		cpc r20,__zero_reg__
+ 1623 0bf8 5105      		cpc r21,__zero_reg__
+ 1624 0bfa 01F0      		breq .L106
+ 1625 0bfc 80EA      		ldi r24,lo8(4000)
+ 1626 0bfe 282E      		mov r2,r24
+ 1627 0c00 8FE0      		ldi r24,hi8(4000)
+ 1628 0c02 382E      		mov r3,r24
+ 1629 0c04 412C      		mov r4,__zero_reg__
+ 1630 0c06 512C      		mov r5,__zero_reg__
+ 1631 0c08 00C0      		rjmp .L104
+ 1632               	.L106:
+ 1633 0c0a 00EA      		ldi r16,lo8(4000)
+ 1634 0c0c 202E      		mov r2,r16
+ 1635 0c0e 0FE0      		ldi r16,hi8(4000)
+ 1636 0c10 302E      		mov r3,r16
+ 1637 0c12 412C      		mov r4,__zero_reg__
+ 1638 0c14 512C      		mov r5,__zero_reg__
+ 1639               	.L195:
+ 1640 0c16 8FEF      		ldi r24,lo8(-1)
+ 1641 0c18 9FEF      		ldi r25,hi8(-1)
+ 1642 0c1a AFEF      		ldi r26,hlo8(-1)
+ 1643 0c1c BFEF      		ldi r27,hhi8(-1)
+ 1644 0c1e 8F83      		std Y+7,r24
+ 1645 0c20 9887      		std Y+8,r25
+ 1646 0c22 A987      		std Y+9,r26
+ 1647 0c24 BA87      		std Y+10,r27
+ 1648               	.L104:
+ 1649 0c26 8091 0000 		lds r24,dhcpState
+ 1650 0c2a 8823      		tst r24
+ 1651 0c2c 01F0      		breq .L107
+ 1652 0c2e 8091 0000 		lds r24,dhcpApiTimeout
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 30
+
+
+ 1653 0c32 9091 0000 		lds r25,(dhcpApiTimeout)+1
+ 1654 0c36 A091 0000 		lds r26,(dhcpApiTimeout)+2
+ 1655 0c3a B091 0000 		lds r27,(dhcpApiTimeout)+3
+ 1656 0c3e 0097      		sbiw r24,0
+ 1657 0c40 A105      		cpc r26,__zero_reg__
+ 1658 0c42 B105      		cpc r27,__zero_reg__
+ 1659 0c44 01F0      		breq .L107
+ 1660 0c46 0E94 0000 		call NutGetMillis
+ 1661 0c4a 9B01      		movw r18,r22
+ 1662 0c4c AC01      		movw r20,r24
+ 1663 0c4e 8091 0000 		lds r24,dhcpApiStart
+ 1664 0c52 9091 0000 		lds r25,(dhcpApiStart)+1
+ 1665 0c56 A091 0000 		lds r26,(dhcpApiStart)+2
+ 1666 0c5a B091 0000 		lds r27,(dhcpApiStart)+3
+ 1667 0c5e 281B      		sub r18,r24
+ 1668 0c60 390B      		sbc r19,r25
+ 1669 0c62 4A0B      		sbc r20,r26
+ 1670 0c64 5B0B      		sbc r21,r27
+ 1671 0c66 6091 0000 		lds r22,dhcpApiTimeout
+ 1672 0c6a 7091 0000 		lds r23,(dhcpApiTimeout)+1
+ 1673 0c6e 8091 0000 		lds r24,(dhcpApiTimeout)+2
+ 1674 0c72 9091 0000 		lds r25,(dhcpApiTimeout)+3
+ 1675 0c76 2617      		cp r18,r22
+ 1676 0c78 3707      		cpc r19,r23
+ 1677 0c7a 4807      		cpc r20,r24
+ 1678 0c7c 5907      		cpc r21,r25
+ 1679 0c7e 00F0      		brlo .L108
+ 1680 0c80 81E0      		ldi r24,lo8(1)
+ 1681 0c82 90E0      		ldi r25,hi8(1)
+ 1682 0c84 00C0      		rjmp .L208
+ 1683               	.L108:
+ 1684 0c86 621B      		sub r22,r18
+ 1685 0c88 730B      		sbc r23,r19
+ 1686 0c8a 840B      		sbc r24,r20
+ 1687 0c8c 950B      		sbc r25,r21
+ 1688 0c8e 6215      		cp r22,r2
+ 1689 0c90 7305      		cpc r23,r3
+ 1690 0c92 8405      		cpc r24,r4
+ 1691 0c94 9505      		cpc r25,r5
+ 1692 0c96 00F4      		brsh .L107
+ 1693 0c98 1B01      		movw r2,r22
+ 1694 0c9a 2C01      		movw r4,r24
+ 1695               	.L107:
+ 1696 0c9c 8091 0000 		lds r24,dhcpState
+ 1697 0ca0 8230      		cpi r24,lo8(2)
+ 1698 0ca2 01F0      		breq .L110
+ 1699 0ca4 8630      		cpi r24,lo8(6)
+ 1700 0ca6 01F0      		breq .L110
+ 1701 0ca8 8730      		cpi r24,lo8(7)
+ 1702 0caa 01F4      		brne .L111
+ 1703               	.L110:
+ 1704 0cac 9920      		tst r9
+ 1705 0cae 01F0      		breq .L112
+ 1706 0cb0 0E94 0000 		call NutGetSeconds
+ 1707 0cb4 2B89      		ldd r18,Y+19
+ 1708 0cb6 3C89      		ldd r19,Y+20
+ 1709 0cb8 4D89      		ldd r20,Y+21
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 31
+
+
+ 1710 0cba 5E89      		ldd r21,Y+22
+ 1711 0cbc 621B      		sub r22,r18
+ 1712 0cbe 730B      		sbc r23,r19
+ 1713 0cc0 840B      		sbc r24,r20
+ 1714 0cc2 950B      		sbc r25,r21
+ 1715 0cc4 6050      		subi r22,lo8(65536)
+ 1716 0cc6 7040      		sbci r23,hi8(65536)
+ 1717 0cc8 8140      		sbci r24,hlo8(65536)
+ 1718 0cca 9040      		sbci r25,hhi8(65536)
+ 1719 0ccc 00F0      		brlo .L113
+ 1720 0cce 4FEF      		ldi r20,lo8(-1)
+ 1721 0cd0 5FEF      		ldi r21,hi8(-1)
+ 1722 0cd2 588F      		std Y+24,r21
+ 1723 0cd4 4F8B      		std Y+23,r20
+ 1724 0cd6 00C0      		rjmp .L111
+ 1725               	.L113:
+ 1726 0cd8 0E94 0000 		call NutGetSeconds
+ 1727 0cdc DB01      		movw r26,r22
+ 1728 0cde EB89      		ldd r30,Y+19
+ 1729 0ce0 FC89      		ldd r31,Y+20
+ 1730 0ce2 AE1B      		sub r26,r30
+ 1731 0ce4 BF0B      		sbc r27,r31
+ 1732 0ce6 B88F      		std Y+24,r27
+ 1733 0ce8 AF8B      		std Y+23,r26
+ 1734 0cea 00C0      		rjmp .L111
+ 1735               	.L112:
+ 1736 0cec 0E94 0000 		call NutGetSeconds
+ 1737 0cf0 6B8B      		std Y+19,r22
+ 1738 0cf2 7C8B      		std Y+20,r23
+ 1739 0cf4 8D8B      		std Y+21,r24
+ 1740 0cf6 9E8B      		std Y+22,r25
+ 1741 0cf8 188E      		std Y+24,__zero_reg__
+ 1742 0cfa 1F8A      		std Y+23,__zero_reg__
+ 1743               	.L111:
+ 1744 0cfc 8091 0000 		lds r24,dhcpState
+ 1745 0d00 8530      		cpi r24,lo8(5)
+ 1746 0d02 01F0      		breq .L114
+ 1747 0d04 8823      		tst r24
+ 1748 0d06 01F4      		brne .L115
+ 1749               	.L114:
+ 1750 0d08 2F8D      		ldd r18,Y+31
+ 1751 0d0a 38A1      		ldd r19,Y+32
+ 1752 0d0c 2115      		cp r18,__zero_reg__
+ 1753 0d0e 3105      		cpc r19,__zero_reg__
+ 1754 0d10 01F0      		breq .L116
+ 1755 0d12 C901      		movw r24,r18
+ 1756 0d14 0E94 0000 		call NutUdpDestroySocket
+ 1757               	.L116:
+ 1758 0d18 6114      		cp r6,__zero_reg__
+ 1759 0d1a 7104      		cpc r7,__zero_reg__
+ 1760 0d1c 01F4      		brne .L117
+ 1761 0d1e 18A2      		std Y+32,__zero_reg__
+ 1762 0d20 1F8E      		std Y+31,__zero_reg__
+ 1763 0d22 00C0      		rjmp .L118
+ 1764               	.L117:
+ 1765 0d24 C301      		movw r24,r6
+ 1766 0d26 0E94 0000 		call free
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 32
+
+
+ 1767 0d2a 18A2      		std Y+32,__zero_reg__
+ 1768 0d2c 1F8E      		std Y+31,__zero_reg__
+ 1769 0d2e 6624      		clr r6
+ 1770 0d30 7724      		clr r7
+ 1771 0d32 00C0      		rjmp .L118
+ 1772               	.L115:
+ 1773 0d34 8091 0000 		lds r24,dhcpConfig
+ 1774 0d38 9091 0000 		lds r25,(dhcpConfig)+1
+ 1775 0d3c 892B      		or r24,r25
+ 1776 0d3e 01F4      		brne .L119
+ 1777 0d40 E98D      		ldd r30,Y+25
+ 1778 0d42 FA8D      		ldd r31,Y+26
+ 1779 0d44 8385      		ldd r24,Z+11
+ 1780 0d46 9485      		ldd r25,Z+12
+ 1781 0d48 A585      		ldd r26,Z+13
+ 1782 0d4a B685      		ldd r27,Z+14
+ 1783 0d4c 0097      		sbiw r24,0
+ 1784 0d4e A105      		cpc r26,__zero_reg__
+ 1785 0d50 B105      		cpc r27,__zero_reg__
+ 1786 0d52 01F0      		breq .+2
+ 1787 0d54 00C0      		rjmp .L201
+ 1788               	.L119:
+ 1789 0d56 2F8D      		ldd r18,Y+31
+ 1790 0d58 38A1      		ldd r19,Y+32
+ 1791 0d5a 232B      		or r18,r19
+ 1792 0d5c 01F0      		breq .L120
+ 1793 0d5e 6114      		cp r6,__zero_reg__
+ 1794 0d60 7104      		cpc r7,__zero_reg__
+ 1795 0d62 01F4      		brne .L118
+ 1796 0d64 00C0      		rjmp .L121
+ 1797               	.L120:
+ 1798 0d66 84E4      		ldi r24,lo8(68)
+ 1799 0d68 90E0      		ldi r25,hi8(68)
+ 1800 0d6a 0E94 0000 		call NutUdpCreateSocket
+ 1801 0d6e 98A3      		std Y+32,r25
+ 1802 0d70 8F8F      		std Y+31,r24
+ 1803 0d72 6114      		cp r6,__zero_reg__
+ 1804 0d74 7104      		cpc r7,__zero_reg__
+ 1805 0d76 01F4      		brne .L122
+ 1806               	.L121:
+ 1807 0d78 84E2      		ldi r24,lo8(548)
+ 1808 0d7a 92E0      		ldi r25,hi8(548)
+ 1809 0d7c 0E94 0000 		call malloc
+ 1810 0d80 3C01      		movw r6,r24
+ 1811               	.L122:
+ 1812 0d82 4F8D      		ldd r20,Y+31
+ 1813 0d84 58A1      		ldd r21,Y+32
+ 1814 0d86 452B      		or r20,r21
+ 1815 0d88 01F0      		breq .L123
+ 1816 0d8a 6114      		cp r6,__zero_reg__
+ 1817 0d8c 7104      		cpc r7,__zero_reg__
+ 1818 0d8e 01F4      		brne .L124
+ 1819               	.L123:
+ 1820 0d90 82E1      		ldi r24,lo8(18)
+ 1821 0d92 90E0      		ldi r25,hi8(18)
+ 1822               	.L208:
+ 1823 0d94 9093 0000 		sts (dhcpError)+1,r25
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 33
+
+
+ 1824 0d98 8093 0000 		sts dhcpError,r24
+ 1825 0d9c 00C0      		rjmp .L201
+ 1826               	.L124:
+ 1827 0d9e 80EC      		ldi r24,lo8(1728)
+ 1828 0da0 96E0      		ldi r25,hi8(1728)
+ 1829 0da2 9A83      		std Y+2,r25
+ 1830 0da4 8983      		std Y+1,r24
+ 1831 0da6 22E0      		ldi r18,lo8(2)
+ 1832 0da8 30E0      		ldi r19,hi8(2)
+ 1833 0daa AE01      		movw r20,r28
+ 1834 0dac 4F5F      		subi r20,lo8(-(1))
+ 1835 0dae 5F4F      		sbci r21,hi8(-(1))
+ 1836 0db0 62E0      		ldi r22,lo8(4098)
+ 1837 0db2 70E1      		ldi r23,hi8(4098)
+ 1838 0db4 8F8D      		ldd r24,Y+31
+ 1839 0db6 98A1      		ldd r25,Y+32
+ 1840 0db8 0E94 0000 		call NutUdpSetSockOpt
+ 1841               	.L118:
+ 1842 0dbc 8091 0000 		lds r24,dhcpState
+ 1843 0dc0 8130      		cpi r24,lo8(1)
+ 1844 0dc2 01F4      		brne .L125
+ 1845 0dc4 8B8D      		ldd r24,Y+27
+ 1846 0dc6 9C8D      		ldd r25,Y+28
+ 1847 0dc8 AD8D      		ldd r26,Y+29
+ 1848 0dca BE8D      		ldd r27,Y+30
+ 1849 0dcc 0196      		adiw r24,1
+ 1850 0dce A11D      		adc r26,__zero_reg__
+ 1851 0dd0 B11D      		adc r27,__zero_reg__
+ 1852 0dd2 8B8F      		std Y+27,r24
+ 1853 0dd4 9C8F      		std Y+28,r25
+ 1854 0dd6 AD8F      		std Y+29,r26
+ 1855 0dd8 BE8F      		std Y+30,r27
+ 1856 0dda 8091 0000 		lds r24,confnet+20
+ 1857 0dde 9091 0000 		lds r25,(confnet+20)+1
+ 1858 0de2 A091 0000 		lds r26,(confnet+20)+2
+ 1859 0de6 B091 0000 		lds r27,(confnet+20)+3
+ 1860 0dea 2B85      		ldd r18,Y+11
+ 1861 0dec 3C85      		ldd r19,Y+12
+ 1862 0dee 4D85      		ldd r20,Y+13
+ 1863 0df0 5E85      		ldd r21,Y+14
+ 1864 0df2 8223      		and r24,r18
+ 1865 0df4 9323      		and r25,r19
+ 1866 0df6 A423      		and r26,r20
+ 1867 0df8 B523      		and r27,r21
+ 1868 0dfa 0097      		sbiw r24,0
+ 1869 0dfc A105      		cpc r26,__zero_reg__
+ 1870 0dfe B105      		cpc r27,__zero_reg__
+ 1871 0e00 01F4      		brne .L126
+ 1872 0e02 32E0      		ldi r19,lo8(2)
+ 1873 0e04 00C0      		rjmp .L200
+ 1874               	.L126:
+ 1875 0e06 44E0      		ldi r20,lo8(4)
+ 1876 0e08 4093 0000 		sts dhcpState,r20
+ 1877 0e0c 00C0      		rjmp .L202
+ 1878               	.L125:
+ 1879 0e0e 8230      		cpi r24,lo8(2)
+ 1880 0e10 01F0      		breq .+2
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 34
+
+
+ 1881 0e12 00C0      		rjmp .L128
+ 1882 0e14 B92C      		mov r11,r9
+ 1883 0e16 B394      		inc r11
+ 1884 0e18 53E0      		ldi r21,lo8(3)
+ 1885 0e1a 5915      		cp r21,r9
+ 1886 0e1c 00F4      		brsh .L129
+ 1887 0e1e 81E0      		ldi r24,lo8(1)
+ 1888 0e20 90E0      		ldi r25,hi8(1)
+ 1889 0e22 9093 0000 		sts (dhcpError)+1,r25
+ 1890 0e26 8093 0000 		sts dhcpError,r24
+ 1891 0e2a 00C0      		rjmp .L204
+ 1892               	.L129:
+ 1893 0e2c 8B85      		ldd r24,Y+11
+ 1894 0e2e 9C85      		ldd r25,Y+12
+ 1895 0e30 AD85      		ldd r26,Y+13
+ 1896 0e32 BE85      		ldd r27,Y+14
+ 1897 0e34 8B83      		std Y+3,r24
+ 1898 0e36 9C83      		std Y+4,r25
+ 1899 0e38 AD83      		std Y+5,r26
+ 1900 0e3a BE83      		std Y+6,r27
+ 1901 0e3c CF88      		ldd r12,Y+23
+ 1902 0e3e D88C      		ldd r13,Y+24
+ 1903 0e40 EE24      		clr r14
+ 1904 0e42 FF24      		clr r15
+ 1905 0e44 8701      		movw r16,r14
+ 1906 0e46 2B8D      		ldd r18,Y+27
+ 1907 0e48 3C8D      		ldd r19,Y+28
+ 1908 0e4a 4D8D      		ldd r20,Y+29
+ 1909 0e4c 5E8D      		ldd r21,Y+30
+ 1910 0e4e 61E0      		ldi r22,lo8(1)
+ 1911 0e50 C301      		movw r24,r6
+ 1912 0e52 0E94 0000 		call DhcpPrepHeader
+ 1913 0e56 9C01      		movw r18,r24
+ 1914 0e58 8B81      		ldd r24,Y+3
+ 1915 0e5a 9C81      		ldd r25,Y+4
+ 1916 0e5c AD81      		ldd r26,Y+5
+ 1917 0e5e BE81      		ldd r27,Y+6
+ 1918 0e60 0097      		sbiw r24,0
+ 1919 0e62 A105      		cpc r26,__zero_reg__
+ 1920 0e64 B105      		cpc r27,__zero_reg__
+ 1921 0e66 01F0      		breq .L130
+ 1922 0e68 F301      		movw r30,r6
+ 1923 0e6a E20F      		add r30,r18
+ 1924 0e6c F31F      		adc r31,r19
+ 1925 0e6e E451      		subi r30,lo8(-(236))
+ 1926 0e70 FF4F      		sbci r31,hi8(-(236))
+ 1927 0e72 82E3      		ldi r24,lo8(50)
+ 1928 0e74 8083      		st Z,r24
+ 1929 0e76 2451      		subi r18,lo8(-(236))
+ 1930 0e78 3F4F      		sbci r19,hi8(-(236))
+ 1931 0e7a F301      		movw r30,r6
+ 1932 0e7c E20F      		add r30,r18
+ 1933 0e7e F31F      		adc r31,r19
+ 1934 0e80 94E0      		ldi r25,lo8(4)
+ 1935 0e82 9183      		std Z+1,r25
+ 1936 0e84 8B81      		ldd r24,Y+3
+ 1937 0e86 9C81      		ldd r25,Y+4
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 35
+
+
+ 1938 0e88 AD81      		ldd r26,Y+5
+ 1939 0e8a BE81      		ldd r27,Y+6
+ 1940 0e8c 8283      		std Z+2,r24
+ 1941 0e8e 9383      		std Z+3,r25
+ 1942 0e90 A483      		std Z+4,r26
+ 1943 0e92 B583      		std Z+5,r27
+ 1944 0e94 265E      		subi r18,lo8(-(-230))
+ 1945 0e96 3040      		sbci r19,hi8(-(-230))
+ 1946               	.L130:
+ 1947 0e98 F301      		movw r30,r6
+ 1948 0e9a E20F      		add r30,r18
+ 1949 0e9c F31F      		adc r31,r19
+ 1950 0e9e E451      		subi r30,lo8(-(236))
+ 1951 0ea0 FF4F      		sbci r31,hi8(-(236))
+ 1952 0ea2 A7E3      		ldi r26,lo8(55)
+ 1953 0ea4 A083      		st Z,r26
+ 1954 0ea6 2451      		subi r18,lo8(-(236))
+ 1955 0ea8 3F4F      		sbci r19,hi8(-(236))
+ 1956 0eaa F301      		movw r30,r6
+ 1957 0eac E20F      		add r30,r18
+ 1958 0eae F31F      		adc r31,r19
+ 1959 0eb0 2C5E      		subi r18,lo8(-(-236))
+ 1960 0eb2 3040      		sbci r19,hi8(-(-236))
+ 1961 0eb4 DF01      		movw r26,r30
+ 1962 0eb6 1196      		adiw r26,1
+ 1963 0eb8 43E0      		ldi r20,lo8(3)
+ 1964 0eba 4183      		std Z+1,r20
+ 1965 0ebc FD01      		movw r30,r26
+ 1966 0ebe 3196      		adiw r30,1
+ 1967 0ec0 51E0      		ldi r21,lo8(1)
+ 1968 0ec2 1196      		adiw r26,1
+ 1969 0ec4 5C93      		st X,r21
+ 1970 0ec6 4183      		std Z+1,r20
+ 1971 0ec8 86E0      		ldi r24,lo8(6)
+ 1972 0eca 8283      		std Z+2,r24
+ 1973 0ecc 15E0      		ldi r17,lo8(5)
+ 1974 0ece E12E      		mov r14,r17
+ 1975 0ed0 F12C      		mov r15,__zero_reg__
+ 1976 0ed2 E20E      		add r14,r18
+ 1977 0ed4 F31E      		adc r15,r19
+ 1978 0ed6 A0E0      		ldi r26,lo8(confos+3)
+ 1979 0ed8 B0E0      		ldi r27,hi8(confos+3)
+ 1980 0eda 0D90      		ld __tmp_reg__,X+
+ 1981 0edc 0020      		tst __tmp_reg__
+ 1982 0ede 01F4      		brne .-6
+ 1983 0ee0 A050      		subi r26,lo8(confos+4)
+ 1984 0ee2 B040      		sbci r27,hi8(confos+4)
+ 1985 0ee4 1A16      		cp __zero_reg__,r26
+ 1986 0ee6 1B06      		cpc __zero_reg__,r27
+ 1987 0ee8 04F4      		brge .L131
+ 1988 0eea 0A2F      		mov r16,r26
+ 1989 0eec F301      		movw r30,r6
+ 1990 0eee EE0D      		add r30,r14
+ 1991 0ef0 FF1D      		adc r31,r15
+ 1992 0ef2 E451      		subi r30,lo8(-(236))
+ 1993 0ef4 FF4F      		sbci r31,hi8(-(236))
+ 1994 0ef6 9CE0      		ldi r25,lo8(12)
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 36
+
+
+ 1995 0ef8 9083      		st Z,r25
+ 1996 0efa F901      		movw r30,r18
+ 1997 0efc EF50      		subi r30,lo8(-(241))
+ 1998 0efe FF4F      		sbci r31,hi8(-(241))
+ 1999 0f00 E60D      		add r30,r6
+ 2000 0f02 F71D      		adc r31,r7
+ 2001 0f04 A183      		std Z+1,r26
+ 2002 0f06 3296      		adiw r30,2
+ 2003 0f08 4A2F      		mov r20,r26
+ 2004 0f0a 50E0      		ldi r21,lo8(0)
+ 2005 0f0c A0E0      		ldi r26,lo8(confos+3)
+ 2006 0f0e B0E0      		ldi r27,hi8(confos+3)
+ 2007 0f10 BD01      		movw r22,r26
+ 2008 0f12 CF01      		movw r24,r30
+ 2009 0f14 0E94 0000 		call memcpy
+ 2010 0f18 10E0      		ldi r17,lo8(0)
+ 2011 0f1a 0E5F      		subi r16,lo8(-(2))
+ 2012 0f1c 1F4F      		sbci r17,hi8(-(2))
+ 2013 0f1e E00E      		add r14,r16
+ 2014 0f20 F11E      		adc r15,r17
+ 2015               	.L131:
+ 2016 0f22 E0E4      		ldi r30,lo8(576)
+ 2017 0f24 F2E0      		ldi r31,hi8(576)
+ 2018 0f26 FA83      		std Y+2,r31
+ 2019 0f28 E983      		std Y+1,r30
+ 2020 0f2a F301      		movw r30,r6
+ 2021 0f2c EE0D      		add r30,r14
+ 2022 0f2e FF1D      		adc r31,r15
+ 2023 0f30 E451      		subi r30,lo8(-(236))
+ 2024 0f32 FF4F      		sbci r31,hi8(-(236))
+ 2025 0f34 29E3      		ldi r18,lo8(57)
+ 2026 0f36 2083      		st Z,r18
+ 2027 0f38 4CEE      		ldi r20,lo8(236)
+ 2028 0f3a 50E0      		ldi r21,hi8(236)
+ 2029 0f3c E40E      		add r14,r20
+ 2030 0f3e F51E      		adc r15,r21
+ 2031 0f40 F301      		movw r30,r6
+ 2032 0f42 EE0D      		add r30,r14
+ 2033 0f44 FF1D      		adc r31,r15
+ 2034 0f46 84E1      		ldi r24,lo8(-236)
+ 2035 0f48 9FEF      		ldi r25,hi8(-236)
+ 2036 0f4a E80E      		add r14,r24
+ 2037 0f4c F91E      		adc r15,r25
+ 2038 0f4e 92E0      		ldi r25,lo8(2)
+ 2039 0f50 9183      		std Z+1,r25
+ 2040 0f52 8981      		ldd r24,Y+1
+ 2041 0f54 9A81      		ldd r25,Y+2
+ 2042               	/* #APP */
+ 2043               	 ;  295 "../../nut/include/sys/types.h" 1
+ 2044 0f56 082E      		mov __tmp_reg__, r24
+ 2045 0f58 892F      		mov r24, r25
+ 2046 0f5a 902D      		mov r25, __tmp_reg__
+ 2047               		
+ 2048               	 ;  0 "" 2
+ 2049               	/* #NOAPP */
+ 2050 0f5c 9A83      		std Y+2,r25
+ 2051 0f5e 8983      		std Y+1,r24
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 37
+
+
+ 2052 0f60 3196      		adiw r30,1
+ 2053 0f62 9283      		std Z+2,r25
+ 2054 0f64 8183      		std Z+1,r24
+ 2055 0f66 F301      		movw r30,r6
+ 2056 0f68 EE0D      		add r30,r14
+ 2057 0f6a FF1D      		adc r31,r15
+ 2058 0f6c E051      		subi r30,lo8(-(240))
+ 2059 0f6e FF4F      		sbci r31,hi8(-(240))
+ 2060 0f70 AFEF      		ldi r26,lo8(-1)
+ 2061 0f72 A083      		st Z,r26
+ 2062 0f74 C701      		movw r24,r14
+ 2063 0f76 8F50      		subi r24,lo8(-(241))
+ 2064 0f78 9F4F      		sbci r25,hi8(-(241))
+ 2065 0f7a B1E0      		ldi r27,hi8(300)
+ 2066 0f7c 8C32      		cpi r24,lo8(300)
+ 2067 0f7e 9B07      		cpc r25,r27
+ 2068 0f80 00F4      		brsh .L133
+ 2069 0f82 8CE2      		ldi r24,lo8(300)
+ 2070 0f84 91E0      		ldi r25,hi8(300)
+ 2071               	.L133:
+ 2072 0f86 7C01      		movw r14,r24
+ 2073 0f88 8301      		movw r16,r6
+ 2074 0f8a 23E4      		ldi r18,lo8(67)
+ 2075 0f8c 30E0      		ldi r19,hi8(67)
+ 2076 0f8e 4FEF      		ldi r20,lo8(-1)
+ 2077 0f90 5FEF      		ldi r21,hi8(-1)
+ 2078 0f92 6FEF      		ldi r22,hlo8(-1)
+ 2079 0f94 7FEF      		ldi r23,hhi8(-1)
+ 2080 0f96 8F8D      		ldd r24,Y+31
+ 2081 0f98 98A1      		ldd r25,Y+32
+ 2082 0f9a 0E94 0000 		call NutUdpSendTo
+ 2083 0f9e 97FF      		sbrs r25,7
+ 2084 0fa0 00C0      		rjmp .L193
+ 2085 0fa2 E3E1      		ldi r30,lo8(19)
+ 2086 0fa4 F0E0      		ldi r31,hi8(19)
+ 2087 0fa6 F093 0000 		sts (dhcpError)+1,r31
+ 2088 0faa E093 0000 		sts dhcpError,r30
+ 2089 0fae 00C0      		rjmp .L204
+ 2090               	.L141:
+ 2091 0fb0 E090 0000 		lds r14,dhcpConfig
+ 2092 0fb4 F090 0000 		lds r15,(dhcpConfig)+1
+ 2093 0fb8 C301      		movw r24,r6
+ 2094 0fba 0E94 0000 		call ParseReply
+ 2095 0fbe 8C01      		movw r16,r24
+ 2096 0fc0 0097      		sbiw r24,0
+ 2097 0fc2 01F4      		brne .+2
+ 2098 0fc4 00C0      		rjmp .L135
+ 2099 0fc6 DC01      		movw r26,r24
+ 2100 0fc8 8C91      		ld r24,X
+ 2101 0fca 8230      		cpi r24,lo8(2)
+ 2102 0fcc 01F0      		breq .+2
+ 2103 0fce 00C0      		rjmp .L139
+ 2104               	.L136:
+ 2105 0fd0 E114      		cp r14,__zero_reg__
+ 2106 0fd2 F104      		cpc r15,__zero_reg__
+ 2107 0fd4 01F4      		brne .+2
+ 2108 0fd6 00C0      		rjmp .L137
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 38
+
+
+ 2109 0fd8 2091 0000 		lds r18,confnet+16
+ 2110 0fdc 3091 0000 		lds r19,(confnet+16)+1
+ 2111 0fe0 4091 0000 		lds r20,(confnet+16)+2
+ 2112 0fe4 5091 0000 		lds r21,(confnet+16)+3
+ 2113 0fe8 8091 0000 		lds r24,confnet+20
+ 2114 0fec 9091 0000 		lds r25,(confnet+20)+1
+ 2115 0ff0 A091 0000 		lds r26,(confnet+20)+2
+ 2116 0ff4 B091 0000 		lds r27,(confnet+20)+3
+ 2117 0ff8 8223      		and r24,r18
+ 2118 0ffa 9323      		and r25,r19
+ 2119 0ffc A423      		and r26,r20
+ 2120 0ffe B523      		and r27,r21
+ 2121 1000 0097      		sbiw r24,0
+ 2122 1002 A105      		cpc r26,__zero_reg__
+ 2123 1004 B105      		cpc r27,__zero_reg__
+ 2124 1006 01F0      		breq .L138
+ 2125 1008 F701      		movw r30,r14
+ 2126 100a 8181      		ldd r24,Z+1
+ 2127 100c 9281      		ldd r25,Z+2
+ 2128 100e A381      		ldd r26,Z+3
+ 2129 1010 B481      		ldd r27,Z+4
+ 2130 1012 8217      		cp r24,r18
+ 2131 1014 9307      		cpc r25,r19
+ 2132 1016 A407      		cpc r26,r20
+ 2133 1018 B507      		cpc r27,r21
+ 2134 101a 01F0      		breq .L135
+ 2135 101c F801      		movw r30,r16
+ 2136 101e 8181      		ldd r24,Z+1
+ 2137 1020 9281      		ldd r25,Z+2
+ 2138 1022 A381      		ldd r26,Z+3
+ 2139 1024 B481      		ldd r27,Z+4
+ 2140 1026 8217      		cp r24,r18
+ 2141 1028 9307      		cpc r25,r19
+ 2142 102a A407      		cpc r26,r20
+ 2143 102c B507      		cpc r27,r21
+ 2144 102e 01F4      		brne .L135
+ 2145 1030 00C0      		rjmp .L196
+ 2146               	.L138:
+ 2147 1032 D801      		movw r26,r16
+ 2148 1034 9596      		adiw r26,37
+ 2149 1036 2D91      		ld r18,X+
+ 2150 1038 3D91      		ld r19,X+
+ 2151 103a 4D91      		ld r20,X+
+ 2152 103c 5C91      		ld r21,X
+ 2153 103e 9897      		sbiw r26,37+3
+ 2154 1040 F701      		movw r30,r14
+ 2155 1042 85A1      		ldd r24,Z+37
+ 2156 1044 96A1      		ldd r25,Z+38
+ 2157 1046 A7A1      		ldd r26,Z+39
+ 2158 1048 B0A5      		ldd r27,Z+40
+ 2159 104a 8217      		cp r24,r18
+ 2160 104c 9307      		cpc r25,r19
+ 2161 104e A407      		cpc r26,r20
+ 2162 1050 B507      		cpc r27,r21
+ 2163 1052 00F4      		brsh .L139
+ 2164               	.L196:
+ 2165 1054 C701      		movw r24,r14
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 39
+
+
+ 2166 1056 0E94 0000 		call ReleaseDynCfg
+ 2167 105a 00C0      		rjmp .L137
+ 2168               	.L139:
+ 2169 105c C801      		movw r24,r16
+ 2170 105e 0E94 0000 		call ReleaseDynCfg
+ 2171               	.L135:
+ 2172 1062 8701      		movw r16,r14
+ 2173               	.L137:
+ 2174 1064 1093 0000 		sts (dhcpConfig)+1,r17
+ 2175 1068 0093 0000 		sts dhcpConfig,r16
+ 2176 106c 012B      		or r16,r17
+ 2177 106e 01F0      		breq .L193
+ 2178 1070 8091 0000 		lds r24,dhcpApiTimeout
+ 2179 1074 9091 0000 		lds r25,(dhcpApiTimeout)+1
+ 2180 1078 A091 0000 		lds r26,(dhcpApiTimeout)+2
+ 2181 107c B091 0000 		lds r27,(dhcpApiTimeout)+3
+ 2182 1080 805E      		subi r24,lo8(12000)
+ 2183 1082 9E42      		sbci r25,hi8(12000)
+ 2184 1084 A040      		sbci r26,hlo8(12000)
+ 2185 1086 B040      		sbci r27,hhi8(12000)
+ 2186 1088 00F0      		brlo .L140
+ 2187 108a B0EA      		ldi r27,lo8(4000)
+ 2188 108c 2B2E      		mov r2,r27
+ 2189 108e BFE0      		ldi r27,hi8(4000)
+ 2190 1090 3B2E      		mov r3,r27
+ 2191 1092 412C      		mov r4,__zero_reg__
+ 2192 1094 512C      		mov r5,__zero_reg__
+ 2193               	.L193:
+ 2194 1096 8201      		movw r16,r4
+ 2195 1098 7101      		movw r14,r2
+ 2196 109a 9301      		movw r18,r6
+ 2197 109c 4B8D      		ldd r20,Y+27
+ 2198 109e 5C8D      		ldd r21,Y+28
+ 2199 10a0 6D8D      		ldd r22,Y+29
+ 2200 10a2 7E8D      		ldd r23,Y+30
+ 2201 10a4 8F8D      		ldd r24,Y+31
+ 2202 10a6 98A1      		ldd r25,Y+32
+ 2203 10a8 0E94 0000 		call DhcpRecvMessage
+ 2204 10ac BC01      		movw r22,r24
+ 2205 10ae 1816      		cp __zero_reg__,r24
+ 2206 10b0 1906      		cpc __zero_reg__,r25
+ 2207 10b2 04F4      		brge .+2
+ 2208 10b4 00C0      		rjmp .L141
+ 2209 10b6 0097      		sbiw r24,0
+ 2210 10b8 01F0      		breq .L140
+ 2211               	.L204:
+ 2212 10ba 1092 0000 		sts dhcpState,__zero_reg__
+ 2213 10be 00C0      		rjmp .L203
+ 2214               	.L140:
+ 2215 10c0 8091 0000 		lds r24,dhcpConfig
+ 2216 10c4 9091 0000 		lds r25,(dhcpConfig)+1
+ 2217 10c8 892B      		or r24,r25
+ 2218 10ca 01F4      		brne .L142
+ 2219               	.L203:
+ 2220 10cc 9B2C      		mov r9,r11
+ 2221 10ce 00C0      		rjmp .L127
+ 2222               	.L142:
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 40
+
+
+ 2223 10d0 23E0      		ldi r18,lo8(3)
+ 2224 10d2 2093 0000 		sts dhcpState,r18
+ 2225 10d6 00C0      		rjmp .L202
+ 2226               	.L128:
+ 2227 10d8 8330      		cpi r24,lo8(3)
+ 2228 10da 01F4      		brne .L143
+ 2229 10dc 892C      		mov r8,r9
+ 2230 10de 8394      		inc r8
+ 2231 10e0 33E0      		ldi r19,lo8(3)
+ 2232 10e2 3915      		cp r19,r9
+ 2233 10e4 00F4      		brsh .L144
+ 2234 10e6 41E0      		ldi r20,lo8(1)
+ 2235 10e8 4093 0000 		sts dhcpState,r20
+ 2236 10ec 00C0      		rjmp .L147
+ 2237               	.L144:
+ 2238 10ee E091 0000 		lds r30,dhcpConfig
+ 2239 10f2 F091 0000 		lds r31,(dhcpConfig)+1
+ 2240 10f6 8F89      		ldd r24,Y+23
+ 2241 10f8 988D      		ldd r25,Y+24
+ 2242 10fa 9F93      		push r25
+ 2243 10fc 8F93      		push r24
+ 2244 10fe 818D      		ldd r24,Z+25
+ 2245 1100 928D      		ldd r25,Z+26
+ 2246 1102 A38D      		ldd r26,Z+27
+ 2247 1104 B48D      		ldd r27,Z+28
+ 2248 1106 BF93      		push r27
+ 2249 1108 AF93      		push r26
+ 2250 110a 9F93      		push r25
+ 2251 110c 8F93      		push r24
+ 2252 110e 8181      		ldd r24,Z+1
+ 2253 1110 9281      		ldd r25,Z+2
+ 2254 1112 A381      		ldd r26,Z+3
+ 2255 1114 B481      		ldd r27,Z+4
+ 2256 1116 BF93      		push r27
+ 2257 1118 AF93      		push r26
+ 2258 111a 9F93      		push r25
+ 2259 111c 8F93      		push r24
+ 2260 111e AA24      		clr r10
+ 2261 1120 BB24      		clr r11
+ 2262 1122 6501      		movw r12,r10
+ 2263 1124 00C0      		rjmp .L219
+ 2264               	.L143:
+ 2265 1126 8430      		cpi r24,lo8(4)
+ 2266 1128 01F0      		breq .+2
+ 2267 112a 00C0      		rjmp .L150
+ 2268 112c 892C      		mov r8,r9
+ 2269 112e 8394      		inc r8
+ 2270 1130 53E0      		ldi r21,lo8(3)
+ 2271 1132 5815      		cp r21,r8
+ 2272 1134 00F4      		brsh .L151
+ 2273 1136 81E0      		ldi r24,lo8(1)
+ 2274 1138 8093 0000 		sts dhcpState,r24
+ 2275 113c 982C      		mov r9,r8
+ 2276 113e 1B86      		std Y+11,__zero_reg__
+ 2277 1140 1C86      		std Y+12,__zero_reg__
+ 2278 1142 1D86      		std Y+13,__zero_reg__
+ 2279 1144 1E86      		std Y+14,__zero_reg__
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 41
+
+
+ 2280 1146 00C0      		rjmp .L127
+ 2281               	.L151:
+ 2282 1148 AF89      		ldd r26,Y+23
+ 2283 114a B88D      		ldd r27,Y+24
+ 2284 114c BF93      		push r27
+ 2285 114e AF93      		push r26
+ 2286 1150 1F92      		push __zero_reg__
+ 2287 1152 1F92      		push __zero_reg__
+ 2288 1154 1F92      		push __zero_reg__
+ 2289 1156 1F92      		push __zero_reg__
+ 2290 1158 2B85      		ldd r18,Y+11
+ 2291 115a 3C85      		ldd r19,Y+12
+ 2292 115c 4D85      		ldd r20,Y+13
+ 2293 115e 5E85      		ldd r21,Y+14
+ 2294 1160 5F93      		push r21
+ 2295 1162 4F93      		push r20
+ 2296 1164 3F93      		push r19
+ 2297 1166 2F93      		push r18
+ 2298 1168 AA24      		clr r10
+ 2299 116a BB24      		clr r11
+ 2300 116c 6501      		movw r12,r10
+ 2301 116e EB8C      		ldd r14,Y+27
+ 2302 1170 FC8C      		ldd r15,Y+28
+ 2303 1172 0D8D      		ldd r16,Y+29
+ 2304 1174 1E8D      		ldd r17,Y+30
+ 2305 1176 9301      		movw r18,r6
+ 2306 1178 4FEF      		ldi r20,lo8(-1)
+ 2307 117a 5FEF      		ldi r21,hi8(-1)
+ 2308 117c 6FEF      		ldi r22,hlo8(-1)
+ 2309 117e 7FEF      		ldi r23,hhi8(-1)
+ 2310 1180 8F8D      		ldd r24,Y+31
+ 2311 1182 98A1      		ldd r25,Y+32
+ 2312 1184 0E94 0000 		call DhcpSendRequest
+ 2313 1188 4DB7      		in r20,__SP_L__
+ 2314 118a 5EB7      		in r21,__SP_H__
+ 2315 118c 465F      		subi r20,lo8(-(10))
+ 2316 118e 5F4F      		sbci r21,hi8(-(10))
+ 2317 1190 0FB6      		in __tmp_reg__,__SREG__
+ 2318 1192 F894      		cli
+ 2319 1194 5EBF      		out __SP_H__,r21
+ 2320 1196 0FBE      		out __SREG__,__tmp_reg__
+ 2321 1198 4DBF      		out __SP_L__,r20
+ 2322 119a 97FD      		sbrc r25,7
+ 2323 119c 00C0      		rjmp .L186
+ 2324               	.L152:
+ 2325 119e 8201      		movw r16,r4
+ 2326 11a0 7101      		movw r14,r2
+ 2327 11a2 9301      		movw r18,r6
+ 2328 11a4 4B8D      		ldd r20,Y+27
+ 2329 11a6 5C8D      		ldd r21,Y+28
+ 2330 11a8 6D8D      		ldd r22,Y+29
+ 2331 11aa 7E8D      		ldd r23,Y+30
+ 2332 11ac 8F8D      		ldd r24,Y+31
+ 2333 11ae 98A1      		ldd r25,Y+32
+ 2334 11b0 0E94 0000 		call DhcpRecvMessage
+ 2335 11b4 BC01      		movw r22,r24
+ 2336 11b6 97FD      		sbrc r25,7
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 42
+
+
+ 2337 11b8 00C0      		rjmp .L186
+ 2338               	.L153:
+ 2339 11ba 0097      		sbiw r24,0
+ 2340 11bc 01F4      		brne .+2
+ 2341 11be 00C0      		rjmp .L147
+ 2342 11c0 C301      		movw r24,r6
+ 2343 11c2 0E94 0000 		call ParseReply
+ 2344 11c6 8C01      		movw r16,r24
+ 2345 11c8 0097      		sbiw r24,0
+ 2346 11ca 01F4      		brne .+2
+ 2347 11cc 00C0      		rjmp .L147
+ 2348 11ce DC01      		movw r26,r24
+ 2349 11d0 8C91      		ld r24,X
+ 2350 11d2 8530      		cpi r24,lo8(5)
+ 2351 11d4 01F4      		brne .L154
+ 2352 11d6 8091 0000 		lds r24,dhcpConfig
+ 2353 11da 9091 0000 		lds r25,(dhcpConfig)+1
+ 2354 11de 0E94 0000 		call ReleaseDynCfg
+ 2355 11e2 1093 0000 		sts (dhcpConfig)+1,r17
+ 2356 11e6 0093 0000 		sts dhcpConfig,r16
+ 2357 11ea B5E0      		ldi r27,lo8(5)
+ 2358 11ec B093 0000 		sts dhcpState,r27
+ 2359 11f0 00C0      		rjmp .L211
+ 2360               	.L154:
+ 2361 11f2 8630      		cpi r24,lo8(6)
+ 2362 11f4 01F0      		breq .+2
+ 2363 11f6 00C0      		rjmp .L149
+ 2364 11f8 31E0      		ldi r19,lo8(1)
+ 2365 11fa 3093 0000 		sts dhcpState,r19
+ 2366 11fe 1B86      		std Y+11,__zero_reg__
+ 2367 1200 1C86      		std Y+12,__zero_reg__
+ 2368 1202 1D86      		std Y+13,__zero_reg__
+ 2369 1204 1E86      		std Y+14,__zero_reg__
+ 2370 1206 00C0      		rjmp .L149
+ 2371               	.L150:
+ 2372 1208 8530      		cpi r24,lo8(5)
+ 2373 120a 01F0      		breq .+2
+ 2374 120c 00C0      		rjmp .L155
+ 2375 120e 80E0      		ldi r24,lo8(dhcpDone)
+ 2376 1210 90E0      		ldi r25,hi8(dhcpDone)
+ 2377 1212 0E94 0000 		call NutEventBroadcast
+ 2378 1216 E091 0000 		lds r30,dhcpConfig
+ 2379 121a F091 0000 		lds r31,(dhcpConfig)+1
+ 2380 121e E58C      		ldd r14,Z+29
+ 2381 1220 F68C      		ldd r15,Z+30
+ 2382 1222 078D      		ldd r16,Z+31
+ 2383 1224 10A1      		ldd r17,Z+32
+ 2384 1226 0E94 0000 		call NutGetSeconds
+ 2385 122a 2F85      		ldd r18,Y+15
+ 2386 122c 3889      		ldd r19,Y+16
+ 2387 122e 4989      		ldd r20,Y+17
+ 2388 1230 5A89      		ldd r21,Y+18
+ 2389 1232 621B      		sub r22,r18
+ 2390 1234 730B      		sbc r23,r19
+ 2391 1236 840B      		sbc r24,r20
+ 2392 1238 950B      		sbc r25,r21
+ 2393 123a 6E15      		cp r22,r14
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 43
+
+
+ 2394 123c 7F05      		cpc r23,r15
+ 2395 123e 8007      		cpc r24,r16
+ 2396 1240 9107      		cpc r25,r17
+ 2397 1242 00F0      		brlo .L156
+ 2398 1244 36E0      		ldi r19,lo8(6)
+ 2399               	.L200:
+ 2400 1246 3093 0000 		sts dhcpState,r19
+ 2401               	.L202:
+ 2402 124a 9924      		clr r9
+ 2403 124c 00C0      		rjmp .L127
+ 2404               	.L156:
+ 2405 124e E091 0000 		lds r30,dhcpConfig
+ 2406 1252 F091 0000 		lds r31,(dhcpConfig)+1
+ 2407 1256 E58C      		ldd r14,Z+29
+ 2408 1258 F68C      		ldd r15,Z+30
+ 2409 125a 078D      		ldd r16,Z+31
+ 2410 125c 10A1      		ldd r17,Z+32
+ 2411 125e 0E94 0000 		call NutGetSeconds
+ 2412 1262 2F85      		ldd r18,Y+15
+ 2413 1264 3889      		ldd r19,Y+16
+ 2414 1266 4989      		ldd r20,Y+17
+ 2415 1268 5A89      		ldd r21,Y+18
+ 2416 126a 2E0D      		add r18,r14
+ 2417 126c 3F1D      		adc r19,r15
+ 2418 126e 401F      		adc r20,r16
+ 2419 1270 511F      		adc r21,r17
+ 2420 1272 261B      		sub r18,r22
+ 2421 1274 370B      		sbc r19,r23
+ 2422 1276 480B      		sbc r20,r24
+ 2423 1278 590B      		sbc r21,r25
+ 2424 127a 2833      		cpi r18,lo8(4294968)
+ 2425 127c 89E8      		ldi r24,hi8(4294968)
+ 2426 127e 3807      		cpc r19,r24
+ 2427 1280 81E4      		ldi r24,hlo8(4294968)
+ 2428 1282 4807      		cpc r20,r24
+ 2429 1284 80E0      		ldi r24,hhi8(4294968)
+ 2430 1286 5807      		cpc r21,r24
+ 2431 1288 00F0      		brlo .L157
+ 2432 128a 27E3      		ldi r18,lo8(4294967)
+ 2433 128c 39E8      		ldi r19,hi8(4294967)
+ 2434 128e 41E4      		ldi r20,hlo8(4294967)
+ 2435 1290 50E0      		ldi r21,hhi8(4294967)
+ 2436               	.L157:
+ 2437 1292 CA01      		movw r24,r20
+ 2438 1294 B901      		movw r22,r18
+ 2439 1296 28EE      		ldi r18,lo8(1000)
+ 2440 1298 33E0      		ldi r19,hi8(1000)
+ 2441 129a 40E0      		ldi r20,hlo8(1000)
+ 2442 129c 50E0      		ldi r21,hhi8(1000)
+ 2443 129e 0E94 0000 		call __mulsi3
+ 2444 12a2 AB01      		movw r20,r22
+ 2445 12a4 BC01      		movw r22,r24
+ 2446 12a6 00C0      		rjmp .L205
+ 2447               	.L155:
+ 2448 12a8 8630      		cpi r24,lo8(6)
+ 2449 12aa 01F0      		breq .+2
+ 2450 12ac 00C0      		rjmp .L158
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 44
+
+
+ 2451 12ae E091 0000 		lds r30,dhcpConfig
+ 2452 12b2 F091 0000 		lds r31,(dhcpConfig)+1
+ 2453 12b6 E1A0      		ldd r14,Z+33
+ 2454 12b8 F2A0      		ldd r15,Z+34
+ 2455 12ba 03A1      		ldd r16,Z+35
+ 2456 12bc 14A1      		ldd r17,Z+36
+ 2457 12be 0E94 0000 		call NutGetSeconds
+ 2458 12c2 5B01      		movw r10,r22
+ 2459 12c4 6C01      		movw r12,r24
+ 2460 12c6 C201      		movw r24,r4
+ 2461 12c8 B101      		movw r22,r2
+ 2462 12ca 28EE      		ldi r18,lo8(1000)
+ 2463 12cc 33E0      		ldi r19,hi8(1000)
+ 2464 12ce 40E0      		ldi r20,hlo8(1000)
+ 2465 12d0 50E0      		ldi r21,hhi8(1000)
+ 2466 12d2 0E94 0000 		call __udivmodsi4
+ 2467 12d6 8F85      		ldd r24,Y+15
+ 2468 12d8 9889      		ldd r25,Y+16
+ 2469 12da A989      		ldd r26,Y+17
+ 2470 12dc BA89      		ldd r27,Y+18
+ 2471 12de E80E      		add r14,r24
+ 2472 12e0 F91E      		adc r15,r25
+ 2473 12e2 0A1F      		adc r16,r26
+ 2474 12e4 1B1F      		adc r17,r27
+ 2475 12e6 EA18      		sub r14,r10
+ 2476 12e8 FB08      		sbc r15,r11
+ 2477 12ea 0C09      		sbc r16,r12
+ 2478 12ec 1D09      		sbc r17,r13
+ 2479 12ee E216      		cp r14,r18
+ 2480 12f0 F306      		cpc r15,r19
+ 2481 12f2 0407      		cpc r16,r20
+ 2482 12f4 1507      		cpc r17,r21
+ 2483 12f6 00F4      		brsh .L159
+ 2484 12f8 E091 0000 		lds r30,dhcpConfig
+ 2485 12fc F091 0000 		lds r31,(dhcpConfig)+1
+ 2486 1300 21A0      		ldd r2,Z+33
+ 2487 1302 32A0      		ldd r3,Z+34
+ 2488 1304 43A0      		ldd r4,Z+35
+ 2489 1306 54A0      		ldd r5,Z+36
+ 2490 1308 0E94 0000 		call NutGetSeconds
+ 2491 130c 2F85      		ldd r18,Y+15
+ 2492 130e 3889      		ldd r19,Y+16
+ 2493 1310 4989      		ldd r20,Y+17
+ 2494 1312 5A89      		ldd r21,Y+18
+ 2495 1314 621B      		sub r22,r18
+ 2496 1316 730B      		sbc r23,r19
+ 2497 1318 840B      		sbc r24,r20
+ 2498 131a 950B      		sbc r25,r21
+ 2499 131c 28EE      		ldi r18,lo8(1000)
+ 2500 131e 33E0      		ldi r19,hi8(1000)
+ 2501 1320 40E0      		ldi r20,hlo8(1000)
+ 2502 1322 50E0      		ldi r21,hhi8(1000)
+ 2503 1324 0E94 0000 		call __mulsi3
+ 2504 1328 261A      		sub r2,r22
+ 2505 132a 370A      		sbc r3,r23
+ 2506 132c 480A      		sbc r4,r24
+ 2507 132e 590A      		sbc r5,r25
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 45
+
+
+ 2508               	.L159:
+ 2509 1330 E091 0000 		lds r30,dhcpConfig
+ 2510 1334 F091 0000 		lds r31,(dhcpConfig)+1
+ 2511 1338 E1A0      		ldd r14,Z+33
+ 2512 133a F2A0      		ldd r15,Z+34
+ 2513 133c 03A1      		ldd r16,Z+35
+ 2514 133e 14A1      		ldd r17,Z+36
+ 2515 1340 0E94 0000 		call NutGetSeconds
+ 2516 1344 2F85      		ldd r18,Y+15
+ 2517 1346 3889      		ldd r19,Y+16
+ 2518 1348 4989      		ldd r20,Y+17
+ 2519 134a 5A89      		ldd r21,Y+18
+ 2520 134c 621B      		sub r22,r18
+ 2521 134e 730B      		sbc r23,r19
+ 2522 1350 840B      		sbc r24,r20
+ 2523 1352 950B      		sbc r25,r21
+ 2524 1354 6E15      		cp r22,r14
+ 2525 1356 7F05      		cpc r23,r15
+ 2526 1358 8007      		cpc r24,r16
+ 2527 135a 9107      		cpc r25,r17
+ 2528 135c 00F0      		brlo .+2
+ 2529 135e 00C0      		rjmp .L206
+ 2530               	.L160:
+ 2531 1360 E091 0000 		lds r30,dhcpConfig
+ 2532 1364 F091 0000 		lds r31,(dhcpConfig)+1
+ 2533 1368 A180      		ldd r10,Z+1
+ 2534 136a B280      		ldd r11,Z+2
+ 2535 136c C380      		ldd r12,Z+3
+ 2536 136e D480      		ldd r13,Z+4
+ 2537 1370 418D      		ldd r20,Z+25
+ 2538 1372 528D      		ldd r21,Z+26
+ 2539 1374 638D      		ldd r22,Z+27
+ 2540 1376 748D      		ldd r23,Z+28
+ 2541 1378 8F89      		ldd r24,Y+23
+ 2542 137a 988D      		ldd r25,Y+24
+ 2543 137c 9F93      		push r25
+ 2544 137e 8F93      		push r24
+ 2545 1380 1F92      		push __zero_reg__
+ 2546 1382 1F92      		push __zero_reg__
+ 2547 1384 1F92      		push __zero_reg__
+ 2548 1386 1F92      		push __zero_reg__
+ 2549 1388 DF92      		push r13
+ 2550 138a CF92      		push r12
+ 2551 138c BF92      		push r11
+ 2552 138e AF92      		push r10
+ 2553 1390 EB8C      		ldd r14,Y+27
+ 2554 1392 FC8C      		ldd r15,Y+28
+ 2555 1394 0D8D      		ldd r16,Y+29
+ 2556 1396 1E8D      		ldd r17,Y+30
+ 2557 1398 9301      		movw r18,r6
+ 2558 139a 8F8D      		ldd r24,Y+31
+ 2559 139c 98A1      		ldd r25,Y+32
+ 2560 139e 0E94 0000 		call DhcpSendRequest
+ 2561 13a2 ADB7      		in r26,__SP_L__
+ 2562 13a4 BEB7      		in r27,__SP_H__
+ 2563 13a6 1A96      		adiw r26,10
+ 2564 13a8 0FB6      		in __tmp_reg__,__SREG__
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 46
+
+
+ 2565 13aa F894      		cli
+ 2566 13ac BEBF      		out __SP_H__,r27
+ 2567 13ae 0FBE      		out __SREG__,__tmp_reg__
+ 2568 13b0 ADBF      		out __SP_L__,r26
+ 2569 13b2 97FD      		sbrc r25,7
+ 2570 13b4 00C0      		rjmp .L206
+ 2571               	.L161:
+ 2572 13b6 892C      		mov r8,r9
+ 2573 13b8 8394      		inc r8
+ 2574 13ba 8201      		movw r16,r4
+ 2575 13bc 7101      		movw r14,r2
+ 2576 13be 9301      		movw r18,r6
+ 2577 13c0 4B8D      		ldd r20,Y+27
+ 2578 13c2 5C8D      		ldd r21,Y+28
+ 2579 13c4 6D8D      		ldd r22,Y+29
+ 2580 13c6 7E8D      		ldd r23,Y+30
+ 2581 13c8 8F8D      		ldd r24,Y+31
+ 2582 13ca 98A1      		ldd r25,Y+32
+ 2583 13cc 0E94 0000 		call DhcpRecvMessage
+ 2584 13d0 BC01      		movw r22,r24
+ 2585 13d2 97FD      		sbrc r25,7
+ 2586 13d4 00C0      		rjmp .L186
+ 2587               	.L162:
+ 2588 13d6 0097      		sbiw r24,0
+ 2589 13d8 01F4      		brne .+2
+ 2590 13da 00C0      		rjmp .L147
+ 2591 13dc C301      		movw r24,r6
+ 2592 13de 0E94 0000 		call ParseReply
+ 2593 13e2 8C01      		movw r16,r24
+ 2594 13e4 0097      		sbiw r24,0
+ 2595 13e6 01F4      		brne .+2
+ 2596 13e8 00C0      		rjmp .L147
+ 2597 13ea FC01      		movw r30,r24
+ 2598 13ec F080      		ld r15,Z
+ 2599 13ee F5E0      		ldi r31,lo8(5)
+ 2600 13f0 FF16      		cp r15,r31
+ 2601 13f2 01F4      		brne .+2
+ 2602 13f4 00C0      		rjmp .L209
+ 2603               	.L163:
+ 2604 13f6 36E0      		ldi r19,lo8(6)
+ 2605 13f8 F316      		cp r15,r19
+ 2606 13fa 01F0      		breq .+2
+ 2607 13fc 00C0      		rjmp .L149
+ 2608 13fe 87E0      		ldi r24,lo8(7)
+ 2609 1400 8093 0000 		sts dhcpState,r24
+ 2610 1404 8824      		clr r8
+ 2611 1406 00C0      		rjmp .L149
+ 2612               	.L158:
+ 2613 1408 8730      		cpi r24,lo8(7)
+ 2614 140a 01F0      		breq .+2
+ 2615 140c 00C0      		rjmp .L164
+ 2616 140e E091 0000 		lds r30,dhcpConfig
+ 2617 1412 F091 0000 		lds r31,(dhcpConfig)+1
+ 2618 1416 E1A0      		ldd r14,Z+33
+ 2619 1418 F2A0      		ldd r15,Z+34
+ 2620 141a 03A1      		ldd r16,Z+35
+ 2621 141c 14A1      		ldd r17,Z+36
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 47
+
+
+ 2622 141e 0E94 0000 		call NutGetSeconds
+ 2623 1422 2F85      		ldd r18,Y+15
+ 2624 1424 3889      		ldd r19,Y+16
+ 2625 1426 4989      		ldd r20,Y+17
+ 2626 1428 5A89      		ldd r21,Y+18
+ 2627 142a E20E      		add r14,r18
+ 2628 142c F31E      		adc r15,r19
+ 2629 142e 041F      		adc r16,r20
+ 2630 1430 151F      		adc r17,r21
+ 2631 1432 E61A      		sub r14,r22
+ 2632 1434 F70A      		sbc r15,r23
+ 2633 1436 080B      		sbc r16,r24
+ 2634 1438 190B      		sbc r17,r25
+ 2635 143a E214      		cp r14,r2
+ 2636 143c F304      		cpc r15,r3
+ 2637 143e 0405      		cpc r16,r4
+ 2638 1440 1505      		cpc r17,r5
+ 2639 1442 00F4      		brsh .L165
+ 2640 1444 E091 0000 		lds r30,dhcpConfig
+ 2641 1448 F091 0000 		lds r31,(dhcpConfig)+1
+ 2642 144c 21A0      		ldd r2,Z+33
+ 2643 144e 32A0      		ldd r3,Z+34
+ 2644 1450 43A0      		ldd r4,Z+35
+ 2645 1452 54A0      		ldd r5,Z+36
+ 2646 1454 0E94 0000 		call NutGetSeconds
+ 2647 1458 261A      		sub r2,r22
+ 2648 145a 370A      		sbc r3,r23
+ 2649 145c 480A      		sbc r4,r24
+ 2650 145e 590A      		sbc r5,r25
+ 2651 1460 8F85      		ldd r24,Y+15
+ 2652 1462 9889      		ldd r25,Y+16
+ 2653 1464 A989      		ldd r26,Y+17
+ 2654 1466 BA89      		ldd r27,Y+18
+ 2655 1468 281A      		sub r2,r24
+ 2656 146a 390A      		sbc r3,r25
+ 2657 146c 4A0A      		sbc r4,r26
+ 2658 146e 5B0A      		sbc r5,r27
+ 2659               	.L165:
+ 2660 1470 E091 0000 		lds r30,dhcpConfig
+ 2661 1474 F091 0000 		lds r31,(dhcpConfig)+1
+ 2662 1478 E1A0      		ldd r14,Z+33
+ 2663 147a F2A0      		ldd r15,Z+34
+ 2664 147c 03A1      		ldd r16,Z+35
+ 2665 147e 14A1      		ldd r17,Z+36
+ 2666 1480 0E94 0000 		call NutGetSeconds
+ 2667 1484 2F85      		ldd r18,Y+15
+ 2668 1486 3889      		ldd r19,Y+16
+ 2669 1488 4989      		ldd r20,Y+17
+ 2670 148a 5A89      		ldd r21,Y+18
+ 2671 148c 621B      		sub r22,r18
+ 2672 148e 730B      		sbc r23,r19
+ 2673 1490 840B      		sbc r24,r20
+ 2674 1492 950B      		sbc r25,r21
+ 2675 1494 6E15      		cp r22,r14
+ 2676 1496 7F05      		cpc r23,r15
+ 2677 1498 8007      		cpc r24,r16
+ 2678 149a 9107      		cpc r25,r17
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 48
+
+
+ 2679 149c 00F0      		brlo .L166
+ 2680               	.L206:
+ 2681 149e 87E0      		ldi r24,lo8(7)
+ 2682 14a0 8093 0000 		sts dhcpState,r24
+ 2683 14a4 00C0      		rjmp .L202
+ 2684               	.L166:
+ 2685 14a6 892C      		mov r8,r9
+ 2686 14a8 8394      		inc r8
+ 2687 14aa E091 0000 		lds r30,dhcpConfig
+ 2688 14ae F091 0000 		lds r31,(dhcpConfig)+1
+ 2689 14b2 A180      		ldd r10,Z+1
+ 2690 14b4 B280      		ldd r11,Z+2
+ 2691 14b6 C380      		ldd r12,Z+3
+ 2692 14b8 D480      		ldd r13,Z+4
+ 2693 14ba 4F89      		ldd r20,Y+23
+ 2694 14bc 588D      		ldd r21,Y+24
+ 2695 14be 5F93      		push r21
+ 2696 14c0 4F93      		push r20
+ 2697 14c2 1F92      		push __zero_reg__
+ 2698 14c4 1F92      		push __zero_reg__
+ 2699 14c6 1F92      		push __zero_reg__
+ 2700 14c8 1F92      		push __zero_reg__
+ 2701 14ca DF92      		push r13
+ 2702 14cc CF92      		push r12
+ 2703 14ce BF92      		push r11
+ 2704 14d0 AF92      		push r10
+ 2705               	.L219:
+ 2706 14d2 EB8C      		ldd r14,Y+27
+ 2707 14d4 FC8C      		ldd r15,Y+28
+ 2708 14d6 0D8D      		ldd r16,Y+29
+ 2709 14d8 1E8D      		ldd r17,Y+30
+ 2710 14da 9301      		movw r18,r6
+ 2711 14dc 4FEF      		ldi r20,lo8(-1)
+ 2712 14de 5FEF      		ldi r21,hi8(-1)
+ 2713 14e0 6FEF      		ldi r22,hlo8(-1)
+ 2714 14e2 7FEF      		ldi r23,hhi8(-1)
+ 2715 14e4 8F8D      		ldd r24,Y+31
+ 2716 14e6 98A1      		ldd r25,Y+32
+ 2717 14e8 0E94 0000 		call DhcpSendRequest
+ 2718 14ec ADB7      		in r26,__SP_L__
+ 2719 14ee BEB7      		in r27,__SP_H__
+ 2720 14f0 1A96      		adiw r26,10
+ 2721 14f2 0FB6      		in __tmp_reg__,__SREG__
+ 2722 14f4 F894      		cli
+ 2723 14f6 BEBF      		out __SP_H__,r27
+ 2724 14f8 0FBE      		out __SREG__,__tmp_reg__
+ 2725 14fa ADBF      		out __SP_L__,r26
+ 2726 14fc 97FD      		sbrc r25,7
+ 2727 14fe 00C0      		rjmp .L186
+ 2728               	.L167:
+ 2729 1500 8201      		movw r16,r4
+ 2730 1502 7101      		movw r14,r2
+ 2731 1504 9301      		movw r18,r6
+ 2732 1506 4B8D      		ldd r20,Y+27
+ 2733 1508 5C8D      		ldd r21,Y+28
+ 2734 150a 6D8D      		ldd r22,Y+29
+ 2735 150c 7E8D      		ldd r23,Y+30
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 49
+
+
+ 2736 150e 8F8D      		ldd r24,Y+31
+ 2737 1510 98A1      		ldd r25,Y+32
+ 2738 1512 0E94 0000 		call DhcpRecvMessage
+ 2739 1516 BC01      		movw r22,r24
+ 2740 1518 97FD      		sbrc r25,7
+ 2741 151a 00C0      		rjmp .L186
+ 2742               	.L168:
+ 2743 151c 0097      		sbiw r24,0
+ 2744 151e 01F4      		brne .+2
+ 2745 1520 00C0      		rjmp .L147
+ 2746 1522 C301      		movw r24,r6
+ 2747 1524 0E94 0000 		call ParseReply
+ 2748 1528 8C01      		movw r16,r24
+ 2749 152a 0097      		sbiw r24,0
+ 2750 152c 01F4      		brne .+2
+ 2751 152e 00C0      		rjmp .L147
+ 2752 1530 FC01      		movw r30,r24
+ 2753 1532 F080      		ld r15,Z
+ 2754 1534 F5E0      		ldi r31,lo8(5)
+ 2755 1536 FF16      		cp r15,r31
+ 2756 1538 01F4      		brne .L169
+ 2757               	.L209:
+ 2758 153a 8091 0000 		lds r24,dhcpConfig
+ 2759 153e 9091 0000 		lds r25,(dhcpConfig)+1
+ 2760 1542 0E94 0000 		call ReleaseDynCfg
+ 2761 1546 1093 0000 		sts (dhcpConfig)+1,r17
+ 2762 154a 0093 0000 		sts dhcpConfig,r16
+ 2763 154e F092 0000 		sts dhcpState,r15
+ 2764               	.L211:
+ 2765 1552 2B89      		ldd r18,Y+19
+ 2766 1554 3C89      		ldd r19,Y+20
+ 2767 1556 4D89      		ldd r20,Y+21
+ 2768 1558 5E89      		ldd r21,Y+22
+ 2769 155a 2F87      		std Y+15,r18
+ 2770 155c 388B      		std Y+16,r19
+ 2771 155e 498B      		std Y+17,r20
+ 2772 1560 5A8B      		std Y+18,r21
+ 2773 1562 00C0      		rjmp .L147
+ 2774               	.L169:
+ 2775 1564 36E0      		ldi r19,lo8(6)
+ 2776 1566 F316      		cp r15,r19
+ 2777 1568 01F0      		breq .+2
+ 2778 156a 00C0      		rjmp .L149
+ 2779 156c 41E0      		ldi r20,lo8(1)
+ 2780 156e 4093 0000 		sts dhcpState,r20
+ 2781 1572 00C0      		rjmp .L149
+ 2782               	.L164:
+ 2783 1574 8830      		cpi r24,lo8(8)
+ 2784 1576 01F0      		breq .+2
+ 2785 1578 00C0      		rjmp .L170
+ 2786 157a 892C      		mov r8,r9
+ 2787 157c 8394      		inc r8
+ 2788 157e 53E0      		ldi r21,lo8(3)
+ 2789 1580 5915      		cp r21,r9
+ 2790 1582 00F4      		brsh .+2
+ 2791 1584 00C0      		rjmp .L186
+ 2792               	.L171:
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 50
+
+
+ 2793 1586 A98D      		ldd r26,Y+25
+ 2794 1588 BA8D      		ldd r27,Y+26
+ 2795 158a 1B96      		adiw r26,11
+ 2796 158c ED90      		ld r14,X+
+ 2797 158e FD90      		ld r15,X+
+ 2798 1590 0D91      		ld r16,X+
+ 2799 1592 1C91      		ld r17,X
+ 2800 1594 1E97      		sbiw r26,11+3
+ 2801 1596 CC24      		clr r12
+ 2802 1598 DD24      		clr r13
+ 2803 159a 2B8D      		ldd r18,Y+27
+ 2804 159c 3C8D      		ldd r19,Y+28
+ 2805 159e 4D8D      		ldd r20,Y+29
+ 2806 15a0 5E8D      		ldd r21,Y+30
+ 2807 15a2 68E0      		ldi r22,lo8(8)
+ 2808 15a4 C301      		movw r24,r6
+ 2809 15a6 0E94 0000 		call DhcpPrepHeader
+ 2810 15aa F301      		movw r30,r6
+ 2811 15ac E80F      		add r30,r24
+ 2812 15ae F91F      		adc r31,r25
+ 2813 15b0 E451      		subi r30,lo8(-(236))
+ 2814 15b2 FF4F      		sbci r31,hi8(-(236))
+ 2815 15b4 B7E3      		ldi r27,lo8(55)
+ 2816 15b6 B083      		st Z,r27
+ 2817 15b8 8451      		subi r24,lo8(-(236))
+ 2818 15ba 9F4F      		sbci r25,hi8(-(236))
+ 2819 15bc F301      		movw r30,r6
+ 2820 15be E80F      		add r30,r24
+ 2821 15c0 F91F      		adc r31,r25
+ 2822 15c2 DF01      		movw r26,r30
+ 2823 15c4 1196      		adiw r26,1
+ 2824 15c6 23E0      		ldi r18,lo8(3)
+ 2825 15c8 2183      		std Z+1,r18
+ 2826 15ca FD01      		movw r30,r26
+ 2827 15cc 3196      		adiw r30,1
+ 2828 15ce 31E0      		ldi r19,lo8(1)
+ 2829 15d0 1196      		adiw r26,1
+ 2830 15d2 3C93      		st X,r19
+ 2831 15d4 2183      		std Z+1,r18
+ 2832 15d6 46E0      		ldi r20,lo8(6)
+ 2833 15d8 4283      		std Z+2,r20
+ 2834 15da A9E1      		ldi r26,lo8(-231)
+ 2835 15dc EA2E      		mov r14,r26
+ 2836 15de AFEF      		ldi r26,hi8(-231)
+ 2837 15e0 FA2E      		mov r15,r26
+ 2838 15e2 E80E      		add r14,r24
+ 2839 15e4 F91E      		adc r15,r25
+ 2840 15e6 A0E0      		ldi r26,lo8(confos+3)
+ 2841 15e8 B0E0      		ldi r27,hi8(confos+3)
+ 2842 15ea 0D90      		ld __tmp_reg__,X+
+ 2843 15ec 0020      		tst __tmp_reg__
+ 2844 15ee 01F4      		brne .-6
+ 2845 15f0 A050      		subi r26,lo8(confos+4)
+ 2846 15f2 B040      		sbci r27,hi8(confos+4)
+ 2847 15f4 01F0      		breq .L172
+ 2848 15f6 0A2F      		mov r16,r26
+ 2849 15f8 F301      		movw r30,r6
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 51
+
+
+ 2850 15fa EE0D      		add r30,r14
+ 2851 15fc FF1D      		adc r31,r15
+ 2852 15fe E451      		subi r30,lo8(-(236))
+ 2853 1600 FF4F      		sbci r31,hi8(-(236))
+ 2854 1602 5CE0      		ldi r21,lo8(12)
+ 2855 1604 5083      		st Z,r21
+ 2856 1606 8CEE      		ldi r24,lo8(236)
+ 2857 1608 90E0      		ldi r25,hi8(236)
+ 2858 160a E80E      		add r14,r24
+ 2859 160c F91E      		adc r15,r25
+ 2860 160e F301      		movw r30,r6
+ 2861 1610 EE0D      		add r30,r14
+ 2862 1612 FF1D      		adc r31,r15
+ 2863 1614 24E1      		ldi r18,lo8(-236)
+ 2864 1616 3FEF      		ldi r19,hi8(-236)
+ 2865 1618 E20E      		add r14,r18
+ 2866 161a F31E      		adc r15,r19
+ 2867 161c A183      		std Z+1,r26
+ 2868 161e 3296      		adiw r30,2
+ 2869 1620 4A2F      		mov r20,r26
+ 2870 1622 50E0      		ldi r21,lo8(0)
+ 2871 1624 80E0      		ldi r24,lo8(confos+3)
+ 2872 1626 90E0      		ldi r25,hi8(confos+3)
+ 2873 1628 BC01      		movw r22,r24
+ 2874 162a CF01      		movw r24,r30
+ 2875 162c 0E94 0000 		call memcpy
+ 2876 1630 10E0      		ldi r17,lo8(0)
+ 2877 1632 0E5F      		subi r16,lo8(-(2))
+ 2878 1634 1F4F      		sbci r17,hi8(-(2))
+ 2879 1636 E00E      		add r14,r16
+ 2880 1638 F11E      		adc r15,r17
+ 2881               	.L172:
+ 2882 163a A0E4      		ldi r26,lo8(576)
+ 2883 163c B2E0      		ldi r27,hi8(576)
+ 2884 163e BA83      		std Y+2,r27
+ 2885 1640 A983      		std Y+1,r26
+ 2886 1642 F301      		movw r30,r6
+ 2887 1644 EE0D      		add r30,r14
+ 2888 1646 FF1D      		adc r31,r15
+ 2889 1648 E451      		subi r30,lo8(-(236))
+ 2890 164a FF4F      		sbci r31,hi8(-(236))
+ 2891 164c B9E3      		ldi r27,lo8(57)
+ 2892 164e B083      		st Z,r27
+ 2893 1650 ECEE      		ldi r30,lo8(236)
+ 2894 1652 F0E0      		ldi r31,hi8(236)
+ 2895 1654 EE0E      		add r14,r30
+ 2896 1656 FF1E      		adc r15,r31
+ 2897 1658 F301      		movw r30,r6
+ 2898 165a EE0D      		add r30,r14
+ 2899 165c FF1D      		adc r31,r15
+ 2900 165e 24E1      		ldi r18,lo8(-236)
+ 2901 1660 3FEF      		ldi r19,hi8(-236)
+ 2902 1662 E20E      		add r14,r18
+ 2903 1664 F31E      		adc r15,r19
+ 2904 1666 32E0      		ldi r19,lo8(2)
+ 2905 1668 3183      		std Z+1,r19
+ 2906 166a 8981      		ldd r24,Y+1
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 52
+
+
+ 2907 166c 9A81      		ldd r25,Y+2
+ 2908               	/* #APP */
+ 2909               	 ;  295 "../../nut/include/sys/types.h" 1
+ 2910 166e 082E      		mov __tmp_reg__, r24
+ 2911 1670 892F      		mov r24, r25
+ 2912 1672 902D      		mov r25, __tmp_reg__
+ 2913               		
+ 2914               	 ;  0 "" 2
+ 2915               	/* #NOAPP */
+ 2916 1674 9A83      		std Y+2,r25
+ 2917 1676 8983      		std Y+1,r24
+ 2918 1678 3196      		adiw r30,1
+ 2919 167a 9283      		std Z+2,r25
+ 2920 167c 8183      		std Z+1,r24
+ 2921 167e F301      		movw r30,r6
+ 2922 1680 EE0D      		add r30,r14
+ 2923 1682 FF1D      		adc r31,r15
+ 2924 1684 E051      		subi r30,lo8(-(240))
+ 2925 1686 FF4F      		sbci r31,hi8(-(240))
+ 2926 1688 4FEF      		ldi r20,lo8(-1)
+ 2927 168a 4083      		st Z,r20
+ 2928 168c C701      		movw r24,r14
+ 2929 168e 8F50      		subi r24,lo8(-(241))
+ 2930 1690 9F4F      		sbci r25,hi8(-(241))
+ 2931 1692 51E0      		ldi r21,hi8(300)
+ 2932 1694 8C32      		cpi r24,lo8(300)
+ 2933 1696 9507      		cpc r25,r21
+ 2934 1698 00F4      		brsh .L174
+ 2935 169a 8CE2      		ldi r24,lo8(300)
+ 2936 169c 91E0      		ldi r25,hi8(300)
+ 2937               	.L174:
+ 2938 169e 7C01      		movw r14,r24
+ 2939 16a0 8301      		movw r16,r6
+ 2940 16a2 23E4      		ldi r18,lo8(67)
+ 2941 16a4 30E0      		ldi r19,hi8(67)
+ 2942 16a6 4F81      		ldd r20,Y+7
+ 2943 16a8 5885      		ldd r21,Y+8
+ 2944 16aa 6985      		ldd r22,Y+9
+ 2945 16ac 7A85      		ldd r23,Y+10
+ 2946 16ae 8F8D      		ldd r24,Y+31
+ 2947 16b0 98A1      		ldd r25,Y+32
+ 2948 16b2 0E94 0000 		call NutUdpSendTo
+ 2949 16b6 97FF      		sbrs r25,7
+ 2950 16b8 00C0      		rjmp .L175
+ 2951 16ba 83E1      		ldi r24,lo8(19)
+ 2952 16bc 90E0      		ldi r25,hi8(19)
+ 2953 16be 9093 0000 		sts (dhcpError)+1,r25
+ 2954 16c2 8093 0000 		sts dhcpError,r24
+ 2955 16c6 2F81      		ldd r18,Y+7
+ 2956 16c8 3885      		ldd r19,Y+8
+ 2957 16ca 4985      		ldd r20,Y+9
+ 2958 16cc 5A85      		ldd r21,Y+10
+ 2959 16ce 2F5F      		subi r18,lo8(-1)
+ 2960 16d0 3F4F      		sbci r19,hi8(-1)
+ 2961 16d2 4F4F      		sbci r20,hlo8(-1)
+ 2962 16d4 5F4F      		sbci r21,hhi8(-1)
+ 2963 16d6 01F0      		breq .+2
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 53
+
+
+ 2964 16d8 00C0      		rjmp .L147
+ 2965 16da 00C0      		rjmp .L186
+ 2966               	.L175:
+ 2967 16dc 8201      		movw r16,r4
+ 2968 16de 7101      		movw r14,r2
+ 2969 16e0 9301      		movw r18,r6
+ 2970 16e2 4B8D      		ldd r20,Y+27
+ 2971 16e4 5C8D      		ldd r21,Y+28
+ 2972 16e6 6D8D      		ldd r22,Y+29
+ 2973 16e8 7E8D      		ldd r23,Y+30
+ 2974 16ea 8F8D      		ldd r24,Y+31
+ 2975 16ec 98A1      		ldd r25,Y+32
+ 2976 16ee 0E94 0000 		call DhcpRecvMessage
+ 2977 16f2 BC01      		movw r22,r24
+ 2978 16f4 0097      		sbiw r24,0
+ 2979 16f6 01F4      		brne .+2
+ 2980 16f8 00C0      		rjmp .L147
+ 2981               	.L177:
+ 2982 16fa 1816      		cp __zero_reg__,r24
+ 2983 16fc 1906      		cpc __zero_reg__,r25
+ 2984 16fe 04F4      		brge .L197
+ 2985               	.L178:
+ 2986 1700 C301      		movw r24,r6
+ 2987 1702 0E94 0000 		call ParseReply
+ 2988 1706 8C01      		movw r16,r24
+ 2989 1708 0097      		sbiw r24,0
+ 2990 170a 01F0      		breq .L179
+ 2991 170c DC01      		movw r26,r24
+ 2992 170e 8C91      		ld r24,X
+ 2993 1710 8530      		cpi r24,lo8(5)
+ 2994 1712 01F4      		brne .L179
+ 2995 1714 8091 0000 		lds r24,dhcpConfig
+ 2996 1718 9091 0000 		lds r25,(dhcpConfig)+1
+ 2997 171c 0E94 0000 		call ReleaseDynCfg
+ 2998 1720 1093 0000 		sts (dhcpConfig)+1,r17
+ 2999 1724 0093 0000 		sts dhcpConfig,r16
+ 3000               	.L197:
+ 3001 1728 00E0      		ldi r16,lo8(0)
+ 3002 172a 10E0      		ldi r17,hi8(0)
+ 3003               	.L179:
+ 3004 172c 1092 0000 		sts dhcpState,__zero_reg__
+ 3005 1730 0115      		cp r16,__zero_reg__
+ 3006 1732 1105      		cpc r17,__zero_reg__
+ 3007 1734 01F0      		breq .+2
+ 3008 1736 00C0      		rjmp .L149
+ 3009 1738 00C0      		rjmp .L109
+ 3010               	.L170:
+ 3011 173a 8930      		cpi r24,lo8(9)
+ 3012 173c 01F0      		breq .+2
+ 3013 173e 00C0      		rjmp .L180
+ 3014 1740 E091 0000 		lds r30,dhcpConfig
+ 3015 1744 F091 0000 		lds r31,(dhcpConfig)+1
+ 3016 1748 3097      		sbiw r30,0
+ 3017 174a 01F4      		brne .+2
+ 3018 174c 00C0      		rjmp .L181
+ 3019 174e 892C      		mov r8,r9
+ 3020 1750 8394      		inc r8
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 54
+
+
+ 3021 1752 9920      		tst r9
+ 3022 1754 01F0      		breq .+2
+ 3023 1756 00C0      		rjmp .L182
+ 3024 1758 E180      		ldd r14,Z+1
+ 3025 175a F280      		ldd r15,Z+2
+ 3026 175c 0381      		ldd r16,Z+3
+ 3027 175e 1481      		ldd r17,Z+4
+ 3028 1760 818D      		ldd r24,Z+25
+ 3029 1762 928D      		ldd r25,Z+26
+ 3030 1764 A38D      		ldd r26,Z+27
+ 3031 1766 B48D      		ldd r27,Z+28
+ 3032 1768 8B83      		std Y+3,r24
+ 3033 176a 9C83      		std Y+4,r25
+ 3034 176c AD83      		std Y+5,r26
+ 3035 176e BE83      		std Y+6,r27
+ 3036 1770 CC24      		clr r12
+ 3037 1772 DD24      		clr r13
+ 3038 1774 2B8D      		ldd r18,Y+27
+ 3039 1776 3C8D      		ldd r19,Y+28
+ 3040 1778 4D8D      		ldd r20,Y+29
+ 3041 177a 5E8D      		ldd r21,Y+30
+ 3042 177c 67E0      		ldi r22,lo8(7)
+ 3043 177e C301      		movw r24,r6
+ 3044 1780 0E94 0000 		call DhcpPrepHeader
+ 3045 1784 9C01      		movw r18,r24
+ 3046 1786 8B81      		ldd r24,Y+3
+ 3047 1788 9C81      		ldd r25,Y+4
+ 3048 178a AD81      		ldd r26,Y+5
+ 3049 178c BE81      		ldd r27,Y+6
+ 3050 178e 0097      		sbiw r24,0
+ 3051 1790 A105      		cpc r26,__zero_reg__
+ 3052 1792 B105      		cpc r27,__zero_reg__
+ 3053 1794 01F0      		breq .L183
+ 3054 1796 F301      		movw r30,r6
+ 3055 1798 E20F      		add r30,r18
+ 3056 179a F31F      		adc r31,r19
+ 3057 179c E451      		subi r30,lo8(-(236))
+ 3058 179e FF4F      		sbci r31,hi8(-(236))
+ 3059 17a0 B6E3      		ldi r27,lo8(54)
+ 3060 17a2 B083      		st Z,r27
+ 3061 17a4 2451      		subi r18,lo8(-(236))
+ 3062 17a6 3F4F      		sbci r19,hi8(-(236))
+ 3063 17a8 F301      		movw r30,r6
+ 3064 17aa E20F      		add r30,r18
+ 3065 17ac F31F      		adc r31,r19
+ 3066 17ae 44E0      		ldi r20,lo8(4)
+ 3067 17b0 4183      		std Z+1,r20
+ 3068 17b2 8B81      		ldd r24,Y+3
+ 3069 17b4 9C81      		ldd r25,Y+4
+ 3070 17b6 AD81      		ldd r26,Y+5
+ 3071 17b8 BE81      		ldd r27,Y+6
+ 3072 17ba 8283      		std Z+2,r24
+ 3073 17bc 9383      		std Z+3,r25
+ 3074 17be A483      		std Z+4,r26
+ 3075 17c0 B583      		std Z+5,r27
+ 3076 17c2 265E      		subi r18,lo8(-(-230))
+ 3077 17c4 3040      		sbci r19,hi8(-(-230))
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 55
+
+
+ 3078               	.L183:
+ 3079 17c6 F301      		movw r30,r6
+ 3080 17c8 E20F      		add r30,r18
+ 3081 17ca F31F      		adc r31,r19
+ 3082 17cc E451      		subi r30,lo8(-(236))
+ 3083 17ce FF4F      		sbci r31,hi8(-(236))
+ 3084 17d0 5FEF      		ldi r21,lo8(-1)
+ 3085 17d2 5083      		st Z,r21
+ 3086 17d4 C901      		movw r24,r18
+ 3087 17d6 8351      		subi r24,lo8(-(237))
+ 3088 17d8 9F4F      		sbci r25,hi8(-(237))
+ 3089 17da A1E0      		ldi r26,hi8(300)
+ 3090 17dc 8C32      		cpi r24,lo8(300)
+ 3091 17de 9A07      		cpc r25,r26
+ 3092 17e0 00F4      		brsh .L184
+ 3093 17e2 8CE2      		ldi r24,lo8(300)
+ 3094 17e4 91E0      		ldi r25,hi8(300)
+ 3095               	.L184:
+ 3096 17e6 7C01      		movw r14,r24
+ 3097 17e8 8301      		movw r16,r6
+ 3098 17ea 23E4      		ldi r18,lo8(67)
+ 3099 17ec 30E0      		ldi r19,hi8(67)
+ 3100 17ee 4F81      		ldd r20,Y+7
+ 3101 17f0 5885      		ldd r21,Y+8
+ 3102 17f2 6985      		ldd r22,Y+9
+ 3103 17f4 7A85      		ldd r23,Y+10
+ 3104 17f6 8F8D      		ldd r24,Y+31
+ 3105 17f8 98A1      		ldd r25,Y+32
+ 3106 17fa 0E94 0000 		call NutUdpSendTo
+ 3107 17fe 97FF      		sbrs r25,7
+ 3108 1800 00C0      		rjmp .L185
+ 3109 1802 E3E1      		ldi r30,lo8(19)
+ 3110 1804 F0E0      		ldi r31,hi8(19)
+ 3111 1806 F093 0000 		sts (dhcpError)+1,r31
+ 3112 180a E093 0000 		sts dhcpError,r30
+ 3113 180e 00C0      		rjmp .L182
+ 3114               	.L185:
+ 3115 1810 8201      		movw r16,r4
+ 3116 1812 7101      		movw r14,r2
+ 3117 1814 9301      		movw r18,r6
+ 3118 1816 4B8D      		ldd r20,Y+27
+ 3119 1818 5C8D      		ldd r21,Y+28
+ 3120 181a 6D8D      		ldd r22,Y+29
+ 3121 181c 7E8D      		ldd r23,Y+30
+ 3122 181e 8F8D      		ldd r24,Y+31
+ 3123 1820 98A1      		ldd r25,Y+32
+ 3124 1822 0E94 0000 		call DhcpRecvMessage
+ 3125 1826 BC01      		movw r22,r24
+ 3126 1828 9923      		tst r25
+ 3127 182a 04F4      		brge .L194
+ 3128 182c 00C0      		rjmp .L186
+ 3129               	.L182:
+ 3130 182e 982C      		mov r9,r8
+ 3131               	.L181:
+ 3132 1830 2F81      		ldd r18,Y+7
+ 3133 1832 3885      		ldd r19,Y+8
+ 3134 1834 4985      		ldd r20,Y+9
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 56
+
+
+ 3135 1836 5A85      		ldd r21,Y+10
+ 3136 1838 2F5F      		subi r18,lo8(-1)
+ 3137 183a 3F4F      		sbci r19,hi8(-1)
+ 3138 183c 4F4F      		sbci r20,hlo8(-1)
+ 3139 183e 5F4F      		sbci r21,hhi8(-1)
+ 3140 1840 01F4      		brne .L127
+ 3141               	.L201:
+ 3142 1842 1092 0000 		sts dhcpState,__zero_reg__
+ 3143 1846 00C0      		rjmp .L127
+ 3144               	.L186:
+ 3145 1848 1092 0000 		sts dhcpState,__zero_reg__
+ 3146 184c 00C0      		rjmp .L147
+ 3147               	.L194:
+ 3148 184e 0097      		sbiw r24,0
+ 3149 1850 01F0      		breq .L147
+ 3150 1852 C301      		movw r24,r6
+ 3151 1854 0E94 0000 		call ParseReply
+ 3152 1858 8C01      		movw r16,r24
+ 3153 185a 0097      		sbiw r24,0
+ 3154 185c 01F0      		breq .L147
+ 3155 185e DC01      		movw r26,r24
+ 3156 1860 8C91      		ld r24,X
+ 3157 1862 8530      		cpi r24,lo8(5)
+ 3158 1864 01F0      		breq .L198
+ 3159               	.L188:
+ 3160 1866 8630      		cpi r24,lo8(6)
+ 3161 1868 01F4      		brne .L149
+ 3162               	.L198:
+ 3163 186a 1092 0000 		sts dhcpState,__zero_reg__
+ 3164 186e 00C0      		rjmp .L149
+ 3165               	.L180:
+ 3166 1870 8823      		tst r24
+ 3167 1872 01F4      		brne .L127
+ 3168 1874 8091 0000 		lds r24,dhcpConfig
+ 3169 1878 9091 0000 		lds r25,(dhcpConfig)+1
+ 3170 187c 0E94 0000 		call ReleaseDynCfg
+ 3171 1880 1092 0000 		sts (dhcpConfig)+1,__zero_reg__
+ 3172 1884 1092 0000 		sts dhcpConfig,__zero_reg__
+ 3173 1888 80E0      		ldi r24,lo8(dhcpDone)
+ 3174 188a 90E0      		ldi r25,hi8(dhcpDone)
+ 3175 188c 0E94 0000 		call NutEventBroadcast
+ 3176 1890 40E0      		ldi r20,lo8(0)
+ 3177 1892 50E0      		ldi r21,hi8(0)
+ 3178 1894 60E0      		ldi r22,hlo8(0)
+ 3179 1896 70E0      		ldi r23,hhi8(0)
+ 3180               	.L205:
+ 3181 1898 80E0      		ldi r24,lo8(dhcpWake)
+ 3182 189a 90E0      		ldi r25,hi8(dhcpWake)
+ 3183 189c 0E94 0000 		call NutEventWait
+ 3184 18a0 00C0      		rjmp .L202
+ 3185               	.L149:
+ 3186 18a2 C801      		movw r24,r16
+ 3187 18a4 0E94 0000 		call ReleaseDynCfg
+ 3188 18a8 00C0      		rjmp .L109
+ 3189               	.L147:
+ 3190 18aa 982C      		mov r9,r8
+ 3191               	.L127:
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 57
+
+
+ 3192 18ac 892C      		mov r8,r9
+ 3193 18ae 00C0      		rjmp .L109
+ 3194               		.size	NutDhcpClient, .-NutDhcpClient
+ 3195               		.lcomm dhcpConfig,2
+ 3196               		.lcomm dhcpThread,2
+ 3197               		.lcomm dhcpState,1
+ 3198               		.lcomm dhcpError,2
+ 3199               		.lcomm dhcpWake,2
+ 3200               		.lcomm dhcpDone,2
+ 3201               		.lcomm dhcpApiTimeout,4
+ 3202               		.lcomm dhcpApiStart,4
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 58
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 dhcpc.c
+  C:\Temp/ccoDfVEd.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccoDfVEd.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccoDfVEd.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccoDfVEd.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccoDfVEd.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccoDfVEd.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccoDfVEd.s:13     .text:00000000 NutDhcpStatus
+  C:\Temp/ccoDfVEd.s:3196   .bss:00000004 dhcpState
+  C:\Temp/ccoDfVEd.s:23     .text:00000008 NutDhcpError
+  C:\Temp/ccoDfVEd.s:3197   .bss:00000005 dhcpError
+  C:\Temp/ccoDfVEd.s:35     .text:0000001a NutDhcpIsConfigured
+  C:\Temp/ccoDfVEd.s:55     .text:0000002e DhcpKick
+  C:\Temp/ccoDfVEd.s:3201   .bss:0000000f dhcpApiStart
+  C:\Temp/ccoDfVEd.s:3200   .bss:0000000b dhcpApiTimeout
+  C:\Temp/ccoDfVEd.s:3195   .bss:00000002 dhcpThread
+  C:\Temp/ccoDfVEd.s:1468   .text:00000ac2 NutDhcpClient
+  C:\Temp/ccoDfVEd.s:3198   .bss:00000007 dhcpWake
+  C:\Temp/ccoDfVEd.s:3199   .bss:00000009 dhcpDone
+  C:\Temp/ccoDfVEd.s:142    .text:000000ee NutDhcpInform
+  C:\Temp/ccoDfVEd.s:170    .text:0000011c NutDhcpRelease
+  C:\Temp/ccoDfVEd.s:197    .text:0000014a DhcpPrepHeader
+  C:\Temp/ccoDfVEd.s:284    .text:000001de NutDhcpIfConfig
+                             .bss:00000000 dhcpConfig
+  C:\Temp/ccoDfVEd.s:559    .text:0000042a ReleaseDynCfg
+  C:\Temp/ccoDfVEd.s:588    .text:00000458 copy_str
+  C:\Temp/ccoDfVEd.s:640    .text:000004b4 ParseReply
+  C:\Temp/ccoDfVEd.s:1075   .text:000007cc DhcpSendRequest
+  C:\Temp/ccoDfVEd.s:1309   .text:00000992 DhcpRecvMessage
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutDeviceLookup
+NutGetMillis
+NutThreadCreate
+NutEventPost
+NutEventWait
+confnet
+memset
+memcmp
+NutNetLoadConfig
+NutSleep
+NutNetIfSetup
+NutDnsConfig2
+NutNetIfConfig2
+free
+malloc
+memcpy
+confos
+NutUdpSendTo
+NutUdpReceiveFrom
+NutGetSeconds
+NutUdpDestroySocket
+NutUdpCreateSocket
+NutUdpSetSockOpt
+GAS LISTING C:\Temp/ccoDfVEd.s 			page 59
+
+
+NutEventBroadcast
+__mulsi3
+__udivmodsi4

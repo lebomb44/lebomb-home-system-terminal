@@ -1,0 +1,2596 @@
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 1
+
+
+   1               		.file	"pnutfs.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	BankSelect
+  12               		.type	BankSelect, @function
+  13               	BankSelect:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 60E2      		ldi r22,lo8(32)
+  17 0002 70E0      		ldi r23,hi8(32)
+  18 0004 0E94 0000 		call __divmodhi4
+  19 0008 FB01      		movw r30,r22
+  20 000a E050      		subi r30,lo8(-(-256))
+  21 000c F140      		sbci r31,hi8(-(-256))
+  22 000e 6083      		st Z,r22
+  23               	/* epilogue start */
+  24 0010 0895      		ret
+  25               		.size	BankSelect, .-BankSelect
+  26               	.global	BankNodePointer
+  27               		.type	BankNodePointer, @function
+  28               	BankNodePointer:
+  29               	/* prologue: function */
+  30               	/* frame size = 0 */
+  31 0012 9C01      		movw r18,r24
+  32 0014 97FF      		sbrs r25,7
+  33 0016 00C0      		rjmp .L4
+  34 0018 20E0      		ldi r18,lo8(0)
+  35 001a 30E0      		ldi r19,hi8(0)
+  36 001c 00C0      		rjmp .L5
+  37               	.L4:
+  38 001e 45E0      		ldi r20,5
+  39 0020 9595      	1:	asr r25
+  40 0022 8795      		ror r24
+  41 0024 4A95      		dec r20
+  42 0026 01F4      		brne 1b
+  43 0028 FC01      		movw r30,r24
+  44 002a E050      		subi r30,lo8(-(-256))
+  45 002c F140      		sbci r31,hi8(-(-256))
+  46 002e 8083      		st Z,r24
+  47 0030 2F71      		andi r18,lo8(31)
+  48 0032 3070      		andi r19,hi8(31)
+  49 0034 322F      		mov r19,r18
+  50 0036 2227      		clr r18
+  51 0038 330F      		lsl r19
+  52 003a 2050      		subi r18,lo8(-(-32768))
+  53 003c 3048      		sbci r19,hi8(-(-32768))
+  54               	.L5:
+  55 003e C901      		movw r24,r18
+  56               	/* epilogue start */
+  57 0040 0895      		ret
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 2
+
+
+  58               		.size	BankNodePointer, .-BankNodePointer
+  59               		.type	PnutFileWrite_P, @function
+  60               	PnutFileWrite_P:
+  61               	/* prologue: function */
+  62               	/* frame size = 0 */
+  63 0042 8FEF      		ldi r24,lo8(-1)
+  64 0044 9FEF      		ldi r25,hi8(-1)
+  65               	/* epilogue start */
+  66 0046 0895      		ret
+  67               		.size	PnutFileWrite_P, .-PnutFileWrite_P
+  68               		.type	PnutFileSize, @function
+  69               	PnutFileSize:
+  70               	/* prologue: function */
+  71               	/* frame size = 0 */
+  72 0048 DC01      		movw r26,r24
+  73 004a 1496      		adiw r26,4
+  74 004c ED91      		ld r30,X+
+  75 004e FC91      		ld r31,X
+  76 0050 1597      		sbiw r26,4+1
+  77 0052 8081      		ld r24,Z
+  78 0054 9181      		ldd r25,Z+1
+  79 0056 0E94 0000 		call BankNodePointer
+  80 005a FC01      		movw r30,r24
+  81 005c 6481      		ldd r22,Z+4
+  82 005e 7581      		ldd r23,Z+5
+  83 0060 8681      		ldd r24,Z+6
+  84 0062 9781      		ldd r25,Z+7
+  85               	/* epilogue start */
+  86 0064 0895      		ret
+  87               		.size	PnutFileSize, .-PnutFileSize
+  88               		.type	PnutFileClose, @function
+  89               	PnutFileClose:
+  90 0066 0F93      		push r16
+  91 0068 1F93      		push r17
+  92 006a CF93      		push r28
+  93 006c DF93      		push r29
+  94               	/* prologue: function */
+  95               	/* frame size = 0 */
+  96 006e 8C01      		movw r16,r24
+  97 0070 8FEF      		ldi r24,hi8(-1)
+  98 0072 0F3F      		cpi r16,lo8(-1)
+  99 0074 1807      		cpc r17,r24
+ 100 0076 01F4      		brne .L12
+ 101 0078 26E1      		ldi r18,lo8(22)
+ 102 007a 30E0      		ldi r19,hi8(22)
+ 103 007c 00C0      		rjmp .L13
+ 104               	.L12:
+ 105 007e F801      		movw r30,r16
+ 106 0080 C481      		ldd r28,Z+4
+ 107 0082 D581      		ldd r29,Z+5
+ 108 0084 2097      		sbiw r28,0
+ 109 0086 01F0      		breq .L14
+ 110 0088 8881      		ld r24,Y
+ 111 008a 9981      		ldd r25,Y+1
+ 112 008c 0E94 0000 		call BankNodePointer
+ 113 0090 FC01      		movw r30,r24
+ 114 0092 8181      		ldd r24,Z+1
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 3
+
+
+ 115 0094 8150      		subi r24,lo8(-(-1))
+ 116 0096 8183      		std Z+1,r24
+ 117 0098 CE01      		movw r24,r28
+ 118 009a 0E94 0000 		call free
+ 119               	.L14:
+ 120 009e C801      		movw r24,r16
+ 121 00a0 0E94 0000 		call free
+ 122 00a4 20E0      		ldi r18,lo8(0)
+ 123 00a6 30E0      		ldi r19,hi8(0)
+ 124               	.L13:
+ 125 00a8 C901      		movw r24,r18
+ 126               	/* epilogue start */
+ 127 00aa DF91      		pop r29
+ 128 00ac CF91      		pop r28
+ 129 00ae 1F91      		pop r17
+ 130 00b0 0F91      		pop r16
+ 131 00b2 0895      		ret
+ 132               		.size	PnutFileClose, .-PnutFileClose
+ 133               		.type	PnutBlockAlloc, @function
+ 134               	PnutBlockAlloc:
+ 135 00b4 CF93      		push r28
+ 136 00b6 DF93      		push r29
+ 137               	/* prologue: function */
+ 138               	/* frame size = 0 */
+ 139 00b8 C091 0000 		lds r28,blockFreeList
+ 140 00bc D091 0000 		lds r29,(blockFreeList)+1
+ 141 00c0 D7FD      		sbrc r29,7
+ 142 00c2 00C0      		rjmp .L17
+ 143 00c4 CE01      		movw r24,r28
+ 144 00c6 0E94 0000 		call BankNodePointer
+ 145 00ca FC01      		movw r30,r24
+ 146 00cc 8081      		ld r24,Z
+ 147 00ce 9181      		ldd r25,Z+1
+ 148 00d0 9093 0000 		sts (blockFreeList)+1,r25
+ 149 00d4 8093 0000 		sts blockFreeList,r24
+ 150 00d8 80E0      		ldi r24,lo8(512)
+ 151 00da 92E0      		ldi r25,hi8(512)
+ 152 00dc DF01      		movw r26,r30
+ 153 00de 9C01      		movw r18,r24
+ 154 00e0 1D92      		st X+,__zero_reg__
+ 155 00e2 2150      		subi r18,1
+ 156 00e4 3040      		sbci r19,0
+ 157 00e6 01F4      		brne .-8
+ 158               	.L17:
+ 159 00e8 CE01      		movw r24,r28
+ 160               	/* epilogue start */
+ 161 00ea DF91      		pop r29
+ 162 00ec CF91      		pop r28
+ 163 00ee 0895      		ret
+ 164               		.size	PnutBlockAlloc, .-PnutBlockAlloc
+ 165               		.type	PnutNodeGetDataPtr, @function
+ 166               	PnutNodeGetDataPtr:
+ 167 00f0 4F92      		push r4
+ 168 00f2 5F92      		push r5
+ 169 00f4 6F92      		push r6
+ 170 00f6 7F92      		push r7
+ 171 00f8 8F92      		push r8
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 4
+
+
+ 172 00fa 9F92      		push r9
+ 173 00fc AF92      		push r10
+ 174 00fe BF92      		push r11
+ 175 0100 CF92      		push r12
+ 176 0102 DF92      		push r13
+ 177 0104 EF92      		push r14
+ 178 0106 FF92      		push r15
+ 179 0108 0F93      		push r16
+ 180 010a 1F93      		push r17
+ 181 010c CF93      		push r28
+ 182 010e DF93      		push r29
+ 183               	/* prologue: function */
+ 184               	/* frame size = 0 */
+ 185 0110 4C01      		movw r8,r24
+ 186 0112 5A01      		movw r10,r20
+ 187 0114 6B01      		movw r12,r22
+ 188 0116 3901      		movw r6,r18
+ 189 0118 2801      		movw r4,r16
+ 190 011a F901      		movw r30,r18
+ 191 011c 1182      		std Z+1,__zero_reg__
+ 192 011e 1082      		st Z,__zero_reg__
+ 193 0120 F801      		movw r30,r16
+ 194 0122 1182      		std Z+1,__zero_reg__
+ 195 0124 1082      		st Z,__zero_reg__
+ 196 0126 DB01      		movw r26,r22
+ 197 0128 CA01      		movw r24,r20
+ 198 012a 69E0      		ldi r22,9
+ 199 012c B695      	1:	lsr r27
+ 200 012e A795      		ror r26
+ 201 0130 9795      		ror r25
+ 202 0132 8795      		ror r24
+ 203 0134 6A95      		dec r22
+ 204 0136 01F4      		brne 1b
+ 205 0138 EC01      		movw r28,r24
+ 206 013a 8A3F      		cpi r24,250
+ 207 013c 9105      		cpc r25,__zero_reg__
+ 208 013e 04F4      		brge .L26
+ 209               	.L20:
+ 210 0140 C401      		movw r24,r8
+ 211 0142 0E94 0000 		call BankNodePointer
+ 212 0146 2696      		adiw r28,6
+ 213 0148 CC0F      		lsl r28
+ 214 014a DD1F      		rol r29
+ 215 014c FC01      		movw r30,r24
+ 216 014e EC0F      		add r30,r28
+ 217 0150 FD1F      		adc r31,r29
+ 218 0152 0081      		ld r16,Z
+ 219 0154 1181      		ldd r17,Z+1
+ 220 0156 17FF      		sbrs r17,7
+ 221 0158 00C0      		rjmp .L22
+ 222 015a EF28      		or r14,r15
+ 223 015c 01F4      		brne .L23
+ 224               	.L26:
+ 225 015e 26E1      		ldi r18,lo8(22)
+ 226 0160 30E0      		ldi r19,hi8(22)
+ 227 0162 00C0      		rjmp .L21
+ 228               	.L23:
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 5
+
+
+ 229 0164 0E94 0000 		call PnutBlockAlloc
+ 230 0168 8C01      		movw r16,r24
+ 231 016a 97FD      		sbrc r25,7
+ 232 016c 00C0      		rjmp .L24
+ 233 016e C401      		movw r24,r8
+ 234 0170 0E94 0000 		call BankNodePointer
+ 235 0174 C80F      		add r28,r24
+ 236 0176 D91F      		adc r29,r25
+ 237 0178 1983      		std Y+1,r17
+ 238 017a 0883      		st Y,r16
+ 239               	.L22:
+ 240 017c C801      		movw r24,r16
+ 241 017e 0E94 0000 		call BankNodePointer
+ 242 0182 9501      		movw r18,r10
+ 243 0184 3170      		andi r19,hi8(511)
+ 244 0186 820F      		add r24,r18
+ 245 0188 931F      		adc r25,r19
+ 246 018a F301      		movw r30,r6
+ 247 018c 9183      		std Z+1,r25
+ 248 018e 8083      		st Z,r24
+ 249 0190 80E0      		ldi r24,lo8(512)
+ 250 0192 92E0      		ldi r25,hi8(512)
+ 251 0194 821B      		sub r24,r18
+ 252 0196 930B      		sbc r25,r19
+ 253 0198 F201      		movw r30,r4
+ 254 019a 9183      		std Z+1,r25
+ 255 019c 8083      		st Z,r24
+ 256 019e 20E0      		ldi r18,lo8(0)
+ 257 01a0 30E0      		ldi r19,hi8(0)
+ 258               	.L21:
+ 259 01a2 C901      		movw r24,r18
+ 260               	/* epilogue start */
+ 261 01a4 DF91      		pop r29
+ 262 01a6 CF91      		pop r28
+ 263 01a8 1F91      		pop r17
+ 264 01aa 0F91      		pop r16
+ 265 01ac FF90      		pop r15
+ 266 01ae EF90      		pop r14
+ 267 01b0 DF90      		pop r13
+ 268 01b2 CF90      		pop r12
+ 269 01b4 BF90      		pop r11
+ 270 01b6 AF90      		pop r10
+ 271 01b8 9F90      		pop r9
+ 272 01ba 8F90      		pop r8
+ 273 01bc 7F90      		pop r7
+ 274 01be 6F90      		pop r6
+ 275 01c0 5F90      		pop r5
+ 276 01c2 4F90      		pop r4
+ 277 01c4 0895      		ret
+ 278               	.L24:
+ 279 01c6 2CE1      		ldi r18,lo8(28)
+ 280 01c8 30E0      		ldi r19,hi8(28)
+ 281 01ca 00C0      		rjmp .L21
+ 282               		.size	PnutNodeGetDataPtr, .-PnutNodeGetDataPtr
+ 283               		.type	PnutDirFindEntry, @function
+ 284               	PnutDirFindEntry:
+ 285 01cc 2F92      		push r2
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 6
+
+
+ 286 01ce 3F92      		push r3
+ 287 01d0 4F92      		push r4
+ 288 01d2 5F92      		push r5
+ 289 01d4 6F92      		push r6
+ 290 01d6 7F92      		push r7
+ 291 01d8 8F92      		push r8
+ 292 01da 9F92      		push r9
+ 293 01dc AF92      		push r10
+ 294 01de BF92      		push r11
+ 295 01e0 CF92      		push r12
+ 296 01e2 DF92      		push r13
+ 297 01e4 EF92      		push r14
+ 298 01e6 FF92      		push r15
+ 299 01e8 0F93      		push r16
+ 300 01ea 1F93      		push r17
+ 301 01ec DF93      		push r29
+ 302 01ee CF93      		push r28
+ 303 01f0 00D0      		rcall .
+ 304 01f2 CDB7      		in r28,__SP_L__
+ 305 01f4 DEB7      		in r29,__SP_H__
+ 306               	/* prologue: function */
+ 307               	/* frame size = 2 */
+ 308 01f6 2C01      		movw r4,r24
+ 309 01f8 1B01      		movw r2,r22
+ 310 01fa 3A01      		movw r6,r20
+ 311 01fc 4901      		movw r8,r18
+ 312 01fe AA24      		clr r10
+ 313 0200 BB24      		clr r11
+ 314 0202 6501      		movw r12,r10
+ 315 0204 00C0      		rjmp .L28
+ 316               	.L32:
+ 317 0206 EE24      		clr r14
+ 318 0208 FF24      		clr r15
+ 319 020a 8E01      		movw r16,r28
+ 320 020c 0F5F      		subi r16,lo8(-(1))
+ 321 020e 1F4F      		sbci r17,hi8(-(1))
+ 322 0210 9401      		movw r18,r8
+ 323 0212 B601      		movw r22,r12
+ 324 0214 A501      		movw r20,r10
+ 325 0216 C201      		movw r24,r4
+ 326 0218 0E94 0000 		call PnutNodeGetDataPtr
+ 327 021c 892B      		or r24,r25
+ 328 021e 01F4      		brne .L29
+ 329 0220 8981      		ldd r24,Y+1
+ 330 0222 9A81      		ldd r25,Y+2
+ 331 0224 0097      		sbiw r24,0
+ 332 0226 01F0      		breq .L29
+ 333 0228 8097      		sbiw r24,32
+ 334 022a 00F0      		brlo .L30
+ 335 022c D401      		movw r26,r8
+ 336 022e ED91      		ld r30,X+
+ 337 0230 FC91      		ld r31,X
+ 338 0232 8281      		ldd r24,Z+2
+ 339 0234 8823      		tst r24
+ 340 0236 01F0      		breq .L30
+ 341 0238 CF01      		movw r24,r30
+ 342 023a 0396      		adiw r24,3
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 7
+
+
+ 343 023c FC01      		movw r30,r24
+ 344 023e 0190      		ld __tmp_reg__,Z+
+ 345 0240 0020      		tst __tmp_reg__
+ 346 0242 01F4      		brne .-6
+ 347 0244 3197      		sbiw r30,1
+ 348 0246 E81B      		sub r30,r24
+ 349 0248 F90B      		sbc r31,r25
+ 350 024a E615      		cp r30,r6
+ 351 024c F705      		cpc r31,r7
+ 352 024e 01F4      		brne .L30
+ 353 0250 A301      		movw r20,r6
+ 354 0252 B101      		movw r22,r2
+ 355 0254 0E94 0000 		call strncmp
+ 356 0258 0097      		sbiw r24,0
+ 357 025a 01F4      		brne .L30
+ 358 025c 20E0      		ldi r18,lo8(0)
+ 359 025e 30E0      		ldi r19,hi8(0)
+ 360 0260 00C0      		rjmp .L31
+ 361               	.L30:
+ 362 0262 80E2      		ldi r24,lo8(32)
+ 363 0264 90E0      		ldi r25,hi8(32)
+ 364 0266 A0E0      		ldi r26,hlo8(32)
+ 365 0268 B0E0      		ldi r27,hhi8(32)
+ 366 026a A80E      		add r10,r24
+ 367 026c B91E      		adc r11,r25
+ 368 026e CA1E      		adc r12,r26
+ 369 0270 DB1E      		adc r13,r27
+ 370               	.L28:
+ 371 0272 C201      		movw r24,r4
+ 372 0274 0E94 0000 		call BankNodePointer
+ 373 0278 FC01      		movw r30,r24
+ 374 027a 8481      		ldd r24,Z+4
+ 375 027c 9581      		ldd r25,Z+5
+ 376 027e A681      		ldd r26,Z+6
+ 377 0280 B781      		ldd r27,Z+7
+ 378 0282 A816      		cp r10,r24
+ 379 0284 B906      		cpc r11,r25
+ 380 0286 CA06      		cpc r12,r26
+ 381 0288 DB06      		cpc r13,r27
+ 382 028a 00F4      		brsh .+2
+ 383 028c 00C0      		rjmp .L32
+ 384               	.L29:
+ 385 028e 22E0      		ldi r18,lo8(2)
+ 386 0290 30E0      		ldi r19,hi8(2)
+ 387               	.L31:
+ 388 0292 C901      		movw r24,r18
+ 389               	/* epilogue start */
+ 390 0294 0F90      		pop __tmp_reg__
+ 391 0296 0F90      		pop __tmp_reg__
+ 392 0298 CF91      		pop r28
+ 393 029a DF91      		pop r29
+ 394 029c 1F91      		pop r17
+ 395 029e 0F91      		pop r16
+ 396 02a0 FF90      		pop r15
+ 397 02a2 EF90      		pop r14
+ 398 02a4 DF90      		pop r13
+ 399 02a6 CF90      		pop r12
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 8
+
+
+ 400 02a8 BF90      		pop r11
+ 401 02aa AF90      		pop r10
+ 402 02ac 9F90      		pop r9
+ 403 02ae 8F90      		pop r8
+ 404 02b0 7F90      		pop r7
+ 405 02b2 6F90      		pop r6
+ 406 02b4 5F90      		pop r5
+ 407 02b6 4F90      		pop r4
+ 408 02b8 3F90      		pop r3
+ 409 02ba 2F90      		pop r2
+ 410 02bc 0895      		ret
+ 411               		.size	PnutDirFindEntry, .-PnutDirFindEntry
+ 412               		.data
+ 413               	.LC0:
+ 414 0000 2E00      		.string	"."
+ 415               		.text
+ 416               		.type	PnutDirFindPath, @function
+ 417               	PnutDirFindPath:
+ 418 02be 6F92      		push r6
+ 419 02c0 7F92      		push r7
+ 420 02c2 8F92      		push r8
+ 421 02c4 9F92      		push r9
+ 422 02c6 AF92      		push r10
+ 423 02c8 BF92      		push r11
+ 424 02ca CF92      		push r12
+ 425 02cc DF92      		push r13
+ 426 02ce EF92      		push r14
+ 427 02d0 FF92      		push r15
+ 428 02d2 0F93      		push r16
+ 429 02d4 1F93      		push r17
+ 430 02d6 DF93      		push r29
+ 431 02d8 CF93      		push r28
+ 432 02da 00D0      		rcall .
+ 433 02dc CDB7      		in r28,__SP_L__
+ 434 02de DEB7      		in r29,__SP_H__
+ 435               	/* prologue: function */
+ 436               	/* frame size = 2 */
+ 437 02e0 4C01      		movw r8,r24
+ 438 02e2 8B01      		movw r16,r22
+ 439 02e4 7A01      		movw r14,r20
+ 440 02e6 FA01      		movw r30,r20
+ 441 02e8 8283      		std Z+2,r24
+ 442 02ea 9382      		std Z+3,r9
+ 443 02ec 8FEF      		ldi r24,lo8(-1)
+ 444 02ee 9FEF      		ldi r25,hi8(-1)
+ 445 02f0 9183      		std Z+1,r25
+ 446 02f2 8083      		st Z,r24
+ 447 02f4 1582      		std Z+5,__zero_reg__
+ 448 02f6 1482      		std Z+4,__zero_reg__
+ 449 02f8 00C0      		rjmp .L35
+ 450               	.L36:
+ 451 02fa 0F5F      		subi r16,lo8(-(1))
+ 452 02fc 1F4F      		sbci r17,hi8(-(1))
+ 453               	.L35:
+ 454 02fe F801      		movw r30,r16
+ 455 0300 8081      		ld r24,Z
+ 456 0302 8F32      		cpi r24,lo8(47)
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 9
+
+
+ 457 0304 01F0      		breq .L36
+ 458 0306 8823      		tst r24
+ 459 0308 01F0      		breq .+2
+ 460 030a 00C0      		rjmp .L37
+ 461 030c 00E0      		ldi r16,lo8(.LC0)
+ 462 030e 10E0      		ldi r17,hi8(.LC0)
+ 463 0310 00C0      		rjmp .L37
+ 464               	.L47:
+ 465 0312 C401      		movw r24,r8
+ 466 0314 0E94 0000 		call BankNodePointer
+ 467 0318 FC01      		movw r30,r24
+ 468 031a 8081      		ld r24,Z
+ 469 031c 8130      		cpi r24,lo8(1)
+ 470 031e 01F0      		breq .L38
+ 471 0320 24E1      		ldi r18,lo8(20)
+ 472 0322 30E0      		ldi r19,hi8(20)
+ 473 0324 00C0      		rjmp .L39
+ 474               	.L38:
+ 475 0326 6801      		movw r12,r16
+ 476 0328 AA24      		clr r10
+ 477 032a BB24      		clr r11
+ 478 032c 00C0      		rjmp .L40
+ 479               	.L42:
+ 480 032e 0894      		sec
+ 481 0330 A11C      		adc r10,__zero_reg__
+ 482 0332 B11C      		adc r11,__zero_reg__
+ 483 0334 0894      		sec
+ 484 0336 C11C      		adc r12,__zero_reg__
+ 485 0338 D11C      		adc r13,__zero_reg__
+ 486               	.L40:
+ 487 033a F601      		movw r30,r12
+ 488 033c 8081      		ld r24,Z
+ 489 033e 8823      		tst r24
+ 490 0340 01F0      		breq .L41
+ 491 0342 8F32      		cpi r24,lo8(47)
+ 492 0344 01F4      		brne .L42
+ 493 0346 00C0      		rjmp .L43
+ 494               	.L41:
+ 495 0348 F701      		movw r30,r14
+ 496 034a 1583      		std Z+5,r17
+ 497 034c 0483      		std Z+4,r16
+ 498               	.L43:
+ 499 034e 9301      		movw r18,r6
+ 500 0350 A501      		movw r20,r10
+ 501 0352 B801      		movw r22,r16
+ 502 0354 C401      		movw r24,r8
+ 503 0356 0E94 0000 		call PnutDirFindEntry
+ 504 035a 9C01      		movw r18,r24
+ 505 035c 0097      		sbiw r24,0
+ 506 035e 01F0      		breq .L44
+ 507 0360 22E0      		ldi r18,lo8(2)
+ 508 0362 30E0      		ldi r19,hi8(2)
+ 509 0364 00C0      		rjmp .L39
+ 510               	.L44:
+ 511 0366 E981      		ldd r30,Y+1
+ 512 0368 FA81      		ldd r31,Y+2
+ 513 036a 4081      		ld r20,Z
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 10
+
+
+ 514 036c 9181      		ldd r25,Z+1
+ 515 036e F701      		movw r30,r14
+ 516 0370 4083      		st Z,r20
+ 517 0372 9183      		std Z+1,r25
+ 518 0374 F601      		movw r30,r12
+ 519 0376 8081      		ld r24,Z
+ 520 0378 8823      		tst r24
+ 521 037a 01F0      		breq .L39
+ 522 037c F701      		movw r30,r14
+ 523 037e 4283      		std Z+2,r20
+ 524 0380 9383      		std Z+3,r25
+ 525 0382 842E      		mov r8,r20
+ 526 0384 992E      		mov r9,r25
+ 527 0386 0A0D      		add r16,r10
+ 528 0388 1B1D      		adc r17,r11
+ 529 038a 00C0      		rjmp .L45
+ 530               	.L50:
+ 531 038c 0F5F      		subi r16,lo8(-(1))
+ 532 038e 1F4F      		sbci r17,hi8(-(1))
+ 533               	.L45:
+ 534 0390 F801      		movw r30,r16
+ 535 0392 8081      		ld r24,Z
+ 536 0394 8F32      		cpi r24,lo8(47)
+ 537 0396 01F4      		brne .L49
+ 538 0398 00C0      		rjmp .L50
+ 539               	.L37:
+ 540 039a 3E01      		movw r6,r28
+ 541 039c 0894      		sec
+ 542 039e 611C      		adc r6,__zero_reg__
+ 543 03a0 711C      		adc r7,__zero_reg__
+ 544               	.L49:
+ 545 03a2 F801      		movw r30,r16
+ 546 03a4 8081      		ld r24,Z
+ 547 03a6 8823      		tst r24
+ 548 03a8 01F0      		breq .+2
+ 549 03aa 00C0      		rjmp .L47
+ 550 03ac 20E0      		ldi r18,lo8(0)
+ 551 03ae 30E0      		ldi r19,hi8(0)
+ 552               	.L39:
+ 553 03b0 C901      		movw r24,r18
+ 554               	/* epilogue start */
+ 555 03b2 0F90      		pop __tmp_reg__
+ 556 03b4 0F90      		pop __tmp_reg__
+ 557 03b6 CF91      		pop r28
+ 558 03b8 DF91      		pop r29
+ 559 03ba 1F91      		pop r17
+ 560 03bc 0F91      		pop r16
+ 561 03be FF90      		pop r15
+ 562 03c0 EF90      		pop r14
+ 563 03c2 DF90      		pop r13
+ 564 03c4 CF90      		pop r12
+ 565 03c6 BF90      		pop r11
+ 566 03c8 AF90      		pop r10
+ 567 03ca 9F90      		pop r9
+ 568 03cc 8F90      		pop r8
+ 569 03ce 7F90      		pop r7
+ 570 03d0 6F90      		pop r6
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 11
+
+
+ 571 03d2 0895      		ret
+ 572               		.size	PnutDirFindPath, .-PnutDirFindPath
+ 573               		.type	PnutNodeDataRelease, @function
+ 574               	PnutNodeDataRelease:
+ 575 03d4 8F92      		push r8
+ 576 03d6 9F92      		push r9
+ 577 03d8 AF92      		push r10
+ 578 03da BF92      		push r11
+ 579 03dc CF92      		push r12
+ 580 03de DF92      		push r13
+ 581 03e0 EF92      		push r14
+ 582 03e2 FF92      		push r15
+ 583 03e4 0F93      		push r16
+ 584 03e6 1F93      		push r17
+ 585 03e8 CF93      		push r28
+ 586 03ea DF93      		push r29
+ 587               	/* prologue: function */
+ 588               	/* frame size = 0 */
+ 589 03ec 7C01      		movw r14,r24
+ 590 03ee B090 0000 		lds r11,blockFreeList
+ 591 03f2 A090 0000 		lds r10,blockFreeList+1
+ 592 03f6 C0E0      		ldi r28,lo8(0)
+ 593 03f8 D0E0      		ldi r29,hi8(0)
+ 594 03fa 8824      		clr r8
+ 595 03fc 8A94      		dec r8
+ 596 03fe 982C      		mov r9,r8
+ 597               	.L55:
+ 598 0400 C701      		movw r24,r14
+ 599 0402 0E94 0000 		call BankNodePointer
+ 600 0406 2696      		adiw r28,6
+ 601 0408 8E01      		movw r16,r28
+ 602 040a 000F      		lsl r16
+ 603 040c 111F      		rol r17
+ 604 040e 2697      		sbiw r28,6
+ 605 0410 FC01      		movw r30,r24
+ 606 0412 E00F      		add r30,r16
+ 607 0414 F11F      		adc r31,r17
+ 608 0416 8081      		ld r24,Z
+ 609 0418 9181      		ldd r25,Z+1
+ 610 041a 97FF      		sbrs r25,7
+ 611 041c 00C0      		rjmp .L52
+ 612 041e 6501      		movw r12,r10
+ 613 0420 00C0      		rjmp .L53
+ 614               	.L52:
+ 615 0422 C701      		movw r24,r14
+ 616 0424 0E94 0000 		call BankNodePointer
+ 617 0428 FC01      		movw r30,r24
+ 618 042a E00F      		add r30,r16
+ 619 042c F11F      		adc r31,r17
+ 620 042e D080      		ld r13,Z
+ 621 0430 C180      		ldd r12,Z+1
+ 622 0432 8D2D      		mov r24,r13
+ 623 0434 9C2D      		mov r25,r12
+ 624 0436 0E94 0000 		call BankNodePointer
+ 625 043a FC01      		movw r30,r24
+ 626 043c B082      		st Z,r11
+ 627 043e A182      		std Z+1,r10
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 12
+
+
+ 628 0440 C701      		movw r24,r14
+ 629 0442 0E94 0000 		call BankNodePointer
+ 630 0446 080F      		add r16,r24
+ 631 0448 191F      		adc r17,r25
+ 632 044a F801      		movw r30,r16
+ 633 044c 9182      		std Z+1,r9
+ 634 044e 8082      		st Z,r8
+ 635               	.L53:
+ 636 0450 2196      		adiw r28,1
+ 637 0452 CA3F      		cpi r28,250
+ 638 0454 D105      		cpc r29,__zero_reg__
+ 639 0456 01F0      		breq .L54
+ 640 0458 5601      		movw r10,r12
+ 641 045a 00C0      		rjmp .L55
+ 642               	.L54:
+ 643 045c D092 0000 		sts blockFreeList,r13
+ 644 0460 C092 0000 		sts blockFreeList+1,r12
+ 645 0464 C701      		movw r24,r14
+ 646 0466 0E94 0000 		call BankNodePointer
+ 647 046a FC01      		movw r30,r24
+ 648 046c 1482      		std Z+4,__zero_reg__
+ 649 046e 1582      		std Z+5,__zero_reg__
+ 650 0470 1682      		std Z+6,__zero_reg__
+ 651 0472 1782      		std Z+7,__zero_reg__
+ 652 0474 C701      		movw r24,r14
+ 653 0476 0E94 0000 		call BankNodePointer
+ 654 047a 8C01      		movw r16,r24
+ 655 047c 80E0      		ldi r24,lo8(0)
+ 656 047e 90E0      		ldi r25,hi8(0)
+ 657 0480 0E94 0000 		call time
+ 658 0484 F801      		movw r30,r16
+ 659 0486 6087      		std Z+8,r22
+ 660 0488 7187      		std Z+9,r23
+ 661 048a 8287      		std Z+10,r24
+ 662 048c 9387      		std Z+11,r25
+ 663               	/* epilogue start */
+ 664 048e DF91      		pop r29
+ 665 0490 CF91      		pop r28
+ 666 0492 1F91      		pop r17
+ 667 0494 0F91      		pop r16
+ 668 0496 FF90      		pop r15
+ 669 0498 EF90      		pop r14
+ 670 049a DF90      		pop r13
+ 671 049c CF90      		pop r12
+ 672 049e BF90      		pop r11
+ 673 04a0 AF90      		pop r10
+ 674 04a2 9F90      		pop r9
+ 675 04a4 8F90      		pop r8
+ 676 04a6 0895      		ret
+ 677               		.size	PnutNodeDataRelease, .-PnutNodeDataRelease
+ 678               		.type	PnutNodeRelease, @function
+ 679               	PnutNodeRelease:
+ 680 04a8 0F93      		push r16
+ 681 04aa 1F93      		push r17
+ 682               	/* prologue: function */
+ 683               	/* frame size = 0 */
+ 684 04ac 8C01      		movw r16,r24
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 13
+
+
+ 685 04ae 0E94 0000 		call PnutNodeDataRelease
+ 686 04b2 C801      		movw r24,r16
+ 687 04b4 0E94 0000 		call BankNodePointer
+ 688 04b8 FC01      		movw r30,r24
+ 689 04ba 8091 0000 		lds r24,blockFreeList
+ 690 04be 9091 0000 		lds r25,(blockFreeList)+1
+ 691 04c2 9183      		std Z+1,r25
+ 692 04c4 8083      		st Z,r24
+ 693 04c6 1093 0000 		sts (blockFreeList)+1,r17
+ 694 04ca 0093 0000 		sts blockFreeList,r16
+ 695               	/* epilogue start */
+ 696 04ce 1F91      		pop r17
+ 697 04d0 0F91      		pop r16
+ 698 04d2 0895      		ret
+ 699               		.size	PnutNodeRelease, .-PnutNodeRelease
+ 700               		.type	PnutNodeAlloc, @function
+ 701               	PnutNodeAlloc:
+ 702 04d4 FF92      		push r15
+ 703 04d6 0F93      		push r16
+ 704 04d8 1F93      		push r17
+ 705 04da CF93      		push r28
+ 706 04dc DF93      		push r29
+ 707               	/* prologue: function */
+ 708               	/* frame size = 0 */
+ 709 04de F82E      		mov r15,r24
+ 710 04e0 0E94 0000 		call PnutBlockAlloc
+ 711 04e4 8C01      		movw r16,r24
+ 712 04e6 97FD      		sbrc r25,7
+ 713 04e8 00C0      		rjmp .L60
+ 714 04ea 0E94 0000 		call BankNodePointer
+ 715 04ee EC01      		movw r28,r24
+ 716 04f0 FC01      		movw r30,r24
+ 717 04f2 80E0      		ldi r24,lo8(0)
+ 718 04f4 90E0      		ldi r25,hi8(0)
+ 719 04f6 2FEF      		ldi r18,lo8(-1)
+ 720 04f8 3FEF      		ldi r19,hi8(-1)
+ 721               	.L61:
+ 722 04fa 3587      		std Z+13,r19
+ 723 04fc 2487      		std Z+12,r18
+ 724 04fe 0196      		adiw r24,1
+ 725 0500 3296      		adiw r30,2
+ 726 0502 8A3F      		cpi r24,250
+ 727 0504 9105      		cpc r25,__zero_reg__
+ 728 0506 01F4      		brne .L61
+ 729 0508 F882      		st Y,r15
+ 730 050a 80E0      		ldi r24,lo8(0)
+ 731 050c 90E0      		ldi r25,hi8(0)
+ 732 050e 0E94 0000 		call time
+ 733 0512 6887      		std Y+8,r22
+ 734 0514 7987      		std Y+9,r23
+ 735 0516 8A87      		std Y+10,r24
+ 736 0518 9B87      		std Y+11,r25
+ 737               	.L60:
+ 738 051a C801      		movw r24,r16
+ 739               	/* epilogue start */
+ 740 051c DF91      		pop r29
+ 741 051e CF91      		pop r28
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 14
+
+
+ 742 0520 1F91      		pop r17
+ 743 0522 0F91      		pop r16
+ 744 0524 FF90      		pop r15
+ 745 0526 0895      		ret
+ 746               		.size	PnutNodeAlloc, .-PnutNodeAlloc
+ 747               		.type	PnutDirAddEntry, @function
+ 748               	PnutDirAddEntry:
+ 749 0528 2F92      		push r2
+ 750 052a 3F92      		push r3
+ 751 052c 4F92      		push r4
+ 752 052e 5F92      		push r5
+ 753 0530 6F92      		push r6
+ 754 0532 7F92      		push r7
+ 755 0534 8F92      		push r8
+ 756 0536 9F92      		push r9
+ 757 0538 AF92      		push r10
+ 758 053a BF92      		push r11
+ 759 053c CF92      		push r12
+ 760 053e DF92      		push r13
+ 761 0540 EF92      		push r14
+ 762 0542 FF92      		push r15
+ 763 0544 0F93      		push r16
+ 764 0546 1F93      		push r17
+ 765 0548 DF93      		push r29
+ 766 054a CF93      		push r28
+ 767 054c 00D0      		rcall .
+ 768 054e 00D0      		rcall .
+ 769 0550 CDB7      		in r28,__SP_L__
+ 770 0552 DEB7      		in r29,__SP_H__
+ 771               	/* prologue: function */
+ 772               	/* frame size = 4 */
+ 773 0554 4C01      		movw r8,r24
+ 774 0556 3B01      		movw r6,r22
+ 775 0558 2A01      		movw r4,r20
+ 776 055a AA24      		clr r10
+ 777 055c BB24      		clr r11
+ 778 055e 6501      		movw r12,r10
+ 779 0560 1E01      		movw r2,r28
+ 780 0562 0894      		sec
+ 781 0564 211C      		adc r2,__zero_reg__
+ 782 0566 311C      		adc r3,__zero_reg__
+ 783               	.L71:
+ 784 0568 E1E0      		ldi r30,lo8(1)
+ 785 056a EE2E      		mov r14,r30
+ 786 056c F12C      		mov r15,__zero_reg__
+ 787 056e 8101      		movw r16,r2
+ 788 0570 9E01      		movw r18,r28
+ 789 0572 2D5F      		subi r18,lo8(-(3))
+ 790 0574 3F4F      		sbci r19,hi8(-(3))
+ 791 0576 B601      		movw r22,r12
+ 792 0578 A501      		movw r20,r10
+ 793 057a C401      		movw r24,r8
+ 794 057c 0E94 0000 		call PnutNodeGetDataPtr
+ 795 0580 7C01      		movw r14,r24
+ 796 0582 0097      		sbiw r24,0
+ 797 0584 01F0      		breq .+2
+ 798 0586 00C0      		rjmp .L65
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 15
+
+
+ 799 0588 80E2      		ldi r24,lo8(32)
+ 800 058a 90E0      		ldi r25,hi8(32)
+ 801 058c A0E0      		ldi r26,hlo8(32)
+ 802 058e B0E0      		ldi r27,hhi8(32)
+ 803 0590 A80E      		add r10,r24
+ 804 0592 B91E      		adc r11,r25
+ 805 0594 CA1E      		adc r12,r26
+ 806 0596 DB1E      		adc r13,r27
+ 807 0598 8981      		ldd r24,Y+1
+ 808 059a 9A81      		ldd r25,Y+2
+ 809 059c 8097      		sbiw r24,32
+ 810 059e 00F0      		brlo .L71
+ 811 05a0 EB81      		ldd r30,Y+3
+ 812 05a2 FC81      		ldd r31,Y+4
+ 813 05a4 8281      		ldd r24,Z+2
+ 814 05a6 8823      		tst r24
+ 815 05a8 01F4      		brne .L71
+ 816 05aa 5182      		std Z+1,r5
+ 817 05ac 4082      		st Z,r4
+ 818 05ae 81E0      		ldi r24,lo8(1)
+ 819 05b0 8283      		std Z+2,r24
+ 820 05b2 B301      		movw r22,r6
+ 821 05b4 CF01      		movw r24,r30
+ 822 05b6 0396      		adiw r24,3
+ 823 05b8 0E94 0000 		call strcpy
+ 824 05bc C401      		movw r24,r8
+ 825 05be 0E94 0000 		call BankNodePointer
+ 826 05c2 8C01      		movw r16,r24
+ 827 05c4 80E0      		ldi r24,lo8(0)
+ 828 05c6 90E0      		ldi r25,hi8(0)
+ 829 05c8 0E94 0000 		call time
+ 830 05cc D801      		movw r26,r16
+ 831 05ce 1896      		adiw r26,8
+ 832 05d0 6D93      		st X+,r22
+ 833 05d2 7D93      		st X+,r23
+ 834 05d4 8D93      		st X+,r24
+ 835 05d6 9C93      		st X,r25
+ 836 05d8 1B97      		sbiw r26,8+3
+ 837 05da 1496      		adiw r26,4
+ 838 05dc 8D91      		ld r24,X+
+ 839 05de 9D91      		ld r25,X+
+ 840 05e0 0D90      		ld __tmp_reg__,X+
+ 841 05e2 BC91      		ld r27,X
+ 842 05e4 A02D      		mov r26,__tmp_reg__
+ 843 05e6 8A15      		cp r24,r10
+ 844 05e8 9B05      		cpc r25,r11
+ 845 05ea AC05      		cpc r26,r12
+ 846 05ec BD05      		cpc r27,r13
+ 847 05ee 00F4      		brsh .L67
+ 848 05f0 F801      		movw r30,r16
+ 849 05f2 A482      		std Z+4,r10
+ 850 05f4 B582      		std Z+5,r11
+ 851 05f6 C682      		std Z+6,r12
+ 852 05f8 D782      		std Z+7,r13
+ 853               	.L67:
+ 854 05fa C201      		movw r24,r4
+ 855 05fc 0E94 0000 		call BankNodePointer
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 16
+
+
+ 856 0600 FC01      		movw r30,r24
+ 857 0602 8281      		ldd r24,Z+2
+ 858 0604 9381      		ldd r25,Z+3
+ 859 0606 0196      		adiw r24,1
+ 860 0608 9383      		std Z+3,r25
+ 861 060a 8283      		std Z+2,r24
+ 862               	.L65:
+ 863 060c C701      		movw r24,r14
+ 864               	/* epilogue start */
+ 865 060e 0F90      		pop __tmp_reg__
+ 866 0610 0F90      		pop __tmp_reg__
+ 867 0612 0F90      		pop __tmp_reg__
+ 868 0614 0F90      		pop __tmp_reg__
+ 869 0616 CF91      		pop r28
+ 870 0618 DF91      		pop r29
+ 871 061a 1F91      		pop r17
+ 872 061c 0F91      		pop r16
+ 873 061e FF90      		pop r15
+ 874 0620 EF90      		pop r14
+ 875 0622 DF90      		pop r13
+ 876 0624 CF90      		pop r12
+ 877 0626 BF90      		pop r11
+ 878 0628 AF90      		pop r10
+ 879 062a 9F90      		pop r9
+ 880 062c 8F90      		pop r8
+ 881 062e 7F90      		pop r7
+ 882 0630 6F90      		pop r6
+ 883 0632 5F90      		pop r5
+ 884 0634 4F90      		pop r4
+ 885 0636 3F90      		pop r3
+ 886 0638 2F90      		pop r2
+ 887 063a 0895      		ret
+ 888               		.size	PnutDirAddEntry, .-PnutDirAddEntry
+ 889               		.type	PnutFileOpen, @function
+ 890               	PnutFileOpen:
+ 891 063c AF92      		push r10
+ 892 063e BF92      		push r11
+ 893 0640 CF92      		push r12
+ 894 0642 DF92      		push r13
+ 895 0644 EF92      		push r14
+ 896 0646 FF92      		push r15
+ 897 0648 0F93      		push r16
+ 898 064a 1F93      		push r17
+ 899 064c DF93      		push r29
+ 900 064e CF93      		push r28
+ 901 0650 00D0      		rcall .
+ 902 0652 00D0      		rcall .
+ 903 0654 00D0      		rcall .
+ 904 0656 CDB7      		in r28,__SP_L__
+ 905 0658 DEB7      		in r29,__SP_H__
+ 906               	/* prologue: function */
+ 907               	/* frame size = 6 */
+ 908 065a 5C01      		movw r10,r24
+ 909 065c 7A01      		movw r14,r20
+ 910 065e AE01      		movw r20,r28
+ 911 0660 4F5F      		subi r20,lo8(-(1))
+ 912 0662 5F4F      		sbci r21,hi8(-(1))
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 17
+
+
+ 913 0664 8091 0000 		lds r24,root
+ 914 0668 9091 0000 		lds r25,(root)+1
+ 915 066c 0E94 0000 		call PnutDirFindPath
+ 916 0670 0097      		sbiw r24,0
+ 917 0672 01F4      		brne .L73
+ 918 0674 8981      		ldd r24,Y+1
+ 919 0676 9A81      		ldd r25,Y+2
+ 920 0678 0E94 0000 		call BankNodePointer
+ 921 067c FC01      		movw r30,r24
+ 922 067e 8081      		ld r24,Z
+ 923 0680 8823      		tst r24
+ 924 0682 01F0      		breq .L74
+ 925 0684 85E1      		ldi r24,lo8(21)
+ 926 0686 90E0      		ldi r25,hi8(21)
+ 927 0688 00C0      		rjmp .L85
+ 928               	.L74:
+ 929 068a C701      		movw r24,r14
+ 930 068c 8070      		andi r24,lo8(1280)
+ 931 068e 9570      		andi r25,hi8(1280)
+ 932 0690 8050      		subi r24,lo8(1280)
+ 933 0692 9540      		sbci r25,hi8(1280)
+ 934 0694 01F4      		brne .L76
+ 935 0696 81E1      		ldi r24,lo8(17)
+ 936 0698 90E0      		ldi r25,hi8(17)
+ 937 069a 00C0      		rjmp .L85
+ 938               	.L76:
+ 939 069c C980      		ldd r12,Y+1
+ 940 069e DA80      		ldd r13,Y+2
+ 941 06a0 F1FE      		sbrs r15,1
+ 942 06a2 00C0      		rjmp .L77
+ 943 06a4 C601      		movw r24,r12
+ 944 06a6 0E94 0000 		call PnutNodeDataRelease
+ 945 06aa 00C0      		rjmp .L77
+ 946               	.L73:
+ 947 06ac 0297      		sbiw r24,2
+ 948 06ae 01F0      		breq .+2
+ 949 06b0 00C0      		rjmp .L78
+ 950 06b2 8D81      		ldd r24,Y+5
+ 951 06b4 9E81      		ldd r25,Y+6
+ 952 06b6 892B      		or r24,r25
+ 953 06b8 01F4      		brne .+2
+ 954 06ba 00C0      		rjmp .L78
+ 955 06bc F0FE      		sbrs r15,0
+ 956 06be 00C0      		rjmp .L78
+ 957 06c0 80E0      		ldi r24,lo8(0)
+ 958 06c2 0E94 0000 		call PnutNodeAlloc
+ 959 06c6 6C01      		movw r12,r24
+ 960 06c8 97FF      		sbrs r25,7
+ 961 06ca 00C0      		rjmp .L79
+ 962 06cc 8CE1      		ldi r24,lo8(28)
+ 963 06ce 90E0      		ldi r25,hi8(28)
+ 964               	.L85:
+ 965 06d0 9093 0000 		sts (errno)+1,r25
+ 966 06d4 8093 0000 		sts errno,r24
+ 967 06d8 00C0      		rjmp .L78
+ 968               	.L79:
+ 969 06da 6D81      		ldd r22,Y+5
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 18
+
+
+ 970 06dc 7E81      		ldd r23,Y+6
+ 971 06de AC01      		movw r20,r24
+ 972 06e0 8B81      		ldd r24,Y+3
+ 973 06e2 9C81      		ldd r25,Y+4
+ 974 06e4 0E94 0000 		call PnutDirAddEntry
+ 975 06e8 892B      		or r24,r25
+ 976 06ea 01F0      		breq .L80
+ 977 06ec C601      		movw r24,r12
+ 978 06ee 0E94 0000 		call BankNodePointer
+ 979 06f2 FC01      		movw r30,r24
+ 980 06f4 8091 0000 		lds r24,blockFreeList
+ 981 06f8 9091 0000 		lds r25,(blockFreeList)+1
+ 982 06fc 9183      		std Z+1,r25
+ 983 06fe 8083      		st Z,r24
+ 984 0700 D092 0000 		sts (blockFreeList)+1,r13
+ 985 0704 C092 0000 		sts blockFreeList,r12
+ 986 0708 00C0      		rjmp .L78
+ 987               	.L80:
+ 988 070a 88E0      		ldi r24,lo8(8)
+ 989 070c 90E0      		ldi r25,hi8(8)
+ 990 070e 0E94 0000 		call malloc
+ 991 0712 8C01      		movw r16,r24
+ 992 0714 0097      		sbiw r24,0
+ 993 0716 01F0      		breq .L78
+ 994 0718 9701      		movw r18,r14
+ 995 071a 2970      		andi r18,lo8(9)
+ 996 071c 3070      		andi r19,hi8(9)
+ 997 071e FC01      		movw r30,r24
+ 998 0720 8681      		ldd r24,Z+6
+ 999 0722 9781      		ldd r25,Z+7
+ 1000 0724 822B      		or r24,r18
+ 1001 0726 932B      		or r25,r19
+ 1002 0728 9783      		std Z+7,r25
+ 1003 072a 8683      		std Z+6,r24
+ 1004 072c E3FC      		sbrc r14,3
+ 1005 072e 00C0      		rjmp .L81
+ 1006 0730 80E0      		ldi r24,lo8(0)
+ 1007 0732 90E0      		ldi r25,hi8(0)
+ 1008 0734 A0E0      		ldi r26,hlo8(0)
+ 1009 0736 B0E0      		ldi r27,hhi8(0)
+ 1010 0738 00C0      		rjmp .L82
+ 1011               	.L81:
+ 1012 073a C601      		movw r24,r12
+ 1013 073c 0E94 0000 		call BankNodePointer
+ 1014 0740 FC01      		movw r30,r24
+ 1015 0742 8481      		ldd r24,Z+4
+ 1016 0744 9581      		ldd r25,Z+5
+ 1017 0746 A681      		ldd r26,Z+6
+ 1018 0748 B781      		ldd r27,Z+7
+ 1019               	.L82:
+ 1020 074a F801      		movw r30,r16
+ 1021 074c 8283      		std Z+2,r24
+ 1022 074e 9383      		std Z+3,r25
+ 1023 0750 A483      		std Z+4,r26
+ 1024 0752 B583      		std Z+5,r27
+ 1025 0754 D182      		std Z+1,r13
+ 1026 0756 C082      		st Z,r12
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 19
+
+
+ 1027 0758 86E0      		ldi r24,lo8(6)
+ 1028 075a 90E0      		ldi r25,hi8(6)
+ 1029 075c 0E94 0000 		call malloc
+ 1030 0760 FC01      		movw r30,r24
+ 1031 0762 7C01      		movw r14,r24
+ 1032 0764 0097      		sbiw r24,0
+ 1033 0766 01F4      		brne .L83
+ 1034 0768 C801      		movw r24,r16
+ 1035 076a 0E94 0000 		call free
+ 1036 076e 00C0      		rjmp .L78
+ 1037               	.L83:
+ 1038 0770 1182      		std Z+1,__zero_reg__
+ 1039 0772 1082      		st Z,__zero_reg__
+ 1040 0774 B382      		std Z+3,r11
+ 1041 0776 A282      		std Z+2,r10
+ 1042 0778 1583      		std Z+5,r17
+ 1043 077a 0483      		std Z+4,r16
+ 1044 077c C601      		movw r24,r12
+ 1045 077e 0E94 0000 		call BankNodePointer
+ 1046 0782 FC01      		movw r30,r24
+ 1047 0784 8181      		ldd r24,Z+1
+ 1048 0786 8F5F      		subi r24,lo8(-(1))
+ 1049 0788 8183      		std Z+1,r24
+ 1050 078a 00C0      		rjmp .L75
+ 1051               	.L78:
+ 1052 078c EE24      		clr r14
+ 1053 078e EA94      		dec r14
+ 1054 0790 FE2C      		mov r15,r14
+ 1055               	.L75:
+ 1056 0792 C701      		movw r24,r14
+ 1057               	/* epilogue start */
+ 1058 0794 2696      		adiw r28,6
+ 1059 0796 0FB6      		in __tmp_reg__,__SREG__
+ 1060 0798 F894      		cli
+ 1061 079a DEBF      		out __SP_H__,r29
+ 1062 079c 0FBE      		out __SREG__,__tmp_reg__
+ 1063 079e CDBF      		out __SP_L__,r28
+ 1064 07a0 CF91      		pop r28
+ 1065 07a2 DF91      		pop r29
+ 1066 07a4 1F91      		pop r17
+ 1067 07a6 0F91      		pop r16
+ 1068 07a8 FF90      		pop r15
+ 1069 07aa EF90      		pop r14
+ 1070 07ac DF90      		pop r13
+ 1071 07ae CF90      		pop r12
+ 1072 07b0 BF90      		pop r11
+ 1073 07b2 AF90      		pop r10
+ 1074 07b4 0895      		ret
+ 1075               	.L77:
+ 1076 07b6 D7FE      		sbrs r13,7
+ 1077 07b8 00C0      		rjmp .L80
+ 1078 07ba 00C0      		rjmp .L78
+ 1079               		.size	PnutFileOpen, .-PnutFileOpen
+ 1080               		.data
+ 1081               	.LC1:
+ 1082 0002 2E2E 00   		.string	".."
+ 1083               		.text
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 20
+
+
+ 1084               		.type	PnutInit, @function
+ 1085               	PnutInit:
+ 1086 07bc 0F93      		push r16
+ 1087 07be 1F93      		push r17
+ 1088 07c0 CF93      		push r28
+ 1089 07c2 DF93      		push r29
+ 1090               	/* prologue: function */
+ 1091               	/* frame size = 0 */
+ 1092 07c4 1091 0000 		lds r17,blockFreeList
+ 1093 07c8 0091 0000 		lds r16,blockFreeList+1
+ 1094 07cc C0E0      		ldi r28,lo8(0)
+ 1095 07ce D0E0      		ldi r29,hi8(0)
+ 1096               	.L87:
+ 1097 07d0 CE01      		movw r24,r28
+ 1098 07d2 0E94 0000 		call BankNodePointer
+ 1099 07d6 FC01      		movw r30,r24
+ 1100 07d8 1083      		st Z,r17
+ 1101 07da 0183      		std Z+1,r16
+ 1102 07dc 1C2F      		mov r17,r28
+ 1103 07de 0D2F      		mov r16,r29
+ 1104 07e0 2196      		adiw r28,1
+ 1105 07e2 23E0      		ldi r18,hi8(960)
+ 1106 07e4 C03C      		cpi r28,lo8(960)
+ 1107 07e6 D207      		cpc r29,r18
+ 1108 07e8 01F4      		brne .L87
+ 1109 07ea 8FEB      		ldi r24,lo8(959)
+ 1110 07ec 93E0      		ldi r25,hi8(959)
+ 1111 07ee 9093 0000 		sts (blockFreeList)+1,r25
+ 1112 07f2 8093 0000 		sts blockFreeList,r24
+ 1113 07f6 81E0      		ldi r24,lo8(1)
+ 1114 07f8 0E94 0000 		call PnutNodeAlloc
+ 1115 07fc 9093 0000 		sts (root)+1,r25
+ 1116 0800 8093 0000 		sts root,r24
+ 1117 0804 2FEF      		ldi r18,hi8(-1)
+ 1118 0806 8F3F      		cpi r24,lo8(-1)
+ 1119 0808 9207      		cpc r25,r18
+ 1120 080a 01F4      		brne .L88
+ 1121 080c CCE1      		ldi r28,lo8(28)
+ 1122 080e D0E0      		ldi r29,hi8(28)
+ 1123 0810 00C0      		rjmp .L89
+ 1124               	.L88:
+ 1125 0812 AC01      		movw r20,r24
+ 1126 0814 60E0      		ldi r22,lo8(.LC0)
+ 1127 0816 70E0      		ldi r23,hi8(.LC0)
+ 1128 0818 0E94 0000 		call PnutDirAddEntry
+ 1129 081c EC01      		movw r28,r24
+ 1130 081e 0097      		sbiw r24,0
+ 1131 0820 01F4      		brne .L90
+ 1132 0822 8091 0000 		lds r24,root
+ 1133 0826 9091 0000 		lds r25,(root)+1
+ 1134 082a AC01      		movw r20,r24
+ 1135 082c 60E0      		ldi r22,lo8(.LC1)
+ 1136 082e 70E0      		ldi r23,hi8(.LC1)
+ 1137 0830 0E94 0000 		call PnutDirAddEntry
+ 1138 0834 EC01      		movw r28,r24
+ 1139 0836 0097      		sbiw r24,0
+ 1140 0838 01F0      		breq .L89
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 21
+
+
+ 1141               	.L90:
+ 1142 083a 0091 0000 		lds r16,root
+ 1143 083e 1091 0000 		lds r17,(root)+1
+ 1144 0842 C801      		movw r24,r16
+ 1145 0844 0E94 0000 		call BankNodePointer
+ 1146 0848 FC01      		movw r30,r24
+ 1147 084a 8091 0000 		lds r24,blockFreeList
+ 1148 084e 9091 0000 		lds r25,(blockFreeList)+1
+ 1149 0852 9183      		std Z+1,r25
+ 1150 0854 8083      		st Z,r24
+ 1151 0856 1093 0000 		sts (blockFreeList)+1,r17
+ 1152 085a 0093 0000 		sts blockFreeList,r16
+ 1153               	.L89:
+ 1154 085e CE01      		movw r24,r28
+ 1155               	/* epilogue start */
+ 1156 0860 DF91      		pop r29
+ 1157 0862 CF91      		pop r28
+ 1158 0864 1F91      		pop r17
+ 1159 0866 0F91      		pop r16
+ 1160 0868 0895      		ret
+ 1161               		.size	PnutInit, .-PnutInit
+ 1162               		.type	PnutFileWrite, @function
+ 1163               	PnutFileWrite:
+ 1164 086a 2F92      		push r2
+ 1165 086c 3F92      		push r3
+ 1166 086e 4F92      		push r4
+ 1167 0870 5F92      		push r5
+ 1168 0872 6F92      		push r6
+ 1169 0874 7F92      		push r7
+ 1170 0876 8F92      		push r8
+ 1171 0878 9F92      		push r9
+ 1172 087a AF92      		push r10
+ 1173 087c BF92      		push r11
+ 1174 087e CF92      		push r12
+ 1175 0880 DF92      		push r13
+ 1176 0882 EF92      		push r14
+ 1177 0884 FF92      		push r15
+ 1178 0886 0F93      		push r16
+ 1179 0888 1F93      		push r17
+ 1180 088a DF93      		push r29
+ 1181 088c CF93      		push r28
+ 1182 088e 00D0      		rcall .
+ 1183 0890 00D0      		rcall .
+ 1184 0892 CDB7      		in r28,__SP_L__
+ 1185 0894 DEB7      		in r29,__SP_H__
+ 1186               	/* prologue: function */
+ 1187               	/* frame size = 4 */
+ 1188 0896 6A01      		movw r12,r20
+ 1189 0898 FC01      		movw r30,r24
+ 1190 089a 8480      		ldd r8,Z+4
+ 1191 089c 9580      		ldd r9,Z+5
+ 1192 089e F401      		movw r30,r8
+ 1193 08a0 6080      		ld r6,Z
+ 1194 08a2 7180      		ldd r7,Z+1
+ 1195 08a4 5B01      		movw r10,r22
+ 1196 08a6 4424      		clr r4
+ 1197 08a8 5524      		clr r5
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 22
+
+
+ 1198 08aa 1E01      		movw r2,r28
+ 1199 08ac 0894      		sec
+ 1200 08ae 211C      		adc r2,__zero_reg__
+ 1201 08b0 311C      		adc r3,__zero_reg__
+ 1202 08b2 00C0      		rjmp .L94
+ 1203               	.L99:
+ 1204 08b4 F401      		movw r30,r8
+ 1205 08b6 4281      		ldd r20,Z+2
+ 1206 08b8 5381      		ldd r21,Z+3
+ 1207 08ba 6481      		ldd r22,Z+4
+ 1208 08bc 7581      		ldd r23,Z+5
+ 1209 08be F1E0      		ldi r31,lo8(1)
+ 1210 08c0 EF2E      		mov r14,r31
+ 1211 08c2 F12C      		mov r15,__zero_reg__
+ 1212 08c4 8E01      		movw r16,r28
+ 1213 08c6 0D5F      		subi r16,lo8(-(3))
+ 1214 08c8 1F4F      		sbci r17,hi8(-(3))
+ 1215 08ca 9101      		movw r18,r2
+ 1216 08cc C301      		movw r24,r6
+ 1217 08ce 0E94 0000 		call PnutNodeGetDataPtr
+ 1218 08d2 0097      		sbiw r24,0
+ 1219 08d4 01F4      		brne .L95
+ 1220 08d6 8B81      		ldd r24,Y+3
+ 1221 08d8 9C81      		ldd r25,Y+4
+ 1222 08da 8C15      		cp r24,r12
+ 1223 08dc 9D05      		cpc r25,r13
+ 1224 08de 00F0      		brlo .L96
+ 1225 08e0 DC82      		std Y+4,r13
+ 1226 08e2 CB82      		std Y+3,r12
+ 1227 08e4 CC24      		clr r12
+ 1228 08e6 DD24      		clr r13
+ 1229 08e8 00C0      		rjmp .L97
+ 1230               	.L96:
+ 1231 08ea C81A      		sub r12,r24
+ 1232 08ec D90A      		sbc r13,r25
+ 1233               	.L97:
+ 1234 08ee 4B81      		ldd r20,Y+3
+ 1235 08f0 5C81      		ldd r21,Y+4
+ 1236 08f2 B501      		movw r22,r10
+ 1237 08f4 8981      		ldd r24,Y+1
+ 1238 08f6 9A81      		ldd r25,Y+2
+ 1239 08f8 0E94 0000 		call memcpy
+ 1240 08fc 2B81      		ldd r18,Y+3
+ 1241 08fe 3C81      		ldd r19,Y+4
+ 1242 0900 420E      		add r4,r18
+ 1243 0902 531E      		adc r5,r19
+ 1244 0904 A20E      		add r10,r18
+ 1245 0906 B31E      		adc r11,r19
+ 1246 0908 40E0      		ldi r20,lo8(0)
+ 1247 090a 50E0      		ldi r21,hi8(0)
+ 1248 090c F401      		movw r30,r8
+ 1249 090e 8281      		ldd r24,Z+2
+ 1250 0910 9381      		ldd r25,Z+3
+ 1251 0912 A481      		ldd r26,Z+4
+ 1252 0914 B581      		ldd r27,Z+5
+ 1253 0916 820F      		add r24,r18
+ 1254 0918 931F      		adc r25,r19
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 23
+
+
+ 1255 091a A41F      		adc r26,r20
+ 1256 091c B51F      		adc r27,r21
+ 1257 091e 8283      		std Z+2,r24
+ 1258 0920 9383      		std Z+3,r25
+ 1259 0922 A483      		std Z+4,r26
+ 1260 0924 B583      		std Z+5,r27
+ 1261               	.L94:
+ 1262 0926 C114      		cp r12,__zero_reg__
+ 1263 0928 D104      		cpc r13,__zero_reg__
+ 1264 092a 01F4      		brne .L99
+ 1265 092c 00C0      		rjmp .L100
+ 1266               	.L95:
+ 1267 092e 4C97      		sbiw r24,28
+ 1268 0930 01F4      		brne .L101
+ 1269               	.L100:
+ 1270 0932 C301      		movw r24,r6
+ 1271 0934 0E94 0000 		call BankNodePointer
+ 1272 0938 FC01      		movw r30,r24
+ 1273 093a 2481      		ldd r18,Z+4
+ 1274 093c 3581      		ldd r19,Z+5
+ 1275 093e 4681      		ldd r20,Z+6
+ 1276 0940 5781      		ldd r21,Z+7
+ 1277 0942 F401      		movw r30,r8
+ 1278 0944 8281      		ldd r24,Z+2
+ 1279 0946 9381      		ldd r25,Z+3
+ 1280 0948 A481      		ldd r26,Z+4
+ 1281 094a B581      		ldd r27,Z+5
+ 1282 094c 2817      		cp r18,r24
+ 1283 094e 3907      		cpc r19,r25
+ 1284 0950 4A07      		cpc r20,r26
+ 1285 0952 5B07      		cpc r21,r27
+ 1286 0954 00F4      		brsh .L102
+ 1287 0956 C301      		movw r24,r6
+ 1288 0958 0E94 0000 		call BankNodePointer
+ 1289 095c F401      		movw r30,r8
+ 1290 095e 2281      		ldd r18,Z+2
+ 1291 0960 3381      		ldd r19,Z+3
+ 1292 0962 4481      		ldd r20,Z+4
+ 1293 0964 5581      		ldd r21,Z+5
+ 1294 0966 FC01      		movw r30,r24
+ 1295 0968 2483      		std Z+4,r18
+ 1296 096a 3583      		std Z+5,r19
+ 1297 096c 4683      		std Z+6,r20
+ 1298 096e 5783      		std Z+7,r21
+ 1299               	.L102:
+ 1300 0970 C301      		movw r24,r6
+ 1301 0972 0E94 0000 		call BankNodePointer
+ 1302 0976 8C01      		movw r16,r24
+ 1303 0978 80E0      		ldi r24,lo8(0)
+ 1304 097a 90E0      		ldi r25,hi8(0)
+ 1305 097c 0E94 0000 		call time
+ 1306 0980 F801      		movw r30,r16
+ 1307 0982 6087      		std Z+8,r22
+ 1308 0984 7187      		std Z+9,r23
+ 1309 0986 8287      		std Z+10,r24
+ 1310 0988 9387      		std Z+11,r25
+ 1311               	.L101:
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 24
+
+
+ 1312 098a C201      		movw r24,r4
+ 1313               	/* epilogue start */
+ 1314 098c 0F90      		pop __tmp_reg__
+ 1315 098e 0F90      		pop __tmp_reg__
+ 1316 0990 0F90      		pop __tmp_reg__
+ 1317 0992 0F90      		pop __tmp_reg__
+ 1318 0994 CF91      		pop r28
+ 1319 0996 DF91      		pop r29
+ 1320 0998 1F91      		pop r17
+ 1321 099a 0F91      		pop r16
+ 1322 099c FF90      		pop r15
+ 1323 099e EF90      		pop r14
+ 1324 09a0 DF90      		pop r13
+ 1325 09a2 CF90      		pop r12
+ 1326 09a4 BF90      		pop r11
+ 1327 09a6 AF90      		pop r10
+ 1328 09a8 9F90      		pop r9
+ 1329 09aa 8F90      		pop r8
+ 1330 09ac 7F90      		pop r7
+ 1331 09ae 6F90      		pop r6
+ 1332 09b0 5F90      		pop r5
+ 1333 09b2 4F90      		pop r4
+ 1334 09b4 3F90      		pop r3
+ 1335 09b6 2F90      		pop r2
+ 1336 09b8 0895      		ret
+ 1337               		.size	PnutFileWrite, .-PnutFileWrite
+ 1338               		.type	PnutFileRead, @function
+ 1339               	PnutFileRead:
+ 1340 09ba 2F92      		push r2
+ 1341 09bc 3F92      		push r3
+ 1342 09be 4F92      		push r4
+ 1343 09c0 5F92      		push r5
+ 1344 09c2 6F92      		push r6
+ 1345 09c4 7F92      		push r7
+ 1346 09c6 8F92      		push r8
+ 1347 09c8 9F92      		push r9
+ 1348 09ca AF92      		push r10
+ 1349 09cc BF92      		push r11
+ 1350 09ce CF92      		push r12
+ 1351 09d0 DF92      		push r13
+ 1352 09d2 EF92      		push r14
+ 1353 09d4 FF92      		push r15
+ 1354 09d6 0F93      		push r16
+ 1355 09d8 1F93      		push r17
+ 1356 09da DF93      		push r29
+ 1357 09dc CF93      		push r28
+ 1358 09de 00D0      		rcall .
+ 1359 09e0 00D0      		rcall .
+ 1360 09e2 CDB7      		in r28,__SP_L__
+ 1361 09e4 DEB7      		in r29,__SP_H__
+ 1362               	/* prologue: function */
+ 1363               	/* frame size = 4 */
+ 1364 09e6 B62E      		mov r11,r22
+ 1365 09e8 A72E      		mov r10,r23
+ 1366 09ea 6A01      		movw r12,r20
+ 1367 09ec FC01      		movw r30,r24
+ 1368 09ee 6480      		ldd r6,Z+4
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 25
+
+
+ 1369 09f0 7580      		ldd r7,Z+5
+ 1370 09f2 F301      		movw r30,r6
+ 1371 09f4 4080      		ld r4,Z
+ 1372 09f6 5180      		ldd r5,Z+1
+ 1373 09f8 C201      		movw r24,r4
+ 1374 09fa 0E94 0000 		call BankNodePointer
+ 1375 09fe 9601      		movw r18,r12
+ 1376 0a00 4427      		clr r20
+ 1377 0a02 37FD      		sbrc r19,7
+ 1378 0a04 4095      		com r20
+ 1379 0a06 542F      		mov r21,r20
+ 1380 0a08 FC01      		movw r30,r24
+ 1381 0a0a 8481      		ldd r24,Z+4
+ 1382 0a0c 9581      		ldd r25,Z+5
+ 1383 0a0e A681      		ldd r26,Z+6
+ 1384 0a10 B781      		ldd r27,Z+7
+ 1385 0a12 F301      		movw r30,r6
+ 1386 0a14 E280      		ldd r14,Z+2
+ 1387 0a16 F380      		ldd r15,Z+3
+ 1388 0a18 0481      		ldd r16,Z+4
+ 1389 0a1a 1581      		ldd r17,Z+5
+ 1390 0a1c 8E19      		sub r24,r14
+ 1391 0a1e 9F09      		sbc r25,r15
+ 1392 0a20 A00B      		sbc r26,r16
+ 1393 0a22 B10B      		sbc r27,r17
+ 1394 0a24 8217      		cp r24,r18
+ 1395 0a26 9307      		cpc r25,r19
+ 1396 0a28 A407      		cpc r26,r20
+ 1397 0a2a B507      		cpc r27,r21
+ 1398 0a2c 00F4      		brsh .L105
+ 1399 0a2e C201      		movw r24,r4
+ 1400 0a30 0E94 0000 		call BankNodePointer
+ 1401 0a34 FC01      		movw r30,r24
+ 1402 0a36 C480      		ldd r12,Z+4
+ 1403 0a38 D580      		ldd r13,Z+5
+ 1404 0a3a F301      		movw r30,r6
+ 1405 0a3c 8281      		ldd r24,Z+2
+ 1406 0a3e 9381      		ldd r25,Z+3
+ 1407 0a40 C81A      		sub r12,r24
+ 1408 0a42 D90A      		sbc r13,r25
+ 1409               	.L105:
+ 1410 0a44 8B2D      		mov r24,r11
+ 1411 0a46 9A2D      		mov r25,r10
+ 1412 0a48 9C01      		movw r18,r24
+ 1413 0a4a 5901      		movw r10,r18
+ 1414 0a4c 8824      		clr r8
+ 1415 0a4e 9924      		clr r9
+ 1416 0a50 1E01      		movw r2,r28
+ 1417 0a52 0894      		sec
+ 1418 0a54 211C      		adc r2,__zero_reg__
+ 1419 0a56 311C      		adc r3,__zero_reg__
+ 1420 0a58 00C0      		rjmp .L106
+ 1421               	.L111:
+ 1422 0a5a F301      		movw r30,r6
+ 1423 0a5c 4281      		ldd r20,Z+2
+ 1424 0a5e 5381      		ldd r21,Z+3
+ 1425 0a60 6481      		ldd r22,Z+4
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 26
+
+
+ 1426 0a62 7581      		ldd r23,Z+5
+ 1427 0a64 EE24      		clr r14
+ 1428 0a66 FF24      		clr r15
+ 1429 0a68 8E01      		movw r16,r28
+ 1430 0a6a 0D5F      		subi r16,lo8(-(3))
+ 1431 0a6c 1F4F      		sbci r17,hi8(-(3))
+ 1432 0a6e 9101      		movw r18,r2
+ 1433 0a70 C201      		movw r24,r4
+ 1434 0a72 0E94 0000 		call PnutNodeGetDataPtr
+ 1435 0a76 892B      		or r24,r25
+ 1436 0a78 01F4      		brne .L107
+ 1437 0a7a 8B81      		ldd r24,Y+3
+ 1438 0a7c 9C81      		ldd r25,Y+4
+ 1439 0a7e 8C15      		cp r24,r12
+ 1440 0a80 9D05      		cpc r25,r13
+ 1441 0a82 00F0      		brlo .L108
+ 1442 0a84 DC82      		std Y+4,r13
+ 1443 0a86 CB82      		std Y+3,r12
+ 1444 0a88 CC24      		clr r12
+ 1445 0a8a DD24      		clr r13
+ 1446 0a8c 00C0      		rjmp .L109
+ 1447               	.L108:
+ 1448 0a8e C81A      		sub r12,r24
+ 1449 0a90 D90A      		sbc r13,r25
+ 1450               	.L109:
+ 1451 0a92 6981      		ldd r22,Y+1
+ 1452 0a94 7A81      		ldd r23,Y+2
+ 1453 0a96 4B81      		ldd r20,Y+3
+ 1454 0a98 5C81      		ldd r21,Y+4
+ 1455 0a9a C501      		movw r24,r10
+ 1456 0a9c 0E94 0000 		call memcpy
+ 1457 0aa0 2B81      		ldd r18,Y+3
+ 1458 0aa2 3C81      		ldd r19,Y+4
+ 1459 0aa4 820E      		add r8,r18
+ 1460 0aa6 931E      		adc r9,r19
+ 1461 0aa8 A20E      		add r10,r18
+ 1462 0aaa B31E      		adc r11,r19
+ 1463 0aac 40E0      		ldi r20,lo8(0)
+ 1464 0aae 50E0      		ldi r21,hi8(0)
+ 1465 0ab0 F301      		movw r30,r6
+ 1466 0ab2 8281      		ldd r24,Z+2
+ 1467 0ab4 9381      		ldd r25,Z+3
+ 1468 0ab6 A481      		ldd r26,Z+4
+ 1469 0ab8 B581      		ldd r27,Z+5
+ 1470 0aba 820F      		add r24,r18
+ 1471 0abc 931F      		adc r25,r19
+ 1472 0abe A41F      		adc r26,r20
+ 1473 0ac0 B51F      		adc r27,r21
+ 1474 0ac2 8283      		std Z+2,r24
+ 1475 0ac4 9383      		std Z+3,r25
+ 1476 0ac6 A483      		std Z+4,r26
+ 1477 0ac8 B583      		std Z+5,r27
+ 1478               	.L106:
+ 1479 0aca C114      		cp r12,__zero_reg__
+ 1480 0acc D104      		cpc r13,__zero_reg__
+ 1481 0ace 01F4      		brne .L111
+ 1482               	.L107:
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 27
+
+
+ 1483 0ad0 C401      		movw r24,r8
+ 1484               	/* epilogue start */
+ 1485 0ad2 0F90      		pop __tmp_reg__
+ 1486 0ad4 0F90      		pop __tmp_reg__
+ 1487 0ad6 0F90      		pop __tmp_reg__
+ 1488 0ad8 0F90      		pop __tmp_reg__
+ 1489 0ada CF91      		pop r28
+ 1490 0adc DF91      		pop r29
+ 1491 0ade 1F91      		pop r17
+ 1492 0ae0 0F91      		pop r16
+ 1493 0ae2 FF90      		pop r15
+ 1494 0ae4 EF90      		pop r14
+ 1495 0ae6 DF90      		pop r13
+ 1496 0ae8 CF90      		pop r12
+ 1497 0aea BF90      		pop r11
+ 1498 0aec AF90      		pop r10
+ 1499 0aee 9F90      		pop r9
+ 1500 0af0 8F90      		pop r8
+ 1501 0af2 7F90      		pop r7
+ 1502 0af4 6F90      		pop r6
+ 1503 0af6 5F90      		pop r5
+ 1504 0af8 4F90      		pop r4
+ 1505 0afa 3F90      		pop r3
+ 1506 0afc 2F90      		pop r2
+ 1507 0afe 0895      		ret
+ 1508               		.size	PnutFileRead, .-PnutFileRead
+ 1509               		.type	PnutDelete, @function
+ 1510               	PnutDelete:
+ 1511 0b00 2F92      		push r2
+ 1512 0b02 3F92      		push r3
+ 1513 0b04 4F92      		push r4
+ 1514 0b06 5F92      		push r5
+ 1515 0b08 6F92      		push r6
+ 1516 0b0a 7F92      		push r7
+ 1517 0b0c 8F92      		push r8
+ 1518 0b0e 9F92      		push r9
+ 1519 0b10 AF92      		push r10
+ 1520 0b12 BF92      		push r11
+ 1521 0b14 CF92      		push r12
+ 1522 0b16 DF92      		push r13
+ 1523 0b18 EF92      		push r14
+ 1524 0b1a FF92      		push r15
+ 1525 0b1c 0F93      		push r16
+ 1526 0b1e 1F93      		push r17
+ 1527 0b20 DF93      		push r29
+ 1528 0b22 CF93      		push r28
+ 1529 0b24 CDB7      		in r28,__SP_L__
+ 1530 0b26 DEB7      		in r29,__SP_H__
+ 1531 0b28 2C97      		sbiw r28,12
+ 1532 0b2a 0FB6      		in __tmp_reg__,__SREG__
+ 1533 0b2c F894      		cli
+ 1534 0b2e DEBF      		out __SP_H__,r29
+ 1535 0b30 0FBE      		out __SREG__,__tmp_reg__
+ 1536 0b32 CDBF      		out __SP_L__,r28
+ 1537               	/* prologue: function */
+ 1538               	/* frame size = 12 */
+ 1539 0b34 AE01      		movw r20,r28
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 28
+
+
+ 1540 0b36 495F      		subi r20,lo8(-(7))
+ 1541 0b38 5F4F      		sbci r21,hi8(-(7))
+ 1542 0b3a BC01      		movw r22,r24
+ 1543 0b3c 8091 0000 		lds r24,root
+ 1544 0b40 9091 0000 		lds r25,(root)+1
+ 1545 0b44 0E94 0000 		call PnutDirFindPath
+ 1546 0b48 0097      		sbiw r24,0
+ 1547 0b4a 01F0      		breq .+2
+ 1548 0b4c 00C0      		rjmp .L114
+ 1549 0b4e 5B84      		ldd r5,Y+11
+ 1550 0b50 4C84      		ldd r4,Y+12
+ 1551 0b52 6984      		ldd r6,Y+9
+ 1552 0b54 7A84      		ldd r7,Y+10
+ 1553 0b56 A52D      		mov r26,r5
+ 1554 0b58 B42D      		mov r27,r4
+ 1555 0b5a FD01      		movw r30,r26
+ 1556 0b5c 0190      		ld __tmp_reg__,Z+
+ 1557 0b5e 0020      		tst __tmp_reg__
+ 1558 0b60 01F4      		brne .-6
+ 1559 0b62 3197      		sbiw r30,1
+ 1560 0b64 EA1B      		sub r30,r26
+ 1561 0b66 FB0B      		sbc r31,r27
+ 1562 0b68 9E01      		movw r18,r28
+ 1563 0b6a 2F5F      		subi r18,lo8(-(1))
+ 1564 0b6c 3F4F      		sbci r19,hi8(-(1))
+ 1565 0b6e AF01      		movw r20,r30
+ 1566 0b70 652D      		mov r22,r5
+ 1567 0b72 742D      		mov r23,r4
+ 1568 0b74 C301      		movw r24,r6
+ 1569 0b76 0E94 0000 		call PnutDirFindEntry
+ 1570 0b7a 0097      		sbiw r24,0
+ 1571 0b7c 01F0      		breq .+2
+ 1572 0b7e 00C0      		rjmp .L114
+ 1573 0b80 E981      		ldd r30,Y+1
+ 1574 0b82 FA81      		ldd r31,Y+2
+ 1575 0b84 8080      		ld r8,Z
+ 1576 0b86 9180      		ldd r9,Z+1
+ 1577 0b88 C401      		movw r24,r8
+ 1578 0b8a 0E94 0000 		call BankNodePointer
+ 1579 0b8e FC01      		movw r30,r24
+ 1580 0b90 8181      		ldd r24,Z+1
+ 1581 0b92 8823      		tst r24
+ 1582 0b94 01F0      		breq .+2
+ 1583 0b96 00C0      		rjmp .L115
+ 1584 0b98 8081      		ld r24,Z
+ 1585 0b9a 8130      		cpi r24,lo8(1)
+ 1586 0b9c 01F0      		breq .+2
+ 1587 0b9e 00C0      		rjmp .L116
+ 1588 0ba0 8281      		ldd r24,Z+2
+ 1589 0ba2 9381      		ldd r25,Z+3
+ 1590 0ba4 0397      		sbiw r24,3
+ 1591 0ba6 00F0      		brlo .+2
+ 1592 0ba8 00C0      		rjmp .L115
+ 1593 0baa AA24      		clr r10
+ 1594 0bac BB24      		clr r11
+ 1595 0bae 6501      		movw r12,r10
+ 1596 0bb0 A5E0      		ldi r26,lo8(5)
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 29
+
+
+ 1597 0bb2 2A2E      		mov r2,r26
+ 1598 0bb4 312C      		mov r3,__zero_reg__
+ 1599 0bb6 2C0E      		add r2,r28
+ 1600 0bb8 3D1E      		adc r3,r29
+ 1601 0bba 00C0      		rjmp .L117
+ 1602               	.L120:
+ 1603 0bbc EE24      		clr r14
+ 1604 0bbe FF24      		clr r15
+ 1605 0bc0 8E01      		movw r16,r28
+ 1606 0bc2 0D5F      		subi r16,lo8(-(3))
+ 1607 0bc4 1F4F      		sbci r17,hi8(-(3))
+ 1608 0bc6 9101      		movw r18,r2
+ 1609 0bc8 B601      		movw r22,r12
+ 1610 0bca A501      		movw r20,r10
+ 1611 0bcc C401      		movw r24,r8
+ 1612 0bce 0E94 0000 		call PnutNodeGetDataPtr
+ 1613 0bd2 892B      		or r24,r25
+ 1614 0bd4 01F4      		brne .L118
+ 1615 0bd6 8B81      		ldd r24,Y+3
+ 1616 0bd8 9C81      		ldd r25,Y+4
+ 1617 0bda 0097      		sbiw r24,0
+ 1618 0bdc 01F0      		breq .L118
+ 1619 0bde 8097      		sbiw r24,32
+ 1620 0be0 00F0      		brlo .L119
+ 1621 0be2 ED81      		ldd r30,Y+5
+ 1622 0be4 FE81      		ldd r31,Y+6
+ 1623 0be6 8281      		ldd r24,Z+2
+ 1624 0be8 8823      		tst r24
+ 1625 0bea 01F0      		breq .L119
+ 1626 0bec 8F01      		movw r16,r30
+ 1627 0bee 0D5F      		subi r16,lo8(-(3))
+ 1628 0bf0 1F4F      		sbci r17,hi8(-(3))
+ 1629 0bf2 60E0      		ldi r22,lo8(.LC0)
+ 1630 0bf4 70E0      		ldi r23,hi8(.LC0)
+ 1631 0bf6 C801      		movw r24,r16
+ 1632 0bf8 0E94 0000 		call strcmp
+ 1633 0bfc 0097      		sbiw r24,0
+ 1634 0bfe 01F0      		breq .L119
+ 1635 0c00 60E0      		ldi r22,lo8(.LC1)
+ 1636 0c02 70E0      		ldi r23,hi8(.LC1)
+ 1637 0c04 C801      		movw r24,r16
+ 1638 0c06 0E94 0000 		call strcmp
+ 1639 0c0a 0097      		sbiw r24,0
+ 1640 0c0c 01F4      		brne .L115
+ 1641               	.L119:
+ 1642 0c0e 80E2      		ldi r24,lo8(32)
+ 1643 0c10 90E0      		ldi r25,hi8(32)
+ 1644 0c12 A0E0      		ldi r26,hlo8(32)
+ 1645 0c14 B0E0      		ldi r27,hhi8(32)
+ 1646 0c16 A80E      		add r10,r24
+ 1647 0c18 B91E      		adc r11,r25
+ 1648 0c1a CA1E      		adc r12,r26
+ 1649 0c1c DB1E      		adc r13,r27
+ 1650               	.L117:
+ 1651 0c1e C401      		movw r24,r8
+ 1652 0c20 0E94 0000 		call BankNodePointer
+ 1653 0c24 FC01      		movw r30,r24
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 30
+
+
+ 1654 0c26 8481      		ldd r24,Z+4
+ 1655 0c28 9581      		ldd r25,Z+5
+ 1656 0c2a A681      		ldd r26,Z+6
+ 1657 0c2c B781      		ldd r27,Z+7
+ 1658 0c2e A816      		cp r10,r24
+ 1659 0c30 B906      		cpc r11,r25
+ 1660 0c32 CA06      		cpc r12,r26
+ 1661 0c34 DB06      		cpc r13,r27
+ 1662 0c36 00F0      		brlo .L120
+ 1663               	.L118:
+ 1664 0c38 C301      		movw r24,r6
+ 1665 0c3a 0E94 0000 		call BankNodePointer
+ 1666 0c3e FC01      		movw r30,r24
+ 1667 0c40 8281      		ldd r24,Z+2
+ 1668 0c42 9381      		ldd r25,Z+3
+ 1669 0c44 0197      		sbiw r24,1
+ 1670 0c46 9383      		std Z+3,r25
+ 1671 0c48 8283      		std Z+2,r24
+ 1672               	.L116:
+ 1673 0c4a C401      		movw r24,r8
+ 1674 0c4c 0E94 0000 		call PnutNodeRelease
+ 1675 0c50 E52D      		mov r30,r5
+ 1676 0c52 F42D      		mov r31,r4
+ 1677 0c54 DF01      		movw r26,r30
+ 1678 0c56 0D90      		ld __tmp_reg__,X+
+ 1679 0c58 0020      		tst __tmp_reg__
+ 1680 0c5a 01F4      		brne .-6
+ 1681 0c5c 1197      		sbiw r26,1
+ 1682 0c5e AE1B      		sub r26,r30
+ 1683 0c60 BF0B      		sbc r27,r31
+ 1684 0c62 9E01      		movw r18,r28
+ 1685 0c64 2F5F      		subi r18,lo8(-(1))
+ 1686 0c66 3F4F      		sbci r19,hi8(-(1))
+ 1687 0c68 AD01      		movw r20,r26
+ 1688 0c6a 652D      		mov r22,r5
+ 1689 0c6c 742D      		mov r23,r4
+ 1690 0c6e C301      		movw r24,r6
+ 1691 0c70 0E94 0000 		call PnutDirFindEntry
+ 1692 0c74 E981      		ldd r30,Y+1
+ 1693 0c76 FA81      		ldd r31,Y+2
+ 1694 0c78 1282      		std Z+2,__zero_reg__
+ 1695 0c7a 20E0      		ldi r18,lo8(0)
+ 1696 0c7c 30E0      		ldi r19,hi8(0)
+ 1697 0c7e 00C0      		rjmp .L122
+ 1698               	.L115:
+ 1699 0c80 8DE0      		ldi r24,lo8(13)
+ 1700 0c82 90E0      		ldi r25,hi8(13)
+ 1701               	.L114:
+ 1702 0c84 9093 0000 		sts (errno)+1,r25
+ 1703 0c88 8093 0000 		sts errno,r24
+ 1704 0c8c 2FEF      		ldi r18,lo8(-1)
+ 1705 0c8e 3FEF      		ldi r19,hi8(-1)
+ 1706               	.L122:
+ 1707 0c90 C901      		movw r24,r18
+ 1708               	/* epilogue start */
+ 1709 0c92 2C96      		adiw r28,12
+ 1710 0c94 0FB6      		in __tmp_reg__,__SREG__
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 31
+
+
+ 1711 0c96 F894      		cli
+ 1712 0c98 DEBF      		out __SP_H__,r29
+ 1713 0c9a 0FBE      		out __SREG__,__tmp_reg__
+ 1714 0c9c CDBF      		out __SP_L__,r28
+ 1715 0c9e CF91      		pop r28
+ 1716 0ca0 DF91      		pop r29
+ 1717 0ca2 1F91      		pop r17
+ 1718 0ca4 0F91      		pop r16
+ 1719 0ca6 FF90      		pop r15
+ 1720 0ca8 EF90      		pop r14
+ 1721 0caa DF90      		pop r13
+ 1722 0cac CF90      		pop r12
+ 1723 0cae BF90      		pop r11
+ 1724 0cb0 AF90      		pop r10
+ 1725 0cb2 9F90      		pop r9
+ 1726 0cb4 8F90      		pop r8
+ 1727 0cb6 7F90      		pop r7
+ 1728 0cb8 6F90      		pop r6
+ 1729 0cba 5F90      		pop r5
+ 1730 0cbc 4F90      		pop r4
+ 1731 0cbe 3F90      		pop r3
+ 1732 0cc0 2F90      		pop r2
+ 1733 0cc2 0895      		ret
+ 1734               		.size	PnutDelete, .-PnutDelete
+ 1735               	.global	PnutIOCtl
+ 1736               		.type	PnutIOCtl, @function
+ 1737               	PnutIOCtl:
+ 1738 0cc4 2F92      		push r2
+ 1739 0cc6 3F92      		push r3
+ 1740 0cc8 4F92      		push r4
+ 1741 0cca 5F92      		push r5
+ 1742 0ccc 6F92      		push r6
+ 1743 0cce 7F92      		push r7
+ 1744 0cd0 8F92      		push r8
+ 1745 0cd2 9F92      		push r9
+ 1746 0cd4 AF92      		push r10
+ 1747 0cd6 BF92      		push r11
+ 1748 0cd8 CF92      		push r12
+ 1749 0cda DF92      		push r13
+ 1750 0cdc EF92      		push r14
+ 1751 0cde FF92      		push r15
+ 1752 0ce0 0F93      		push r16
+ 1753 0ce2 1F93      		push r17
+ 1754 0ce4 DF93      		push r29
+ 1755 0ce6 CF93      		push r28
+ 1756 0ce8 CDB7      		in r28,__SP_L__
+ 1757 0cea DEB7      		in r29,__SP_H__
+ 1758 0cec 2A97      		sbiw r28,10
+ 1759 0cee 0FB6      		in __tmp_reg__,__SREG__
+ 1760 0cf0 F894      		cli
+ 1761 0cf2 DEBF      		out __SP_H__,r29
+ 1762 0cf4 0FBE      		out __SREG__,__tmp_reg__
+ 1763 0cf6 CDBF      		out __SP_L__,r28
+ 1764               	/* prologue: function */
+ 1765               	/* frame size = 10 */
+ 1766 0cf8 5C01      		movw r10,r24
+ 1767 0cfa CA01      		movw r24,r20
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 32
+
+
+ 1768 0cfc 21E1      		ldi r18,hi8(4372)
+ 1769 0cfe 6431      		cpi r22,lo8(4372)
+ 1770 0d00 7207      		cpc r23,r18
+ 1771 0d02 01F4      		brne .+2
+ 1772 0d04 00C0      		rjmp .L130
+ 1773 0d06 31E1      		ldi r19,hi8(4373)
+ 1774 0d08 6531      		cpi r22,lo8(4373)
+ 1775 0d0a 7307      		cpc r23,r19
+ 1776 0d0c 04F4      		brge .L135
+ 1777 0d0e 41E1      		ldi r20,hi8(4369)
+ 1778 0d10 6131      		cpi r22,lo8(4369)
+ 1779 0d12 7407      		cpc r23,r20
+ 1780 0d14 01F4      		brne .+2
+ 1781 0d16 00C0      		rjmp .L127
+ 1782 0d18 51E1      		ldi r21,hi8(4370)
+ 1783 0d1a 6231      		cpi r22,lo8(4370)
+ 1784 0d1c 7507      		cpc r23,r21
+ 1785 0d1e 04F4      		brge .L136
+ 1786 0d20 6150      		subi r22,lo8(4353)
+ 1787 0d22 7141      		sbci r23,hi8(4353)
+ 1788 0d24 01F0      		breq .+2
+ 1789 0d26 00C0      		rjmp .L125
+ 1790 0d28 00C0      		rjmp .L162
+ 1791               	.L136:
+ 1792 0d2a B1E1      		ldi r27,hi8(4370)
+ 1793 0d2c 6231      		cpi r22,lo8(4370)
+ 1794 0d2e 7B07      		cpc r23,r27
+ 1795 0d30 01F4      		brne .+2
+ 1796 0d32 00C0      		rjmp .L133
+ 1797 0d34 6351      		subi r22,lo8(4371)
+ 1798 0d36 7141      		sbci r23,hi8(4371)
+ 1799 0d38 01F0      		breq .+2
+ 1800 0d3a 00C0      		rjmp .L125
+ 1801 0d3c 00C0      		rjmp .L163
+ 1802               	.L135:
+ 1803 0d3e F1E1      		ldi r31,hi8(4385)
+ 1804 0d40 6132      		cpi r22,lo8(4385)
+ 1805 0d42 7F07      		cpc r23,r31
+ 1806 0d44 01F4      		brne .+2
+ 1807 0d46 00C0      		rjmp .L132
+ 1808 0d48 21E1      		ldi r18,hi8(4386)
+ 1809 0d4a 6232      		cpi r22,lo8(4386)
+ 1810 0d4c 7207      		cpc r23,r18
+ 1811 0d4e 04F4      		brge .L137
+ 1812 0d50 6551      		subi r22,lo8(4373)
+ 1813 0d52 7141      		sbci r23,hi8(4373)
+ 1814 0d54 01F0      		breq .+2
+ 1815 0d56 00C0      		rjmp .L125
+ 1816 0d58 00C0      		rjmp .L164
+ 1817               	.L137:
+ 1818 0d5a 41E1      		ldi r20,hi8(4386)
+ 1819 0d5c 6232      		cpi r22,lo8(4386)
+ 1820 0d5e 7407      		cpc r23,r20
+ 1821 0d60 01F4      		brne .+2
+ 1822 0d62 00C0      		rjmp .L133
+ 1823 0d64 6352      		subi r22,lo8(4387)
+ 1824 0d66 7141      		sbci r23,hi8(4387)
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 33
+
+
+ 1825 0d68 01F0      		breq .+2
+ 1826 0d6a 00C0      		rjmp .L125
+ 1827 0d6c 00C0      		rjmp .L165
+ 1828               	.L162:
+ 1829 0d6e FC01      		movw r30,r24
+ 1830 0d70 0281      		ldd r16,Z+2
+ 1831 0d72 1381      		ldd r17,Z+3
+ 1832 0d74 6081      		ld r22,Z
+ 1833 0d76 7181      		ldd r23,Z+1
+ 1834 0d78 AE01      		movw r20,r28
+ 1835 0d7a 4B5F      		subi r20,lo8(-(5))
+ 1836 0d7c 5F4F      		sbci r21,hi8(-(5))
+ 1837 0d7e 8091 0000 		lds r24,root
+ 1838 0d82 9091 0000 		lds r25,(root)+1
+ 1839 0d86 0E94 0000 		call PnutDirFindPath
+ 1840 0d8a 7C01      		movw r14,r24
+ 1841 0d8c 0097      		sbiw r24,0
+ 1842 0d8e 01F0      		breq .+2
+ 1843 0d90 00C0      		rjmp .L138
+ 1844 0d92 8D81      		ldd r24,Y+5
+ 1845 0d94 9E81      		ldd r25,Y+6
+ 1846 0d96 0E94 0000 		call BankNodePointer
+ 1847 0d9a FC01      		movw r30,r24
+ 1848 0d9c 8081      		ld r24,Z
+ 1849 0d9e D801      		movw r26,r16
+ 1850 0da0 1296      		adiw r26,2
+ 1851 0da2 8C93      		st X,r24
+ 1852 0da4 1297      		sbiw r26,2
+ 1853 0da6 8D81      		ldd r24,Y+5
+ 1854 0da8 9E81      		ldd r25,Y+6
+ 1855 0daa 8D93      		st X+,r24
+ 1856 0dac 9C93      		st X,r25
+ 1857 0dae 8D81      		ldd r24,Y+5
+ 1858 0db0 9E81      		ldd r25,Y+6
+ 1859 0db2 0E94 0000 		call BankNodePointer
+ 1860 0db6 FC01      		movw r30,r24
+ 1861 0db8 8281      		ldd r24,Z+2
+ 1862 0dba 9381      		ldd r25,Z+3
+ 1863 0dbc D801      		movw r26,r16
+ 1864 0dbe 1496      		adiw r26,3+1
+ 1865 0dc0 9C93      		st X,r25
+ 1866 0dc2 8E93      		st -X,r24
+ 1867 0dc4 1397      		sbiw r26,3
+ 1868 0dc6 8D81      		ldd r24,Y+5
+ 1869 0dc8 9E81      		ldd r25,Y+6
+ 1870 0dca 0E94 0000 		call BankNodePointer
+ 1871 0dce FC01      		movw r30,r24
+ 1872 0dd0 8481      		ldd r24,Z+4
+ 1873 0dd2 9581      		ldd r25,Z+5
+ 1874 0dd4 A681      		ldd r26,Z+6
+ 1875 0dd6 B781      		ldd r27,Z+7
+ 1876 0dd8 F801      		movw r30,r16
+ 1877 0dda 8583      		std Z+5,r24
+ 1878 0ddc 9683      		std Z+6,r25
+ 1879 0dde A783      		std Z+7,r26
+ 1880 0de0 B087      		std Z+8,r27
+ 1881 0de2 8D81      		ldd r24,Y+5
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 34
+
+
+ 1882 0de4 9E81      		ldd r25,Y+6
+ 1883 0de6 0E94 0000 		call BankNodePointer
+ 1884 0dea FC01      		movw r30,r24
+ 1885 0dec 8085      		ldd r24,Z+8
+ 1886 0dee 9185      		ldd r25,Z+9
+ 1887 0df0 A285      		ldd r26,Z+10
+ 1888 0df2 B385      		ldd r27,Z+11
+ 1889 0df4 F801      		movw r30,r16
+ 1890 0df6 8187      		std Z+9,r24
+ 1891 0df8 9287      		std Z+10,r25
+ 1892 0dfa A387      		std Z+11,r26
+ 1893 0dfc B487      		std Z+12,r27
+ 1894 0dfe 00C0      		rjmp .L138
+ 1895               	.L127:
+ 1896 0e00 AE01      		movw r20,r28
+ 1897 0e02 4B5F      		subi r20,lo8(-(5))
+ 1898 0e04 5F4F      		sbci r21,hi8(-(5))
+ 1899 0e06 BC01      		movw r22,r24
+ 1900 0e08 8091 0000 		lds r24,root
+ 1901 0e0c 9091 0000 		lds r25,(root)+1
+ 1902 0e10 0E94 0000 		call PnutDirFindPath
+ 1903 0e14 8C01      		movw r16,r24
+ 1904 0e16 0097      		sbiw r24,0
+ 1905 0e18 01F4      		brne .L139
+ 1906 0e1a 01E1      		ldi r16,lo8(17)
+ 1907 0e1c 10E0      		ldi r17,hi8(17)
+ 1908 0e1e 00C0      		rjmp .L140
+ 1909               	.L139:
+ 1910 0e20 8230      		cpi r24,2
+ 1911 0e22 9105      		cpc r25,__zero_reg__
+ 1912 0e24 01F4      		brne .L140
+ 1913 0e26 8985      		ldd r24,Y+9
+ 1914 0e28 9A85      		ldd r25,Y+10
+ 1915 0e2a 892B      		or r24,r25
+ 1916 0e2c 01F0      		breq .L140
+ 1917 0e2e 81E0      		ldi r24,lo8(1)
+ 1918 0e30 0E94 0000 		call PnutNodeAlloc
+ 1919 0e34 7C01      		movw r14,r24
+ 1920 0e36 97FD      		sbrc r25,7
+ 1921 0e38 00C0      		rjmp .L141
+ 1922 0e3a AC01      		movw r20,r24
+ 1923 0e3c 60E0      		ldi r22,lo8(.LC0)
+ 1924 0e3e 70E0      		ldi r23,hi8(.LC0)
+ 1925 0e40 0E94 0000 		call PnutDirAddEntry
+ 1926 0e44 8C01      		movw r16,r24
+ 1927 0e46 0097      		sbiw r24,0
+ 1928 0e48 01F4      		brne .L144
+ 1929               	.L142:
+ 1930 0e4a 4F81      		ldd r20,Y+7
+ 1931 0e4c 5885      		ldd r21,Y+8
+ 1932 0e4e 60E0      		ldi r22,lo8(.LC1)
+ 1933 0e50 70E0      		ldi r23,hi8(.LC1)
+ 1934 0e52 C701      		movw r24,r14
+ 1935 0e54 0E94 0000 		call PnutDirAddEntry
+ 1936 0e58 8C01      		movw r16,r24
+ 1937 0e5a 0097      		sbiw r24,0
+ 1938 0e5c 01F4      		brne .L144
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 35
+
+
+ 1939               	.L143:
+ 1940 0e5e 6985      		ldd r22,Y+9
+ 1941 0e60 7A85      		ldd r23,Y+10
+ 1942 0e62 A701      		movw r20,r14
+ 1943 0e64 8F81      		ldd r24,Y+7
+ 1944 0e66 9885      		ldd r25,Y+8
+ 1945 0e68 0E94 0000 		call PnutDirAddEntry
+ 1946 0e6c 8C01      		movw r16,r24
+ 1947 0e6e 0097      		sbiw r24,0
+ 1948 0e70 01F4      		brne .+2
+ 1949 0e72 00C0      		rjmp .L161
+ 1950               	.L144:
+ 1951 0e74 C701      		movw r24,r14
+ 1952 0e76 0E94 0000 		call PnutNodeRelease
+ 1953               	.L140:
+ 1954 0e7a 1093 0000 		sts (errno)+1,r17
+ 1955 0e7e 0093 0000 		sts errno,r16
+ 1956 0e82 00C0      		rjmp .L125
+ 1957               	.L163:
+ 1958 0e84 6C01      		movw r12,r24
+ 1959 0e86 DC01      		movw r26,r24
+ 1960 0e88 1296      		adiw r26,2
+ 1961 0e8a 6D91      		ld r22,X+
+ 1962 0e8c 7C91      		ld r23,X
+ 1963 0e8e 1397      		sbiw r26,2+1
+ 1964 0e90 AE01      		movw r20,r28
+ 1965 0e92 4B5F      		subi r20,lo8(-(5))
+ 1966 0e94 5F4F      		sbci r21,hi8(-(5))
+ 1967 0e96 8091 0000 		lds r24,root
+ 1968 0e9a 9091 0000 		lds r25,(root)+1
+ 1969 0e9e 0E94 0000 		call PnutDirFindPath
+ 1970 0ea2 7C01      		movw r14,r24
+ 1971 0ea4 0097      		sbiw r24,0
+ 1972 0ea6 01F0      		breq .L145
+ 1973 0ea8 9093 0000 		sts (errno)+1,r25
+ 1974 0eac 8093 0000 		sts errno,r24
+ 1975 0eb0 00C0      		rjmp .L125
+ 1976               	.L145:
+ 1977 0eb2 8D81      		ldd r24,Y+5
+ 1978 0eb4 9E81      		ldd r25,Y+6
+ 1979 0eb6 0E94 0000 		call BankNodePointer
+ 1980 0eba FC01      		movw r30,r24
+ 1981 0ebc 8081      		ld r24,Z
+ 1982 0ebe 8130      		cpi r24,lo8(1)
+ 1983 0ec0 01F0      		breq .L146
+ 1984 0ec2 84E1      		ldi r24,lo8(20)
+ 1985 0ec4 90E0      		ldi r25,hi8(20)
+ 1986 0ec6 9093 0000 		sts (errno)+1,r25
+ 1987 0eca 8093 0000 		sts errno,r24
+ 1988 0ece 00C0      		rjmp .L125
+ 1989               	.L146:
+ 1990 0ed0 88E0      		ldi r24,lo8(8)
+ 1991 0ed2 90E0      		ldi r25,hi8(8)
+ 1992 0ed4 0E94 0000 		call malloc
+ 1993 0ed8 8C01      		movw r16,r24
+ 1994 0eda 0097      		sbiw r24,0
+ 1995 0edc 01F4      		brne .+2
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 36
+
+
+ 1996 0ede 00C0      		rjmp .L125
+ 1997               	.L147:
+ 1998 0ee0 8D81      		ldd r24,Y+5
+ 1999 0ee2 9E81      		ldd r25,Y+6
+ 2000 0ee4 F801      		movw r30,r16
+ 2001 0ee6 9183      		std Z+1,r25
+ 2002 0ee8 8083      		st Z,r24
+ 2003 0eea D801      		movw r26,r16
+ 2004 0eec 1296      		adiw r26,2
+ 2005 0eee 1D92      		st X+,__zero_reg__
+ 2006 0ef0 1D92      		st X+,__zero_reg__
+ 2007 0ef2 1D92      		st X+,__zero_reg__
+ 2008 0ef4 1C92      		st X,__zero_reg__
+ 2009 0ef6 1597      		sbiw r26,2+3
+ 2010 0ef8 86E0      		ldi r24,lo8(6)
+ 2011 0efa 90E0      		ldi r25,hi8(6)
+ 2012 0efc 0E94 0000 		call malloc
+ 2013 0f00 FC01      		movw r30,r24
+ 2014 0f02 D601      		movw r26,r12
+ 2015 0f04 8D93      		st X+,r24
+ 2016 0f06 9C93      		st X,r25
+ 2017 0f08 0097      		sbiw r24,0
+ 2018 0f0a 01F4      		brne .L148
+ 2019 0f0c C801      		movw r24,r16
+ 2020 0f0e 0E94 0000 		call free
+ 2021 0f12 00C0      		rjmp .L125
+ 2022               	.L148:
+ 2023 0f14 86E0      		ldi r24,lo8(6)
+ 2024 0f16 DF01      		movw r26,r30
+ 2025 0f18 1D92      		st X+,__zero_reg__
+ 2026 0f1a 8A95      	        dec r24
+ 2027 0f1c 01F4      		brne .-6
+ 2028 0f1e D601      		movw r26,r12
+ 2029 0f20 ED91      		ld r30,X+
+ 2030 0f22 FC91      		ld r31,X
+ 2031 0f24 B382      		std Z+3,r11
+ 2032 0f26 A282      		std Z+2,r10
+ 2033 0f28 1583      		std Z+5,r17
+ 2034 0f2a 0483      		std Z+4,r16
+ 2035 0f2c F801      		movw r30,r16
+ 2036 0f2e 8081      		ld r24,Z
+ 2037 0f30 9181      		ldd r25,Z+1
+ 2038 0f32 0E94 0000 		call BankNodePointer
+ 2039 0f36 FC01      		movw r30,r24
+ 2040 0f38 8181      		ldd r24,Z+1
+ 2041 0f3a 8F5F      		subi r24,lo8(-(1))
+ 2042 0f3c 8183      		std Z+1,r24
+ 2043 0f3e 00C0      		rjmp .L138
+ 2044               	.L130:
+ 2045 0f40 8A01      		movw r16,r20
+ 2046 0f42 4115      		cp r20,__zero_reg__
+ 2047 0f44 5105      		cpc r21,__zero_reg__
+ 2048 0f46 01F4      		brne .+2
+ 2049 0f48 00C0      		rjmp .L149
+ 2050 0f4a DA01      		movw r26,r20
+ 2051 0f4c ED91      		ld r30,X+
+ 2052 0f4e FC91      		ld r31,X
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 37
+
+
+ 2053 0f50 3097      		sbiw r30,0
+ 2054 0f52 01F4      		brne .+2
+ 2055 0f54 00C0      		rjmp .L149
+ 2056 0f56 E480      		ldd r14,Z+4
+ 2057 0f58 F580      		ldd r15,Z+5
+ 2058 0f5a E114      		cp r14,__zero_reg__
+ 2059 0f5c F104      		cpc r15,__zero_reg__
+ 2060 0f5e 01F0      		breq .L150
+ 2061 0f60 F701      		movw r30,r14
+ 2062 0f62 8081      		ld r24,Z
+ 2063 0f64 9181      		ldd r25,Z+1
+ 2064 0f66 0E94 0000 		call BankNodePointer
+ 2065 0f6a FC01      		movw r30,r24
+ 2066 0f6c 8181      		ldd r24,Z+1
+ 2067 0f6e 8150      		subi r24,lo8(-(-1))
+ 2068 0f70 8183      		std Z+1,r24
+ 2069 0f72 C701      		movw r24,r14
+ 2070 0f74 0E94 0000 		call free
+ 2071               	.L150:
+ 2072 0f78 D801      		movw r26,r16
+ 2073 0f7a 8D91      		ld r24,X+
+ 2074 0f7c 9C91      		ld r25,X
+ 2075 0f7e 0E94 0000 		call free
+ 2076 0f82 00C0      		rjmp .L161
+ 2077               	.L164:
+ 2078 0f84 FA01      		movw r30,r20
+ 2079 0f86 A081      		ld r26,Z
+ 2080 0f88 B181      		ldd r27,Z+1
+ 2081 0f8a 1496      		adiw r26,4
+ 2082 0f8c 8D90      		ld r8,X+
+ 2083 0f8e 9C90      		ld r9,X
+ 2084 0f90 1597      		sbiw r26,4+1
+ 2085 0f92 6280      		ldd r6,Z+2
+ 2086 0f94 7380      		ldd r7,Z+3
+ 2087 0f96 F301      		movw r30,r6
+ 2088 0f98 1086      		std Z+8,__zero_reg__
+ 2089 0f9a D401      		movw r26,r8
+ 2090 0f9c 1296      		adiw r26,2
+ 2091 0f9e AD90      		ld r10,X+
+ 2092 0fa0 BD90      		ld r11,X+
+ 2093 0fa2 CD90      		ld r12,X+
+ 2094 0fa4 DC90      		ld r13,X
+ 2095 0fa6 1597      		sbiw r26,2+3
+ 2096 0fa8 EE24      		clr r14
+ 2097 0faa EA94      		dec r14
+ 2098 0fac FE2C      		mov r15,r14
+ 2099 0fae 13E0      		ldi r17,lo8(3)
+ 2100 0fb0 212E      		mov r2,r17
+ 2101 0fb2 312C      		mov r3,__zero_reg__
+ 2102 0fb4 2C0E      		add r2,r28
+ 2103 0fb6 3D1E      		adc r3,r29
+ 2104 0fb8 2E01      		movw r4,r28
+ 2105 0fba 0894      		sec
+ 2106 0fbc 411C      		adc r4,__zero_reg__
+ 2107 0fbe 511C      		adc r5,__zero_reg__
+ 2108 0fc0 00C0      		rjmp .L159
+ 2109               	.L152:
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 38
+
+
+ 2110 0fc2 EE24      		clr r14
+ 2111 0fc4 FF24      		clr r15
+ 2112 0fc6 8101      		movw r16,r2
+ 2113 0fc8 9201      		movw r18,r4
+ 2114 0fca B601      		movw r22,r12
+ 2115 0fcc A501      		movw r20,r10
+ 2116 0fce F401      		movw r30,r8
+ 2117 0fd0 8081      		ld r24,Z
+ 2118 0fd2 9181      		ldd r25,Z+1
+ 2119 0fd4 0E94 0000 		call PnutNodeGetDataPtr
+ 2120 0fd8 7C01      		movw r14,r24
+ 2121 0fda 0097      		sbiw r24,0
+ 2122 0fdc 01F0      		breq .+2
+ 2123 0fde 00C0      		rjmp .L125
+ 2124 0fe0 8B81      		ldd r24,Y+3
+ 2125 0fe2 9C81      		ldd r25,Y+4
+ 2126 0fe4 0097      		sbiw r24,0
+ 2127 0fe6 01F4      		brne .+2
+ 2128 0fe8 00C0      		rjmp .L125
+ 2129 0fea 20E2      		ldi r18,lo8(32)
+ 2130 0fec 30E0      		ldi r19,hi8(32)
+ 2131 0fee 40E0      		ldi r20,hlo8(32)
+ 2132 0ff0 50E0      		ldi r21,hhi8(32)
+ 2133 0ff2 A20E      		add r10,r18
+ 2134 0ff4 B31E      		adc r11,r19
+ 2135 0ff6 C41E      		adc r12,r20
+ 2136 0ff8 D51E      		adc r13,r21
+ 2137 0ffa D401      		movw r26,r8
+ 2138 0ffc 1296      		adiw r26,2
+ 2139 0ffe AD92      		st X+,r10
+ 2140 1000 BD92      		st X+,r11
+ 2141 1002 CD92      		st X+,r12
+ 2142 1004 DC92      		st X,r13
+ 2143 1006 1597      		sbiw r26,2+3
+ 2144 1008 8097      		sbiw r24,32
+ 2145 100a 00F0      		brlo .L159
+ 2146 100c E981      		ldd r30,Y+1
+ 2147 100e FA81      		ldd r31,Y+2
+ 2148 1010 8281      		ldd r24,Z+2
+ 2149 1012 8823      		tst r24
+ 2150 1014 01F0      		breq .L159
+ 2151 1016 88E0      		ldi r24,lo8(264)
+ 2152 1018 91E0      		ldi r25,hi8(264)
+ 2153 101a F301      		movw r30,r6
+ 2154 101c 9C01      		movw r18,r24
+ 2155 101e 1192      		st Z+,__zero_reg__
+ 2156 1020 2150      		subi r18,1
+ 2157 1022 3040      		sbci r19,0
+ 2158 1024 01F4      		brne .-8
+ 2159 1026 2981      		ldd r18,Y+1
+ 2160 1028 3A81      		ldd r19,Y+2
+ 2161 102a D901      		movw r26,r18
+ 2162 102c 8D91      		ld r24,X+
+ 2163 102e 9C91      		ld r25,X
+ 2164 1030 AA27      		clr r26
+ 2165 1032 97FD      		sbrc r25,7
+ 2166 1034 A095      		com r26
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 39
+
+
+ 2167 1036 BA2F      		mov r27,r26
+ 2168 1038 F301      		movw r30,r6
+ 2169 103a 8083      		st Z,r24
+ 2170 103c 9183      		std Z+1,r25
+ 2171 103e A283      		std Z+2,r26
+ 2172 1040 B383      		std Z+3,r27
+ 2173 1042 2D5F      		subi r18,lo8(-(3))
+ 2174 1044 3F4F      		sbci r19,hi8(-(3))
+ 2175 1046 F901      		movw r30,r18
+ 2176 1048 0190      		ld __tmp_reg__,Z+
+ 2177 104a 0020      		tst __tmp_reg__
+ 2178 104c 01F4      		brne .-6
+ 2179 104e 3197      		sbiw r30,1
+ 2180 1050 E21B      		sub r30,r18
+ 2181 1052 F30B      		sbc r31,r19
+ 2182 1054 D301      		movw r26,r6
+ 2183 1056 1796      		adiw r26,7
+ 2184 1058 EC93      		st X,r30
+ 2185 105a 6981      		ldd r22,Y+1
+ 2186 105c 7A81      		ldd r23,Y+2
+ 2187 105e 6D5F      		subi r22,lo8(-(3))
+ 2188 1060 7F4F      		sbci r23,hi8(-(3))
+ 2189 1062 C301      		movw r24,r6
+ 2190 1064 0896      		adiw r24,8
+ 2191 1066 0E94 0000 		call strcpy
+ 2192 106a 00C0      		rjmp .L138
+ 2193               	.L159:
+ 2194 106c F401      		movw r30,r8
+ 2195 106e 8081      		ld r24,Z
+ 2196 1070 9181      		ldd r25,Z+1
+ 2197 1072 0E94 0000 		call BankNodePointer
+ 2198 1076 FC01      		movw r30,r24
+ 2199 1078 8481      		ldd r24,Z+4
+ 2200 107a 9581      		ldd r25,Z+5
+ 2201 107c A681      		ldd r26,Z+6
+ 2202 107e B781      		ldd r27,Z+7
+ 2203 1080 A816      		cp r10,r24
+ 2204 1082 B906      		cpc r11,r25
+ 2205 1084 CA06      		cpc r12,r26
+ 2206 1086 DB06      		cpc r13,r27
+ 2207 1088 00F4      		brsh .+2
+ 2208 108a 00C0      		rjmp .L152
+ 2209 108c 00C0      		rjmp .L138
+ 2210               	.L132:
+ 2211 108e FA01      		movw r30,r20
+ 2212 1090 E280      		ldd r14,Z+2
+ 2213 1092 F380      		ldd r15,Z+3
+ 2214 1094 0081      		ld r16,Z
+ 2215 1096 1181      		ldd r17,Z+1
+ 2216 1098 D801      		movw r26,r16
+ 2217 109a 8D91      		ld r24,X+
+ 2218 109c 9C91      		ld r25,X
+ 2219 109e 0E94 0000 		call BankNodePointer
+ 2220 10a2 FC01      		movw r30,r24
+ 2221 10a4 8081      		ld r24,Z
+ 2222 10a6 F701      		movw r30,r14
+ 2223 10a8 8283      		std Z+2,r24
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 40
+
+
+ 2224 10aa D801      		movw r26,r16
+ 2225 10ac 8D91      		ld r24,X+
+ 2226 10ae 9C91      		ld r25,X
+ 2227 10b0 1197      		sbiw r26,1
+ 2228 10b2 9183      		std Z+1,r25
+ 2229 10b4 8083      		st Z,r24
+ 2230 10b6 8D91      		ld r24,X+
+ 2231 10b8 9C91      		ld r25,X
+ 2232 10ba 0E94 0000 		call BankNodePointer
+ 2233 10be FC01      		movw r30,r24
+ 2234 10c0 8281      		ldd r24,Z+2
+ 2235 10c2 9381      		ldd r25,Z+3
+ 2236 10c4 D701      		movw r26,r14
+ 2237 10c6 1496      		adiw r26,3+1
+ 2238 10c8 9C93      		st X,r25
+ 2239 10ca 8E93      		st -X,r24
+ 2240 10cc 1397      		sbiw r26,3
+ 2241 10ce F801      		movw r30,r16
+ 2242 10d0 8081      		ld r24,Z
+ 2243 10d2 9181      		ldd r25,Z+1
+ 2244 10d4 0E94 0000 		call BankNodePointer
+ 2245 10d8 FC01      		movw r30,r24
+ 2246 10da 8481      		ldd r24,Z+4
+ 2247 10dc 9581      		ldd r25,Z+5
+ 2248 10de A681      		ldd r26,Z+6
+ 2249 10e0 B781      		ldd r27,Z+7
+ 2250 10e2 F701      		movw r30,r14
+ 2251 10e4 8583      		std Z+5,r24
+ 2252 10e6 9683      		std Z+6,r25
+ 2253 10e8 A783      		std Z+7,r26
+ 2254 10ea B087      		std Z+8,r27
+ 2255 10ec D801      		movw r26,r16
+ 2256 10ee 8D91      		ld r24,X+
+ 2257 10f0 9C91      		ld r25,X
+ 2258 10f2 0E94 0000 		call BankNodePointer
+ 2259 10f6 FC01      		movw r30,r24
+ 2260 10f8 8085      		ldd r24,Z+8
+ 2261 10fa 9185      		ldd r25,Z+9
+ 2262 10fc A285      		ldd r26,Z+10
+ 2263 10fe B385      		ldd r27,Z+11
+ 2264 1100 F701      		movw r30,r14
+ 2265 1102 8187      		std Z+9,r24
+ 2266 1104 9287      		std Z+10,r25
+ 2267 1106 A387      		std Z+11,r26
+ 2268 1108 B487      		std Z+12,r27
+ 2269               	.L161:
+ 2270 110a EE24      		clr r14
+ 2271 110c FF24      		clr r15
+ 2272 110e 00C0      		rjmp .L138
+ 2273               	.L133:
+ 2274 1110 0E94 0000 		call PnutDelete
+ 2275 1114 7C01      		movw r14,r24
+ 2276 1116 00C0      		rjmp .L138
+ 2277               	.L165:
+ 2278 1118 FC01      		movw r30,r24
+ 2279 111a A280      		ldd r10,Z+2
+ 2280 111c B380      		ldd r11,Z+3
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 41
+
+
+ 2281 111e C080      		ld r12,Z
+ 2282 1120 D180      		ldd r13,Z+1
+ 2283 1122 D501      		movw r26,r10
+ 2284 1124 ED90      		ld r14,X+
+ 2285 1126 FD90      		ld r15,X+
+ 2286 1128 0D91      		ld r16,X+
+ 2287 112a 1C91      		ld r17,X
+ 2288 112c 8481      		ldd r24,Z+4
+ 2289 112e 9581      		ldd r25,Z+5
+ 2290 1130 8130      		cpi r24,1
+ 2291 1132 9105      		cpc r25,__zero_reg__
+ 2292 1134 01F0      		breq .L154
+ 2293 1136 0297      		sbiw r24,2
+ 2294 1138 01F4      		brne .L153
+ 2295 113a 00C0      		rjmp .L166
+ 2296               	.L154:
+ 2297 113c F601      		movw r30,r12
+ 2298 113e 8281      		ldd r24,Z+2
+ 2299 1140 9381      		ldd r25,Z+3
+ 2300 1142 A481      		ldd r26,Z+4
+ 2301 1144 B581      		ldd r27,Z+5
+ 2302 1146 00C0      		rjmp .L160
+ 2303               	.L166:
+ 2304 1148 D601      		movw r26,r12
+ 2305 114a 8D91      		ld r24,X+
+ 2306 114c 9C91      		ld r25,X
+ 2307 114e 0E94 0000 		call BankNodePointer
+ 2308 1152 FC01      		movw r30,r24
+ 2309 1154 8481      		ldd r24,Z+4
+ 2310 1156 9581      		ldd r25,Z+5
+ 2311 1158 A681      		ldd r26,Z+6
+ 2312 115a B781      		ldd r27,Z+7
+ 2313               	.L160:
+ 2314 115c E80E      		add r14,r24
+ 2315 115e F91E      		adc r15,r25
+ 2316 1160 0A1F      		adc r16,r26
+ 2317 1162 1B1F      		adc r17,r27
+ 2318               	.L153:
+ 2319 1164 17FD      		sbrc r17,7
+ 2320 1166 00C0      		rjmp .L125
+ 2321 1168 D601      		movw r26,r12
+ 2322 116a 8D91      		ld r24,X+
+ 2323 116c 9C91      		ld r25,X
+ 2324 116e 0E94 0000 		call BankNodePointer
+ 2325 1172 FC01      		movw r30,r24
+ 2326 1174 8481      		ldd r24,Z+4
+ 2327 1176 9581      		ldd r25,Z+5
+ 2328 1178 A681      		ldd r26,Z+6
+ 2329 117a B781      		ldd r27,Z+7
+ 2330 117c 8E15      		cp r24,r14
+ 2331 117e 9F05      		cpc r25,r15
+ 2332 1180 A007      		cpc r26,r16
+ 2333 1182 B107      		cpc r27,r17
+ 2334 1184 04F0      		brlt .L125
+ 2335 1186 D601      		movw r26,r12
+ 2336 1188 1296      		adiw r26,2
+ 2337 118a ED92      		st X+,r14
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 42
+
+
+ 2338 118c FD92      		st X+,r15
+ 2339 118e 0D93      		st X+,r16
+ 2340 1190 1C93      		st X,r17
+ 2341 1192 1597      		sbiw r26,2+3
+ 2342 1194 F501      		movw r30,r10
+ 2343 1196 E082      		st Z,r14
+ 2344 1198 F182      		std Z+1,r15
+ 2345 119a 0283      		std Z+2,r16
+ 2346 119c 1383      		std Z+3,r17
+ 2347               	.L125:
+ 2348 119e EE24      		clr r14
+ 2349 11a0 EA94      		dec r14
+ 2350 11a2 FE2C      		mov r15,r14
+ 2351 11a4 00C0      		rjmp .L138
+ 2352               	.L149:
+ 2353 11a6 B6E1      		ldi r27,lo8(22)
+ 2354 11a8 EB2E      		mov r14,r27
+ 2355 11aa F12C      		mov r15,__zero_reg__
+ 2356               	.L138:
+ 2357 11ac C701      		movw r24,r14
+ 2358               	/* epilogue start */
+ 2359 11ae 2A96      		adiw r28,10
+ 2360 11b0 0FB6      		in __tmp_reg__,__SREG__
+ 2361 11b2 F894      		cli
+ 2362 11b4 DEBF      		out __SP_H__,r29
+ 2363 11b6 0FBE      		out __SREG__,__tmp_reg__
+ 2364 11b8 CDBF      		out __SP_L__,r28
+ 2365 11ba CF91      		pop r28
+ 2366 11bc DF91      		pop r29
+ 2367 11be 1F91      		pop r17
+ 2368 11c0 0F91      		pop r16
+ 2369 11c2 FF90      		pop r15
+ 2370 11c4 EF90      		pop r14
+ 2371 11c6 DF90      		pop r13
+ 2372 11c8 CF90      		pop r12
+ 2373 11ca BF90      		pop r11
+ 2374 11cc AF90      		pop r10
+ 2375 11ce 9F90      		pop r9
+ 2376 11d0 8F90      		pop r8
+ 2377 11d2 7F90      		pop r7
+ 2378 11d4 6F90      		pop r6
+ 2379 11d6 5F90      		pop r5
+ 2380 11d8 4F90      		pop r4
+ 2381 11da 3F90      		pop r3
+ 2382 11dc 2F90      		pop r2
+ 2383 11de 0895      		ret
+ 2384               	.L141:
+ 2385 11e0 0CE1      		ldi r16,lo8(28)
+ 2386 11e2 10E0      		ldi r17,hi8(28)
+ 2387 11e4 00C0      		rjmp .L140
+ 2388               		.size	PnutIOCtl, .-PnutIOCtl
+ 2389               	.global	devPnut
+ 2390               		.data
+ 2391               		.type	devPnut, @object
+ 2392               		.size	devPnut, 35
+ 2393               	devPnut:
+ 2394 0005 0000      		.word	0
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 43
+
+
+ 2395 0007 50        		.byte	80
+ 2396 0008 4E        		.byte	78
+ 2397 0009 55        		.byte	85
+ 2398 000a 54        		.byte	84
+ 2399 000b 00        		.byte	0
+ 2400 000c 00        		.byte	0
+ 2401 000d 00        		.byte	0
+ 2402 000e 00        		.byte	0
+ 2403 000f 00        		.byte	0
+ 2404 0010 00        		.byte	0
+ 2405 0011 0000      		.word	0
+ 2406 0013 00        		.byte	0
+ 2407 0014 0000      		.word	0
+ 2408 0016 0000      		.word	0
+ 2409 0018 0000      		.word	gs(PnutInit)
+ 2410 001a 0000      		.word	gs(PnutIOCtl)
+ 2411 001c 0000      		.word	gs(PnutFileRead)
+ 2412 001e 0000      		.word	gs(PnutFileWrite)
+ 2413 0020 0000      		.word	gs(PnutFileWrite_P)
+ 2414 0022 0000      		.word	gs(PnutFileOpen)
+ 2415 0024 0000      		.word	gs(PnutFileClose)
+ 2416 0026 0000      		.word	gs(PnutFileSize)
+ 2417               		.type	blockFreeList, @object
+ 2418               		.size	blockFreeList, 2
+ 2419               	blockFreeList:
+ 2420 0028 FFFF      		.word	-1
+ 2421               		.lcomm root,2
+GAS LISTING C:\Temp/ccmijCtQ.s 			page 44
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pnutfs.c
+  C:\Temp/ccmijCtQ.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccmijCtQ.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccmijCtQ.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccmijCtQ.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccmijCtQ.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccmijCtQ.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccmijCtQ.s:13     .text:00000000 BankSelect
+  C:\Temp/ccmijCtQ.s:28     .text:00000012 BankNodePointer
+  C:\Temp/ccmijCtQ.s:60     .text:00000042 PnutFileWrite_P
+  C:\Temp/ccmijCtQ.s:69     .text:00000048 PnutFileSize
+  C:\Temp/ccmijCtQ.s:89     .text:00000066 PnutFileClose
+  C:\Temp/ccmijCtQ.s:134    .text:000000b4 PnutBlockAlloc
+  C:\Temp/ccmijCtQ.s:2419   .data:00000028 blockFreeList
+  C:\Temp/ccmijCtQ.s:166    .text:000000f0 PnutNodeGetDataPtr
+  C:\Temp/ccmijCtQ.s:284    .text:000001cc PnutDirFindEntry
+  C:\Temp/ccmijCtQ.s:417    .text:000002be PnutDirFindPath
+  C:\Temp/ccmijCtQ.s:574    .text:000003d4 PnutNodeDataRelease
+  C:\Temp/ccmijCtQ.s:679    .text:000004a8 PnutNodeRelease
+  C:\Temp/ccmijCtQ.s:701    .text:000004d4 PnutNodeAlloc
+  C:\Temp/ccmijCtQ.s:748    .text:00000528 PnutDirAddEntry
+  C:\Temp/ccmijCtQ.s:890    .text:0000063c PnutFileOpen
+                             .bss:00000000 root
+  C:\Temp/ccmijCtQ.s:1085   .text:000007bc PnutInit
+  C:\Temp/ccmijCtQ.s:1163   .text:0000086a PnutFileWrite
+  C:\Temp/ccmijCtQ.s:1339   .text:000009ba PnutFileRead
+  C:\Temp/ccmijCtQ.s:1510   .text:00000b00 PnutDelete
+  C:\Temp/ccmijCtQ.s:1737   .text:00000cc4 PnutIOCtl
+  C:\Temp/ccmijCtQ.s:2393   .data:00000005 devPnut
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+__divmodhi4
+free
+strncmp
+time
+strcpy
+errno
+malloc
+memcpy
+strcmp

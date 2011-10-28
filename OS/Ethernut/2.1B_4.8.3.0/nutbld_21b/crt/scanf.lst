@@ -1,0 +1,53 @@
+GAS LISTING C:\Temp/ccS9jIeF.s 			page 1
+
+
+   1               		.file	"scanf.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	scanf
+  12               		.type	scanf, @function
+  13               	scanf:
+  14 0000 DF93      		push r29
+  15 0002 CF93      		push r28
+  16 0004 CDB7      		in r28,__SP_L__
+  17 0006 DEB7      		in r29,__SP_H__
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 0008 FE01      		movw r30,r28
+  21 000a 3596      		adiw r30,5
+  22 000c 6191      		ld r22,Z+
+  23 000e 7191      		ld r23,Z+
+  24 0010 AF01      		movw r20,r30
+  25 0012 8091 0000 		lds r24,__iob
+  26 0016 9091 0000 		lds r25,(__iob)+1
+  27 001a 0E94 0000 		call vfscanf
+  28               	/* epilogue start */
+  29 001e CF91      		pop r28
+  30 0020 DF91      		pop r29
+  31 0022 0895      		ret
+  32               		.size	scanf, .-scanf
+GAS LISTING C:\Temp/ccS9jIeF.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 scanf.c
+  C:\Temp/ccS9jIeF.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccS9jIeF.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccS9jIeF.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccS9jIeF.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccS9jIeF.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccS9jIeF.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccS9jIeF.s:13     .text:00000000 scanf
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+__iob
+vfscanf

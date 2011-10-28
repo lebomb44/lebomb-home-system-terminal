@@ -1,0 +1,143 @@
+GAS LISTING C:\Temp/cc7cq50b.s 			page 1
+
+
+   1               		.file	"open.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	_open
+  12               		.type	_open, @function
+  13               	_open:
+  14 0000 DF92      		push r13
+  15 0002 EF92      		push r14
+  16 0004 FF92      		push r15
+  17 0006 0F93      		push r16
+  18 0008 1F93      		push r17
+  19 000a DF93      		push r29
+  20 000c CF93      		push r28
+  21 000e CDB7      		in r28,__SP_L__
+  22 0010 DEB7      		in r29,__SP_H__
+  23 0012 2997      		sbiw r28,9
+  24 0014 0FB6      		in __tmp_reg__,__SREG__
+  25 0016 F894      		cli
+  26 0018 DEBF      		out __SP_H__,r29
+  27 001a 0FBE      		out __SREG__,__tmp_reg__
+  28 001c CDBF      		out __SP_L__,r28
+  29               	/* prologue: function */
+  30               	/* frame size = 9 */
+  31 001e D82E      		mov r13,r24
+  32 0020 7B01      		movw r14,r22
+  33 0022 FE01      		movw r30,r28
+  34 0024 3196      		adiw r30,1
+  35 0026 282F      		mov r18,r24
+  36 0028 392F      		mov r19,r25
+  37 002a 8901      		movw r16,r18
+  38 002c AE01      		movw r20,r28
+  39 002e 475F      		subi r20,lo8(-(9))
+  40 0030 5F4F      		sbci r21,hi8(-(9))
+  41 0032 00C0      		rjmp .L2
+  42               	.L4:
+  43 0034 8193      		st Z+,r24
+  44 0036 0F5F      		subi r16,lo8(-(1))
+  45 0038 1F4F      		sbci r17,hi8(-(1))
+  46               	.L2:
+  47 003a 202F      		mov r18,r16
+  48 003c 2D19      		sub r18,r13
+  49 003e D801      		movw r26,r16
+  50 0040 8C91      		ld r24,X
+  51 0042 8823      		tst r24
+  52 0044 01F0      		breq .L3
+  53 0046 8A33      		cpi r24,lo8(58)
+  54 0048 01F0      		breq .L3
+  55 004a E417      		cp r30,r20
+  56 004c F507      		cpc r31,r21
+  57 004e 01F4      		brne .L4
+GAS LISTING C:\Temp/cc7cq50b.s 			page 2
+
+
+  58               	.L3:
+  59 0050 CE01      		movw r24,r28
+  60 0052 0196      		adiw r24,1
+  61 0054 FC01      		movw r30,r24
+  62 0056 E20F      		add r30,r18
+  63 0058 F11D      		adc r31,__zero_reg__
+  64 005a 1082      		st Z,__zero_reg__
+  65 005c 0E94 0000 		call NutDeviceLookup
+  66 0060 DC01      		movw r26,r24
+  67 0062 0097      		sbiw r24,0
+  68 0064 01F4      		brne .L5
+  69 0066 82E0      		ldi r24,lo8(2)
+  70 0068 90E0      		ldi r25,hi8(2)
+  71 006a 9093 0000 		sts (errno)+1,r25
+  72 006e 8093 0000 		sts errno,r24
+  73 0072 2FEF      		ldi r18,lo8(-1)
+  74 0074 3FEF      		ldi r19,hi8(-1)
+  75 0076 00C0      		rjmp .L6
+  76               	.L5:
+  77 0078 F801      		movw r30,r16
+  78 007a 8081      		ld r24,Z
+  79 007c 8A33      		cpi r24,lo8(58)
+  80 007e 01F0      		breq .L7
+  81 0080 60E0      		ldi r22,lo8(0)
+  82 0082 70E0      		ldi r23,hi8(0)
+  83 0084 00C0      		rjmp .L8
+  84               	.L7:
+  85 0086 B801      		movw r22,r16
+  86 0088 6F5F      		subi r22,lo8(-(1))
+  87 008a 7F4F      		sbci r23,hi8(-(1))
+  88               	.L8:
+  89 008c 5D96      		adiw r26,29
+  90 008e ED91      		ld r30,X+
+  91 0090 FC91      		ld r31,X
+  92 0092 5E97      		sbiw r26,29+1
+  93 0094 20E0      		ldi r18,lo8(0)
+  94 0096 30E0      		ldi r19,hi8(0)
+  95 0098 A701      		movw r20,r14
+  96 009a CD01      		movw r24,r26
+  97 009c 0995      		icall
+  98 009e 9C01      		movw r18,r24
+  99               	.L6:
+ 100 00a0 C901      		movw r24,r18
+ 101               	/* epilogue start */
+ 102 00a2 2996      		adiw r28,9
+ 103 00a4 0FB6      		in __tmp_reg__,__SREG__
+ 104 00a6 F894      		cli
+ 105 00a8 DEBF      		out __SP_H__,r29
+ 106 00aa 0FBE      		out __SREG__,__tmp_reg__
+ 107 00ac CDBF      		out __SP_L__,r28
+ 108 00ae CF91      		pop r28
+ 109 00b0 DF91      		pop r29
+ 110 00b2 1F91      		pop r17
+ 111 00b4 0F91      		pop r16
+ 112 00b6 FF90      		pop r15
+ 113 00b8 EF90      		pop r14
+ 114 00ba DF90      		pop r13
+GAS LISTING C:\Temp/cc7cq50b.s 			page 3
+
+
+ 115 00bc 0895      		ret
+ 116               		.size	_open, .-_open
+GAS LISTING C:\Temp/cc7cq50b.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 open.c
+  C:\Temp/cc7cq50b.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cc7cq50b.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cc7cq50b.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cc7cq50b.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cc7cq50b.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cc7cq50b.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cc7cq50b.s:13     .text:00000000 _open
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutDeviceLookup
+errno

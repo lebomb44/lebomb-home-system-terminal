@@ -1,0 +1,127 @@
+GAS LISTING C:\Temp/ccQJQWVS.s 			page 1
+
+
+   1               		.file	"devreg.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutDeviceLookup
+  12               		.type	NutDeviceLookup, @function
+  13               	NutDeviceLookup:
+  14 0000 0F93      		push r16
+  15 0002 1F93      		push r17
+  16 0004 CF93      		push r28
+  17 0006 DF93      		push r29
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 0008 8C01      		movw r16,r24
+  21 000a C091 0000 		lds r28,nutDeviceList
+  22 000e D091 0000 		lds r29,(nutDeviceList)+1
+  23 0012 00C0      		rjmp .L2
+  24               	.L4:
+  25 0014 B801      		movw r22,r16
+  26 0016 CE01      		movw r24,r28
+  27 0018 0296      		adiw r24,2
+  28 001a 0E94 0000 		call strcmp
+  29 001e 0097      		sbiw r24,0
+  30 0020 01F0      		breq .L3
+  31 0022 0990      		ld __tmp_reg__,Y+
+  32 0024 D881      		ld r29,Y
+  33 0026 C02D      		mov r28,__tmp_reg__
+  34               	.L2:
+  35 0028 2097      		sbiw r28,0
+  36 002a 01F4      		brne .L4
+  37               	.L3:
+  38 002c CE01      		movw r24,r28
+  39               	/* epilogue start */
+  40 002e DF91      		pop r29
+  41 0030 CF91      		pop r28
+  42 0032 1F91      		pop r17
+  43 0034 0F91      		pop r16
+  44 0036 0895      		ret
+  45               		.size	NutDeviceLookup, .-NutDeviceLookup
+  46               	.global	NutRegisterDevice
+  47               		.type	NutRegisterDevice, @function
+  48               	NutRegisterDevice:
+  49 0038 CF93      		push r28
+  50 003a DF93      		push r29
+  51               	/* prologue: function */
+  52               	/* frame size = 0 */
+  53 003c EC01      		movw r28,r24
+  54 003e 6115      		cp r22,__zero_reg__
+  55 0040 7105      		cpc r23,__zero_reg__
+  56 0042 01F0      		breq .L7
+  57 0044 7D87      		std Y+13,r23
+GAS LISTING C:\Temp/ccQJQWVS.s 			page 2
+
+
+  58 0046 6C87      		std Y+12,r22
+  59               	.L7:
+  60 0048 4111      		cpse r20,__zero_reg__
+  61 004a 4E87      		std Y+14,r20
+  62               	.L8:
+  63 004c CE01      		movw r24,r28
+  64 004e 0296      		adiw r24,2
+  65 0050 0E94 0000 		call NutDeviceLookup
+  66 0054 892B      		or r24,r25
+  67 0056 01F4      		brne .L9
+  68 0058 EB89      		ldd r30,Y+19
+  69 005a FC89      		ldd r31,Y+20
+  70 005c 3097      		sbiw r30,0
+  71 005e 01F0      		breq .L10
+  72 0060 CE01      		movw r24,r28
+  73 0062 0995      		icall
+  74 0064 892B      		or r24,r25
+  75 0066 01F4      		brne .L9
+  76               	.L10:
+  77 0068 8091 0000 		lds r24,nutDeviceList
+  78 006c 9091 0000 		lds r25,(nutDeviceList)+1
+  79 0070 9983      		std Y+1,r25
+  80 0072 8883      		st Y,r24
+  81 0074 D093 0000 		sts (nutDeviceList)+1,r29
+  82 0078 C093 0000 		sts nutDeviceList,r28
+  83 007c 20E0      		ldi r18,lo8(0)
+  84 007e 30E0      		ldi r19,hi8(0)
+  85 0080 00C0      		rjmp .L11
+  86               	.L9:
+  87 0082 2FEF      		ldi r18,lo8(-1)
+  88 0084 3FEF      		ldi r19,hi8(-1)
+  89               	.L11:
+  90 0086 C901      		movw r24,r18
+  91               	/* epilogue start */
+  92 0088 DF91      		pop r29
+  93 008a CF91      		pop r28
+  94 008c 0895      		ret
+  95               		.size	NutRegisterDevice, .-NutRegisterDevice
+  96               	.global	nutDeviceList
+  97               	.global	nutDeviceList
+  98               		.section .bss
+  99               		.type	nutDeviceList, @object
+ 100               		.size	nutDeviceList, 2
+ 101               	nutDeviceList:
+ 102 0000 0000      		.skip 2,0
+GAS LISTING C:\Temp/ccQJQWVS.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 devreg.c
+  C:\Temp/ccQJQWVS.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccQJQWVS.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccQJQWVS.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccQJQWVS.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccQJQWVS.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccQJQWVS.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccQJQWVS.s:13     .text:00000000 NutDeviceLookup
+  C:\Temp/ccQJQWVS.s:101    .bss:00000000 nutDeviceList
+  C:\Temp/ccQJQWVS.s:48     .text:00000038 NutRegisterDevice
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+strcmp

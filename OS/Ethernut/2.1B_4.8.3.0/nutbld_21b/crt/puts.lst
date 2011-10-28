@@ -1,0 +1,60 @@
+GAS LISTING C:\Temp/ccfBrAwv.s 			page 1
+
+
+   1               		.file	"puts.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	puts
+  12               		.type	puts, @function
+  13               	puts:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 6091 0000 		lds r22,__iob+2
+  17 0004 7091 0000 		lds r23,(__iob+2)+1
+  18 0008 0E94 0000 		call fputs
+  19 000c 9C01      		movw r18,r24
+  20 000e 2F5F      		subi r18,lo8(-1)
+  21 0010 3F4F      		sbci r19,hi8(-1)
+  22 0012 01F4      		brne .L2
+  23 0014 2FEF      		ldi r18,lo8(-1)
+  24 0016 3FEF      		ldi r19,hi8(-1)
+  25 0018 00C0      		rjmp .L3
+  26               	.L2:
+  27 001a 6091 0000 		lds r22,__iob+2
+  28 001e 7091 0000 		lds r23,(__iob+2)+1
+  29 0022 8AE0      		ldi r24,lo8(10)
+  30 0024 90E0      		ldi r25,hi8(10)
+  31 0026 0E94 0000 		call fputc
+  32 002a 20E0      		ldi r18,lo8(0)
+  33 002c 30E0      		ldi r19,hi8(0)
+  34               	.L3:
+  35 002e C901      		movw r24,r18
+  36               	/* epilogue start */
+  37 0030 0895      		ret
+  38               		.size	puts, .-puts
+GAS LISTING C:\Temp/ccfBrAwv.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 puts.c
+  C:\Temp/ccfBrAwv.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccfBrAwv.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccfBrAwv.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccfBrAwv.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccfBrAwv.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccfBrAwv.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccfBrAwv.s:13     .text:00000000 puts
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+__iob
+fputs
+fputc

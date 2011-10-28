@@ -1,0 +1,152 @@
+GAS LISTING C:\Temp/ccrkrweV.s 			page 1
+
+
+   1               		.file	"ethout.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutEtherOutput
+  12               		.type	NutEtherOutput, @function
+  13               	NutEtherOutput:
+  14 0000 8F92      		push r8
+  15 0002 9F92      		push r9
+  16 0004 AF92      		push r10
+  17 0006 BF92      		push r11
+  18 0008 CF92      		push r12
+  19 000a DF92      		push r13
+  20 000c EF92      		push r14
+  21 000e FF92      		push r15
+  22 0010 0F93      		push r16
+  23 0012 1F93      		push r17
+  24 0014 CF93      		push r28
+  25 0016 DF93      		push r29
+  26               	/* prologue: function */
+  27               	/* frame size = 0 */
+  28 0018 4C01      		movw r8,r24
+  29 001a 7B01      		movw r14,r22
+  30 001c 6A01      		movw r12,r20
+  31 001e 8901      		movw r16,r18
+  32 0020 4EE0      		ldi r20,lo8(14)
+  33 0022 50E0      		ldi r21,hi8(14)
+  34 0024 60E1      		ldi r22,lo8(16)
+  35 0026 C901      		movw r24,r18
+  36 0028 0E94 0000 		call NutNetBufAlloc
+  37 002c 892B      		or r24,r25
+  38 002e 01F4      		brne .+2
+  39 0030 00C0      		rjmp .L12
+  40               	.L2:
+  41 0032 D801      		movw r26,r16
+  42 0034 1396      		adiw r26,3
+  43 0036 CD91      		ld r28,X+
+  44 0038 DC91      		ld r29,X
+  45 003a 1497      		sbiw r26,3+1
+  46 003c F401      		movw r30,r8
+  47 003e A784      		ldd r10,Z+15
+  48 0040 B088      		ldd r11,Z+16
+  49 0042 DE01      		movw r26,r28
+  50 0044 1696      		adiw r26,6
+  51 0046 F501      		movw r30,r10
+  52 0048 3596      		adiw r30,5
+  53 004a 86E0      		ldi r24,lo8(6)
+  54               	.L4:
+  55 004c 0190      		ld r0,Z+
+  56 004e 0D92      		st X+,r0
+  57 0050 8150      		subi r24,lo8(-(-1))
+GAS LISTING C:\Temp/ccrkrweV.s 			page 2
+
+
+  58 0052 01F4      		brne .L4
+  59 0054 C114      		cp r12,__zero_reg__
+  60 0056 D104      		cpc r13,__zero_reg__
+  61 0058 01F0      		breq .L5
+  62 005a DE01      		movw r26,r28
+  63 005c F601      		movw r30,r12
+  64 005e 86E0      		ldi r24,lo8(6)
+  65               	.L6:
+  66 0060 0190      		ld r0,Z+
+  67 0062 0D92      		st X+,r0
+  68 0064 8150      		subi r24,lo8(-(-1))
+  69 0066 01F4      		brne .L6
+  70 0068 00C0      		rjmp .L7
+  71               	.L5:
+  72 006a 46E0      		ldi r20,lo8(6)
+  73 006c 50E0      		ldi r21,hi8(6)
+  74 006e 6FEF      		ldi r22,lo8(255)
+  75 0070 70E0      		ldi r23,hi8(255)
+  76 0072 CE01      		movw r24,r28
+  77 0074 0E94 0000 		call memset
+  78               	.L7:
+  79               	/* #APP */
+  80               	 ;  295 "../../nut/include/sys/types.h" 1
+  81 0078 0E2C      		mov __tmp_reg__, r14
+  82 007a EF2C      		mov r14, r15
+  83 007c F02C      		mov r15, __tmp_reg__
+  84               		
+  85               	 ;  0 "" 2
+  86               	/* #NOAPP */
+  87 007e FD86      		std Y+13,r15
+  88 0080 EC86      		std Y+12,r14
+  89 0082 D501      		movw r26,r10
+  90 0084 9196      		adiw r26,33
+  91 0086 ED91      		ld r30,X+
+  92 0088 FC91      		ld r31,X
+  93 008a 9297      		sbiw r26,33+1
+  94 008c B801      		movw r22,r16
+  95 008e C401      		movw r24,r8
+  96 0090 0995      		icall
+  97 0092 892B      		or r24,r25
+  98 0094 01F4      		brne .L8
+  99 0096 20E0      		ldi r18,lo8(0)
+ 100 0098 30E0      		ldi r19,hi8(0)
+ 101 009a 00C0      		rjmp .L3
+ 102               	.L8:
+ 103 009c C801      		movw r24,r16
+ 104 009e 0E94 0000 		call NutNetBufFree
+ 105               	.L12:
+ 106 00a2 2FEF      		ldi r18,lo8(-1)
+ 107 00a4 3FEF      		ldi r19,hi8(-1)
+ 108               	.L3:
+ 109 00a6 C901      		movw r24,r18
+ 110               	/* epilogue start */
+ 111 00a8 DF91      		pop r29
+ 112 00aa CF91      		pop r28
+ 113 00ac 1F91      		pop r17
+ 114 00ae 0F91      		pop r16
+GAS LISTING C:\Temp/ccrkrweV.s 			page 3
+
+
+ 115 00b0 FF90      		pop r15
+ 116 00b2 EF90      		pop r14
+ 117 00b4 DF90      		pop r13
+ 118 00b6 CF90      		pop r12
+ 119 00b8 BF90      		pop r11
+ 120 00ba AF90      		pop r10
+ 121 00bc 9F90      		pop r9
+ 122 00be 8F90      		pop r8
+ 123 00c0 0895      		ret
+ 124               		.size	NutEtherOutput, .-NutEtherOutput
+GAS LISTING C:\Temp/ccrkrweV.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ethout.c
+  C:\Temp/ccrkrweV.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccrkrweV.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccrkrweV.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccrkrweV.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccrkrweV.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccrkrweV.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccrkrweV.s:13     .text:00000000 NutEtherOutput
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutNetBufAlloc
+memset
+NutNetBufFree

@@ -1,0 +1,760 @@
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 1
+
+
+   1               		.file	"ds1307rtc.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	DS1307RtcWrite
+  12               		.type	DS1307RtcWrite, @function
+  13               	DS1307RtcWrite:
+  14 0000 CF92      		push r12
+  15 0002 DF92      		push r13
+  16 0004 EF92      		push r14
+  17 0006 FF92      		push r15
+  18 0008 0F93      		push r16
+  19 000a 1F93      		push r17
+  20               	/* prologue: function */
+  21               	/* frame size = 0 */
+  22 000c AB01      		movw r20,r22
+  23 000e CC24      		clr r12
+  24 0010 DD24      		clr r13
+  25 0012 7601      		movw r14,r12
+  26 0014 00E0      		ldi r16,lo8(0)
+  27 0016 10E0      		ldi r17,hi8(0)
+  28 0018 20E0      		ldi r18,lo8(0)
+  29 001a 30E0      		ldi r19,hi8(0)
+  30 001c BC01      		movw r22,r24
+  31 001e 88E6      		ldi r24,lo8(104)
+  32 0020 0E94 0000 		call TwMasterTransact
+  33               	/* epilogue start */
+  34 0024 1F91      		pop r17
+  35 0026 0F91      		pop r16
+  36 0028 FF90      		pop r15
+  37 002a EF90      		pop r14
+  38 002c DF90      		pop r13
+  39 002e CF90      		pop r12
+  40 0030 0895      		ret
+  41               		.size	DS1307RtcWrite, .-DS1307RtcWrite
+  42               	.global	DS1307RtcReadRegs
+  43               		.type	DS1307RtcReadRegs, @function
+  44               	DS1307RtcReadRegs:
+  45 0032 AF92      		push r10
+  46 0034 BF92      		push r11
+  47 0036 CF92      		push r12
+  48 0038 DF92      		push r13
+  49 003a EF92      		push r14
+  50 003c FF92      		push r15
+  51 003e 0F93      		push r16
+  52 0040 1F93      		push r17
+  53 0042 DF93      		push r29
+  54 0044 CF93      		push r28
+  55 0046 0F92      		push __tmp_reg__
+  56 0048 CDB7      		in r28,__SP_L__
+  57 004a DEB7      		in r29,__SP_H__
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 2
+
+
+  58               	/* prologue: function */
+  59               	/* frame size = 1 */
+  60 004c 9B01      		movw r18,r22
+  61 004e 5A01      		movw r10,r20
+  62 0050 8983      		std Y+1,r24
+  63 0052 CC24      		clr r12
+  64 0054 DD24      		clr r13
+  65 0056 7601      		movw r14,r12
+  66 0058 8A01      		movw r16,r20
+  67 005a 41E0      		ldi r20,lo8(1)
+  68 005c 50E0      		ldi r21,hi8(1)
+  69 005e BE01      		movw r22,r28
+  70 0060 6F5F      		subi r22,lo8(-(1))
+  71 0062 7F4F      		sbci r23,hi8(-(1))
+  72 0064 88E6      		ldi r24,lo8(104)
+  73 0066 0E94 0000 		call TwMasterTransact
+  74 006a 8A15      		cp r24,r10
+  75 006c 9B05      		cpc r25,r11
+  76 006e 01F4      		brne .L4
+  77 0070 20E0      		ldi r18,lo8(0)
+  78 0072 30E0      		ldi r19,hi8(0)
+  79 0074 00C0      		rjmp .L5
+  80               	.L4:
+  81 0076 2FEF      		ldi r18,lo8(-1)
+  82 0078 3FEF      		ldi r19,hi8(-1)
+  83               	.L5:
+  84 007a C901      		movw r24,r18
+  85               	/* epilogue start */
+  86 007c 0F90      		pop __tmp_reg__
+  87 007e CF91      		pop r28
+  88 0080 DF91      		pop r29
+  89 0082 1F91      		pop r17
+  90 0084 0F91      		pop r16
+  91 0086 FF90      		pop r15
+  92 0088 EF90      		pop r14
+  93 008a DF90      		pop r13
+  94 008c CF90      		pop r12
+  95 008e BF90      		pop r11
+  96 0090 AF90      		pop r10
+  97 0092 0895      		ret
+  98               		.size	DS1307RtcReadRegs, .-DS1307RtcReadRegs
+  99               	.global	DS1307Init
+ 100               		.type	DS1307Init, @function
+ 101               	DS1307Init:
+ 102 0094 BF92      		push r11
+ 103 0096 CF92      		push r12
+ 104 0098 DF92      		push r13
+ 105 009a EF92      		push r14
+ 106 009c FF92      		push r15
+ 107 009e 0F93      		push r16
+ 108 00a0 1F93      		push r17
+ 109 00a2 DF93      		push r29
+ 110 00a4 CF93      		push r28
+ 111 00a6 00D0      		rcall .
+ 112 00a8 00D0      		rcall .
+ 113 00aa CDB7      		in r28,__SP_L__
+ 114 00ac DEB7      		in r29,__SP_H__
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 3
+
+
+ 115               	/* prologue: function */
+ 116               	/* frame size = 4 */
+ 117 00ae 80E0      		ldi r24,lo8(0)
+ 118 00b0 0E94 0000 		call TwInit
+ 119 00b4 9C01      		movw r18,r24
+ 120 00b6 0097      		sbiw r24,0
+ 121 00b8 01F4      		brne .L8
+ 122 00ba 1A82      		std Y+2,__zero_reg__
+ 123 00bc CC24      		clr r12
+ 124 00be DD24      		clr r13
+ 125 00c0 7601      		movw r14,r12
+ 126 00c2 01E0      		ldi r16,lo8(1)
+ 127 00c4 10E0      		ldi r17,hi8(1)
+ 128 00c6 9E01      		movw r18,r28
+ 129 00c8 2F5F      		subi r18,lo8(-(1))
+ 130 00ca 3F4F      		sbci r19,hi8(-(1))
+ 131 00cc 41E0      		ldi r20,lo8(1)
+ 132 00ce 50E0      		ldi r21,hi8(1)
+ 133 00d0 BE01      		movw r22,r28
+ 134 00d2 6E5F      		subi r22,lo8(-(2))
+ 135 00d4 7F4F      		sbci r23,hi8(-(2))
+ 136 00d6 88E6      		ldi r24,lo8(104)
+ 137 00d8 0E94 0000 		call TwMasterTransact
+ 138 00dc 0197      		sbiw r24,1
+ 139 00de 01F0      		breq .L9
+ 140               	.L11:
+ 141 00e0 82E0      		ldi r24,lo8(2)
+ 142 00e2 B82E      		mov r11,r24
+ 143 00e4 BA82      		std Y+2,r11
+ 144 00e6 CC24      		clr r12
+ 145 00e8 DD24      		clr r13
+ 146 00ea 7601      		movw r14,r12
+ 147 00ec 01E0      		ldi r16,lo8(1)
+ 148 00ee 10E0      		ldi r17,hi8(1)
+ 149 00f0 9E01      		movw r18,r28
+ 150 00f2 2F5F      		subi r18,lo8(-(1))
+ 151 00f4 3F4F      		sbci r19,hi8(-(1))
+ 152 00f6 41E0      		ldi r20,lo8(1)
+ 153 00f8 50E0      		ldi r21,hi8(1)
+ 154 00fa BE01      		movw r22,r28
+ 155 00fc 6E5F      		subi r22,lo8(-(2))
+ 156 00fe 7F4F      		sbci r23,hi8(-(2))
+ 157 0100 88E6      		ldi r24,lo8(104)
+ 158 0102 0E94 0000 		call TwMasterTransact
+ 159 0106 0197      		sbiw r24,1
+ 160 0108 01F0      		breq .L10
+ 161 010a 2FEF      		ldi r18,lo8(-1)
+ 162 010c 3FEF      		ldi r19,hi8(-1)
+ 163               	.L8:
+ 164 010e C901      		movw r24,r18
+ 165               	/* epilogue start */
+ 166 0110 0F90      		pop __tmp_reg__
+ 167 0112 0F90      		pop __tmp_reg__
+ 168 0114 0F90      		pop __tmp_reg__
+ 169 0116 0F90      		pop __tmp_reg__
+ 170 0118 CF91      		pop r28
+ 171 011a DF91      		pop r29
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 4
+
+
+ 172 011c 1F91      		pop r17
+ 173 011e 0F91      		pop r16
+ 174 0120 FF90      		pop r15
+ 175 0122 EF90      		pop r14
+ 176 0124 DF90      		pop r13
+ 177 0126 CF90      		pop r12
+ 178 0128 BF90      		pop r11
+ 179 012a 0895      		ret
+ 180               	.L9:
+ 181 012c 1B82      		std Y+3,__zero_reg__
+ 182 012e 8981      		ldd r24,Y+1
+ 183 0130 8F77      		andi r24,lo8(127)
+ 184 0132 8C83      		std Y+4,r24
+ 185 0134 CC24      		clr r12
+ 186 0136 DD24      		clr r13
+ 187 0138 7601      		movw r14,r12
+ 188 013a 00E0      		ldi r16,lo8(0)
+ 189 013c 10E0      		ldi r17,hi8(0)
+ 190 013e 20E0      		ldi r18,lo8(0)
+ 191 0140 30E0      		ldi r19,hi8(0)
+ 192 0142 42E0      		ldi r20,lo8(2)
+ 193 0144 50E0      		ldi r21,hi8(2)
+ 194 0146 BE01      		movw r22,r28
+ 195 0148 6D5F      		subi r22,lo8(-(3))
+ 196 014a 7F4F      		sbci r23,hi8(-(3))
+ 197 014c 88E6      		ldi r24,lo8(104)
+ 198 014e 0E94 0000 		call TwMasterTransact
+ 199 0152 00C0      		rjmp .L11
+ 200               	.L10:
+ 201 0154 BB82      		std Y+3,r11
+ 202 0156 8981      		ldd r24,Y+1
+ 203 0158 8F7B      		andi r24,lo8(-65)
+ 204 015a 8C83      		std Y+4,r24
+ 205 015c CC24      		clr r12
+ 206 015e DD24      		clr r13
+ 207 0160 7601      		movw r14,r12
+ 208 0162 00E0      		ldi r16,lo8(0)
+ 209 0164 10E0      		ldi r17,hi8(0)
+ 210 0166 20E0      		ldi r18,lo8(0)
+ 211 0168 30E0      		ldi r19,hi8(0)
+ 212 016a 42E0      		ldi r20,lo8(2)
+ 213 016c 50E0      		ldi r21,hi8(2)
+ 214 016e BE01      		movw r22,r28
+ 215 0170 6D5F      		subi r22,lo8(-(3))
+ 216 0172 7F4F      		sbci r23,hi8(-(3))
+ 217 0174 88E6      		ldi r24,lo8(104)
+ 218 0176 0E94 0000 		call TwMasterTransact
+ 219 017a 9C01      		movw r18,r24
+ 220 017c 00C0      		rjmp .L8
+ 221               		.size	DS1307Init, .-DS1307Init
+ 222               	.global	DS1307RamRead
+ 223               		.type	DS1307RamRead, @function
+ 224               	DS1307RamRead:
+ 225 017e AF92      		push r10
+ 226 0180 BF92      		push r11
+ 227 0182 CF92      		push r12
+ 228 0184 DF92      		push r13
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 5
+
+
+ 229 0186 EF92      		push r14
+ 230 0188 FF92      		push r15
+ 231 018a 0F93      		push r16
+ 232 018c 1F93      		push r17
+ 233 018e DF93      		push r29
+ 234 0190 CF93      		push r28
+ 235 0192 0F92      		push __tmp_reg__
+ 236 0194 CDB7      		in r28,__SP_L__
+ 237 0196 DEB7      		in r29,__SP_H__
+ 238               	/* prologue: function */
+ 239               	/* frame size = 1 */
+ 240 0198 982F      		mov r25,r24
+ 241 019a 9B01      		movw r18,r22
+ 242 019c 5A01      		movw r10,r20
+ 243 019e 8850      		subi r24,lo8(-(-8))
+ 244 01a0 8833      		cpi r24,lo8(56)
+ 245 01a2 00F4      		brsh .L14
+ 246 01a4 9983      		std Y+1,r25
+ 247 01a6 CC24      		clr r12
+ 248 01a8 DD24      		clr r13
+ 249 01aa 7601      		movw r14,r12
+ 250 01ac 8A01      		movw r16,r20
+ 251 01ae 41E0      		ldi r20,lo8(1)
+ 252 01b0 50E0      		ldi r21,hi8(1)
+ 253 01b2 BE01      		movw r22,r28
+ 254 01b4 6F5F      		subi r22,lo8(-(1))
+ 255 01b6 7F4F      		sbci r23,hi8(-(1))
+ 256 01b8 88E6      		ldi r24,lo8(104)
+ 257 01ba 0E94 0000 		call TwMasterTransact
+ 258 01be 8A15      		cp r24,r10
+ 259 01c0 9B05      		cpc r25,r11
+ 260 01c2 01F4      		brne .L14
+ 261 01c4 20E0      		ldi r18,lo8(0)
+ 262 01c6 30E0      		ldi r19,hi8(0)
+ 263 01c8 00C0      		rjmp .L15
+ 264               	.L14:
+ 265 01ca 2FEF      		ldi r18,lo8(-1)
+ 266 01cc 3FEF      		ldi r19,hi8(-1)
+ 267               	.L15:
+ 268 01ce C901      		movw r24,r18
+ 269               	/* epilogue start */
+ 270 01d0 0F90      		pop __tmp_reg__
+ 271 01d2 CF91      		pop r28
+ 272 01d4 DF91      		pop r29
+ 273 01d6 1F91      		pop r17
+ 274 01d8 0F91      		pop r16
+ 275 01da FF90      		pop r15
+ 276 01dc EF90      		pop r14
+ 277 01de DF90      		pop r13
+ 278 01e0 CF90      		pop r12
+ 279 01e2 BF90      		pop r11
+ 280 01e4 AF90      		pop r10
+ 281 01e6 0895      		ret
+ 282               		.size	DS1307RamRead, .-DS1307RamRead
+ 283               	.global	DS1307RtcGetClock
+ 284               		.type	DS1307RtcGetClock, @function
+ 285               	DS1307RtcGetClock:
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 6
+
+
+ 286 01e8 AF92      		push r10
+ 287 01ea BF92      		push r11
+ 288 01ec CF92      		push r12
+ 289 01ee DF92      		push r13
+ 290 01f0 EF92      		push r14
+ 291 01f2 FF92      		push r15
+ 292 01f4 0F93      		push r16
+ 293 01f6 1F93      		push r17
+ 294 01f8 DF93      		push r29
+ 295 01fa CF93      		push r28
+ 296 01fc CDB7      		in r28,__SP_L__
+ 297 01fe DEB7      		in r29,__SP_H__
+ 298 0200 2897      		sbiw r28,8
+ 299 0202 0FB6      		in __tmp_reg__,__SREG__
+ 300 0204 F894      		cli
+ 301 0206 DEBF      		out __SP_H__,r29
+ 302 0208 0FBE      		out __SREG__,__tmp_reg__
+ 303 020a CDBF      		out __SP_L__,r28
+ 304               	/* prologue: function */
+ 305               	/* frame size = 8 */
+ 306 020c 5C01      		movw r10,r24
+ 307 020e 1982      		std Y+1,__zero_reg__
+ 308 0210 CC24      		clr r12
+ 309 0212 DD24      		clr r13
+ 310 0214 7601      		movw r14,r12
+ 311 0216 07E0      		ldi r16,lo8(7)
+ 312 0218 10E0      		ldi r17,hi8(7)
+ 313 021a 9E01      		movw r18,r28
+ 314 021c 2E5F      		subi r18,lo8(-(2))
+ 315 021e 3F4F      		sbci r19,hi8(-(2))
+ 316 0220 41E0      		ldi r20,lo8(1)
+ 317 0222 50E0      		ldi r21,hi8(1)
+ 318 0224 BE01      		movw r22,r28
+ 319 0226 6F5F      		subi r22,lo8(-(1))
+ 320 0228 7F4F      		sbci r23,hi8(-(1))
+ 321 022a 88E6      		ldi r24,lo8(104)
+ 322 022c 0E94 0000 		call TwMasterTransact
+ 323 0230 0797      		sbiw r24,7
+ 324 0232 01F0      		breq .L18
+ 325 0234 2FEF      		ldi r18,lo8(-1)
+ 326 0236 3FEF      		ldi r19,hi8(-1)
+ 327               	.L19:
+ 328 0238 C901      		movw r24,r18
+ 329               	/* epilogue start */
+ 330 023a 2896      		adiw r28,8
+ 331 023c 0FB6      		in __tmp_reg__,__SREG__
+ 332 023e F894      		cli
+ 333 0240 DEBF      		out __SP_H__,r29
+ 334 0242 0FBE      		out __SREG__,__tmp_reg__
+ 335 0244 CDBF      		out __SP_L__,r28
+ 336 0246 CF91      		pop r28
+ 337 0248 DF91      		pop r29
+ 338 024a 1F91      		pop r17
+ 339 024c 0F91      		pop r16
+ 340 024e FF90      		pop r15
+ 341 0250 EF90      		pop r14
+ 342 0252 DF90      		pop r13
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 7
+
+
+ 343 0254 CF90      		pop r12
+ 344 0256 BF90      		pop r11
+ 345 0258 AF90      		pop r10
+ 346 025a 0895      		ret
+ 347               	.L18:
+ 348 025c 2A81      		ldd r18,Y+2
+ 349 025e 822F      		mov r24,r18
+ 350 0260 8295      		swap r24
+ 351 0262 8F70      		andi r24,lo8(15)
+ 352 0264 6AE0      		ldi r22,lo8(10)
+ 353 0266 869F      		mul r24,r22
+ 354 0268 C001      		movw r24,r0
+ 355 026a 1124      		clr r1
+ 356 026c 2F70      		andi r18,lo8(15)
+ 357 026e 820F      		add r24,r18
+ 358 0270 911D      		adc r25,__zero_reg__
+ 359 0272 F501      		movw r30,r10
+ 360 0274 9183      		std Z+1,r25
+ 361 0276 8083      		st Z,r24
+ 362 0278 2B81      		ldd r18,Y+3
+ 363 027a 822F      		mov r24,r18
+ 364 027c 8295      		swap r24
+ 365 027e 8F70      		andi r24,lo8(15)
+ 366 0280 869F      		mul r24,r22
+ 367 0282 C001      		movw r24,r0
+ 368 0284 1124      		clr r1
+ 369 0286 2F70      		andi r18,lo8(15)
+ 370 0288 820F      		add r24,r18
+ 371 028a 911D      		adc r25,__zero_reg__
+ 372 028c 9383      		std Z+3,r25
+ 373 028e 8283      		std Z+2,r24
+ 374 0290 4C81      		ldd r20,Y+4
+ 375 0292 50E0      		ldi r21,lo8(0)
+ 376 0294 CA01      		movw r24,r20
+ 377 0296 8F73      		andi r24,lo8(63)
+ 378 0298 9070      		andi r25,hi8(63)
+ 379 029a B4E0      		ldi r27,4
+ 380 029c 9595      	1:	asr r25
+ 381 029e 8795      		ror r24
+ 382 02a0 BA95      		dec r27
+ 383 02a2 01F4      		brne 1b
+ 384 02a4 9C01      		movw r18,r24
+ 385 02a6 A3E0      		ldi r26,3
+ 386 02a8 220F      	1:	lsl r18
+ 387 02aa 331F      		rol r19
+ 388 02ac AA95      		dec r26
+ 389 02ae 01F4      		brne 1b
+ 390 02b0 880F      		lsl r24
+ 391 02b2 991F      		rol r25
+ 392 02b4 280F      		add r18,r24
+ 393 02b6 391F      		adc r19,r25
+ 394 02b8 4F70      		andi r20,lo8(15)
+ 395 02ba 5070      		andi r21,hi8(15)
+ 396 02bc 240F      		add r18,r20
+ 397 02be 351F      		adc r19,r21
+ 398 02c0 3583      		std Z+5,r19
+ 399 02c2 2483      		std Z+4,r18
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 8
+
+
+ 400 02c4 2E81      		ldd r18,Y+6
+ 401 02c6 822F      		mov r24,r18
+ 402 02c8 8295      		swap r24
+ 403 02ca 8F70      		andi r24,lo8(15)
+ 404 02cc 869F      		mul r24,r22
+ 405 02ce C001      		movw r24,r0
+ 406 02d0 1124      		clr r1
+ 407 02d2 2F70      		andi r18,lo8(15)
+ 408 02d4 820F      		add r24,r18
+ 409 02d6 911D      		adc r25,__zero_reg__
+ 410 02d8 9783      		std Z+7,r25
+ 411 02da 8683      		std Z+6,r24
+ 412 02dc 2F81      		ldd r18,Y+7
+ 413 02de 822F      		mov r24,r18
+ 414 02e0 90E0      		ldi r25,lo8(0)
+ 415 02e2 8F70      		andi r24,lo8(15)
+ 416 02e4 9070      		andi r25,hi8(15)
+ 417 02e6 0197      		sbiw r24,1
+ 418 02e8 2295      		swap r18
+ 419 02ea 2F70      		andi r18,lo8(15)
+ 420 02ec 269F      		mul r18,r22
+ 421 02ee 9001      		movw r18,r0
+ 422 02f0 1124      		clr r1
+ 423 02f2 820F      		add r24,r18
+ 424 02f4 931F      		adc r25,r19
+ 425 02f6 9187      		std Z+9,r25
+ 426 02f8 8087      		std Z+8,r24
+ 427 02fa 2885      		ldd r18,Y+8
+ 428 02fc 822F      		mov r24,r18
+ 429 02fe 90E0      		ldi r25,lo8(0)
+ 430 0300 8F70      		andi r24,lo8(15)
+ 431 0302 9070      		andi r25,hi8(15)
+ 432 0304 8C59      		subi r24,lo8(-(100))
+ 433 0306 9F4F      		sbci r25,hi8(-(100))
+ 434 0308 2295      		swap r18
+ 435 030a 2F70      		andi r18,lo8(15)
+ 436 030c 269F      		mul r18,r22
+ 437 030e 9001      		movw r18,r0
+ 438 0310 1124      		clr r1
+ 439 0312 820F      		add r24,r18
+ 440 0314 931F      		adc r25,r19
+ 441 0316 9387      		std Z+11,r25
+ 442 0318 8287      		std Z+10,r24
+ 443 031a 8D81      		ldd r24,Y+5
+ 444 031c 90E0      		ldi r25,lo8(0)
+ 445 031e 0197      		sbiw r24,1
+ 446 0320 9587      		std Z+13,r25
+ 447 0322 8487      		std Z+12,r24
+ 448 0324 20E0      		ldi r18,lo8(0)
+ 449 0326 30E0      		ldi r19,hi8(0)
+ 450 0328 00C0      		rjmp .L19
+ 451               		.size	DS1307RtcGetClock, .-DS1307RtcGetClock
+ 452               	.global	DS1307RamWrite
+ 453               		.type	DS1307RamWrite, @function
+ 454               	DS1307RamWrite:
+ 455 032a AF92      		push r10
+ 456 032c BF92      		push r11
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 9
+
+
+ 457 032e CF92      		push r12
+ 458 0330 DF92      		push r13
+ 459 0332 EF92      		push r14
+ 460 0334 FF92      		push r15
+ 461 0336 0F93      		push r16
+ 462 0338 1F93      		push r17
+ 463 033a CF93      		push r28
+ 464 033c DF93      		push r29
+ 465               	/* prologue: function */
+ 466               	/* frame size = 0 */
+ 467 033e F82E      		mov r15,r24
+ 468 0340 E62E      		mov r14,r22
+ 469 0342 D72E      		mov r13,r23
+ 470 0344 8A01      		movw r16,r20
+ 471 0346 5A01      		movw r10,r20
+ 472 0348 0894      		sec
+ 473 034a A11C      		adc r10,__zero_reg__
+ 474 034c B11C      		adc r11,__zero_reg__
+ 475 034e C501      		movw r24,r10
+ 476 0350 0E94 0000 		call malloc
+ 477 0354 EC01      		movw r28,r24
+ 478 0356 0097      		sbiw r24,0
+ 479 0358 01F4      		brne .L22
+ 480 035a 0FEF      		ldi r16,lo8(-1)
+ 481 035c 1FEF      		ldi r17,hi8(-1)
+ 482 035e 00C0      		rjmp .L23
+ 483               	.L22:
+ 484 0360 FC01      		movw r30,r24
+ 485 0362 F192      		st Z+,r15
+ 486 0364 A801      		movw r20,r16
+ 487 0366 6E2D      		mov r22,r14
+ 488 0368 7D2D      		mov r23,r13
+ 489 036a CF01      		movw r24,r30
+ 490 036c 0E94 0000 		call memcpy
+ 491 0370 CC24      		clr r12
+ 492 0372 DD24      		clr r13
+ 493 0374 7601      		movw r14,r12
+ 494 0376 00E0      		ldi r16,lo8(0)
+ 495 0378 10E0      		ldi r17,hi8(0)
+ 496 037a 20E0      		ldi r18,lo8(0)
+ 497 037c 30E0      		ldi r19,hi8(0)
+ 498 037e A501      		movw r20,r10
+ 499 0380 BE01      		movw r22,r28
+ 500 0382 88E6      		ldi r24,lo8(104)
+ 501 0384 0E94 0000 		call TwMasterTransact
+ 502 0388 8C01      		movw r16,r24
+ 503 038a CE01      		movw r24,r28
+ 504 038c 0E94 0000 		call free
+ 505               	.L23:
+ 506 0390 C801      		movw r24,r16
+ 507               	/* epilogue start */
+ 508 0392 DF91      		pop r29
+ 509 0394 CF91      		pop r28
+ 510 0396 1F91      		pop r17
+ 511 0398 0F91      		pop r16
+ 512 039a FF90      		pop r15
+ 513 039c EF90      		pop r14
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 10
+
+
+ 514 039e DF90      		pop r13
+ 515 03a0 CF90      		pop r12
+ 516 03a2 BF90      		pop r11
+ 517 03a4 AF90      		pop r10
+ 518 03a6 0895      		ret
+ 519               		.size	DS1307RamWrite, .-DS1307RamWrite
+ 520               	.global	DS1307RtcSetClock
+ 521               		.type	DS1307RtcSetClock, @function
+ 522               	DS1307RtcSetClock:
+ 523 03a8 CF92      		push r12
+ 524 03aa DF92      		push r13
+ 525 03ac EF92      		push r14
+ 526 03ae FF92      		push r15
+ 527 03b0 0F93      		push r16
+ 528 03b2 1F93      		push r17
+ 529 03b4 DF93      		push r29
+ 530 03b6 CF93      		push r28
+ 531 03b8 CDB7      		in r28,__SP_L__
+ 532 03ba DEB7      		in r29,__SP_H__
+ 533 03bc 2897      		sbiw r28,8
+ 534 03be 0FB6      		in __tmp_reg__,__SREG__
+ 535 03c0 F894      		cli
+ 536 03c2 DEBF      		out __SP_H__,r29
+ 537 03c4 0FBE      		out __SREG__,__tmp_reg__
+ 538 03c6 CDBF      		out __SP_L__,r28
+ 539               	/* prologue: function */
+ 540               	/* frame size = 8 */
+ 541 03c8 8C01      		movw r16,r24
+ 542 03ca FE01      		movw r30,r28
+ 543 03cc 3196      		adiw r30,1
+ 544 03ce 88E0      		ldi r24,lo8(8)
+ 545 03d0 DF01      		movw r26,r30
+ 546 03d2 1D92      		st X+,__zero_reg__
+ 547 03d4 8A95      	        dec r24
+ 548 03d6 01F4      		brne .-6
+ 549 03d8 0115      		cp r16,__zero_reg__
+ 550 03da 1105      		cpc r17,__zero_reg__
+ 551 03dc 01F4      		brne .+2
+ 552 03de 00C0      		rjmp .L27
+ 553 03e0 1982      		std Y+1,__zero_reg__
+ 554 03e2 F801      		movw r30,r16
+ 555 03e4 3081      		ld r19,Z
+ 556 03e6 832F      		mov r24,r19
+ 557 03e8 6AE0      		ldi r22,lo8(10)
+ 558 03ea 0E94 0000 		call __udivmodqi4
+ 559 03ee 282F      		mov r18,r24
+ 560 03f0 2295      		swap r18
+ 561 03f2 207F      		andi r18,lo8(-16)
+ 562 03f4 832F      		mov r24,r19
+ 563 03f6 9181      		ldd r25,Z+1
+ 564 03f8 6AE0      		ldi r22,lo8(10)
+ 565 03fa 70E0      		ldi r23,hi8(10)
+ 566 03fc 0E94 0000 		call __divmodhi4
+ 567 0400 280F      		add r18,r24
+ 568 0402 2A83      		std Y+2,r18
+ 569 0404 3281      		ldd r19,Z+2
+ 570 0406 832F      		mov r24,r19
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 11
+
+
+ 571 0408 6AE0      		ldi r22,lo8(10)
+ 572 040a 0E94 0000 		call __udivmodqi4
+ 573 040e 282F      		mov r18,r24
+ 574 0410 2295      		swap r18
+ 575 0412 207F      		andi r18,lo8(-16)
+ 576 0414 832F      		mov r24,r19
+ 577 0416 9381      		ldd r25,Z+3
+ 578 0418 6AE0      		ldi r22,lo8(10)
+ 579 041a 70E0      		ldi r23,hi8(10)
+ 580 041c 0E94 0000 		call __divmodhi4
+ 581 0420 280F      		add r18,r24
+ 582 0422 2B83      		std Y+3,r18
+ 583 0424 3481      		ldd r19,Z+4
+ 584 0426 832F      		mov r24,r19
+ 585 0428 6AE0      		ldi r22,lo8(10)
+ 586 042a 0E94 0000 		call __udivmodqi4
+ 587 042e 282F      		mov r18,r24
+ 588 0430 2295      		swap r18
+ 589 0432 207F      		andi r18,lo8(-16)
+ 590 0434 832F      		mov r24,r19
+ 591 0436 9581      		ldd r25,Z+5
+ 592 0438 6AE0      		ldi r22,lo8(10)
+ 593 043a 70E0      		ldi r23,hi8(10)
+ 594 043c 0E94 0000 		call __divmodhi4
+ 595 0440 280F      		add r18,r24
+ 596 0442 2F73      		andi r18,lo8(63)
+ 597 0444 2C83      		std Y+4,r18
+ 598 0446 3681      		ldd r19,Z+6
+ 599 0448 832F      		mov r24,r19
+ 600 044a 6AE0      		ldi r22,lo8(10)
+ 601 044c 0E94 0000 		call __udivmodqi4
+ 602 0450 282F      		mov r18,r24
+ 603 0452 2295      		swap r18
+ 604 0454 207F      		andi r18,lo8(-16)
+ 605 0456 832F      		mov r24,r19
+ 606 0458 9781      		ldd r25,Z+7
+ 607 045a 6AE0      		ldi r22,lo8(10)
+ 608 045c 70E0      		ldi r23,hi8(10)
+ 609 045e 0E94 0000 		call __divmodhi4
+ 610 0462 280F      		add r18,r24
+ 611 0464 2E83      		std Y+6,r18
+ 612 0466 4085      		ldd r20,Z+8
+ 613 0468 5185      		ldd r21,Z+9
+ 614 046a 842F      		mov r24,r20
+ 615 046c 8F5F      		subi r24,lo8(-(1))
+ 616 046e 6AE0      		ldi r22,lo8(10)
+ 617 0470 0E94 0000 		call __udivmodqi4
+ 618 0474 282F      		mov r18,r24
+ 619 0476 2295      		swap r18
+ 620 0478 207F      		andi r18,lo8(-16)
+ 621 047a CA01      		movw r24,r20
+ 622 047c 0196      		adiw r24,1
+ 623 047e 6AE0      		ldi r22,lo8(10)
+ 624 0480 70E0      		ldi r23,hi8(10)
+ 625 0482 0E94 0000 		call __divmodhi4
+ 626 0486 280F      		add r18,r24
+ 627 0488 2F83      		std Y+7,r18
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 12
+
+
+ 628 048a 4285      		ldd r20,Z+10
+ 629 048c 5385      		ldd r21,Z+11
+ 630 048e 842F      		mov r24,r20
+ 631 0490 8456      		subi r24,lo8(-(-100))
+ 632 0492 6AE0      		ldi r22,lo8(10)
+ 633 0494 0E94 0000 		call __udivmodqi4
+ 634 0498 282F      		mov r18,r24
+ 635 049a 2295      		swap r18
+ 636 049c 207F      		andi r18,lo8(-16)
+ 637 049e CA01      		movw r24,r20
+ 638 04a0 8456      		subi r24,lo8(-(-100))
+ 639 04a2 9040      		sbci r25,hi8(-(-100))
+ 640 04a4 6AE0      		ldi r22,lo8(10)
+ 641 04a6 70E0      		ldi r23,hi8(10)
+ 642 04a8 0E94 0000 		call __divmodhi4
+ 643 04ac 280F      		add r18,r24
+ 644 04ae 2887      		std Y+8,r18
+ 645 04b0 8485      		ldd r24,Z+12
+ 646 04b2 8F5F      		subi r24,lo8(-(1))
+ 647 04b4 8D83      		std Y+5,r24
+ 648               	.L27:
+ 649 04b6 CC24      		clr r12
+ 650 04b8 DD24      		clr r13
+ 651 04ba 7601      		movw r14,r12
+ 652 04bc 00E0      		ldi r16,lo8(0)
+ 653 04be 10E0      		ldi r17,hi8(0)
+ 654 04c0 20E0      		ldi r18,lo8(0)
+ 655 04c2 30E0      		ldi r19,hi8(0)
+ 656 04c4 48E0      		ldi r20,lo8(8)
+ 657 04c6 50E0      		ldi r21,hi8(8)
+ 658 04c8 BE01      		movw r22,r28
+ 659 04ca 6F5F      		subi r22,lo8(-(1))
+ 660 04cc 7F4F      		sbci r23,hi8(-(1))
+ 661 04ce 88E6      		ldi r24,lo8(104)
+ 662 04d0 0E94 0000 		call TwMasterTransact
+ 663               	/* epilogue start */
+ 664 04d4 2896      		adiw r28,8
+ 665 04d6 0FB6      		in __tmp_reg__,__SREG__
+ 666 04d8 F894      		cli
+ 667 04da DEBF      		out __SP_H__,r29
+ 668 04dc 0FBE      		out __SREG__,__tmp_reg__
+ 669 04de CDBF      		out __SP_L__,r28
+ 670 04e0 CF91      		pop r28
+ 671 04e2 DF91      		pop r29
+ 672 04e4 1F91      		pop r17
+ 673 04e6 0F91      		pop r16
+ 674 04e8 FF90      		pop r15
+ 675 04ea EF90      		pop r14
+ 676 04ec DF90      		pop r13
+ 677 04ee CF90      		pop r12
+ 678 04f0 0895      		ret
+ 679               		.size	DS1307RtcSetClock, .-DS1307RtcSetClock
+ 680               	.global	rtcDs1307
+ 681               		.data
+ 682               		.type	rtcDs1307, @object
+ 683               		.size	rtcDs1307, 14
+ 684               	rtcDs1307:
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 13
+
+
+ 685 0000 0000      		.word	gs(DS1307Init)
+ 686 0002 0000      		.word	gs(DS1307RtcGetClock)
+ 687 0004 0000      		.word	gs(DS1307RtcSetClock)
+ 688 0006 0000      		.word	0
+ 689 0008 0000      		.word	0
+ 690 000a 0000      		.word	0
+ 691 000c 0000      		.word	0
+GAS LISTING C:\Temp/ccnm8BGa.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ds1307rtc.c
+  C:\Temp/ccnm8BGa.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccnm8BGa.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccnm8BGa.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccnm8BGa.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccnm8BGa.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccnm8BGa.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccnm8BGa.s:13     .text:00000000 DS1307RtcWrite
+  C:\Temp/ccnm8BGa.s:44     .text:00000032 DS1307RtcReadRegs
+  C:\Temp/ccnm8BGa.s:101    .text:00000094 DS1307Init
+  C:\Temp/ccnm8BGa.s:224    .text:0000017e DS1307RamRead
+  C:\Temp/ccnm8BGa.s:285    .text:000001e8 DS1307RtcGetClock
+  C:\Temp/ccnm8BGa.s:454    .text:0000032a DS1307RamWrite
+  C:\Temp/ccnm8BGa.s:522    .text:000003a8 DS1307RtcSetClock
+  C:\Temp/ccnm8BGa.s:684    .data:00000000 rtcDs1307
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+TwMasterTransact
+TwInit
+malloc
+memcpy
+free
+__udivmodqi4
+__divmodhi4

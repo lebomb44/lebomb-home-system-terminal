@@ -1,0 +1,401 @@
+GAS LISTING C:\Temp/ccIUq50b.s 			page 1
+
+
+   1               		.file	"lcpout.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	LcpResetOptions
+  12               		.type	LcpResetOptions, @function
+  13               	LcpResetOptions:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 DC01      		movw r26,r24
+  17 0002 5196      		adiw r26,17
+  18 0004 ED91      		ld r30,X+
+  19 0006 FC91      		ld r31,X
+  20 0008 5297      		sbiw r26,17+1
+  21 000a 1686      		std Z+14,__zero_reg__
+  22 000c 83E2      		ldi r24,lo8(-16349)
+  23 000e 90EC      		ldi r25,hi8(-16349)
+  24 0010 908B      		std Z+16,r25
+  25 0012 8787      		std Z+15,r24
+  26 0014 8091 0000 		lds r24,new_magic
+  27 0018 9091 0000 		lds r25,(new_magic)+1
+  28 001c A091 0000 		lds r26,(new_magic)+2
+  29 0020 B091 0000 		lds r27,(new_magic)+3
+  30 0024 818B      		std Z+17,r24
+  31 0026 928B      		std Z+18,r25
+  32 0028 A38B      		std Z+19,r26
+  33 002a B48B      		std Z+20,r27
+  34 002c 158A      		std Z+21,__zero_reg__
+  35 002e 168A      		std Z+22,__zero_reg__
+  36 0030 178A      		std Z+23,__zero_reg__
+  37 0032 108E      		std Z+24,__zero_reg__
+  38 0034 118E      		std Z+25,__zero_reg__
+  39 0036 128E      		std Z+26,__zero_reg__
+  40 0038 138E      		std Z+27,__zero_reg__
+  41 003a 148E      		std Z+28,__zero_reg__
+  42 003c 80E0      		ldi r24,lo8(655360)
+  43 003e 90E0      		ldi r25,hi8(655360)
+  44 0040 AAE0      		ldi r26,hlo8(655360)
+  45 0042 B0E0      		ldi r27,hhi8(655360)
+  46 0044 8287      		std Z+10,r24
+  47 0046 9387      		std Z+11,r25
+  48 0048 A487      		std Z+12,r26
+  49 004a B587      		std Z+13,r27
+  50 004c 8CED      		ldi r24,lo8(1500)
+  51 004e 95E0      		ldi r25,hi8(1500)
+  52 0050 9783      		std Z+7,r25
+  53 0052 8683      		std Z+6,r24
+  54               	/* epilogue start */
+  55 0054 0895      		ret
+  56               		.size	LcpResetOptions, .-LcpResetOptions
+  57               	.global	NutLcpOutput
+GAS LISTING C:\Temp/ccIUq50b.s 			page 2
+
+
+  58               		.type	NutLcpOutput, @function
+  59               	NutLcpOutput:
+  60 0056 EF92      		push r14
+  61 0058 FF92      		push r15
+  62 005a 0F93      		push r16
+  63 005c 1F93      		push r17
+  64 005e CF93      		push r28
+  65 0060 DF93      		push r29
+  66               	/* prologue: function */
+  67               	/* frame size = 0 */
+  68 0062 7C01      		movw r14,r24
+  69 0064 162F      		mov r17,r22
+  70 0066 042F      		mov r16,r20
+  71 0068 C901      		movw r24,r18
+  72 006a 44E0      		ldi r20,lo8(4)
+  73 006c 50E0      		ldi r21,hi8(4)
+  74 006e 60E2      		ldi r22,lo8(32)
+  75 0070 0E94 0000 		call NutNetBufAlloc
+  76 0074 EC01      		movw r28,r24
+  77 0076 0097      		sbiw r24,0
+  78 0078 01F4      		brne .L4
+  79 007a 2FEF      		ldi r18,lo8(-1)
+  80 007c 3FEF      		ldi r19,hi8(-1)
+  81 007e 00C0      		rjmp .L5
+  82               	.L4:
+  83 0080 EF81      		ldd r30,Y+7
+  84 0082 F885      		ldd r31,Y+8
+  85 0084 1083      		st Z,r17
+  86 0086 0183      		std Z+1,r16
+  87 0088 8D85      		ldd r24,Y+13
+  88 008a 9E85      		ldd r25,Y+14
+  89 008c 2985      		ldd r18,Y+9
+  90 008e 3A85      		ldd r19,Y+10
+  91 0090 820F      		add r24,r18
+  92 0092 931F      		adc r25,r19
+  93 0094 2989      		ldd r18,Y+17
+  94 0096 3A89      		ldd r19,Y+18
+  95 0098 820F      		add r24,r18
+  96 009a 931F      		adc r25,r19
+  97               	/* #APP */
+  98               	 ;  295 "../../nut/include/sys/types.h" 1
+  99 009c 082E      		mov __tmp_reg__, r24
+ 100 009e 892F      		mov r24, r25
+ 101 00a0 902D      		mov r25, __tmp_reg__
+ 102               		
+ 103               	 ;  0 "" 2
+ 104               	/* #NOAPP */
+ 105 00a2 9383      		std Z+3,r25
+ 106 00a4 8283      		std Z+2,r24
+ 107 00a6 9E01      		movw r18,r28
+ 108 00a8 40E0      		ldi r20,lo8(0)
+ 109 00aa 50E0      		ldi r21,hi8(0)
+ 110 00ac 61E2      		ldi r22,lo8(-16351)
+ 111 00ae 70EC      		ldi r23,hi8(-16351)
+ 112 00b0 C701      		movw r24,r14
+ 113 00b2 0E94 0000 		call NutPppOutput
+ 114 00b6 892B      		or r24,r25
+GAS LISTING C:\Temp/ccIUq50b.s 			page 3
+
+
+ 115 00b8 01F4      		brne .L8
+ 116               	.L6:
+ 117 00ba CE01      		movw r24,r28
+ 118 00bc 0E94 0000 		call NutNetBufFree
+ 119               	.L8:
+ 120 00c0 20E0      		ldi r18,lo8(0)
+ 121 00c2 30E0      		ldi r19,hi8(0)
+ 122               	.L5:
+ 123 00c4 C901      		movw r24,r18
+ 124               	/* epilogue start */
+ 125 00c6 DF91      		pop r29
+ 126 00c8 CF91      		pop r28
+ 127 00ca 1F91      		pop r17
+ 128 00cc 0F91      		pop r16
+ 129 00ce FF90      		pop r15
+ 130 00d0 EF90      		pop r14
+ 131 00d2 0895      		ret
+ 132               		.size	NutLcpOutput, .-NutLcpOutput
+ 133               	.global	LcpTxProtRej
+ 134               		.type	LcpTxProtRej, @function
+ 135               	LcpTxProtRej:
+ 136 00d4 8F92      		push r8
+ 137 00d6 9F92      		push r9
+ 138 00d8 AF92      		push r10
+ 139 00da BF92      		push r11
+ 140 00dc CF92      		push r12
+ 141 00de DF92      		push r13
+ 142 00e0 EF92      		push r14
+ 143 00e2 FF92      		push r15
+ 144 00e4 0F93      		push r16
+ 145 00e6 1F93      		push r17
+ 146 00e8 CF93      		push r28
+ 147 00ea DF93      		push r29
+ 148               	/* prologue: function */
+ 149               	/* frame size = 0 */
+ 150 00ec 5C01      		movw r10,r24
+ 151 00ee 7B01      		movw r14,r22
+ 152 00f0 EA01      		movw r28,r20
+ 153 00f2 FC01      		movw r30,r24
+ 154 00f4 9188      		ldd r9,Z+17
+ 155 00f6 8288      		ldd r8,Z+18
+ 156 00f8 4985      		ldd r20,Y+9
+ 157 00fa 5A85      		ldd r21,Y+10
+ 158 00fc 60E8      		ldi r22,lo8(-128)
+ 159 00fe 80E0      		ldi r24,lo8(0)
+ 160 0100 90E0      		ldi r25,hi8(0)
+ 161 0102 0E94 0000 		call NutNetBufAlloc
+ 162 0106 6C01      		movw r12,r24
+ 163 0108 0097      		sbiw r24,0
+ 164 010a 01F0      		breq .L10
+ 165 010c 092D      		mov r16,r9
+ 166 010e 182D      		mov r17,r8
+ 167 0110 FC01      		movw r30,r24
+ 168 0112 8785      		ldd r24,Z+15
+ 169 0114 9089      		ldd r25,Z+16
+ 170               	/* #APP */
+ 171               	 ;  295 "../../nut/include/sys/types.h" 1
+GAS LISTING C:\Temp/ccIUq50b.s 			page 4
+
+
+ 172 0116 0E2C      		mov __tmp_reg__, r14
+ 173 0118 EF2C      		mov r14, r15
+ 174 011a F02C      		mov r15, __tmp_reg__
+ 175               		
+ 176               	 ;  0 "" 2
+ 177               	/* #NOAPP */
+ 178 011c FC01      		movw r30,r24
+ 179 011e E192      		st Z+,r14
+ 180 0120 F192      		st Z+,r15
+ 181 0122 8985      		ldd r24,Y+9
+ 182 0124 9A85      		ldd r25,Y+10
+ 183 0126 0297      		sbiw r24,2
+ 184 0128 6F81      		ldd r22,Y+7
+ 185 012a 7885      		ldd r23,Y+8
+ 186 012c AC01      		movw r20,r24
+ 187 012e CF01      		movw r24,r30
+ 188 0130 0E94 0000 		call memcpy
+ 189 0134 CE01      		movw r24,r28
+ 190 0136 0E94 0000 		call NutNetBufFree
+ 191 013a F801      		movw r30,r16
+ 192 013c 4481      		ldd r20,Z+4
+ 193 013e 4F5F      		subi r20,lo8(-(1))
+ 194 0140 4483      		std Z+4,r20
+ 195 0142 9601      		movw r18,r12
+ 196 0144 68E0      		ldi r22,lo8(8)
+ 197 0146 C501      		movw r24,r10
+ 198 0148 0E94 0000 		call NutLcpOutput
+ 199 014c 00C0      		rjmp .L13
+ 200               	.L10:
+ 201 014e CE01      		movw r24,r28
+ 202 0150 0E94 0000 		call NutNetBufFree
+ 203               	.L13:
+ 204               	/* epilogue start */
+ 205 0154 DF91      		pop r29
+ 206 0156 CF91      		pop r28
+ 207 0158 1F91      		pop r17
+ 208 015a 0F91      		pop r16
+ 209 015c FF90      		pop r15
+ 210 015e EF90      		pop r14
+ 211 0160 DF90      		pop r13
+ 212 0162 CF90      		pop r12
+ 213 0164 BF90      		pop r11
+ 214 0166 AF90      		pop r10
+ 215 0168 9F90      		pop r9
+ 216 016a 8F90      		pop r8
+ 217 016c 0895      		ret
+ 218               		.size	LcpTxProtRej, .-LcpTxProtRej
+ 219               	.global	LcpTxConfReq
+ 220               		.type	LcpTxConfReq, @function
+ 221               	LcpTxConfReq:
+ 222 016e CF92      		push r12
+ 223 0170 DF92      		push r13
+ 224 0172 EF92      		push r14
+ 225 0174 FF92      		push r15
+ 226 0176 0F93      		push r16
+ 227 0178 1F93      		push r17
+ 228 017a CF93      		push r28
+GAS LISTING C:\Temp/ccIUq50b.s 			page 5
+
+
+ 229 017c DF93      		push r29
+ 230               	/* prologue: function */
+ 231               	/* frame size = 0 */
+ 232 017e 7C01      		movw r14,r24
+ 233 0180 C62E      		mov r12,r22
+ 234 0182 D42E      		mov r13,r20
+ 235 0184 EC01      		movw r28,r24
+ 236 0186 0989      		ldd r16,Y+17
+ 237 0188 1A89      		ldd r17,Y+18
+ 238 018a F801      		movw r30,r16
+ 239 018c 8281      		ldd r24,Z+2
+ 240 018e 8650      		subi r24,lo8(-(-6))
+ 241 0190 8330      		cpi r24,lo8(3)
+ 242 0192 00F0      		brlo .L15
+ 243 0194 1686      		std Z+14,__zero_reg__
+ 244 0196 83E2      		ldi r24,lo8(-16349)
+ 245 0198 90EC      		ldi r25,hi8(-16349)
+ 246 019a 908B      		std Z+16,r25
+ 247 019c 8787      		std Z+15,r24
+ 248 019e 8091 0000 		lds r24,new_magic
+ 249 01a2 9091 0000 		lds r25,(new_magic)+1
+ 250 01a6 A091 0000 		lds r26,(new_magic)+2
+ 251 01aa B091 0000 		lds r27,(new_magic)+3
+ 252 01ae E801      		movw r28,r16
+ 253 01b0 898B      		std Y+17,r24
+ 254 01b2 9A8B      		std Y+18,r25
+ 255 01b4 AB8B      		std Y+19,r26
+ 256 01b6 BC8B      		std Y+20,r27
+ 257 01b8 158A      		std Z+21,__zero_reg__
+ 258 01ba 168A      		std Z+22,__zero_reg__
+ 259 01bc 178A      		std Z+23,__zero_reg__
+ 260 01be 108E      		std Z+24,__zero_reg__
+ 261 01c0 198E      		std Y+25,__zero_reg__
+ 262 01c2 1A8E      		std Y+26,__zero_reg__
+ 263 01c4 1B8E      		std Y+27,__zero_reg__
+ 264 01c6 1C8E      		std Y+28,__zero_reg__
+ 265 01c8 80E0      		ldi r24,lo8(655360)
+ 266 01ca 90E0      		ldi r25,hi8(655360)
+ 267 01cc AAE0      		ldi r26,hlo8(655360)
+ 268 01ce B0E0      		ldi r27,hhi8(655360)
+ 269 01d0 8287      		std Z+10,r24
+ 270 01d2 9387      		std Z+11,r25
+ 271 01d4 A487      		std Z+12,r26
+ 272 01d6 B587      		std Z+13,r27
+ 273 01d8 8CED      		ldi r24,lo8(1500)
+ 274 01da 95E0      		ldi r25,hi8(1500)
+ 275 01dc 9783      		std Z+7,r25
+ 276 01de 8683      		std Z+6,r24
+ 277 01e0 12AE      		std Z+58,__zero_reg__
+ 278               	.L15:
+ 279 01e2 E801      		movw r28,r16
+ 280 01e4 1D82      		std Y+5,__zero_reg__
+ 281 01e6 19AE      		std Y+57,__zero_reg__
+ 282 01e8 DD20      		tst r13
+ 283 01ea 01F4      		brne .L16
+ 284 01ec 4CE0      		ldi r20,lo8(12)
+ 285 01ee 50E0      		ldi r21,hi8(12)
+GAS LISTING C:\Temp/ccIUq50b.s 			page 6
+
+
+ 286 01f0 00C0      		rjmp .L17
+ 287               	.L16:
+ 288 01f2 46E0      		ldi r20,lo8(6)
+ 289 01f4 50E0      		ldi r21,hi8(6)
+ 290               	.L17:
+ 291 01f6 60E8      		ldi r22,lo8(-128)
+ 292 01f8 80E0      		ldi r24,lo8(0)
+ 293 01fa 90E0      		ldi r25,hi8(0)
+ 294 01fc 0E94 0000 		call NutNetBufAlloc
+ 295 0200 9C01      		movw r18,r24
+ 296 0202 0097      		sbiw r24,0
+ 297 0204 01F0      		breq .L20
+ 298 0206 FC01      		movw r30,r24
+ 299 0208 C785      		ldd r28,Z+15
+ 300 020a D089      		ldd r29,Z+16
+ 301 020c 82E0      		ldi r24,lo8(2)
+ 302 020e 8883      		st Y,r24
+ 303 0210 46E0      		ldi r20,lo8(6)
+ 304 0212 4983      		std Y+1,r20
+ 305 0214 80E0      		ldi r24,lo8(655360)
+ 306 0216 90E0      		ldi r25,hi8(655360)
+ 307 0218 AAE0      		ldi r26,hlo8(655360)
+ 308 021a B0E0      		ldi r27,hhi8(655360)
+ 309               	/* #APP */
+ 310               	 ;  305 "../../nut/include/sys/types.h" 1
+ 311 021c 082E      		mov __tmp_reg__, r24
+ 312 021e 8B2F      		mov r24, r27
+ 313 0220 B02D      		mov r27, __tmp_reg__
+ 314 0222 092E      		mov __tmp_reg__, r25
+ 315 0224 9A2F      		mov r25, r26
+ 316 0226 A02D      		mov r26, __tmp_reg__
+ 317               		
+ 318               	 ;  0 "" 2
+ 319               	/* #NOAPP */
+ 320 0228 8A83      		std Y+2,r24
+ 321 022a 9B83      		std Y+3,r25
+ 322 022c AC83      		std Y+4,r26
+ 323 022e BD83      		std Y+5,r27
+ 324 0230 DD20      		tst r13
+ 325 0232 01F4      		brne .L19
+ 326 0234 FE01      		movw r30,r28
+ 327 0236 3696      		adiw r30,6
+ 328 0238 85E0      		ldi r24,lo8(5)
+ 329 023a 8E83      		std Y+6,r24
+ 330 023c 4183      		std Z+1,r20
+ 331 023e E801      		movw r28,r16
+ 332 0240 8989      		ldd r24,Y+17
+ 333 0242 9A89      		ldd r25,Y+18
+ 334 0244 AB89      		ldd r26,Y+19
+ 335 0246 BC89      		ldd r27,Y+20
+ 336 0248 8283      		std Z+2,r24
+ 337 024a 9383      		std Z+3,r25
+ 338 024c A483      		std Z+4,r26
+ 339 024e B583      		std Z+5,r27
+ 340               	.L19:
+ 341 0250 4C2D      		mov r20,r12
+ 342 0252 61E0      		ldi r22,lo8(1)
+GAS LISTING C:\Temp/ccIUq50b.s 			page 7
+
+
+ 343 0254 C701      		movw r24,r14
+ 344 0256 0E94 0000 		call NutLcpOutput
+ 345               	.L20:
+ 346               	/* epilogue start */
+ 347 025a DF91      		pop r29
+ 348 025c CF91      		pop r28
+ 349 025e 1F91      		pop r17
+ 350 0260 0F91      		pop r16
+ 351 0262 FF90      		pop r15
+ 352 0264 EF90      		pop r14
+ 353 0266 DF90      		pop r13
+ 354 0268 CF90      		pop r12
+ 355 026a 0895      		ret
+ 356               		.size	LcpTxConfReq, .-LcpTxConfReq
+GAS LISTING C:\Temp/ccIUq50b.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lcpout.c
+  C:\Temp/ccIUq50b.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccIUq50b.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccIUq50b.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccIUq50b.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccIUq50b.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccIUq50b.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccIUq50b.s:13     .text:00000000 LcpResetOptions
+  C:\Temp/ccIUq50b.s:59     .text:00000056 NutLcpOutput
+  C:\Temp/ccIUq50b.s:135    .text:000000d4 LcpTxProtRej
+  C:\Temp/ccIUq50b.s:221    .text:0000016e LcpTxConfReq
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+new_magic
+NutNetBufAlloc
+NutPppOutput
+NutNetBufFree
+memcpy

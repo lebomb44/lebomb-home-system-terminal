@@ -1,0 +1,218 @@
+GAS LISTING C:\Temp/cceSqCh5.s 			page 1
+
+
+   1               		.file	"icmpin.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutIcmpInput
+  12               		.type	NutIcmpInput, @function
+  13               	NutIcmpInput:
+  14 0000 FF92      		push r15
+  15 0002 0F93      		push r16
+  16 0004 1F93      		push r17
+  17 0006 CF93      		push r28
+  18 0008 DF93      		push r29
+  19               	/* prologue: function */
+  20               	/* frame size = 0 */
+  21 000a FC01      		movw r30,r24
+  22 000c 8B01      		movw r16,r22
+  23 000e DB01      		movw r26,r22
+  24 0010 1B96      		adiw r26,11
+  25 0012 CD91      		ld r28,X+
+  26 0014 DC91      		ld r29,X
+  27 0016 1C97      		sbiw r26,11+1
+  28 0018 2097      		sbiw r28,0
+  29 001a 01F4      		brne .+2
+  30 001c 00C0      		rjmp .L6
+  31 001e 1D96      		adiw r26,13
+  32 0020 8D91      		ld r24,X+
+  33 0022 9C91      		ld r25,X
+  34 0024 1E97      		sbiw r26,13+1
+  35 0026 8830      		cpi r24,8
+  36 0028 9105      		cpc r25,__zero_reg__
+  37 002a 00F4      		brsh .+2
+  38 002c 00C0      		rjmp .L6
+  39               	.L3:
+  40 002e 0897      		sbiw r24,8
+  41 0030 DB01      		movw r26,r22
+  42 0032 5296      		adiw r26,17+1
+  43 0034 9C93      		st X,r25
+  44 0036 8E93      		st -X,r24
+  45 0038 5197      		sbiw r26,17
+  46 003a 892B      		or r24,r25
+  47 003c 01F0      		breq .L5
+  48 003e 2896      		adiw r28,8
+  49 0040 5096      		adiw r26,15+1
+  50 0042 DC93      		st X,r29
+  51 0044 CE93      		st -X,r28
+  52 0046 1F97      		sbiw r26,15
+  53 0048 2897      		sbiw r28,8
+  54 004a 88E0      		ldi r24,lo8(8)
+  55 004c 90E0      		ldi r25,hi8(8)
+  56 004e 1E96      		adiw r26,13+1
+  57 0050 9C93      		st X,r25
+GAS LISTING C:\Temp/cceSqCh5.s 			page 2
+
+
+  58 0052 8E93      		st -X,r24
+  59 0054 1D97      		sbiw r26,13
+  60               	.L5:
+  61 0056 8881      		ld r24,Y
+  62 0058 8330      		cpi r24,lo8(3)
+  63 005a 01F0      		breq .L7
+  64 005c 8830      		cpi r24,lo8(8)
+  65 005e 01F0      		breq .+2
+  66 0060 00C0      		rjmp .L6
+  67 0062 D801      		movw r26,r16
+  68 0064 1796      		adiw r26,7
+  69 0066 2D91      		ld r18,X+
+  70 0068 3C91      		ld r19,X
+  71 006a 1897      		sbiw r26,7+1
+  72 006c D901      		movw r26,r18
+  73 006e 1C96      		adiw r26,12
+  74 0070 4D91      		ld r20,X+
+  75 0072 5D91      		ld r21,X+
+  76 0074 6D91      		ld r22,X+
+  77 0076 7C91      		ld r23,X
+  78 0078 1F97      		sbiw r26,12+3
+  79 007a 0784      		ldd __tmp_reg__,Z+15
+  80 007c F089      		ldd r31,Z+16
+  81 007e E02D      		mov r30,__tmp_reg__
+  82 0080 8385      		ldd r24,Z+11
+  83 0082 9485      		ldd r25,Z+12
+  84 0084 A585      		ldd r26,Z+13
+  85 0086 B685      		ldd r27,Z+14
+  86 0088 F901      		movw r30,r18
+  87 008a 8487      		std Z+12,r24
+  88 008c 9587      		std Z+13,r25
+  89 008e A687      		std Z+14,r26
+  90 0090 B787      		std Z+15,r27
+  91 0092 8FEF      		ldi r24,lo8(-1)
+  92 0094 8087      		std Z+8,r24
+  93 0096 9801      		movw r18,r16
+  94 0098 80E0      		ldi r24,lo8(0)
+  95 009a 0E94 0000 		call NutIcmpOutput
+  96 009e 892B      		or r24,r25
+  97 00a0 01F4      		brne .L11
+  98               	.L7:
+  99 00a2 F980      		ldd r15,Y+1
+ 100 00a4 D801      		movw r26,r16
+ 101 00a6 5196      		adiw r26,17
+ 102 00a8 8D91      		ld r24,X+
+ 103 00aa 9C91      		ld r25,X
+ 104 00ac 5297      		sbiw r26,17+1
+ 105 00ae 4C97      		sbiw r24,28
+ 106 00b0 00F0      		brlo .L6
+ 107 00b2 1F96      		adiw r26,15
+ 108 00b4 0D90      		ld __tmp_reg__,X+
+ 109 00b6 BC91      		ld r27,X
+ 110 00b8 A02D      		mov r26,__tmp_reg__
+ 111 00ba 1996      		adiw r26,9
+ 112 00bc 8C91      		ld r24,X
+ 113 00be 1997      		sbiw r26,9
+ 114 00c0 8630      		cpi r24,lo8(6)
+GAS LISTING C:\Temp/cceSqCh5.s 			page 3
+
+
+ 115 00c2 01F4      		brne .L6
+ 116 00c4 FD01      		movw r30,r26
+ 117 00c6 E057      		subi r30,lo8(-(400))
+ 118 00c8 FE4F      		sbci r31,hi8(-(400))
+ 119 00ca 1C96      		adiw r26,12
+ 120 00cc 2D91      		ld r18,X+
+ 121 00ce 3D91      		ld r19,X+
+ 122 00d0 4D91      		ld r20,X+
+ 123 00d2 5C91      		ld r21,X
+ 124 00d4 1F97      		sbiw r26,12+3
+ 125 00d6 6081      		ld r22,Z
+ 126 00d8 7181      		ldd r23,Z+1
+ 127 00da 8281      		ldd r24,Z+2
+ 128 00dc 9381      		ldd r25,Z+3
+ 129 00de 0E94 0000 		call NutTcpFindSocket
+ 130 00e2 DC01      		movw r26,r24
+ 131 00e4 0097      		sbiw r24,0
+ 132 00e6 01F0      		breq .L6
+ 133 00e8 5396      		adiw r26,19
+ 134 00ea 8C91      		ld r24,X
+ 135 00ec 5397      		sbiw r26,19
+ 136 00ee 8230      		cpi r24,lo8(2)
+ 137 00f0 01F0      		breq .L10
+ 138 00f2 5396      		adiw r26,19
+ 139 00f4 8C91      		ld r24,X
+ 140 00f6 5397      		sbiw r26,19
+ 141 00f8 8430      		cpi r24,lo8(4)
+ 142 00fa 01F4      		brne .L6
+ 143               	.L10:
+ 144 00fc EF2D      		mov r30,r15
+ 145 00fe F0E0      		ldi r31,lo8(0)
+ 146 0100 EE0F      		lsl r30
+ 147 0102 FF1F      		rol r31
+ 148 0104 E050      		subi r30,lo8(-(icmp_code2errno))
+ 149 0106 F040      		sbci r31,hi8(-(icmp_code2errno))
+ 150 0108 6081      		ld r22,Z
+ 151 010a 7181      		ldd r23,Z+1
+ 152 010c CD01      		movw r24,r26
+ 153 010e 0E94 0000 		call NutTcpAbortSocket
+ 154               	.L6:
+ 155 0112 C801      		movw r24,r16
+ 156 0114 0E94 0000 		call NutNetBufFree
+ 157               	.L11:
+ 158               	/* epilogue start */
+ 159 0118 DF91      		pop r29
+ 160 011a CF91      		pop r28
+ 161 011c 1F91      		pop r17
+ 162 011e 0F91      		pop r16
+ 163 0120 FF90      		pop r15
+ 164 0122 0895      		ret
+ 165               		.size	NutIcmpInput, .-NutIcmpInput
+ 166               		.data
+ 167               		.type	icmp_code2errno, @object
+ 168               		.size	icmp_code2errno, 32
+ 169               	icmp_code2errno:
+ 170 0000 3300      		.word	51
+ 171 0002 4100      		.word	65
+GAS LISTING C:\Temp/cceSqCh5.s 			page 4
+
+
+ 172 0004 2A00      		.word	42
+ 173 0006 3D00      		.word	61
+ 174 0008 2800      		.word	40
+ 175 000a 2D00      		.word	45
+ 176 000c 3300      		.word	51
+ 177 000e 4000      		.word	64
+ 178 0010 3300      		.word	51
+ 179 0012 3300      		.word	51
+ 180 0014 4100      		.word	65
+ 181 0016 3300      		.word	51
+ 182 0018 4100      		.word	65
+ 183 001a 4100      		.word	65
+ 184 001c 4100      		.word	65
+ 185 001e 4100      		.word	65
+GAS LISTING C:\Temp/cceSqCh5.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 icmpin.c
+  C:\Temp/cceSqCh5.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cceSqCh5.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cceSqCh5.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cceSqCh5.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cceSqCh5.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cceSqCh5.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cceSqCh5.s:13     .text:00000000 NutIcmpInput
+  C:\Temp/cceSqCh5.s:169    .data:00000000 icmp_code2errno
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutIcmpOutput
+NutTcpFindSocket
+NutTcpAbortSocket
+NutNetBufFree

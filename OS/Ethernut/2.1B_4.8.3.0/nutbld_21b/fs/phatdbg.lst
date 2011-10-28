@@ -1,0 +1,1173 @@
+GAS LISTING C:\Temp/ccGekIeF.s 			page 1
+
+
+   1               		.file	"phatdbg.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.data
+  11               	.LC0:
+  12 0000 2D2D 2D20 		.string	"--- %s ---\n"
+  12      2573 202D 
+  12      2D2D 0A00 
+  13               	.LC1:
+  14 000c 426F 6F74 		.string	"Boot jump      : %02X %02X %02X\n"
+  14      206A 756D 
+  14      7020 2020 
+  14      2020 203A 
+  14      2025 3032 
+  15               	.LC2:
+  16 002d 4F45 4D20 		.string	"OEM name       : %.8s\n"
+  16      6E61 6D65 
+  16      2020 2020 
+  16      2020 203A 
+  16      2025 2E38 
+  17               	.LC3:
+  18 0044 4279 7465 		.string	"Bytes/sector   : %u\n"
+  18      732F 7365 
+  18      6374 6F72 
+  18      2020 203A 
+  18      2025 750A 
+  19               	.LC4:
+  20 0059 5365 6374 		.string	"Sectors/cluster: %u\n"
+  20      6F72 732F 
+  20      636C 7573 
+  20      7465 723A 
+  20      2025 750A 
+  21               	.LC5:
+  22 006e 5273 7664 		.string	"Rsvd. sectors  : %u\n"
+  22      2E20 7365 
+  22      6374 6F72 
+  22      7320 203A 
+  22      2025 750A 
+  23               	.LC6:
+  24 0083 416C 6C6F 		.string	"Alloc. tables  : %u\n"
+  24      632E 2074 
+  24      6162 6C65 
+  24      7320 203A 
+  24      2025 750A 
+  25               	.LC7:
+  26 0098 526F 6F74 		.string	"Root entries   : %u\n"
+  26      2065 6E74 
+  26      7269 6573 
+  26      2020 203A 
+  26      2025 750A 
+  27               	.LC8:
+GAS LISTING C:\Temp/ccGekIeF.s 			page 2
+
+
+  28 00ad 546F 7461 		.string	"Total sectors  : %lu\n"
+  28      6C20 7365 
+  28      6374 6F72 
+  28      7320 203A 
+  28      2025 6C75 
+  29               	.LC9:
+  30 00c3 4D65 6469 		.string	"Media type     : 0x%02X\n"
+  30      6120 7479 
+  30      7065 2020 
+  30      2020 203A 
+  30      2030 7825 
+  31               	.LC10:
+  32 00dc 5365 6374 		.string	"Sectors/table  : %u %lu\n"
+  32      6F72 732F 
+  32      7461 626C 
+  32      6520 203A 
+  32      2025 7520 
+  33               	.LC11:
+  34 00f5 5365 6374 		.string	"Sectors/track  : %u\n"
+  34      6F72 732F 
+  34      7472 6163 
+  34      6B20 203A 
+  34      2025 750A 
+  35               	.LC12:
+  36 010a 4865 6164 		.string	"Heads          : %u\n"
+  36      7320 2020 
+  36      2020 2020 
+  36      2020 203A 
+  36      2025 750A 
+  37               	.LC13:
+  38 011f 4869 6464 		.string	"Hidden sectors : %lu\n"
+  38      656E 2073 
+  38      6563 746F 
+  38      7273 203A 
+  38      2025 6C75 
+  39               	.LC14:
+  40 0135 4D69 7272 		.string	"Mirror flags   : 0x%04u\n"
+  40      6F72 2066 
+  40      6C61 6773 
+  40      2020 203A 
+  40      2030 7825 
+  41               	.LC15:
+  42 014e 4669 6C65 		.string	"File system ver: %u\n"
+  42      2073 7973 
+  42      7465 6D20 
+  42      7665 723A 
+  42      2025 750A 
+  43               	.LC16:
+  44 0163 526F 6F74 		.string	"Root dir clust : %lu\n"
+  44      2064 6972 
+  44      2063 6C75 
+  44      7374 203A 
+  44      2025 6C75 
+  45               	.LC17:
+  46 0179 4653 496E 		.string	"FSInfo sector  : %u\n"
+  46      666F 2073 
+  46      6563 746F 
+GAS LISTING C:\Temp/ccGekIeF.s 			page 3
+
+
+  46      7220 203A 
+  46      2025 750A 
+  47               	.LC18:
+  48 018e 426F 6F74 		.string	"Boot back sect : %u\n"
+  48      2062 6163 
+  48      6B20 7365 
+  48      6374 203A 
+  48      2025 750A 
+  49               	.LC19:
+  50 01a3 4C6F 6769 		.string	"Logical drive  : %u\n"
+  50      6361 6C20 
+  50      6472 6976 
+  50      6520 203A 
+  50      2025 750A 
+  51               	.LC20:
+  52 01b8 5273 7664 		.string	"Rsvd NT(head)  : %u\n"
+  52      204E 5428 
+  52      6865 6164 
+  52      2920 203A 
+  52      2025 750A 
+  53               	.LC21:
+  54 01cd 4578 742E 		.string	"Ext. signature : 0x%02X\n"
+  54      2073 6967 
+  54      6E61 7475 
+  54      7265 203A 
+  54      2030 7825 
+  55               	.LC22:
+  56 01e6 566F 6C75 		.string	"Volume ID      : 0x%08lX\n"
+  56      6D65 2049 
+  56      4420 2020 
+  56      2020 203A 
+  56      2030 7825 
+  57               	.LC23:
+  58 0200 566F 6C75 		.string	"Volume label   : %.11s\n"
+  58      6D65 206C 
+  58      6162 656C 
+  58      2020 203A 
+  58      2025 2E31 
+  59               	.LC24:
+  60 0218 4669 6C65 		.string	"Filesystem     : %.8s\n"
+  60      7379 7374 
+  60      656D 2020 
+  60      2020 203A 
+  60      2025 2E38 
+  61               		.text
+  62               	.global	PhatDbgVbr
+  63               		.type	PhatDbgVbr, @function
+  64               	PhatDbgVbr:
+  65 0000 EF92      		push r14
+  66 0002 FF92      		push r15
+  67 0004 0F93      		push r16
+  68 0006 1F93      		push r17
+  69 0008 CF93      		push r28
+  70 000a DF93      		push r29
+  71               	/* prologue: function */
+  72               	/* frame size = 0 */
+  73 000c 7C01      		movw r14,r24
+GAS LISTING C:\Temp/ccGekIeF.s 			page 4
+
+
+  74 000e EA01      		movw r28,r20
+  75 0010 6115      		cp r22,__zero_reg__
+  76 0012 7105      		cpc r23,__zero_reg__
+  77 0014 01F0      		breq .L2
+  78 0016 7F93      		push r23
+  79 0018 6F93      		push r22
+  80 001a 80E0      		ldi r24,lo8(.LC0)
+  81 001c 90E0      		ldi r25,hi8(.LC0)
+  82 001e 9F93      		push r25
+  83 0020 8F93      		push r24
+  84 0022 FF92      		push r15
+  85 0024 EF92      		push r14
+  86 0026 0E94 0000 		call fprintf
+  87 002a 2DB7      		in r18,__SP_L__
+  88 002c 3EB7      		in r19,__SP_H__
+  89 002e 2A5F      		subi r18,lo8(-(6))
+  90 0030 3F4F      		sbci r19,hi8(-(6))
+  91 0032 0FB6      		in __tmp_reg__,__SREG__
+  92 0034 F894      		cli
+  93 0036 3EBF      		out __SP_H__,r19
+  94 0038 0FBE      		out __SREG__,__tmp_reg__
+  95 003a 2DBF      		out __SP_L__,r18
+  96               	.L2:
+  97 003c 8A81      		ldd r24,Y+2
+  98 003e 90E0      		ldi r25,lo8(0)
+  99 0040 9F93      		push r25
+ 100 0042 8F93      		push r24
+ 101 0044 8981      		ldd r24,Y+1
+ 102 0046 90E0      		ldi r25,lo8(0)
+ 103 0048 9F93      		push r25
+ 104 004a 8F93      		push r24
+ 105 004c 8881      		ld r24,Y
+ 106 004e 90E0      		ldi r25,lo8(0)
+ 107 0050 9F93      		push r25
+ 108 0052 8F93      		push r24
+ 109 0054 80E0      		ldi r24,lo8(.LC1)
+ 110 0056 90E0      		ldi r25,hi8(.LC1)
+ 111 0058 9F93      		push r25
+ 112 005a 8F93      		push r24
+ 113 005c FF92      		push r15
+ 114 005e EF92      		push r14
+ 115 0060 0E94 0000 		call fprintf
+ 116 0064 2396      		adiw r28,3
+ 117 0066 DF93      		push r29
+ 118 0068 CF93      		push r28
+ 119 006a 2397      		sbiw r28,3
+ 120 006c 80E0      		ldi r24,lo8(.LC2)
+ 121 006e 90E0      		ldi r25,hi8(.LC2)
+ 122 0070 9F93      		push r25
+ 123 0072 8F93      		push r24
+ 124 0074 FF92      		push r15
+ 125 0076 EF92      		push r14
+ 126 0078 0E94 0000 		call fprintf
+ 127 007c 8B85      		ldd r24,Y+11
+ 128 007e 9C85      		ldd r25,Y+12
+ 129 0080 9F93      		push r25
+ 130 0082 8F93      		push r24
+GAS LISTING C:\Temp/ccGekIeF.s 			page 5
+
+
+ 131 0084 80E0      		ldi r24,lo8(.LC3)
+ 132 0086 90E0      		ldi r25,hi8(.LC3)
+ 133 0088 9F93      		push r25
+ 134 008a 8F93      		push r24
+ 135 008c FF92      		push r15
+ 136 008e EF92      		push r14
+ 137 0090 0E94 0000 		call fprintf
+ 138 0094 8D85      		ldd r24,Y+13
+ 139 0096 90E0      		ldi r25,lo8(0)
+ 140 0098 9F93      		push r25
+ 141 009a 8F93      		push r24
+ 142 009c 80E0      		ldi r24,lo8(.LC4)
+ 143 009e 90E0      		ldi r25,hi8(.LC4)
+ 144 00a0 9F93      		push r25
+ 145 00a2 8F93      		push r24
+ 146 00a4 FF92      		push r15
+ 147 00a6 EF92      		push r14
+ 148 00a8 0E94 0000 		call fprintf
+ 149 00ac 8E85      		ldd r24,Y+14
+ 150 00ae 9F85      		ldd r25,Y+15
+ 151 00b0 9F93      		push r25
+ 152 00b2 8F93      		push r24
+ 153 00b4 80E0      		ldi r24,lo8(.LC5)
+ 154 00b6 90E0      		ldi r25,hi8(.LC5)
+ 155 00b8 9F93      		push r25
+ 156 00ba 8F93      		push r24
+ 157 00bc FF92      		push r15
+ 158 00be EF92      		push r14
+ 159 00c0 0E94 0000 		call fprintf
+ 160 00c4 8DB7      		in r24,__SP_L__
+ 161 00c6 9EB7      		in r25,__SP_H__
+ 162 00c8 8296      		adiw r24,34
+ 163 00ca 0FB6      		in __tmp_reg__,__SREG__
+ 164 00cc F894      		cli
+ 165 00ce 9EBF      		out __SP_H__,r25
+ 166 00d0 0FBE      		out __SREG__,__tmp_reg__
+ 167 00d2 8DBF      		out __SP_L__,r24
+ 168 00d4 8889      		ldd r24,Y+16
+ 169 00d6 90E0      		ldi r25,lo8(0)
+ 170 00d8 9F93      		push r25
+ 171 00da 8F93      		push r24
+ 172 00dc 80E0      		ldi r24,lo8(.LC6)
+ 173 00de 90E0      		ldi r25,hi8(.LC6)
+ 174 00e0 9F93      		push r25
+ 175 00e2 8F93      		push r24
+ 176 00e4 FF92      		push r15
+ 177 00e6 EF92      		push r14
+ 178 00e8 0E94 0000 		call fprintf
+ 179 00ec 8989      		ldd r24,Y+17
+ 180 00ee 9A89      		ldd r25,Y+18
+ 181 00f0 9F93      		push r25
+ 182 00f2 8F93      		push r24
+ 183 00f4 80E0      		ldi r24,lo8(.LC7)
+ 184 00f6 90E0      		ldi r25,hi8(.LC7)
+ 185 00f8 9F93      		push r25
+ 186 00fa 8F93      		push r24
+ 187 00fc FF92      		push r15
+GAS LISTING C:\Temp/ccGekIeF.s 			page 6
+
+
+ 188 00fe EF92      		push r14
+ 189 0100 0E94 0000 		call fprintf
+ 190 0104 8B89      		ldd r24,Y+19
+ 191 0106 9C89      		ldd r25,Y+20
+ 192 0108 EDB7      		in r30,__SP_L__
+ 193 010a FEB7      		in r31,__SP_H__
+ 194 010c 3C96      		adiw r30,12
+ 195 010e 0FB6      		in __tmp_reg__,__SREG__
+ 196 0110 F894      		cli
+ 197 0112 FEBF      		out __SP_H__,r31
+ 198 0114 0FBE      		out __SREG__,__tmp_reg__
+ 199 0116 EDBF      		out __SP_L__,r30
+ 200 0118 0097      		sbiw r24,0
+ 201 011a 01F0      		breq .L3
+ 202 011c A0E0      		ldi r26,lo8(0)
+ 203 011e B0E0      		ldi r27,hi8(0)
+ 204 0120 00C0      		rjmp .L4
+ 205               	.L3:
+ 206 0122 88A1      		ldd r24,Y+32
+ 207 0124 99A1      		ldd r25,Y+33
+ 208 0126 AAA1      		ldd r26,Y+34
+ 209 0128 BBA1      		ldd r27,Y+35
+ 210               	.L4:
+ 211 012a BF93      		push r27
+ 212 012c AF93      		push r26
+ 213 012e 9F93      		push r25
+ 214 0130 8F93      		push r24
+ 215 0132 80E0      		ldi r24,lo8(.LC8)
+ 216 0134 90E0      		ldi r25,hi8(.LC8)
+ 217 0136 9F93      		push r25
+ 218 0138 8F93      		push r24
+ 219 013a FF92      		push r15
+ 220 013c EF92      		push r14
+ 221 013e 0E94 0000 		call fprintf
+ 222 0142 8D89      		ldd r24,Y+21
+ 223 0144 90E0      		ldi r25,lo8(0)
+ 224 0146 9F93      		push r25
+ 225 0148 8F93      		push r24
+ 226 014a 80E0      		ldi r24,lo8(.LC9)
+ 227 014c 90E0      		ldi r25,hi8(.LC9)
+ 228 014e 9F93      		push r25
+ 229 0150 8F93      		push r24
+ 230 0152 FF92      		push r15
+ 231 0154 EF92      		push r14
+ 232 0156 0E94 0000 		call fprintf
+ 233 015a 8CA1      		ldd r24,Y+36
+ 234 015c 9DA1      		ldd r25,Y+37
+ 235 015e AEA1      		ldd r26,Y+38
+ 236 0160 BFA1      		ldd r27,Y+39
+ 237 0162 BF93      		push r27
+ 238 0164 AF93      		push r26
+ 239 0166 9F93      		push r25
+ 240 0168 8F93      		push r24
+ 241 016a 8E89      		ldd r24,Y+22
+ 242 016c 9F89      		ldd r25,Y+23
+ 243 016e 9F93      		push r25
+ 244 0170 8F93      		push r24
+GAS LISTING C:\Temp/ccGekIeF.s 			page 7
+
+
+ 245 0172 80E0      		ldi r24,lo8(.LC10)
+ 246 0174 90E0      		ldi r25,hi8(.LC10)
+ 247 0176 9F93      		push r25
+ 248 0178 8F93      		push r24
+ 249 017a FF92      		push r15
+ 250 017c EF92      		push r14
+ 251 017e 0E94 0000 		call fprintf
+ 252 0182 888D      		ldd r24,Y+24
+ 253 0184 998D      		ldd r25,Y+25
+ 254 0186 9F93      		push r25
+ 255 0188 8F93      		push r24
+ 256 018a 80E0      		ldi r24,lo8(.LC11)
+ 257 018c 90E0      		ldi r25,hi8(.LC11)
+ 258 018e 9F93      		push r25
+ 259 0190 8F93      		push r24
+ 260 0192 FF92      		push r15
+ 261 0194 EF92      		push r14
+ 262 0196 0E94 0000 		call fprintf
+ 263 019a 8A8D      		ldd r24,Y+26
+ 264 019c 9B8D      		ldd r25,Y+27
+ 265 019e 9F93      		push r25
+ 266 01a0 8F93      		push r24
+ 267 01a2 80E0      		ldi r24,lo8(.LC12)
+ 268 01a4 90E0      		ldi r25,hi8(.LC12)
+ 269 01a6 9F93      		push r25
+ 270 01a8 8F93      		push r24
+ 271 01aa FF92      		push r15
+ 272 01ac EF92      		push r14
+ 273 01ae 0E94 0000 		call fprintf
+ 274 01b2 2DB7      		in r18,__SP_L__
+ 275 01b4 3EB7      		in r19,__SP_H__
+ 276 01b6 2C5D      		subi r18,lo8(-(36))
+ 277 01b8 3F4F      		sbci r19,hi8(-(36))
+ 278 01ba 0FB6      		in __tmp_reg__,__SREG__
+ 279 01bc F894      		cli
+ 280 01be 3EBF      		out __SP_H__,r19
+ 281 01c0 0FBE      		out __SREG__,__tmp_reg__
+ 282 01c2 2DBF      		out __SP_L__,r18
+ 283 01c4 8C8D      		ldd r24,Y+28
+ 284 01c6 9D8D      		ldd r25,Y+29
+ 285 01c8 AE8D      		ldd r26,Y+30
+ 286 01ca BF8D      		ldd r27,Y+31
+ 287 01cc BF93      		push r27
+ 288 01ce AF93      		push r26
+ 289 01d0 9F93      		push r25
+ 290 01d2 8F93      		push r24
+ 291 01d4 80E0      		ldi r24,lo8(.LC13)
+ 292 01d6 90E0      		ldi r25,hi8(.LC13)
+ 293 01d8 9F93      		push r25
+ 294 01da 8F93      		push r24
+ 295 01dc FF92      		push r15
+ 296 01de EF92      		push r14
+ 297 01e0 0E94 0000 		call fprintf
+ 298 01e4 88A5      		ldd r24,Y+40
+ 299 01e6 99A5      		ldd r25,Y+41
+ 300 01e8 9F93      		push r25
+ 301 01ea 8F93      		push r24
+GAS LISTING C:\Temp/ccGekIeF.s 			page 8
+
+
+ 302 01ec 80E0      		ldi r24,lo8(.LC14)
+ 303 01ee 90E0      		ldi r25,hi8(.LC14)
+ 304 01f0 9F93      		push r25
+ 305 01f2 8F93      		push r24
+ 306 01f4 FF92      		push r15
+ 307 01f6 EF92      		push r14
+ 308 01f8 0E94 0000 		call fprintf
+ 309 01fc 8AA5      		ldd r24,Y+42
+ 310 01fe 9BA5      		ldd r25,Y+43
+ 311 0200 9F93      		push r25
+ 312 0202 8F93      		push r24
+ 313 0204 80E0      		ldi r24,lo8(.LC15)
+ 314 0206 90E0      		ldi r25,hi8(.LC15)
+ 315 0208 9F93      		push r25
+ 316 020a 8F93      		push r24
+ 317 020c FF92      		push r15
+ 318 020e EF92      		push r14
+ 319 0210 0E94 0000 		call fprintf
+ 320 0214 8CA5      		ldd r24,Y+44
+ 321 0216 9DA5      		ldd r25,Y+45
+ 322 0218 AEA5      		ldd r26,Y+46
+ 323 021a BFA5      		ldd r27,Y+47
+ 324 021c BF93      		push r27
+ 325 021e AF93      		push r26
+ 326 0220 9F93      		push r25
+ 327 0222 8F93      		push r24
+ 328 0224 80E0      		ldi r24,lo8(.LC16)
+ 329 0226 90E0      		ldi r25,hi8(.LC16)
+ 330 0228 9F93      		push r25
+ 331 022a 8F93      		push r24
+ 332 022c FF92      		push r15
+ 333 022e EF92      		push r14
+ 334 0230 0E94 0000 		call fprintf
+ 335 0234 88A9      		ldd r24,Y+48
+ 336 0236 99A9      		ldd r25,Y+49
+ 337 0238 9F93      		push r25
+ 338 023a 8F93      		push r24
+ 339 023c 80E0      		ldi r24,lo8(.LC17)
+ 340 023e 90E0      		ldi r25,hi8(.LC17)
+ 341 0240 9F93      		push r25
+ 342 0242 8F93      		push r24
+ 343 0244 FF92      		push r15
+ 344 0246 EF92      		push r14
+ 345 0248 0E94 0000 		call fprintf
+ 346 024c 8DB7      		in r24,__SP_L__
+ 347 024e 9EB7      		in r25,__SP_H__
+ 348 0250 8296      		adiw r24,34
+ 349 0252 0FB6      		in __tmp_reg__,__SREG__
+ 350 0254 F894      		cli
+ 351 0256 9EBF      		out __SP_H__,r25
+ 352 0258 0FBE      		out __SREG__,__tmp_reg__
+ 353 025a 8DBF      		out __SP_L__,r24
+ 354 025c 8AA9      		ldd r24,Y+50
+ 355 025e 9BA9      		ldd r25,Y+51
+ 356 0260 9F93      		push r25
+ 357 0262 8F93      		push r24
+ 358 0264 80E0      		ldi r24,lo8(.LC18)
+GAS LISTING C:\Temp/ccGekIeF.s 			page 9
+
+
+ 359 0266 90E0      		ldi r25,hi8(.LC18)
+ 360 0268 9F93      		push r25
+ 361 026a 8F93      		push r24
+ 362 026c FF92      		push r15
+ 363 026e EF92      		push r14
+ 364 0270 0E94 0000 		call fprintf
+ 365 0274 C05C      		subi r28,lo8(-(64))
+ 366 0276 DF4F      		sbci r29,hi8(-(64))
+ 367 0278 8991      		ld r24,Y+
+ 368 027a 90E0      		ldi r25,lo8(0)
+ 369 027c 9F93      		push r25
+ 370 027e 8F93      		push r24
+ 371 0280 80E0      		ldi r24,lo8(.LC19)
+ 372 0282 90E0      		ldi r25,hi8(.LC19)
+ 373 0284 9F93      		push r25
+ 374 0286 8F93      		push r24
+ 375 0288 FF92      		push r15
+ 376 028a EF92      		push r14
+ 377 028c 0E94 0000 		call fprintf
+ 378 0290 8881      		ld r24,Y
+ 379 0292 C154      		subi r28,lo8(-(-65))
+ 380 0294 D040      		sbci r29,hi8(-(-65))
+ 381 0296 90E0      		ldi r25,lo8(0)
+ 382 0298 9F93      		push r25
+ 383 029a 8F93      		push r24
+ 384 029c 80E0      		ldi r24,lo8(.LC20)
+ 385 029e 90E0      		ldi r25,hi8(.LC20)
+ 386 02a0 9F93      		push r25
+ 387 02a2 8F93      		push r24
+ 388 02a4 FF92      		push r15
+ 389 02a6 EF92      		push r14
+ 390 02a8 0E94 0000 		call fprintf
+ 391 02ac 8E01      		movw r16,r28
+ 392 02ae 0E5B      		subi r16,lo8(-(66))
+ 393 02b0 1F4F      		sbci r17,hi8(-(66))
+ 394 02b2 F801      		movw r30,r16
+ 395 02b4 8081      		ld r24,Z
+ 396 02b6 90E0      		ldi r25,lo8(0)
+ 397 02b8 9F93      		push r25
+ 398 02ba 8F93      		push r24
+ 399 02bc 80E0      		ldi r24,lo8(.LC21)
+ 400 02be 90E0      		ldi r25,hi8(.LC21)
+ 401 02c0 9F93      		push r25
+ 402 02c2 8F93      		push r24
+ 403 02c4 FF92      		push r15
+ 404 02c6 EF92      		push r14
+ 405 02c8 0E94 0000 		call fprintf
+ 406 02cc F801      		movw r30,r16
+ 407 02ce 8081      		ld r24,Z
+ 408 02d0 8852      		subi r24,lo8(-(-40))
+ 409 02d2 2DB7      		in r18,__SP_L__
+ 410 02d4 3EB7      		in r19,__SP_H__
+ 411 02d6 285E      		subi r18,lo8(-(24))
+ 412 02d8 3F4F      		sbci r19,hi8(-(24))
+ 413 02da 0FB6      		in __tmp_reg__,__SREG__
+ 414 02dc F894      		cli
+ 415 02de 3EBF      		out __SP_H__,r19
+GAS LISTING C:\Temp/ccGekIeF.s 			page 10
+
+
+ 416 02e0 0FBE      		out __SREG__,__tmp_reg__
+ 417 02e2 2DBF      		out __SP_L__,r18
+ 418 02e4 8230      		cpi r24,lo8(2)
+ 419 02e6 00F4      		brsh .L6
+ 420 02e8 CD5B      		subi r28,lo8(-(67))
+ 421 02ea DF4F      		sbci r29,hi8(-(67))
+ 422 02ec 8991      		ld r24,Y+
+ 423 02ee 9991      		ld r25,Y+
+ 424 02f0 A991      		ld r26,Y+
+ 425 02f2 B991      		ld r27,Y+
+ 426 02f4 BF93      		push r27
+ 427 02f6 AF93      		push r26
+ 428 02f8 9F93      		push r25
+ 429 02fa 8F93      		push r24
+ 430 02fc 80E0      		ldi r24,lo8(.LC22)
+ 431 02fe 90E0      		ldi r25,hi8(.LC22)
+ 432 0300 9F93      		push r25
+ 433 0302 8F93      		push r24
+ 434 0304 FF92      		push r15
+ 435 0306 EF92      		push r14
+ 436 0308 0E94 0000 		call fprintf
+ 437 030c DF93      		push r29
+ 438 030e CF93      		push r28
+ 439 0310 80E0      		ldi r24,lo8(.LC23)
+ 440 0312 90E0      		ldi r25,hi8(.LC23)
+ 441 0314 9F93      		push r25
+ 442 0316 8F93      		push r24
+ 443 0318 FF92      		push r15
+ 444 031a EF92      		push r14
+ 445 031c 0E94 0000 		call fprintf
+ 446 0320 2B96      		adiw r28,11
+ 447 0322 DF93      		push r29
+ 448 0324 CF93      		push r28
+ 449 0326 80E0      		ldi r24,lo8(.LC24)
+ 450 0328 90E0      		ldi r25,hi8(.LC24)
+ 451 032a 9F93      		push r25
+ 452 032c 8F93      		push r24
+ 453 032e FF92      		push r15
+ 454 0330 EF92      		push r14
+ 455 0332 0E94 0000 		call fprintf
+ 456 0336 8DB7      		in r24,__SP_L__
+ 457 0338 9EB7      		in r25,__SP_H__
+ 458 033a 4496      		adiw r24,20
+ 459 033c 0FB6      		in __tmp_reg__,__SREG__
+ 460 033e F894      		cli
+ 461 0340 9EBF      		out __SP_H__,r25
+ 462 0342 0FBE      		out __SREG__,__tmp_reg__
+ 463 0344 8DBF      		out __SP_L__,r24
+ 464               	.L6:
+ 465               	/* epilogue start */
+ 466 0346 DF91      		pop r29
+ 467 0348 CF91      		pop r28
+ 468 034a 1F91      		pop r17
+ 469 034c 0F91      		pop r16
+ 470 034e FF90      		pop r15
+ 471 0350 EF90      		pop r14
+ 472 0352 0895      		ret
+GAS LISTING C:\Temp/ccGekIeF.s 			page 11
+
+
+ 473               		.size	PhatDbgVbr, .-PhatDbgVbr
+ 474               	.global	PhatDbgAttrList
+ 475               		.type	PhatDbgAttrList, @function
+ 476               	PhatDbgAttrList:
+ 477               	/* prologue: function */
+ 478               	/* frame size = 0 */
+ 479 0354 60FF      		sbrs r22,0
+ 480 0356 00C0      		rjmp .L8
+ 481 0358 BC01      		movw r22,r24
+ 482 035a 82E5      		ldi r24,lo8(82)
+ 483 035c 90E0      		ldi r25,hi8(82)
+ 484 035e 00C0      		rjmp .L15
+ 485               	.L8:
+ 486 0360 61FF      		sbrs r22,1
+ 487 0362 00C0      		rjmp .L10
+ 488 0364 BC01      		movw r22,r24
+ 489 0366 88E4      		ldi r24,lo8(72)
+ 490 0368 90E0      		ldi r25,hi8(72)
+ 491 036a 00C0      		rjmp .L15
+ 492               	.L10:
+ 493 036c 62FF      		sbrs r22,2
+ 494 036e 00C0      		rjmp .L11
+ 495 0370 BC01      		movw r22,r24
+ 496 0372 83E5      		ldi r24,lo8(83)
+ 497 0374 90E0      		ldi r25,hi8(83)
+ 498 0376 00C0      		rjmp .L15
+ 499               	.L11:
+ 500 0378 63FF      		sbrs r22,3
+ 501 037a 00C0      		rjmp .L12
+ 502 037c BC01      		movw r22,r24
+ 503 037e 86E5      		ldi r24,lo8(86)
+ 504 0380 90E0      		ldi r25,hi8(86)
+ 505 0382 00C0      		rjmp .L15
+ 506               	.L12:
+ 507 0384 64FF      		sbrs r22,4
+ 508 0386 00C0      		rjmp .L13
+ 509 0388 BC01      		movw r22,r24
+ 510 038a 84E4      		ldi r24,lo8(68)
+ 511 038c 90E0      		ldi r25,hi8(68)
+ 512               	.L15:
+ 513 038e 0E94 0000 		call fputc
+ 514 0392 0895      		ret
+ 515               	.L13:
+ 516 0394 65FF      		sbrs r22,5
+ 517 0396 00C0      		rjmp .L14
+ 518 0398 BC01      		movw r22,r24
+ 519 039a 81E4      		ldi r24,lo8(65)
+ 520 039c 90E0      		ldi r25,hi8(65)
+ 521 039e 0E94 0000 		call fputc
+ 522               	.L14:
+ 523 03a2 0895      		ret
+ 524               		.size	PhatDbgAttrList, .-PhatDbgAttrList
+ 525               		.data
+ 526               	.LC25:
+ 527 022f 4465 6E74 		.string	"DentFName: '%.11s'\n"
+ 527      464E 616D 
+ 527      653A 2027 
+GAS LISTING C:\Temp/ccGekIeF.s 			page 12
+
+
+ 527      252E 3131 
+ 527      7327 0A00 
+ 528               	.LC26:
+ 529 0243 4465 6E74 		.string	"DentFAttr: "
+ 529      4641 7474 
+ 529      723A 2000 
+ 530               	.LC27:
+ 531 024f 4465 6E74 		.string	"DentRsrvd: 0x%02X\n"
+ 531      5273 7276 
+ 531      643A 2030 
+ 531      7825 3032 
+ 531      580A 00
+ 532               	.LC28:
+ 533 0262 4465 6E74 		.string	"DentCTime: 0x%04X 0x%04X 0x%02X\n"
+ 533      4354 696D 
+ 533      653A 2030 
+ 533      7825 3034 
+ 533      5820 3078 
+ 534               	.LC29:
+ 535 0283 4465 6E74 		.string	"DentADate: 0x%04X\n"
+ 535      4144 6174 
+ 535      653A 2030 
+ 535      7825 3034 
+ 535      580A 00
+ 536               	.LC30:
+ 537 0296 4465 6E74 		.string	"DentMTime: 0x%04X 0x%04X\n"
+ 537      4D54 696D 
+ 537      653A 2030 
+ 537      7825 3034 
+ 537      5820 3078 
+ 538               	.LC31:
+ 539 02b0 4465 6E74 		.string	"DentClust: %lu\n"
+ 539      436C 7573 
+ 539      743A 2025 
+ 539      6C75 0A00 
+ 540               	.LC32:
+ 541 02c0 4465 6E74 		.string	"DentFSize: %lu\n"
+ 541      4653 697A 
+ 541      653A 2025 
+ 541      6C75 0A00 
+ 542               		.text
+ 543               	.global	PhatDbgDirEntry
+ 544               		.type	PhatDbgDirEntry, @function
+ 545               	PhatDbgDirEntry:
+ 546 03a4 0F93      		push r16
+ 547 03a6 1F93      		push r17
+ 548 03a8 CF93      		push r28
+ 549 03aa DF93      		push r29
+ 550               	/* prologue: function */
+ 551               	/* frame size = 0 */
+ 552 03ac 8C01      		movw r16,r24
+ 553 03ae EA01      		movw r28,r20
+ 554 03b0 6115      		cp r22,__zero_reg__
+ 555 03b2 7105      		cpc r23,__zero_reg__
+ 556 03b4 01F0      		breq .L17
+ 557 03b6 7F93      		push r23
+ 558 03b8 6F93      		push r22
+GAS LISTING C:\Temp/ccGekIeF.s 			page 13
+
+
+ 559 03ba 80E0      		ldi r24,lo8(.LC0)
+ 560 03bc 90E0      		ldi r25,hi8(.LC0)
+ 561 03be 9F93      		push r25
+ 562 03c0 8F93      		push r24
+ 563 03c2 1F93      		push r17
+ 564 03c4 0F93      		push r16
+ 565 03c6 0E94 0000 		call fprintf
+ 566 03ca 8DB7      		in r24,__SP_L__
+ 567 03cc 9EB7      		in r25,__SP_H__
+ 568 03ce 0696      		adiw r24,6
+ 569 03d0 0FB6      		in __tmp_reg__,__SREG__
+ 570 03d2 F894      		cli
+ 571 03d4 9EBF      		out __SP_H__,r25
+ 572 03d6 0FBE      		out __SREG__,__tmp_reg__
+ 573 03d8 8DBF      		out __SP_L__,r24
+ 574               	.L17:
+ 575 03da DF93      		push r29
+ 576 03dc CF93      		push r28
+ 577 03de 80E0      		ldi r24,lo8(.LC25)
+ 578 03e0 90E0      		ldi r25,hi8(.LC25)
+ 579 03e2 9F93      		push r25
+ 580 03e4 8F93      		push r24
+ 581 03e6 1F93      		push r17
+ 582 03e8 0F93      		push r16
+ 583 03ea 0E94 0000 		call fprintf
+ 584 03ee B801      		movw r22,r16
+ 585 03f0 80E0      		ldi r24,lo8(.LC26)
+ 586 03f2 90E0      		ldi r25,hi8(.LC26)
+ 587 03f4 0E94 0000 		call fputs
+ 588 03f8 6B85      		ldd r22,Y+11
+ 589 03fa C801      		movw r24,r16
+ 590 03fc 0E94 0000 		call PhatDbgAttrList
+ 591 0400 B801      		movw r22,r16
+ 592 0402 8AE0      		ldi r24,lo8(10)
+ 593 0404 90E0      		ldi r25,hi8(10)
+ 594 0406 0E94 0000 		call fputc
+ 595 040a 8C85      		ldd r24,Y+12
+ 596 040c 90E0      		ldi r25,lo8(0)
+ 597 040e 9F93      		push r25
+ 598 0410 8F93      		push r24
+ 599 0412 80E0      		ldi r24,lo8(.LC27)
+ 600 0414 90E0      		ldi r25,hi8(.LC27)
+ 601 0416 9F93      		push r25
+ 602 0418 8F93      		push r24
+ 603 041a 1F93      		push r17
+ 604 041c 0F93      		push r16
+ 605 041e 0E94 0000 		call fprintf
+ 606 0422 8D85      		ldd r24,Y+13
+ 607 0424 90E0      		ldi r25,lo8(0)
+ 608 0426 9F93      		push r25
+ 609 0428 8F93      		push r24
+ 610 042a 8E85      		ldd r24,Y+14
+ 611 042c 9F85      		ldd r25,Y+15
+ 612 042e 9F93      		push r25
+ 613 0430 8F93      		push r24
+ 614 0432 8889      		ldd r24,Y+16
+ 615 0434 9989      		ldd r25,Y+17
+GAS LISTING C:\Temp/ccGekIeF.s 			page 14
+
+
+ 616 0436 9F93      		push r25
+ 617 0438 8F93      		push r24
+ 618 043a 80E0      		ldi r24,lo8(.LC28)
+ 619 043c 90E0      		ldi r25,hi8(.LC28)
+ 620 043e 9F93      		push r25
+ 621 0440 8F93      		push r24
+ 622 0442 1F93      		push r17
+ 623 0444 0F93      		push r16
+ 624 0446 0E94 0000 		call fprintf
+ 625 044a 8A89      		ldd r24,Y+18
+ 626 044c 9B89      		ldd r25,Y+19
+ 627 044e 9F93      		push r25
+ 628 0450 8F93      		push r24
+ 629 0452 80E0      		ldi r24,lo8(.LC29)
+ 630 0454 90E0      		ldi r25,hi8(.LC29)
+ 631 0456 9F93      		push r25
+ 632 0458 8F93      		push r24
+ 633 045a 1F93      		push r17
+ 634 045c 0F93      		push r16
+ 635 045e 0E94 0000 		call fprintf
+ 636 0462 8E89      		ldd r24,Y+22
+ 637 0464 9F89      		ldd r25,Y+23
+ 638 0466 9F93      		push r25
+ 639 0468 8F93      		push r24
+ 640 046a 888D      		ldd r24,Y+24
+ 641 046c 998D      		ldd r25,Y+25
+ 642 046e 9F93      		push r25
+ 643 0470 8F93      		push r24
+ 644 0472 80E0      		ldi r24,lo8(.LC30)
+ 645 0474 90E0      		ldi r25,hi8(.LC30)
+ 646 0476 9F93      		push r25
+ 647 0478 8F93      		push r24
+ 648 047a 1F93      		push r17
+ 649 047c 0F93      		push r16
+ 650 047e 0E94 0000 		call fprintf
+ 651 0482 8DB7      		in r24,__SP_L__
+ 652 0484 9EB7      		in r25,__SP_H__
+ 653 0486 8496      		adiw r24,36
+ 654 0488 0FB6      		in __tmp_reg__,__SREG__
+ 655 048a F894      		cli
+ 656 048c 9EBF      		out __SP_H__,r25
+ 657 048e 0FBE      		out __SREG__,__tmp_reg__
+ 658 0490 8DBF      		out __SP_L__,r24
+ 659 0492 8C89      		ldd r24,Y+20
+ 660 0494 9D89      		ldd r25,Y+21
+ 661 0496 A0E0      		ldi r26,lo8(0)
+ 662 0498 B0E0      		ldi r27,hi8(0)
+ 663 049a DC01      		movw r26,r24
+ 664 049c 9927      		clr r25
+ 665 049e 8827      		clr r24
+ 666 04a0 2A8D      		ldd r18,Y+26
+ 667 04a2 3B8D      		ldd r19,Y+27
+ 668 04a4 40E0      		ldi r20,lo8(0)
+ 669 04a6 50E0      		ldi r21,hi8(0)
+ 670 04a8 820F      		add r24,r18
+ 671 04aa 931F      		adc r25,r19
+ 672 04ac A41F      		adc r26,r20
+GAS LISTING C:\Temp/ccGekIeF.s 			page 15
+
+
+ 673 04ae B51F      		adc r27,r21
+ 674 04b0 BF93      		push r27
+ 675 04b2 AF93      		push r26
+ 676 04b4 9F93      		push r25
+ 677 04b6 8F93      		push r24
+ 678 04b8 80E0      		ldi r24,lo8(.LC31)
+ 679 04ba 90E0      		ldi r25,hi8(.LC31)
+ 680 04bc 9F93      		push r25
+ 681 04be 8F93      		push r24
+ 682 04c0 1F93      		push r17
+ 683 04c2 0F93      		push r16
+ 684 04c4 0E94 0000 		call fprintf
+ 685 04c8 8C8D      		ldd r24,Y+28
+ 686 04ca 9D8D      		ldd r25,Y+29
+ 687 04cc AE8D      		ldd r26,Y+30
+ 688 04ce BF8D      		ldd r27,Y+31
+ 689 04d0 BF93      		push r27
+ 690 04d2 AF93      		push r26
+ 691 04d4 9F93      		push r25
+ 692 04d6 8F93      		push r24
+ 693 04d8 80E0      		ldi r24,lo8(.LC32)
+ 694 04da 90E0      		ldi r25,hi8(.LC32)
+ 695 04dc 9F93      		push r25
+ 696 04de 8F93      		push r24
+ 697 04e0 1F93      		push r17
+ 698 04e2 0F93      		push r16
+ 699 04e4 0E94 0000 		call fprintf
+ 700 04e8 8DB7      		in r24,__SP_L__
+ 701 04ea 9EB7      		in r25,__SP_H__
+ 702 04ec 4096      		adiw r24,16
+ 703 04ee 0FB6      		in __tmp_reg__,__SREG__
+ 704 04f0 F894      		cli
+ 705 04f2 9EBF      		out __SP_H__,r25
+ 706 04f4 0FBE      		out __SREG__,__tmp_reg__
+ 707 04f6 8DBF      		out __SP_L__,r24
+ 708               	/* epilogue start */
+ 709 04f8 DF91      		pop r29
+ 710 04fa CF91      		pop r28
+ 711 04fc 1F91      		pop r17
+ 712 04fe 0F91      		pop r16
+ 713 0500 0895      		ret
+ 714               		.size	PhatDbgDirEntry, .-PhatDbgDirEntry
+ 715               		.data
+ 716               	.LC33:
+ 717 02d0 4669 6C65 		.string	"File Pos   : %lu\n"
+ 717      2050 6F73 
+ 717      2020 203A 
+ 717      2025 6C75 
+ 717      0A00 
+ 718               	.LC34:
+ 719 02e2 436C 7573 		.string	"Cluster    : %lu  Prev %lu\n"
+ 719      7465 7220 
+ 719      2020 203A 
+ 719      2025 6C75 
+ 719      2020 5072 
+ 720               	.LC35:
+ 721 02fe 436C 7573 		.string	"Cluster Pos: %lu\n"
+GAS LISTING C:\Temp/ccGekIeF.s 			page 16
+
+
+ 721      7465 7220 
+ 721      506F 733A 
+ 721      2025 6C75 
+ 721      0A00 
+ 722               	.LC36:
+ 723 0310 5365 6374 		.string	"Sector Pos : %lu\n"
+ 723      6F72 2050 
+ 723      6F73 203A 
+ 723      2025 6C75 
+ 723      0A00 
+ 724               	.LC37:
+ 725 0322 5061 7265 		.string	"Parent Clust: %lu\n"
+ 725      6E74 2043 
+ 725      6C75 7374 
+ 725      3A20 256C 
+ 725      750A 00
+ 726               	.LC38:
+ 727 0335 4469 7245 		.string	"DirEnt Sect : %lu\n"
+ 727      6E74 2053 
+ 727      6563 7420 
+ 727      3A20 256C 
+ 727      750A 00
+ 728               	.LC39:
+ 729 0348 4469 7245 		.string	"DirEnt Offs : %lu\n"
+ 729      6E74 204F 
+ 729      6666 7320 
+ 729      3A20 256C 
+ 729      750A 00
+ 730               	.LC40:
+ 731 035b 4469 7245 		.string	"DirEnt Dirty: %u\n"
+ 731      6E74 2044 
+ 731      6972 7479 
+ 731      3A20 2575 
+ 731      0A00 
+ 732               		.text
+ 733               	.global	PhatDbgFileInfo
+ 734               		.type	PhatDbgFileInfo, @function
+ 735               	PhatDbgFileInfo:
+ 736 0502 0F93      		push r16
+ 737 0504 1F93      		push r17
+ 738 0506 CF93      		push r28
+ 739 0508 DF93      		push r29
+ 740               	/* prologue: function */
+ 741               	/* frame size = 0 */
+ 742 050a 8C01      		movw r16,r24
+ 743 050c EA01      		movw r28,r20
+ 744 050e 6115      		cp r22,__zero_reg__
+ 745 0510 7105      		cpc r23,__zero_reg__
+ 746 0512 01F0      		breq .L20
+ 747 0514 7F93      		push r23
+ 748 0516 6F93      		push r22
+ 749 0518 80E0      		ldi r24,lo8(.LC0)
+ 750 051a 90E0      		ldi r25,hi8(.LC0)
+ 751 051c 9F93      		push r25
+ 752 051e 8F93      		push r24
+ 753 0520 1F93      		push r17
+ 754 0522 0F93      		push r16
+GAS LISTING C:\Temp/ccGekIeF.s 			page 17
+
+
+ 755 0524 0E94 0000 		call fprintf
+ 756 0528 8DB7      		in r24,__SP_L__
+ 757 052a 9EB7      		in r25,__SP_H__
+ 758 052c 0696      		adiw r24,6
+ 759 052e 0FB6      		in __tmp_reg__,__SREG__
+ 760 0530 F894      		cli
+ 761 0532 9EBF      		out __SP_H__,r25
+ 762 0534 0FBE      		out __SREG__,__tmp_reg__
+ 763 0536 8DBF      		out __SP_L__,r24
+ 764               	.L20:
+ 765 0538 8881      		ld r24,Y
+ 766 053a 9981      		ldd r25,Y+1
+ 767 053c AA81      		ldd r26,Y+2
+ 768 053e BB81      		ldd r27,Y+3
+ 769 0540 BF93      		push r27
+ 770 0542 AF93      		push r26
+ 771 0544 9F93      		push r25
+ 772 0546 8F93      		push r24
+ 773 0548 80E0      		ldi r24,lo8(.LC33)
+ 774 054a 90E0      		ldi r25,hi8(.LC33)
+ 775 054c 9F93      		push r25
+ 776 054e 8F93      		push r24
+ 777 0550 1F93      		push r17
+ 778 0552 0F93      		push r16
+ 779 0554 0E94 0000 		call fprintf
+ 780 0558 8889      		ldd r24,Y+16
+ 781 055a 9989      		ldd r25,Y+17
+ 782 055c AA89      		ldd r26,Y+18
+ 783 055e BB89      		ldd r27,Y+19
+ 784 0560 BF93      		push r27
+ 785 0562 AF93      		push r26
+ 786 0564 9F93      		push r25
+ 787 0566 8F93      		push r24
+ 788 0568 8C81      		ldd r24,Y+4
+ 789 056a 9D81      		ldd r25,Y+5
+ 790 056c AE81      		ldd r26,Y+6
+ 791 056e BF81      		ldd r27,Y+7
+ 792 0570 BF93      		push r27
+ 793 0572 AF93      		push r26
+ 794 0574 9F93      		push r25
+ 795 0576 8F93      		push r24
+ 796 0578 80E0      		ldi r24,lo8(.LC34)
+ 797 057a 90E0      		ldi r25,hi8(.LC34)
+ 798 057c 9F93      		push r25
+ 799 057e 8F93      		push r24
+ 800 0580 1F93      		push r17
+ 801 0582 0F93      		push r16
+ 802 0584 0E94 0000 		call fprintf
+ 803 0588 8885      		ldd r24,Y+8
+ 804 058a 9985      		ldd r25,Y+9
+ 805 058c AA85      		ldd r26,Y+10
+ 806 058e BB85      		ldd r27,Y+11
+ 807 0590 BF93      		push r27
+ 808 0592 AF93      		push r26
+ 809 0594 9F93      		push r25
+ 810 0596 8F93      		push r24
+ 811 0598 80E0      		ldi r24,lo8(.LC35)
+GAS LISTING C:\Temp/ccGekIeF.s 			page 18
+
+
+ 812 059a 90E0      		ldi r25,hi8(.LC35)
+ 813 059c 9F93      		push r25
+ 814 059e 8F93      		push r24
+ 815 05a0 1F93      		push r17
+ 816 05a2 0F93      		push r16
+ 817 05a4 0E94 0000 		call fprintf
+ 818 05a8 8C85      		ldd r24,Y+12
+ 819 05aa 9D85      		ldd r25,Y+13
+ 820 05ac AE85      		ldd r26,Y+14
+ 821 05ae BF85      		ldd r27,Y+15
+ 822 05b0 BF93      		push r27
+ 823 05b2 AF93      		push r26
+ 824 05b4 9F93      		push r25
+ 825 05b6 8F93      		push r24
+ 826 05b8 80E0      		ldi r24,lo8(.LC36)
+ 827 05ba 90E0      		ldi r25,hi8(.LC36)
+ 828 05bc 9F93      		push r25
+ 829 05be 8F93      		push r24
+ 830 05c0 1F93      		push r17
+ 831 05c2 0F93      		push r16
+ 832 05c4 0E94 0000 		call fprintf
+ 833 05c8 8DB7      		in r24,__SP_L__
+ 834 05ca 9EB7      		in r25,__SP_H__
+ 835 05cc 8496      		adiw r24,36
+ 836 05ce 0FB6      		in __tmp_reg__,__SREG__
+ 837 05d0 F894      		cli
+ 838 05d2 9EBF      		out __SP_H__,r25
+ 839 05d4 0FBE      		out __SREG__,__tmp_reg__
+ 840 05d6 8DBF      		out __SP_L__,r24
+ 841 05d8 6896      		adiw r28,24
+ 842 05da AE01      		movw r20,r28
+ 843 05dc 60E0      		ldi r22,lo8(0)
+ 844 05de 70E0      		ldi r23,hi8(0)
+ 845 05e0 C801      		movw r24,r16
+ 846 05e2 0E94 0000 		call PhatDbgDirEntry
+ 847 05e6 AC96      		adiw r28,44
+ 848 05e8 8881      		ld r24,Y
+ 849 05ea 9981      		ldd r25,Y+1
+ 850 05ec A0E0      		ldi r26,lo8(0)
+ 851 05ee B0E0      		ldi r27,hi8(0)
+ 852 05f0 DC01      		movw r26,r24
+ 853 05f2 9927      		clr r25
+ 854 05f4 8827      		clr r24
+ 855 05f6 3A91      		ld r19,-Y
+ 856 05f8 2A91      		ld r18,-Y
+ 857 05fa C254      		subi r28,lo8(-(-66))
+ 858 05fc D040      		sbci r29,hi8(-(-66))
+ 859 05fe 40E0      		ldi r20,lo8(0)
+ 860 0600 50E0      		ldi r21,hi8(0)
+ 861 0602 820F      		add r24,r18
+ 862 0604 931F      		adc r25,r19
+ 863 0606 A41F      		adc r26,r20
+ 864 0608 B51F      		adc r27,r21
+ 865 060a BF93      		push r27
+ 866 060c AF93      		push r26
+ 867 060e 9F93      		push r25
+ 868 0610 8F93      		push r24
+GAS LISTING C:\Temp/ccGekIeF.s 			page 19
+
+
+ 869 0612 80E0      		ldi r24,lo8(.LC37)
+ 870 0614 90E0      		ldi r25,hi8(.LC37)
+ 871 0616 9F93      		push r25
+ 872 0618 8F93      		push r24
+ 873 061a 1F93      		push r17
+ 874 061c 0F93      		push r16
+ 875 061e 0E94 0000 		call fprintf
+ 876 0622 88AD      		ldd r24,Y+56
+ 877 0624 99AD      		ldd r25,Y+57
+ 878 0626 AAAD      		ldd r26,Y+58
+ 879 0628 BBAD      		ldd r27,Y+59
+ 880 062a BF93      		push r27
+ 881 062c AF93      		push r26
+ 882 062e 9F93      		push r25
+ 883 0630 8F93      		push r24
+ 884 0632 80E0      		ldi r24,lo8(.LC38)
+ 885 0634 90E0      		ldi r25,hi8(.LC38)
+ 886 0636 9F93      		push r25
+ 887 0638 8F93      		push r24
+ 888 063a 1F93      		push r17
+ 889 063c 0F93      		push r16
+ 890 063e 0E94 0000 		call fprintf
+ 891 0642 8CAD      		ldd r24,Y+60
+ 892 0644 9DAD      		ldd r25,Y+61
+ 893 0646 AEAD      		ldd r26,Y+62
+ 894 0648 BFAD      		ldd r27,Y+63
+ 895 064a BF93      		push r27
+ 896 064c AF93      		push r26
+ 897 064e 9F93      		push r25
+ 898 0650 8F93      		push r24
+ 899 0652 80E0      		ldi r24,lo8(.LC39)
+ 900 0654 90E0      		ldi r25,hi8(.LC39)
+ 901 0656 9F93      		push r25
+ 902 0658 8F93      		push r24
+ 903 065a 1F93      		push r17
+ 904 065c 0F93      		push r16
+ 905 065e 0E94 0000 		call fprintf
+ 906 0662 C05C      		subi r28,lo8(-(64))
+ 907 0664 DF4F      		sbci r29,hi8(-(64))
+ 908 0666 8881      		ld r24,Y
+ 909 0668 9981      		ldd r25,Y+1
+ 910 066a 9F93      		push r25
+ 911 066c 8F93      		push r24
+ 912 066e 80E0      		ldi r24,lo8(.LC40)
+ 913 0670 90E0      		ldi r25,hi8(.LC40)
+ 914 0672 9F93      		push r25
+ 915 0674 8F93      		push r24
+ 916 0676 1F93      		push r17
+ 917 0678 0F93      		push r16
+ 918 067a 0E94 0000 		call fprintf
+ 919 067e 8DB7      		in r24,__SP_L__
+ 920 0680 9EB7      		in r25,__SP_H__
+ 921 0682 4E96      		adiw r24,30
+ 922 0684 0FB6      		in __tmp_reg__,__SREG__
+ 923 0686 F894      		cli
+ 924 0688 9EBF      		out __SP_H__,r25
+ 925 068a 0FBE      		out __SREG__,__tmp_reg__
+GAS LISTING C:\Temp/ccGekIeF.s 			page 20
+
+
+ 926 068c 8DBF      		out __SP_L__,r24
+ 927               	/* epilogue start */
+ 928 068e DF91      		pop r29
+ 929 0690 CF91      		pop r28
+ 930 0692 1F91      		pop r17
+ 931 0694 0F91      		pop r16
+ 932 0696 0895      		ret
+ 933               		.size	PhatDbgFileInfo, .-PhatDbgFileInfo
+GAS LISTING C:\Temp/ccGekIeF.s 			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 phatdbg.c
+  C:\Temp/ccGekIeF.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccGekIeF.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccGekIeF.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccGekIeF.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccGekIeF.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccGekIeF.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccGekIeF.s:64     .text:00000000 PhatDbgVbr
+  C:\Temp/ccGekIeF.s:476    .text:00000354 PhatDbgAttrList
+  C:\Temp/ccGekIeF.s:545    .text:000003a4 PhatDbgDirEntry
+  C:\Temp/ccGekIeF.s:735    .text:00000502 PhatDbgFileInfo
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+fprintf
+fputc
+fputs

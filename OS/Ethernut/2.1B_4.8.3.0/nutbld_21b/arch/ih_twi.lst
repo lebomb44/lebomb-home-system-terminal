@@ -1,0 +1,188 @@
+GAS LISTING C:\Temp/ccd1JrYC.s 			page 1
+
+
+   1               		.file	"ih_twi.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	AvrTwiIrqCtl, @function
+  12               	AvrTwiIrqCtl:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 9C01      		movw r18,r24
+  16 0002 FB01      		movw r30,r22
+  17 0004 4091 7400 		lds r20,116
+  18 0008 4170      		andi r20,lo8(1)
+  19 000a 8091 7400 		lds r24,116
+  20 000e 8E7F      		andi r24,lo8(-2)
+  21 0010 8093 7400 		sts 116,r24
+  22 0014 2031      		cpi r18,16
+  23 0016 3105      		cpc r19,__zero_reg__
+  24 0018 01F0      		breq .L5
+  25 001a 2131      		cpi r18,17
+  26 001c 3105      		cpc r19,__zero_reg__
+  27 001e 04F4      		brge .L9
+  28 0020 2115      		cp r18,__zero_reg__
+  29 0022 3105      		cpc r19,__zero_reg__
+  30 0024 01F0      		breq .L3
+  31 0026 2130      		cpi r18,1
+  32 0028 3105      		cpc r19,__zero_reg__
+  33 002a 01F4      		brne .L2
+  34 002c 00C0      		rjmp .L4
+  35               	.L9:
+  36 002e 2231      		cpi r18,18
+  37 0030 3105      		cpc r19,__zero_reg__
+  38 0032 01F0      		breq .L7
+  39 0034 2231      		cpi r18,18
+  40 0036 3105      		cpc r19,__zero_reg__
+  41 0038 04F0      		brlt .L18
+  42 003a 2032      		cpi r18,32
+  43 003c 3105      		cpc r19,__zero_reg__
+  44 003e 01F0      		breq .L19
+  45               	.L2:
+  46 0040 2FEF      		ldi r18,lo8(-1)
+  47 0042 3FEF      		ldi r19,hi8(-1)
+  48 0044 00C0      		rjmp .L11
+  49               	.L3:
+  50 0046 40E0      		ldi r20,lo8(0)
+  51               	.L4:
+  52 0048 779B      		sbis 46-32,7
+  53 004a 00C0      		rjmp .L17
+  54               	.L12:
+  55 004c 8FB1      		in r24,47-32
+  56 004e 00C0      		rjmp .L17
+  57               	.L5:
+GAS LISTING C:\Temp/ccd1JrYC.s 			page 2
+
+
+  58 0050 8091 7400 		lds r24,116
+  59 0054 87FF      		sbrs r24,7
+  60 0056 00C0      		rjmp .L13
+  61 0058 81E0      		ldi r24,lo8(1)
+  62 005a 90E0      		ldi r25,hi8(1)
+  63 005c 9183      		std Z+1,r25
+  64 005e 8083      		st Z,r24
+  65 0060 00C0      		rjmp .L14
+  66               	.L13:
+  67 0062 1182      		std Z+1,__zero_reg__
+  68 0064 1082      		st Z,__zero_reg__
+  69               	.L14:
+  70 0066 4423      		tst r20
+  71 0068 01F0      		breq .L7
+  72 006a 8081      		ld r24,Z
+  73 006c 9181      		ldd r25,Z+1
+  74 006e 8068      		ori r24,lo8(128)
+  75 0070 9183      		std Z+1,r25
+  76 0072 8083      		st Z,r24
+  77               	.L18:
+  78 0074 20E0      		ldi r18,lo8(0)
+  79 0076 30E0      		ldi r19,hi8(0)
+  80 0078 00C0      		rjmp .L10
+  81               	.L19:
+  82 007a 80E1      		ldi r24,lo8(16)
+  83 007c 90E0      		ldi r25,hi8(16)
+  84 007e 9183      		std Z+1,r25
+  85 0080 8083      		st Z,r24
+  86               	.L17:
+  87 0082 20E0      		ldi r18,lo8(0)
+  88 0084 30E0      		ldi r19,hi8(0)
+  89               	.L11:
+  90 0086 4423      		tst r20
+  91 0088 01F0      		breq .L15
+  92               	.L10:
+  93 008a 8091 7400 		lds r24,116
+  94 008e 8160      		ori r24,lo8(1)
+  95 0090 8093 7400 		sts 116,r24
+  96 0094 00C0      		rjmp .L15
+  97               	.L7:
+  98 0096 20E0      		ldi r18,lo8(0)
+  99 0098 30E0      		ldi r19,hi8(0)
+ 100               	.L15:
+ 101 009a C901      		movw r24,r18
+ 102               	/* epilogue start */
+ 103 009c 0895      		ret
+ 104               		.size	AvrTwiIrqCtl, .-AvrTwiIrqCtl
+ 105               	.global	__vector_33
+ 106               		.type	__vector_33, @function
+ 107               	__vector_33:
+ 108 009e 1F92      		push __zero_reg__
+ 109 00a0 0F92      		push r0
+ 110 00a2 0FB6      		in r0,__SREG__
+ 111 00a4 0F92      		push r0
+ 112 00a6 0BB6      		in r0,91-32
+ 113 00a8 0F92      		push r0
+ 114 00aa 1124      		clr __zero_reg__
+GAS LISTING C:\Temp/ccd1JrYC.s 			page 3
+
+
+ 115 00ac 2F93      		push r18
+ 116 00ae 3F93      		push r19
+ 117 00b0 4F93      		push r20
+ 118 00b2 5F93      		push r21
+ 119 00b4 6F93      		push r22
+ 120 00b6 7F93      		push r23
+ 121 00b8 8F93      		push r24
+ 122 00ba 9F93      		push r25
+ 123 00bc AF93      		push r26
+ 124 00be BF93      		push r27
+ 125 00c0 EF93      		push r30
+ 126 00c2 FF93      		push r31
+ 127               	/* prologue: Signal */
+ 128               	/* frame size = 0 */
+ 129 00c4 80E0      		ldi r24,lo8(sig_2WIRE_SERIAL)
+ 130 00c6 90E0      		ldi r25,hi8(sig_2WIRE_SERIAL)
+ 131 00c8 0E94 0000 		call CallHandler
+ 132               	/* epilogue start */
+ 133 00cc FF91      		pop r31
+ 134 00ce EF91      		pop r30
+ 135 00d0 BF91      		pop r27
+ 136 00d2 AF91      		pop r26
+ 137 00d4 9F91      		pop r25
+ 138 00d6 8F91      		pop r24
+ 139 00d8 7F91      		pop r23
+ 140 00da 6F91      		pop r22
+ 141 00dc 5F91      		pop r21
+ 142 00de 4F91      		pop r20
+ 143 00e0 3F91      		pop r19
+ 144 00e2 2F91      		pop r18
+ 145 00e4 0F90      		pop r0
+ 146 00e6 0BBE      		out 91-32,r0
+ 147 00e8 0F90      		pop r0
+ 148 00ea 0FBE      		out __SREG__,r0
+ 149 00ec 0F90      		pop r0
+ 150 00ee 1F90      		pop __zero_reg__
+ 151 00f0 1895      		reti
+ 152               		.size	__vector_33, .-__vector_33
+ 153               	.global	sig_2WIRE_SERIAL
+ 154               		.data
+ 155               		.type	sig_2WIRE_SERIAL, @object
+ 156               		.size	sig_2WIRE_SERIAL, 6
+ 157               	sig_2WIRE_SERIAL:
+ 158 0000 0000      		.word	0
+ 159 0002 0000      		.word	0
+ 160 0004 0000      		.word	gs(AvrTwiIrqCtl)
+GAS LISTING C:\Temp/ccd1JrYC.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ih_twi.c
+  C:\Temp/ccd1JrYC.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccd1JrYC.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccd1JrYC.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccd1JrYC.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccd1JrYC.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccd1JrYC.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccd1JrYC.s:12     .text:00000000 AvrTwiIrqCtl
+  C:\Temp/ccd1JrYC.s:107    .text:0000009e __vector_33
+  C:\Temp/ccd1JrYC.s:157    .data:00000000 sig_2WIRE_SERIAL
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+CallHandler

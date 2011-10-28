@@ -1,0 +1,236 @@
+GAS LISTING C:\Temp/ccOXRhLP.s 			page 1
+
+
+   1               		.file	"ipcpout.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutIpcpOutput
+  12               		.type	NutIpcpOutput, @function
+  13               	NutIpcpOutput:
+  14 0000 EF92      		push r14
+  15 0002 FF92      		push r15
+  16 0004 0F93      		push r16
+  17 0006 1F93      		push r17
+  18 0008 CF93      		push r28
+  19 000a DF93      		push r29
+  20               	/* prologue: function */
+  21               	/* frame size = 0 */
+  22 000c 7C01      		movw r14,r24
+  23 000e 162F      		mov r17,r22
+  24 0010 042F      		mov r16,r20
+  25 0012 C901      		movw r24,r18
+  26 0014 44E0      		ldi r20,lo8(4)
+  27 0016 50E0      		ldi r21,hi8(4)
+  28 0018 60E2      		ldi r22,lo8(32)
+  29 001a 0E94 0000 		call NutNetBufAlloc
+  30 001e EC01      		movw r28,r24
+  31 0020 0097      		sbiw r24,0
+  32 0022 01F0      		breq .L2
+  33 0024 EF81      		ldd r30,Y+7
+  34 0026 F885      		ldd r31,Y+8
+  35 0028 1083      		st Z,r17
+  36 002a 0183      		std Z+1,r16
+  37 002c 8D85      		ldd r24,Y+13
+  38 002e 9E85      		ldd r25,Y+14
+  39 0030 2985      		ldd r18,Y+9
+  40 0032 3A85      		ldd r19,Y+10
+  41 0034 820F      		add r24,r18
+  42 0036 931F      		adc r25,r19
+  43 0038 2989      		ldd r18,Y+17
+  44 003a 3A89      		ldd r19,Y+18
+  45 003c 820F      		add r24,r18
+  46 003e 931F      		adc r25,r19
+  47               	/* #APP */
+  48               	 ;  295 "../../nut/include/sys/types.h" 1
+  49 0040 082E      		mov __tmp_reg__, r24
+  50 0042 892F      		mov r24, r25
+  51 0044 902D      		mov r25, __tmp_reg__
+  52               		
+  53               	 ;  0 "" 2
+  54               	/* #NOAPP */
+  55 0046 9383      		std Z+3,r25
+  56 0048 8283      		std Z+2,r24
+  57 004a 9E01      		movw r18,r28
+GAS LISTING C:\Temp/ccOXRhLP.s 			page 2
+
+
+  58 004c 40E0      		ldi r20,lo8(0)
+  59 004e 50E0      		ldi r21,hi8(0)
+  60 0050 61E2      		ldi r22,lo8(-32735)
+  61 0052 70E8      		ldi r23,hi8(-32735)
+  62 0054 C701      		movw r24,r14
+  63 0056 0E94 0000 		call NutPppOutput
+  64 005a 892B      		or r24,r25
+  65 005c 01F4      		brne .L2
+  66 005e CE01      		movw r24,r28
+  67 0060 0E94 0000 		call NutNetBufFree
+  68 0064 20E0      		ldi r18,lo8(0)
+  69 0066 30E0      		ldi r19,hi8(0)
+  70 0068 00C0      		rjmp .L3
+  71               	.L2:
+  72 006a 2FEF      		ldi r18,lo8(-1)
+  73 006c 3FEF      		ldi r19,hi8(-1)
+  74               	.L3:
+  75 006e C901      		movw r24,r18
+  76               	/* epilogue start */
+  77 0070 DF91      		pop r29
+  78 0072 CF91      		pop r28
+  79 0074 1F91      		pop r17
+  80 0076 0F91      		pop r16
+  81 0078 FF90      		pop r15
+  82 007a EF90      		pop r14
+  83 007c 0895      		ret
+  84               		.size	NutIpcpOutput, .-NutIpcpOutput
+  85               	.global	IpcpTxConfReq
+  86               		.type	IpcpTxConfReq, @function
+  87               	IpcpTxConfReq:
+  88 007e FF92      		push r15
+  89 0080 0F93      		push r16
+  90 0082 1F93      		push r17
+  91 0084 CF93      		push r28
+  92 0086 DF93      		push r29
+  93               	/* prologue: function */
+  94               	/* frame size = 0 */
+  95 0088 8C01      		movw r16,r24
+  96 008a F62E      		mov r15,r22
+  97 008c DC01      		movw r26,r24
+  98 008e 5196      		adiw r26,17
+  99 0090 CD91      		ld r28,X+
+ 100 0092 DC91      		ld r29,X
+ 101 0094 5297      		sbiw r26,17+1
+ 102 0096 8CAD      		ldd r24,Y+60
+ 103 0098 8650      		subi r24,lo8(-(-6))
+ 104 009a 8330      		cpi r24,lo8(3)
+ 105 009c 00F0      		brlo .L6
+ 106 009e 1DAE      		std Y+61,__zero_reg__
+ 107               	.L6:
+ 108 00a0 1D82      		std Y+5,__zero_reg__
+ 109 00a2 8DA9      		ldd r24,Y+53
+ 110 00a4 9EA9      		ldd r25,Y+54
+ 111 00a6 AFA9      		ldd r26,Y+55
+ 112 00a8 B8AD      		ldd r27,Y+56
+ 113 00aa 90FD      		sbrc r25,0
+ 114 00ac 00C0      		rjmp .L7
+GAS LISTING C:\Temp/ccOXRhLP.s 			page 3
+
+
+ 115 00ae 4CE0      		ldi r20,lo8(12)
+ 116 00b0 50E0      		ldi r21,hi8(12)
+ 117 00b2 00C0      		rjmp .L8
+ 118               	.L7:
+ 119 00b4 46E0      		ldi r20,lo8(6)
+ 120 00b6 50E0      		ldi r21,hi8(6)
+ 121               	.L8:
+ 122 00b8 91FD      		sbrc r25,1
+ 123 00ba 00C0      		rjmp .L9
+ 124 00bc 4A5F      		subi r20,lo8(-(6))
+ 125 00be 5F4F      		sbci r21,hi8(-(6))
+ 126               	.L9:
+ 127 00c0 60E8      		ldi r22,lo8(-128)
+ 128 00c2 80E0      		ldi r24,lo8(0)
+ 129 00c4 90E0      		ldi r25,hi8(0)
+ 130 00c6 0E94 0000 		call NutNetBufAlloc
+ 131 00ca 9C01      		movw r18,r24
+ 132 00cc 0097      		sbiw r24,0
+ 133 00ce 01F0      		breq .L13
+ 134 00d0 DC01      		movw r26,r24
+ 135 00d2 1F96      		adiw r26,15
+ 136 00d4 ED91      		ld r30,X+
+ 137 00d6 FC91      		ld r31,X
+ 138 00d8 5097      		sbiw r26,15+1
+ 139 00da 83E0      		ldi r24,lo8(3)
+ 140 00dc 8083      		st Z,r24
+ 141 00de 46E0      		ldi r20,lo8(6)
+ 142 00e0 4183      		std Z+1,r20
+ 143 00e2 89A1      		ldd r24,Y+33
+ 144 00e4 9AA1      		ldd r25,Y+34
+ 145 00e6 ABA1      		ldd r26,Y+35
+ 146 00e8 BCA1      		ldd r27,Y+36
+ 147 00ea 8283      		std Z+2,r24
+ 148 00ec 9383      		std Z+3,r25
+ 149 00ee A483      		std Z+4,r26
+ 150 00f0 B583      		std Z+5,r27
+ 151 00f2 8DA9      		ldd r24,Y+53
+ 152 00f4 9EA9      		ldd r25,Y+54
+ 153 00f6 AFA9      		ldd r26,Y+55
+ 154 00f8 B8AD      		ldd r27,Y+56
+ 155 00fa 90FD      		sbrc r25,0
+ 156 00fc 00C0      		rjmp .L11
+ 157 00fe 3696      		adiw r30,6
+ 158 0100 81E8      		ldi r24,lo8(-127)
+ 159 0102 8083      		st Z,r24
+ 160 0104 4183      		std Z+1,r20
+ 161 0106 8DA5      		ldd r24,Y+45
+ 162 0108 9EA5      		ldd r25,Y+46
+ 163 010a AFA5      		ldd r26,Y+47
+ 164 010c B8A9      		ldd r27,Y+48
+ 165 010e 8283      		std Z+2,r24
+ 166 0110 9383      		std Z+3,r25
+ 167 0112 A483      		std Z+4,r26
+ 168 0114 B583      		std Z+5,r27
+ 169               	.L11:
+ 170 0116 8DA9      		ldd r24,Y+53
+ 171 0118 9EA9      		ldd r25,Y+54
+GAS LISTING C:\Temp/ccOXRhLP.s 			page 4
+
+
+ 172 011a AFA9      		ldd r26,Y+55
+ 173 011c B8AD      		ldd r27,Y+56
+ 174 011e 91FD      		sbrc r25,1
+ 175 0120 00C0      		rjmp .L12
+ 176 0122 8181      		ldd r24,Z+1
+ 177 0124 E80F      		add r30,r24
+ 178 0126 F11D      		adc r31,__zero_reg__
+ 179 0128 83E8      		ldi r24,lo8(-125)
+ 180 012a 8083      		st Z,r24
+ 181 012c 86E0      		ldi r24,lo8(6)
+ 182 012e 8183      		std Z+1,r24
+ 183 0130 89A9      		ldd r24,Y+49
+ 184 0132 9AA9      		ldd r25,Y+50
+ 185 0134 ABA9      		ldd r26,Y+51
+ 186 0136 BCA9      		ldd r27,Y+52
+ 187 0138 8283      		std Z+2,r24
+ 188 013a 9383      		std Z+3,r25
+ 189 013c A483      		std Z+4,r26
+ 190 013e B583      		std Z+5,r27
+ 191               	.L12:
+ 192 0140 4F2D      		mov r20,r15
+ 193 0142 61E0      		ldi r22,lo8(1)
+ 194 0144 C801      		movw r24,r16
+ 195 0146 0E94 0000 		call NutIpcpOutput
+ 196               	.L13:
+ 197               	/* epilogue start */
+ 198 014a DF91      		pop r29
+ 199 014c CF91      		pop r28
+ 200 014e 1F91      		pop r17
+ 201 0150 0F91      		pop r16
+ 202 0152 FF90      		pop r15
+ 203 0154 0895      		ret
+ 204               		.size	IpcpTxConfReq, .-IpcpTxConfReq
+GAS LISTING C:\Temp/ccOXRhLP.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ipcpout.c
+  C:\Temp/ccOXRhLP.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccOXRhLP.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccOXRhLP.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccOXRhLP.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccOXRhLP.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccOXRhLP.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccOXRhLP.s:13     .text:00000000 NutIpcpOutput
+  C:\Temp/ccOXRhLP.s:87     .text:0000007e IpcpTxConfReq
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutNetBufAlloc
+NutPppOutput
+NutNetBufFree

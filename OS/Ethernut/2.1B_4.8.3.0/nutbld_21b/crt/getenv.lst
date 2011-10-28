@@ -1,0 +1,99 @@
+GAS LISTING C:\Temp/cct1wSHJ.s 			page 1
+
+
+   1               		.file	"getenv.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	nextenv
+  12               		.type	nextenv, @function
+  13               	nextenv:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 FC01      		movw r30,r24
+  17 0002 0097      		sbiw r24,0
+  18 0004 01F0      		breq .L2
+  19 0006 8081      		ld r24,Z
+  20 0008 8823      		tst r24
+  21 000a 01F0      		breq .L2
+  22 000c CF01      		movw r24,r30
+  23 000e 0E94 0000 		call findenv
+  24 0012 FC01      		movw r30,r24
+  25 0014 0097      		sbiw r24,0
+  26 0016 01F0      		breq .L3
+  27 0018 0190      		ld __tmp_reg__,Z+
+  28 001a F081      		ld r31,Z
+  29 001c E02D      		mov r30,__tmp_reg__
+  30 001e 00C0      		rjmp .L8
+  31               	.L2:
+  32 0020 E091 0000 		lds r30,nut_environ
+  33 0024 F091 0000 		lds r31,(nut_environ)+1
+  34               	.L8:
+  35 0028 3097      		sbiw r30,0
+  36 002a 01F0      		breq .L3
+  37 002c 2481      		ldd r18,Z+4
+  38 002e 3581      		ldd r19,Z+5
+  39 0030 00C0      		rjmp .L4
+  40               	.L3:
+  41 0032 20E0      		ldi r18,lo8(0)
+  42 0034 30E0      		ldi r19,hi8(0)
+  43               	.L4:
+  44 0036 C901      		movw r24,r18
+  45               	/* epilogue start */
+  46 0038 0895      		ret
+  47               		.size	nextenv, .-nextenv
+  48               	.global	getenv
+  49               		.type	getenv, @function
+  50               	getenv:
+  51               	/* prologue: function */
+  52               	/* frame size = 0 */
+  53 003a 0E94 0000 		call findenv
+  54 003e FC01      		movw r30,r24
+  55 0040 0097      		sbiw r24,0
+  56 0042 01F4      		brne .L10
+  57 0044 20E0      		ldi r18,lo8(0)
+GAS LISTING C:\Temp/cct1wSHJ.s 			page 2
+
+
+  58 0046 30E0      		ldi r19,hi8(0)
+  59 0048 00C0      		rjmp .L11
+  60               	.L10:
+  61 004a 2681      		ldd r18,Z+6
+  62 004c 3781      		ldd r19,Z+7
+  63 004e 2115      		cp r18,__zero_reg__
+  64 0050 3105      		cpc r19,__zero_reg__
+  65 0052 01F4      		brne .L11
+  66 0054 20E0      		ldi r18,lo8(empty_envval)
+  67 0056 30E0      		ldi r19,hi8(empty_envval)
+  68               	.L11:
+  69 0058 C901      		movw r24,r18
+  70               	/* epilogue start */
+  71 005a 0895      		ret
+  72               		.size	getenv, .-getenv
+  73               		.lcomm empty_envval,1
+GAS LISTING C:\Temp/cct1wSHJ.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 getenv.c
+  C:\Temp/cct1wSHJ.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cct1wSHJ.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cct1wSHJ.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cct1wSHJ.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cct1wSHJ.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cct1wSHJ.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cct1wSHJ.s:13     .text:00000000 nextenv
+  C:\Temp/cct1wSHJ.s:50     .text:0000003a getenv
+                             .bss:00000000 empty_envval
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+findenv
+nut_environ

@@ -1,0 +1,851 @@
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 1
+
+
+   1               		.file	"phatvol.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	PhatClusterSector
+  12               		.type	PhatClusterSector, @function
+  13               	PhatClusterSector:
+  14 0000 EF92      		push r14
+  15 0002 FF92      		push r15
+  16 0004 0F93      		push r16
+  17 0006 1F93      		push r17
+  18 0008 CF93      		push r28
+  19 000a DF93      		push r29
+  20               	/* prologue: function */
+  21               	/* frame size = 0 */
+  22 000c DC01      		movw r26,r24
+  23 000e 7A01      		movw r14,r20
+  24 0010 8B01      		movw r16,r22
+  25 0012 1296      		adiw r26,2
+  26 0014 ED91      		ld r30,X+
+  27 0016 FC91      		ld r31,X
+  28 0018 1397      		sbiw r26,2+1
+  29 001a C189      		ldd r28,Z+17
+  30 001c D289      		ldd r29,Z+18
+  31 001e 0E94 0000 		call IsFixedRootDir
+  32 0022 892B      		or r24,r25
+  33 0024 01F0      		breq .L2
+  34 0026 28A5      		ldd r18,Y+40
+  35 0028 39A5      		ldd r19,Y+41
+  36 002a 4AA5      		ldd r20,Y+42
+  37 002c 5BA5      		ldd r21,Y+43
+  38 002e 00C0      		rjmp .L3
+  39               	.L2:
+  40 0030 82E0      		ldi r24,lo8(2)
+  41 0032 E816      		cp r14,r24
+  42 0034 F104      		cpc r15,__zero_reg__
+  43 0036 0105      		cpc r16,__zero_reg__
+  44 0038 1105      		cpc r17,__zero_reg__
+  45 003a 00F0      		brlo .L4
+  46 003c 8EEF      		ldi r24,lo8(-2)
+  47 003e 9FEF      		ldi r25,hi8(-2)
+  48 0040 AFEF      		ldi r26,hlo8(-2)
+  49 0042 BFEF      		ldi r27,hhi8(-2)
+  50 0044 E80E      		add r14,r24
+  51 0046 F91E      		adc r15,r25
+  52 0048 0A1F      		adc r16,r26
+  53 004a 1B1F      		adc r17,r27
+  54               	.L4:
+  55 004c 288D      		ldd r18,Y+24
+  56 004e 398D      		ldd r19,Y+25
+  57 0050 40E0      		ldi r20,lo8(0)
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 2
+
+
+  58 0052 50E0      		ldi r21,hi8(0)
+  59 0054 C801      		movw r24,r16
+  60 0056 B701      		movw r22,r14
+  61 0058 0E94 0000 		call __mulsi3
+  62 005c 9B01      		movw r18,r22
+  63 005e AC01      		movw r20,r24
+  64 0060 8CA9      		ldd r24,Y+52
+  65 0062 9DA9      		ldd r25,Y+53
+  66 0064 AEA9      		ldd r26,Y+54
+  67 0066 BFA9      		ldd r27,Y+55
+  68 0068 280F      		add r18,r24
+  69 006a 391F      		adc r19,r25
+  70 006c 4A1F      		adc r20,r26
+  71 006e 5B1F      		adc r21,r27
+  72               	.L3:
+  73 0070 B901      		movw r22,r18
+  74 0072 CA01      		movw r24,r20
+  75               	/* epilogue start */
+  76 0074 DF91      		pop r29
+  77 0076 CF91      		pop r28
+  78 0078 1F91      		pop r17
+  79 007a 0F91      		pop r16
+  80 007c FF90      		pop r15
+  81 007e EF90      		pop r14
+  82 0080 0895      		ret
+  83               		.size	PhatClusterSector, .-PhatClusterSector
+  84               	.global	PhatVolUnmount
+  85               		.type	PhatVolUnmount, @function
+  86               	PhatVolUnmount:
+  87               	/* prologue: function */
+  88               	/* frame size = 0 */
+  89 0082 FC01      		movw r30,r24
+  90 0084 8189      		ldd r24,Z+17
+  91 0086 9289      		ldd r25,Z+18
+  92 0088 0097      		sbiw r24,0
+  93 008a 01F0      		breq .L7
+  94 008c 0E94 0000 		call free
+  95               	.L7:
+  96 0090 80E0      		ldi r24,lo8(0)
+  97 0092 90E0      		ldi r25,hi8(0)
+  98               	/* epilogue start */
+  99 0094 0895      		ret
+ 100               		.size	PhatVolUnmount, .-PhatVolUnmount
+ 101               	.global	PhatVolMount
+ 102               		.type	PhatVolMount, @function
+ 103               	PhatVolMount:
+ 104 0096 2F92      		push r2
+ 105 0098 3F92      		push r3
+ 106 009a 4F92      		push r4
+ 107 009c 5F92      		push r5
+ 108 009e 6F92      		push r6
+ 109 00a0 7F92      		push r7
+ 110 00a2 8F92      		push r8
+ 111 00a4 9F92      		push r9
+ 112 00a6 AF92      		push r10
+ 113 00a8 BF92      		push r11
+ 114 00aa CF92      		push r12
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 3
+
+
+ 115 00ac DF92      		push r13
+ 116 00ae EF92      		push r14
+ 117 00b0 FF92      		push r15
+ 118 00b2 0F93      		push r16
+ 119 00b4 1F93      		push r17
+ 120 00b6 DF93      		push r29
+ 121 00b8 CF93      		push r28
+ 122 00ba CDB7      		in r28,__SP_L__
+ 123 00bc DEB7      		in r29,__SP_H__
+ 124 00be 6097      		sbiw r28,16
+ 125 00c0 0FB6      		in __tmp_reg__,__SREG__
+ 126 00c2 F894      		cli
+ 127 00c4 DEBF      		out __SP_H__,r29
+ 128 00c6 0FBE      		out __SREG__,__tmp_reg__
+ 129 00c8 CDBF      		out __SP_L__,r28
+ 130               	/* prologue: function */
+ 131               	/* frame size = 16 */
+ 132 00ca 2C01      		movw r4,r24
+ 133 00cc 6B01      		movw r12,r22
+ 134 00ce 142F      		mov r17,r20
+ 135 00d0 DB01      		movw r26,r22
+ 136 00d2 1296      		adiw r26,2
+ 137 00d4 ED90      		ld r14,X+
+ 138 00d6 FC90      		ld r15,X
+ 139 00d8 1397      		sbiw r26,2+1
+ 140 00da 88E3      		ldi r24,lo8(56)
+ 141 00dc 90E0      		ldi r25,hi8(56)
+ 142 00de 0E94 0000 		call malloc
+ 143 00e2 FC01      		movw r30,r24
+ 144 00e4 D201      		movw r26,r4
+ 145 00e6 5296      		adiw r26,17+1
+ 146 00e8 9C93      		st X,r25
+ 147 00ea 8E93      		st -X,r24
+ 148 00ec 5197      		sbiw r26,17
+ 149 00ee 0097      		sbiw r24,0
+ 150 00f0 01F0      		breq .L53
+ 151               	.L10:
+ 152 00f2 88E3      		ldi r24,lo8(56)
+ 153 00f4 DF01      		movw r26,r30
+ 154 00f6 1D92      		st X+,__zero_reg__
+ 155 00f8 8A95      	        dec r24
+ 156 00fa 01F4      		brne .-6
+ 157 00fc 8E2E      		mov r8,r30
+ 158 00fe 992E      		mov r9,r25
+ 159 0100 1630      		cpi r17,lo8(6)
+ 160 0102 01F0      		breq .L14
+ 161 0104 1730      		cpi r17,lo8(7)
+ 162 0106 00F4      		brsh .L16
+ 163 0108 1130      		cpi r17,lo8(1)
+ 164 010a 01F0      		breq .L13
+ 165 010c 1430      		cpi r17,lo8(4)
+ 166 010e 01F4      		brne .L12
+ 167 0110 00C0      		rjmp .L14
+ 168               	.L16:
+ 169 0112 1B30      		cpi r17,lo8(11)
+ 170 0114 00F0      		brlo .L12
+ 171 0116 1D30      		cpi r17,lo8(13)
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 4
+
+
+ 172 0118 00F0      		brlo .L15
+ 173 011a 1E30      		cpi r17,lo8(14)
+ 174 011c 01F4      		brne .L12
+ 175 011e 00C0      		rjmp .L14
+ 176               	.L15:
+ 177 0120 80E2      		ldi r24,lo8(32)
+ 178 0122 90E0      		ldi r25,hi8(32)
+ 179 0124 00C0      		rjmp .L50
+ 180               	.L14:
+ 181 0126 80E1      		ldi r24,lo8(16)
+ 182 0128 90E0      		ldi r25,hi8(16)
+ 183 012a D401      		movw r26,r8
+ 184 012c 8D93      		st X+,r24
+ 185 012e 9C93      		st X,r25
+ 186 0130 00C0      		rjmp .L12
+ 187               	.L13:
+ 188 0132 8CE0      		ldi r24,lo8(12)
+ 189 0134 90E0      		ldi r25,hi8(12)
+ 190               	.L50:
+ 191 0136 F401      		movw r30,r8
+ 192 0138 9183      		std Z+1,r25
+ 193 013a 8083      		st Z,r24
+ 194               	.L12:
+ 195 013c DE82      		std Y+6,r13
+ 196 013e CD82      		std Y+5,r12
+ 197 0140 D701      		movw r26,r14
+ 198 0142 5596      		adiw r26,21
+ 199 0144 ED91      		ld r30,X+
+ 200 0146 FC91      		ld r31,X
+ 201 0148 5697      		sbiw r26,21+1
+ 202 014a AE01      		movw r20,r28
+ 203 014c 4B5F      		subi r20,lo8(-(5))
+ 204 014e 5F4F      		sbci r21,hi8(-(5))
+ 205 0150 62E0      		ldi r22,lo8(4610)
+ 206 0152 72E1      		ldi r23,hi8(4610)
+ 207 0154 C701      		movw r24,r14
+ 208 0156 0995      		icall
+ 209 0158 892B      		or r24,r25
+ 210 015a 01F0      		breq .L17
+ 211 015c C401      		movw r24,r8
+ 212 015e 0E94 0000 		call free
+ 213               	.L54:
+ 214 0162 83E1      		ldi r24,lo8(19)
+ 215 0164 90E0      		ldi r25,hi8(19)
+ 216 0166 9093 0000 		sts (errno)+1,r25
+ 217 016a 8093 0000 		sts errno,r24
+ 218               	.L53:
+ 219 016e 2FEF      		ldi r18,lo8(-1)
+ 220 0170 3FEF      		ldi r19,hi8(-1)
+ 221 0172 00C0      		rjmp .L11
+ 222               	.L17:
+ 223 0174 2F85      		ldd r18,Y+15
+ 224 0176 3889      		ldd r19,Y+16
+ 225 0178 F401      		movw r30,r8
+ 226 017a 3387      		std Z+11,r19
+ 227 017c 2287      		std Z+10,r18
+ 228 017e 40E0      		ldi r20,lo8(0)
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 5
+
+
+ 229 0180 50E0      		ldi r21,hi8(0)
+ 230 0182 60E0      		ldi r22,hlo8(0)
+ 231 0184 70E0      		ldi r23,hhi8(0)
+ 232 0186 C601      		movw r24,r12
+ 233 0188 0E94 0000 		call PhatSectorRead
+ 234 018c 892B      		or r24,r25
+ 235 018e 01F0      		breq .L18
+ 236 0190 C201      		movw r24,r4
+ 237 0192 0E94 0000 		call PhatVolUnmount
+ 238 0196 00C0      		rjmp .L53
+ 239               	.L18:
+ 240 0198 D401      		movw r26,r8
+ 241 019a 1C96      		adiw r26,12
+ 242 019c 1D92      		st X+,__zero_reg__
+ 243 019e 1D92      		st X+,__zero_reg__
+ 244 01a0 1D92      		st X+,__zero_reg__
+ 245 01a2 1C92      		st X,__zero_reg__
+ 246 01a4 1F97      		sbiw r26,12+3
+ 247 01a6 1A96      		adiw r26,10
+ 248 01a8 0D91      		ld r16,X+
+ 249 01aa 1C91      		ld r17,X
+ 250 01ac 1B97      		sbiw r26,10+1
+ 251 01ae 8D91      		ld r24,X+
+ 252 01b0 9C91      		ld r25,X
+ 253 01b2 1197      		sbiw r26,1
+ 254 01b4 892B      		or r24,r25
+ 255 01b6 01F4      		brne .L19
+ 256 01b8 F801      		movw r30,r16
+ 257 01ba 8189      		ldd r24,Z+17
+ 258 01bc 9289      		ldd r25,Z+18
+ 259 01be 892B      		or r24,r25
+ 260 01c0 01F4      		brne .L19
+ 261 01c2 80E2      		ldi r24,lo8(32)
+ 262 01c4 90E0      		ldi r25,hi8(32)
+ 263 01c6 8D93      		st X+,r24
+ 264 01c8 9C93      		st X,r25
+ 265               	.L19:
+ 266 01ca D401      		movw r26,r8
+ 267 01cc 8D91      		ld r24,X+
+ 268 01ce 9C91      		ld r25,X
+ 269 01d0 8097      		sbiw r24,32
+ 270 01d2 01F0      		breq .L20
+ 271 01d4 9801      		movw r18,r16
+ 272 01d6 2C5D      		subi r18,lo8(-(36))
+ 273 01d8 3F4F      		sbci r19,hi8(-(36))
+ 274 01da D801      		movw r26,r16
+ 275 01dc A05C      		subi r26,lo8(-(64))
+ 276 01de BF4F      		sbci r27,hi8(-(64))
+ 277 01e0 F901      		movw r30,r18
+ 278 01e2 8AE1      		ldi r24,lo8(26)
+ 279               	.L21:
+ 280 01e4 0190      		ld r0,Z+
+ 281 01e6 0D92      		st X+,r0
+ 282 01e8 8150      		subi r24,lo8(-(-1))
+ 283 01ea 01F4      		brne .L21
+ 284 01ec 8CE1      		ldi r24,lo8(28)
+ 285 01ee F901      		movw r30,r18
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 6
+
+
+ 286 01f0 1192      		st Z+,__zero_reg__
+ 287 01f2 8A95      	        dec r24
+ 288 01f4 01F4      		brne .-6
+ 289               	.L20:
+ 290 01f6 D401      		movw r26,r8
+ 291 01f8 1A96      		adiw r26,10
+ 292 01fa ED91      		ld r30,X+
+ 293 01fc FC91      		ld r31,X
+ 294 01fe 1B97      		sbiw r26,10+1
+ 295 0200 E250      		subi r30,lo8(-(510))
+ 296 0202 FE4F      		sbci r31,hi8(-(510))
+ 297 0204 8081      		ld r24,Z
+ 298 0206 EE5F      		subi r30,lo8(-(-510))
+ 299 0208 F140      		sbci r31,hi8(-(-510))
+ 300 020a 8535      		cpi r24,lo8(85)
+ 301 020c 01F4      		brne .L55
+ 302 020e E150      		subi r30,lo8(-(511))
+ 303 0210 FE4F      		sbci r31,hi8(-(511))
+ 304 0212 8081      		ld r24,Z
+ 305 0214 8A3A      		cpi r24,lo8(-86)
+ 306 0216 01F4      		brne .L55
+ 307               	.L23:
+ 308 0218 F801      		movw r30,r16
+ 309 021a 8589      		ldd r24,Z+21
+ 310 021c 803F      		cpi r24,lo8(-16)
+ 311 021e 01F0      		breq .L24
+ 312 0220 883F      		cpi r24,lo8(-8)
+ 313 0222 00F0      		brlo .L55
+ 314               	.L24:
+ 315 0224 D801      		movw r26,r16
+ 316 0226 1B96      		adiw r26,11
+ 317 0228 8D91      		ld r24,X+
+ 318 022a 9C91      		ld r25,X
+ 319 022c 1C97      		sbiw r26,11+1
+ 320 022e F401      		movw r30,r8
+ 321 0230 978B      		std Z+23,r25
+ 322 0232 868B      		std Z+22,r24
+ 323 0234 F2E0      		ldi r31,hi8(512)
+ 324 0236 8030      		cpi r24,lo8(512)
+ 325 0238 9F07      		cpc r25,r31
+ 326 023a 00F0      		brlo .L55
+ 327 023c 8823      		tst r24
+ 328 023e 01F4      		brne .L55
+ 329               	.L26:
+ 330 0240 D801      		movw r26,r16
+ 331 0242 1D96      		adiw r26,13
+ 332 0244 8C91      		ld r24,X
+ 333 0246 90E0      		ldi r25,lo8(0)
+ 334 0248 F401      		movw r30,r8
+ 335 024a 918F      		std Z+25,r25
+ 336 024c 808F      		std Z+24,r24
+ 337 024e 892B      		or r24,r25
+ 338 0250 01F4      		brne .L27
+ 339               	.L55:
+ 340 0252 C201      		movw r24,r4
+ 341 0254 0E94 0000 		call PhatVolUnmount
+ 342 0258 00C0      		rjmp .L54
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 7
+
+
+ 343               	.L27:
+ 344 025a D801      		movw r26,r16
+ 345 025c 5696      		adiw r26,22
+ 346 025e 8D91      		ld r24,X+
+ 347 0260 9C91      		ld r25,X
+ 348 0262 5797      		sbiw r26,22+1
+ 349 0264 0097      		sbiw r24,0
+ 350 0266 01F0      		breq .L28
+ 351 0268 A0E0      		ldi r26,lo8(0)
+ 352 026a B0E0      		ldi r27,hi8(0)
+ 353 026c 00C0      		rjmp .L51
+ 354               	.L28:
+ 355 026e F801      		movw r30,r16
+ 356 0270 84A1      		ldd r24,Z+36
+ 357 0272 95A1      		ldd r25,Z+37
+ 358 0274 A6A1      		ldd r26,Z+38
+ 359 0276 B7A1      		ldd r27,Z+39
+ 360               	.L51:
+ 361 0278 F401      		movw r30,r8
+ 362 027a 828F      		std Z+26,r24
+ 363 027c 938F      		std Z+27,r25
+ 364 027e A48F      		std Z+28,r26
+ 365 0280 B58F      		std Z+29,r27
+ 366 0282 D801      		movw r26,r16
+ 367 0284 1E96      		adiw r26,14
+ 368 0286 8D91      		ld r24,X+
+ 369 0288 9C91      		ld r25,X
+ 370 028a 1F97      		sbiw r26,14+1
+ 371 028c 9C01      		movw r18,r24
+ 372 028e 40E0      		ldi r20,lo8(0)
+ 373 0290 50E0      		ldi r21,hi8(0)
+ 374 0292 F401      		movw r30,r8
+ 375 0294 268F      		std Z+30,r18
+ 376 0296 378F      		std Z+31,r19
+ 377 0298 40A3      		std Z+32,r20
+ 378 029a 51A3      		std Z+33,r21
+ 379 029c 5096      		adiw r26,16
+ 380 029e 8C91      		ld r24,X
+ 381 02a0 8230      		cpi r24,lo8(2)
+ 382 02a2 00F0      		brlo .L30
+ 383 02a4 828D      		ldd r24,Z+26
+ 384 02a6 938D      		ldd r25,Z+27
+ 385 02a8 A48D      		ldd r26,Z+28
+ 386 02aa B58D      		ldd r27,Z+29
+ 387 02ac 280F      		add r18,r24
+ 388 02ae 391F      		adc r19,r25
+ 389 02b0 4A1F      		adc r20,r26
+ 390 02b2 5B1F      		adc r21,r27
+ 391 02b4 D401      		movw r26,r8
+ 392 02b6 9296      		adiw r26,34
+ 393 02b8 2D93      		st X+,r18
+ 394 02ba 3D93      		st X+,r19
+ 395 02bc 4D93      		st X+,r20
+ 396 02be 5C93      		st X,r21
+ 397 02c0 9597      		sbiw r26,34+3
+ 398               	.L30:
+ 399 02c2 F401      		movw r30,r8
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 8
+
+
+ 400 02c4 6689      		ldd r22,Z+22
+ 401 02c6 7789      		ldd r23,Z+23
+ 402 02c8 CB01      		movw r24,r22
+ 403 02ca 0197      		sbiw r24,1
+ 404 02cc D801      		movw r26,r16
+ 405 02ce 5196      		adiw r26,17
+ 406 02d0 2D91      		ld r18,X+
+ 407 02d2 3C91      		ld r19,X
+ 408 02d4 5297      		sbiw r26,17+1
+ 409 02d6 45E0      		ldi r20,5
+ 410 02d8 220F      	1:	lsl r18
+ 411 02da 331F      		rol r19
+ 412 02dc 4A95      		dec r20
+ 413 02de 01F4      		brne 1b
+ 414 02e0 820F      		add r24,r18
+ 415 02e2 931F      		adc r25,r19
+ 416 02e4 0E94 0000 		call __udivmodhi4
+ 417 02e8 77A3      		std Z+39,r23
+ 418 02ea 66A3      		std Z+38,r22
+ 419 02ec F801      		movw r30,r16
+ 420 02ee 6089      		ldd r22,Z+16
+ 421 02f0 70E0      		ldi r23,lo8(0)
+ 422 02f2 80E0      		ldi r24,lo8(0)
+ 423 02f4 90E0      		ldi r25,hi8(0)
+ 424 02f6 D401      		movw r26,r8
+ 425 02f8 5A96      		adiw r26,26
+ 426 02fa 2D91      		ld r18,X+
+ 427 02fc 3D91      		ld r19,X+
+ 428 02fe 4D91      		ld r20,X+
+ 429 0300 5C91      		ld r21,X
+ 430 0302 5D97      		sbiw r26,26+3
+ 431 0304 0E94 0000 		call __mulsi3
+ 432 0308 F801      		movw r30,r16
+ 433 030a 2685      		ldd r18,Z+14
+ 434 030c 3785      		ldd r19,Z+15
+ 435 030e 40E0      		ldi r20,lo8(0)
+ 436 0310 50E0      		ldi r21,hi8(0)
+ 437 0312 260F      		add r18,r22
+ 438 0314 371F      		adc r19,r23
+ 439 0316 481F      		adc r20,r24
+ 440 0318 591F      		adc r21,r25
+ 441 031a D401      		movw r26,r8
+ 442 031c 9896      		adiw r26,40
+ 443 031e 2D93      		st X+,r18
+ 444 0320 3D93      		st X+,r19
+ 445 0322 4D93      		st X+,r20
+ 446 0324 5C93      		st X,r21
+ 447 0326 9B97      		sbiw r26,40+3
+ 448 0328 8D91      		ld r24,X+
+ 449 032a 9C91      		ld r25,X
+ 450 032c 8097      		sbiw r24,32
+ 451 032e 01F4      		brne .L31
+ 452 0330 84A5      		ldd r24,Z+44
+ 453 0332 95A5      		ldd r25,Z+45
+ 454 0334 A6A5      		ldd r26,Z+46
+ 455 0336 B7A5      		ldd r27,Z+47
+ 456 0338 F401      		movw r30,r8
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 9
+
+
+ 457 033a 84A7      		std Z+44,r24
+ 458 033c 95A7      		std Z+45,r25
+ 459 033e A6A7      		std Z+46,r26
+ 460 0340 B7A7      		std Z+47,r27
+ 461               	.L31:
+ 462 0342 D401      		movw r26,r8
+ 463 0344 9696      		adiw r26,38
+ 464 0346 8D91      		ld r24,X+
+ 465 0348 9C91      		ld r25,X
+ 466 034a 9797      		sbiw r26,38+1
+ 467 034c 9C01      		movw r18,r24
+ 468 034e 40E0      		ldi r20,lo8(0)
+ 469 0350 50E0      		ldi r21,hi8(0)
+ 470 0352 9896      		adiw r26,40
+ 471 0354 8D91      		ld r24,X+
+ 472 0356 9D91      		ld r25,X+
+ 473 0358 0D90      		ld __tmp_reg__,X+
+ 474 035a BC91      		ld r27,X
+ 475 035c A02D      		mov r26,__tmp_reg__
+ 476 035e 280F      		add r18,r24
+ 477 0360 391F      		adc r19,r25
+ 478 0362 4A1F      		adc r20,r26
+ 479 0364 5B1F      		adc r21,r27
+ 480 0366 F401      		movw r30,r8
+ 481 0368 24AB      		std Z+52,r18
+ 482 036a 35AB      		std Z+53,r19
+ 483 036c 46AB      		std Z+54,r20
+ 484 036e 57AB      		std Z+55,r21
+ 485 0370 D801      		movw r26,r16
+ 486 0372 5396      		adiw r26,19
+ 487 0374 8D91      		ld r24,X+
+ 488 0376 9C91      		ld r25,X
+ 489 0378 5497      		sbiw r26,19+1
+ 490 037a 0097      		sbiw r24,0
+ 491 037c 01F0      		breq .L32
+ 492 037e A0E0      		ldi r26,lo8(0)
+ 493 0380 B0E0      		ldi r27,hi8(0)
+ 494 0382 821B      		sub r24,r18
+ 495 0384 930B      		sbc r25,r19
+ 496 0386 A40B      		sbc r26,r20
+ 497 0388 B50B      		sbc r27,r21
+ 498 038a 00C0      		rjmp .L52
+ 499               	.L32:
+ 500 038c F801      		movw r30,r16
+ 501 038e 80A1      		ldd r24,Z+32
+ 502 0390 91A1      		ldd r25,Z+33
+ 503 0392 A2A1      		ldd r26,Z+34
+ 504 0394 B3A1      		ldd r27,Z+35
+ 505 0396 821B      		sub r24,r18
+ 506 0398 930B      		sbc r25,r19
+ 507 039a A40B      		sbc r26,r20
+ 508 039c B50B      		sbc r27,r21
+ 509 039e F401      		movw r30,r8
+ 510               	.L52:
+ 511 03a0 80AB      		std Z+48,r24
+ 512 03a2 91AB      		std Z+49,r25
+ 513 03a4 A2AB      		std Z+50,r26
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 10
+
+
+ 514 03a6 B3AB      		std Z+51,r27
+ 515 03a8 D401      		movw r26,r8
+ 516 03aa 5896      		adiw r26,24
+ 517 03ac 2D91      		ld r18,X+
+ 518 03ae 3C91      		ld r19,X
+ 519 03b0 5997      		sbiw r26,24+1
+ 520 03b2 40E0      		ldi r20,lo8(0)
+ 521 03b4 50E0      		ldi r21,hi8(0)
+ 522 03b6 D096      		adiw r26,48
+ 523 03b8 6D91      		ld r22,X+
+ 524 03ba 7D91      		ld r23,X+
+ 525 03bc 8D91      		ld r24,X+
+ 526 03be 9C91      		ld r25,X
+ 527 03c0 D397      		sbiw r26,48+3
+ 528 03c2 0E94 0000 		call __udivmodsi4
+ 529 03c6 2E5F      		subi r18,lo8(-(2))
+ 530 03c8 3F4F      		sbci r19,hi8(-(2))
+ 531 03ca 4F4F      		sbci r20,hlo8(-(2))
+ 532 03cc 5F4F      		sbci r21,hhi8(-(2))
+ 533 03ce F401      		movw r30,r8
+ 534 03d0 20AB      		std Z+48,r18
+ 535 03d2 31AB      		std Z+49,r19
+ 536 03d4 42AB      		std Z+50,r20
+ 537 03d6 53AB      		std Z+51,r21
+ 538 03d8 8081      		ld r24,Z
+ 539 03da 9181      		ldd r25,Z+1
+ 540 03dc 892B      		or r24,r25
+ 541 03de 01F4      		brne .L34
+ 542 03e0 275F      		subi r18,lo8(4087)
+ 543 03e2 3F40      		sbci r19,hi8(4087)
+ 544 03e4 4040      		sbci r20,hlo8(4087)
+ 545 03e6 5040      		sbci r21,hhi8(4087)
+ 546 03e8 00F0      		brlo .L35
+ 547 03ea 80E1      		ldi r24,lo8(16)
+ 548 03ec 90E0      		ldi r25,hi8(16)
+ 549 03ee D401      		movw r26,r8
+ 550 03f0 8D93      		st X+,r24
+ 551 03f2 9C93      		st X,r25
+ 552 03f4 00C0      		rjmp .L34
+ 553               	.L35:
+ 554 03f6 8CE0      		ldi r24,lo8(12)
+ 555 03f8 90E0      		ldi r25,hi8(12)
+ 556 03fa F401      		movw r30,r8
+ 557 03fc 9183      		std Z+1,r25
+ 558 03fe 8083      		st Z,r24
+ 559               	.L34:
+ 560 0400 D201      		movw r26,r4
+ 561 0402 5096      		adiw r26,15+1
+ 562 0404 DC92      		st X,r13
+ 563 0406 CE92      		st -X,r12
+ 564 0408 1F97      		sbiw r26,15
+ 565 040a C401      		movw r24,r8
+ 566 040c 4296      		adiw r24,18
+ 567 040e 0E94 0000 		call NutEventPost
+ 568 0412 C401      		movw r24,r8
+ 569 0414 4496      		adiw r24,20
+ 570 0416 0E94 0000 		call NutEventPost
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 11
+
+
+ 571 041a F201      		movw r30,r4
+ 572 041c 6188      		ldd r6,Z+17
+ 573 041e 7288      		ldd r7,Z+18
+ 574 0420 D301      		movw r26,r6
+ 575 0422 8D91      		ld r24,X+
+ 576 0424 9C91      		ld r25,X
+ 577 0426 8032      		cpi r24,32
+ 578 0428 9105      		cpc r25,__zero_reg__
+ 579 042a 01F4      		brne .L36
+ 580 042c 22E0      		ldi r18,lo8(2)
+ 581 042e E22E      		mov r14,r18
+ 582 0430 F12C      		mov r15,__zero_reg__
+ 583 0432 012D      		mov r16,__zero_reg__
+ 584 0434 112D      		mov r17,__zero_reg__
+ 585 0436 AA24      		clr r10
+ 586 0438 BB24      		clr r11
+ 587 043a 6501      		movw r12,r10
+ 588 043c 1E01      		movw r2,r28
+ 589 043e 0894      		sec
+ 590 0440 211C      		adc r2,__zero_reg__
+ 591 0442 311C      		adc r3,__zero_reg__
+ 592 0444 00C0      		rjmp .L37
+ 593               	.L40:
+ 594 0446 9101      		movw r18,r2
+ 595 0448 B801      		movw r22,r16
+ 596 044a A701      		movw r20,r14
+ 597 044c C201      		movw r24,r4
+ 598 044e 0E94 0000 		call Phat32GetClusterLink
+ 599 0452 892B      		or r24,r25
+ 600 0454 01F0      		breq .+2
+ 601 0456 00C0      		rjmp .L38
+ 602 0458 8981      		ldd r24,Y+1
+ 603 045a 9A81      		ldd r25,Y+2
+ 604 045c AB81      		ldd r26,Y+3
+ 605 045e BC81      		ldd r27,Y+4
+ 606 0460 0097      		sbiw r24,0
+ 607 0462 A105      		cpc r26,__zero_reg__
+ 608 0464 B105      		cpc r27,__zero_reg__
+ 609 0466 01F4      		brne .L39
+ 610 0468 0894      		sec
+ 611 046a A11C      		adc r10,__zero_reg__
+ 612 046c B11C      		adc r11,__zero_reg__
+ 613 046e C11C      		adc r12,__zero_reg__
+ 614 0470 D11C      		adc r13,__zero_reg__
+ 615               	.L39:
+ 616 0472 0894      		sec
+ 617 0474 E11C      		adc r14,__zero_reg__
+ 618 0476 F11C      		adc r15,__zero_reg__
+ 619 0478 011D      		adc r16,__zero_reg__
+ 620 047a 111D      		adc r17,__zero_reg__
+ 621               	.L37:
+ 622 047c F301      		movw r30,r6
+ 623 047e 80A9      		ldd r24,Z+48
+ 624 0480 91A9      		ldd r25,Z+49
+ 625 0482 A2A9      		ldd r26,Z+50
+ 626 0484 B3A9      		ldd r27,Z+51
+ 627 0486 E816      		cp r14,r24
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 12
+
+
+ 628 0488 F906      		cpc r15,r25
+ 629 048a 0A07      		cpc r16,r26
+ 630 048c 1B07      		cpc r17,r27
+ 631 048e 00F0      		brlo .L40
+ 632 0490 00C0      		rjmp .L38
+ 633               	.L36:
+ 634 0492 4097      		sbiw r24,16
+ 635 0494 01F0      		breq .L41
+ 636 0496 92E0      		ldi r25,lo8(2)
+ 637 0498 E92E      		mov r14,r25
+ 638 049a F12C      		mov r15,__zero_reg__
+ 639 049c 012D      		mov r16,__zero_reg__
+ 640 049e 112D      		mov r17,__zero_reg__
+ 641 04a0 AA24      		clr r10
+ 642 04a2 BB24      		clr r11
+ 643 04a4 6501      		movw r12,r10
+ 644 04a6 1E01      		movw r2,r28
+ 645 04a8 0894      		sec
+ 646 04aa 211C      		adc r2,__zero_reg__
+ 647 04ac 311C      		adc r3,__zero_reg__
+ 648 04ae 00C0      		rjmp .L42
+ 649               	.L41:
+ 650 04b0 82E0      		ldi r24,lo8(2)
+ 651 04b2 E82E      		mov r14,r24
+ 652 04b4 F12C      		mov r15,__zero_reg__
+ 653 04b6 012D      		mov r16,__zero_reg__
+ 654 04b8 112D      		mov r17,__zero_reg__
+ 655 04ba AA24      		clr r10
+ 656 04bc BB24      		clr r11
+ 657 04be 6501      		movw r12,r10
+ 658 04c0 1E01      		movw r2,r28
+ 659 04c2 0894      		sec
+ 660 04c4 211C      		adc r2,__zero_reg__
+ 661 04c6 311C      		adc r3,__zero_reg__
+ 662 04c8 00C0      		rjmp .L43
+ 663               	.L45:
+ 664 04ca 9101      		movw r18,r2
+ 665 04cc B801      		movw r22,r16
+ 666 04ce A701      		movw r20,r14
+ 667 04d0 C201      		movw r24,r4
+ 668 04d2 0E94 0000 		call Phat16GetClusterLink
+ 669 04d6 892B      		or r24,r25
+ 670 04d8 01F0      		breq .+2
+ 671 04da 00C0      		rjmp .L38
+ 672 04dc 8981      		ldd r24,Y+1
+ 673 04de 9A81      		ldd r25,Y+2
+ 674 04e0 AB81      		ldd r26,Y+3
+ 675 04e2 BC81      		ldd r27,Y+4
+ 676 04e4 0097      		sbiw r24,0
+ 677 04e6 A105      		cpc r26,__zero_reg__
+ 678 04e8 B105      		cpc r27,__zero_reg__
+ 679 04ea 01F4      		brne .L44
+ 680 04ec 0894      		sec
+ 681 04ee A11C      		adc r10,__zero_reg__
+ 682 04f0 B11C      		adc r11,__zero_reg__
+ 683 04f2 C11C      		adc r12,__zero_reg__
+ 684 04f4 D11C      		adc r13,__zero_reg__
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 13
+
+
+ 685               	.L44:
+ 686 04f6 0894      		sec
+ 687 04f8 E11C      		adc r14,__zero_reg__
+ 688 04fa F11C      		adc r15,__zero_reg__
+ 689 04fc 011D      		adc r16,__zero_reg__
+ 690 04fe 111D      		adc r17,__zero_reg__
+ 691               	.L43:
+ 692 0500 F301      		movw r30,r6
+ 693 0502 80A9      		ldd r24,Z+48
+ 694 0504 91A9      		ldd r25,Z+49
+ 695 0506 A2A9      		ldd r26,Z+50
+ 696 0508 B3A9      		ldd r27,Z+51
+ 697 050a E816      		cp r14,r24
+ 698 050c F906      		cpc r15,r25
+ 699 050e 0A07      		cpc r16,r26
+ 700 0510 1B07      		cpc r17,r27
+ 701 0512 00F0      		brlo .L45
+ 702 0514 00C0      		rjmp .L38
+ 703               	.L47:
+ 704 0516 9101      		movw r18,r2
+ 705 0518 B801      		movw r22,r16
+ 706 051a A701      		movw r20,r14
+ 707 051c C201      		movw r24,r4
+ 708 051e 0E94 0000 		call Phat12GetClusterLink
+ 709 0522 892B      		or r24,r25
+ 710 0524 01F4      		brne .L38
+ 711 0526 8981      		ldd r24,Y+1
+ 712 0528 9A81      		ldd r25,Y+2
+ 713 052a AB81      		ldd r26,Y+3
+ 714 052c BC81      		ldd r27,Y+4
+ 715 052e 0097      		sbiw r24,0
+ 716 0530 A105      		cpc r26,__zero_reg__
+ 717 0532 B105      		cpc r27,__zero_reg__
+ 718 0534 01F4      		brne .L46
+ 719 0536 0894      		sec
+ 720 0538 A11C      		adc r10,__zero_reg__
+ 721 053a B11C      		adc r11,__zero_reg__
+ 722 053c C11C      		adc r12,__zero_reg__
+ 723 053e D11C      		adc r13,__zero_reg__
+ 724               	.L46:
+ 725 0540 0894      		sec
+ 726 0542 E11C      		adc r14,__zero_reg__
+ 727 0544 F11C      		adc r15,__zero_reg__
+ 728 0546 011D      		adc r16,__zero_reg__
+ 729 0548 111D      		adc r17,__zero_reg__
+ 730               	.L42:
+ 731 054a F301      		movw r30,r6
+ 732 054c 80A9      		ldd r24,Z+48
+ 733 054e 91A9      		ldd r25,Z+49
+ 734 0550 A2A9      		ldd r26,Z+50
+ 735 0552 B3A9      		ldd r27,Z+51
+ 736 0554 E816      		cp r14,r24
+ 737 0556 F906      		cpc r15,r25
+ 738 0558 0A07      		cpc r16,r26
+ 739 055a 1B07      		cpc r17,r27
+ 740 055c 00F0      		brlo .L47
+ 741               	.L38:
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 14
+
+
+ 742 055e D401      		movw r26,r8
+ 743 0560 1296      		adiw r26,2
+ 744 0562 AD92      		st X+,r10
+ 745 0564 BD92      		st X+,r11
+ 746 0566 CD92      		st X+,r12
+ 747 0568 DC92      		st X,r13
+ 748 056a 1597      		sbiw r26,2+3
+ 749 056c 20E0      		ldi r18,lo8(0)
+ 750 056e 30E0      		ldi r19,hi8(0)
+ 751               	.L11:
+ 752 0570 C901      		movw r24,r18
+ 753               	/* epilogue start */
+ 754 0572 6096      		adiw r28,16
+ 755 0574 0FB6      		in __tmp_reg__,__SREG__
+ 756 0576 F894      		cli
+ 757 0578 DEBF      		out __SP_H__,r29
+ 758 057a 0FBE      		out __SREG__,__tmp_reg__
+ 759 057c CDBF      		out __SP_L__,r28
+ 760 057e CF91      		pop r28
+ 761 0580 DF91      		pop r29
+ 762 0582 1F91      		pop r17
+ 763 0584 0F91      		pop r16
+ 764 0586 FF90      		pop r15
+ 765 0588 EF90      		pop r14
+ 766 058a DF90      		pop r13
+ 767 058c CF90      		pop r12
+ 768 058e BF90      		pop r11
+ 769 0590 AF90      		pop r10
+ 770 0592 9F90      		pop r9
+ 771 0594 8F90      		pop r8
+ 772 0596 7F90      		pop r7
+ 773 0598 6F90      		pop r6
+ 774 059a 5F90      		pop r5
+ 775 059c 4F90      		pop r4
+ 776 059e 3F90      		pop r3
+ 777 05a0 2F90      		pop r2
+ 778 05a2 0895      		ret
+ 779               		.size	PhatVolMount, .-PhatVolMount
+GAS LISTING C:\Temp/ccMAwWSd.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 phatvol.c
+  C:\Temp/ccMAwWSd.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccMAwWSd.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccMAwWSd.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccMAwWSd.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccMAwWSd.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccMAwWSd.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccMAwWSd.s:13     .text:00000000 PhatClusterSector
+  C:\Temp/ccMAwWSd.s:86     .text:00000082 PhatVolUnmount
+  C:\Temp/ccMAwWSd.s:103    .text:00000096 PhatVolMount
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+IsFixedRootDir
+__mulsi3
+free
+malloc
+errno
+PhatSectorRead
+__udivmodhi4
+__udivmodsi4
+NutEventPost
+Phat32GetClusterLink
+Phat16GetClusterLink
+Phat12GetClusterLink

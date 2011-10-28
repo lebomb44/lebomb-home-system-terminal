@@ -1,0 +1,72 @@
+GAS LISTING C:\Temp/cct4Jl2B.s 			page 1
+
+
+   1               		.file	"watchdog.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutWatchDogEnable
+  12               		.type	NutWatchDogEnable, @function
+  13               	NutWatchDogEnable:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 0E94 0000 		call AvrWatchDogEnable
+  17               	/* epilogue start */
+  18 0004 0895      		ret
+  19               		.size	NutWatchDogEnable, .-NutWatchDogEnable
+  20               	.global	NutWatchDogDisable
+  21               		.type	NutWatchDogDisable, @function
+  22               	NutWatchDogDisable:
+  23               	/* prologue: function */
+  24               	/* frame size = 0 */
+  25 0006 0E94 0000 		call AvrWatchDogDisable
+  26               	/* epilogue start */
+  27 000a 0895      		ret
+  28               		.size	NutWatchDogDisable, .-NutWatchDogDisable
+  29               	.global	NutWatchDogRestart
+  30               		.type	NutWatchDogRestart, @function
+  31               	NutWatchDogRestart:
+  32               	/* prologue: function */
+  33               	/* frame size = 0 */
+  34 000c 0E94 0000 		call AvrWatchDogRestart
+  35               	/* epilogue start */
+  36 0010 0895      		ret
+  37               		.size	NutWatchDogRestart, .-NutWatchDogRestart
+  38               	.global	NutWatchDogStart
+  39               		.type	NutWatchDogStart, @function
+  40               	NutWatchDogStart:
+  41               	/* prologue: function */
+  42               	/* frame size = 0 */
+  43 0012 0E94 0000 		call AvrWatchDogStart
+  44               	/* epilogue start */
+  45 0016 0895      		ret
+  46               		.size	NutWatchDogStart, .-NutWatchDogStart
+GAS LISTING C:\Temp/cct4Jl2B.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 watchdog.c
+  C:\Temp/cct4Jl2B.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cct4Jl2B.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cct4Jl2B.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cct4Jl2B.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cct4Jl2B.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cct4Jl2B.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cct4Jl2B.s:13     .text:00000000 NutWatchDogEnable
+  C:\Temp/cct4Jl2B.s:22     .text:00000006 NutWatchDogDisable
+  C:\Temp/cct4Jl2B.s:31     .text:0000000c NutWatchDogRestart
+  C:\Temp/cct4Jl2B.s:40     .text:00000012 NutWatchDogStart
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+AvrWatchDogEnable
+AvrWatchDogDisable
+AvrWatchDogRestart
+AvrWatchDogStart

@@ -1,0 +1,99 @@
+GAS LISTING C:\Temp/cc7xG2Fw.s 			page 1
+
+
+   1               		.file	"fmode.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	_fmode
+  12               		.type	_fmode, @function
+  13               	_fmode:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 FC01      		movw r30,r24
+  17 0002 8081      		ld r24,Z
+  18 0004 8237      		cpi r24,lo8(114)
+  19 0006 01F0      		breq .L4
+  20 0008 8737      		cpi r24,lo8(119)
+  21 000a 01F0      		breq .L5
+  22 000c 8136      		cpi r24,lo8(97)
+  23 000e 01F4      		brne .L16
+  24 0010 00C0      		rjmp .L17
+  25               	.L5:
+  26 0012 81E0      		ldi r24,lo8(769)
+  27 0014 93E0      		ldi r25,hi8(769)
+  28 0016 42E0      		ldi r20,lo8(770)
+  29 0018 53E0      		ldi r21,hi8(770)
+  30 001a 00C0      		rjmp .L6
+  31               	.L4:
+  32 001c 80E0      		ldi r24,lo8(0)
+  33 001e 90E0      		ldi r25,hi8(0)
+  34 0020 42E0      		ldi r20,lo8(2)
+  35 0022 50E0      		ldi r21,hi8(2)
+  36 0024 00C0      		rjmp .L6
+  37               	.L17:
+  38 0026 89E0      		ldi r24,lo8(265)
+  39 0028 91E0      		ldi r25,hi8(265)
+  40 002a 4AE0      		ldi r20,lo8(266)
+  41 002c 51E0      		ldi r21,hi8(266)
+  42               	.L6:
+  43 002e 60E0      		ldi r22,lo8(16384)
+  44 0030 70E4      		ldi r23,hi8(16384)
+  45 0032 00C0      		rjmp .L15
+  46               	.L12:
+  47 0034 2B32      		cpi r18,lo8(43)
+  48 0036 01F0      		breq .L10
+  49 0038 2236      		cpi r18,lo8(98)
+  50 003a 01F4      		brne .L16
+  51 003c 60E0      		ldi r22,lo8(-32768)
+  52 003e 70E8      		ldi r23,hi8(-32768)
+  53 0040 00C0      		rjmp .L15
+  54               	.L16:
+  55 0042 86E1      		ldi r24,lo8(22)
+  56 0044 90E0      		ldi r25,hi8(22)
+  57 0046 9093 0000 		sts (errno)+1,r25
+GAS LISTING C:\Temp/cc7xG2Fw.s 			page 2
+
+
+  58 004a 8093 0000 		sts errno,r24
+  59 004e 2FEF      		ldi r18,lo8(-1)
+  60 0050 3FEF      		ldi r19,hi8(-1)
+  61 0052 00C0      		rjmp .L8
+  62               	.L10:
+  63 0054 CA01      		movw r24,r20
+  64               	.L15:
+  65 0056 3196      		adiw r30,1
+  66 0058 2081      		ld r18,Z
+  67 005a 2223      		tst r18
+  68 005c 01F4      		brne .L12
+  69 005e 9B01      		movw r18,r22
+  70 0060 282B      		or r18,r24
+  71 0062 392B      		or r19,r25
+  72               	.L8:
+  73 0064 C901      		movw r24,r18
+  74               	/* epilogue start */
+  75 0066 0895      		ret
+  76               		.size	_fmode, .-_fmode
+GAS LISTING C:\Temp/cc7xG2Fw.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 fmode.c
+  C:\Temp/cc7xG2Fw.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cc7xG2Fw.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cc7xG2Fw.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cc7xG2Fw.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cc7xG2Fw.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cc7xG2Fw.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cc7xG2Fw.s:13     .text:00000000 _fmode
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+errno

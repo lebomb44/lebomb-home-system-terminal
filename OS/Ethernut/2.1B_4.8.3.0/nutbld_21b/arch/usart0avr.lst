@@ -1,0 +1,1474 @@
+GAS LISTING C:\Temp/cciFFDF8.s 			page 1
+
+
+   1               		.file	"usart0avr.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	AvrUsartTxEmpty, @function
+  12               	AvrUsartTxEmpty:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 FC01      		movw r30,r24
+  16 0002 6281      		ldd r22,Z+2
+  17 0004 7381      		ldd r23,Z+3
+  18 0006 2091 0000 		lds r18,flow_control
+  19 000a 422F      		mov r20,r18
+  20 000c 50E0      		ldi r21,lo8(0)
+  21 000e CA01      		movw r24,r20
+  22 0010 8073      		andi r24,lo8(48)
+  23 0012 9070      		andi r25,hi8(48)
+  24 0014 892B      		or r24,r25
+  25 0016 01F0      		breq .L2
+  26 0018 24FF      		sbrs r18,4
+  27 001a 00C0      		rjmp .L3
+  28 001c 83E1      		ldi r24,lo8(19)
+  29 001e 8CB9      		out 44-32,r24
+  30 0020 2064      		ori r18,lo8(64)
+  31 0022 00C0      		rjmp .L14
+  32               	.L3:
+  33 0024 81E1      		ldi r24,lo8(17)
+  34 0026 8CB9      		out 44-32,r24
+  35 0028 2F7B      		andi r18,lo8(-65)
+  36               	.L14:
+  37 002a 2093 0000 		sts flow_control,r18
+  38 002e 8091 0000 		lds r24,flow_control
+  39 0032 8F7C      		andi r24,lo8(-49)
+  40 0034 8093 0000 		sts flow_control,r24
+  41 0038 0895      		ret
+  42               	.L2:
+  43 003a 27FF      		sbrs r18,7
+  44 003c 00C0      		rjmp .L6
+  45 003e 5598      		cbi 42-32,5
+  46 0040 0895      		ret
+  47               	.L6:
+  48 0042 8285      		ldd r24,Z+10
+  49 0044 9385      		ldd r25,Z+11
+  50 0046 892B      		or r24,r25
+  51 0048 01F0      		breq .L7
+  52 004a 8285      		ldd r24,Z+10
+  53 004c 9385      		ldd r25,Z+11
+  54 004e 0197      		sbiw r24,1
+  55 0050 9387      		std Z+11,r25
+  56 0052 8287      		std Z+10,r24
+  57 0054 8091 0000 		lds r24,tx_aframe
+GAS LISTING C:\Temp/cciFFDF8.s 			page 2
+
+
+  58 0058 8823      		tst r24
+  59 005a 01F0      		breq .L8
+  60 005c 509A      		sbi 42-32,0
+  61 005e 00C0      		rjmp .L9
+  62               	.L8:
+  63 0060 5098      		cbi 42-32,0
+  64               	.L9:
+  65 0062 DB01      		movw r26,r22
+  66 0064 8D91      		ld r24,X+
+  67 0066 8CB9      		out 44-32,r24
+  68 0068 8681      		ldd r24,Z+6
+  69 006a 9781      		ldd r25,Z+7
+  70 006c A817      		cp r26,r24
+  71 006e B907      		cpc r27,r25
+  72 0070 01F4      		brne .L10
+  73 0072 A481      		ldd r26,Z+4
+  74 0074 B581      		ldd r27,Z+5
+  75               	.L10:
+  76 0076 B383      		std Z+3,r27
+  77 0078 A283      		std Z+2,r26
+  78 007a 2285      		ldd r18,Z+10
+  79 007c 3385      		ldd r19,Z+11
+  80 007e 8485      		ldd r24,Z+12
+  81 0080 9585      		ldd r25,Z+13
+  82 0082 2817      		cp r18,r24
+  83 0084 3907      		cpc r19,r25
+  84 0086 01F4      		brne .L13
+  85 0088 A089      		ldd r26,Z+16
+  86 008a B189      		ldd r27,Z+17
+  87 008c 1097      		sbiw r26,0
+  88 008e 01F0      		breq .L15
+  89               	.L11:
+  90 0090 8FEF      		ldi r24,hi8(-1)
+  91 0092 AF3F      		cpi r26,lo8(-1)
+  92 0094 B807      		cpc r27,r24
+  93 0096 01F0      		breq .L13
+  94 0098 1496      		adiw r26,4
+  95 009a 8D91      		ld r24,X+
+  96 009c 9C91      		ld r25,X
+  97 009e 1597      		sbiw r26,4+1
+  98 00a0 0196      		adiw r24,1
+  99 00a2 1596      		adiw r26,4+1
+ 100 00a4 9C93      		st X,r25
+ 101 00a6 8E93      		st -X,r24
+ 102 00a8 1497      		sbiw r26,4
+ 103 00aa 0895      		ret
+ 104               	.L7:
+ 105 00ac 5598      		cbi 42-32,5
+ 106 00ae 1386      		std Z+11,__zero_reg__
+ 107 00b0 1286      		std Z+10,__zero_reg__
+ 108 00b2 A089      		ldd r26,Z+16
+ 109 00b4 B189      		ldd r27,Z+17
+ 110 00b6 1097      		sbiw r26,0
+ 111 00b8 01F4      		brne .L12
+ 112               	.L15:
+ 113 00ba 8FEF      		ldi r24,lo8(-1)
+ 114 00bc 9FEF      		ldi r25,hi8(-1)
+GAS LISTING C:\Temp/cciFFDF8.s 			page 3
+
+
+ 115 00be 918B      		std Z+17,r25
+ 116 00c0 808B      		std Z+16,r24
+ 117 00c2 0895      		ret
+ 118               	.L12:
+ 119 00c4 8FEF      		ldi r24,hi8(-1)
+ 120 00c6 AF3F      		cpi r26,lo8(-1)
+ 121 00c8 B807      		cpc r27,r24
+ 122 00ca 01F0      		breq .L13
+ 123 00cc 1496      		adiw r26,4
+ 124 00ce 8D91      		ld r24,X+
+ 125 00d0 9C91      		ld r25,X
+ 126 00d2 1597      		sbiw r26,4+1
+ 127 00d4 0196      		adiw r24,1
+ 128 00d6 1596      		adiw r26,4+1
+ 129 00d8 9C93      		st X,r25
+ 130 00da 8E93      		st -X,r24
+ 131 00dc 1497      		sbiw r26,4
+ 132               	.L13:
+ 133 00de 0895      		ret
+ 134               		.size	AvrUsartTxEmpty, .-AvrUsartTxEmpty
+ 135               		.type	AvrUsartRxComplete, @function
+ 136               	AvrUsartRxComplete:
+ 137 00e0 CF93      		push r28
+ 138 00e2 DF93      		push r29
+ 139               	/* prologue: function */
+ 140               	/* frame size = 0 */
+ 141 00e4 282F      		mov r18,r24
+ 142 00e6 5BB1      		in r21,43-32
+ 143 00e8 8091 0000 		lds r24,rx_errors
+ 144 00ec 582B      		or r21,r24
+ 145 00ee 5093 0000 		sts rx_errors,r21
+ 146 00f2 6CB1      		in r22,44-32
+ 147 00f4 4091 0000 		lds r20,flow_control
+ 148 00f8 4423      		tst r20
+ 149 00fa 01F0      		breq .L17
+ 150 00fc 6331      		cpi r22,lo8(19)
+ 151 00fe 01F4      		brne .L18
+ 152 0100 5598      		cbi 42-32,5
+ 153 0102 4068      		ori r20,lo8(-128)
+ 154 0104 00C0      		rjmp .L28
+ 155               	.L18:
+ 156 0106 6131      		cpi r22,lo8(17)
+ 157 0108 01F4      		brne .L17
+ 158 010a 559A      		sbi 42-32,5
+ 159 010c 4F77      		andi r20,lo8(127)
+ 160               	.L28:
+ 161 010e 4093 0000 		sts flow_control,r20
+ 162 0112 00C0      		rjmp .L26
+ 163               	.L17:
+ 164 0114 A22F      		mov r26,r18
+ 165 0116 B92F      		mov r27,r25
+ 166 0118 1A96      		adiw r26,10
+ 167 011a 2D91      		ld r18,X+
+ 168 011c 3C91      		ld r19,X
+ 169 011e 1B97      		sbiw r26,10+1
+ 170 0120 1896      		adiw r26,8
+ 171 0122 8D91      		ld r24,X+
+GAS LISTING C:\Temp/cciFFDF8.s 			page 4
+
+
+ 172 0124 9C91      		ld r25,X
+ 173 0126 1997      		sbiw r26,8+1
+ 174 0128 2817      		cp r18,r24
+ 175 012a 3907      		cpc r19,r25
+ 176 012c 00F0      		brlo .L20
+ 177 012e 5860      		ori r21,lo8(8)
+ 178 0130 5093 0000 		sts rx_errors,r21
+ 179 0134 00C0      		rjmp .L26
+ 180               	.L20:
+ 181 0136 E901      		movw r28,r18
+ 182 0138 2196      		adiw r28,1
+ 183 013a 232B      		or r18,r19
+ 184 013c 01F4      		brne .L21
+ 185 013e 5096      		adiw r26,16
+ 186 0140 ED91      		ld r30,X+
+ 187 0142 FC91      		ld r31,X
+ 188 0144 5197      		sbiw r26,16+1
+ 189 0146 3097      		sbiw r30,0
+ 190 0148 01F4      		brne .L22
+ 191 014a 8FEF      		ldi r24,lo8(-1)
+ 192 014c 9FEF      		ldi r25,hi8(-1)
+ 193 014e 5196      		adiw r26,16+1
+ 194 0150 9C93      		st X,r25
+ 195 0152 8E93      		st -X,r24
+ 196 0154 5097      		sbiw r26,16
+ 197 0156 00C0      		rjmp .L23
+ 198               	.L22:
+ 199 0158 8FEF      		ldi r24,hi8(-1)
+ 200 015a EF3F      		cpi r30,lo8(-1)
+ 201 015c F807      		cpc r31,r24
+ 202 015e 01F0      		breq .L23
+ 203 0160 8481      		ldd r24,Z+4
+ 204 0162 9581      		ldd r25,Z+5
+ 205 0164 0196      		adiw r24,1
+ 206 0166 9583      		std Z+5,r25
+ 207 0168 8483      		std Z+4,r24
+ 208 016a 00C0      		rjmp .L23
+ 209               	.L21:
+ 210 016c 4423      		tst r20
+ 211 016e 01F0      		breq .L23
+ 212 0170 1E96      		adiw r26,14
+ 213 0172 8D91      		ld r24,X+
+ 214 0174 9C91      		ld r25,X
+ 215 0176 1F97      		sbiw r26,14+1
+ 216 0178 C817      		cp r28,r24
+ 217 017a D907      		cpc r29,r25
+ 218 017c 00F0      		brlo .L23
+ 219 017e 46FD      		sbrc r20,6
+ 220 0180 00C0      		rjmp .L23
+ 221 0182 5D9B      		sbis 43-32,5
+ 222 0184 00C0      		rjmp .L24
+ 223 0186 83E1      		ldi r24,lo8(19)
+ 224 0188 8CB9      		out 44-32,r24
+ 225 018a 4064      		ori r20,lo8(64)
+ 226 018c 4F7D      		andi r20,lo8(-33)
+ 227 018e 00C0      		rjmp .L27
+ 228               	.L24:
+GAS LISTING C:\Temp/cciFFDF8.s 			page 5
+
+
+ 229 0190 4062      		ori r20,lo8(32)
+ 230               	.L27:
+ 231 0192 4093 0000 		sts flow_control,r20
+ 232               	.L23:
+ 233 0196 ED91      		ld r30,X+
+ 234 0198 FC91      		ld r31,X
+ 235 019a 1197      		sbiw r26,1
+ 236 019c 6193      		st Z+,r22
+ 237 019e 1196      		adiw r26,1
+ 238 01a0 FC93      		st X,r31
+ 239 01a2 EE93      		st -X,r30
+ 240 01a4 2D91      		ld r18,X+
+ 241 01a6 3C91      		ld r19,X
+ 242 01a8 1197      		sbiw r26,1
+ 243 01aa 1696      		adiw r26,6
+ 244 01ac 8D91      		ld r24,X+
+ 245 01ae 9C91      		ld r25,X
+ 246 01b0 1797      		sbiw r26,6+1
+ 247 01b2 2817      		cp r18,r24
+ 248 01b4 3907      		cpc r19,r25
+ 249 01b6 01F4      		brne .L25
+ 250 01b8 1496      		adiw r26,4
+ 251 01ba 8D91      		ld r24,X+
+ 252 01bc 9C91      		ld r25,X
+ 253 01be 1597      		sbiw r26,4+1
+ 254 01c0 1196      		adiw r26,1
+ 255 01c2 9C93      		st X,r25
+ 256 01c4 8E93      		st -X,r24
+ 257               	.L25:
+ 258 01c6 1B96      		adiw r26,10+1
+ 259 01c8 DC93      		st X,r29
+ 260 01ca CE93      		st -X,r28
+ 261 01cc 1A97      		sbiw r26,10
+ 262               	.L26:
+ 263               	/* epilogue start */
+ 264 01ce DF91      		pop r29
+ 265 01d0 CF91      		pop r28
+ 266 01d2 0895      		ret
+ 267               		.size	AvrUsartRxComplete, .-AvrUsartRxComplete
+ 268               		.type	AvrUsartGetDataBits, @function
+ 269               	AvrUsartGetDataBits:
+ 270               	/* prologue: function */
+ 271               	/* frame size = 0 */
+ 272 01d4 529B      		sbis 42-32,2
+ 273 01d6 00C0      		rjmp .L30
+ 274 01d8 89E0      		ldi r24,lo8(9)
+ 275 01da 0895      		ret
+ 276               	.L30:
+ 277 01dc 8091 9500 		lds r24,149
+ 278 01e0 82FF      		sbrs r24,2
+ 279 01e2 00C0      		rjmp .L32
+ 280 01e4 8091 9500 		lds r24,149
+ 281 01e8 81FD      		sbrc r24,1
+ 282 01ea 00C0      		rjmp .L33
+ 283 01ec 87E0      		ldi r24,lo8(7)
+ 284 01ee 0895      		ret
+ 285               	.L33:
+GAS LISTING C:\Temp/cciFFDF8.s 			page 6
+
+
+ 286 01f0 88E0      		ldi r24,lo8(8)
+ 287 01f2 0895      		ret
+ 288               	.L32:
+ 289 01f4 8091 9500 		lds r24,149
+ 290 01f8 81FD      		sbrc r24,1
+ 291 01fa 00C0      		rjmp .L34
+ 292 01fc 85E0      		ldi r24,lo8(5)
+ 293 01fe 0895      		ret
+ 294               	.L34:
+ 295 0200 86E0      		ldi r24,lo8(6)
+ 296 0202 0895      		ret
+ 297               		.size	AvrUsartGetDataBits, .-AvrUsartGetDataBits
+ 298               		.type	AvrUsartGetParity, @function
+ 299               	AvrUsartGetParity:
+ 300               	/* prologue: function */
+ 301               	/* frame size = 0 */
+ 302 0204 8091 9500 		lds r24,149
+ 303 0208 85FD      		sbrc r24,5
+ 304 020a 00C0      		rjmp .L37
+ 305 020c 80E0      		ldi r24,lo8(0)
+ 306 020e 0895      		ret
+ 307               	.L37:
+ 308 0210 8091 9500 		lds r24,149
+ 309 0214 84FD      		sbrc r24,4
+ 310 0216 00C0      		rjmp .L39
+ 311 0218 82E0      		ldi r24,lo8(2)
+ 312 021a 0895      		ret
+ 313               	.L39:
+ 314 021c 81E0      		ldi r24,lo8(1)
+ 315 021e 0895      		ret
+ 316               		.size	AvrUsartGetParity, .-AvrUsartGetParity
+ 317               		.type	AvrUsartGetStopBits, @function
+ 318               	AvrUsartGetStopBits:
+ 319               	/* prologue: function */
+ 320               	/* frame size = 0 */
+ 321 0220 8091 9500 		lds r24,149
+ 322 0224 83FD      		sbrc r24,3
+ 323 0226 00C0      		rjmp .L42
+ 324 0228 81E0      		ldi r24,lo8(1)
+ 325 022a 0895      		ret
+ 326               	.L42:
+ 327 022c 82E0      		ldi r24,lo8(2)
+ 328 022e 0895      		ret
+ 329               		.size	AvrUsartGetStopBits, .-AvrUsartGetStopBits
+ 330               		.type	AvrUsartGetStatus, @function
+ 331               	AvrUsartGetStatus:
+ 332               	/* prologue: function */
+ 333               	/* frame size = 0 */
+ 334 0230 8091 0000 		lds r24,rx_errors
+ 335 0234 682F      		mov r22,r24
+ 336 0236 70E0      		ldi r23,lo8(0)
+ 337 0238 CB01      		movw r24,r22
+ 338 023a 24E0      		ldi r18,4
+ 339 023c 9695      	1:	lsr r25
+ 340 023e 8795      		ror r24
+ 341 0240 2A95      		dec r18
+ 342 0242 01F4      		brne 1b
+GAS LISTING C:\Temp/cciFFDF8.s 			page 7
+
+
+ 343 0244 9C01      		movw r18,r24
+ 344 0246 40E0      		ldi r20,lo8(0)
+ 345 0248 50E0      		ldi r21,hi8(0)
+ 346 024a 2170      		andi r18,lo8(1)
+ 347 024c 3070      		andi r19,hi8(1)
+ 348 024e 4070      		andi r20,hlo8(1)
+ 349 0250 5070      		andi r21,hhi8(1)
+ 350 0252 63FD      		sbrc r22,3
+ 351 0254 2260      		ori r18,lo8(2)
+ 352               	.L46:
+ 353 0256 62FD      		sbrc r22,2
+ 354 0258 2460      		ori r18,lo8(4)
+ 355               	.L47:
+ 356 025a 8091 0000 		lds r24,flow_control
+ 357 025e 8823      		tst r24
+ 358 0260 01F0      		breq .L48
+ 359 0262 86FD      		sbrc r24,6
+ 360 0264 4260      		ori r20,hlo8(131072)
+ 361               	.L49:
+ 362 0266 87FD      		sbrc r24,7
+ 363 0268 4860      		ori r20,hlo8(524288)
+ 364               	.L48:
+ 365 026a 41FF      		sbrs r20,1
+ 366 026c 4160      		ori r20,hlo8(65536)
+ 367               	.L50:
+ 368 026e 43FF      		sbrs r20,3
+ 369 0270 4460      		ori r20,hlo8(262144)
+ 370               	.L51:
+ 371 0272 8091 0000 		lds r24,tx_aframe
+ 372 0276 8823      		tst r24
+ 373 0278 01F0      		breq .L52
+ 374 027a CA01      		movw r24,r20
+ 375 027c B901      		movw r22,r18
+ 376 027e 8064      		ori r24,hlo8(4194304)
+ 377 0280 00C0      		rjmp .L53
+ 378               	.L52:
+ 379 0282 CA01      		movw r24,r20
+ 380 0284 B901      		movw r22,r18
+ 381 0286 8068      		ori r24,hlo8(8388608)
+ 382               	.L53:
+ 383 0288 589B      		sbis 43-32,0
+ 384 028a 00C0      		rjmp .L54
+ 385 028c 9B01      		movw r18,r22
+ 386 028e AC01      		movw r20,r24
+ 387 0290 4061      		ori r20,hlo8(1048576)
+ 388 0292 00C0      		rjmp .L55
+ 389               	.L54:
+ 390 0294 9B01      		movw r18,r22
+ 391 0296 AC01      		movw r20,r24
+ 392 0298 4062      		ori r20,hlo8(2097152)
+ 393               	.L55:
+ 394 029a B901      		movw r22,r18
+ 395 029c CA01      		movw r24,r20
+ 396               	/* epilogue start */
+ 397 029e 0895      		ret
+ 398               		.size	AvrUsartGetStatus, .-AvrUsartGetStatus
+ 399               		.type	AvrUsartSetStatus, @function
+GAS LISTING C:\Temp/cciFFDF8.s 			page 8
+
+
+ 400               	AvrUsartSetStatus:
+ 401 02a0 EF92      		push r14
+ 402 02a2 FF92      		push r15
+ 403 02a4 0F93      		push r16
+ 404 02a6 1F93      		push r17
+ 405               	/* prologue: function */
+ 406               	/* frame size = 0 */
+ 407 02a8 7B01      		movw r14,r22
+ 408 02aa 8C01      		movw r16,r24
+ 409 02ac 8091 0000 		lds r24,flow_control
+ 410 02b0 8823      		tst r24
+ 411 02b2 01F0      		breq .L58
+ 412               	/* #APP */
+ 413               	 ;  922 "../../nut/arch/avr/dev/usartavr.c" 1
+ 414 02b4 0FB6      		in  __tmp_reg__, __SREG__
+ 415 02b6 F894      		cli
+ 416 02b8 0F92      		push __tmp_reg__
+ 417               		
+ 418               	 ;  0 "" 2
+ 419               	/* #NOAPP */
+ 420 02ba 00FF      		sbrs r16,0
+ 421 02bc 00C0      		rjmp .L59
+ 422 02be 8F7B      		andi r24,lo8(-65)
+ 423 02c0 00C0      		rjmp .L73
+ 424               	.L59:
+ 425 02c2 01FF      		sbrs r16,1
+ 426 02c4 00C0      		rjmp .L60
+ 427 02c6 8064      		ori r24,lo8(64)
+ 428               	.L73:
+ 429 02c8 8093 0000 		sts flow_control,r24
+ 430               	.L60:
+ 431 02cc 02FF      		sbrs r16,2
+ 432 02ce 00C0      		rjmp .L61
+ 433 02d0 8091 0000 		lds r24,flow_control
+ 434 02d4 8F77      		andi r24,lo8(127)
+ 435 02d6 00C0      		rjmp .L74
+ 436               	.L61:
+ 437 02d8 03FF      		sbrs r16,3
+ 438 02da 00C0      		rjmp .L62
+ 439 02dc 8091 0000 		lds r24,flow_control
+ 440 02e0 8068      		ori r24,lo8(-128)
+ 441               	.L74:
+ 442 02e2 8093 0000 		sts flow_control,r24
+ 443               	.L62:
+ 444               	/* #APP */
+ 445               	 ;  943 "../../nut/arch/avr/dev/usartavr.c" 1
+ 446 02e6 0F90      		pop __tmp_reg__
+ 447 02e8 0FBE      		out __SREG__, __tmp_reg__
+ 448               		
+ 449               	 ;  0 "" 2
+ 450               	/* #NOAPP */
+ 451               	.L58:
+ 452 02ea 06FF      		sbrs r16,6
+ 453 02ec 00C0      		rjmp .L63
+ 454 02ee 81E0      		ldi r24,lo8(1)
+ 455 02f0 8093 0000 		sts tx_aframe,r24
+ 456               	.L63:
+GAS LISTING C:\Temp/cciFFDF8.s 			page 9
+
+
+ 457 02f4 07FF      		sbrs r16,7
+ 458 02f6 00C0      		rjmp .L64
+ 459 02f8 1092 0000 		sts tx_aframe,__zero_reg__
+ 460               	.L64:
+ 461 02fc 04FD      		sbrc r16,4
+ 462 02fe 589A      		sbi 43-32,0
+ 463               	.L65:
+ 464 0300 05FD      		sbrc r16,5
+ 465 0302 5898      		cbi 43-32,0
+ 466               	.L66:
+ 467 0304 C701      		movw r24,r14
+ 468 0306 8170      		andi r24,lo8(1)
+ 469 0308 9070      		andi r25,hi8(1)
+ 470 030a 892B      		or r24,r25
+ 471 030c 01F0      		breq .L67
+ 472 030e 8091 0000 		lds r24,rx_errors
+ 473 0312 8F7E      		andi r24,lo8(-17)
+ 474 0314 8093 0000 		sts rx_errors,r24
+ 475               	.L67:
+ 476 0318 E1FE      		sbrs r14,1
+ 477 031a 00C0      		rjmp .L68
+ 478 031c 8091 0000 		lds r24,rx_errors
+ 479 0320 877F      		andi r24,lo8(-9)
+ 480 0322 8093 0000 		sts rx_errors,r24
+ 481               	.L68:
+ 482 0326 E2FE      		sbrs r14,2
+ 483 0328 00C0      		rjmp .L69
+ 484 032a 8091 0000 		lds r24,rx_errors
+ 485 032e 8B7F      		andi r24,lo8(-5)
+ 486 0330 8093 0000 		sts rx_errors,r24
+ 487               	.L69:
+ 488 0334 0E94 0000 		call AvrUsartGetStatus
+ 489 0338 687F      		andi r22,lo8(-8)
+ 490 033a 6E15      		cp r22,r14
+ 491 033c 7F05      		cpc r23,r15
+ 492 033e 8007      		cpc r24,r16
+ 493 0340 9107      		cpc r25,r17
+ 494 0342 01F4      		brne .L70
+ 495 0344 20E0      		ldi r18,lo8(0)
+ 496 0346 30E0      		ldi r19,hi8(0)
+ 497 0348 00C0      		rjmp .L71
+ 498               	.L70:
+ 499 034a 2FEF      		ldi r18,lo8(-1)
+ 500 034c 3FEF      		ldi r19,hi8(-1)
+ 501               	.L71:
+ 502 034e C901      		movw r24,r18
+ 503               	/* epilogue start */
+ 504 0350 1F91      		pop r17
+ 505 0352 0F91      		pop r16
+ 506 0354 FF90      		pop r15
+ 507 0356 EF90      		pop r14
+ 508 0358 0895      		ret
+ 509               		.size	AvrUsartSetStatus, .-AvrUsartSetStatus
+ 510               		.type	AvrUsartGetClockMode, @function
+ 511               	AvrUsartGetClockMode:
+ 512               	/* prologue: function */
+ 513               	/* frame size = 0 */
+GAS LISTING C:\Temp/cciFFDF8.s 			page 10
+
+
+ 514 035a 8091 9500 		lds r24,149
+ 515 035e 86FF      		sbrs r24,6
+ 516 0360 00C0      		rjmp .L76
+ 517 0362 129B      		sbis 34-32,2
+ 518 0364 00C0      		rjmp .L77
+ 519 0366 93E0      		ldi r25,lo8(3)
+ 520 0368 00C0      		rjmp .L78
+ 521               	.L77:
+ 522 036a 91E0      		ldi r25,lo8(1)
+ 523               	.L78:
+ 524 036c 8091 9500 		lds r24,149
+ 525 0370 80FF      		sbrs r24,0
+ 526 0372 00C0      		rjmp .L79
+ 527 0374 9460      		ori r25,lo8(4)
+ 528 0376 00C0      		rjmp .L79
+ 529               	.L76:
+ 530 0378 599B      		sbis 43-32,1
+ 531 037a 00C0      		rjmp .L80
+ 532 037c 90E2      		ldi r25,lo8(32)
+ 533 037e 00C0      		rjmp .L79
+ 534               	.L80:
+ 535 0380 90E0      		ldi r25,lo8(0)
+ 536               	.L79:
+ 537 0382 892F      		mov r24,r25
+ 538               	/* epilogue start */
+ 539 0384 0895      		ret
+ 540               		.size	AvrUsartGetClockMode, .-AvrUsartGetClockMode
+ 541               		.type	AvrUsartGetFlowControl, @function
+ 542               	AvrUsartGetFlowControl:
+ 543               	/* prologue: function */
+ 544               	/* frame size = 0 */
+ 545 0386 8091 0000 		lds r24,flow_control
+ 546 038a 8823      		tst r24
+ 547 038c 01F4      		brne .L83
+ 548 038e 20E0      		ldi r18,lo8(0)
+ 549 0390 30E0      		ldi r19,hi8(0)
+ 550 0392 40E0      		ldi r20,hlo8(0)
+ 551 0394 50E0      		ldi r21,hhi8(0)
+ 552 0396 00C0      		rjmp .L84
+ 553               	.L83:
+ 554 0398 20E2      		ldi r18,lo8(32)
+ 555 039a 30E0      		ldi r19,hi8(32)
+ 556 039c 40E0      		ldi r20,hlo8(32)
+ 557 039e 50E0      		ldi r21,hhi8(32)
+ 558               	.L84:
+ 559 03a0 B901      		movw r22,r18
+ 560 03a2 CA01      		movw r24,r20
+ 561               	/* epilogue start */
+ 562 03a4 0895      		ret
+ 563               		.size	AvrUsartGetFlowControl, .-AvrUsartGetFlowControl
+ 564               		.type	AvrUsartSetFlowControl, @function
+ 565               	AvrUsartSetFlowControl:
+ 566 03a6 EF92      		push r14
+ 567 03a8 FF92      		push r15
+ 568 03aa 0F93      		push r16
+ 569 03ac 1F93      		push r17
+ 570               	/* prologue: function */
+GAS LISTING C:\Temp/cciFFDF8.s 			page 11
+
+
+ 571               	/* frame size = 0 */
+ 572 03ae 7B01      		movw r14,r22
+ 573 03b0 8C01      		movw r16,r24
+ 574 03b2 65FF      		sbrs r22,5
+ 575 03b4 00C0      		rjmp .L87
+ 576 03b6 8091 0000 		lds r24,flow_control
+ 577 03ba 8823      		tst r24
+ 578 03bc 01F4      		brne .L88
+ 579               	/* #APP */
+ 580               	 ;  1178 "../../nut/arch/avr/dev/usartavr.c" 1
+ 581 03be 0FB6      		in  __tmp_reg__, __SREG__
+ 582 03c0 F894      		cli
+ 583 03c2 0F92      		push __tmp_reg__
+ 584               		
+ 585               	 ;  0 "" 2
+ 586               	/* #NOAPP */
+ 587 03c4 81E4      		ldi r24,lo8(65)
+ 588 03c6 8093 0000 		sts flow_control,r24
+ 589               	/* #APP */
+ 590               	 ;  1180 "../../nut/arch/avr/dev/usartavr.c" 1
+ 591 03ca 0F90      		pop __tmp_reg__
+ 592 03cc 0FBE      		out __SREG__, __tmp_reg__
+ 593               		
+ 594               	 ;  0 "" 2
+ 595               	/* #NOAPP */
+ 596 03ce 00C0      		rjmp .L88
+ 597               	.L87:
+ 598               	/* #APP */
+ 599               	 ;  1183 "../../nut/arch/avr/dev/usartavr.c" 1
+ 600 03d0 0FB6      		in  __tmp_reg__, __SREG__
+ 601 03d2 F894      		cli
+ 602 03d4 0F92      		push __tmp_reg__
+ 603               		
+ 604               	 ;  0 "" 2
+ 605               	/* #NOAPP */
+ 606 03d6 1092 0000 		sts flow_control,__zero_reg__
+ 607               	/* #APP */
+ 608               	 ;  1185 "../../nut/arch/avr/dev/usartavr.c" 1
+ 609 03da 0F90      		pop __tmp_reg__
+ 610 03dc 0FBE      		out __SREG__, __tmp_reg__
+ 611               		
+ 612               	 ;  0 "" 2
+ 613               	/* #NOAPP */
+ 614               	.L88:
+ 615 03de 8091 0000 		lds r24,flow_control
+ 616 03e2 8823      		tst r24
+ 617 03e4 01F4      		brne .L89
+ 618 03e6 20E0      		ldi r18,lo8(0)
+ 619 03e8 30E0      		ldi r19,hi8(0)
+ 620 03ea 40E0      		ldi r20,hlo8(0)
+ 621 03ec 50E0      		ldi r21,hhi8(0)
+ 622 03ee 00C0      		rjmp .L90
+ 623               	.L89:
+ 624 03f0 20E2      		ldi r18,lo8(32)
+ 625 03f2 30E0      		ldi r19,hi8(32)
+ 626 03f4 40E0      		ldi r20,hlo8(32)
+ 627 03f6 50E0      		ldi r21,hhi8(32)
+GAS LISTING C:\Temp/cciFFDF8.s 			page 12
+
+
+ 628               	.L90:
+ 629 03f8 2E15      		cp r18,r14
+ 630 03fa 3F05      		cpc r19,r15
+ 631 03fc 4007      		cpc r20,r16
+ 632 03fe 5107      		cpc r21,r17
+ 633 0400 01F4      		brne .L91
+ 634 0402 20E0      		ldi r18,lo8(0)
+ 635 0404 30E0      		ldi r19,hi8(0)
+ 636 0406 00C0      		rjmp .L92
+ 637               	.L91:
+ 638 0408 2FEF      		ldi r18,lo8(-1)
+ 639 040a 3FEF      		ldi r19,hi8(-1)
+ 640               	.L92:
+ 641 040c C901      		movw r24,r18
+ 642               	/* epilogue start */
+ 643 040e 1F91      		pop r17
+ 644 0410 0F91      		pop r16
+ 645 0412 FF90      		pop r15
+ 646 0414 EF90      		pop r14
+ 647 0416 0895      		ret
+ 648               		.size	AvrUsartSetFlowControl, .-AvrUsartSetFlowControl
+ 649               		.type	AvrUsartTxStart, @function
+ 650               	AvrUsartTxStart:
+ 651               	/* prologue: function */
+ 652               	/* frame size = 0 */
+ 653 0418 559A      		sbi 42-32,5
+ 654               	/* epilogue start */
+ 655 041a 0895      		ret
+ 656               		.size	AvrUsartTxStart, .-AvrUsartTxStart
+ 657               		.type	AvrUsartRxStart, @function
+ 658               	AvrUsartRxStart:
+ 659               	/* prologue: function */
+ 660               	/* frame size = 0 */
+ 661 041c 9091 0000 		lds r25,flow_control
+ 662 0420 9923      		tst r25
+ 663 0422 01F0      		breq .L100
+ 664 0424 96FF      		sbrs r25,6
+ 665 0426 00C0      		rjmp .L100
+ 666               	/* #APP */
+ 667               	 ;  1289 "../../nut/arch/avr/dev/usartavr.c" 1
+ 668 0428 0FB6      		in  __tmp_reg__, __SREG__
+ 669 042a F894      		cli
+ 670 042c 0F92      		push __tmp_reg__
+ 671               		
+ 672               	 ;  0 "" 2
+ 673               	/* #NOAPP */
+ 674 042e 5D9B      		sbis 43-32,5
+ 675 0430 00C0      		rjmp .L98
+ 676 0432 81E1      		ldi r24,lo8(17)
+ 677 0434 8CB9      		out 44-32,r24
+ 678 0436 9F7E      		andi r25,lo8(-17)
+ 679 0438 00C0      		rjmp .L101
+ 680               	.L98:
+ 681 043a 9061      		ori r25,lo8(16)
+ 682               	.L101:
+ 683 043c 9093 0000 		sts flow_control,r25
+ 684 0440 8091 0000 		lds r24,flow_control
+GAS LISTING C:\Temp/cciFFDF8.s 			page 13
+
+
+ 685 0444 8F79      		andi r24,lo8(-97)
+ 686 0446 8093 0000 		sts flow_control,r24
+ 687               	/* #APP */
+ 688               	 ;  1297 "../../nut/arch/avr/dev/usartavr.c" 1
+ 689 044a 0F90      		pop __tmp_reg__
+ 690 044c 0FBE      		out __SREG__, __tmp_reg__
+ 691               		
+ 692               	 ;  0 "" 2
+ 693               	/* #NOAPP */
+ 694               	.L100:
+ 695 044e 0895      		ret
+ 696               		.size	AvrUsartRxStart, .-AvrUsartRxStart
+ 697               		.type	AvrUsartDisable, @function
+ 698               	AvrUsartDisable:
+ 699               	/* prologue: function */
+ 700               	/* frame size = 0 */
+ 701               	/* #APP */
+ 702               	 ;  522 "../../nut/arch/avr/dev/usartavr.c" 1
+ 703 0450 0FB6      		in  __tmp_reg__, __SREG__
+ 704 0452 F894      		cli
+ 705 0454 0F92      		push __tmp_reg__
+ 706               		
+ 707               	 ;  0 "" 2
+ 708               	/* #NOAPP */
+ 709 0456 5798      		cbi 42-32,7
+ 710 0458 5698      		cbi 42-32,6
+ 711 045a 5598      		cbi 42-32,5
+ 712               	/* #APP */
+ 713               	 ;  526 "../../nut/arch/avr/dev/usartavr.c" 1
+ 714 045c 0F90      		pop __tmp_reg__
+ 715 045e 0FBE      		out __SREG__, __tmp_reg__
+ 716               		
+ 717               	 ;  0 "" 2
+ 718               	/* #NOAPP */
+ 719 0460 8AE0      		ldi r24,lo8(10)
+ 720 0462 0E94 0000 		call NutDelay
+ 721 0466 5498      		cbi 42-32,4
+ 722 0468 5398      		cbi 42-32,3
+ 723               	/* epilogue start */
+ 724 046a 0895      		ret
+ 725               		.size	AvrUsartDisable, .-AvrUsartDisable
+ 726               		.type	AvrUsartSetClockMode, @function
+ 727               	AvrUsartSetClockMode:
+ 728 046c 1F93      		push r17
+ 729               	/* prologue: function */
+ 730               	/* frame size = 0 */
+ 731 046e 182F      		mov r17,r24
+ 732 0470 0E94 0000 		call AvrUsartDisable
+ 733 0474 812F      		mov r24,r17
+ 734 0476 10FF      		sbrs r17,0
+ 735 0478 00C0      		rjmp .L105
+ 736 047a 11FF      		sbrs r17,1
+ 737 047c 00C0      		rjmp .L106
+ 738 047e 129A      		sbi 34-32,2
+ 739 0480 00C0      		rjmp .L107
+ 740               	.L106:
+ 741 0482 1298      		cbi 34-32,2
+GAS LISTING C:\Temp/cciFFDF8.s 			page 14
+
+
+ 742               	.L107:
+ 743 0484 82FF      		sbrs r24,2
+ 744 0486 00C0      		rjmp .L108
+ 745 0488 8091 9500 		lds r24,149
+ 746 048c 8160      		ori r24,lo8(1)
+ 747 048e 00C0      		rjmp .L116
+ 748               	.L108:
+ 749 0490 8091 9500 		lds r24,149
+ 750 0494 8E7F      		andi r24,lo8(-2)
+ 751               	.L116:
+ 752 0496 8093 9500 		sts 149,r24
+ 753 049a 5998      		cbi 43-32,1
+ 754 049c 5E9A      		sbi 43-32,6
+ 755 049e 00C0      		rjmp .L110
+ 756               	.L105:
+ 757 04a0 15FF      		sbrs r17,5
+ 758 04a2 00C0      		rjmp .L111
+ 759 04a4 599A      		sbi 43-32,1
+ 760 04a6 00C0      		rjmp .L112
+ 761               	.L111:
+ 762 04a8 5998      		cbi 43-32,1
+ 763               	.L112:
+ 764 04aa 8091 9500 		lds r24,149
+ 765 04ae 8E7F      		andi r24,lo8(-2)
+ 766 04b0 8093 9500 		sts 149,r24
+ 767 04b4 8091 9500 		lds r24,149
+ 768 04b8 8F7B      		andi r24,lo8(-65)
+ 769 04ba 8093 9500 		sts 149,r24
+ 770               	.L110:
+ 771               	/* #APP */
+ 772               	 ;  500 "../../nut/arch/avr/dev/usartavr.c" 1
+ 773 04be 0FB6      		in  __tmp_reg__, __SREG__
+ 774 04c0 F894      		cli
+ 775 04c2 0F92      		push __tmp_reg__
+ 776               		
+ 777               	 ;  0 "" 2
+ 778               	/* #NOAPP */
+ 779 04c4 88EB      		ldi r24,lo8(-72)
+ 780 04c6 8AB9      		out 42-32,r24
+ 781               	/* #APP */
+ 782               	 ;  511 "../../nut/arch/avr/dev/usartavr.c" 1
+ 783 04c8 0F90      		pop __tmp_reg__
+ 784 04ca 0FBE      		out __SREG__, __tmp_reg__
+ 785               		
+ 786               	 ;  0 "" 2
+ 787               	/* #NOAPP */
+ 788 04cc 0E94 0000 		call AvrUsartGetClockMode
+ 789 04d0 8117      		cp r24,r17
+ 790 04d2 01F4      		brne .L113
+ 791 04d4 20E0      		ldi r18,lo8(0)
+ 792 04d6 30E0      		ldi r19,hi8(0)
+ 793 04d8 00C0      		rjmp .L114
+ 794               	.L113:
+ 795 04da 2FEF      		ldi r18,lo8(-1)
+ 796 04dc 3FEF      		ldi r19,hi8(-1)
+ 797               	.L114:
+ 798 04de C901      		movw r24,r18
+GAS LISTING C:\Temp/cciFFDF8.s 			page 15
+
+
+ 799               	/* epilogue start */
+ 800 04e0 1F91      		pop r17
+ 801 04e2 0895      		ret
+ 802               		.size	AvrUsartSetClockMode, .-AvrUsartSetClockMode
+ 803               		.type	AvrUsartSetStopBits, @function
+ 804               	AvrUsartSetStopBits:
+ 805 04e4 1F93      		push r17
+ 806               	/* prologue: function */
+ 807               	/* frame size = 0 */
+ 808 04e6 182F      		mov r17,r24
+ 809 04e8 0E94 0000 		call AvrUsartDisable
+ 810 04ec 1130      		cpi r17,lo8(1)
+ 811 04ee 01F4      		brne .L118
+ 812 04f0 8091 9500 		lds r24,149
+ 813 04f4 877F      		andi r24,lo8(-9)
+ 814 04f6 00C0      		rjmp .L125
+ 815               	.L118:
+ 816 04f8 1230      		cpi r17,lo8(2)
+ 817 04fa 01F4      		brne .L119
+ 818 04fc 8091 9500 		lds r24,149
+ 819 0500 8860      		ori r24,lo8(8)
+ 820               	.L125:
+ 821 0502 8093 9500 		sts 149,r24
+ 822               	.L119:
+ 823               	/* #APP */
+ 824               	 ;  500 "../../nut/arch/avr/dev/usartavr.c" 1
+ 825 0506 0FB6      		in  __tmp_reg__, __SREG__
+ 826 0508 F894      		cli
+ 827 050a 0F92      		push __tmp_reg__
+ 828               		
+ 829               	 ;  0 "" 2
+ 830               	/* #NOAPP */
+ 831 050c 88EB      		ldi r24,lo8(-72)
+ 832 050e 8AB9      		out 42-32,r24
+ 833               	/* #APP */
+ 834               	 ;  511 "../../nut/arch/avr/dev/usartavr.c" 1
+ 835 0510 0F90      		pop __tmp_reg__
+ 836 0512 0FBE      		out __SREG__, __tmp_reg__
+ 837               		
+ 838               	 ;  0 "" 2
+ 839               	/* #NOAPP */
+ 840 0514 8091 9500 		lds r24,149
+ 841 0518 83FD      		sbrc r24,3
+ 842 051a 00C0      		rjmp .L120
+ 843 051c 81E0      		ldi r24,lo8(1)
+ 844 051e 00C0      		rjmp .L121
+ 845               	.L120:
+ 846 0520 82E0      		ldi r24,lo8(2)
+ 847               	.L121:
+ 848 0522 8117      		cp r24,r17
+ 849 0524 01F4      		brne .L122
+ 850 0526 20E0      		ldi r18,lo8(0)
+ 851 0528 30E0      		ldi r19,hi8(0)
+ 852 052a 00C0      		rjmp .L123
+ 853               	.L122:
+ 854 052c 2FEF      		ldi r18,lo8(-1)
+ 855 052e 3FEF      		ldi r19,hi8(-1)
+GAS LISTING C:\Temp/cciFFDF8.s 			page 16
+
+
+ 856               	.L123:
+ 857 0530 C901      		movw r24,r18
+ 858               	/* epilogue start */
+ 859 0532 1F91      		pop r17
+ 860 0534 0895      		ret
+ 861               		.size	AvrUsartSetStopBits, .-AvrUsartSetStopBits
+ 862               		.type	AvrUsartSetParity, @function
+ 863               	AvrUsartSetParity:
+ 864 0536 1F93      		push r17
+ 865               	/* prologue: function */
+ 866               	/* frame size = 0 */
+ 867 0538 182F      		mov r17,r24
+ 868 053a 0E94 0000 		call AvrUsartDisable
+ 869 053e 1130      		cpi r17,lo8(1)
+ 870 0540 01F0      		breq .L129
+ 871 0542 1130      		cpi r17,lo8(1)
+ 872 0544 00F0      		brlo .L128
+ 873 0546 1230      		cpi r17,lo8(2)
+ 874 0548 01F4      		brne .L127
+ 875 054a 00C0      		rjmp .L139
+ 876               	.L128:
+ 877 054c 8091 9500 		lds r24,149
+ 878 0550 8F7E      		andi r24,lo8(-17)
+ 879 0552 8093 9500 		sts 149,r24
+ 880 0556 8091 9500 		lds r24,149
+ 881 055a 8F7D      		andi r24,lo8(-33)
+ 882 055c 00C0      		rjmp .L137
+ 883               	.L129:
+ 884 055e 8091 9500 		lds r24,149
+ 885 0562 8061      		ori r24,lo8(16)
+ 886 0564 00C0      		rjmp .L138
+ 887               	.L139:
+ 888 0566 8091 9500 		lds r24,149
+ 889 056a 8F7E      		andi r24,lo8(-17)
+ 890               	.L138:
+ 891 056c 8093 9500 		sts 149,r24
+ 892 0570 8091 9500 		lds r24,149
+ 893 0574 8062      		ori r24,lo8(32)
+ 894               	.L137:
+ 895 0576 8093 9500 		sts 149,r24
+ 896               	.L127:
+ 897               	/* #APP */
+ 898               	 ;  500 "../../nut/arch/avr/dev/usartavr.c" 1
+ 899 057a 0FB6      		in  __tmp_reg__, __SREG__
+ 900 057c F894      		cli
+ 901 057e 0F92      		push __tmp_reg__
+ 902               		
+ 903               	 ;  0 "" 2
+ 904               	/* #NOAPP */
+ 905 0580 88EB      		ldi r24,lo8(-72)
+ 906 0582 8AB9      		out 42-32,r24
+ 907               	/* #APP */
+ 908               	 ;  511 "../../nut/arch/avr/dev/usartavr.c" 1
+ 909 0584 0F90      		pop __tmp_reg__
+ 910 0586 0FBE      		out __SREG__, __tmp_reg__
+ 911               		
+ 912               	 ;  0 "" 2
+GAS LISTING C:\Temp/cciFFDF8.s 			page 17
+
+
+ 913               	/* #NOAPP */
+ 914 0588 8091 9500 		lds r24,149
+ 915 058c 85FD      		sbrc r24,5
+ 916 058e 00C0      		rjmp .L131
+ 917 0590 80E0      		ldi r24,lo8(0)
+ 918 0592 00C0      		rjmp .L132
+ 919               	.L131:
+ 920 0594 8091 9500 		lds r24,149
+ 921 0598 84FD      		sbrc r24,4
+ 922 059a 00C0      		rjmp .L133
+ 923 059c 82E0      		ldi r24,lo8(2)
+ 924 059e 00C0      		rjmp .L132
+ 925               	.L133:
+ 926 05a0 81E0      		ldi r24,lo8(1)
+ 927               	.L132:
+ 928 05a2 8117      		cp r24,r17
+ 929 05a4 01F4      		brne .L134
+ 930 05a6 20E0      		ldi r18,lo8(0)
+ 931 05a8 30E0      		ldi r19,hi8(0)
+ 932 05aa 00C0      		rjmp .L135
+ 933               	.L134:
+ 934 05ac 2FEF      		ldi r18,lo8(-1)
+ 935 05ae 3FEF      		ldi r19,hi8(-1)
+ 936               	.L135:
+ 937 05b0 C901      		movw r24,r18
+ 938               	/* epilogue start */
+ 939 05b2 1F91      		pop r17
+ 940 05b4 0895      		ret
+ 941               		.size	AvrUsartSetParity, .-AvrUsartSetParity
+ 942               		.type	AvrUsartSetDataBits, @function
+ 943               	AvrUsartSetDataBits:
+ 944 05b6 1F93      		push r17
+ 945               	/* prologue: function */
+ 946               	/* frame size = 0 */
+ 947 05b8 182F      		mov r17,r24
+ 948 05ba 0E94 0000 		call AvrUsartDisable
+ 949 05be 5298      		cbi 42-32,2
+ 950 05c0 8091 9500 		lds r24,149
+ 951 05c4 8D7F      		andi r24,lo8(-3)
+ 952 05c6 8093 9500 		sts 149,r24
+ 953 05ca 8091 9500 		lds r24,149
+ 954 05ce 8B7F      		andi r24,lo8(-5)
+ 955 05d0 8093 9500 		sts 149,r24
+ 956 05d4 1730      		cpi r17,lo8(7)
+ 957 05d6 01F0      		breq .L143
+ 958 05d8 1830      		cpi r17,lo8(8)
+ 959 05da 00F4      		brsh .L146
+ 960 05dc 1630      		cpi r17,lo8(6)
+ 961 05de 01F4      		brne .L141
+ 962 05e0 00C0      		rjmp .L156
+ 963               	.L146:
+ 964 05e2 1830      		cpi r17,lo8(8)
+ 965 05e4 01F0      		breq .L144
+ 966 05e6 1930      		cpi r17,lo8(9)
+ 967 05e8 01F4      		brne .L141
+ 968 05ea 00C0      		rjmp .L157
+ 969               	.L156:
+GAS LISTING C:\Temp/cciFFDF8.s 			page 18
+
+
+ 970 05ec 8091 9500 		lds r24,149
+ 971 05f0 8260      		ori r24,lo8(2)
+ 972 05f2 00C0      		rjmp .L155
+ 973               	.L157:
+ 974 05f4 529A      		sbi 42-32,2
+ 975               	.L144:
+ 976 05f6 8091 9500 		lds r24,149
+ 977 05fa 8260      		ori r24,lo8(2)
+ 978 05fc 8093 9500 		sts 149,r24
+ 979               	.L143:
+ 980 0600 8091 9500 		lds r24,149
+ 981 0604 8460      		ori r24,lo8(4)
+ 982               	.L155:
+ 983 0606 8093 9500 		sts 149,r24
+ 984               	.L141:
+ 985               	/* #APP */
+ 986               	 ;  500 "../../nut/arch/avr/dev/usartavr.c" 1
+ 987 060a 0FB6      		in  __tmp_reg__, __SREG__
+ 988 060c F894      		cli
+ 989 060e 0F92      		push __tmp_reg__
+ 990               		
+ 991               	 ;  0 "" 2
+ 992               	/* #NOAPP */
+ 993 0610 88EB      		ldi r24,lo8(-72)
+ 994 0612 8AB9      		out 42-32,r24
+ 995               	/* #APP */
+ 996               	 ;  511 "../../nut/arch/avr/dev/usartavr.c" 1
+ 997 0614 0F90      		pop __tmp_reg__
+ 998 0616 0FBE      		out __SREG__, __tmp_reg__
+ 999               		
+ 1000               	 ;  0 "" 2
+ 1001               	/* #NOAPP */
+ 1002 0618 529B      		sbis 42-32,2
+ 1003 061a 00C0      		rjmp .L147
+ 1004 061c 89E0      		ldi r24,lo8(9)
+ 1005 061e 00C0      		rjmp .L148
+ 1006               	.L147:
+ 1007 0620 8091 9500 		lds r24,149
+ 1008 0624 82FF      		sbrs r24,2
+ 1009 0626 00C0      		rjmp .L149
+ 1010 0628 8091 9500 		lds r24,149
+ 1011 062c 81FD      		sbrc r24,1
+ 1012 062e 00C0      		rjmp .L150
+ 1013 0630 87E0      		ldi r24,lo8(7)
+ 1014 0632 00C0      		rjmp .L148
+ 1015               	.L150:
+ 1016 0634 88E0      		ldi r24,lo8(8)
+ 1017 0636 00C0      		rjmp .L148
+ 1018               	.L149:
+ 1019 0638 8091 9500 		lds r24,149
+ 1020 063c 81FD      		sbrc r24,1
+ 1021 063e 00C0      		rjmp .L151
+ 1022 0640 85E0      		ldi r24,lo8(5)
+ 1023 0642 00C0      		rjmp .L148
+ 1024               	.L151:
+ 1025 0644 86E0      		ldi r24,lo8(6)
+ 1026               	.L148:
+GAS LISTING C:\Temp/cciFFDF8.s 			page 19
+
+
+ 1027 0646 8117      		cp r24,r17
+ 1028 0648 01F4      		brne .L152
+ 1029 064a 20E0      		ldi r18,lo8(0)
+ 1030 064c 30E0      		ldi r19,hi8(0)
+ 1031 064e 00C0      		rjmp .L153
+ 1032               	.L152:
+ 1033 0650 2FEF      		ldi r18,lo8(-1)
+ 1034 0652 3FEF      		ldi r19,hi8(-1)
+ 1035               	.L153:
+ 1036 0654 C901      		movw r24,r18
+ 1037               	/* epilogue start */
+ 1038 0656 1F91      		pop r17
+ 1039 0658 0895      		ret
+ 1040               		.size	AvrUsartSetDataBits, .-AvrUsartSetDataBits
+ 1041               		.type	AvrUsartGetSpeed, @function
+ 1042               	AvrUsartGetSpeed:
+ 1043 065a 8F92      		push r8
+ 1044 065c 9F92      		push r9
+ 1045 065e AF92      		push r10
+ 1046 0660 BF92      		push r11
+ 1047 0662 CF92      		push r12
+ 1048 0664 DF92      		push r13
+ 1049 0666 EF92      		push r14
+ 1050 0668 FF92      		push r15
+ 1051 066a 0F93      		push r16
+ 1052 066c 1F93      		push r17
+ 1053               	/* prologue: function */
+ 1054               	/* frame size = 0 */
+ 1055 066e 99B0      		in r9,41-32
+ 1056 0670 8090 9000 		lds r8,144
+ 1057 0674 8091 9500 		lds r24,149
+ 1058 0678 86FF      		sbrs r24,6
+ 1059 067a 00C0      		rjmp .L159
+ 1060 067c 52E0      		ldi r21,lo8(2)
+ 1061 067e A52E      		mov r10,r21
+ 1062 0680 B12C      		mov r11,__zero_reg__
+ 1063 0682 C12C      		mov r12,__zero_reg__
+ 1064 0684 D12C      		mov r13,__zero_reg__
+ 1065 0686 00C0      		rjmp .L160
+ 1066               	.L159:
+ 1067 0688 5999      		sbic 43-32,1
+ 1068 068a 00C0      		rjmp .L161
+ 1069 068c 40E1      		ldi r20,lo8(16)
+ 1070 068e A42E      		mov r10,r20
+ 1071 0690 B12C      		mov r11,__zero_reg__
+ 1072 0692 C12C      		mov r12,__zero_reg__
+ 1073 0694 D12C      		mov r13,__zero_reg__
+ 1074 0696 00C0      		rjmp .L160
+ 1075               	.L161:
+ 1076 0698 38E0      		ldi r19,lo8(8)
+ 1077 069a A32E      		mov r10,r19
+ 1078 069c B12C      		mov r11,__zero_reg__
+ 1079 069e C12C      		mov r12,__zero_reg__
+ 1080 06a0 D12C      		mov r13,__zero_reg__
+ 1081               	.L160:
+ 1082 06a2 0E94 0000 		call NutGetCpuClock
+ 1083 06a6 7B01      		movw r14,r22
+GAS LISTING C:\Temp/cciFFDF8.s 			page 20
+
+
+ 1084 06a8 8C01      		movw r16,r24
+ 1085 06aa 892D      		mov r24,r9
+ 1086 06ac 90E0      		ldi r25,lo8(0)
+ 1087 06ae 382D      		mov r19,r8
+ 1088 06b0 20E0      		ldi r18,lo8(0)
+ 1089 06b2 282B      		or r18,r24
+ 1090 06b4 392B      		or r19,r25
+ 1091 06b6 40E0      		ldi r20,lo8(0)
+ 1092 06b8 50E0      		ldi r21,hi8(0)
+ 1093 06ba 2F5F      		subi r18,lo8(-(1))
+ 1094 06bc 3F4F      		sbci r19,hi8(-(1))
+ 1095 06be 4F4F      		sbci r20,hlo8(-(1))
+ 1096 06c0 5F4F      		sbci r21,hhi8(-(1))
+ 1097 06c2 C601      		movw r24,r12
+ 1098 06c4 B501      		movw r22,r10
+ 1099 06c6 0E94 0000 		call __mulsi3
+ 1100 06ca 9B01      		movw r18,r22
+ 1101 06cc AC01      		movw r20,r24
+ 1102 06ce C801      		movw r24,r16
+ 1103 06d0 B701      		movw r22,r14
+ 1104 06d2 0E94 0000 		call __udivmodsi4
+ 1105 06d6 CA01      		movw r24,r20
+ 1106 06d8 B901      		movw r22,r18
+ 1107               	/* epilogue start */
+ 1108 06da 1F91      		pop r17
+ 1109 06dc 0F91      		pop r16
+ 1110 06de FF90      		pop r15
+ 1111 06e0 EF90      		pop r14
+ 1112 06e2 DF90      		pop r13
+ 1113 06e4 CF90      		pop r12
+ 1114 06e6 BF90      		pop r11
+ 1115 06e8 AF90      		pop r10
+ 1116 06ea 9F90      		pop r9
+ 1117 06ec 8F90      		pop r8
+ 1118 06ee 0895      		ret
+ 1119               		.size	AvrUsartGetSpeed, .-AvrUsartGetSpeed
+ 1120               		.type	AvrUsartSetSpeed, @function
+ 1121               	AvrUsartSetSpeed:
+ 1122 06f0 EF92      		push r14
+ 1123 06f2 FF92      		push r15
+ 1124 06f4 0F93      		push r16
+ 1125 06f6 1F93      		push r17
+ 1126               	/* prologue: function */
+ 1127               	/* frame size = 0 */
+ 1128 06f8 7B01      		movw r14,r22
+ 1129 06fa 8C01      		movw r16,r24
+ 1130 06fc 0E94 0000 		call AvrUsartDisable
+ 1131 0700 8091 9500 		lds r24,149
+ 1132 0704 86FD      		sbrc r24,6
+ 1133 0706 00C0      		rjmp .L164
+ 1134 0708 599B      		sbis 43-32,1
+ 1135 070a 00C0      		rjmp .L165
+ 1136 070c E2E0      		ldi r30,2
+ 1137 070e EE0C      	1:	lsl r14
+ 1138 0710 FF1C      		rol r15
+ 1139 0712 001F      		rol r16
+ 1140 0714 111F      		rol r17
+GAS LISTING C:\Temp/cciFFDF8.s 			page 21
+
+
+ 1141 0716 EA95      		dec r30
+ 1142 0718 01F4      		brne 1b
+ 1143 071a 00C0      		rjmp .L164
+ 1144               	.L165:
+ 1145 071c 73E0      		ldi r23,3
+ 1146 071e EE0C      	1:	lsl r14
+ 1147 0720 FF1C      		rol r15
+ 1148 0722 001F      		rol r16
+ 1149 0724 111F      		rol r17
+ 1150 0726 7A95      		dec r23
+ 1151 0728 01F4      		brne 1b
+ 1152               	.L164:
+ 1153 072a 0E94 0000 		call NutGetCpuClock
+ 1154 072e A801      		movw r20,r16
+ 1155 0730 9701      		movw r18,r14
+ 1156 0732 0E94 0000 		call __udivmodsi4
+ 1157 0736 2F5F      		subi r18,lo8(-(1))
+ 1158 0738 3F4F      		sbci r19,hi8(-(1))
+ 1159 073a 4F4F      		sbci r20,hlo8(-(1))
+ 1160 073c 5F4F      		sbci r21,hhi8(-(1))
+ 1161 073e 5695      		lsr r21
+ 1162 0740 4795      		ror r20
+ 1163 0742 3795      		ror r19
+ 1164 0744 2795      		ror r18
+ 1165 0746 2150      		subi r18,lo8(-(-1))
+ 1166 0748 3040      		sbci r19,hi8(-(-1))
+ 1167 074a 29B9      		out 41-32,r18
+ 1168 074c 3093 9000 		sts 144,r19
+ 1169               	/* #APP */
+ 1170               	 ;  500 "../../nut/arch/avr/dev/usartavr.c" 1
+ 1171 0750 0FB6      		in  __tmp_reg__, __SREG__
+ 1172 0752 F894      		cli
+ 1173 0754 0F92      		push __tmp_reg__
+ 1174               		
+ 1175               	 ;  0 "" 2
+ 1176               	/* #NOAPP */
+ 1177 0756 88EB      		ldi r24,lo8(-72)
+ 1178 0758 8AB9      		out 42-32,r24
+ 1179               	/* #APP */
+ 1180               	 ;  511 "../../nut/arch/avr/dev/usartavr.c" 1
+ 1181 075a 0F90      		pop __tmp_reg__
+ 1182 075c 0FBE      		out __SREG__, __tmp_reg__
+ 1183               		
+ 1184               	 ;  0 "" 2
+ 1185               	/* #NOAPP */
+ 1186 075e 80E0      		ldi r24,lo8(0)
+ 1187 0760 90E0      		ldi r25,hi8(0)
+ 1188               	/* epilogue start */
+ 1189 0762 1F91      		pop r17
+ 1190 0764 0F91      		pop r16
+ 1191 0766 FF90      		pop r15
+ 1192 0768 EF90      		pop r14
+ 1193 076a 0895      		ret
+ 1194               		.size	AvrUsartSetSpeed, .-AvrUsartSetSpeed
+ 1195               		.type	AvrUsartDeinit, @function
+ 1196               	AvrUsartDeinit:
+ 1197               	/* prologue: function */
+GAS LISTING C:\Temp/cciFFDF8.s 			page 22
+
+
+ 1198               	/* frame size = 0 */
+ 1199 076c 40E0      		ldi r20,lo8(0)
+ 1200 076e 50E0      		ldi r21,hi8(0)
+ 1201 0770 60E0      		ldi r22,lo8(0)
+ 1202 0772 70E0      		ldi r23,hi8(0)
+ 1203 0774 80E0      		ldi r24,lo8(sig_UART0_RECV)
+ 1204 0776 90E0      		ldi r25,hi8(sig_UART0_RECV)
+ 1205 0778 0E94 0000 		call NutRegisterIrqHandler
+ 1206 077c 40E0      		ldi r20,lo8(0)
+ 1207 077e 50E0      		ldi r21,hi8(0)
+ 1208 0780 60E0      		ldi r22,lo8(0)
+ 1209 0782 70E0      		ldi r23,hi8(0)
+ 1210 0784 80E0      		ldi r24,lo8(sig_UART0_DATA)
+ 1211 0786 90E0      		ldi r25,hi8(sig_UART0_DATA)
+ 1212 0788 0E94 0000 		call NutRegisterIrqHandler
+ 1213 078c 80E0      		ldi r24,lo8(0)
+ 1214 078e 90E0      		ldi r25,hi8(0)
+ 1215               	/* epilogue start */
+ 1216 0790 0895      		ret
+ 1217               		.size	AvrUsartDeinit, .-AvrUsartDeinit
+ 1218               		.type	AvrUsartInit, @function
+ 1219               	AvrUsartInit:
+ 1220               	/* prologue: function */
+ 1221               	/* frame size = 0 */
+ 1222 0792 40E0      		ldi r20,lo8(dcb_usart0+34)
+ 1223 0794 50E0      		ldi r21,hi8(dcb_usart0+34)
+ 1224 0796 60E0      		ldi r22,lo8(gs(AvrUsartRxComplete))
+ 1225 0798 70E0      		ldi r23,hi8(gs(AvrUsartRxComplete))
+ 1226 079a 80E0      		ldi r24,lo8(sig_UART0_RECV)
+ 1227 079c 90E0      		ldi r25,hi8(sig_UART0_RECV)
+ 1228 079e 0E94 0000 		call NutRegisterIrqHandler
+ 1229 07a2 892B      		or r24,r25
+ 1230 07a4 01F4      		brne .L174
+ 1231               	.L170:
+ 1232 07a6 40E0      		ldi r20,lo8(dcb_usart0+16)
+ 1233 07a8 50E0      		ldi r21,hi8(dcb_usart0+16)
+ 1234 07aa 60E0      		ldi r22,lo8(gs(AvrUsartTxEmpty))
+ 1235 07ac 70E0      		ldi r23,hi8(gs(AvrUsartTxEmpty))
+ 1236 07ae 80E0      		ldi r24,lo8(sig_UART0_DATA)
+ 1237 07b0 90E0      		ldi r25,hi8(sig_UART0_DATA)
+ 1238 07b2 0E94 0000 		call NutRegisterIrqHandler
+ 1239 07b6 892B      		or r24,r25
+ 1240 07b8 01F4      		brne .L172
+ 1241 07ba 20E0      		ldi r18,lo8(0)
+ 1242 07bc 30E0      		ldi r19,hi8(0)
+ 1243 07be 00C0      		rjmp .L171
+ 1244               	.L172:
+ 1245 07c0 40E0      		ldi r20,lo8(0)
+ 1246 07c2 50E0      		ldi r21,hi8(0)
+ 1247 07c4 60E0      		ldi r22,lo8(0)
+ 1248 07c6 70E0      		ldi r23,hi8(0)
+ 1249 07c8 80E0      		ldi r24,lo8(sig_UART0_RECV)
+ 1250 07ca 90E0      		ldi r25,hi8(sig_UART0_RECV)
+ 1251 07cc 0E94 0000 		call NutRegisterIrqHandler
+ 1252               	.L174:
+ 1253 07d0 2FEF      		ldi r18,lo8(-1)
+ 1254 07d2 3FEF      		ldi r19,hi8(-1)
+GAS LISTING C:\Temp/cciFFDF8.s 			page 23
+
+
+ 1255               	.L171:
+ 1256 07d4 C901      		movw r24,r18
+ 1257               	/* epilogue start */
+ 1258 07d6 0895      		ret
+ 1259               		.size	AvrUsartInit, .-AvrUsartInit
+ 1260               	.global	devUsartAvr0
+ 1261               		.data
+ 1262               		.type	devUsartAvr0, @object
+ 1263               		.size	devUsartAvr0, 35
+ 1264               	devUsartAvr0:
+ 1265 0000 0000      		.word	0
+ 1266 0002 75        		.byte	117
+ 1267 0003 61        		.byte	97
+ 1268 0004 72        		.byte	114
+ 1269 0005 74        		.byte	116
+ 1270 0006 30        		.byte	48
+ 1271 0007 00        		.byte	0
+ 1272 0008 00        		.byte	0
+ 1273 0009 00        		.byte	0
+ 1274 000a 00        		.byte	0
+ 1275 000b 05        		.byte	5
+ 1276 000c 0000      		.word	0
+ 1277 000e 00        		.byte	0
+ 1278 000f 0000      		.word	0
+ 1279 0011 0000      		.word	dcb_usart0
+ 1280 0013 0000      		.word	gs(UsartInit)
+ 1281 0015 0000      		.word	gs(UsartIOCtl)
+ 1282 0017 0000      		.word	gs(UsartRead)
+ 1283 0019 0000      		.word	gs(UsartWrite)
+ 1284 001b 0000      		.word	gs(UsartWrite_P)
+ 1285 001d 0000      		.word	gs(UsartOpen)
+ 1286 001f 0000      		.word	gs(UsartClose)
+ 1287 0021 0000      		.word	gs(UsartSize)
+ 1288               		.type	dcb_usart0, @object
+ 1289               		.size	dcb_usart0, 89
+ 1290               	dcb_usart0:
+ 1291 0023 00        		.byte	0
+ 1292 0024 00        		.byte	0
+ 1293 0025 00        		.byte	0
+ 1294 0026 00        		.byte	0
+ 1295 0027 00        		.byte	0
+ 1296 0028 00        		.byte	0
+ 1297 0029 00        		.byte	0
+ 1298 002a 00        		.byte	0
+ 1299 002b 00        		.byte	0
+ 1300 002c 00        		.byte	0
+ 1301 002d 00        		.byte	0
+ 1302 002e 00        		.byte	0
+ 1303 002f 00        		.byte	0
+ 1304 0030 00        		.byte	0
+ 1305 0031 00        		.byte	0
+ 1306 0032 00        		.byte	0
+ 1307 0033 0000      		.word	0
+ 1308 0035 0000      		.word	0
+ 1309 0037 0000      		.word	0
+ 1310 0039 0000      		.word	0
+ 1311 003b 0000      		.word	0
+GAS LISTING C:\Temp/cciFFDF8.s 			page 24
+
+
+ 1312 003d 0000      		.word	0
+ 1313 003f 0000      		.word	0
+ 1314 0041 0000      		.word	0
+ 1315 0043 0000      		.skip 2,0
+ 1316 0045 0000      		.word	0
+ 1317 0047 0000      		.word	0
+ 1318 0049 0000      		.word	0
+ 1319 004b 0000      		.word	0
+ 1320 004d 0000      		.word	0
+ 1321 004f 0000      		.word	0
+ 1322 0051 0000      		.word	0
+ 1323 0053 0000      		.word	0
+ 1324 0055 0000      		.skip 2,0
+ 1325 0057 00        		.byte	0
+ 1326 0058 0000      		.word	gs(AvrUsartInit)
+ 1327 005a 0000      		.word	gs(AvrUsartDeinit)
+ 1328 005c 0000      		.word	gs(AvrUsartTxStart)
+ 1329 005e 0000      		.word	gs(AvrUsartRxStart)
+ 1330 0060 0000      		.word	gs(AvrUsartSetFlowControl)
+ 1331 0062 0000      		.word	gs(AvrUsartGetFlowControl)
+ 1332 0064 0000      		.word	gs(AvrUsartSetSpeed)
+ 1333 0066 0000      		.word	gs(AvrUsartGetSpeed)
+ 1334 0068 0000      		.word	gs(AvrUsartSetDataBits)
+ 1335 006a 0000      		.word	gs(AvrUsartGetDataBits)
+ 1336 006c 0000      		.word	gs(AvrUsartSetParity)
+ 1337 006e 0000      		.word	gs(AvrUsartGetParity)
+ 1338 0070 0000      		.word	gs(AvrUsartSetStopBits)
+ 1339 0072 0000      		.word	gs(AvrUsartGetStopBits)
+ 1340 0074 0000      		.word	gs(AvrUsartSetStatus)
+ 1341 0076 0000      		.word	gs(AvrUsartGetStatus)
+ 1342 0078 0000      		.word	gs(AvrUsartSetClockMode)
+ 1343 007a 0000      		.word	gs(AvrUsartGetClockMode)
+ 1344               		.lcomm rx_errors,1
+ 1345               		.lcomm flow_control,1
+ 1346               		.lcomm tx_aframe,1
+GAS LISTING C:\Temp/cciFFDF8.s 			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 usart0avr.c
+  C:\Temp/cciFFDF8.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cciFFDF8.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cciFFDF8.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cciFFDF8.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cciFFDF8.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cciFFDF8.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cciFFDF8.s:12     .text:00000000 AvrUsartTxEmpty
+  C:\Temp/cciFFDF8.s:1344   .bss:00000001 flow_control
+  C:\Temp/cciFFDF8.s:1345   .bss:00000002 tx_aframe
+  C:\Temp/cciFFDF8.s:136    .text:000000e0 AvrUsartRxComplete
+                             .bss:00000000 rx_errors
+  C:\Temp/cciFFDF8.s:269    .text:000001d4 AvrUsartGetDataBits
+  C:\Temp/cciFFDF8.s:299    .text:00000204 AvrUsartGetParity
+  C:\Temp/cciFFDF8.s:318    .text:00000220 AvrUsartGetStopBits
+  C:\Temp/cciFFDF8.s:331    .text:00000230 AvrUsartGetStatus
+  C:\Temp/cciFFDF8.s:400    .text:000002a0 AvrUsartSetStatus
+  C:\Temp/cciFFDF8.s:511    .text:0000035a AvrUsartGetClockMode
+  C:\Temp/cciFFDF8.s:542    .text:00000386 AvrUsartGetFlowControl
+  C:\Temp/cciFFDF8.s:565    .text:000003a6 AvrUsartSetFlowControl
+  C:\Temp/cciFFDF8.s:650    .text:00000418 AvrUsartTxStart
+  C:\Temp/cciFFDF8.s:658    .text:0000041c AvrUsartRxStart
+  C:\Temp/cciFFDF8.s:698    .text:00000450 AvrUsartDisable
+  C:\Temp/cciFFDF8.s:727    .text:0000046c AvrUsartSetClockMode
+  C:\Temp/cciFFDF8.s:804    .text:000004e4 AvrUsartSetStopBits
+  C:\Temp/cciFFDF8.s:863    .text:00000536 AvrUsartSetParity
+  C:\Temp/cciFFDF8.s:943    .text:000005b6 AvrUsartSetDataBits
+  C:\Temp/cciFFDF8.s:1042   .text:0000065a AvrUsartGetSpeed
+  C:\Temp/cciFFDF8.s:1121   .text:000006f0 AvrUsartSetSpeed
+  C:\Temp/cciFFDF8.s:1196   .text:0000076c AvrUsartDeinit
+  C:\Temp/cciFFDF8.s:1219   .text:00000792 AvrUsartInit
+  C:\Temp/cciFFDF8.s:1290   .data:00000023 dcb_usart0
+  C:\Temp/cciFFDF8.s:1264   .data:00000000 devUsartAvr0
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutDelay
+NutGetCpuClock
+__mulsi3
+__udivmodsi4
+sig_UART0_RECV
+NutRegisterIrqHandler
+sig_UART0_DATA
+UsartInit
+UsartIOCtl
+UsartRead
+UsartWrite
+UsartWrite_P
+UsartOpen
+UsartClose
+UsartSize

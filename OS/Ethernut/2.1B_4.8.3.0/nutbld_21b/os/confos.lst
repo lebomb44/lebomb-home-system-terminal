@@ -1,0 +1,110 @@
+GAS LISTING C:\Temp/ccgd3LvY.s 			page 1
+
+
+   1               		.file	"confos.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutSaveConfig
+  12               		.type	NutSaveConfig, @function
+  13               	NutSaveConfig:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 83E1      		ldi r24,lo8(19)
+  17 0002 8093 0000 		sts confos,r24
+  18 0006 8FE4      		ldi r24,lo8(21327)
+  19 0008 93E5      		ldi r25,hi8(21327)
+  20 000a 9093 0000 		sts (confos+1)+1,r25
+  21 000e 8093 0000 		sts confos+1,r24
+  22 0012 43E1      		ldi r20,lo8(19)
+  23 0014 50E0      		ldi r21,hi8(19)
+  24 0016 60E0      		ldi r22,lo8(confos)
+  25 0018 70E0      		ldi r23,hi8(confos)
+  26 001a 80E0      		ldi r24,lo8(0)
+  27 001c 90E0      		ldi r25,hi8(0)
+  28 001e 0E94 0000 		call NutNvMemSave
+  29               	/* epilogue start */
+  30 0022 0895      		ret
+  31               		.size	NutSaveConfig, .-NutSaveConfig
+  32               		.data
+  33               	.LC0:
+  34 0000 4F53 00   		.string	"OS"
+  35               	.LC1:
+  36 0003 6574 6865 		.string	"ethernut"
+  36      726E 7574 
+  36      00
+  37               		.text
+  38               	.global	NutLoadConfig
+  39               		.type	NutLoadConfig, @function
+  40               	NutLoadConfig:
+  41               	/* prologue: function */
+  42               	/* frame size = 0 */
+  43 0024 43E1      		ldi r20,lo8(19)
+  44 0026 50E0      		ldi r21,hi8(19)
+  45 0028 60E0      		ldi r22,lo8(confos)
+  46 002a 70E0      		ldi r23,hi8(confos)
+  47 002c 80E0      		ldi r24,lo8(0)
+  48 002e 90E0      		ldi r25,hi8(0)
+  49 0030 0E94 0000 		call NutNvMemLoad
+  50 0034 892B      		or r24,r25
+  51 0036 01F4      		brne .L4
+  52 0038 8091 0000 		lds r24,confos
+  53 003c 8331      		cpi r24,lo8(19)
+  54 003e 01F4      		brne .L4
+  55 0040 42E0      		ldi r20,lo8(2)
+GAS LISTING C:\Temp/ccgd3LvY.s 			page 2
+
+
+  56 0042 50E0      		ldi r21,hi8(2)
+  57 0044 60E0      		ldi r22,lo8(.LC0)
+  58 0046 70E0      		ldi r23,hi8(.LC0)
+  59 0048 80E0      		ldi r24,lo8(confos+1)
+  60 004a 90E0      		ldi r25,hi8(confos+1)
+  61 004c 0E94 0000 		call memcmp
+  62 0050 0097      		sbiw r24,0
+  63 0052 01F4      		brne .L4
+  64 0054 20E0      		ldi r18,lo8(0)
+  65 0056 30E0      		ldi r19,hi8(0)
+  66 0058 00C0      		rjmp .L5
+  67               	.L4:
+  68 005a 60E0      		ldi r22,lo8(.LC1)
+  69 005c 70E0      		ldi r23,hi8(.LC1)
+  70 005e 80E0      		ldi r24,lo8(confos+3)
+  71 0060 90E0      		ldi r25,hi8(confos+3)
+  72 0062 0E94 0000 		call strcpy
+  73 0066 2FEF      		ldi r18,lo8(-1)
+  74 0068 3FEF      		ldi r19,hi8(-1)
+  75               	.L5:
+  76 006a C901      		movw r24,r18
+  77               	/* epilogue start */
+  78 006c 0895      		ret
+  79               		.size	NutLoadConfig, .-NutLoadConfig
+  80               		.comm confos,19,1
+GAS LISTING C:\Temp/ccgd3LvY.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 confos.c
+  C:\Temp/ccgd3LvY.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccgd3LvY.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccgd3LvY.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccgd3LvY.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccgd3LvY.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccgd3LvY.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccgd3LvY.s:13     .text:00000000 NutSaveConfig
+                            *COM*:00000013 confos
+  C:\Temp/ccgd3LvY.s:40     .text:00000024 NutLoadConfig
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutNvMemSave
+NutNvMemLoad
+memcmp
+strcpy

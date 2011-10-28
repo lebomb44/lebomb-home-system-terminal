@@ -1,0 +1,265 @@
+GAS LISTING C:\Temp/ccS0q50b.s 			page 1
+
+
+   1               		.file	"icmpout.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutIcmpOutput
+  12               		.type	NutIcmpOutput, @function
+  13               	NutIcmpOutput:
+  14 0000 AF92      		push r10
+  15 0002 BF92      		push r11
+  16 0004 CF92      		push r12
+  17 0006 DF92      		push r13
+  18 0008 EF92      		push r14
+  19 000a FF92      		push r15
+  20 000c 0F93      		push r16
+  21 000e 1F93      		push r17
+  22               	/* prologue: function */
+  23               	/* frame size = 0 */
+  24 0010 5A01      		movw r10,r20
+  25 0012 6B01      		movw r12,r22
+  26 0014 8901      		movw r16,r18
+  27 0016 F901      		movw r30,r18
+  28 0018 E384      		ldd r14,Z+11
+  29 001a F484      		ldd r15,Z+12
+  30 001c F701      		movw r30,r14
+  31 001e 8083      		st Z,r24
+  32 0020 1382      		std Z+3,__zero_reg__
+  33 0022 1282      		std Z+2,__zero_reg__
+  34 0024 F901      		movw r30,r18
+  35 0026 4585      		ldd r20,Z+13
+  36 0028 5685      		ldd r21,Z+14
+  37 002a 6385      		ldd r22,Z+11
+  38 002c 7485      		ldd r23,Z+12
+  39 002e 80E0      		ldi r24,lo8(0)
+  40 0030 90E0      		ldi r25,hi8(0)
+  41 0032 0E94 0000 		call NutIpChkSumPartial
+  42 0036 F801      		movw r30,r16
+  43 0038 4189      		ldd r20,Z+17
+  44 003a 5289      		ldd r21,Z+18
+  45 003c 6785      		ldd r22,Z+15
+  46 003e 7089      		ldd r23,Z+16
+  47 0040 0E94 0000 		call NutIpChkSum
+  48 0044 F701      		movw r30,r14
+  49 0046 9383      		std Z+3,r25
+  50 0048 8283      		std Z+2,r24
+  51 004a 9801      		movw r18,r16
+  52 004c B601      		movw r22,r12
+  53 004e A501      		movw r20,r10
+  54 0050 81E0      		ldi r24,lo8(1)
+  55 0052 0E94 0000 		call NutIpOutput
+  56               	/* epilogue start */
+  57 0056 1F91      		pop r17
+GAS LISTING C:\Temp/ccS0q50b.s 			page 2
+
+
+  58 0058 0F91      		pop r16
+  59 005a FF90      		pop r15
+  60 005c EF90      		pop r14
+  61 005e DF90      		pop r13
+  62 0060 CF90      		pop r12
+  63 0062 BF90      		pop r11
+  64 0064 AF90      		pop r10
+  65 0066 0895      		ret
+  66               		.size	NutIcmpOutput, .-NutIcmpOutput
+  67               	.global	NutIcmpReply
+  68               		.type	NutIcmpReply, @function
+  69               	NutIcmpReply:
+  70 0068 6F92      		push r6
+  71 006a 7F92      		push r7
+  72 006c 8F92      		push r8
+  73 006e 9F92      		push r9
+  74 0070 AF92      		push r10
+  75 0072 BF92      		push r11
+  76 0074 CF92      		push r12
+  77 0076 DF92      		push r13
+  78 0078 EF92      		push r14
+  79 007a FF92      		push r15
+  80 007c 0F93      		push r16
+  81 007e 1F93      		push r17
+  82               	/* prologue: function */
+  83               	/* frame size = 0 */
+  84 0080 682E      		mov r6,r24
+  85 0082 762E      		mov r7,r22
+  86 0084 4901      		movw r8,r18
+  87 0086 5A01      		movw r10,r20
+  88 0088 C601      		movw r24,r12
+  89 008a 48E0      		ldi r20,lo8(8)
+  90 008c 50E0      		ldi r21,hi8(8)
+  91 008e 60E4      		ldi r22,lo8(64)
+  92 0090 0E94 0000 		call NutNetBufAlloc
+  93 0094 DC01      		movw r26,r24
+  94 0096 0097      		sbiw r24,0
+  95 0098 01F4      		brne .L4
+  96 009a 2FEF      		ldi r18,lo8(-1)
+  97 009c 3FEF      		ldi r19,hi8(-1)
+  98 009e 00C0      		rjmp .L5
+  99               	.L4:
+ 100 00a0 1B96      		adiw r26,11
+ 101 00a2 ED91      		ld r30,X+
+ 102 00a4 FC91      		ld r31,X
+ 103 00a6 1C97      		sbiw r26,11+1
+ 104 00a8 7182      		std Z+1,r7
+ 105 00aa 8482      		std Z+4,r8
+ 106 00ac 9582      		std Z+5,r9
+ 107 00ae A682      		std Z+6,r10
+ 108 00b0 B782      		std Z+7,r11
+ 109 00b2 9C01      		movw r18,r24
+ 110 00b4 B801      		movw r22,r16
+ 111 00b6 A701      		movw r20,r14
+ 112 00b8 862D      		mov r24,r6
+ 113 00ba 0E94 0000 		call NutIcmpOutput
+ 114 00be 9C01      		movw r18,r24
+GAS LISTING C:\Temp/ccS0q50b.s 			page 3
+
+
+ 115               	.L5:
+ 116 00c0 C901      		movw r24,r18
+ 117               	/* epilogue start */
+ 118 00c2 1F91      		pop r17
+ 119 00c4 0F91      		pop r16
+ 120 00c6 FF90      		pop r15
+ 121 00c8 EF90      		pop r14
+ 122 00ca DF90      		pop r13
+ 123 00cc CF90      		pop r12
+ 124 00ce BF90      		pop r11
+ 125 00d0 AF90      		pop r10
+ 126 00d2 9F90      		pop r9
+ 127 00d4 8F90      		pop r8
+ 128 00d6 7F90      		pop r7
+ 129 00d8 6F90      		pop r6
+ 130 00da 0895      		ret
+ 131               		.size	NutIcmpReply, .-NutIcmpReply
+ 132               	.global	NutIcmpResponse
+ 133               		.type	NutIcmpResponse, @function
+ 134               	NutIcmpResponse:
+ 135 00dc 6F92      		push r6
+ 136 00de 7F92      		push r7
+ 137 00e0 8F92      		push r8
+ 138 00e2 9F92      		push r9
+ 139 00e4 AF92      		push r10
+ 140 00e6 BF92      		push r11
+ 141 00e8 CF92      		push r12
+ 142 00ea DF92      		push r13
+ 143 00ec EF92      		push r14
+ 144 00ee FF92      		push r15
+ 145 00f0 0F93      		push r16
+ 146 00f2 1F93      		push r17
+ 147 00f4 CF93      		push r28
+ 148 00f6 DF93      		push r29
+ 149               	/* prologue: function */
+ 150               	/* frame size = 0 */
+ 151 00f8 682E      		mov r6,r24
+ 152 00fa 762E      		mov r7,r22
+ 153 00fc 4901      		movw r8,r18
+ 154 00fe 5A01      		movw r10,r20
+ 155 0100 D801      		movw r26,r16
+ 156 0102 1796      		adiw r26,7
+ 157 0104 ED91      		ld r30,X+
+ 158 0106 FC91      		ld r31,X
+ 159 0108 1897      		sbiw r26,7+1
+ 160 010a E484      		ldd r14,Z+12
+ 161 010c F584      		ldd r15,Z+13
+ 162 010e 0685      		ldd r16,Z+14
+ 163 0110 1785      		ldd r17,Z+15
+ 164 0112 4CE1      		ldi r20,lo8(28)
+ 165 0114 50E0      		ldi r21,hi8(28)
+ 166 0116 60E8      		ldi r22,lo8(-128)
+ 167 0118 CD01      		movw r24,r26
+ 168 011a 0E94 0000 		call NutNetBufAlloc
+ 169 011e FC01      		movw r30,r24
+ 170 0120 0097      		sbiw r24,0
+ 171 0122 01F4      		brne .L8
+GAS LISTING C:\Temp/ccS0q50b.s 			page 4
+
+
+ 172 0124 2FEF      		ldi r18,lo8(-1)
+ 173 0126 3FEF      		ldi r19,hi8(-1)
+ 174 0128 00C0      		rjmp .L9
+ 175               	.L8:
+ 176 012a 2785      		ldd r18,Z+15
+ 177 012c 3089      		ldd r19,Z+16
+ 178 012e C901      		movw r24,r18
+ 179 0130 EC01      		movw r28,r24
+ 180 0132 2781      		ldd r18,Z+7
+ 181 0134 3085      		ldd r19,Z+8
+ 182 0136 C901      		movw r24,r18
+ 183 0138 DC01      		movw r26,r24
+ 184 013a 84E1      		ldi r24,lo8(20)
+ 185               	.L10:
+ 186 013c 0D90      		ld r0,X+
+ 187 013e 0992      		st Y+,r0
+ 188 0140 8150      		subi r24,lo8(-(-1))
+ 189 0142 01F4      		brne .L10
+ 190 0144 A785      		ldd r26,Z+15
+ 191 0146 B089      		ldd r27,Z+16
+ 192 0148 5496      		adiw r26,20
+ 193 014a 8385      		ldd r24,Z+11
+ 194 014c 9485      		ldd r25,Z+12
+ 195 014e 9C01      		movw r18,r24
+ 196 0150 E901      		movw r28,r18
+ 197 0152 88E0      		ldi r24,lo8(8)
+ 198               	.L11:
+ 199 0154 0990      		ld r0,Y+
+ 200 0156 0D92      		st X+,r0
+ 201 0158 8150      		subi r24,lo8(-(-1))
+ 202 015a 01F4      		brne .L11
+ 203 015c 6F01      		movw r12,r30
+ 204 015e A501      		movw r20,r10
+ 205 0160 9401      		movw r18,r8
+ 206 0162 672D      		mov r22,r7
+ 207 0164 862D      		mov r24,r6
+ 208 0166 0E94 0000 		call NutIcmpReply
+ 209 016a 9C01      		movw r18,r24
+ 210               	.L9:
+ 211 016c C901      		movw r24,r18
+ 212               	/* epilogue start */
+ 213 016e DF91      		pop r29
+ 214 0170 CF91      		pop r28
+ 215 0172 1F91      		pop r17
+ 216 0174 0F91      		pop r16
+ 217 0176 FF90      		pop r15
+ 218 0178 EF90      		pop r14
+ 219 017a DF90      		pop r13
+ 220 017c CF90      		pop r12
+ 221 017e BF90      		pop r11
+ 222 0180 AF90      		pop r10
+ 223 0182 9F90      		pop r9
+ 224 0184 8F90      		pop r8
+ 225 0186 7F90      		pop r7
+ 226 0188 6F90      		pop r6
+ 227 018a 0895      		ret
+ 228               		.size	NutIcmpResponse, .-NutIcmpResponse
+GAS LISTING C:\Temp/ccS0q50b.s 			page 5
+
+
+GAS LISTING C:\Temp/ccS0q50b.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 icmpout.c
+  C:\Temp/ccS0q50b.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccS0q50b.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccS0q50b.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccS0q50b.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccS0q50b.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccS0q50b.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccS0q50b.s:13     .text:00000000 NutIcmpOutput
+  C:\Temp/ccS0q50b.s:69     .text:00000068 NutIcmpReply
+  C:\Temp/ccS0q50b.s:134    .text:000000dc NutIcmpResponse
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutIpChkSumPartial
+NutIpChkSum
+NutIpOutput
+NutNetBufAlloc

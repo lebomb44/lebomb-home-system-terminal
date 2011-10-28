@@ -1,0 +1,426 @@
+GAS LISTING C:\Temp/ccbwGvoW.s 			page 1
+
+
+   1               		.file	"setenv.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.data
+  11               	.LC0:
+  12 0000 00        		.string	""
+  13               		.text
+  14               		.type	save_env, @function
+  15               	save_env:
+  16 0000 CF92      		push r12
+  17 0002 DF92      		push r13
+  18 0004 EF92      		push r14
+  19 0006 FF92      		push r15
+  20 0008 0F93      		push r16
+  21 000a 1F93      		push r17
+  22 000c DF93      		push r29
+  23 000e CF93      		push r28
+  24 0010 00D0      		rcall .
+  25 0012 00D0      		rcall .
+  26 0014 CDB7      		in r28,__SP_L__
+  27 0016 DEB7      		in r29,__SP_H__
+  28               	/* prologue: function */
+  29               	/* frame size = 4 */
+  30 0018 8091 0000 		lds r24,nut_environ
+  31 001c 9091 0000 		lds r25,(nut_environ)+1
+  32 0020 892B      		or r24,r25
+  33 0022 01F4      		brne .+2
+  34 0024 00C0      		rjmp .L2
+  35 0026 85E4      		ldi r24,lo8(5656133)
+  36 0028 9EE4      		ldi r25,hi8(5656133)
+  37 002a A6E5      		ldi r26,hlo8(5656133)
+  38 002c B0E0      		ldi r27,hhi8(5656133)
+  39 002e 8983      		std Y+1,r24
+  40 0030 9A83      		std Y+2,r25
+  41 0032 AB83      		std Y+3,r26
+  42 0034 BC83      		std Y+4,r27
+  43 0036 44E0      		ldi r20,lo8(4)
+  44 0038 50E0      		ldi r21,hi8(4)
+  45 003a BE01      		movw r22,r28
+  46 003c 6F5F      		subi r22,lo8(-(1))
+  47 003e 7F4F      		sbci r23,hi8(-(1))
+  48 0040 80E0      		ldi r24,lo8(256)
+  49 0042 91E0      		ldi r25,hi8(256)
+  50 0044 0E94 0000 		call NutNvMemSave
+  51 0048 892B      		or r24,r25
+  52 004a 01F0      		breq .+2
+  53 004c 00C0      		rjmp .L2
+  54 004e C090 0000 		lds r12,nut_environ
+  55 0052 D090 0000 		lds r13,(nut_environ)+1
+  56 0056 20E0      		ldi r18,lo8(0)
+  57 0058 30E0      		ldi r19,hi8(0)
+GAS LISTING C:\Temp/ccbwGvoW.s 			page 2
+
+
+  58 005a 84E0      		ldi r24,lo8(260)
+  59 005c E82E      		mov r14,r24
+  60 005e 81E0      		ldi r24,hi8(260)
+  61 0060 F82E      		mov r15,r24
+  62 0062 00C0      		rjmp .L3
+  63               	.L7:
+  64 0064 D601      		movw r26,r12
+  65 0066 1496      		adiw r26,4
+  66 0068 6C91      		ld r22,X
+  67 006a 1497      		sbiw r26,4
+  68 006c 1596      		adiw r26,5
+  69 006e 7C91      		ld r23,X
+  70 0070 FB01      		movw r30,r22
+  71 0072 DF01      		movw r26,r30
+  72 0074 0D90      		ld __tmp_reg__,X+
+  73 0076 0020      		tst __tmp_reg__
+  74 0078 01F4      		brne .-6
+  75 007a 8D01      		movw r16,r26
+  76 007c 0E1B      		sub r16,r30
+  77 007e 1F0B      		sbc r17,r31
+  78 0080 A801      		movw r20,r16
+  79 0082 C701      		movw r24,r14
+  80 0084 0E94 0000 		call NutNvMemSave
+  81 0088 9C01      		movw r18,r24
+  82 008a 0097      		sbiw r24,0
+  83 008c 01F4      		brne .L4
+  84 008e E00E      		add r14,r16
+  85 0090 F11E      		adc r15,r17
+  86 0092 F601      		movw r30,r12
+  87 0094 6681      		ldd r22,Z+6
+  88 0096 7781      		ldd r23,Z+7
+  89 0098 6115      		cp r22,__zero_reg__
+  90 009a 7105      		cpc r23,__zero_reg__
+  91 009c 01F0      		breq .L5
+  92 009e DB01      		movw r26,r22
+  93 00a0 0D90      		ld __tmp_reg__,X+
+  94 00a2 0020      		tst __tmp_reg__
+  95 00a4 01F4      		brne .-6
+  96 00a6 8D01      		movw r16,r26
+  97 00a8 061B      		sub r16,r22
+  98 00aa 170B      		sbc r17,r23
+  99 00ac A801      		movw r20,r16
+ 100 00ae C701      		movw r24,r14
+ 101 00b0 0E94 0000 		call NutNvMemSave
+ 102 00b4 9C01      		movw r18,r24
+ 103 00b6 0097      		sbiw r24,0
+ 104 00b8 01F0      		breq .L6
+ 105 00ba 00C0      		rjmp .L4
+ 106               	.L5:
+ 107 00bc 41E0      		ldi r20,lo8(1)
+ 108 00be 50E0      		ldi r21,hi8(1)
+ 109 00c0 60E0      		ldi r22,lo8(.LC0)
+ 110 00c2 70E0      		ldi r23,hi8(.LC0)
+ 111 00c4 C701      		movw r24,r14
+ 112 00c6 0E94 0000 		call NutNvMemSave
+ 113 00ca 9C01      		movw r18,r24
+ 114 00cc 0097      		sbiw r24,0
+GAS LISTING C:\Temp/ccbwGvoW.s 			page 3
+
+
+ 115 00ce 01F4      		brne .L4
+ 116 00d0 01E0      		ldi r16,lo8(1)
+ 117 00d2 10E0      		ldi r17,hi8(1)
+ 118               	.L6:
+ 119 00d4 E00E      		add r14,r16
+ 120 00d6 F11E      		adc r15,r17
+ 121 00d8 F601      		movw r30,r12
+ 122 00da C080      		ld r12,Z
+ 123 00dc D180      		ldd r13,Z+1
+ 124               	.L3:
+ 125 00de C114      		cp r12,__zero_reg__
+ 126 00e0 D104      		cpc r13,__zero_reg__
+ 127 00e2 01F0      		breq .+2
+ 128 00e4 00C0      		rjmp .L7
+ 129 00e6 2115      		cp r18,__zero_reg__
+ 130 00e8 3105      		cpc r19,__zero_reg__
+ 131 00ea 01F4      		brne .L4
+ 132 00ec 41E0      		ldi r20,lo8(1)
+ 133 00ee 50E0      		ldi r21,hi8(1)
+ 134 00f0 60E0      		ldi r22,lo8(.LC0)
+ 135 00f2 70E0      		ldi r23,hi8(.LC0)
+ 136 00f4 C701      		movw r24,r14
+ 137 00f6 0E94 0000 		call NutNvMemSave
+ 138 00fa 9C01      		movw r18,r24
+ 139 00fc 00C0      		rjmp .L4
+ 140               	.L2:
+ 141 00fe 20E0      		ldi r18,lo8(0)
+ 142 0100 30E0      		ldi r19,hi8(0)
+ 143               	.L4:
+ 144 0102 C901      		movw r24,r18
+ 145               	/* epilogue start */
+ 146 0104 0F90      		pop __tmp_reg__
+ 147 0106 0F90      		pop __tmp_reg__
+ 148 0108 0F90      		pop __tmp_reg__
+ 149 010a 0F90      		pop __tmp_reg__
+ 150 010c CF91      		pop r28
+ 151 010e DF91      		pop r29
+ 152 0110 1F91      		pop r17
+ 153 0112 0F91      		pop r16
+ 154 0114 FF90      		pop r15
+ 155 0116 EF90      		pop r14
+ 156 0118 DF90      		pop r13
+ 157 011a CF90      		pop r12
+ 158 011c 0895      		ret
+ 159               		.size	save_env, .-save_env
+ 160               	.global	unsetenv
+ 161               		.type	unsetenv, @function
+ 162               	unsetenv:
+ 163 011e CF93      		push r28
+ 164 0120 DF93      		push r29
+ 165               	/* prologue: function */
+ 166               	/* frame size = 0 */
+ 167 0122 0E94 0000 		call findenv
+ 168 0126 EC01      		movw r28,r24
+ 169 0128 0097      		sbiw r24,0
+ 170 012a 01F4      		brne .L10
+ 171 012c 82E0      		ldi r24,lo8(2)
+GAS LISTING C:\Temp/ccbwGvoW.s 			page 4
+
+
+ 172 012e 90E0      		ldi r25,hi8(2)
+ 173 0130 9093 0000 		sts (errno)+1,r25
+ 174 0134 8093 0000 		sts errno,r24
+ 175 0138 00C0      		rjmp .L15
+ 176               	.L10:
+ 177 013a EA81      		ldd r30,Y+2
+ 178 013c FB81      		ldd r31,Y+3
+ 179 013e 3097      		sbiw r30,0
+ 180 0140 01F0      		breq .L12
+ 181 0142 8881      		ld r24,Y
+ 182 0144 9981      		ldd r25,Y+1
+ 183 0146 9183      		std Z+1,r25
+ 184 0148 8083      		st Z,r24
+ 185               	.L12:
+ 186 014a E881      		ld r30,Y
+ 187 014c F981      		ldd r31,Y+1
+ 188 014e 3097      		sbiw r30,0
+ 189 0150 01F0      		breq .L13
+ 190 0152 8A81      		ldd r24,Y+2
+ 191 0154 9B81      		ldd r25,Y+3
+ 192 0156 9383      		std Z+3,r25
+ 193 0158 8283      		std Z+2,r24
+ 194               	.L13:
+ 195 015a 8091 0000 		lds r24,nut_environ
+ 196 015e 9091 0000 		lds r25,(nut_environ)+1
+ 197 0162 8C17      		cp r24,r28
+ 198 0164 9D07      		cpc r25,r29
+ 199 0166 01F4      		brne .L14
+ 200 0168 8881      		ld r24,Y
+ 201 016a 9981      		ldd r25,Y+1
+ 202 016c 9093 0000 		sts (nut_environ)+1,r25
+ 203 0170 8093 0000 		sts nut_environ,r24
+ 204               	.L14:
+ 205 0174 8C81      		ldd r24,Y+4
+ 206 0176 9D81      		ldd r25,Y+5
+ 207 0178 0E94 0000 		call free
+ 208 017c 8E81      		ldd r24,Y+6
+ 209 017e 9F81      		ldd r25,Y+7
+ 210 0180 0E94 0000 		call free
+ 211 0184 CE01      		movw r24,r28
+ 212 0186 0E94 0000 		call free
+ 213 018a 0E94 0000 		call save_env
+ 214               	.L15:
+ 215               	/* epilogue start */
+ 216 018e DF91      		pop r29
+ 217 0190 CF91      		pop r28
+ 218 0192 0895      		ret
+ 219               		.size	unsetenv, .-unsetenv
+ 220               	.global	setenv
+ 221               		.type	setenv, @function
+ 222               	setenv:
+ 223 0194 AF92      		push r10
+ 224 0196 BF92      		push r11
+ 225 0198 CF92      		push r12
+ 226 019a DF92      		push r13
+ 227 019c EF92      		push r14
+ 228 019e FF92      		push r15
+GAS LISTING C:\Temp/ccbwGvoW.s 			page 5
+
+
+ 229 01a0 0F93      		push r16
+ 230 01a2 1F93      		push r17
+ 231 01a4 CF93      		push r28
+ 232 01a6 DF93      		push r29
+ 233               	/* prologue: function */
+ 234               	/* frame size = 0 */
+ 235 01a8 8C01      		movw r16,r24
+ 236 01aa 5B01      		movw r10,r22
+ 237 01ac EA01      		movw r28,r20
+ 238 01ae 0E94 0000 		call findenv
+ 239 01b2 6C01      		movw r12,r24
+ 240 01b4 0097      		sbiw r24,0
+ 241 01b6 01F0      		breq .+2
+ 242 01b8 00C0      		rjmp .L17
+ 243 01ba 88E0      		ldi r24,lo8(8)
+ 244 01bc 90E0      		ldi r25,hi8(8)
+ 245 01be 0E94 0000 		call malloc
+ 246 01c2 EC01      		movw r28,r24
+ 247 01c4 6C01      		movw r12,r24
+ 248 01c6 0097      		sbiw r24,0
+ 249 01c8 01F4      		brne .+2
+ 250 01ca 00C0      		rjmp .L18
+ 251 01cc 88E0      		ldi r24,lo8(8)
+ 252 01ce DE01      		movw r26,r28
+ 253 01d0 1D92      		st X+,__zero_reg__
+ 254 01d2 8A95      	        dec r24
+ 255 01d4 01F4      		brne .-6
+ 256 01d6 C801      		movw r24,r16
+ 257 01d8 0E94 0000 		call strdup
+ 258 01dc 7C01      		movw r14,r24
+ 259 01de 9D83      		std Y+5,r25
+ 260 01e0 8C83      		std Y+4,r24
+ 261 01e2 0097      		sbiw r24,0
+ 262 01e4 01F4      		brne .L19
+ 263 01e6 CE01      		movw r24,r28
+ 264 01e8 0E94 0000 		call free
+ 265 01ec 00C0      		rjmp .L18
+ 266               	.L19:
+ 267 01ee 0091 0000 		lds r16,nut_environ
+ 268 01f2 1091 0000 		lds r17,(nut_environ)+1
+ 269 01f6 E0E0      		ldi r30,lo8(0)
+ 270 01f8 F0E0      		ldi r31,hi8(0)
+ 271 01fa 00C0      		rjmp .L21
+ 272               	.L26:
+ 273 01fc F801      		movw r30,r16
+ 274 01fe 6481      		ldd r22,Z+4
+ 275 0200 7581      		ldd r23,Z+5
+ 276 0202 C701      		movw r24,r14
+ 277 0204 0E94 0000 		call strcmp
+ 278 0208 97FF      		sbrs r25,7
+ 279 020a 00C0      		rjmp .L22
+ 280 020c D801      		movw r26,r16
+ 281 020e 1296      		adiw r26,2
+ 282 0210 ED91      		ld r30,X+
+ 283 0212 FC91      		ld r31,X
+ 284 0214 1397      		sbiw r26,2+1
+ 285 0216 3097      		sbiw r30,0
+GAS LISTING C:\Temp/ccbwGvoW.s 			page 6
+
+
+ 286 0218 01F0      		breq .L23
+ 287 021a D183      		std Z+1,r29
+ 288 021c C083      		st Z,r28
+ 289 021e 00C0      		rjmp .L24
+ 290               	.L23:
+ 291 0220 D093 0000 		sts (nut_environ)+1,r29
+ 292 0224 C093 0000 		sts nut_environ,r28
+ 293               	.L24:
+ 294 0228 1983      		std Y+1,r17
+ 295 022a 0883      		st Y,r16
+ 296 022c F801      		movw r30,r16
+ 297 022e 8281      		ldd r24,Z+2
+ 298 0230 9381      		ldd r25,Z+3
+ 299 0232 9B83      		std Y+3,r25
+ 300 0234 8A83      		std Y+2,r24
+ 301 0236 D383      		std Z+3,r29
+ 302 0238 C283      		std Z+2,r28
+ 303 023a 00C0      		rjmp .L25
+ 304               	.L22:
+ 305 023c F801      		movw r30,r16
+ 306 023e 8081      		ld r24,Z
+ 307 0240 9181      		ldd r25,Z+1
+ 308 0242 9C01      		movw r18,r24
+ 309 0244 8901      		movw r16,r18
+ 310               	.L21:
+ 311 0246 0115      		cp r16,__zero_reg__
+ 312 0248 1105      		cpc r17,__zero_reg__
+ 313 024a 01F4      		brne .L26
+ 314 024c 00C0      		rjmp .L35
+ 315               	.L30:
+ 316 024e D183      		std Z+1,r29
+ 317 0250 C083      		st Z,r28
+ 318 0252 FB83      		std Y+3,r31
+ 319 0254 EA83      		std Y+2,r30
+ 320 0256 00C0      		rjmp .L25
+ 321               	.L36:
+ 322 0258 D093 0000 		sts (nut_environ)+1,r29
+ 323 025c C093 0000 		sts nut_environ,r28
+ 324 0260 00C0      		rjmp .L25
+ 325               	.L17:
+ 326 0262 CD2B      		or r28,r29
+ 327 0264 01F0      		breq .L28
+ 328               	.L25:
+ 329 0266 D601      		movw r26,r12
+ 330 0268 1696      		adiw r26,6
+ 331 026a CD91      		ld r28,X+
+ 332 026c DC91      		ld r29,X
+ 333 026e 1797      		sbiw r26,6+1
+ 334 0270 2097      		sbiw r28,0
+ 335 0272 01F0      		breq .L29
+ 336 0274 B501      		movw r22,r10
+ 337 0276 CE01      		movw r24,r28
+ 338 0278 0E94 0000 		call strcmp
+ 339 027c 0097      		sbiw r24,0
+ 340 027e 01F0      		breq .L28
+ 341 0280 CE01      		movw r24,r28
+ 342 0282 0E94 0000 		call free
+GAS LISTING C:\Temp/ccbwGvoW.s 			page 7
+
+
+ 343               	.L29:
+ 344 0286 C501      		movw r24,r10
+ 345 0288 0E94 0000 		call strdup
+ 346 028c F601      		movw r30,r12
+ 347 028e 9783      		std Z+7,r25
+ 348 0290 8683      		std Z+6,r24
+ 349 0292 0097      		sbiw r24,0
+ 350 0294 01F0      		breq .L18
+ 351 0296 0E94 0000 		call save_env
+ 352 029a 9C01      		movw r18,r24
+ 353 029c 00C0      		rjmp .L20
+ 354               	.L18:
+ 355 029e 2FEF      		ldi r18,lo8(-1)
+ 356 02a0 3FEF      		ldi r19,hi8(-1)
+ 357 02a2 00C0      		rjmp .L20
+ 358               	.L28:
+ 359 02a4 20E0      		ldi r18,lo8(0)
+ 360 02a6 30E0      		ldi r19,hi8(0)
+ 361               	.L20:
+ 362 02a8 C901      		movw r24,r18
+ 363               	/* epilogue start */
+ 364 02aa DF91      		pop r29
+ 365 02ac CF91      		pop r28
+ 366 02ae 1F91      		pop r17
+ 367 02b0 0F91      		pop r16
+ 368 02b2 FF90      		pop r15
+ 369 02b4 EF90      		pop r14
+ 370 02b6 DF90      		pop r13
+ 371 02b8 CF90      		pop r12
+ 372 02ba BF90      		pop r11
+ 373 02bc AF90      		pop r10
+ 374 02be 0895      		ret
+ 375               	.L35:
+ 376 02c0 3097      		sbiw r30,0
+ 377 02c2 01F4      		brne .L30
+ 378 02c4 00C0      		rjmp .L36
+ 379               		.size	setenv, .-setenv
+GAS LISTING C:\Temp/ccbwGvoW.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 setenv.c
+  C:\Temp/ccbwGvoW.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccbwGvoW.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccbwGvoW.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccbwGvoW.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccbwGvoW.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccbwGvoW.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccbwGvoW.s:15     .text:00000000 save_env
+  C:\Temp/ccbwGvoW.s:162    .text:0000011e unsetenv
+  C:\Temp/ccbwGvoW.s:222    .text:00000194 setenv
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+nut_environ
+NutNvMemSave
+findenv
+errno
+free
+malloc
+strdup
+strcmp

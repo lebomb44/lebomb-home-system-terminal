@@ -1,0 +1,56 @@
+GAS LISTING C:\Temp/ccrtRGiL.s 			page 1
+
+
+   1               		.file	"fputs_p.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	fputs_P
+  12               		.type	fputs_P, @function
+  13               	fputs_P:
+  14 0000 EF92      		push r14
+  15 0002 FF92      		push r15
+  16 0004 0F93      		push r16
+  17 0006 1F93      		push r17
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 0008 8C01      		movw r16,r24
+  21 000a 7B01      		movw r14,r22
+  22 000c 0E94 0000 		call strlen_P
+  23 0010 AC01      		movw r20,r24
+  24 0012 B801      		movw r22,r16
+  25 0014 F701      		movw r30,r14
+  26 0016 8081      		ld r24,Z
+  27 0018 9181      		ldd r25,Z+1
+  28 001a 0E94 0000 		call _write_P
+  29               	/* epilogue start */
+  30 001e 1F91      		pop r17
+  31 0020 0F91      		pop r16
+  32 0022 FF90      		pop r15
+  33 0024 EF90      		pop r14
+  34 0026 0895      		ret
+  35               		.size	fputs_P, .-fputs_P
+GAS LISTING C:\Temp/ccrtRGiL.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 fputs_p.c
+  C:\Temp/ccrtRGiL.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccrtRGiL.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccrtRGiL.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccrtRGiL.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccrtRGiL.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccrtRGiL.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccrtRGiL.s:13     .text:00000000 fputs_P
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+strlen_P
+_write_P

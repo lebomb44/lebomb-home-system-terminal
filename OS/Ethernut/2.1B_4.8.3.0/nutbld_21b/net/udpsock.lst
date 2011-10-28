@@ -1,0 +1,633 @@
+GAS LISTING C:\Temp/ccMtmnZi.s 			page 1
+
+
+   1               		.file	"udpsock.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutUdpError
+  12               		.type	NutUdpError, @function
+  13               	NutUdpError:
+  14 0000 CF93      		push r28
+  15 0002 DF93      		push r29
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0004 FC01      		movw r30,r24
+  19 0006 EB01      		movw r28,r22
+  20 0008 DA01      		movw r26,r20
+  21 000a 0097      		sbiw r24,0
+  22 000c 01F4      		brne .L2
+  23 000e 26E2      		ldi r18,lo8(38)
+  24 0010 30E0      		ldi r19,hi8(38)
+  25 0012 00C0      		rjmp .L3
+  26               	.L2:
+  27 0014 8485      		ldd r24,Z+12
+  28 0016 9585      		ldd r25,Z+13
+  29 0018 0097      		sbiw r24,0
+  30 001a 01F4      		brne .L4
+  31 001c 20E0      		ldi r18,lo8(0)
+  32 001e 30E0      		ldi r19,hi8(0)
+  33 0020 00C0      		rjmp .L3
+  34               	.L4:
+  35 0022 9C01      		movw r18,r24
+  36 0024 8289      		ldd r24,Z+18
+  37 0026 9389      		ldd r25,Z+19
+  38               	/* #APP */
+  39               	 ;  295 "../../nut/include/sys/types.h" 1
+  40 0028 082E      		mov __tmp_reg__, r24
+  41 002a 892F      		mov r24, r25
+  42 002c 902D      		mov r25, __tmp_reg__
+  43               		
+  44               	 ;  0 "" 2
+  45               	/* #NOAPP */
+  46 002e 8D93      		st X+,r24
+  47 0030 9C93      		st X,r25
+  48 0032 8685      		ldd r24,Z+14
+  49 0034 9785      		ldd r25,Z+15
+  50 0036 A089      		ldd r26,Z+16
+  51 0038 B189      		ldd r27,Z+17
+  52 003a 8883      		st Y,r24
+  53 003c 9983      		std Y+1,r25
+  54 003e AA83      		std Y+2,r26
+  55 0040 BB83      		std Y+3,r27
+  56 0042 1586      		std Z+13,__zero_reg__
+  57 0044 1486      		std Z+12,__zero_reg__
+GAS LISTING C:\Temp/ccMtmnZi.s 			page 2
+
+
+  58 0046 138A      		std Z+19,__zero_reg__
+  59 0048 128A      		std Z+18,__zero_reg__
+  60 004a 1686      		std Z+14,__zero_reg__
+  61 004c 1786      		std Z+15,__zero_reg__
+  62 004e 108A      		std Z+16,__zero_reg__
+  63 0050 118A      		std Z+17,__zero_reg__
+  64               	.L3:
+  65 0052 C901      		movw r24,r18
+  66               	/* epilogue start */
+  67 0054 DF91      		pop r29
+  68 0056 CF91      		pop r28
+  69 0058 0895      		ret
+  70               		.size	NutUdpError, .-NutUdpError
+  71               	.global	NutUdpFindSocket
+  72               		.type	NutUdpFindSocket, @function
+  73               	NutUdpFindSocket:
+  74               	/* prologue: function */
+  75               	/* frame size = 0 */
+  76 005a 9C01      		movw r18,r24
+  77 005c E091 0000 		lds r30,udpSocketList
+  78 0060 F091 0000 		lds r31,(udpSocketList)+1
+  79 0064 00C0      		rjmp .L7
+  80               	.L10:
+  81 0066 8281      		ldd r24,Z+2
+  82 0068 9381      		ldd r25,Z+3
+  83 006a 8217      		cp r24,r18
+  84 006c 9307      		cpc r25,r19
+  85 006e 01F4      		brne .L8
+  86 0070 9F01      		movw r18,r30
+  87 0072 00C0      		rjmp .L9
+  88               	.L8:
+  89 0074 0190      		ld __tmp_reg__,Z+
+  90 0076 F081      		ld r31,Z
+  91 0078 E02D      		mov r30,__tmp_reg__
+  92               	.L7:
+  93 007a 3097      		sbiw r30,0
+  94 007c 01F4      		brne .L10
+  95 007e 20E0      		ldi r18,lo8(0)
+  96 0080 30E0      		ldi r19,hi8(0)
+  97               	.L9:
+  98 0082 C901      		movw r24,r18
+  99               	/* epilogue start */
+ 100 0084 0895      		ret
+ 101               		.size	NutUdpFindSocket, .-NutUdpFindSocket
+ 102               	.global	NutUdpSetSockOpt
+ 103               		.type	NutUdpSetSockOpt, @function
+ 104               	NutUdpSetSockOpt:
+ 105               	/* prologue: function */
+ 106               	/* frame size = 0 */
+ 107 0086 DC01      		movw r26,r24
+ 108 0088 FA01      		movw r30,r20
+ 109 008a 0097      		sbiw r24,0
+ 110 008c 01F0      		breq .L13
+ 111 008e 6250      		subi r22,lo8(4098)
+ 112 0090 7041      		sbci r23,hi8(4098)
+ 113 0092 01F4      		brne .L13
+ 114 0094 4115      		cp r20,__zero_reg__
+GAS LISTING C:\Temp/ccMtmnZi.s 			page 3
+
+
+ 115 0096 5105      		cpc r21,__zero_reg__
+ 116 0098 01F0      		breq .L13
+ 117 009a 2230      		cpi r18,2
+ 118 009c 3105      		cpc r19,__zero_reg__
+ 119 009e 01F4      		brne .L13
+ 120 00a0 8081      		ld r24,Z
+ 121 00a2 9181      		ldd r25,Z+1
+ 122 00a4 1B96      		adiw r26,10+1
+ 123 00a6 9C93      		st X,r25
+ 124 00a8 8E93      		st -X,r24
+ 125 00aa 1A97      		sbiw r26,10
+ 126 00ac 20E0      		ldi r18,lo8(0)
+ 127 00ae 30E0      		ldi r19,hi8(0)
+ 128 00b0 00C0      		rjmp .L15
+ 129               	.L13:
+ 130 00b2 2FEF      		ldi r18,lo8(-1)
+ 131 00b4 3FEF      		ldi r19,hi8(-1)
+ 132               	.L15:
+ 133 00b6 C901      		movw r24,r18
+ 134               	/* epilogue start */
+ 135 00b8 0895      		ret
+ 136               		.size	NutUdpSetSockOpt, .-NutUdpSetSockOpt
+ 137               	.global	NutUdpGetSockOpt
+ 138               		.type	NutUdpGetSockOpt, @function
+ 139               	NutUdpGetSockOpt:
+ 140               	/* prologue: function */
+ 141               	/* frame size = 0 */
+ 142 00ba DC01      		movw r26,r24
+ 143 00bc FA01      		movw r30,r20
+ 144 00be 0097      		sbiw r24,0
+ 145 00c0 01F0      		breq .L18
+ 146 00c2 6250      		subi r22,lo8(4098)
+ 147 00c4 7041      		sbci r23,hi8(4098)
+ 148 00c6 01F4      		brne .L18
+ 149 00c8 4115      		cp r20,__zero_reg__
+ 150 00ca 5105      		cpc r21,__zero_reg__
+ 151 00cc 01F0      		breq .L18
+ 152 00ce 2230      		cpi r18,2
+ 153 00d0 3105      		cpc r19,__zero_reg__
+ 154 00d2 01F4      		brne .L18
+ 155 00d4 1A96      		adiw r26,10
+ 156 00d6 8D91      		ld r24,X+
+ 157 00d8 9C91      		ld r25,X
+ 158 00da 1B97      		sbiw r26,10+1
+ 159 00dc 9183      		std Z+1,r25
+ 160 00de 8083      		st Z,r24
+ 161 00e0 20E0      		ldi r18,lo8(0)
+ 162 00e2 30E0      		ldi r19,hi8(0)
+ 163 00e4 00C0      		rjmp .L20
+ 164               	.L18:
+ 165 00e6 2FEF      		ldi r18,lo8(-1)
+ 166 00e8 3FEF      		ldi r19,hi8(-1)
+ 167               	.L20:
+ 168 00ea C901      		movw r24,r18
+ 169               	/* epilogue start */
+ 170 00ec 0895      		ret
+ 171               		.size	NutUdpGetSockOpt, .-NutUdpGetSockOpt
+GAS LISTING C:\Temp/ccMtmnZi.s 			page 4
+
+
+ 172               	.global	NutUdpSetSocketError
+ 173               		.type	NutUdpSetSocketError, @function
+ 174               	NutUdpSetSocketError:
+ 175 00ee 0F93      		push r16
+ 176 00f0 1F93      		push r17
+ 177               	/* prologue: function */
+ 178               	/* frame size = 0 */
+ 179 00f2 FC01      		movw r30,r24
+ 180 00f4 0097      		sbiw r24,0
+ 181 00f6 01F4      		brne .L23
+ 182 00f8 2FEF      		ldi r18,lo8(-1)
+ 183 00fa 3FEF      		ldi r19,hi8(-1)
+ 184 00fc 00C0      		rjmp .L24
+ 185               	.L23:
+ 186 00fe 4687      		std Z+14,r20
+ 187 0100 5787      		std Z+15,r21
+ 188 0102 608B      		std Z+16,r22
+ 189 0104 718B      		std Z+17,r23
+ 190 0106 338B      		std Z+19,r19
+ 191 0108 228B      		std Z+18,r18
+ 192 010a 1587      		std Z+13,r17
+ 193 010c 0487      		std Z+12,r16
+ 194 010e 8681      		ldd r24,Z+6
+ 195 0110 9781      		ldd r25,Z+7
+ 196 0112 892B      		or r24,r25
+ 197 0114 01F0      		breq .L27
+ 198               	.L25:
+ 199 0116 CF01      		movw r24,r30
+ 200 0118 0696      		adiw r24,6
+ 201 011a 0E94 0000 		call NutEventPost
+ 202               	.L27:
+ 203 011e 20E0      		ldi r18,lo8(0)
+ 204 0120 30E0      		ldi r19,hi8(0)
+ 205               	.L24:
+ 206 0122 C901      		movw r24,r18
+ 207               	/* epilogue start */
+ 208 0124 1F91      		pop r17
+ 209 0126 0F91      		pop r16
+ 210 0128 0895      		ret
+ 211               		.size	NutUdpSetSocketError, .-NutUdpSetSocketError
+ 212               	.global	NutUdpDestroySocket
+ 213               		.type	NutUdpDestroySocket, @function
+ 214               	NutUdpDestroySocket:
+ 215 012a CF93      		push r28
+ 216 012c DF93      		push r29
+ 217               	/* prologue: function */
+ 218               	/* frame size = 0 */
+ 219 012e EC01      		movw r28,r24
+ 220 0130 E091 0000 		lds r30,udpSocketList
+ 221 0134 F091 0000 		lds r31,(udpSocketList)+1
+ 222 0138 A0E0      		ldi r26,lo8(udpSocketList)
+ 223 013a B0E0      		ldi r27,hi8(udpSocketList)
+ 224 013c 00C0      		rjmp .L29
+ 225               	.L34:
+ 226 013e EC17      		cp r30,r28
+ 227 0140 FD07      		cpc r31,r29
+ 228 0142 01F4      		brne .L30
+GAS LISTING C:\Temp/ccMtmnZi.s 			page 5
+
+
+ 229 0144 8881      		ld r24,Y
+ 230 0146 9981      		ldd r25,Y+1
+ 231 0148 8D93      		st X+,r24
+ 232 014a 9C93      		st X,r25
+ 233 014c 00C0      		rjmp .L31
+ 234               	.L32:
+ 235 014e 8081      		ld r24,Z
+ 236 0150 9181      		ldd r25,Z+1
+ 237 0152 9D83      		std Y+5,r25
+ 238 0154 8C83      		std Y+4,r24
+ 239 0156 CF01      		movw r24,r30
+ 240 0158 0E94 0000 		call NutNetBufFree
+ 241               	.L31:
+ 242 015c EC81      		ldd r30,Y+4
+ 243 015e FD81      		ldd r31,Y+5
+ 244 0160 3097      		sbiw r30,0
+ 245 0162 01F4      		brne .L32
+ 246 0164 CE01      		movw r24,r28
+ 247 0166 0E94 0000 		call free
+ 248 016a 20E0      		ldi r18,lo8(0)
+ 249 016c 30E0      		ldi r19,hi8(0)
+ 250 016e 00C0      		rjmp .L33
+ 251               	.L30:
+ 252 0170 DF01      		movw r26,r30
+ 253 0172 0190      		ld __tmp_reg__,Z+
+ 254 0174 F081      		ld r31,Z
+ 255 0176 E02D      		mov r30,__tmp_reg__
+ 256               	.L29:
+ 257 0178 3097      		sbiw r30,0
+ 258 017a 01F4      		brne .L34
+ 259 017c 2FEF      		ldi r18,lo8(-1)
+ 260 017e 3FEF      		ldi r19,hi8(-1)
+ 261               	.L33:
+ 262 0180 C901      		movw r24,r18
+ 263               	/* epilogue start */
+ 264 0182 DF91      		pop r29
+ 265 0184 CF91      		pop r28
+ 266 0186 0895      		ret
+ 267               		.size	NutUdpDestroySocket, .-NutUdpDestroySocket
+ 268               	.global	NutUdpReceiveFrom
+ 269               		.type	NutUdpReceiveFrom, @function
+ 270               	NutUdpReceiveFrom:
+ 271 0188 4F92      		push r4
+ 272 018a 5F92      		push r5
+ 273 018c 6F92      		push r6
+ 274 018e 7F92      		push r7
+ 275 0190 8F92      		push r8
+ 276 0192 9F92      		push r9
+ 277 0194 AF92      		push r10
+ 278 0196 BF92      		push r11
+ 279 0198 CF92      		push r12
+ 280 019a DF92      		push r13
+ 281 019c EF92      		push r14
+ 282 019e FF92      		push r15
+ 283 01a0 0F93      		push r16
+ 284 01a2 1F93      		push r17
+ 285 01a4 CF93      		push r28
+GAS LISTING C:\Temp/ccMtmnZi.s 			page 6
+
+
+ 286 01a6 DF93      		push r29
+ 287               	/* prologue: function */
+ 288               	/* frame size = 0 */
+ 289 01a8 5C01      		movw r10,r24
+ 290 01aa 4B01      		movw r8,r22
+ 291 01ac 3A01      		movw r6,r20
+ 292 01ae 522E      		mov r5,r18
+ 293 01b0 432E      		mov r4,r19
+ 294 01b2 FC01      		movw r30,r24
+ 295 01b4 8481      		ldd r24,Z+4
+ 296 01b6 9581      		ldd r25,Z+5
+ 297 01b8 892B      		or r24,r25
+ 298 01ba 01F4      		brne .L37
+ 299 01bc B701      		movw r22,r14
+ 300 01be A601      		movw r20,r12
+ 301 01c0 C501      		movw r24,r10
+ 302 01c2 0696      		adiw r24,6
+ 303 01c4 0E94 0000 		call NutEventWait
+ 304               	.L37:
+ 305 01c8 F501      		movw r30,r10
+ 306 01ca C481      		ldd r28,Z+4
+ 307 01cc D581      		ldd r29,Z+5
+ 308 01ce 2097      		sbiw r28,0
+ 309 01d0 01F4      		brne .L38
+ 310 01d2 00E0      		ldi r16,lo8(0)
+ 311 01d4 10E0      		ldi r17,hi8(0)
+ 312 01d6 00C0      		rjmp .L39
+ 313               	.L38:
+ 314 01d8 8881      		ld r24,Y
+ 315 01da 9981      		ldd r25,Y+1
+ 316 01dc F501      		movw r30,r10
+ 317 01de 9583      		std Z+5,r25
+ 318 01e0 8483      		std Z+4,r24
+ 319 01e2 EF81      		ldd r30,Y+7
+ 320 01e4 F885      		ldd r31,Y+8
+ 321 01e6 8485      		ldd r24,Z+12
+ 322 01e8 9585      		ldd r25,Z+13
+ 323 01ea A685      		ldd r26,Z+14
+ 324 01ec B785      		ldd r27,Z+15
+ 325 01ee F401      		movw r30,r8
+ 326 01f0 8083      		st Z,r24
+ 327 01f2 9183      		std Z+1,r25
+ 328 01f4 A283      		std Z+2,r26
+ 329 01f6 B383      		std Z+3,r27
+ 330 01f8 EB85      		ldd r30,Y+11
+ 331 01fa FC85      		ldd r31,Y+12
+ 332 01fc 8081      		ld r24,Z
+ 333 01fe 9181      		ldd r25,Z+1
+ 334               	/* #APP */
+ 335               	 ;  295 "../../nut/include/sys/types.h" 1
+ 336 0200 082E      		mov __tmp_reg__, r24
+ 337 0202 892F      		mov r24, r25
+ 338 0204 902D      		mov r25, __tmp_reg__
+ 339               		
+ 340               	 ;  0 "" 2
+ 341               	/* #NOAPP */
+ 342 0206 F301      		movw r30,r6
+GAS LISTING C:\Temp/ccMtmnZi.s 			page 7
+
+
+ 343 0208 9183      		std Z+1,r25
+ 344 020a 8083      		st Z,r24
+ 345 020c 4989      		ldd r20,Y+17
+ 346 020e 5A89      		ldd r21,Y+18
+ 347 0210 4017      		cp r20,r16
+ 348 0212 5107      		cpc r21,r17
+ 349 0214 04F4      		brge .L40
+ 350 0216 8A01      		movw r16,r20
+ 351               	.L40:
+ 352 0218 F501      		movw r30,r10
+ 353 021a 8085      		ldd r24,Z+8
+ 354 021c 9185      		ldd r25,Z+9
+ 355 021e 841B      		sub r24,r20
+ 356 0220 950B      		sbc r25,r21
+ 357 0222 9187      		std Z+9,r25
+ 358 0224 8087      		std Z+8,r24
+ 359 0226 6F85      		ldd r22,Y+15
+ 360 0228 7889      		ldd r23,Y+16
+ 361 022a A801      		movw r20,r16
+ 362 022c 852D      		mov r24,r5
+ 363 022e 942D      		mov r25,r4
+ 364 0230 0E94 0000 		call memcpy
+ 365 0234 CE01      		movw r24,r28
+ 366 0236 0E94 0000 		call NutNetBufFree
+ 367               	.L39:
+ 368 023a C801      		movw r24,r16
+ 369               	/* epilogue start */
+ 370 023c DF91      		pop r29
+ 371 023e CF91      		pop r28
+ 372 0240 1F91      		pop r17
+ 373 0242 0F91      		pop r16
+ 374 0244 FF90      		pop r15
+ 375 0246 EF90      		pop r14
+ 376 0248 DF90      		pop r13
+ 377 024a CF90      		pop r12
+ 378 024c BF90      		pop r11
+ 379 024e AF90      		pop r10
+ 380 0250 9F90      		pop r9
+ 381 0252 8F90      		pop r8
+ 382 0254 7F90      		pop r7
+ 383 0256 6F90      		pop r6
+ 384 0258 5F90      		pop r5
+ 385 025a 4F90      		pop r4
+ 386 025c 0895      		ret
+ 387               		.size	NutUdpReceiveFrom, .-NutUdpReceiveFrom
+ 388               	.global	NutUdpSendTo
+ 389               		.type	NutUdpSendTo, @function
+ 390               	NutUdpSendTo:
+ 391 025e 6F92      		push r6
+ 392 0260 7F92      		push r7
+ 393 0262 8F92      		push r8
+ 394 0264 9F92      		push r9
+ 395 0266 AF92      		push r10
+ 396 0268 BF92      		push r11
+ 397 026a CF92      		push r12
+ 398 026c DF92      		push r13
+ 399 026e EF92      		push r14
+GAS LISTING C:\Temp/ccMtmnZi.s 			page 8
+
+
+ 400 0270 FF92      		push r15
+ 401 0272 0F93      		push r16
+ 402 0274 1F93      		push r17
+ 403 0276 CF93      		push r28
+ 404 0278 DF93      		push r29
+ 405               	/* prologue: function */
+ 406               	/* frame size = 0 */
+ 407 027a 4C01      		movw r8,r24
+ 408 027c 5A01      		movw r10,r20
+ 409 027e 6B01      		movw r12,r22
+ 410 0280 3901      		movw r6,r18
+ 411 0282 A701      		movw r20,r14
+ 412 0284 60E8      		ldi r22,lo8(-128)
+ 413 0286 80E0      		ldi r24,lo8(0)
+ 414 0288 90E0      		ldi r25,hi8(0)
+ 415 028a 0E94 0000 		call NutNetBufAlloc
+ 416 028e EC01      		movw r28,r24
+ 417 0290 0097      		sbiw r24,0
+ 418 0292 01F4      		brne .L44
+ 419 0294 8CE0      		ldi r24,lo8(12)
+ 420 0296 90E0      		ldi r25,hi8(12)
+ 421 0298 F401      		movw r30,r8
+ 422 029a 9587      		std Z+13,r25
+ 423 029c 8487      		std Z+12,r24
+ 424 029e 0FEF      		ldi r16,lo8(-1)
+ 425 02a0 1FEF      		ldi r17,hi8(-1)
+ 426 02a2 00C0      		rjmp .L45
+ 427               	.L44:
+ 428 02a4 A701      		movw r20,r14
+ 429 02a6 B801      		movw r22,r16
+ 430 02a8 8F85      		ldd r24,Y+15
+ 431 02aa 9889      		ldd r25,Y+16
+ 432 02ac 0E94 0000 		call memcpy
+ 433 02b0 8E01      		movw r16,r28
+ 434 02b2 9301      		movw r18,r6
+ 435 02b4 B601      		movw r22,r12
+ 436 02b6 A501      		movw r20,r10
+ 437 02b8 C401      		movw r24,r8
+ 438 02ba 0E94 0000 		call NutUdpOutput
+ 439 02be 8C01      		movw r16,r24
+ 440 02c0 0097      		sbiw r24,0
+ 441 02c2 01F4      		brne .L45
+ 442 02c4 CE01      		movw r24,r28
+ 443 02c6 0E94 0000 		call NutNetBufFree
+ 444               	.L45:
+ 445 02ca C801      		movw r24,r16
+ 446               	/* epilogue start */
+ 447 02cc DF91      		pop r29
+ 448 02ce CF91      		pop r28
+ 449 02d0 1F91      		pop r17
+ 450 02d2 0F91      		pop r16
+ 451 02d4 FF90      		pop r15
+ 452 02d6 EF90      		pop r14
+ 453 02d8 DF90      		pop r13
+ 454 02da CF90      		pop r12
+ 455 02dc BF90      		pop r11
+ 456 02de AF90      		pop r10
+GAS LISTING C:\Temp/ccMtmnZi.s 			page 9
+
+
+ 457 02e0 9F90      		pop r9
+ 458 02e2 8F90      		pop r8
+ 459 02e4 7F90      		pop r7
+ 460 02e6 6F90      		pop r6
+ 461 02e8 0895      		ret
+ 462               		.size	NutUdpSendTo, .-NutUdpSendTo
+ 463               	.global	NutUdpCreateSocket
+ 464               		.type	NutUdpCreateSocket, @function
+ 465               	NutUdpCreateSocket:
+ 466 02ea CF93      		push r28
+ 467 02ec DF93      		push r29
+ 468               	/* prologue: function */
+ 469               	/* frame size = 0 */
+ 470 02ee EC01      		movw r28,r24
+ 471 02f0 8091 0000 		lds r24,registered
+ 472 02f4 8823      		tst r24
+ 473 02f6 01F4      		brne .L49
+ 474 02f8 60E0      		ldi r22,lo8(gs(NutUdpInput))
+ 475 02fa 70E0      		ldi r23,hi8(gs(NutUdpInput))
+ 476 02fc 81E1      		ldi r24,lo8(17)
+ 477 02fe 0E94 0000 		call NutRegisterIpHandler
+ 478 0302 892B      		or r24,r25
+ 479 0304 01F0      		breq .L50
+ 480 0306 20E0      		ldi r18,lo8(0)
+ 481 0308 30E0      		ldi r19,hi8(0)
+ 482 030a 00C0      		rjmp .L51
+ 483               	.L50:
+ 484 030c 81E0      		ldi r24,lo8(1)
+ 485 030e 8093 0000 		sts registered,r24
+ 486               	.L49:
+ 487 0312 2097      		sbiw r28,0
+ 488 0314 01F4      		brne .L52
+ 489 0316 7091 0000 		lds r23,udpSocketList
+ 490 031a 6091 0000 		lds r22,udpSocketList+1
+ 491 031e C091 0000 		lds r28,last_local_port
+ 492 0322 D091 0000 		lds r29,(last_local_port)+1
+ 493               	.L55:
+ 494 0326 2196      		adiw r28,1
+ 495 0328 01F4      		brne .L53
+ 496 032a C0E0      		ldi r28,lo8(4096)
+ 497 032c D0E1      		ldi r29,hi8(4096)
+ 498               	.L53:
+ 499 032e AE01      		movw r20,r28
+ 500               	/* #APP */
+ 501               	 ;  295 "../../nut/include/sys/types.h" 1
+ 502 0330 042E      		mov __tmp_reg__, r20
+ 503 0332 452F      		mov r20, r21
+ 504 0334 502D      		mov r21, __tmp_reg__
+ 505               		
+ 506               	 ;  0 "" 2
+ 507               	/* #NOAPP */
+ 508 0336 872F      		mov r24,r23
+ 509 0338 962F      		mov r25,r22
+ 510 033a 9C01      		movw r18,r24
+ 511 033c F901      		movw r30,r18
+ 512 033e 00C0      		rjmp .L54
+ 513               	.L56:
+GAS LISTING C:\Temp/ccMtmnZi.s 			page 10
+
+
+ 514 0340 8281      		ldd r24,Z+2
+ 515 0342 9381      		ldd r25,Z+3
+ 516 0344 8417      		cp r24,r20
+ 517 0346 9507      		cpc r25,r21
+ 518 0348 01F0      		breq .L55
+ 519 034a 0190      		ld __tmp_reg__,Z+
+ 520 034c F081      		ld r31,Z
+ 521 034e E02D      		mov r30,__tmp_reg__
+ 522               	.L54:
+ 523 0350 3097      		sbiw r30,0
+ 524 0352 01F4      		brne .L56
+ 525 0354 C093 0000 		sts last_local_port,r28
+ 526 0358 D093 0000 		sts last_local_port+1,r29
+ 527               	.L52:
+ 528 035c 64E1      		ldi r22,lo8(20)
+ 529 035e 70E0      		ldi r23,hi8(20)
+ 530 0360 81E0      		ldi r24,lo8(1)
+ 531 0362 90E0      		ldi r25,hi8(1)
+ 532 0364 0E94 0000 		call calloc
+ 533 0368 FC01      		movw r30,r24
+ 534 036a 9C01      		movw r18,r24
+ 535 036c 0097      		sbiw r24,0
+ 536 036e 01F0      		breq .L51
+ 537               	/* #APP */
+ 538               	 ;  295 "../../nut/include/sys/types.h" 1
+ 539 0370 0C2E      		mov __tmp_reg__, r28
+ 540 0372 CD2F      		mov r28, r29
+ 541 0374 D02D      		mov r29, __tmp_reg__
+ 542               		
+ 543               	 ;  0 "" 2
+ 544               	/* #NOAPP */
+ 545 0376 D383      		std Z+3,r29
+ 546 0378 C283      		std Z+2,r28
+ 547 037a 8091 0000 		lds r24,udpSocketList
+ 548 037e 9091 0000 		lds r25,(udpSocketList)+1
+ 549 0382 9183      		std Z+1,r25
+ 550 0384 8083      		st Z,r24
+ 551 0386 F093 0000 		sts (udpSocketList)+1,r31
+ 552 038a E093 0000 		sts udpSocketList,r30
+ 553               	.L51:
+ 554 038e C901      		movw r24,r18
+ 555               	/* epilogue start */
+ 556 0390 DF91      		pop r29
+ 557 0392 CF91      		pop r28
+ 558 0394 0895      		ret
+ 559               		.size	NutUdpCreateSocket, .-NutUdpCreateSocket
+ 560               		.data
+ 561               		.type	last_local_port, @object
+ 562               		.size	last_local_port, 2
+ 563               	last_local_port:
+ 564 0000 0010      		.word	4096
+ 565               		.lcomm registered,1
+ 566               		.comm udpSocketList,2,1
+GAS LISTING C:\Temp/ccMtmnZi.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 udpsock.c
+  C:\Temp/ccMtmnZi.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccMtmnZi.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccMtmnZi.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccMtmnZi.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccMtmnZi.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccMtmnZi.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccMtmnZi.s:13     .text:00000000 NutUdpError
+  C:\Temp/ccMtmnZi.s:73     .text:0000005a NutUdpFindSocket
+                            *COM*:00000002 udpSocketList
+  C:\Temp/ccMtmnZi.s:104    .text:00000086 NutUdpSetSockOpt
+  C:\Temp/ccMtmnZi.s:139    .text:000000ba NutUdpGetSockOpt
+  C:\Temp/ccMtmnZi.s:174    .text:000000ee NutUdpSetSocketError
+  C:\Temp/ccMtmnZi.s:214    .text:0000012a NutUdpDestroySocket
+  C:\Temp/ccMtmnZi.s:270    .text:00000188 NutUdpReceiveFrom
+  C:\Temp/ccMtmnZi.s:390    .text:0000025e NutUdpSendTo
+  C:\Temp/ccMtmnZi.s:465    .text:000002ea NutUdpCreateSocket
+                             .bss:00000000 registered
+  C:\Temp/ccMtmnZi.s:563    .data:00000000 last_local_port
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutEventPost
+NutNetBufFree
+free
+NutEventWait
+memcpy
+NutNetBufAlloc
+NutUdpOutput
+NutUdpInput
+NutRegisterIpHandler
+calloc

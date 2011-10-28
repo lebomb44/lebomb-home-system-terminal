@@ -1,0 +1,131 @@
+GAS LISTING C:\Temp/ccewrCh5.s 			page 1
+
+
+   1               		.file	"fdopen.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	_fdopen
+  12               		.type	_fdopen, @function
+  13               	_fdopen:
+  14 0000 EF92      		push r14
+  15 0002 FF92      		push r15
+  16 0004 0F93      		push r16
+  17 0006 1F93      		push r17
+  18 0008 CF93      		push r28
+  19 000a DF93      		push r29
+  20               	/* prologue: function */
+  21               	/* frame size = 0 */
+  22 000c 7C01      		movw r14,r24
+  23 000e CB01      		movw r24,r22
+  24 0010 0E94 0000 		call _fmode
+  25 0014 8C01      		movw r16,r24
+  26 0016 8FEF      		ldi r24,hi8(-1)
+  27 0018 0F3F      		cpi r16,lo8(-1)
+  28 001a 1807      		cpc r17,r24
+  29 001c 01F0      		breq .L10
+  30               	.L2:
+  31 001e E0E0      		ldi r30,lo8(__iob+6)
+  32 0020 F0E0      		ldi r31,hi8(__iob+6)
+  33 0022 C3E0      		ldi r28,lo8(3)
+  34 0024 D0E0      		ldi r29,hi8(3)
+  35 0026 00C0      		rjmp .L4
+  36               	.L5:
+  37 0028 2196      		adiw r28,1
+  38 002a 3296      		adiw r30,2
+  39 002c C830      		cpi r28,8
+  40 002e D105      		cpc r29,__zero_reg__
+  41 0030 01F4      		brne .L4
+  42 0032 87E1      		ldi r24,lo8(23)
+  43 0034 90E0      		ldi r25,hi8(23)
+  44 0036 9093 0000 		sts (errno)+1,r25
+  45 003a 8093 0000 		sts errno,r24
+  46               	.L10:
+  47 003e E0E0      		ldi r30,lo8(0)
+  48 0040 F0E0      		ldi r31,hi8(0)
+  49 0042 00C0      		rjmp .L3
+  50               	.L4:
+  51 0044 8081      		ld r24,Z
+  52 0046 9181      		ldd r25,Z+1
+  53 0048 892B      		or r24,r25
+  54 004a 01F4      		brne .L5
+  55 004c 87E0      		ldi r24,lo8(7)
+  56 004e 90E0      		ldi r25,hi8(7)
+  57 0050 0E94 0000 		call malloc
+GAS LISTING C:\Temp/ccewrCh5.s 			page 2
+
+
+  58 0054 DC01      		movw r26,r24
+  59 0056 FE01      		movw r30,r28
+  60 0058 EE0F      		lsl r30
+  61 005a FF1F      		rol r31
+  62 005c E050      		subi r30,lo8(-(__iob))
+  63 005e F040      		sbci r31,hi8(-(__iob))
+  64 0060 B183      		std Z+1,r27
+  65 0062 A083      		st Z,r26
+  66 0064 1097      		sbiw r26,0
+  67 0066 01F0      		breq .L6
+  68 0068 1196      		adiw r26,1
+  69 006a FC92      		st X,r15
+  70 006c EE92      		st -X,r14
+  71 006e 1396      		adiw r26,2+1
+  72 0070 1C93      		st X,r17
+  73 0072 0E93      		st -X,r16
+  74 0074 1297      		sbiw r26,2
+  75 0076 1496      		adiw r26,4
+  76 0078 1C92      		st X,__zero_reg__
+  77 007a 1497      		sbiw r26,4
+  78 007c 1696      		adiw r26,5+1
+  79 007e 1C92      		st X,__zero_reg__
+  80 0080 1E92      		st -X,__zero_reg__
+  81 0082 1597      		sbiw r26,5
+  82 0084 00C0      		rjmp .L7
+  83               	.L6:
+  84 0086 8CE0      		ldi r24,lo8(12)
+  85 0088 90E0      		ldi r25,hi8(12)
+  86 008a 9093 0000 		sts (errno)+1,r25
+  87 008e 8093 0000 		sts errno,r24
+  88               	.L7:
+  89 0092 CC0F      		lsl r28
+  90 0094 DD1F      		rol r29
+  91 0096 C050      		subi r28,lo8(-(__iob))
+  92 0098 D040      		sbci r29,hi8(-(__iob))
+  93 009a E881      		ld r30,Y
+  94 009c F981      		ldd r31,Y+1
+  95               	.L3:
+  96 009e CF01      		movw r24,r30
+  97               	/* epilogue start */
+  98 00a0 DF91      		pop r29
+  99 00a2 CF91      		pop r28
+ 100 00a4 1F91      		pop r17
+ 101 00a6 0F91      		pop r16
+ 102 00a8 FF90      		pop r15
+ 103 00aa EF90      		pop r14
+ 104 00ac 0895      		ret
+ 105               		.size	_fdopen, .-_fdopen
+GAS LISTING C:\Temp/ccewrCh5.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 fdopen.c
+  C:\Temp/ccewrCh5.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccewrCh5.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccewrCh5.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccewrCh5.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccewrCh5.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccewrCh5.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccewrCh5.s:13     .text:00000000 _fdopen
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+_fmode
+__iob
+errno
+malloc

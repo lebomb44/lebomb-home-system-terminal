@@ -1,0 +1,54 @@
+GAS LISTING C:\Temp/cc0CJdLp.s 			page 1
+
+
+   1               		.file	"read.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	_read
+  12               		.type	_read, @function
+  13               	_read:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 DC01      		movw r26,r24
+  17 0002 1296      		adiw r26,2
+  18 0004 ED91      		ld r30,X+
+  19 0006 FC91      		ld r31,X
+  20 0008 1397      		sbiw r26,2+1
+  21 000a 3097      		sbiw r30,0
+  22 000c 01F4      		brne .L2
+  23 000e 1596      		adiw r26,5
+  24 0010 ED91      		ld r30,X+
+  25 0012 FC91      		ld r31,X
+  26 0014 1697      		sbiw r26,5+1
+  27 0016 0995      		icall
+  28 0018 0895      		ret
+  29               	.L2:
+  30 001a 0788      		ldd __tmp_reg__,Z+23
+  31 001c F08D      		ldd r31,Z+24
+  32 001e E02D      		mov r30,__tmp_reg__
+  33 0020 0995      		icall
+  34 0022 0895      		ret
+  35               		.size	_read, .-_read
+GAS LISTING C:\Temp/cc0CJdLp.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 read.c
+  C:\Temp/cc0CJdLp.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cc0CJdLp.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cc0CJdLp.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cc0CJdLp.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cc0CJdLp.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cc0CJdLp.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cc0CJdLp.s:13     .text:00000000 _read
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

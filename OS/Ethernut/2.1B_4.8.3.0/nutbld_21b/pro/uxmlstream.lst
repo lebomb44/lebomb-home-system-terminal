@@ -1,0 +1,501 @@
+GAS LISTING C:\Temp/ccmQ8Dlh.s 			page 1
+
+
+   1               		.file	"uxmlstream.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	UxmlParseStream
+  12               		.type	UxmlParseStream, @function
+  13               	UxmlParseStream:
+  14 0000 2F92      		push r2
+  15 0002 3F92      		push r3
+  16 0004 4F92      		push r4
+  17 0006 5F92      		push r5
+  18 0008 6F92      		push r6
+  19 000a 7F92      		push r7
+  20 000c 8F92      		push r8
+  21 000e 9F92      		push r9
+  22 0010 AF92      		push r10
+  23 0012 BF92      		push r11
+  24 0014 CF92      		push r12
+  25 0016 DF92      		push r13
+  26 0018 EF92      		push r14
+  27 001a FF92      		push r15
+  28 001c 0F93      		push r16
+  29 001e 1F93      		push r17
+  30 0020 DF93      		push r29
+  31 0022 CF93      		push r28
+  32 0024 CDB7      		in r28,__SP_L__
+  33 0026 DEB7      		in r29,__SP_H__
+  34 0028 2C97      		sbiw r28,12
+  35 002a 0FB6      		in __tmp_reg__,__SREG__
+  36 002c F894      		cli
+  37 002e DEBF      		out __SP_H__,r29
+  38 0030 0FBE      		out __SREG__,__tmp_reg__
+  39 0032 CDBF      		out __SP_L__,r28
+  40               	/* prologue: function */
+  41               	/* frame size = 12 */
+  42 0034 9C83      		std Y+4,r25
+  43 0036 8B83      		std Y+3,r24
+  44 0038 7E83      		std Y+6,r23
+  45 003a 6D83      		std Y+5,r22
+  46 003c 5887      		std Y+8,r21
+  47 003e 4F83      		std Y+7,r20
+  48 0040 80E0      		ldi r24,lo8(512)
+  49 0042 92E0      		ldi r25,hi8(512)
+  50 0044 0E94 0000 		call malloc
+  51 0048 3C01      		movw r6,r24
+  52 004a 0097      		sbiw r24,0
+  53 004c 01F0      		breq .L39
+  54               	.L2:
+  55 004e 80E4      		ldi r24,lo8(64)
+  56 0050 90E0      		ldi r25,hi8(64)
+  57 0052 0E94 0000 		call malloc
+GAS LISTING C:\Temp/ccmQ8Dlh.s 			page 2
+
+
+  58 0056 7C01      		movw r14,r24
+  59 0058 0097      		sbiw r24,0
+  60 005a 01F0      		breq .L4
+  61 005c 4424      		clr r4
+  62 005e 5524      		clr r5
+  63 0060 AA24      		clr r10
+  64 0062 BB24      		clr r11
+  65 0064 C301      		movw r24,r6
+  66 0066 0196      		adiw r24,1
+  67 0068 9A87      		std Y+10,r25
+  68 006a 8987      		std Y+9,r24
+  69 006c 00C0      		rjmp .L36
+  70               	.L4:
+  71 006e C301      		movw r24,r6
+  72 0070 0E94 0000 		call free
+  73               	.L39:
+  74 0074 4424      		clr r4
+  75 0076 5524      		clr r5
+  76 0078 00C0      		rjmp .L3
+  77               	.L36:
+  78 007a 80E0      		ldi r24,lo8(heapFreeList)
+  79 007c 90E0      		ldi r25,hi8(heapFreeList)
+  80 007e 0E94 0000 		call NutHeapRootAvailable
+  81 0082 8050      		subi r24,lo8(8192)
+  82 0084 9042      		sbci r25,hi8(8192)
+  83 0086 00F4      		brsh .+2
+  84 0088 00C0      		rjmp .L6
+  85 008a 01E0      		ldi r16,lo8(1)
+  86 008c 10E0      		ldi r17,hi8(1)
+  87 008e 8824      		clr r8
+  88 0090 9924      		clr r9
+  89 0092 212C      		mov r2,__zero_reg__
+  90 0094 82E0      		ldi r24,hi8(512)
+  91 0096 382E      		mov r3,r24
+  92 0098 CC24      		clr r12
+  93 009a DD24      		clr r13
+  94 009c EFEF      		ldi r30,lo8(-1)
+  95 009e FFEF      		ldi r31,hi8(-1)
+  96 00a0 FA83      		std Y+2,r31
+  97 00a2 E983      		std Y+1,r30
+  98               	.L23:
+  99 00a4 8B81      		ldd r24,Y+3
+ 100 00a6 9C81      		ldd r25,Y+4
+ 101 00a8 0E94 0000 		call fgetc
+ 102 00ac 9C87      		std Y+12,r25
+ 103 00ae 8B87      		std Y+11,r24
+ 104 00b0 0196      		adiw r24,1
+ 105 00b2 0297      		sbiw r24,2
+ 106 00b4 00F4      		brsh .+2
+ 107 00b6 00C0      		rjmp .L7
+ 108 00b8 0330      		cpi r16,3
+ 109 00ba 1105      		cpc r17,__zero_reg__
+ 110 00bc 01F0      		breq .L11
+ 111 00be 0430      		cpi r16,4
+ 112 00c0 1105      		cpc r17,__zero_reg__
+ 113 00c2 04F4      		brge .L13
+ 114 00c4 0130      		cpi r16,1
+GAS LISTING C:\Temp/ccmQ8Dlh.s 			page 3
+
+
+ 115 00c6 1105      		cpc r17,__zero_reg__
+ 116 00c8 01F0      		breq .L9
+ 117 00ca 0230      		cpi r16,2
+ 118 00cc 1105      		cpc r17,__zero_reg__
+ 119 00ce 01F0      		breq .+2
+ 120 00d0 00C0      		rjmp .L8
+ 121 00d2 00C0      		rjmp .L10
+ 122               	.L13:
+ 123 00d4 0430      		cpi r16,4
+ 124 00d6 1105      		cpc r17,__zero_reg__
+ 125 00d8 01F0      		breq .L12
+ 126 00da 0530      		cpi r16,5
+ 127 00dc 1105      		cpc r17,__zero_reg__
+ 128 00de 01F0      		breq .+2
+ 129 00e0 00C0      		rjmp .L8
+ 130 00e2 00C0      		rjmp .L10
+ 131               	.L9:
+ 132 00e4 8B85      		ldd r24,Y+11
+ 133 00e6 9C85      		ldd r25,Y+12
+ 134 00e8 CC97      		sbiw r24,60
+ 135 00ea 01F4      		brne .L14
+ 136 00ec 6301      		movw r12,r6
+ 137 00ee 04E0      		ldi r16,lo8(4)
+ 138 00f0 10E0      		ldi r17,hi8(4)
+ 139 00f2 00C0      		rjmp .L15
+ 140               	.L14:
+ 141 00f4 AB85      		ldd r26,Y+11
+ 142 00f6 BC85      		ldd r27,Y+12
+ 143 00f8 A232      		cpi r26,34
+ 144 00fa B105      		cpc r27,__zero_reg__
+ 145 00fc 01F0      		breq .L16
+ 146 00fe 9797      		sbiw r26,39
+ 147 0100 01F4      		brne .L8
+ 148 0102 00C0      		rjmp .L16
+ 149               	.L10:
+ 150 0104 EB85      		ldd r30,Y+11
+ 151 0106 FC85      		ldd r31,Y+12
+ 152 0108 E815      		cp r30,r8
+ 153 010a F905      		cpc r31,r9
+ 154 010c 01F4      		brne .L8
+ 155 010e 0150      		subi r16,lo8(-(-1))
+ 156 0110 1040      		sbci r17,hi8(-(-1))
+ 157 0112 4F01      		movw r8,r30
+ 158 0114 00C0      		rjmp .L8
+ 159               	.L11:
+ 160 0116 8B85      		ldd r24,Y+11
+ 161 0118 9C85      		ldd r25,Y+12
+ 162 011a 0E94 0000 		call isspace
+ 163 011e 892B      		or r24,r25
+ 164 0120 01F0      		breq .L17
+ 165 0122 1C86      		std Y+12,__zero_reg__
+ 166 0124 1B86      		std Y+11,__zero_reg__
+ 167 0126 00C0      		rjmp .L8
+ 168               	.L17:
+ 169 0128 04E0      		ldi r16,lo8(4)
+ 170 012a 10E0      		ldi r17,hi8(4)
+ 171               	.L12:
+GAS LISTING C:\Temp/ccmQ8Dlh.s 			page 4
+
+
+ 172 012c 8B85      		ldd r24,Y+11
+ 173 012e 9C85      		ldd r25,Y+12
+ 174 0130 CE97      		sbiw r24,62
+ 175 0132 01F4      		brne .L18
+ 176 0134 00E0      		ldi r16,lo8(0)
+ 177 0136 10E0      		ldi r17,hi8(0)
+ 178 0138 1A82      		std Y+2,__zero_reg__
+ 179 013a 1982      		std Y+1,__zero_reg__
+ 180 013c 00C0      		rjmp .L8
+ 181               	.L18:
+ 182 013e AB85      		ldd r26,Y+11
+ 183 0140 BC85      		ldd r27,Y+12
+ 184 0142 A232      		cpi r26,34
+ 185 0144 B105      		cpc r27,__zero_reg__
+ 186 0146 01F0      		breq .L19
+ 187 0148 9797      		sbiw r26,39
+ 188 014a 01F4      		brne .L20
+ 189               	.L19:
+ 190 014c 0F5F      		subi r16,lo8(-(1))
+ 191 014e 1F4F      		sbci r17,hi8(-(1))
+ 192 0150 8B84      		ldd r8,Y+11
+ 193 0152 9C84      		ldd r9,Y+12
+ 194 0154 00C0      		rjmp .L8
+ 195               	.L20:
+ 196 0156 8B85      		ldd r24,Y+11
+ 197 0158 9C85      		ldd r25,Y+12
+ 198 015a 0E94 0000 		call isspace
+ 199 015e 892B      		or r24,r25
+ 200 0160 01F0      		breq .L8
+ 201 0162 03E0      		ldi r16,lo8(3)
+ 202 0164 10E0      		ldi r17,hi8(3)
+ 203 0166 E0E2      		ldi r30,lo8(32)
+ 204 0168 F0E0      		ldi r31,hi8(32)
+ 205 016a FC87      		std Y+12,r31
+ 206 016c EB87      		std Y+11,r30
+ 207 016e 00C0      		rjmp .L8
+ 208               	.L16:
+ 209 0170 8B84      		ldd r8,Y+11
+ 210 0172 9C84      		ldd r9,Y+12
+ 211 0174 02E0      		ldi r16,lo8(2)
+ 212 0176 10E0      		ldi r17,hi8(2)
+ 213               	.L8:
+ 214 0178 C114      		cp r12,__zero_reg__
+ 215 017a D104      		cpc r13,__zero_reg__
+ 216 017c 01F0      		breq .L21
+ 217 017e 8B85      		ldd r24,Y+11
+ 218 0180 9C85      		ldd r25,Y+12
+ 219 0182 892B      		or r24,r25
+ 220 0184 01F0      		breq .L21
+ 221               	.L15:
+ 222 0186 92E0      		ldi r25,lo8(2)
+ 223 0188 2916      		cp r2,r25
+ 224 018a 3104      		cpc r3,__zero_reg__
+ 225 018c 00F0      		brlo .L22
+ 226 018e 0894      		sec
+ 227 0190 2108      		sbc r2,__zero_reg__
+ 228 0192 3108      		sbc r3,__zero_reg__
+GAS LISTING C:\Temp/ccmQ8Dlh.s 			page 5
+
+
+ 229 0194 D601      		movw r26,r12
+ 230 0196 EB85      		ldd r30,Y+11
+ 231 0198 ED93      		st X+,r30
+ 232 019a 6D01      		movw r12,r26
+ 233               	.L21:
+ 234 019c 0115      		cp r16,__zero_reg__
+ 235 019e 1105      		cpc r17,__zero_reg__
+ 236 01a0 01F0      		breq .+2
+ 237 01a2 00C0      		rjmp .L23
+ 238               	.L7:
+ 239 01a4 C114      		cp r12,__zero_reg__
+ 240 01a6 D104      		cpc r13,__zero_reg__
+ 241 01a8 01F0      		breq .L24
+ 242               	.L22:
+ 243 01aa D601      		movw r26,r12
+ 244 01ac 1C92      		st X,__zero_reg__
+ 245               	.L24:
+ 246 01ae E981      		ldd r30,Y+1
+ 247 01b0 FA81      		ldd r31,Y+2
+ 248 01b2 EF2B      		or r30,r31
+ 249 01b4 01F0      		breq .+2
+ 250 01b6 00C0      		rjmp .L6
+ 251 01b8 40E4      		ldi r20,lo8(64)
+ 252 01ba 50E0      		ldi r21,hi8(64)
+ 253 01bc B701      		movw r22,r14
+ 254 01be 8985      		ldd r24,Y+9
+ 255 01c0 9A85      		ldd r25,Y+10
+ 256 01c2 0E94 0000 		call UxmlParseTag
+ 257 01c6 6C01      		movw r12,r24
+ 258 01c8 0097      		sbiw r24,0
+ 259 01ca 01F4      		brne .+2
+ 260 01cc 00C0      		rjmp .L36
+ 261 01ce 182F      		mov r17,r24
+ 262 01d0 0D2D      		mov r16,r13
+ 263 01d2 D701      		movw r26,r14
+ 264 01d4 8C91      		ld r24,X
+ 265 01d6 9927      		clr r25
+ 266 01d8 87FD      		sbrc r24,7
+ 267 01da 9095      		com r25
+ 268 01dc 0E94 0000 		call isalpha
+ 269 01e0 892B      		or r24,r25
+ 270 01e2 01F4      		brne .+2
+ 271 01e4 00C0      		rjmp .L25
+ 272 01e6 6D81      		ldd r22,Y+5
+ 273 01e8 7E81      		ldd r23,Y+6
+ 274 01ea C701      		movw r24,r14
+ 275 01ec 0E94 0000 		call UxmlFilterMatch
+ 276 01f0 892B      		or r24,r25
+ 277 01f2 01F4      		brne .+2
+ 278 01f4 00C0      		rjmp .L25
+ 279 01f6 C701      		movw r24,r14
+ 280 01f8 0E94 0000 		call UxmlNodeCreate
+ 281 01fc BC01      		movw r22,r24
+ 282 01fe 0097      		sbiw r24,0
+ 283 0200 01F4      		brne .+2
+ 284 0202 00C0      		rjmp .L6
+ 285 0204 4114      		cp r4,__zero_reg__
+GAS LISTING C:\Temp/ccmQ8Dlh.s 			page 6
+
+
+ 286 0206 5104      		cpc r5,__zero_reg__
+ 287 0208 01F4      		brne .L26
+ 288 020a 2C01      		movw r4,r24
+ 289 020c 5C01      		movw r10,r24
+ 290 020e 00C0      		rjmp .L37
+ 291               	.L26:
+ 292 0210 A114      		cp r10,__zero_reg__
+ 293 0212 B104      		cpc r11,__zero_reg__
+ 294 0214 01F4      		brne .L28
+ 295 0216 C201      		movw r24,r4
+ 296 0218 0E94 0000 		call UxmlTreeAddSibling
+ 297 021c 00C0      		rjmp .L38
+ 298               	.L28:
+ 299 021e C501      		movw r24,r10
+ 300 0220 0E94 0000 		call UxmlTreeAddChild
+ 301               	.L38:
+ 302 0224 5C01      		movw r10,r24
+ 303               	.L37:
+ 304 0226 40E4      		ldi r20,lo8(64)
+ 305 0228 50E0      		ldi r21,hi8(64)
+ 306 022a B701      		movw r22,r14
+ 307 022c C601      		movw r24,r12
+ 308 022e 0E94 0000 		call UxmlParseTag
+ 309 0232 6C01      		movw r12,r24
+ 310 0234 0097      		sbiw r24,0
+ 311 0236 01F4      		brne .+2
+ 312 0238 00C0      		rjmp .L36
+ 313 023a F701      		movw r30,r14
+ 314 023c 8081      		ld r24,Z
+ 315 023e 8E33      		cpi r24,lo8(62)
+ 316 0240 01F4      		brne .+2
+ 317 0242 00C0      		rjmp .L36
+ 318 0244 9927      		clr r25
+ 319 0246 87FD      		sbrc r24,7
+ 320 0248 9095      		com r25
+ 321 024a 0E94 0000 		call isalpha
+ 322 024e 892B      		or r24,r25
+ 323 0250 01F0      		breq .L37
+ 324 0252 6F81      		ldd r22,Y+7
+ 325 0254 7885      		ldd r23,Y+8
+ 326 0256 C701      		movw r24,r14
+ 327 0258 0E94 0000 		call UxmlFilterMatch
+ 328 025c 892B      		or r24,r25
+ 329 025e 01F0      		breq .L37
+ 330 0260 D701      		movw r26,r14
+ 331 0262 0D90      		ld __tmp_reg__,X+
+ 332 0264 0020      		tst __tmp_reg__
+ 333 0266 01F4      		brne .-6
+ 334 0268 4D01      		movw r8,r26
+ 335 026a 8E18      		sub r8,r14
+ 336 026c 9F08      		sbc r9,r15
+ 337 026e C401      		movw r24,r8
+ 338 0270 0E94 0000 		call malloc
+ 339 0274 8C01      		movw r16,r24
+ 340 0276 0097      		sbiw r24,0
+ 341 0278 01F0      		breq .L37
+ 342 027a A401      		movw r20,r8
+GAS LISTING C:\Temp/ccmQ8Dlh.s 			page 7
+
+
+ 343 027c B701      		movw r22,r14
+ 344 027e 0E94 0000 		call memcpy
+ 345 0282 40E4      		ldi r20,lo8(64)
+ 346 0284 50E0      		ldi r21,hi8(64)
+ 347 0286 B701      		movw r22,r14
+ 348 0288 C601      		movw r24,r12
+ 349 028a 0E94 0000 		call UxmlParseTag
+ 350 028e 9C01      		movw r18,r24
+ 351 0290 0097      		sbiw r24,0
+ 352 0292 01F4      		brne .+2
+ 353 0294 00C0      		rjmp .L36
+ 354 0296 F701      		movw r30,r14
+ 355 0298 8081      		ld r24,Z
+ 356 029a 8D33      		cpi r24,lo8(61)
+ 357 029c 01F0      		breq .+2
+ 358 029e 00C0      		rjmp .L36
+ 359 02a0 40E4      		ldi r20,lo8(64)
+ 360 02a2 50E0      		ldi r21,hi8(64)
+ 361 02a4 B701      		movw r22,r14
+ 362 02a6 C901      		movw r24,r18
+ 363 02a8 0E94 0000 		call UxmlParseTag
+ 364 02ac 6C01      		movw r12,r24
+ 365 02ae 0097      		sbiw r24,0
+ 366 02b0 01F4      		brne .+2
+ 367 02b2 00C0      		rjmp .L36
+ 368 02b4 D701      		movw r26,r14
+ 369 02b6 8C91      		ld r24,X
+ 370 02b8 8E33      		cpi r24,lo8(62)
+ 371 02ba 01F4      		brne .+2
+ 372 02bc 00C0      		rjmp .L36
+ 373 02be A701      		movw r20,r14
+ 374 02c0 B801      		movw r22,r16
+ 375 02c2 C501      		movw r24,r10
+ 376 02c4 0E94 0000 		call UxmlNodeAddAttrib
+ 377 02c8 C801      		movw r24,r16
+ 378 02ca 0E94 0000 		call free
+ 379 02ce 00C0      		rjmp .L37
+ 380               	.L25:
+ 381 02d0 F701      		movw r30,r14
+ 382 02d2 8081      		ld r24,Z
+ 383 02d4 8F32      		cpi r24,lo8(47)
+ 384 02d6 01F0      		breq .+2
+ 385 02d8 00C0      		rjmp .L36
+ 386 02da 40E4      		ldi r20,lo8(64)
+ 387 02dc 50E0      		ldi r21,hi8(64)
+ 388 02de B701      		movw r22,r14
+ 389 02e0 812F      		mov r24,r17
+ 390 02e2 902F      		mov r25,r16
+ 391 02e4 0E94 0000 		call UxmlParseTag
+ 392 02e8 892B      		or r24,r25
+ 393 02ea 01F4      		brne .+2
+ 394 02ec 00C0      		rjmp .L36
+ 395 02ee A114      		cp r10,__zero_reg__
+ 396 02f0 B104      		cpc r11,__zero_reg__
+ 397 02f2 01F4      		brne .+2
+ 398 02f4 00C0      		rjmp .L36
+ 399 02f6 B701      		movw r22,r14
+GAS LISTING C:\Temp/ccmQ8Dlh.s 			page 8
+
+
+ 400 02f8 D501      		movw r26,r10
+ 401 02fa 1696      		adiw r26,6
+ 402 02fc 8D91      		ld r24,X+
+ 403 02fe 9C91      		ld r25,X
+ 404 0300 1797      		sbiw r26,6+1
+ 405 0302 0E94 0000 		call strcasecmp
+ 406 0306 892B      		or r24,r25
+ 407 0308 01F0      		breq .+2
+ 408 030a 00C0      		rjmp .L36
+ 409 030c F501      		movw r30,r10
+ 410 030e A480      		ldd r10,Z+4
+ 411 0310 B580      		ldd r11,Z+5
+ 412 0312 00C0      		rjmp .L36
+ 413               	.L6:
+ 414 0314 C301      		movw r24,r6
+ 415 0316 0E94 0000 		call free
+ 416 031a C701      		movw r24,r14
+ 417 031c 0E94 0000 		call free
+ 418               	.L3:
+ 419 0320 C201      		movw r24,r4
+ 420               	/* epilogue start */
+ 421 0322 2C96      		adiw r28,12
+ 422 0324 0FB6      		in __tmp_reg__,__SREG__
+ 423 0326 F894      		cli
+ 424 0328 DEBF      		out __SP_H__,r29
+ 425 032a 0FBE      		out __SREG__,__tmp_reg__
+ 426 032c CDBF      		out __SP_L__,r28
+ 427 032e CF91      		pop r28
+ 428 0330 DF91      		pop r29
+ 429 0332 1F91      		pop r17
+ 430 0334 0F91      		pop r16
+ 431 0336 FF90      		pop r15
+ 432 0338 EF90      		pop r14
+ 433 033a DF90      		pop r13
+ 434 033c CF90      		pop r12
+ 435 033e BF90      		pop r11
+ 436 0340 AF90      		pop r10
+ 437 0342 9F90      		pop r9
+ 438 0344 8F90      		pop r8
+ 439 0346 7F90      		pop r7
+ 440 0348 6F90      		pop r6
+ 441 034a 5F90      		pop r5
+ 442 034c 4F90      		pop r4
+ 443 034e 3F90      		pop r3
+ 444 0350 2F90      		pop r2
+ 445 0352 0895      		ret
+ 446               		.size	UxmlParseStream, .-UxmlParseStream
+GAS LISTING C:\Temp/ccmQ8Dlh.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 uxmlstream.c
+  C:\Temp/ccmQ8Dlh.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccmQ8Dlh.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccmQ8Dlh.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccmQ8Dlh.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccmQ8Dlh.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccmQ8Dlh.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccmQ8Dlh.s:13     .text:00000000 UxmlParseStream
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+malloc
+free
+heapFreeList
+NutHeapRootAvailable
+fgetc
+isspace
+UxmlParseTag
+isalpha
+UxmlFilterMatch
+UxmlNodeCreate
+UxmlTreeAddSibling
+UxmlTreeAddChild
+memcpy
+UxmlNodeAddAttrib
+strcasecmp

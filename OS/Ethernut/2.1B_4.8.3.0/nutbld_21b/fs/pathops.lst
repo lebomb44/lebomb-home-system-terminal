@@ -1,0 +1,493 @@
+GAS LISTING C:\Temp/ccNlafJz.s 			page 1
+
+
+   1               		.file	"pathops.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	lseek
+  12               		.type	lseek, @function
+  13               	lseek:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 6FEF      		ldi r22,lo8(-1)
+  17 0002 7FEF      		ldi r23,hi8(-1)
+  18 0004 8FEF      		ldi r24,hlo8(-1)
+  19 0006 9FEF      		ldi r25,hhi8(-1)
+  20               	/* epilogue start */
+  21 0008 0895      		ret
+  22               		.size	lseek, .-lseek
+  23               	.global	fstat
+  24               		.type	fstat, @function
+  25               	fstat:
+  26               	/* prologue: function */
+  27               	/* frame size = 0 */
+  28 000a 8FEF      		ldi r24,lo8(-1)
+  29 000c 9FEF      		ldi r25,hi8(-1)
+  30               	/* epilogue start */
+  31 000e 0895      		ret
+  32               		.size	fstat, .-fstat
+  33               	.global	rename
+  34               		.type	rename, @function
+  35               	rename:
+  36 0010 0F93      		push r16
+  37 0012 1F93      		push r17
+  38 0014 DF93      		push r29
+  39 0016 CF93      		push r28
+  40 0018 CDB7      		in r28,__SP_L__
+  41 001a DEB7      		in r29,__SP_H__
+  42 001c 6697      		sbiw r28,22
+  43 001e 0FB6      		in __tmp_reg__,__SREG__
+  44 0020 F894      		cli
+  45 0022 DEBF      		out __SP_H__,r29
+  46 0024 0FBE      		out __SREG__,__tmp_reg__
+  47 0026 CDBF      		out __SP_L__,r28
+  48               	/* prologue: function */
+  49               	/* frame size = 22 */
+  50 0028 582F      		mov r21,r24
+  51 002a FE01      		movw r30,r28
+  52 002c 3596      		adiw r30,5
+  53 002e 282F      		mov r18,r24
+  54 0030 392F      		mov r19,r25
+  55 0032 D901      		movw r26,r18
+  56 0034 9E01      		movw r18,r28
+  57 0036 235F      		subi r18,lo8(-(13))
+GAS LISTING C:\Temp/ccNlafJz.s 			page 2
+
+
+  58 0038 3F4F      		sbci r19,hi8(-(13))
+  59 003a 00C0      		rjmp .L6
+  60               	.L8:
+  61 003c 8193      		st Z+,r24
+  62 003e 1196      		adiw r26,1
+  63               	.L6:
+  64 0040 9A2F      		mov r25,r26
+  65 0042 951B      		sub r25,r21
+  66 0044 8C91      		ld r24,X
+  67 0046 8823      		tst r24
+  68 0048 01F0      		breq .L7
+  69 004a 8A33      		cpi r24,lo8(58)
+  70 004c 01F0      		breq .L7
+  71 004e E217      		cp r30,r18
+  72 0050 F307      		cpc r31,r19
+  73 0052 01F4      		brne .L8
+  74               	.L7:
+  75 0054 FE01      		movw r30,r28
+  76 0056 E90F      		add r30,r25
+  77 0058 F11D      		adc r31,__zero_reg__
+  78 005a 1582      		std Z+5,__zero_reg__
+  79 005c 8C91      		ld r24,X
+  80 005e 8A33      		cpi r24,lo8(58)
+  81 0060 01F0      		breq .+2
+  82 0062 00C0      		rjmp .L9
+  83 0064 1196      		adiw r26,1
+  84 0066 BA83      		std Y+2,r27
+  85 0068 A983      		std Y+1,r26
+  86 006a FE01      		movw r30,r28
+  87 006c 3E96      		adiw r30,14
+  88 006e DB01      		movw r26,r22
+  89 0070 9E01      		movw r18,r28
+  90 0072 2A5E      		subi r18,lo8(-(22))
+  91 0074 3F4F      		sbci r19,hi8(-(22))
+  92 0076 00C0      		rjmp .L10
+  93               	.L12:
+  94 0078 8193      		st Z+,r24
+  95 007a 1196      		adiw r26,1
+  96               	.L10:
+  97 007c 9A2F      		mov r25,r26
+  98 007e 961B      		sub r25,r22
+  99 0080 8C91      		ld r24,X
+ 100 0082 8823      		tst r24
+ 101 0084 01F0      		breq .L11
+ 102 0086 8A33      		cpi r24,lo8(58)
+ 103 0088 01F0      		breq .L11
+ 104 008a E217      		cp r30,r18
+ 105 008c F307      		cpc r31,r19
+ 106 008e 01F4      		brne .L12
+ 107               	.L11:
+ 108 0090 9E01      		movw r18,r28
+ 109 0092 225F      		subi r18,lo8(-(14))
+ 110 0094 3F4F      		sbci r19,hi8(-(14))
+ 111 0096 F901      		movw r30,r18
+ 112 0098 E90F      		add r30,r25
+ 113 009a F11D      		adc r31,__zero_reg__
+ 114 009c 1082      		st Z,__zero_reg__
+GAS LISTING C:\Temp/ccNlafJz.s 			page 3
+
+
+ 115 009e 8C91      		ld r24,X
+ 116 00a0 8A33      		cpi r24,lo8(58)
+ 117 00a2 01F4      		brne .L9
+ 118 00a4 1196      		adiw r26,1
+ 119 00a6 BC83      		std Y+4,r27
+ 120 00a8 AB83      		std Y+3,r26
+ 121 00aa 8E01      		movw r16,r28
+ 122 00ac 0B5F      		subi r16,lo8(-(5))
+ 123 00ae 1F4F      		sbci r17,hi8(-(5))
+ 124 00b0 B801      		movw r22,r16
+ 125 00b2 C901      		movw r24,r18
+ 126 00b4 0E94 0000 		call strcmp
+ 127 00b8 0097      		sbiw r24,0
+ 128 00ba 01F4      		brne .L9
+ 129 00bc C801      		movw r24,r16
+ 130 00be 0E94 0000 		call NutDeviceLookup
+ 131 00c2 DC01      		movw r26,r24
+ 132 00c4 0097      		sbiw r24,0
+ 133 00c6 01F4      		brne .L13
+ 134 00c8 82E0      		ldi r24,lo8(2)
+ 135 00ca 90E0      		ldi r25,hi8(2)
+ 136 00cc 9093 0000 		sts (errno)+1,r25
+ 137 00d0 8093 0000 		sts errno,r24
+ 138 00d4 00C0      		rjmp .L9
+ 139               	.L13:
+ 140 00d6 5596      		adiw r26,21
+ 141 00d8 ED91      		ld r30,X+
+ 142 00da FC91      		ld r31,X
+ 143 00dc 5697      		sbiw r26,21+1
+ 144 00de AE01      		movw r20,r28
+ 145 00e0 4F5F      		subi r20,lo8(-(1))
+ 146 00e2 5F4F      		sbci r21,hi8(-(1))
+ 147 00e4 62E3      		ldi r22,lo8(4402)
+ 148 00e6 71E1      		ldi r23,hi8(4402)
+ 149 00e8 0995      		icall
+ 150 00ea 9C01      		movw r18,r24
+ 151 00ec 00C0      		rjmp .L14
+ 152               	.L9:
+ 153 00ee 2FEF      		ldi r18,lo8(-1)
+ 154 00f0 3FEF      		ldi r19,hi8(-1)
+ 155               	.L14:
+ 156 00f2 C901      		movw r24,r18
+ 157               	/* epilogue start */
+ 158 00f4 6696      		adiw r28,22
+ 159 00f6 0FB6      		in __tmp_reg__,__SREG__
+ 160 00f8 F894      		cli
+ 161 00fa DEBF      		out __SP_H__,r29
+ 162 00fc 0FBE      		out __SREG__,__tmp_reg__
+ 163 00fe CDBF      		out __SP_L__,r28
+ 164 0100 CF91      		pop r28
+ 165 0102 DF91      		pop r29
+ 166 0104 1F91      		pop r17
+ 167 0106 0F91      		pop r16
+ 168 0108 0895      		ret
+ 169               		.size	rename, .-rename
+ 170               		.type	PathOperation, @function
+ 171               	PathOperation:
+GAS LISTING C:\Temp/ccNlafJz.s 			page 4
+
+
+ 172 010a DF92      		push r13
+ 173 010c EF92      		push r14
+ 174 010e FF92      		push r15
+ 175 0110 0F93      		push r16
+ 176 0112 1F93      		push r17
+ 177 0114 DF93      		push r29
+ 178 0116 CF93      		push r28
+ 179 0118 CDB7      		in r28,__SP_L__
+ 180 011a DEB7      		in r29,__SP_H__
+ 181 011c 2997      		sbiw r28,9
+ 182 011e 0FB6      		in __tmp_reg__,__SREG__
+ 183 0120 F894      		cli
+ 184 0122 DEBF      		out __SP_H__,r29
+ 185 0124 0FBE      		out __SREG__,__tmp_reg__
+ 186 0126 CDBF      		out __SP_L__,r28
+ 187               	/* prologue: function */
+ 188               	/* frame size = 9 */
+ 189 0128 D82E      		mov r13,r24
+ 190 012a 7B01      		movw r14,r22
+ 191 012c FE01      		movw r30,r28
+ 192 012e 3196      		adiw r30,1
+ 193 0130 282F      		mov r18,r24
+ 194 0132 392F      		mov r19,r25
+ 195 0134 8901      		movw r16,r18
+ 196 0136 AE01      		movw r20,r28
+ 197 0138 475F      		subi r20,lo8(-(9))
+ 198 013a 5F4F      		sbci r21,hi8(-(9))
+ 199 013c 00C0      		rjmp .L17
+ 200               	.L19:
+ 201 013e 8193      		st Z+,r24
+ 202 0140 0F5F      		subi r16,lo8(-(1))
+ 203 0142 1F4F      		sbci r17,hi8(-(1))
+ 204               	.L17:
+ 205 0144 202F      		mov r18,r16
+ 206 0146 2D19      		sub r18,r13
+ 207 0148 D801      		movw r26,r16
+ 208 014a 8C91      		ld r24,X
+ 209 014c 8823      		tst r24
+ 210 014e 01F0      		breq .L18
+ 211 0150 8A33      		cpi r24,lo8(58)
+ 212 0152 01F0      		breq .L18
+ 213 0154 E417      		cp r30,r20
+ 214 0156 F507      		cpc r31,r21
+ 215 0158 01F4      		brne .L19
+ 216               	.L18:
+ 217 015a CE01      		movw r24,r28
+ 218 015c 0196      		adiw r24,1
+ 219 015e FC01      		movw r30,r24
+ 220 0160 E20F      		add r30,r18
+ 221 0162 F11D      		adc r31,__zero_reg__
+ 222 0164 1082      		st Z,__zero_reg__
+ 223 0166 0E94 0000 		call NutDeviceLookup
+ 224 016a DC01      		movw r26,r24
+ 225 016c 0097      		sbiw r24,0
+ 226 016e 01F4      		brne .L20
+ 227 0170 82E0      		ldi r24,lo8(2)
+ 228 0172 90E0      		ldi r25,hi8(2)
+GAS LISTING C:\Temp/ccNlafJz.s 			page 5
+
+
+ 229 0174 9093 0000 		sts (errno)+1,r25
+ 230 0178 8093 0000 		sts errno,r24
+ 231 017c 2FEF      		ldi r18,lo8(-1)
+ 232 017e 3FEF      		ldi r19,hi8(-1)
+ 233 0180 00C0      		rjmp .L21
+ 234               	.L20:
+ 235 0182 0F5F      		subi r16,lo8(-(1))
+ 236 0184 1F4F      		sbci r17,hi8(-(1))
+ 237 0186 5596      		adiw r26,21
+ 238 0188 ED91      		ld r30,X+
+ 239 018a FC91      		ld r31,X
+ 240 018c 5697      		sbiw r26,21+1
+ 241 018e A801      		movw r20,r16
+ 242 0190 B701      		movw r22,r14
+ 243 0192 0995      		icall
+ 244 0194 9C01      		movw r18,r24
+ 245               	.L21:
+ 246 0196 C901      		movw r24,r18
+ 247               	/* epilogue start */
+ 248 0198 2996      		adiw r28,9
+ 249 019a 0FB6      		in __tmp_reg__,__SREG__
+ 250 019c F894      		cli
+ 251 019e DEBF      		out __SP_H__,r29
+ 252 01a0 0FBE      		out __SREG__,__tmp_reg__
+ 253 01a2 CDBF      		out __SP_L__,r28
+ 254 01a4 CF91      		pop r28
+ 255 01a6 DF91      		pop r29
+ 256 01a8 1F91      		pop r17
+ 257 01aa 0F91      		pop r16
+ 258 01ac FF90      		pop r15
+ 259 01ae EF90      		pop r14
+ 260 01b0 DF90      		pop r13
+ 261 01b2 0895      		ret
+ 262               		.size	PathOperation, .-PathOperation
+ 263               	.global	mkdir
+ 264               		.type	mkdir, @function
+ 265               	mkdir:
+ 266               	/* prologue: function */
+ 267               	/* frame size = 0 */
+ 268 01b4 61E1      		ldi r22,lo8(4369)
+ 269 01b6 71E1      		ldi r23,hi8(4369)
+ 270 01b8 0E94 0000 		call PathOperation
+ 271               	/* epilogue start */
+ 272 01bc 0895      		ret
+ 273               		.size	mkdir, .-mkdir
+ 274               	.global	unlink
+ 275               		.type	unlink, @function
+ 276               	unlink:
+ 277               	/* prologue: function */
+ 278               	/* frame size = 0 */
+ 279 01be 62E2      		ldi r22,lo8(4386)
+ 280 01c0 71E1      		ldi r23,hi8(4386)
+ 281 01c2 0E94 0000 		call PathOperation
+ 282               	/* epilogue start */
+ 283 01c6 0895      		ret
+ 284               		.size	unlink, .-unlink
+ 285               	.global	rmdir
+GAS LISTING C:\Temp/ccNlafJz.s 			page 6
+
+
+ 286               		.type	rmdir, @function
+ 287               	rmdir:
+ 288               	/* prologue: function */
+ 289               	/* frame size = 0 */
+ 290 01c8 62E1      		ldi r22,lo8(4370)
+ 291 01ca 71E1      		ldi r23,hi8(4370)
+ 292 01cc 0E94 0000 		call PathOperation
+ 293               	/* epilogue start */
+ 294 01d0 0895      		ret
+ 295               		.size	rmdir, .-rmdir
+ 296               	.global	stat
+ 297               		.type	stat, @function
+ 298               	stat:
+ 299 01d2 CF92      		push r12
+ 300 01d4 DF92      		push r13
+ 301 01d6 EF92      		push r14
+ 302 01d8 FF92      		push r15
+ 303 01da 0F93      		push r16
+ 304 01dc 1F93      		push r17
+ 305 01de DF93      		push r29
+ 306 01e0 CF93      		push r28
+ 307 01e2 CDB7      		in r28,__SP_L__
+ 308 01e4 DEB7      		in r29,__SP_H__
+ 309 01e6 2D97      		sbiw r28,13
+ 310 01e8 0FB6      		in __tmp_reg__,__SREG__
+ 311 01ea F894      		cli
+ 312 01ec DEBF      		out __SP_H__,r29
+ 313 01ee 0FBE      		out __SREG__,__tmp_reg__
+ 314 01f0 CDBF      		out __SP_L__,r28
+ 315               	/* prologue: function */
+ 316               	/* frame size = 13 */
+ 317 01f2 F82E      		mov r15,r24
+ 318 01f4 6B01      		movw r12,r22
+ 319 01f6 FE01      		movw r30,r28
+ 320 01f8 3596      		adiw r30,5
+ 321 01fa 282F      		mov r18,r24
+ 322 01fc 392F      		mov r19,r25
+ 323 01fe 8901      		movw r16,r18
+ 324 0200 AE01      		movw r20,r28
+ 325 0202 435F      		subi r20,lo8(-(13))
+ 326 0204 5F4F      		sbci r21,hi8(-(13))
+ 327 0206 00C0      		rjmp .L30
+ 328               	.L32:
+ 329 0208 8193      		st Z+,r24
+ 330 020a 0F5F      		subi r16,lo8(-(1))
+ 331 020c 1F4F      		sbci r17,hi8(-(1))
+ 332               	.L30:
+ 333 020e 202F      		mov r18,r16
+ 334 0210 2F19      		sub r18,r15
+ 335 0212 D801      		movw r26,r16
+ 336 0214 8C91      		ld r24,X
+ 337 0216 8823      		tst r24
+ 338 0218 01F0      		breq .L31
+ 339 021a 8A33      		cpi r24,lo8(58)
+ 340 021c 01F0      		breq .L31
+ 341 021e E417      		cp r30,r20
+ 342 0220 F507      		cpc r31,r21
+GAS LISTING C:\Temp/ccNlafJz.s 			page 7
+
+
+ 343 0222 01F4      		brne .L32
+ 344               	.L31:
+ 345 0224 7801      		movw r14,r16
+ 346 0226 CE01      		movw r24,r28
+ 347 0228 0596      		adiw r24,5
+ 348 022a FC01      		movw r30,r24
+ 349 022c E20F      		add r30,r18
+ 350 022e F11D      		adc r31,__zero_reg__
+ 351 0230 1082      		st Z,__zero_reg__
+ 352 0232 0E94 0000 		call NutDeviceLookup
+ 353 0236 DC01      		movw r26,r24
+ 354 0238 0097      		sbiw r24,0
+ 355 023a 01F4      		brne .L33
+ 356 023c 2FEF      		ldi r18,lo8(-1)
+ 357 023e 3FEF      		ldi r19,hi8(-1)
+ 358 0240 00C0      		rjmp .L34
+ 359               	.L33:
+ 360 0242 F801      		movw r30,r16
+ 361 0244 8081      		ld r24,Z
+ 362 0246 8A33      		cpi r24,lo8(58)
+ 363 0248 01F4      		brne .L35
+ 364 024a 0894      		sec
+ 365 024c E11C      		adc r14,__zero_reg__
+ 366 024e F11C      		adc r15,__zero_reg__
+ 367               	.L35:
+ 368 0250 FA82      		std Y+2,r15
+ 369 0252 E982      		std Y+1,r14
+ 370 0254 DC82      		std Y+4,r13
+ 371 0256 CB82      		std Y+3,r12
+ 372 0258 5596      		adiw r26,21
+ 373 025a ED91      		ld r30,X+
+ 374 025c FC91      		ld r31,X
+ 375 025e 5697      		sbiw r26,21+1
+ 376 0260 AE01      		movw r20,r28
+ 377 0262 4F5F      		subi r20,lo8(-(1))
+ 378 0264 5F4F      		sbci r21,hi8(-(1))
+ 379 0266 61E0      		ldi r22,lo8(4353)
+ 380 0268 71E1      		ldi r23,hi8(4353)
+ 381 026a CD01      		movw r24,r26
+ 382 026c 0995      		icall
+ 383 026e 9C01      		movw r18,r24
+ 384               	.L34:
+ 385 0270 C901      		movw r24,r18
+ 386               	/* epilogue start */
+ 387 0272 2D96      		adiw r28,13
+ 388 0274 0FB6      		in __tmp_reg__,__SREG__
+ 389 0276 F894      		cli
+ 390 0278 DEBF      		out __SP_H__,r29
+ 391 027a 0FBE      		out __SREG__,__tmp_reg__
+ 392 027c CDBF      		out __SP_L__,r28
+ 393 027e CF91      		pop r28
+ 394 0280 DF91      		pop r29
+ 395 0282 1F91      		pop r17
+ 396 0284 0F91      		pop r16
+ 397 0286 FF90      		pop r15
+ 398 0288 EF90      		pop r14
+ 399 028a DF90      		pop r13
+GAS LISTING C:\Temp/ccNlafJz.s 			page 8
+
+
+ 400 028c CF90      		pop r12
+ 401 028e 0895      		ret
+ 402               		.size	stat, .-stat
+ 403               	.global	access
+ 404               		.type	access, @function
+ 405               	access:
+ 406 0290 DF93      		push r29
+ 407 0292 CF93      		push r28
+ 408 0294 CDB7      		in r28,__SP_L__
+ 409 0296 DEB7      		in r29,__SP_H__
+ 410 0298 2D97      		sbiw r28,13
+ 411 029a 0FB6      		in __tmp_reg__,__SREG__
+ 412 029c F894      		cli
+ 413 029e DEBF      		out __SP_H__,r29
+ 414 02a0 0FBE      		out __SREG__,__tmp_reg__
+ 415 02a2 CDBF      		out __SP_L__,r28
+ 416               	/* prologue: function */
+ 417               	/* frame size = 13 */
+ 418 02a4 BE01      		movw r22,r28
+ 419 02a6 6F5F      		subi r22,lo8(-(1))
+ 420 02a8 7F4F      		sbci r23,hi8(-(1))
+ 421 02aa 0E94 0000 		call stat
+ 422 02ae 892B      		or r24,r25
+ 423 02b0 01F4      		brne .L38
+ 424 02b2 20E0      		ldi r18,lo8(0)
+ 425 02b4 30E0      		ldi r19,hi8(0)
+ 426 02b6 00C0      		rjmp .L39
+ 427               	.L38:
+ 428 02b8 2FEF      		ldi r18,lo8(-1)
+ 429 02ba 3FEF      		ldi r19,hi8(-1)
+ 430               	.L39:
+ 431 02bc C901      		movw r24,r18
+ 432               	/* epilogue start */
+ 433 02be 2D96      		adiw r28,13
+ 434 02c0 0FB6      		in __tmp_reg__,__SREG__
+ 435 02c2 F894      		cli
+ 436 02c4 DEBF      		out __SP_H__,r29
+ 437 02c6 0FBE      		out __SREG__,__tmp_reg__
+ 438 02c8 CDBF      		out __SP_L__,r28
+ 439 02ca CF91      		pop r28
+ 440 02cc DF91      		pop r29
+ 441 02ce 0895      		ret
+ 442               		.size	access, .-access
+GAS LISTING C:\Temp/ccNlafJz.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pathops.c
+  C:\Temp/ccNlafJz.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccNlafJz.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccNlafJz.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccNlafJz.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccNlafJz.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccNlafJz.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccNlafJz.s:13     .text:00000000 lseek
+  C:\Temp/ccNlafJz.s:25     .text:0000000a fstat
+  C:\Temp/ccNlafJz.s:35     .text:00000010 rename
+  C:\Temp/ccNlafJz.s:171    .text:0000010a PathOperation
+  C:\Temp/ccNlafJz.s:265    .text:000001b4 mkdir
+  C:\Temp/ccNlafJz.s:276    .text:000001be unlink
+  C:\Temp/ccNlafJz.s:287    .text:000001c8 rmdir
+  C:\Temp/ccNlafJz.s:298    .text:000001d2 stat
+  C:\Temp/ccNlafJz.s:405    .text:00000290 access
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+strcmp
+NutDeviceLookup
+errno

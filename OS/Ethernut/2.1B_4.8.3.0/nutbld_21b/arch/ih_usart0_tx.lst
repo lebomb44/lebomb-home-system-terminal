@@ -1,0 +1,176 @@
+GAS LISTING C:\Temp/cc5I9aDR.s 			page 1
+
+
+   1               		.file	"ih_usart0_tx.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	AvrUart0TxIrqCtl, @function
+  12               	AvrUart0TxIrqCtl:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 FB01      		movw r30,r22
+  16 0002 4AB1      		in r20,42-32
+  17 0004 4074      		andi r20,lo8(64)
+  18 0006 5698      		cbi 42-32,6
+  19 0008 8031      		cpi r24,16
+  20 000a 9105      		cpc r25,__zero_reg__
+  21 000c 01F0      		breq .L5
+  22 000e 8131      		cpi r24,17
+  23 0010 9105      		cpc r25,__zero_reg__
+  24 0012 04F4      		brge .L9
+  25 0014 0097      		sbiw r24,0
+  26 0016 01F0      		breq .L3
+  27 0018 0197      		sbiw r24,1
+  28 001a 01F4      		brne .L2
+  29 001c 00C0      		rjmp .L4
+  30               	.L9:
+  31 001e 8231      		cpi r24,18
+  32 0020 9105      		cpc r25,__zero_reg__
+  33 0022 01F0      		breq .L7
+  34 0024 8231      		cpi r24,18
+  35 0026 9105      		cpc r25,__zero_reg__
+  36 0028 04F0      		brlt .L17
+  37 002a 8097      		sbiw r24,32
+  38 002c 01F0      		breq .L18
+  39               	.L2:
+  40 002e 2FEF      		ldi r18,lo8(-1)
+  41 0030 3FEF      		ldi r19,hi8(-1)
+  42 0032 00C0      		rjmp .L11
+  43               	.L3:
+  44 0034 40E0      		ldi r20,lo8(0)
+  45               	.L4:
+  46 0036 5E9A      		sbi 43-32,6
+  47 0038 00C0      		rjmp .L16
+  48               	.L5:
+  49 003a 5E9B      		sbis 43-32,6
+  50 003c 00C0      		rjmp .L12
+  51 003e 81E0      		ldi r24,lo8(1)
+  52 0040 90E0      		ldi r25,hi8(1)
+  53 0042 9183      		std Z+1,r25
+  54 0044 8083      		st Z,r24
+  55 0046 00C0      		rjmp .L13
+  56               	.L12:
+  57 0048 1182      		std Z+1,__zero_reg__
+GAS LISTING C:\Temp/cc5I9aDR.s 			page 2
+
+
+  58 004a 1082      		st Z,__zero_reg__
+  59               	.L13:
+  60 004c 4423      		tst r20
+  61 004e 01F0      		breq .L7
+  62 0050 8081      		ld r24,Z
+  63 0052 9181      		ldd r25,Z+1
+  64 0054 8068      		ori r24,lo8(128)
+  65 0056 9183      		std Z+1,r25
+  66 0058 8083      		st Z,r24
+  67               	.L17:
+  68 005a 20E0      		ldi r18,lo8(0)
+  69 005c 30E0      		ldi r19,hi8(0)
+  70 005e 00C0      		rjmp .L10
+  71               	.L18:
+  72 0060 80E1      		ldi r24,lo8(16)
+  73 0062 90E0      		ldi r25,hi8(16)
+  74 0064 9183      		std Z+1,r25
+  75 0066 8083      		st Z,r24
+  76               	.L16:
+  77 0068 20E0      		ldi r18,lo8(0)
+  78 006a 30E0      		ldi r19,hi8(0)
+  79               	.L11:
+  80 006c 4423      		tst r20
+  81 006e 01F0      		breq .L14
+  82               	.L10:
+  83 0070 569A      		sbi 42-32,6
+  84 0072 00C0      		rjmp .L14
+  85               	.L7:
+  86 0074 20E0      		ldi r18,lo8(0)
+  87 0076 30E0      		ldi r19,hi8(0)
+  88               	.L14:
+  89 0078 C901      		movw r24,r18
+  90               	/* epilogue start */
+  91 007a 0895      		ret
+  92               		.size	AvrUart0TxIrqCtl, .-AvrUart0TxIrqCtl
+  93               	.global	__vector_20
+  94               		.type	__vector_20, @function
+  95               	__vector_20:
+  96 007c 1F92      		push __zero_reg__
+  97 007e 0F92      		push r0
+  98 0080 0FB6      		in r0,__SREG__
+  99 0082 0F92      		push r0
+ 100 0084 0BB6      		in r0,91-32
+ 101 0086 0F92      		push r0
+ 102 0088 1124      		clr __zero_reg__
+ 103 008a 2F93      		push r18
+ 104 008c 3F93      		push r19
+ 105 008e 4F93      		push r20
+ 106 0090 5F93      		push r21
+ 107 0092 6F93      		push r22
+ 108 0094 7F93      		push r23
+ 109 0096 8F93      		push r24
+ 110 0098 9F93      		push r25
+ 111 009a AF93      		push r26
+ 112 009c BF93      		push r27
+ 113 009e EF93      		push r30
+ 114 00a0 FF93      		push r31
+GAS LISTING C:\Temp/cc5I9aDR.s 			page 3
+
+
+ 115               	/* prologue: Signal */
+ 116               	/* frame size = 0 */
+ 117 00a2 80E0      		ldi r24,lo8(sig_UART0_TRANS)
+ 118 00a4 90E0      		ldi r25,hi8(sig_UART0_TRANS)
+ 119 00a6 0E94 0000 		call CallHandler
+ 120               	/* epilogue start */
+ 121 00aa FF91      		pop r31
+ 122 00ac EF91      		pop r30
+ 123 00ae BF91      		pop r27
+ 124 00b0 AF91      		pop r26
+ 125 00b2 9F91      		pop r25
+ 126 00b4 8F91      		pop r24
+ 127 00b6 7F91      		pop r23
+ 128 00b8 6F91      		pop r22
+ 129 00ba 5F91      		pop r21
+ 130 00bc 4F91      		pop r20
+ 131 00be 3F91      		pop r19
+ 132 00c0 2F91      		pop r18
+ 133 00c2 0F90      		pop r0
+ 134 00c4 0BBE      		out 91-32,r0
+ 135 00c6 0F90      		pop r0
+ 136 00c8 0FBE      		out __SREG__,r0
+ 137 00ca 0F90      		pop r0
+ 138 00cc 1F90      		pop __zero_reg__
+ 139 00ce 1895      		reti
+ 140               		.size	__vector_20, .-__vector_20
+ 141               	.global	sig_UART0_TRANS
+ 142               		.data
+ 143               		.type	sig_UART0_TRANS, @object
+ 144               		.size	sig_UART0_TRANS, 6
+ 145               	sig_UART0_TRANS:
+ 146 0000 0000      		.word	0
+ 147 0002 0000      		.word	0
+ 148 0004 0000      		.word	gs(AvrUart0TxIrqCtl)
+GAS LISTING C:\Temp/cc5I9aDR.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ih_usart0_tx.c
+  C:\Temp/cc5I9aDR.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cc5I9aDR.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cc5I9aDR.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cc5I9aDR.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cc5I9aDR.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cc5I9aDR.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cc5I9aDR.s:12     .text:00000000 AvrUart0TxIrqCtl
+  C:\Temp/cc5I9aDR.s:95     .text:0000007c __vector_20
+  C:\Temp/cc5I9aDR.s:145    .data:00000000 sig_UART0_TRANS
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+CallHandler

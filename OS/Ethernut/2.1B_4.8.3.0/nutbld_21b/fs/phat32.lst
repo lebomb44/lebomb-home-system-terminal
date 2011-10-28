@@ -1,0 +1,579 @@
+GAS LISTING C:\Temp/cc4yunOe.s 			page 1
+
+
+   1               		.file	"phat32.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	Phat32SetClusterLink
+  12               		.type	Phat32SetClusterLink, @function
+  13               	Phat32SetClusterLink:
+  14 0000 2F92      		push r2
+  15 0002 3F92      		push r3
+  16 0004 4F92      		push r4
+  17 0006 5F92      		push r5
+  18 0008 6F92      		push r6
+  19 000a 7F92      		push r7
+  20 000c 8F92      		push r8
+  21 000e 9F92      		push r9
+  22 0010 AF92      		push r10
+  23 0012 BF92      		push r11
+  24 0014 CF92      		push r12
+  25 0016 DF92      		push r13
+  26 0018 EF92      		push r14
+  27 001a FF92      		push r15
+  28 001c 0F93      		push r16
+  29 001e 1F93      		push r17
+  30 0020 DF93      		push r29
+  31 0022 CF93      		push r28
+  32 0024 CDB7      		in r28,__SP_L__
+  33 0026 DEB7      		in r29,__SP_H__
+  34 0028 2897      		sbiw r28,8
+  35 002a 0FB6      		in __tmp_reg__,__SREG__
+  36 002c F894      		cli
+  37 002e DEBF      		out __SP_H__,r29
+  38 0030 0FBE      		out __SREG__,__tmp_reg__
+  39 0032 CDBF      		out __SP_L__,r28
+  40               	/* prologue: function */
+  41               	/* frame size = 8 */
+  42 0034 9E83      		std Y+6,r25
+  43 0036 8D83      		std Y+5,r24
+  44 0038 1A01      		movw r2,r20
+  45 003a 2B01      		movw r4,r22
+  46 003c 5801      		movw r10,r16
+  47 003e 6901      		movw r12,r18
+  48 0040 DC01      		movw r26,r24
+  49 0042 5196      		adiw r26,17
+  50 0044 0D90      		ld __tmp_reg__,X+
+  51 0046 BC91      		ld r27,X
+  52 0048 A02D      		mov r26,__tmp_reg__
+  53 004a BC83      		std Y+4,r27
+  54 004c AB83      		std Y+3,r26
+  55 004e F2E0      		ldi r31,2
+  56 0050 220C      	1:	lsl r2
+  57 0052 331C      		rol r3
+GAS LISTING C:\Temp/cc4yunOe.s 			page 2
+
+
+  58 0054 441C      		rol r4
+  59 0056 551C      		rol r5
+  60 0058 FA95      		dec r31
+  61 005a 01F4      		brne 1b
+  62 005c BA83      		std Y+2,r27
+  63 005e A983      		std Y+1,r26
+  64 0060 FD01      		movw r30,r26
+  65 0062 3896      		adiw r30,8
+  66 0064 F887      		std Y+8,r31
+  67 0066 EF83      		std Y+7,r30
+  68 0068 00C0      		rjmp .L2
+  69               	.L6:
+  70 006a AB81      		ldd r26,Y+3
+  71 006c BC81      		ldd r27,Y+4
+  72 006e 5696      		adiw r26,22
+  73 0070 8D91      		ld r24,X+
+  74 0072 9C91      		ld r25,X
+  75 0074 5797      		sbiw r26,22+1
+  76 0076 3C01      		movw r6,r24
+  77 0078 8824      		clr r8
+  78 007a 9924      		clr r9
+  79 007c C201      		movw r24,r4
+  80 007e B101      		movw r22,r2
+  81 0080 A401      		movw r20,r8
+  82 0082 9301      		movw r18,r6
+  83 0084 0E94 0000 		call __udivmodsi4
+  84 0088 E20E      		add r14,r18
+  85 008a F31E      		adc r15,r19
+  86 008c 041F      		adc r16,r20
+  87 008e 151F      		adc r17,r21
+  88 0090 B801      		movw r22,r16
+  89 0092 A701      		movw r20,r14
+  90 0094 8D81      		ldd r24,Y+5
+  91 0096 9E81      		ldd r25,Y+6
+  92 0098 0E94 0000 		call PhatSectorLoad
+  93 009c 7C01      		movw r14,r24
+  94 009e 97FF      		sbrs r25,7
+  95 00a0 00C0      		rjmp .L3
+  96 00a2 2FEF      		ldi r18,lo8(-1)
+  97 00a4 3FEF      		ldi r19,hi8(-1)
+  98 00a6 00C0      		rjmp .L4
+  99               	.L3:
+ 100 00a8 8FEF      		ldi r24,lo8(268435455)
+ 101 00aa 9FEF      		ldi r25,hi8(268435455)
+ 102 00ac AFEF      		ldi r26,hlo8(268435455)
+ 103 00ae BFE0      		ldi r27,hhi8(268435455)
+ 104 00b0 A822      		and r10,r24
+ 105 00b2 B922      		and r11,r25
+ 106 00b4 CA22      		and r12,r26
+ 107 00b6 DB22      		and r13,r27
+ 108 00b8 C201      		movw r24,r4
+ 109 00ba B101      		movw r22,r2
+ 110 00bc A401      		movw r20,r8
+ 111 00be 9301      		movw r18,r6
+ 112 00c0 0E94 0000 		call __udivmodsi4
+ 113 00c4 9B01      		movw r18,r22
+ 114 00c6 B701      		movw r22,r14
+GAS LISTING C:\Temp/cc4yunOe.s 			page 3
+
+
+ 115 00c8 E3E0      		ldi r30,3
+ 116 00ca 660F      	1:	lsl r22
+ 117 00cc 771F      		rol r23
+ 118 00ce EA95      		dec r30
+ 119 00d0 01F4      		brne 1b
+ 120 00d2 AB81      		ldd r26,Y+3
+ 121 00d4 BC81      		ldd r27,Y+4
+ 122 00d6 6A0F      		add r22,r26
+ 123 00d8 7B1F      		adc r23,r27
+ 124 00da DB01      		movw r26,r22
+ 125 00dc 1A96      		adiw r26,10
+ 126 00de ED91      		ld r30,X+
+ 127 00e0 FC91      		ld r31,X
+ 128 00e2 1B97      		sbiw r26,10+1
+ 129 00e4 E20F      		add r30,r18
+ 130 00e6 F31F      		adc r31,r19
+ 131 00e8 A082      		st Z,r10
+ 132 00ea 1A96      		adiw r26,10
+ 133 00ec ED91      		ld r30,X+
+ 134 00ee FC91      		ld r31,X
+ 135 00f0 1B97      		sbiw r26,10+1
+ 136 00f2 E20F      		add r30,r18
+ 137 00f4 F31F      		adc r31,r19
+ 138 00f6 BB27      		clr r27
+ 139 00f8 AD2D      		mov r26,r13
+ 140 00fa 9C2D      		mov r25,r12
+ 141 00fc 8B2D      		mov r24,r11
+ 142 00fe 8183      		std Z+1,r24
+ 143 0100 DB01      		movw r26,r22
+ 144 0102 1A96      		adiw r26,10
+ 145 0104 ED91      		ld r30,X+
+ 146 0106 FC91      		ld r31,X
+ 147 0108 1B97      		sbiw r26,10+1
+ 148 010a E20F      		add r30,r18
+ 149 010c F31F      		adc r31,r19
+ 150 010e C601      		movw r24,r12
+ 151 0110 AA27      		clr r26
+ 152 0112 BB27      		clr r27
+ 153 0114 8283      		std Z+2,r24
+ 154 0116 DB01      		movw r26,r22
+ 155 0118 1A96      		adiw r26,10
+ 156 011a ED91      		ld r30,X+
+ 157 011c FC91      		ld r31,X
+ 158 011e 1B97      		sbiw r26,10+1
+ 159 0120 E20F      		add r30,r18
+ 160 0122 F31F      		adc r31,r19
+ 161 0124 8D2D      		mov r24,r13
+ 162 0126 9927      		clr r25
+ 163 0128 AA27      		clr r26
+ 164 012a BB27      		clr r27
+ 165 012c 8383      		std Z+3,r24
+ 166 012e E2E0      		ldi r30,lo8(2)
+ 167 0130 F0E0      		ldi r31,hi8(2)
+ 168 0132 EE0E      		add r14,r30
+ 169 0134 FF1E      		adc r15,r31
+ 170 0136 83E0      		ldi r24,3
+ 171 0138 EE0C      	1:	lsl r14
+GAS LISTING C:\Temp/cc4yunOe.s 			page 4
+
+
+ 172 013a FF1C      		rol r15
+ 173 013c 8A95      		dec r24
+ 174 013e 01F4      		brne 1b
+ 175 0140 2B81      		ldd r18,Y+3
+ 176 0142 3C81      		ldd r19,Y+4
+ 177 0144 E20E      		add r14,r18
+ 178 0146 F31E      		adc r15,r19
+ 179 0148 E1E0      		ldi r30,lo8(1)
+ 180 014a F0E0      		ldi r31,hi8(1)
+ 181 014c D701      		movw r26,r14
+ 182 014e ED93      		st X+,r30
+ 183 0150 FC93      		st X,r31
+ 184 0152 2981      		ldd r18,Y+1
+ 185 0154 3A81      		ldd r19,Y+2
+ 186 0156 2C5F      		subi r18,lo8(-(4))
+ 187 0158 3F4F      		sbci r19,hi8(-(4))
+ 188 015a 3A83      		std Y+2,r19
+ 189 015c 2983      		std Y+1,r18
+ 190 015e 8F81      		ldd r24,Y+7
+ 191 0160 9885      		ldd r25,Y+8
+ 192 0162 2817      		cp r18,r24
+ 193 0164 3907      		cpc r19,r25
+ 194 0166 01F0      		breq .L5
+ 195               	.L2:
+ 196 0168 A981      		ldd r26,Y+1
+ 197 016a BA81      		ldd r27,Y+2
+ 198 016c 5E96      		adiw r26,30
+ 199 016e ED90      		ld r14,X+
+ 200 0170 FD90      		ld r15,X+
+ 201 0172 0D91      		ld r16,X+
+ 202 0174 1C91      		ld r17,X
+ 203 0176 9197      		sbiw r26,30+3
+ 204 0178 E114      		cp r14,__zero_reg__
+ 205 017a F104      		cpc r15,__zero_reg__
+ 206 017c 0105      		cpc r16,__zero_reg__
+ 207 017e 1105      		cpc r17,__zero_reg__
+ 208 0180 01F0      		breq .+2
+ 209 0182 00C0      		rjmp .L6
+ 210               	.L5:
+ 211 0184 20E0      		ldi r18,lo8(0)
+ 212 0186 30E0      		ldi r19,hi8(0)
+ 213               	.L4:
+ 214 0188 C901      		movw r24,r18
+ 215               	/* epilogue start */
+ 216 018a 2896      		adiw r28,8
+ 217 018c 0FB6      		in __tmp_reg__,__SREG__
+ 218 018e F894      		cli
+ 219 0190 DEBF      		out __SP_H__,r29
+ 220 0192 0FBE      		out __SREG__,__tmp_reg__
+ 221 0194 CDBF      		out __SP_L__,r28
+ 222 0196 CF91      		pop r28
+ 223 0198 DF91      		pop r29
+ 224 019a 1F91      		pop r17
+ 225 019c 0F91      		pop r16
+ 226 019e FF90      		pop r15
+ 227 01a0 EF90      		pop r14
+ 228 01a2 DF90      		pop r13
+GAS LISTING C:\Temp/cc4yunOe.s 			page 5
+
+
+ 229 01a4 CF90      		pop r12
+ 230 01a6 BF90      		pop r11
+ 231 01a8 AF90      		pop r10
+ 232 01aa 9F90      		pop r9
+ 233 01ac 8F90      		pop r8
+ 234 01ae 7F90      		pop r7
+ 235 01b0 6F90      		pop r6
+ 236 01b2 5F90      		pop r5
+ 237 01b4 4F90      		pop r4
+ 238 01b6 3F90      		pop r3
+ 239 01b8 2F90      		pop r2
+ 240 01ba 0895      		ret
+ 241               		.size	Phat32SetClusterLink, .-Phat32SetClusterLink
+ 242               	.global	Phat32GetClusterLink
+ 243               		.type	Phat32GetClusterLink, @function
+ 244               	Phat32GetClusterLink:
+ 245 01bc 6F92      		push r6
+ 246 01be 7F92      		push r7
+ 247 01c0 8F92      		push r8
+ 248 01c2 9F92      		push r9
+ 249 01c4 AF92      		push r10
+ 250 01c6 BF92      		push r11
+ 251 01c8 CF92      		push r12
+ 252 01ca DF92      		push r13
+ 253 01cc EF92      		push r14
+ 254 01ce FF92      		push r15
+ 255 01d0 0F93      		push r16
+ 256 01d2 1F93      		push r17
+ 257 01d4 CF93      		push r28
+ 258 01d6 DF93      		push r29
+ 259               	/* prologue: function */
+ 260               	/* frame size = 0 */
+ 261 01d8 8C01      		movw r16,r24
+ 262 01da 3901      		movw r6,r18
+ 263 01dc DC01      		movw r26,r24
+ 264 01de 5196      		adiw r26,17
+ 265 01e0 8C91      		ld r24,X
+ 266 01e2 5197      		sbiw r26,17
+ 267 01e4 5296      		adiw r26,18
+ 268 01e6 9C91      		ld r25,X
+ 269 01e8 483F      		cpi r20,lo8(268435448)
+ 270 01ea BFEF      		ldi r27,hi8(268435448)
+ 271 01ec 5B07      		cpc r21,r27
+ 272 01ee BFEF      		ldi r27,hlo8(268435448)
+ 273 01f0 6B07      		cpc r22,r27
+ 274 01f2 BFE0      		ldi r27,hhi8(268435448)
+ 275 01f4 7B07      		cpc r23,r27
+ 276 01f6 00F0      		brlo .+2
+ 277 01f8 00C0      		rjmp .L9
+ 278 01fa EC01      		movw r28,r24
+ 279 01fc 4A01      		movw r8,r20
+ 280 01fe 5B01      		movw r10,r22
+ 281 0200 E2E0      		ldi r30,2
+ 282 0202 880C      	1:	lsl r8
+ 283 0204 991C      		rol r9
+ 284 0206 AA1C      		rol r10
+ 285 0208 BB1C      		rol r11
+GAS LISTING C:\Temp/cc4yunOe.s 			page 6
+
+
+ 286 020a EA95      		dec r30
+ 287 020c 01F4      		brne 1b
+ 288 020e 8E89      		ldd r24,Y+22
+ 289 0210 9F89      		ldd r25,Y+23
+ 290 0212 6C01      		movw r12,r24
+ 291 0214 EE24      		clr r14
+ 292 0216 FF24      		clr r15
+ 293 0218 C501      		movw r24,r10
+ 294 021a B401      		movw r22,r8
+ 295 021c A701      		movw r20,r14
+ 296 021e 9601      		movw r18,r12
+ 297 0220 0E94 0000 		call __udivmodsi4
+ 298 0224 DA01      		movw r26,r20
+ 299 0226 C901      		movw r24,r18
+ 300 0228 4E8D      		ldd r20,Y+30
+ 301 022a 5F8D      		ldd r21,Y+31
+ 302 022c 68A1      		ldd r22,Y+32
+ 303 022e 79A1      		ldd r23,Y+33
+ 304 0230 480F      		add r20,r24
+ 305 0232 591F      		adc r21,r25
+ 306 0234 6A1F      		adc r22,r26
+ 307 0236 7B1F      		adc r23,r27
+ 308 0238 C801      		movw r24,r16
+ 309 023a 0E94 0000 		call PhatSectorLoad
+ 310 023e 8C01      		movw r16,r24
+ 311 0240 97FD      		sbrc r25,7
+ 312 0242 00C0      		rjmp .L9
+ 313 0244 C501      		movw r24,r10
+ 314 0246 B401      		movw r22,r8
+ 315 0248 A701      		movw r20,r14
+ 316 024a 9601      		movw r18,r12
+ 317 024c 0E94 0000 		call __udivmodsi4
+ 318 0250 9B01      		movw r18,r22
+ 319 0252 73E0      		ldi r23,3
+ 320 0254 000F      	1:	lsl r16
+ 321 0256 111F      		rol r17
+ 322 0258 7A95      		dec r23
+ 323 025a 01F4      		brne 1b
+ 324 025c C00F      		add r28,r16
+ 325 025e D11F      		adc r29,r17
+ 326 0260 EA85      		ldd r30,Y+10
+ 327 0262 FB85      		ldd r31,Y+11
+ 328 0264 E20F      		add r30,r18
+ 329 0266 F31F      		adc r31,r19
+ 330 0268 2081      		ld r18,Z
+ 331 026a 30E0      		ldi r19,lo8(0)
+ 332 026c 40E0      		ldi r20,lo8(0)
+ 333 026e 50E0      		ldi r21,hi8(0)
+ 334 0270 E301      		movw r28,r6
+ 335 0272 2883      		st Y,r18
+ 336 0274 3983      		std Y+1,r19
+ 337 0276 4A83      		std Y+2,r20
+ 338 0278 5B83      		std Y+3,r21
+ 339 027a 8181      		ldd r24,Z+1
+ 340 027c 90E0      		ldi r25,lo8(0)
+ 341 027e A0E0      		ldi r26,lo8(0)
+ 342 0280 B0E0      		ldi r27,hi8(0)
+GAS LISTING C:\Temp/cc4yunOe.s 			page 7
+
+
+ 343 0282 BA2F      		mov r27,r26
+ 344 0284 A92F      		mov r26,r25
+ 345 0286 982F      		mov r25,r24
+ 346 0288 8827      		clr r24
+ 347 028a 820F      		add r24,r18
+ 348 028c 931F      		adc r25,r19
+ 349 028e A41F      		adc r26,r20
+ 350 0290 B51F      		adc r27,r21
+ 351 0292 8883      		st Y,r24
+ 352 0294 9983      		std Y+1,r25
+ 353 0296 AA83      		std Y+2,r26
+ 354 0298 BB83      		std Y+3,r27
+ 355 029a 2281      		ldd r18,Z+2
+ 356 029c 30E0      		ldi r19,lo8(0)
+ 357 029e 40E0      		ldi r20,lo8(0)
+ 358 02a0 50E0      		ldi r21,hi8(0)
+ 359 02a2 A901      		movw r20,r18
+ 360 02a4 3327      		clr r19
+ 361 02a6 2227      		clr r18
+ 362 02a8 280F      		add r18,r24
+ 363 02aa 391F      		adc r19,r25
+ 364 02ac 4A1F      		adc r20,r26
+ 365 02ae 5B1F      		adc r21,r27
+ 366 02b0 D301      		movw r26,r6
+ 367 02b2 2D93      		st X+,r18
+ 368 02b4 3D93      		st X+,r19
+ 369 02b6 4D93      		st X+,r20
+ 370 02b8 5C93      		st X,r21
+ 371 02ba 1397      		sbiw r26,3
+ 372 02bc 8381      		ldd r24,Z+3
+ 373 02be 90E0      		ldi r25,lo8(0)
+ 374 02c0 A0E0      		ldi r26,lo8(0)
+ 375 02c2 B0E0      		ldi r27,hi8(0)
+ 376 02c4 B82F      		mov r27,r24
+ 377 02c6 AA27      		clr r26
+ 378 02c8 9927      		clr r25
+ 379 02ca 8827      		clr r24
+ 380 02cc 280F      		add r18,r24
+ 381 02ce 391F      		adc r19,r25
+ 382 02d0 4A1F      		adc r20,r26
+ 383 02d2 5B1F      		adc r21,r27
+ 384 02d4 2883      		st Y,r18
+ 385 02d6 3983      		std Y+1,r19
+ 386 02d8 4A83      		std Y+2,r20
+ 387 02da 5B83      		std Y+3,r21
+ 388 02dc 20E0      		ldi r18,lo8(0)
+ 389 02de 30E0      		ldi r19,hi8(0)
+ 390 02e0 00C0      		rjmp .L10
+ 391               	.L9:
+ 392 02e2 2FEF      		ldi r18,lo8(-1)
+ 393 02e4 3FEF      		ldi r19,hi8(-1)
+ 394               	.L10:
+ 395 02e6 C901      		movw r24,r18
+ 396               	/* epilogue start */
+ 397 02e8 DF91      		pop r29
+ 398 02ea CF91      		pop r28
+ 399 02ec 1F91      		pop r17
+GAS LISTING C:\Temp/cc4yunOe.s 			page 8
+
+
+ 400 02ee 0F91      		pop r16
+ 401 02f0 FF90      		pop r15
+ 402 02f2 EF90      		pop r14
+ 403 02f4 DF90      		pop r13
+ 404 02f6 CF90      		pop r12
+ 405 02f8 BF90      		pop r11
+ 406 02fa AF90      		pop r10
+ 407 02fc 9F90      		pop r9
+ 408 02fe 8F90      		pop r8
+ 409 0300 7F90      		pop r7
+ 410 0302 6F90      		pop r6
+ 411 0304 0895      		ret
+ 412               		.size	Phat32GetClusterLink, .-Phat32GetClusterLink
+ 413               	.global	Phat32ReleaseChain
+ 414               		.type	Phat32ReleaseChain, @function
+ 415               	Phat32ReleaseChain:
+ 416 0306 6F92      		push r6
+ 417 0308 7F92      		push r7
+ 418 030a 8F92      		push r8
+ 419 030c 9F92      		push r9
+ 420 030e AF92      		push r10
+ 421 0310 BF92      		push r11
+ 422 0312 CF92      		push r12
+ 423 0314 DF92      		push r13
+ 424 0316 EF92      		push r14
+ 425 0318 FF92      		push r15
+ 426 031a 0F93      		push r16
+ 427 031c 1F93      		push r17
+ 428 031e DF93      		push r29
+ 429 0320 CF93      		push r28
+ 430 0322 00D0      		rcall .
+ 431 0324 00D0      		rcall .
+ 432 0326 CDB7      		in r28,__SP_L__
+ 433 0328 DEB7      		in r29,__SP_H__
+ 434               	/* prologue: function */
+ 435               	/* frame size = 4 */
+ 436 032a 5C01      		movw r10,r24
+ 437 032c 6A01      		movw r12,r20
+ 438 032e 7B01      		movw r14,r22
+ 439 0330 FC01      		movw r30,r24
+ 440 0332 8188      		ldd r8,Z+17
+ 441 0334 9288      		ldd r9,Z+18
+ 442 0336 3E01      		movw r6,r28
+ 443 0338 0894      		sec
+ 444 033a 611C      		adc r6,__zero_reg__
+ 445 033c 711C      		adc r7,__zero_reg__
+ 446 033e 00C0      		rjmp .L13
+ 447               	.L16:
+ 448 0340 9301      		movw r18,r6
+ 449 0342 B701      		movw r22,r14
+ 450 0344 A601      		movw r20,r12
+ 451 0346 C501      		movw r24,r10
+ 452 0348 0E94 0000 		call Phat32GetClusterLink
+ 453 034c 892B      		or r24,r25
+ 454 034e 01F4      		brne .L14
+ 455 0350 8981      		ldd r24,Y+1
+ 456 0352 9A81      		ldd r25,Y+2
+GAS LISTING C:\Temp/cc4yunOe.s 			page 9
+
+
+ 457 0354 AB81      		ldd r26,Y+3
+ 458 0356 BC81      		ldd r27,Y+4
+ 459 0358 0297      		sbiw r24,2
+ 460 035a A105      		cpc r26,__zero_reg__
+ 461 035c B105      		cpc r27,__zero_reg__
+ 462 035e 00F0      		brlo .L15
+ 463 0360 00E0      		ldi r16,lo8(0)
+ 464 0362 10E0      		ldi r17,hi8(0)
+ 465 0364 20E0      		ldi r18,hlo8(0)
+ 466 0366 30E0      		ldi r19,hhi8(0)
+ 467 0368 B701      		movw r22,r14
+ 468 036a A601      		movw r20,r12
+ 469 036c C501      		movw r24,r10
+ 470 036e 0E94 0000 		call Phat32SetClusterLink
+ 471 0372 892B      		or r24,r25
+ 472 0374 01F4      		brne .L14
+ 473 0376 F401      		movw r30,r8
+ 474 0378 8281      		ldd r24,Z+2
+ 475 037a 9381      		ldd r25,Z+3
+ 476 037c A481      		ldd r26,Z+4
+ 477 037e B581      		ldd r27,Z+5
+ 478 0380 0196      		adiw r24,1
+ 479 0382 A11D      		adc r26,__zero_reg__
+ 480 0384 B11D      		adc r27,__zero_reg__
+ 481 0386 8283      		std Z+2,r24
+ 482 0388 9383      		std Z+3,r25
+ 483 038a A483      		std Z+4,r26
+ 484 038c B583      		std Z+5,r27
+ 485 038e C980      		ldd r12,Y+1
+ 486 0390 DA80      		ldd r13,Y+2
+ 487 0392 EB80      		ldd r14,Y+3
+ 488 0394 FC80      		ldd r15,Y+4
+ 489               	.L13:
+ 490 0396 F8EF      		ldi r31,lo8(268435448)
+ 491 0398 CF16      		cp r12,r31
+ 492 039a FFEF      		ldi r31,hi8(268435448)
+ 493 039c DF06      		cpc r13,r31
+ 494 039e FFEF      		ldi r31,hlo8(268435448)
+ 495 03a0 EF06      		cpc r14,r31
+ 496 03a2 FFE0      		ldi r31,hhi8(268435448)
+ 497 03a4 FF06      		cpc r15,r31
+ 498 03a6 00F0      		brlo .L16
+ 499 03a8 00C0      		rjmp .L15
+ 500               	.L14:
+ 501 03aa 2FEF      		ldi r18,lo8(-1)
+ 502 03ac 3FEF      		ldi r19,hi8(-1)
+ 503 03ae 00C0      		rjmp .L17
+ 504               	.L15:
+ 505 03b0 20E0      		ldi r18,lo8(0)
+ 506 03b2 30E0      		ldi r19,hi8(0)
+ 507               	.L17:
+ 508 03b4 C901      		movw r24,r18
+ 509               	/* epilogue start */
+ 510 03b6 0F90      		pop __tmp_reg__
+ 511 03b8 0F90      		pop __tmp_reg__
+ 512 03ba 0F90      		pop __tmp_reg__
+ 513 03bc 0F90      		pop __tmp_reg__
+GAS LISTING C:\Temp/cc4yunOe.s 			page 10
+
+
+ 514 03be CF91      		pop r28
+ 515 03c0 DF91      		pop r29
+ 516 03c2 1F91      		pop r17
+ 517 03c4 0F91      		pop r16
+ 518 03c6 FF90      		pop r15
+ 519 03c8 EF90      		pop r14
+ 520 03ca DF90      		pop r13
+ 521 03cc CF90      		pop r12
+ 522 03ce BF90      		pop r11
+ 523 03d0 AF90      		pop r10
+ 524 03d2 9F90      		pop r9
+ 525 03d4 8F90      		pop r8
+ 526 03d6 7F90      		pop r7
+ 527 03d8 6F90      		pop r6
+ 528 03da 0895      		ret
+ 529               		.size	Phat32ReleaseChain, .-Phat32ReleaseChain
+GAS LISTING C:\Temp/cc4yunOe.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 phat32.c
+  C:\Temp/cc4yunOe.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/cc4yunOe.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/cc4yunOe.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/cc4yunOe.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/cc4yunOe.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/cc4yunOe.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/cc4yunOe.s:13     .text:00000000 Phat32SetClusterLink
+  C:\Temp/cc4yunOe.s:244    .text:000001bc Phat32GetClusterLink
+  C:\Temp/cc4yunOe.s:415    .text:00000306 Phat32ReleaseChain
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+__udivmodsi4
+PhatSectorLoad

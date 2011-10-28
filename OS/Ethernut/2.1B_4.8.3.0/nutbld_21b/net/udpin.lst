@@ -1,0 +1,191 @@
+GAS LISTING C:\Temp/ccnHwWSd.s 			page 1
+
+
+   1               		.file	"udpin.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutUdpInput
+  12               		.type	NutUdpInput, @function
+  13               	NutUdpInput:
+  14 0000 0F93      		push r16
+  15 0002 1F93      		push r17
+  16 0004 CF93      		push r28
+  17 0006 DF93      		push r29
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 0008 EB01      		movw r28,r22
+  21 000a EB85      		ldd r30,Y+11
+  22 000c FC85      		ldd r31,Y+12
+  23 000e 3097      		sbiw r30,0
+  24 0010 01F0      		breq .L19
+  25 0012 2D85      		ldd r18,Y+13
+  26 0014 3E85      		ldd r19,Y+14
+  27 0016 2830      		cpi r18,8
+  28 0018 3105      		cpc r19,__zero_reg__
+  29 001a 00F0      		brlo .L19
+  30               	.L3:
+  31 001c 2850      		subi r18,lo8(-(-8))
+  32 001e 3040      		sbci r19,hi8(-(-8))
+  33 0020 3A8B      		std Y+18,r19
+  34 0022 298B      		std Y+17,r18
+  35 0024 88E0      		ldi r24,lo8(8)
+  36 0026 90E0      		ldi r25,hi8(8)
+  37 0028 9E87      		std Y+14,r25
+  38 002a 8D87      		std Y+13,r24
+  39 002c 232B      		or r18,r19
+  40 002e 01F0      		breq .L5
+  41 0030 3896      		adiw r30,8
+  42 0032 F88B      		std Y+16,r31
+  43 0034 EF87      		std Y+15,r30
+  44 0036 3897      		sbiw r30,8
+  45               	.L5:
+  46 0038 8281      		ldd r24,Z+2
+  47 003a 9381      		ldd r25,Z+3
+  48 003c 0E94 0000 		call NutUdpFindSocket
+  49 0040 8C01      		movw r16,r24
+  50 0042 0097      		sbiw r24,0
+  51 0044 01F4      		brne .L6
+  52 0046 8A81      		ldd r24,Y+2
+  53 0048 83FF      		sbrs r24,3
+  54 004a 00C0      		rjmp .L19
+  55 004c 8E01      		movw r16,r28
+  56 004e 20E0      		ldi r18,lo8(0)
+  57 0050 30E0      		ldi r19,hi8(0)
+GAS LISTING C:\Temp/ccnHwWSd.s 			page 2
+
+
+  58 0052 40E0      		ldi r20,hlo8(0)
+  59 0054 50E0      		ldi r21,hhi8(0)
+  60 0056 63E0      		ldi r22,lo8(3)
+  61 0058 83E0      		ldi r24,lo8(3)
+  62 005a 0E94 0000 		call NutIcmpResponse
+  63 005e 892B      		or r24,r25
+  64 0060 01F0      		breq .+2
+  65 0062 00C0      		rjmp .L4
+  66 0064 00C0      		rjmp .L19
+  67               	.L6:
+  68 0066 DC01      		movw r26,r24
+  69 0068 1A96      		adiw r26,10
+  70 006a 4D91      		ld r20,X+
+  71 006c 5C91      		ld r21,X
+  72 006e 1B97      		sbiw r26,10+1
+  73 0070 4115      		cp r20,__zero_reg__
+  74 0072 5105      		cpc r21,__zero_reg__
+  75 0074 01F0      		breq .L8
+  76 0076 8989      		ldd r24,Y+17
+  77 0078 9A89      		ldd r25,Y+18
+  78 007a 1896      		adiw r26,8
+  79 007c 2D91      		ld r18,X+
+  80 007e 3C91      		ld r19,X
+  81 0080 1997      		sbiw r26,8+1
+  82 0082 820F      		add r24,r18
+  83 0084 931F      		adc r25,r19
+  84 0086 4817      		cp r20,r24
+  85 0088 5907      		cpc r21,r25
+  86 008a 04F4      		brge .L9
+  87               	.L19:
+  88 008c CE01      		movw r24,r28
+  89 008e 0E94 0000 		call NutNetBufFree
+  90 0092 00C0      		rjmp .L4
+  91               	.L9:
+  92 0094 D801      		movw r26,r16
+  93 0096 1496      		adiw r26,4
+  94 0098 ED91      		ld r30,X+
+  95 009a FC91      		ld r31,X
+  96 009c 1597      		sbiw r26,4+1
+  97 009e 3097      		sbiw r30,0
+  98 00a0 01F0      		breq .L10
+  99               	.L16:
+ 100 00a2 CF01      		movw r24,r30
+ 101 00a4 0190      		ld __tmp_reg__,Z+
+ 102 00a6 F081      		ld r31,Z
+ 103 00a8 E02D      		mov r30,__tmp_reg__
+ 104 00aa 3097      		sbiw r30,0
+ 105 00ac 01F4      		brne .L16
+ 106 00ae FC01      		movw r30,r24
+ 107 00b0 D183      		std Z+1,r29
+ 108 00b2 C083      		st Z,r28
+ 109 00b4 00C0      		rjmp .L12
+ 110               	.L10:
+ 111 00b6 F801      		movw r30,r16
+ 112 00b8 D583      		std Z+5,r29
+ 113 00ba C483      		std Z+4,r28
+ 114               	.L12:
+GAS LISTING C:\Temp/ccnHwWSd.s 			page 3
+
+
+ 115 00bc D801      		movw r26,r16
+ 116 00be 1896      		adiw r26,8
+ 117 00c0 8D91      		ld r24,X+
+ 118 00c2 9C91      		ld r25,X
+ 119 00c4 1997      		sbiw r26,8+1
+ 120 00c6 2989      		ldd r18,Y+17
+ 121 00c8 3A89      		ldd r19,Y+18
+ 122 00ca 820F      		add r24,r18
+ 123 00cc 931F      		adc r25,r19
+ 124 00ce 00C0      		rjmp .L18
+ 125               	.L8:
+ 126 00d0 FC01      		movw r30,r24
+ 127 00d2 8481      		ldd r24,Z+4
+ 128 00d4 9581      		ldd r25,Z+5
+ 129 00d6 0097      		sbiw r24,0
+ 130 00d8 01F0      		breq .L14
+ 131 00da 0E94 0000 		call NutNetBufFree
+ 132               	.L14:
+ 133 00de D801      		movw r26,r16
+ 134 00e0 1596      		adiw r26,4+1
+ 135 00e2 DC93      		st X,r29
+ 136 00e4 CE93      		st -X,r28
+ 137 00e6 1497      		sbiw r26,4
+ 138 00e8 8989      		ldd r24,Y+17
+ 139 00ea 9A89      		ldd r25,Y+18
+ 140               	.L18:
+ 141 00ec 1996      		adiw r26,8+1
+ 142 00ee 9C93      		st X,r25
+ 143 00f0 8E93      		st -X,r24
+ 144 00f2 1897      		sbiw r26,8
+ 145 00f4 F801      		movw r30,r16
+ 146 00f6 8681      		ldd r24,Z+6
+ 147 00f8 9781      		ldd r25,Z+7
+ 148 00fa 892B      		or r24,r25
+ 149 00fc 01F0      		breq .L4
+ 150 00fe C801      		movw r24,r16
+ 151 0100 0696      		adiw r24,6
+ 152 0102 0E94 0000 		call NutEventPost
+ 153               	.L4:
+ 154 0106 80E0      		ldi r24,lo8(0)
+ 155 0108 90E0      		ldi r25,hi8(0)
+ 156               	/* epilogue start */
+ 157 010a DF91      		pop r29
+ 158 010c CF91      		pop r28
+ 159 010e 1F91      		pop r17
+ 160 0110 0F91      		pop r16
+ 161 0112 0895      		ret
+ 162               		.size	NutUdpInput, .-NutUdpInput
+GAS LISTING C:\Temp/ccnHwWSd.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 udpin.c
+  C:\Temp/ccnHwWSd.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccnHwWSd.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccnHwWSd.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccnHwWSd.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccnHwWSd.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccnHwWSd.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccnHwWSd.s:13     .text:00000000 NutUdpInput
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutUdpFindSocket
+NutIcmpResponse
+NutNetBufFree
+NutEventPost

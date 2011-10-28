@@ -1,0 +1,228 @@
+GAS LISTING C:\Temp/ccwY3LvY.s 			page 1
+
+
+   1               		.file	"debug1.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	DebugInit, @function
+  12               	DebugInit:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 88E1      		ldi r24,lo8(24)
+  16 0002 8093 9A00 		sts 154,r24
+  17 0006 80E0      		ldi r24,lo8(0)
+  18 0008 90E0      		ldi r25,hi8(0)
+  19               	/* epilogue start */
+  20 000a 0895      		ret
+  21               		.size	DebugInit, .-DebugInit
+  22               		.type	DebugWrite, @function
+  23               	DebugWrite:
+  24               	/* prologue: function */
+  25               	/* frame size = 0 */
+  26 000c FB01      		movw r30,r22
+  27 000e BA01      		movw r22,r20
+  28 0010 00C0      		rjmp .L4
+  29               	.L7:
+  30 0012 2081      		ld r18,Z
+  31               	.L11:
+  32 0014 8091 9B00 		lds r24,155
+  33 0018 85FF      		sbrs r24,5
+  34 001a 00C0      		rjmp .L11
+  35 001c 2093 9C00 		sts 156,r18
+  36 0020 2A30      		cpi r18,lo8(10)
+  37 0022 01F4      		brne .L6
+  38 0024 2DE0      		ldi r18,lo8(13)
+  39 0026 00C0      		rjmp .L11
+  40               	.L6:
+  41 0028 3196      		adiw r30,1
+  42               	.L4:
+  43 002a 6150      		subi r22,lo8(-(-1))
+  44 002c 7040      		sbci r23,hi8(-(-1))
+  45 002e 8FEF      		ldi r24,hi8(-1)
+  46 0030 6F3F      		cpi r22,lo8(-1)
+  47 0032 7807      		cpc r23,r24
+  48 0034 01F4      		brne .L7
+  49 0036 CA01      		movw r24,r20
+  50               	/* epilogue start */
+  51 0038 0895      		ret
+  52               		.size	DebugWrite, .-DebugWrite
+  53               		.type	DebugWrite_P, @function
+  54               	DebugWrite_P:
+  55               	/* prologue: function */
+  56               	/* frame size = 0 */
+  57 003a FB01      		movw r30,r22
+GAS LISTING C:\Temp/ccwY3LvY.s 			page 2
+
+
+  58 003c BA01      		movw r22,r20
+  59 003e 00C0      		rjmp .L13
+  60               	.L16:
+  61               	/* #APP */
+  62               	 ;  132 "../../nut/arch/avr/dev/debug1.c" 1
+  63 0040 2491      		lpm r18, Z
+  64               		
+  65               	 ;  0 "" 2
+  66               	/* #NOAPP */
+  67               	.L20:
+  68 0042 8091 9B00 		lds r24,155
+  69 0046 85FF      		sbrs r24,5
+  70 0048 00C0      		rjmp .L20
+  71 004a 2093 9C00 		sts 156,r18
+  72 004e 2A30      		cpi r18,lo8(10)
+  73 0050 01F4      		brne .L15
+  74 0052 2DE0      		ldi r18,lo8(13)
+  75 0054 00C0      		rjmp .L20
+  76               	.L15:
+  77 0056 3196      		adiw r30,1
+  78               	.L13:
+  79 0058 6150      		subi r22,lo8(-(-1))
+  80 005a 7040      		sbci r23,hi8(-(-1))
+  81 005c 8FEF      		ldi r24,hi8(-1)
+  82 005e 6F3F      		cpi r22,lo8(-1)
+  83 0060 7807      		cpc r23,r24
+  84 0062 01F4      		brne .L16
+  85 0064 CA01      		movw r24,r20
+  86               	/* epilogue start */
+  87 0066 0895      		ret
+  88               		.size	DebugWrite_P, .-DebugWrite_P
+  89               		.type	DebugOpen, @function
+  90               	DebugOpen:
+  91               	/* prologue: function */
+  92               	/* frame size = 0 */
+  93 0068 1092 0000 		sts (dbgfile)+1,__zero_reg__
+  94 006c 1092 0000 		sts dbgfile,__zero_reg__
+  95 0070 9093 0000 		sts (dbgfile+2)+1,r25
+  96 0074 8093 0000 		sts dbgfile+2,r24
+  97 0078 1092 0000 		sts (dbgfile+4)+1,__zero_reg__
+  98 007c 1092 0000 		sts dbgfile+4,__zero_reg__
+  99 0080 80E0      		ldi r24,lo8(dbgfile)
+ 100 0082 90E0      		ldi r25,hi8(dbgfile)
+ 101               	/* epilogue start */
+ 102 0084 0895      		ret
+ 103               		.size	DebugOpen, .-DebugOpen
+ 104               		.type	DebugClose, @function
+ 105               	DebugClose:
+ 106               	/* prologue: function */
+ 107               	/* frame size = 0 */
+ 108 0086 80E0      		ldi r24,lo8(0)
+ 109 0088 90E0      		ldi r25,hi8(0)
+ 110               	/* epilogue start */
+ 111 008a 0895      		ret
+ 112               		.size	DebugClose, .-DebugClose
+ 113               		.type	DebugIOCtl, @function
+ 114               	DebugIOCtl:
+GAS LISTING C:\Temp/ccwY3LvY.s 			page 3
+
+
+ 115 008c CF93      		push r28
+ 116 008e DF93      		push r29
+ 117               	/* prologue: function */
+ 118               	/* frame size = 0 */
+ 119 0090 EA01      		movw r28,r20
+ 120 0092 6150      		subi r22,lo8(257)
+ 121 0094 7140      		sbci r23,hi8(257)
+ 122 0096 01F0      		breq .L26
+ 123 0098 2FEF      		ldi r18,lo8(-1)
+ 124 009a 3FEF      		ldi r19,hi8(-1)
+ 125 009c 00C0      		rjmp .L27
+ 126               	.L26:
+ 127 009e 0E94 0000 		call NutGetCpuClock
+ 128 00a2 660F      		lsl r22
+ 129 00a4 771F      		rol r23
+ 130 00a6 881F      		rol r24
+ 131 00a8 991F      		rol r25
+ 132 00aa 2881      		ld r18,Y
+ 133 00ac 3981      		ldd r19,Y+1
+ 134 00ae 4A81      		ldd r20,Y+2
+ 135 00b0 5B81      		ldd r21,Y+3
+ 136 00b2 E4E0      		ldi r30,4
+ 137 00b4 220F      	1:	lsl r18
+ 138 00b6 331F      		rol r19
+ 139 00b8 441F      		rol r20
+ 140 00ba 551F      		rol r21
+ 141 00bc EA95      		dec r30
+ 142 00be 01F4      		brne 1b
+ 143 00c0 0E94 0000 		call __udivmodsi4
+ 144 00c4 2F5F      		subi r18,lo8(-(1))
+ 145 00c6 3F4F      		sbci r19,hi8(-(1))
+ 146 00c8 4F4F      		sbci r20,hlo8(-(1))
+ 147 00ca 5F4F      		sbci r21,hhi8(-(1))
+ 148 00cc 5695      		lsr r21
+ 149 00ce 4795      		ror r20
+ 150 00d0 3795      		ror r19
+ 151 00d2 2795      		ror r18
+ 152 00d4 2150      		subi r18,lo8(-(-1))
+ 153 00d6 2093 9900 		sts 153,r18
+ 154 00da 20E0      		ldi r18,lo8(0)
+ 155 00dc 30E0      		ldi r19,hi8(0)
+ 156               	.L27:
+ 157 00de C901      		movw r24,r18
+ 158               	/* epilogue start */
+ 159 00e0 DF91      		pop r29
+ 160 00e2 CF91      		pop r28
+ 161 00e4 0895      		ret
+ 162               		.size	DebugIOCtl, .-DebugIOCtl
+ 163               	.global	devDebug1
+ 164               		.data
+ 165               		.type	devDebug1, @object
+ 166               		.size	devDebug1, 35
+ 167               	devDebug1:
+ 168 0000 0000      		.word	0
+ 169 0002 75        		.byte	117
+ 170 0003 61        		.byte	97
+ 171 0004 72        		.byte	114
+GAS LISTING C:\Temp/ccwY3LvY.s 			page 4
+
+
+ 172 0005 74        		.byte	116
+ 173 0006 31        		.byte	49
+ 174 0007 00        		.byte	0
+ 175 0008 00        		.byte	0
+ 176 0009 00        		.byte	0
+ 177 000a 00        		.byte	0
+ 178 000b 00        		.byte	0
+ 179 000c 0000      		.word	0
+ 180 000e 00        		.byte	0
+ 181 000f 0000      		.word	0
+ 182 0011 0000      		.word	0
+ 183 0013 0000      		.word	gs(DebugInit)
+ 184 0015 0000      		.word	gs(DebugIOCtl)
+ 185 0017 0000      		.word	0
+ 186 0019 0000      		.word	gs(DebugWrite)
+ 187 001b 0000      		.word	gs(DebugWrite_P)
+ 188 001d 0000      		.word	gs(DebugOpen)
+ 189 001f 0000      		.word	gs(DebugClose)
+ 190 0021 0000      		.word	0
+ 191               		.lcomm dbgfile,6
+GAS LISTING C:\Temp/ccwY3LvY.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 debug1.c
+  C:\Temp/ccwY3LvY.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccwY3LvY.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccwY3LvY.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccwY3LvY.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccwY3LvY.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccwY3LvY.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccwY3LvY.s:12     .text:00000000 DebugInit
+  C:\Temp/ccwY3LvY.s:23     .text:0000000c DebugWrite
+  C:\Temp/ccwY3LvY.s:54     .text:0000003a DebugWrite_P
+  C:\Temp/ccwY3LvY.s:90     .text:00000068 DebugOpen
+                             .bss:00000000 dbgfile
+  C:\Temp/ccwY3LvY.s:105    .text:00000086 DebugClose
+  C:\Temp/ccwY3LvY.s:114    .text:0000008c DebugIOCtl
+  C:\Temp/ccwY3LvY.s:167    .data:00000000 devDebug1
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutGetCpuClock
+__udivmodsi4

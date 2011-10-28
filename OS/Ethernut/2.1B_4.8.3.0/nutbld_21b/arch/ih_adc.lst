@@ -1,0 +1,175 @@
+GAS LISTING C:\Temp/ccuDwWSd.s 			page 1
+
+
+   1               		.file	"ih_adc.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               		.type	AvrAdcIrqCtl, @function
+  12               	AvrAdcIrqCtl:
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0000 FB01      		movw r30,r22
+  16 0002 46B1      		in r20,38-32
+  17 0004 4870      		andi r20,lo8(8)
+  18 0006 3398      		cbi 38-32,3
+  19 0008 8031      		cpi r24,16
+  20 000a 9105      		cpc r25,__zero_reg__
+  21 000c 01F0      		breq .L5
+  22 000e 8131      		cpi r24,17
+  23 0010 9105      		cpc r25,__zero_reg__
+  24 0012 04F4      		brge .L9
+  25 0014 0097      		sbiw r24,0
+  26 0016 01F0      		breq .L3
+  27 0018 0197      		sbiw r24,1
+  28 001a 01F4      		brne .L2
+  29 001c 00C0      		rjmp .L4
+  30               	.L9:
+  31 001e 8231      		cpi r24,18
+  32 0020 9105      		cpc r25,__zero_reg__
+  33 0022 01F0      		breq .L7
+  34 0024 8231      		cpi r24,18
+  35 0026 9105      		cpc r25,__zero_reg__
+  36 0028 04F0      		brlt .L17
+  37 002a 8097      		sbiw r24,32
+  38 002c 01F0      		breq .L18
+  39               	.L2:
+  40 002e 2FEF      		ldi r18,lo8(-1)
+  41 0030 3FEF      		ldi r19,hi8(-1)
+  42 0032 00C0      		rjmp .L11
+  43               	.L3:
+  44 0034 40E0      		ldi r20,lo8(0)
+  45               	.L4:
+  46 0036 80E1      		ldi r24,lo8(16)
+  47 0038 86B9      		out 38-32,r24
+  48 003a 00C0      		rjmp .L16
+  49               	.L5:
+  50 003c 349B      		sbis 38-32,4
+  51 003e 00C0      		rjmp .L12
+  52 0040 81E0      		ldi r24,lo8(1)
+  53 0042 90E0      		ldi r25,hi8(1)
+  54 0044 9183      		std Z+1,r25
+  55 0046 8083      		st Z,r24
+  56 0048 00C0      		rjmp .L13
+  57               	.L12:
+GAS LISTING C:\Temp/ccuDwWSd.s 			page 2
+
+
+  58 004a 1182      		std Z+1,__zero_reg__
+  59 004c 1082      		st Z,__zero_reg__
+  60               	.L13:
+  61 004e 4423      		tst r20
+  62 0050 01F0      		breq .L7
+  63 0052 8081      		ld r24,Z
+  64 0054 9181      		ldd r25,Z+1
+  65 0056 8068      		ori r24,lo8(128)
+  66 0058 9183      		std Z+1,r25
+  67 005a 8083      		st Z,r24
+  68               	.L17:
+  69 005c 20E0      		ldi r18,lo8(0)
+  70 005e 30E0      		ldi r19,hi8(0)
+  71 0060 00C0      		rjmp .L10
+  72               	.L18:
+  73 0062 1182      		std Z+1,__zero_reg__
+  74 0064 1082      		st Z,__zero_reg__
+  75               	.L16:
+  76 0066 20E0      		ldi r18,lo8(0)
+  77 0068 30E0      		ldi r19,hi8(0)
+  78               	.L11:
+  79 006a 4423      		tst r20
+  80 006c 01F0      		breq .L14
+  81               	.L10:
+  82 006e 339A      		sbi 38-32,3
+  83 0070 00C0      		rjmp .L14
+  84               	.L7:
+  85 0072 20E0      		ldi r18,lo8(0)
+  86 0074 30E0      		ldi r19,hi8(0)
+  87               	.L14:
+  88 0076 C901      		movw r24,r18
+  89               	/* epilogue start */
+  90 0078 0895      		ret
+  91               		.size	AvrAdcIrqCtl, .-AvrAdcIrqCtl
+  92               	.global	__vector_21
+  93               		.type	__vector_21, @function
+  94               	__vector_21:
+  95 007a 1F92      		push __zero_reg__
+  96 007c 0F92      		push r0
+  97 007e 0FB6      		in r0,__SREG__
+  98 0080 0F92      		push r0
+  99 0082 0BB6      		in r0,91-32
+ 100 0084 0F92      		push r0
+ 101 0086 1124      		clr __zero_reg__
+ 102 0088 2F93      		push r18
+ 103 008a 3F93      		push r19
+ 104 008c 4F93      		push r20
+ 105 008e 5F93      		push r21
+ 106 0090 6F93      		push r22
+ 107 0092 7F93      		push r23
+ 108 0094 8F93      		push r24
+ 109 0096 9F93      		push r25
+ 110 0098 AF93      		push r26
+ 111 009a BF93      		push r27
+ 112 009c EF93      		push r30
+ 113 009e FF93      		push r31
+ 114               	/* prologue: Signal */
+GAS LISTING C:\Temp/ccuDwWSd.s 			page 3
+
+
+ 115               	/* frame size = 0 */
+ 116 00a0 80E0      		ldi r24,lo8(sig_ADC)
+ 117 00a2 90E0      		ldi r25,hi8(sig_ADC)
+ 118 00a4 0E94 0000 		call CallHandler
+ 119               	/* epilogue start */
+ 120 00a8 FF91      		pop r31
+ 121 00aa EF91      		pop r30
+ 122 00ac BF91      		pop r27
+ 123 00ae AF91      		pop r26
+ 124 00b0 9F91      		pop r25
+ 125 00b2 8F91      		pop r24
+ 126 00b4 7F91      		pop r23
+ 127 00b6 6F91      		pop r22
+ 128 00b8 5F91      		pop r21
+ 129 00ba 4F91      		pop r20
+ 130 00bc 3F91      		pop r19
+ 131 00be 2F91      		pop r18
+ 132 00c0 0F90      		pop r0
+ 133 00c2 0BBE      		out 91-32,r0
+ 134 00c4 0F90      		pop r0
+ 135 00c6 0FBE      		out __SREG__,r0
+ 136 00c8 0F90      		pop r0
+ 137 00ca 1F90      		pop __zero_reg__
+ 138 00cc 1895      		reti
+ 139               		.size	__vector_21, .-__vector_21
+ 140               	.global	sig_ADC
+ 141               		.data
+ 142               		.type	sig_ADC, @object
+ 143               		.size	sig_ADC, 6
+ 144               	sig_ADC:
+ 145 0000 0000      		.word	0
+ 146 0002 0000      		.word	0
+ 147 0004 0000      		.word	gs(AvrAdcIrqCtl)
+GAS LISTING C:\Temp/ccuDwWSd.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ih_adc.c
+  C:\Temp/ccuDwWSd.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccuDwWSd.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccuDwWSd.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccuDwWSd.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccuDwWSd.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccuDwWSd.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccuDwWSd.s:12     .text:00000000 AvrAdcIrqCtl
+  C:\Temp/ccuDwWSd.s:94     .text:0000007a __vector_21
+  C:\Temp/ccuDwWSd.s:144    .data:00000000 sig_ADC
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+CallHandler

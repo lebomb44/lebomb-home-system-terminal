@@ -1,0 +1,629 @@
+GAS LISTING C:\Temp/ccIV7vim.s 			page 1
+
+
+   1               		.file	"thread.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	NutThreadAddPriQueue
+  12               		.type	NutThreadAddPriQueue, @function
+  13               	NutThreadAddPriQueue:
+  14 0000 CF93      		push r28
+  15 0002 DF93      		push r29
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0004 DC01      		movw r26,r24
+  19 0006 EB01      		movw r28,r22
+  20 0008 5896      		adiw r26,23+1
+  21 000a 7C93      		st X,r23
+  22 000c 6E93      		st -X,r22
+  23 000e 5797      		sbiw r26,23
+  24 0010 1596      		adiw r26,4+1
+  25 0012 1C92      		st X,__zero_reg__
+  26 0014 1E92      		st -X,__zero_reg__
+  27 0016 1497      		sbiw r26,4
+  28               	/* #APP */
+  29               	 ;  303 "../../nut/os/thread.c" 1
+  30 0018 0FB6      		in  __tmp_reg__, __SREG__
+  31 001a F894      		cli
+  32 001c 0F92      		push __tmp_reg__
+  33               		
+  34               	 ;  0 "" 2
+  35               	/* #NOAPP */
+  36 001e E881      		ld r30,Y
+  37 0020 F981      		ldd r31,Y+1
+  38 0022 8FEF      		ldi r24,hi8(-1)
+  39 0024 EF3F      		cpi r30,lo8(-1)
+  40 0026 F807      		cpc r31,r24
+  41 0028 01F4      		brne .L2
+  42 002a 1496      		adiw r26,4
+  43 002c 8D91      		ld r24,X+
+  44 002e 9C91      		ld r25,X
+  45 0030 1597      		sbiw r26,4+1
+  46 0032 0196      		adiw r24,1
+  47 0034 1596      		adiw r26,4+1
+  48 0036 9C93      		st X,r25
+  49 0038 8E93      		st -X,r24
+  50 003a 1497      		sbiw r26,4
+  51 003c E0E0      		ldi r30,lo8(0)
+  52 003e F0E0      		ldi r31,hi8(0)
+  53 0040 00C0      		rjmp .L3
+  54               	.L2:
+  55 0042 3097      		sbiw r30,0
+  56 0044 01F0      		breq .L3
+  57               	/* #APP */
+GAS LISTING C:\Temp/ccIV7vim.s 			page 2
+
+
+  58               	 ;  310 "../../nut/os/thread.c" 1
+  59 0046 0F90      		pop __tmp_reg__
+  60 0048 0FBE      		out __SREG__, __tmp_reg__
+  61               		
+  62               	 ;  0 "" 2
+  63               	/* #NOAPP */
+  64 004a 5296      		adiw r26,18
+  65 004c 9C91      		ld r25,X
+  66 004e 5297      		sbiw r26,18
+  67 0050 00C0      		rjmp .L4
+  68               	.L6:
+  69 0052 EF01      		movw r28,r30
+  70 0054 2296      		adiw r28,2
+  71 0056 0280      		ldd __tmp_reg__,Z+2
+  72 0058 F381      		ldd r31,Z+3
+  73 005a E02D      		mov r30,__tmp_reg__
+  74 005c 3097      		sbiw r30,0
+  75 005e 01F0      		breq .L5
+  76               	.L4:
+  77 0060 8289      		ldd r24,Z+18
+  78 0062 9817      		cp r25,r24
+  79 0064 00F4      		brsh .L6
+  80               	.L5:
+  81               	/* #APP */
+  82               	 ;  318 "../../nut/os/thread.c" 1
+  83 0066 0FB6      		in  __tmp_reg__, __SREG__
+  84 0068 F894      		cli
+  85 006a 0F92      		push __tmp_reg__
+  86               		
+  87               	 ;  0 "" 2
+  88               	/* #NOAPP */
+  89               	.L3:
+  90 006c 1396      		adiw r26,2+1
+  91 006e FC93      		st X,r31
+  92 0070 EE93      		st -X,r30
+  93 0072 1297      		sbiw r26,2
+  94 0074 B983      		std Y+1,r27
+  95 0076 A883      		st Y,r26
+  96 0078 1296      		adiw r26,2
+  97 007a ED91      		ld r30,X+
+  98 007c FC91      		ld r31,X
+  99 007e 1397      		sbiw r26,2+1
+ 100 0080 3097      		sbiw r30,0
+ 101 0082 01F0      		breq .L7
+ 102 0084 8481      		ldd r24,Z+4
+ 103 0086 9581      		ldd r25,Z+5
+ 104 0088 892B      		or r24,r25
+ 105 008a 01F0      		breq .L7
+ 106 008c 1496      		adiw r26,4
+ 107 008e 2D91      		ld r18,X+
+ 108 0090 3C91      		ld r19,X
+ 109 0092 1597      		sbiw r26,4+1
+ 110 0094 8481      		ldd r24,Z+4
+ 111 0096 9581      		ldd r25,Z+5
+ 112 0098 820F      		add r24,r18
+ 113 009a 931F      		adc r25,r19
+ 114 009c 1596      		adiw r26,4+1
+GAS LISTING C:\Temp/ccIV7vim.s 			page 3
+
+
+ 115 009e 9C93      		st X,r25
+ 116 00a0 8E93      		st -X,r24
+ 117 00a2 1497      		sbiw r26,4
+ 118 00a4 1582      		std Z+5,__zero_reg__
+ 119 00a6 1482      		std Z+4,__zero_reg__
+ 120               	.L7:
+ 121               	/* #APP */
+ 122               	 ;  328 "../../nut/os/thread.c" 1
+ 123 00a8 0F90      		pop __tmp_reg__
+ 124 00aa 0FBE      		out __SREG__, __tmp_reg__
+ 125               		
+ 126               	 ;  0 "" 2
+ 127               	/* epilogue start */
+ 128               	/* #NOAPP */
+ 129 00ac DF91      		pop r29
+ 130 00ae CF91      		pop r28
+ 131 00b0 0895      		ret
+ 132               		.size	NutThreadAddPriQueue, .-NutThreadAddPriQueue
+ 133               	.global	NutThreadRemoveQueue
+ 134               		.type	NutThreadRemoveQueue, @function
+ 135               	NutThreadRemoveQueue:
+ 136 00b2 CF93      		push r28
+ 137 00b4 DF93      		push r29
+ 138               	/* prologue: function */
+ 139               	/* frame size = 0 */
+ 140 00b6 DC01      		movw r26,r24
+ 141 00b8 EB01      		movw r28,r22
+ 142               	/* #APP */
+ 143               	 ;  345 "../../nut/os/thread.c" 1
+ 144 00ba 0FB6      		in  __tmp_reg__, __SREG__
+ 145 00bc F894      		cli
+ 146 00be 0F92      		push __tmp_reg__
+ 147               		
+ 148               	 ;  0 "" 2
+ 149               	/* #NOAPP */
+ 150 00c0 E881      		ld r30,Y
+ 151 00c2 F981      		ldd r31,Y+1
+ 152               	/* #APP */
+ 153               	 ;  347 "../../nut/os/thread.c" 1
+ 154 00c4 0F90      		pop __tmp_reg__
+ 155 00c6 0FBE      		out __SREG__, __tmp_reg__
+ 156               		
+ 157               	 ;  0 "" 2
+ 158               	/* #NOAPP */
+ 159 00c8 8FEF      		ldi r24,hi8(-1)
+ 160 00ca EF3F      		cpi r30,lo8(-1)
+ 161 00cc F807      		cpc r31,r24
+ 162 00ce 01F4      		brne .L17
+ 163 00d0 00C0      		rjmp .L16
+ 164               	.L15:
+ 165 00d2 EA17      		cp r30,r26
+ 166 00d4 FB07      		cpc r31,r27
+ 167 00d6 01F4      		brne .L12
+ 168               	/* #APP */
+ 169               	 ;  352 "../../nut/os/thread.c" 1
+ 170 00d8 0FB6      		in  __tmp_reg__, __SREG__
+ 171 00da F894      		cli
+GAS LISTING C:\Temp/ccIV7vim.s 			page 4
+
+
+ 172 00dc 0F92      		push __tmp_reg__
+ 173               		
+ 174               	 ;  0 "" 2
+ 175               	/* #NOAPP */
+ 176 00de 1296      		adiw r26,2
+ 177 00e0 8D91      		ld r24,X+
+ 178 00e2 9C91      		ld r25,X
+ 179 00e4 1397      		sbiw r26,2+1
+ 180 00e6 9983      		std Y+1,r25
+ 181 00e8 8883      		st Y,r24
+ 182 00ea 1496      		adiw r26,4
+ 183 00ec 8D91      		ld r24,X+
+ 184 00ee 9C91      		ld r25,X
+ 185 00f0 1597      		sbiw r26,4+1
+ 186 00f2 892B      		or r24,r25
+ 187 00f4 01F0      		breq .L13
+ 188 00f6 1296      		adiw r26,2
+ 189 00f8 ED91      		ld r30,X+
+ 190 00fa FC91      		ld r31,X
+ 191 00fc 1397      		sbiw r26,2+1
+ 192 00fe 3097      		sbiw r30,0
+ 193 0100 01F0      		breq .L14
+ 194 0102 1496      		adiw r26,4
+ 195 0104 8D91      		ld r24,X+
+ 196 0106 9C91      		ld r25,X
+ 197 0108 1597      		sbiw r26,4+1
+ 198 010a 9583      		std Z+5,r25
+ 199 010c 8483      		std Z+4,r24
+ 200               	.L14:
+ 201 010e 1596      		adiw r26,4+1
+ 202 0110 1C92      		st X,__zero_reg__
+ 203 0112 1E92      		st -X,__zero_reg__
+ 204 0114 1497      		sbiw r26,4
+ 205               	.L13:
+ 206               	/* #APP */
+ 207               	 ;  360 "../../nut/os/thread.c" 1
+ 208 0116 0F90      		pop __tmp_reg__
+ 209 0118 0FBE      		out __SREG__, __tmp_reg__
+ 210               		
+ 211               	 ;  0 "" 2
+ 212               	/* #NOAPP */
+ 213 011a 1396      		adiw r26,2+1
+ 214 011c 1C92      		st X,__zero_reg__
+ 215 011e 1E92      		st -X,__zero_reg__
+ 216 0120 1297      		sbiw r26,2
+ 217 0122 5896      		adiw r26,23+1
+ 218 0124 1C92      		st X,__zero_reg__
+ 219 0126 1E92      		st -X,__zero_reg__
+ 220 0128 5797      		sbiw r26,23
+ 221 012a 00C0      		rjmp .L16
+ 222               	.L12:
+ 223 012c EF01      		movw r28,r30
+ 224 012e 2296      		adiw r28,2
+ 225 0130 0280      		ldd __tmp_reg__,Z+2
+ 226 0132 F381      		ldd r31,Z+3
+ 227 0134 E02D      		mov r30,__tmp_reg__
+ 228               	.L17:
+GAS LISTING C:\Temp/ccIV7vim.s 			page 5
+
+
+ 229 0136 3097      		sbiw r30,0
+ 230 0138 01F4      		brne .L15
+ 231               	.L16:
+ 232               	/* epilogue start */
+ 233 013a DF91      		pop r29
+ 234 013c CF91      		pop r28
+ 235 013e 0895      		ret
+ 236               		.size	NutThreadRemoveQueue, .-NutThreadRemoveQueue
+ 237               	.global	NutThreadWake
+ 238               		.type	NutThreadWake, @function
+ 239               	NutThreadWake:
+ 240               	/* prologue: function */
+ 241               	/* frame size = 0 */
+ 242 0140 FB01      		movw r30,r22
+ 243 0142 168A      		std Z+22,__zero_reg__
+ 244 0144 158A      		std Z+21,__zero_reg__
+ 245 0146 82E0      		ldi r24,lo8(2)
+ 246 0148 8787      		std Z+15,r24
+ 247 014a 60E0      		ldi r22,lo8(runQueue)
+ 248 014c 70E0      		ldi r23,hi8(runQueue)
+ 249 014e CF01      		movw r24,r30
+ 250 0150 0E94 0000 		call NutThreadAddPriQueue
+ 251               	/* epilogue start */
+ 252 0154 0895      		ret
+ 253               		.size	NutThreadWake, .-NutThreadWake
+ 254               	.global	GetThreadByName
+ 255               		.type	GetThreadByName, @function
+ 256               	GetThreadByName:
+ 257 0156 0F93      		push r16
+ 258 0158 1F93      		push r17
+ 259 015a CF93      		push r28
+ 260 015c DF93      		push r29
+ 261               	/* prologue: function */
+ 262               	/* frame size = 0 */
+ 263 015e 8C01      		movw r16,r24
+ 264 0160 0097      		sbiw r24,0
+ 265 0162 01F0      		breq .L21
+ 266 0164 C091 0000 		lds r28,nutThreadList
+ 267 0168 D091 0000 		lds r29,(nutThreadList)+1
+ 268 016c 00C0      		rjmp .L22
+ 269               	.L25:
+ 270 016e B801      		movw r22,r16
+ 271 0170 CE01      		movw r24,r28
+ 272 0172 0696      		adiw r24,6
+ 273 0174 0E94 0000 		call strcmp
+ 274 0178 0097      		sbiw r24,0
+ 275 017a 01F4      		brne .L23
+ 276 017c 9E01      		movw r18,r28
+ 277 017e 00C0      		rjmp .L24
+ 278               	.L23:
+ 279 0180 0990      		ld __tmp_reg__,Y+
+ 280 0182 D881      		ld r29,Y
+ 281 0184 C02D      		mov r28,__tmp_reg__
+ 282               	.L22:
+ 283 0186 2097      		sbiw r28,0
+ 284 0188 01F4      		brne .L25
+ 285 018a 20E0      		ldi r18,lo8(0)
+GAS LISTING C:\Temp/ccIV7vim.s 			page 6
+
+
+ 286 018c 30E0      		ldi r19,hi8(0)
+ 287 018e 00C0      		rjmp .L24
+ 288               	.L21:
+ 289 0190 2091 0000 		lds r18,runningThread
+ 290 0194 3091 0000 		lds r19,(runningThread)+1
+ 291               	.L24:
+ 292 0198 C901      		movw r24,r18
+ 293               	/* epilogue start */
+ 294 019a DF91      		pop r29
+ 295 019c CF91      		pop r28
+ 296 019e 1F91      		pop r17
+ 297 01a0 0F91      		pop r16
+ 298 01a2 0895      		ret
+ 299               		.size	GetThreadByName, .-GetThreadByName
+ 300               	.global	NutThreadDestroy
+ 301               		.type	NutThreadDestroy, @function
+ 302               	NutThreadDestroy:
+ 303               	/* prologue: function */
+ 304               	/* frame size = 0 */
+ 305 01a4 E091 0000 		lds r30,killedThread
+ 306 01a8 F091 0000 		lds r31,(killedThread)+1
+ 307 01ac 3097      		sbiw r30,0
+ 308 01ae 01F0      		breq .L29
+ 309 01b0 6389      		ldd r22,Z+19
+ 310 01b2 7489      		ldd r23,Z+20
+ 311 01b4 80E0      		ldi r24,lo8(heapFreeList)
+ 312 01b6 90E0      		ldi r25,hi8(heapFreeList)
+ 313 01b8 0E94 0000 		call NutHeapRootFree
+ 314 01bc 1092 0000 		sts (killedThread)+1,__zero_reg__
+ 315 01c0 1092 0000 		sts killedThread,__zero_reg__
+ 316               	.L29:
+ 317 01c4 0895      		ret
+ 318               		.size	NutThreadDestroy, .-NutThreadDestroy
+ 319               	.global	NutThreadKill
+ 320               		.type	NutThreadKill, @function
+ 321               	NutThreadKill:
+ 322 01c6 CF93      		push r28
+ 323 01c8 DF93      		push r29
+ 324               	/* prologue: function */
+ 325               	/* frame size = 0 */
+ 326 01ca C091 0000 		lds r28,nutThreadList
+ 327 01ce D091 0000 		lds r29,(nutThreadList)+1
+ 328 01d2 0E94 0000 		call NutThreadDestroy
+ 329 01d6 4091 0000 		lds r20,runningThread
+ 330 01da 5091 0000 		lds r21,(runningThread)+1
+ 331 01de E0E0      		ldi r30,lo8(nutThreadList)
+ 332 01e0 F0E0      		ldi r31,hi8(nutThreadList)
+ 333 01e2 00C0      		rjmp .L31
+ 334               	.L34:
+ 335 01e4 2881      		ld r18,Y
+ 336 01e6 3981      		ldd r19,Y+1
+ 337 01e8 C417      		cp r28,r20
+ 338 01ea D507      		cpc r29,r21
+ 339 01ec 01F4      		brne .L32
+ 340 01ee 2083      		st Z,r18
+ 341 01f0 3183      		std Z+1,r19
+ 342 01f2 00C0      		rjmp .L33
+GAS LISTING C:\Temp/ccIV7vim.s 			page 7
+
+
+ 343               	.L32:
+ 344 01f4 FE01      		movw r30,r28
+ 345 01f6 C901      		movw r24,r18
+ 346 01f8 EC01      		movw r28,r24
+ 347               	.L31:
+ 348 01fa 2097      		sbiw r28,0
+ 349 01fc 01F4      		brne .L34
+ 350               	.L33:
+ 351 01fe 8091 0000 		lds r24,runningThread
+ 352 0202 9091 0000 		lds r25,(runningThread)+1
+ 353 0206 9093 0000 		sts (killedThread)+1,r25
+ 354 020a 8093 0000 		sts killedThread,r24
+ 355               	/* epilogue start */
+ 356 020e DF91      		pop r29
+ 357 0210 CF91      		pop r28
+ 358 0212 0895      		ret
+ 359               		.size	NutThreadKill, .-NutThreadKill
+ 360               	.global	NutThreadSetPriority
+ 361               		.type	NutThreadSetPriority, @function
+ 362               	NutThreadSetPriority:
+ 363 0214 0F93      		push r16
+ 364 0216 1F93      		push r17
+ 365               	/* prologue: function */
+ 366               	/* frame size = 0 */
+ 367 0218 182F      		mov r17,r24
+ 368 021a E091 0000 		lds r30,runningThread
+ 369 021e F091 0000 		lds r31,(runningThread)+1
+ 370 0222 0289      		ldd r16,Z+18
+ 371 0224 60E0      		ldi r22,lo8(runQueue)
+ 372 0226 70E0      		ldi r23,hi8(runQueue)
+ 373 0228 CF01      		movw r24,r30
+ 374 022a 0E94 0000 		call NutThreadRemoveQueue
+ 375 022e E091 0000 		lds r30,runningThread
+ 376 0232 F091 0000 		lds r31,(runningThread)+1
+ 377 0236 128B      		std Z+18,r17
+ 378 0238 1F3F      		cpi r17,lo8(-1)
+ 379 023a 01F0      		breq .L37
+ 380 023c 60E0      		ldi r22,lo8(runQueue)
+ 381 023e 70E0      		ldi r23,hi8(runQueue)
+ 382 0240 CF01      		movw r24,r30
+ 383 0242 0E94 0000 		call NutThreadAddPriQueue
+ 384 0246 00C0      		rjmp .L38
+ 385               	.L37:
+ 386 0248 0E94 0000 		call NutThreadKill
+ 387               	.L38:
+ 388 024c E091 0000 		lds r30,runningThread
+ 389 0250 F091 0000 		lds r31,(runningThread)+1
+ 390 0254 8091 0000 		lds r24,runQueue
+ 391 0258 9091 0000 		lds r25,(runQueue)+1
+ 392 025c E817      		cp r30,r24
+ 393 025e F907      		cpc r31,r25
+ 394 0260 01F4      		brne .L39
+ 395 0262 81E0      		ldi r24,lo8(1)
+ 396 0264 8787      		std Z+15,r24
+ 397 0266 00C0      		rjmp .L40
+ 398               	.L39:
+ 399 0268 82E0      		ldi r24,lo8(2)
+GAS LISTING C:\Temp/ccIV7vim.s 			page 8
+
+
+ 400 026a 8787      		std Z+15,r24
+ 401               	/* #APP */
+ 402               	 ;  547 "../../nut/os/thread.c" 1
+ 403 026c 0FB6      		in  __tmp_reg__, __SREG__
+ 404 026e F894      		cli
+ 405 0270 0F92      		push __tmp_reg__
+ 406               		
+ 407               	 ;  0 "" 2
+ 408               	/* #NOAPP */
+ 409 0272 0E94 0000 		call NutThreadSwitch
+ 410               	/* #APP */
+ 411               	 ;  549 "../../nut/os/thread.c" 1
+ 412 0276 0F90      		pop __tmp_reg__
+ 413 0278 0FBE      		out __SREG__, __tmp_reg__
+ 414               		
+ 415               	 ;  0 "" 2
+ 416               	/* #NOAPP */
+ 417               	.L40:
+ 418 027a 802F      		mov r24,r16
+ 419               	/* epilogue start */
+ 420 027c 1F91      		pop r17
+ 421 027e 0F91      		pop r16
+ 422 0280 0895      		ret
+ 423               		.size	NutThreadSetPriority, .-NutThreadSetPriority
+ 424               	.global	NutThreadExit
+ 425               		.type	NutThreadExit, @function
+ 426               	NutThreadExit:
+ 427               	/* prologue: function */
+ 428               	/* frame size = 0 */
+ 429 0282 8FEF      		ldi r24,lo8(-1)
+ 430 0284 0E94 0000 		call NutThreadSetPriority
+ 431               	/* epilogue start */
+ 432 0288 0895      		ret
+ 433               		.size	NutThreadExit, .-NutThreadExit
+ 434               	.global	NutThreadResume
+ 435               		.type	NutThreadResume, @function
+ 436               	NutThreadResume:
+ 437 028a CF93      		push r28
+ 438 028c DF93      		push r29
+ 439               	/* prologue: function */
+ 440               	/* frame size = 0 */
+ 441 028e C091 0000 		lds r28,nutThreadList
+ 442 0292 D091 0000 		lds r29,(nutThreadList)+1
+ 443 0296 00C0      		rjmp .L45
+ 444               	.L47:
+ 445               	/* #APP */
+ 446               	 ;  394 "../../nut/os/thread.c" 1
+ 447 0298 0FB6      		in  __tmp_reg__, __SREG__
+ 448 029a F894      		cli
+ 449 029c 0F92      		push __tmp_reg__
+ 450               		
+ 451               	 ;  0 "" 2
+ 452               	/* #NOAPP */
+ 453 029e 8C81      		ldd r24,Y+4
+ 454 02a0 9D81      		ldd r25,Y+5
+ 455               	/* #APP */
+ 456               	 ;  396 "../../nut/os/thread.c" 1
+GAS LISTING C:\Temp/ccIV7vim.s 			page 9
+
+
+ 457 02a2 0F90      		pop __tmp_reg__
+ 458 02a4 0FBE      		out __SREG__, __tmp_reg__
+ 459               		
+ 460               	 ;  0 "" 2
+ 461               	/* #NOAPP */
+ 462 02a6 892B      		or r24,r25
+ 463 02a8 01F0      		breq .L46
+ 464 02aa EF89      		ldd r30,Y+23
+ 465 02ac F88D      		ldd r31,Y+24
+ 466               	/* #APP */
+ 467               	 ;  401 "../../nut/os/thread.c" 1
+ 468 02ae 0FB6      		in  __tmp_reg__, __SREG__
+ 469 02b0 F894      		cli
+ 470 02b2 0F92      		push __tmp_reg__
+ 471               		
+ 472               	 ;  0 "" 2
+ 473               	/* #NOAPP */
+ 474 02b4 8C81      		ldd r24,Y+4
+ 475 02b6 9D81      		ldd r25,Y+5
+ 476 02b8 0197      		sbiw r24,1
+ 477 02ba 9D83      		std Y+5,r25
+ 478 02bc 8C83      		std Y+4,r24
+ 479               	/* #APP */
+ 480               	 ;  404 "../../nut/os/thread.c" 1
+ 481 02be 0F90      		pop __tmp_reg__
+ 482 02c0 0FBE      		out __SREG__, __tmp_reg__
+ 483               		
+ 484               	 ;  0 "" 2
+ 485               	/* #NOAPP */
+ 486 02c2 8081      		ld r24,Z
+ 487 02c4 9181      		ldd r25,Z+1
+ 488 02c6 8F5F      		subi r24,lo8(-1)
+ 489 02c8 9F4F      		sbci r25,hi8(-1)
+ 490 02ca 01F0      		breq .L46
+ 491 02cc CF01      		movw r24,r30
+ 492 02ce 0E94 0000 		call NutEventPostAsync
+ 493               	.L46:
+ 494 02d2 0990      		ld __tmp_reg__,Y+
+ 495 02d4 D881      		ld r29,Y
+ 496 02d6 C02D      		mov r28,__tmp_reg__
+ 497               	.L45:
+ 498 02d8 2097      		sbiw r28,0
+ 499 02da 01F4      		brne .L47
+ 500 02dc 0E94 0000 		call NutTimerProcessElapsed
+ 501 02e0 E091 0000 		lds r30,runningThread
+ 502 02e4 F091 0000 		lds r31,(runningThread)+1
+ 503 02e8 8091 0000 		lds r24,runQueue
+ 504 02ec 9091 0000 		lds r25,(runQueue)+1
+ 505 02f0 E817      		cp r30,r24
+ 506 02f2 F907      		cpc r31,r25
+ 507 02f4 01F0      		breq .L50
+ 508 02f6 8785      		ldd r24,Z+15
+ 509 02f8 8130      		cpi r24,lo8(1)
+ 510 02fa 01F4      		brne .L49
+ 511 02fc 82E0      		ldi r24,lo8(2)
+ 512 02fe 8787      		std Z+15,r24
+ 513               	.L49:
+GAS LISTING C:\Temp/ccIV7vim.s 			page 10
+
+
+ 514               	/* #APP */
+ 515               	 ;  427 "../../nut/os/thread.c" 1
+ 516 0300 0FB6      		in  __tmp_reg__, __SREG__
+ 517 0302 F894      		cli
+ 518 0304 0F92      		push __tmp_reg__
+ 519               		
+ 520               	 ;  0 "" 2
+ 521               	/* #NOAPP */
+ 522 0306 0E94 0000 		call NutThreadSwitch
+ 523               	/* #APP */
+ 524               	 ;  429 "../../nut/os/thread.c" 1
+ 525 030a 0F90      		pop __tmp_reg__
+ 526 030c 0FBE      		out __SREG__, __tmp_reg__
+ 527               		
+ 528               	 ;  0 "" 2
+ 529               	/* #NOAPP */
+ 530               	.L50:
+ 531               	/* epilogue start */
+ 532 030e DF91      		pop r29
+ 533 0310 CF91      		pop r28
+ 534 0312 0895      		ret
+ 535               		.size	NutThreadResume, .-NutThreadResume
+ 536               	.global	NutThreadYield
+ 537               		.type	NutThreadYield, @function
+ 538               	NutThreadYield:
+ 539               	/* prologue: function */
+ 540               	/* frame size = 0 */
+ 541 0314 E091 0000 		lds r30,runningThread
+ 542 0318 F091 0000 		lds r31,(runningThread)+1
+ 543 031c 8281      		ldd r24,Z+2
+ 544 031e 9381      		ldd r25,Z+3
+ 545 0320 892B      		or r24,r25
+ 546 0322 01F0      		breq .L52
+ 547 0324 60E0      		ldi r22,lo8(runQueue)
+ 548 0326 70E0      		ldi r23,hi8(runQueue)
+ 549 0328 CF01      		movw r24,r30
+ 550 032a 0E94 0000 		call NutThreadRemoveQueue
+ 551 032e 60E0      		ldi r22,lo8(runQueue)
+ 552 0330 70E0      		ldi r23,hi8(runQueue)
+ 553 0332 8091 0000 		lds r24,runningThread
+ 554 0336 9091 0000 		lds r25,(runningThread)+1
+ 555 033a 0E94 0000 		call NutThreadAddPriQueue
+ 556               	.L52:
+ 557 033e 0E94 0000 		call NutThreadResume
+ 558               	/* epilogue start */
+ 559 0342 0895      		ret
+ 560               		.size	NutThreadYield, .-NutThreadYield
+ 561               		.comm runningThread,2,1
+ 562               		.comm nutThreadList,2,1
+ 563               		.comm runQueue,2,1
+ 564               		.comm killedThread,2,1
+GAS LISTING C:\Temp/ccIV7vim.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 thread.c
+  C:\Temp/ccIV7vim.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccIV7vim.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccIV7vim.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccIV7vim.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccIV7vim.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccIV7vim.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccIV7vim.s:13     .text:00000000 NutThreadAddPriQueue
+  C:\Temp/ccIV7vim.s:135    .text:000000b2 NutThreadRemoveQueue
+  C:\Temp/ccIV7vim.s:239    .text:00000140 NutThreadWake
+                            *COM*:00000002 runQueue
+  C:\Temp/ccIV7vim.s:256    .text:00000156 GetThreadByName
+                            *COM*:00000002 nutThreadList
+                            *COM*:00000002 runningThread
+  C:\Temp/ccIV7vim.s:302    .text:000001a4 NutThreadDestroy
+                            *COM*:00000002 killedThread
+  C:\Temp/ccIV7vim.s:321    .text:000001c6 NutThreadKill
+  C:\Temp/ccIV7vim.s:362    .text:00000214 NutThreadSetPriority
+  C:\Temp/ccIV7vim.s:426    .text:00000282 NutThreadExit
+  C:\Temp/ccIV7vim.s:436    .text:0000028a NutThreadResume
+  C:\Temp/ccIV7vim.s:538    .text:00000314 NutThreadYield
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+strcmp
+heapFreeList
+NutHeapRootFree
+NutThreadSwitch
+NutEventPostAsync
+NutTimerProcessElapsed

@@ -1,0 +1,56 @@
+GAS LISTING C:\Temp/ccf0x9lc.s 			page 1
+
+
+   1               		.file	"fflush.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	fflush
+  12               		.type	fflush, @function
+  13               	fflush:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 FC01      		movw r30,r24
+  17 0002 40E0      		ldi r20,lo8(0)
+  18 0004 50E0      		ldi r21,hi8(0)
+  19 0006 60E0      		ldi r22,lo8(0)
+  20 0008 70E0      		ldi r23,hi8(0)
+  21 000a 8081      		ld r24,Z
+  22 000c 9181      		ldd r25,Z+1
+  23 000e 0E94 0000 		call _write
+  24 0012 892B      		or r24,r25
+  25 0014 01F4      		brne .L2
+  26 0016 20E0      		ldi r18,lo8(0)
+  27 0018 30E0      		ldi r19,hi8(0)
+  28 001a 00C0      		rjmp .L3
+  29               	.L2:
+  30 001c 2FEF      		ldi r18,lo8(-1)
+  31 001e 3FEF      		ldi r19,hi8(-1)
+  32               	.L3:
+  33 0020 C901      		movw r24,r18
+  34               	/* epilogue start */
+  35 0022 0895      		ret
+  36               		.size	fflush, .-fflush
+GAS LISTING C:\Temp/ccf0x9lc.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 fflush.c
+  C:\Temp/ccf0x9lc.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccf0x9lc.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccf0x9lc.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccf0x9lc.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccf0x9lc.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccf0x9lc.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccf0x9lc.s:13     .text:00000000 fflush
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+_write

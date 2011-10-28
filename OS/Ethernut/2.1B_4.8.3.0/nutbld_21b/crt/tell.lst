@@ -1,0 +1,115 @@
+GAS LISTING C:\Temp/ccfmrCh5.s 			page 1
+
+
+   1               		.file	"tell.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	_tell
+  12               		.type	_tell, @function
+  13               	_tell:
+  14 0000 0F93      		push r16
+  15 0002 1F93      		push r17
+  16 0004 DF93      		push r29
+  17 0006 CF93      		push r28
+  18 0008 CDB7      		in r28,__SP_L__
+  19 000a DEB7      		in r29,__SP_H__
+  20 000c 2A97      		sbiw r28,10
+  21 000e 0FB6      		in __tmp_reg__,__SREG__
+  22 0010 F894      		cli
+  23 0012 DEBF      		out __SP_H__,r29
+  24 0014 0FBE      		out __SREG__,__tmp_reg__
+  25 0016 CDBF      		out __SP_L__,r28
+  26               	/* prologue: function */
+  27               	/* frame size = 10 */
+  28 0018 DC01      		movw r26,r24
+  29 001a 1296      		adiw r26,2
+  30 001c 2D91      		ld r18,X+
+  31 001e 3C91      		ld r19,X
+  32 0020 1397      		sbiw r26,2+1
+  33 0022 2115      		cp r18,__zero_reg__
+  34 0024 3105      		cpc r19,__zero_reg__
+  35 0026 01F0      		breq .L2
+  36 0028 F901      		movw r30,r18
+  37 002a 0589      		ldd r16,Z+21
+  38 002c 1689      		ldd r17,Z+22
+  39 002e 81E0      		ldi r24,lo8(1)
+  40 0030 90E0      		ldi r25,hi8(1)
+  41 0032 9A87      		std Y+10,r25
+  42 0034 8987      		std Y+9,r24
+  43 0036 CE01      		movw r24,r28
+  44 0038 0196      		adiw r24,1
+  45 003a 9887      		std Y+8,r25
+  46 003c 8F83      		std Y+7,r24
+  47 003e BE83      		std Y+6,r27
+  48 0040 AD83      		std Y+5,r26
+  49 0042 1982      		std Y+1,__zero_reg__
+  50 0044 1A82      		std Y+2,__zero_reg__
+  51 0046 1B82      		std Y+3,__zero_reg__
+  52 0048 1C82      		std Y+4,__zero_reg__
+  53 004a AE01      		movw r20,r28
+  54 004c 4B5F      		subi r20,lo8(-(5))
+  55 004e 5F4F      		sbci r21,hi8(-(5))
+  56 0050 63E2      		ldi r22,lo8(4387)
+  57 0052 71E1      		ldi r23,hi8(4387)
+GAS LISTING C:\Temp/ccfmrCh5.s 			page 2
+
+
+  58 0054 C901      		movw r24,r18
+  59 0056 F801      		movw r30,r16
+  60 0058 0995      		icall
+  61 005a 892B      		or r24,r25
+  62 005c 01F0      		breq .L2
+  63 005e 2981      		ldd r18,Y+1
+  64 0060 3A81      		ldd r19,Y+2
+  65 0062 4B81      		ldd r20,Y+3
+  66 0064 5C81      		ldd r21,Y+4
+  67 0066 00C0      		rjmp .L4
+  68               	.L2:
+  69 0068 86E1      		ldi r24,lo8(22)
+  70 006a 90E0      		ldi r25,hi8(22)
+  71 006c 9093 0000 		sts (errno)+1,r25
+  72 0070 8093 0000 		sts errno,r24
+  73 0074 2FEF      		ldi r18,lo8(-1)
+  74 0076 3FEF      		ldi r19,hi8(-1)
+  75 0078 4FEF      		ldi r20,hlo8(-1)
+  76 007a 5FEF      		ldi r21,hhi8(-1)
+  77               	.L4:
+  78 007c B901      		movw r22,r18
+  79 007e CA01      		movw r24,r20
+  80               	/* epilogue start */
+  81 0080 2A96      		adiw r28,10
+  82 0082 0FB6      		in __tmp_reg__,__SREG__
+  83 0084 F894      		cli
+  84 0086 DEBF      		out __SP_H__,r29
+  85 0088 0FBE      		out __SREG__,__tmp_reg__
+  86 008a CDBF      		out __SP_L__,r28
+  87 008c CF91      		pop r28
+  88 008e DF91      		pop r29
+  89 0090 1F91      		pop r17
+  90 0092 0F91      		pop r16
+  91 0094 0895      		ret
+  92               		.size	_tell, .-_tell
+GAS LISTING C:\Temp/ccfmrCh5.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tell.c
+  C:\Temp/ccfmrCh5.s:2      *ABS*:0000003f __SREG__
+  C:\Temp/ccfmrCh5.s:3      *ABS*:0000003e __SP_H__
+  C:\Temp/ccfmrCh5.s:4      *ABS*:0000003d __SP_L__
+  C:\Temp/ccfmrCh5.s:5      *ABS*:00000034 __CCP__
+  C:\Temp/ccfmrCh5.s:6      *ABS*:00000000 __tmp_reg__
+  C:\Temp/ccfmrCh5.s:7      *ABS*:00000001 __zero_reg__
+  C:\Temp/ccfmrCh5.s:13     .text:00000000 _tell
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+errno
