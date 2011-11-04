@@ -2,7 +2,7 @@ PROJ = main
 WEBDIR = www
 WEBFILE= urom.c
 
-include $(DEVBASE)/OS/$(OS_VERSION)/nutapp_21b/Makedefs
+include $(DEVBASE)/OS/Ethernut/$(OS_VERSION)/nutapp_21b/Makedefs
 
 SRCS =  $(PROJ).c \
 devices/eth.c devices/uart.c devices/lcd.c devices/adc.c devices/ups.c devices/gsm.c devices/ir.c devices/i2c.c \
@@ -39,7 +39,7 @@ $(WEBFILE): $(WEBDIR)/index.asp
 	$(CRUROM) -r -o$(WEBFILE) $(WEBDIR)
 
 
-include $(DEVBASE)/OS/$(OS_VERSION)/nutapp_21b/Makerules
+include $(DEVBASE)/OS/Ethernut/$(OS_VERSION)/nutapp_21b/Makerules
 
 studio: $(PROJ).obj
 
