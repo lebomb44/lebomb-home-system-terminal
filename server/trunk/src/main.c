@@ -22,7 +22,6 @@
 
 #include "services/http.h"
 #include "services/monitor.h"
-#include "services/admin.h"
 #include "services/web.h"
 #include "services/tftp.h"
 
@@ -53,7 +52,6 @@ int main(void)
   http_init();
 
   mon_init();
-  admin_init();
 
   freebox_init();
   rc_init();

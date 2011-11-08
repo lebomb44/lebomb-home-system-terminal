@@ -15,41 +15,25 @@
 #include <pro/dhcp.h>
 #include <pro/httpd.h>
 
-#include "admin.h"
 #include "web.h"
 
 int web_ASPCallback (char *pASPFunction, FILE *stream)
 {
   time_t tt;
   tm time_now;
-    if (strncmp_P(pASPFunction, PSTR("host_name"), sizeof("host_name")) == 0) {
-        fprintf_P(stream, PSTR("%s"), confos.hostname);
-        return(0);
-    }
+  if (strncmp_P(pASPFunction, PSTR("host_name"), sizeof("host_name")) == 0) {
+    fprintf_P(stream, PSTR("%s"), confos.hostname);
+    return(0);
+  }
 
-    else if (strncmp_P(pASPFunction, PSTR("usr_date"), sizeof("usr_date")) == 0) {
-        fprintf_P(stream, PSTR("Dummy example: 01.01.2005"));
-        return(0);
-    }
+  else if (strncmp_P(pASPFunction, PSTR("usr_time"), sizeof("usr_time")) == 0) {
+    tt = time(NULL);
+    localtime_r(&tt, &time_now);
+    fprintf_P(stream, PSTR("%d %02d %02d %02d:%02d:%02d %04d"),time_now.tm_wday, time_now.tm_mon+1, time_now.tm_mday, time_now.tm_hour, time_now.tm_min, time_now.tm_sec, time_now.tm_year+1900);
+    return(0);
+  }
 
-    else if (strncmp_P(pASPFunction, PSTR("usr_time"), sizeof("usr_time")) == 0) {
-        tt = time(NULL);
-        localtime_r(&tt, &time_now);
-        fprintf_P(stream, PSTR("%d %02d %02d %02d:%02d:%02d %04d"),time_now.tm_wday, time_now.tm_mon+1, time_now.tm_mday, time_now.tm_hour, time_now.tm_min, time_now.tm_sec, time_now.tm_year+1900);
-        return(0);
-    }
-    else if(strncmp_P(pASPFunction, PSTR("admin_gsm1"), sizeof("admin_gsm1")) == 0)
-    {
-      fprintf_P(stream, PSTR("%s"), admin_gsm1);
-      return(0);
-    }
-    else if(strncmp_P(pASPFunction, PSTR("admin_gsm2"), sizeof("admin_gsm2")) == 0)
-    {
-      fprintf_P(stream, PSTR("%s"), admin_gsm2);
-      return(0);
-    }
-
-    return (-1);
+  return (-1);
 }
 
 void fprintf_HTML_Head_Begin(FILE* stream)
@@ -119,26 +103,27 @@ void fprintf_HTML_Page_Redirection(prog_char* url_P, uint8_t delay, prog_char* t
 
 void fprintf_HTML_Option(unsigned long int nb, unsigned long int comp, FILE *stream)
 {
-    fprintf_P(stream, PSTR("<option  value='%ld'"), nb);
-    if(nb==comp) { fputs_P(PSTR(" selected='selected'"), stream); }
-    fprintf_P(stream, PSTR(">%ld</option>"), nb);
+  fprintf_P(stream, PSTR("<option  value='%ld'"), nb);
+  if(nb==comp) { fputs_P(PSTR(" selected='selected'"), stream); }
+  fprintf_P(stream, PSTR(">%ld</option>"), nb);
 }
 
 void fprintf_HTML_Option_and_String(unsigned long int nb, prog_char* str, unsigned long int comp, FILE *stream)
 {
-    fprintf_P(stream, PSTR("<option  value='%ld'"), nb);
-    if(nb==comp) { fputs_P(PSTR(" selected='selected'"), stream); }
-    fputs_P(PSTR(">"), stream);
-    fputs_P(str, stream);
-    fputs_P(PSTR("</option>"), stream);
+  fprintf_P(stream, PSTR("<option  value='%ld'"), nb);
+  if(nb==comp) { fputs_P(PSTR(" selected='selected'"), stream); }
+  fputs_P(PSTR(">"), stream);
+  fputs_P(str, stream);
+  fputs_P(PSTR("</option>"), stream);
 }
 
 void fprintf_HTML_Option_List(unsigned long int begin, unsigned long int nb, unsigned int comp, FILE *stream)
 {
-    unsigned long int i=0;
-    for(i=begin; i<(begin+nb); i++) {
-        fprintf_HTML_Option(i, comp, stream);
-    }
+  unsigned long int i=0;
+  for(i=begin; i<(begin+nb); i++)
+  {
+    fprintf_HTML_Option(i, comp, stream);
+  }
 }
 
 void fprintf_XML_header(FILE *stream)

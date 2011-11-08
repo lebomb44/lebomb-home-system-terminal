@@ -13,6 +13,9 @@
 #define NOKIA_3310_SMSSEND 0x02
 #define NOKIA_3310_ACK     0x7F
 
+char gsm1[11];
+char gsm2[11];
+
 extern int gsm_form(FILE * stream, REQUEST * req);
 
 void fbus_sync(void)
@@ -157,6 +160,9 @@ uint8_t fbus_receive_ack(uint8_t _cmd)
 
 uint8_t gsm_init(void)
 {
+  strncpy(gsm1, "0689350159", 10);
+  strncpy(gsm2, "0689350159", 10);
+
   NutRegisterCgi("gsm.cgi", gsm_form);
 
   return 0;

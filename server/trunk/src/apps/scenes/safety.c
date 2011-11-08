@@ -12,7 +12,6 @@
 #include "../../devices/lcd.h"
 #include "../../services/http.h"
 #include "../../services/web.h"
-#include "../../services/admin.h"
 #include "../rooms/rooms.h"
 #include "safety.h"
 
@@ -96,8 +95,8 @@ uint8_t safety_init(void)
 uint8_t safety_action(char* msg)
 {
   lcd_puts(msg);
-  gsm_sms_send(admin_gsm1, msg);
-  gsm_sms_send(admin_gsm2, msg);
+  gsm_sms_send(gsm1, msg);
+  gsm_sms_send(gsm2, msg);
   http_email_send(msg);
 
   return 0;

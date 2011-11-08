@@ -6,7 +6,7 @@
 
 
 #define MY_MAC  { 0x00, 0x06, 0x98, 0x00, 0x00, 0x01 }
-#define MY_IP_ADDR    "192.168.10.25"
+#define MY_IP_ADDR    "192.168.10.3"
 #define MY_IP_MASK    "255.255.255.0"
 #define MY_IP_GATEWAY "192.168.10.1"
 
