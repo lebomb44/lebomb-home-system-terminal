@@ -6,6 +6,7 @@ document.write("\
         </ul>\
         <ul class=\"iArrow\">\
             <li id=\"Room"+String(ROOM_SALON)+"_bg\"><a href=\"#_Salon\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Salon</a></li>\
+            <li id=\"Room"+String(ROOM_CUISINE)+"_bg\"><a href=\"#_Cuisine\"><img class=\"picto\" src=\""+lost_icons_path+"cuisine.jpg\">Bureau</a></li>\
             <li id=\"Room"+String(ROOM_BUREAU)+"_bg\"><a href=\"#_Bureau\"><img class=\"picto\" src=\""+lost_icons_path+"bureau.jpg\">Bureau</a></li>\
             <li id=\"Room"+String(ROOM_TERRASSE)+"_bg\"><a href=\"#_Terrasse\"><img class=\"picto\" src=\""+lost_icons_path+"terrasse.jpg\">Terrasse</a></li>\
             <li id=\"Room"+String(ROOM_C1)+"_bg\"><a href=\"#_C1\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre Marine</a></li>\
@@ -64,6 +65,32 @@ document.write("\
     </div>\
 </div>\
 ");
+document.write("\
+		<div class=\"iLayer\" id=\"waCuisine\" title=\"Cuisine\">\
+		    <div class=\"iMenu\">\
+		    <div class=\"iPanel\">\
+		        <fieldset>\
+		            <legend>Lumieres</legend>\
+		            <ul>\
+		                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_CUISINE)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_CUISINE,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_CUISINE)+"_Light0\">Plafond</label></li>\
+		            </ul>\
+		        </fieldset>\
+		        <fieldset>\
+		            <legend>Ouvertures</legend>\
+		            <ul>\
+		                <li><a href=\"javascript:lost_room_shutter_set(ROOM_CUISINE,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_CUISINE,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_CUISINE,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
+		            </ul>\
+		        </fieldset>\
+		        <fieldset>\
+		            <legend>Info</legend>\
+		            <ul class=\"iArrow\">\
+		                <li><a href=\"#_CuisineInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
+		            </ul>\
+		        </fieldset>\
+		    </div>\
+		    </div>\
+		</div>\
+		");
 document.write("\
 <div class=\"iLayer\" id=\"waBureau\" title=\"Bureau\">\
     <div class=\"iMenu\">\

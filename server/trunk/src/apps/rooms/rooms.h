@@ -9,6 +9,7 @@ __BEGIN_DECLS
 typedef enum _ROOM_N_T
 {
   ROOM_SALON = 0,
+  ROOM_CUISINE,
   ROOM_BUREAU,
   ROOM_TERRASSE,
   ROOM_C1,
