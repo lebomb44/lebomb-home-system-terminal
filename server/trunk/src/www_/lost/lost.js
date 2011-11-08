@@ -109,36 +109,56 @@ function lost_select_F2C_update(xml, node, id)
 
 function lost_innerHTML_update(xml, node, id)
 {
-  var in_id1 = xml.getElementsByTagName(node)[0];
-  if(in_id1)
+  var out_id = document.getElementById(node+"_"+id);
+  if(out_id)
   {
-    var in_id2 = in_id1.getElementsByTagName(id)[0];
-    if(in_id2)
+	var in_id1 = xml.getElementsByTagName(node)[0];
+    if(in_id1)
     {
-      var out_id = document.getElementById(node+"_"+id);
-      if(out_id)
+      var in_id2 = in_id1.getElementsByTagName(id)[0];
+      if(in_id2)
       {
         out_id.innerHTML=in_id2.firstChild.nodeValue;
         lost_wa_refresh(node+"_"+id);
       }
+      else
+      {
+        out_id.innerHTML="Unknown";
+        lost_wa_refresh(node+"_"+id);
+      }
+    }
+    else
+    {
+      out_id.innerHTML="Unknown";
+      lost_wa_refresh(node+"_"+id);
     }
   }
 }
 
 function lost_innerHTML_F2C_update(xml, node, id)
 {
-  var in_id1 = xml.getElementsByTagName(node)[0];
-  if(in_id1)
+  var out_id = document.getElementById(node+"_"+id);
+  if(out_id)
   {
-    var in_id2 = in_id1.getElementsByTagName(id)[0];
-    if(in_id2)
+    var in_id1 = xml.getElementsByTagName(node)[0];
+    if(in_id1)
     {
-      var out_id = document.getElementById(node+"_"+id);
-      if(out_id)
+      var in_id2 = in_id1.getElementsByTagName(id)[0];
+      if(in_id2)
       {
         out_id.innerHTML=Math.round(((((((in_id2.firstChild.nodeValue)*5*100)/1024)-32)*140)/252)*10)/10;
         lost_wa_refresh(node+"_"+id);
       }
+      else
+      {
+        out_id.innerHTML="Unknown";
+        lost_wa_refresh(node+"_"+id);
+      }
+    }
+    else
+    {
+      out_id.innerHTML="Unknown";
+      lost_wa_refresh(node+"_"+id);
     }
   }
 }
@@ -156,16 +176,16 @@ function printSelectOption(id, nb)
 
 function lost_trig2bg_update(xml, node, id)
 {
+  var out_id1 = document.getElementById(node+"_"+id+"_bg");
+  var out_id2 = document.getElementById(node+"_"+id+"_Ctrl_bg");
+  var out_id3 = document.getElementById(node+"_bg");
+
   var in_id1 = xml.getElementsByTagName(node)[0];
   if(in_id1)
   {
     var in_id2 = in_id1.getElementsByTagName(id+"_Trig")[0];
     if(in_id2)
     {
-      var out_id1 = document.getElementById(node+"_"+id+"_bg");
-      var out_id2 = document.getElementById(node+"_"+id+"_Ctrl_bg");
-      var out_id3 = document.getElementById(node+"_bg");
-
       if(Boolean(Number(in_id2.firstChild.nodeValue)) == true)
       {
         if(out_id1) { out_id1.style.backgroundColor = "#FF0000"; }
@@ -178,6 +198,18 @@ function lost_trig2bg_update(xml, node, id)
         if(out_id2) { out_id2.style.backgroundColor = "#FFFFFF"; }
       }
     }
+    else
+    {
+      if(out_id1) { out_id1.style.backgroundColor = "#FE8800"; }
+      if(out_id2) { out_id2.style.backgroundColor = "#FE8800"; }
+      if(out_id3) { out_id3.style.backgroundColor = "#FE8800"; }
+    }
+  }
+  else
+  {
+    if(out_id1) { out_id1.style.backgroundColor = "#FE8800"; }
+    if(out_id2) { out_id2.style.backgroundColor = "#FE8800"; }
+    if(out_id3) { out_id3.style.backgroundColor = "#FE8800"; }
   }
 }
 
