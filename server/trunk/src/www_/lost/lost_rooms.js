@@ -3,7 +3,7 @@ var ROOM_SHUTTER_STOP = 2
 var ROOM_SHUTTER_DOWN = 3
 
 var ROOM_SALON    = 0;
-var ROOM_CUSINE   = 1;
+var ROOM_CUISINE   = 1;
 var ROOM_BUREAU   = 2;
 var ROOM_TERRASSE = 3;
 var ROOM_C1       = 4;
