@@ -1,6 +1,5 @@
-var lost_path = "http://lebomb.free.fr/APP/";
-var lost_web_path = lost_path + "www_/";
-var lost_icons_path = lost_web_path + "icons/";
+var lost_path = "http://lebomb.free.fr/MM/";
+var lost_icons_path = lost_path + "icons/";
 
 function lost_getXHR()
 {
