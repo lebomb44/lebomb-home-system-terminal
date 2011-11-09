@@ -15,8 +15,7 @@
 
 uint8_t mon_init(void)
 {
-  NutRegisterCgi("mon_showThreads.cgi", mon_showThreads);
-  NutRegisterCgi("mon_showSockets.cgi", mon_showSockets);
+  NutRegisterCgi("monitor.cgi", mon_show);
 
   NutThreadCreate("Monitord", Mond, 0, 128);
 
@@ -39,24 +38,33 @@ static char *states[] = { "TRM",
 };
 
 
-prog_char tbot_P[] = "</TABLE></BODY></HTML>";
+prog_char tbot1_P[] = "</TABLE>";
+prog_char tbot2_P[] = "</TABLE></BODY></HTML>";
 /*
  * Thread list CGI.
  */
-int mon_showThreads(FILE * stream, REQUEST * req)
+int mon_show(FILE * stream, REQUEST * req)
 {
+    extern TCPSOCKET *tcpSocketList;
+    TCPSOCKET *ts;
     NUTTHREADINFO *tdp = nutThreadList;
-    static prog_char head_P[] = "<HTML><HEAD><TITLE>Nut/OS Threads</TITLE>" "</HEAD><BODY><h1>Nut/OS Threads</h1>\r\n";
+    static prog_char head1_P[] = "<HTML><HEAD><TITLE>Nut/OS</TITLE>" "</HEAD><BODY><h1>Nut/OS Threads</h1>\r\n";
     static prog_char ttop_P[] = "<TABLE BORDER><TR><TH>Handle</TH>"
         "<TH>Name</TH><TH>Priority</TH>"
         "<TH>Status</TH><TH>Event<BR>Queue</TH>" "<TH>Timer</TH><TH>Stack-<BR>pointer</TH>" "<TH>Free<BR>Stack</TH></TR>\r\n";
     static prog_char tfmt_P[] = "<TR><TD>%04X</TD><TD>%s</TD><TD>%u</TD>"
         "<TD>%s</TD><TD>%04X</TD><TD>%04X</TD>" "<TD>%04X</TD><TD>%u</TD><TD>%s</TD></TR>\r\n";
 
+    static prog_char head2_P[] = "<h1>Nut/OS Sockets</h1><TABLE BORDER><TR>" "<TH>Handle</TH><TH>Type</TH><TH>Local</TH>" "<TH>Remote</TH><TH>Status</TH></TR>\r\n";
+
+    static prog_char fmt1_P[] = "<TR><TD>%04X</TD><TD>TCP</TD><TD>%s:%u</TD>";
+    static prog_char fmt2_P[] = "<TD>%s:%u</TD><TD>";
+    static prog_char estb_P[] = "<FONT COLOR=#CC0000>ESTABL</FONT>";
+
     NutHttpSendHeaderTop(stream, req, 200, "Ok");
     NutHttpSendHeaderBot(stream, "text/html", -1);
 
-    fputs_P(head_P, stream);
+    fputs_P(head1_P, stream);
 	fprintf_P(stream, PSTR("Available Heap : %d bytes\r\n"), (int) NutHeapAvailable());
     fputs_P(ttop_P, stream);
     while (tdp) {
@@ -66,32 +74,9 @@ int mon_showThreads(FILE * stream, REQUEST * req)
                   (u_int) tdp->td_sp - (u_int) tdp->td_memory, *((u_long *) tdp->td_memory) != DEADBEEF ? "Corr" : "OK");
         tdp = tdp->td_next;
     }
-    fputs_P(tbot_P, stream);
-    fflush(stream);
+    fputs_P(tbot1_P, stream);
 
-    return 0;
-}
-
-
-
-/*
- * Socket list CGI.
- */
-int mon_showSockets(FILE * stream, REQUEST * req)
-{
-    extern TCPSOCKET *tcpSocketList;
-    TCPSOCKET *ts;
-    static prog_char head_P[] = "<HTML><HEAD><TITLE>Show Threads</TITLE>"
-        "</HEAD><BODY><TABLE BORDER><TR>" "<TH>Handle</TH><TH>Type</TH><TH>Local</TH>" "<TH>Remote</TH><TH>Status</TH></TR>\r\n";
-    static prog_char fmt1_P[] = "<TR><TD>%04X</TD><TD>TCP</TD><TD>%s:%u</TD>";
-    static prog_char fmt2_P[] = "<TD>%s:%u</TD><TD>";
-    static prog_char estb_P[] = "<FONT COLOR=#CC0000>ESTABL</FONT>";
-
-    NutHttpSendHeaderTop(stream, req, 200, "Ok");
-    NutHttpSendHeaderBot(stream, "text/html", -1);
-
-    fputs_P(head_P, stream);
-
+    fputs_P(head2_P, stream);
     NutEnterCritical();
     for (ts = tcpSocketList; ts; ts = ts->so_next) {
         fprintf_P(stream, fmt1_P, (u_int)ts, inet_ntoa(ts->so_local_addr), ntohs(ts->so_local_port));
@@ -137,7 +122,7 @@ int mon_showSockets(FILE * stream, REQUEST * req)
         fputs_P(PSTR("</TD></TR>\r\n"), stream);
     }
     NutExitCritical();
-    fputs_P(tbot_P, stream);
+    fputs_P(tbot2_P, stream);
     fflush(stream);
 
     return 0;

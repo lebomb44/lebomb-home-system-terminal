@@ -11,7 +11,7 @@ document.write("\
             <li id=\"Alarm_bg\"><a href=\"#_Alarmes\"><img class=\"picto\" src=\""+lost_icons_path+"detector.jpg\"/>Alarmes</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
-            <li><a href=\"admin/index.asp\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"admin.jpg\" alt=\"Admin\">Admin</a></li>\
+            <li><a href=\"cgi/monitor.cgi\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"system.jpg\" alt=\"System\">System</a></li>\
         </ul>\
     </div>\
 </div>\
