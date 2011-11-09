@@ -341,7 +341,6 @@ int rooms_form(FILE * stream, REQUEST * req)
           }
         }
       }
-printf("ROOM=%d | %s %s %s %s | %s\n",room,light_s,shutter_s,heater_s,elec_s,value_s);
     }
     fflush(stream);
   }

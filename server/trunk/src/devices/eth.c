@@ -19,12 +19,8 @@ uint8_t eth_init(void)
 
   NutRegisterDevice(&DEV_ETHER, 0, 0);
   if(NutNetIfConfig2(DEV_ETHER_NAME, mac, ip_addr, ip_mask, ip_gateway))
-  /* if(NutNetIfConfig(DEV_ETHER_NAME, mac, ip_addr, ip_mask)) */
   {
-#if defined (__AVR__)
-    asm("cli");
-    asm("call 0");
-#endif
+    printf("ERROR : NutNetIfConfig2\n");
   }
 
   return 0;

@@ -160,6 +160,7 @@ uint8_t fbus_receive_ack(uint8_t _cmd)
 
 uint8_t gsm_init(void)
 {
+  /* TODO set the GSM phone number */
   strncpy(gsm1, "0689350159", 10);
   strncpy(gsm2, "0689350159", 10);
 

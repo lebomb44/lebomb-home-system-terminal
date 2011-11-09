@@ -8,7 +8,6 @@
 #include <pro/httpd.h>
 
 #include "../../devices/gsm.h"
-#include "../../devices/lcd.h"
 #include "../../services/http.h"
 #include "../../services/web.h"
 #include "../rooms/rooms.h"
@@ -31,8 +30,8 @@ uint8_t alarm_init(void)
   alarm_status.volume     = 0;
   alarm_status.simulation = 0;
 
-  alarm_control.perimeter  = 0;
-  alarm_control.volume     = 0;
+  alarm_control.perimeter  = 0; // TODO
+  alarm_control.volume     = 0; // TODO
   alarm_control.simulation = 0;
 
   alarm_trig.perimeter  = 0;
@@ -48,7 +47,6 @@ uint8_t alarm_init(void)
 /* This function is executed if an alarm is detected */
 uint8_t alarm_action(char* msg)
 {
-  lcd_puts(msg);
   gsm_sms_send(gsm1, msg);
   gsm_sms_send(gsm2, msg);
   http_email_send(msg);
@@ -65,7 +63,7 @@ THREAD(AlarmD, arg)
     alarm_status.perimeter  = rooms_perimeter_status_get();
     alarm_status.volume     = rooms_volume_status_get();
     alarm_status.simulation = rooms_simulation_status_get();
-    /* Check all the status but we don t know from whitch room */
+    /* Check all the status but we don t know from which room */
     if(alarm_control.perimeter) { if((!(alarm_trig.perimeter)) && rooms_perimeter_trig_get()) { alarm_action("Alarm Perimeter"); alarm_trig.perimeter = 1; } }
     if(alarm_control.volume   ) { if((!(alarm_trig.volume   )) && rooms_volume_trig_get()   ) { alarm_action("Alarm Volume"   ); alarm_trig.volume    = 1; } }
     NutSleep(1000);
@@ -99,7 +97,7 @@ int alarm_form(FILE * stream, REQUEST * req)
       if(arg_s[0] == '?') { fprintf(stream, "%d", alarm_control.simulation); }
       else { alarm_trig.simulation = 0; alarm_control.simulation = strtoul(arg_s, NULL, 10); rooms_simulation_control_set(alarm_control.simulation); }
     }
-printf("ALARM=%d %d %d\n",alarm_control.perimeter,alarm_control.volume,alarm_control.simulation);
+
     fflush(stream);
   }
 
@@ -120,6 +118,8 @@ int alarm_xml_get(FILE * stream)
   fprintf_XML_elt_int("Perimeter_Trig" , alarm_trig.perimeter , stream);
   fprintf_XML_elt_int("Volume_Trig"    , alarm_trig.volume    , stream);
   fprintf_XML_elt_int("Simulation_Trig", alarm_trig.simulation, stream);
+
   fprintf_XML_elt_trailer("Alarm", stream);
+
   return 0;
 }

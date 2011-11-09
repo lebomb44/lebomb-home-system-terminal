@@ -17,7 +17,6 @@ uint8_t mon_init(void)
 {
   NutRegisterCgi("mon_showThreads.cgi", mon_showThreads);
   NutRegisterCgi("mon_showSockets.cgi", mon_showSockets);
-  NutRegisterCgi("mon_showPorts.cgi", mon_showPorts);
 
   NutThreadCreate("Monitord", Mond, 0, 128);
 
@@ -143,75 +142,3 @@ int mon_showSockets(FILE * stream, REQUEST * req)
 
     return 0;
 }
-
-
-void DoCheckboxes(FILE * stream, char * name, u_char val)
-{
-    u_char i;
-    static prog_char ttop_P[] = "<tr><td>%s</td>";
-    static prog_char tfmt_P[] = "<td><input type=\"checkbox\"" " name=\"%s\" value=\"%u\" ";
-    static prog_char tchk_P[] = " checked=\"checked\"";
-
-    fprintf_P(stream, ttop_P, name);
-    for (i = 8; i-- > 0;) {
-        fprintf_P(stream, tfmt_P, name, i);
-        if (val & _BV(i))
-            fputs_P(tchk_P, stream);
-        fputs_P(PSTR("></td>\r\n"), stream);
-    }
-    fputs_P(PSTR("</tr>\r\n"), stream);
-}
-
-
-/*
- * Socket list CGI.
- */
-int mon_showPorts(FILE * stream, REQUEST * req)
-{
-    static prog_char ttop_P[] = "<HTML><HEAD><TITLE>Show Ports</TITLE>"
-        "</HEAD><BODY>"
-        "<form action=\"cgi-bin/setports.cgi\" "
-        "enctype=\"text/plain\"> <TABLE BORDER>"
-        "<tr><td>Bit</td><td>7</td><td>6</td>" "<td>5</td><td>4</td><td>3</td><td>2</td>" "<td>1</td><td>0</td></tr>\r\n";
-#if defined (__AVR__)
-    static prog_char trow_P[] = "<tr></tr>";
-#endif
-
-    NutHttpSendHeaderTop(stream, req, 200, "Ok");
-    NutHttpSendHeaderBot(stream, "text/html", -1);
-
-    fputs_P(ttop_P, stream);
-
-#if defined (__AVR__)
-    DoCheckboxes(stream, "DDRA", inb(DDRA));
-    DoCheckboxes(stream, "PINA", inb(PINA));
-    DoCheckboxes(stream, "PORTA", inb(PORTA));
-
-    fputs_P(trow_P, stream);
-    DoCheckboxes(stream, "DDRB", inb(DDRB));
-    DoCheckboxes(stream, "PINB", inb(PINB));
-    DoCheckboxes(stream, "PORTB", inb(PORTB));
-
-    fputs_P(trow_P, stream);
-    DoCheckboxes(stream, "PORTC", inb(PORTC));
-
-    fputs_P(trow_P, stream);
-    DoCheckboxes(stream, "DDRD", inb(DDRD));
-    DoCheckboxes(stream, "PIND", inb(PIND));
-    DoCheckboxes(stream, "PORTD", inb(PORTD));
-
-    fputs_P(trow_P, stream);
-    DoCheckboxes(stream, "DDRE", inb(DDRE));
-    DoCheckboxes(stream, "PINE", inb(PINE));
-    DoCheckboxes(stream, "PORTE", inb(PORTE));
-
-    fputs_P(trow_P, stream);
-    DoCheckboxes(stream, "PINF", inb(PINF));
-#endif
-
-    fputs_P(tbot_P, stream);
-    fflush(stream);
-
-    return 0;
-}
-

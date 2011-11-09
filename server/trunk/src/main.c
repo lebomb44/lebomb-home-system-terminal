@@ -12,11 +12,9 @@
 
 #include "devices/uart.h"
 #include "devices/eth.h"
-#include "devices/lcd.h"
 #include "devices/adc.h"
 #include "devices/ups.h"
 #include "devices/gsm.h"
-#include "devices/ir.h"
 #include "devices/i2c.h"
 #include "devices/xflash.h"
 
@@ -42,11 +40,9 @@ int main(void)
 {
   uart_init();
   eth_init();
-  lcd_init();
   adc_init();
   ups_init();
   gsm_init();
-  ir_init();
   i2c_init();
 
   http_init();

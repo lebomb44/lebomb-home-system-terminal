@@ -8,13 +8,8 @@
 
 #include <sys/timer.h>
 #include <sys/thread.h>
-#include <sys/confos.h>
-#include <sys/confnet.h>
 #include <sys/socket.h>
 #include <sys/heap.h>
-
-#include <cfg/eeprom.h>
-#include <dev/nvmem.h>
 
 #include <arpa/inet.h>
 #include <pro/httpd.h>
@@ -127,7 +122,7 @@ THREAD(HttpD, arg)
 #define HTTP_GET_END   " HTTP/1.0\r\n"
 #define HTTP_HOST_HEAD "Host: "
 #define HTTP_HOST_END  "\r\n"
-#define HTTP_USER      "User-Agent: Ethernut\r\n"
+#define HTTP_USER      "User-Agent: LOST\r\n"
 #define HTTP_REQ_END   "\r\n"
 char* http_request(char* ip, uint16_t port, char* req, char* host_req, uint16_t len_to_recv)
 {
@@ -159,12 +154,12 @@ char* http_request(char* ip, uint16_t port, char* req, char* host_req, uint16_t 
               + sizeof(HTTP_USER     ) \
               + sizeof(HTTP_GET_END  );
 
-  /* Alloc the buffer requeired for the request to send */
+  /* Allocation of the buffer required for the request to send */
   buff = malloc(len_to_send + 1);
   /* If the allocation failed return in error */
   if(buff == NULL) { NutTcpCloseSocket(sock); return NULL; }
 
-  /* Create the HTTP request begining */
+  /* Create the HTTP request beginning */
   strncpy(buff, HTTP_GET_HEAD, sizeof(HTTP_GET_HEAD));
   /* Build the URL */
   if(req) { strncat(buff, req, 500); }
@@ -198,8 +193,6 @@ char* http_request(char* ip, uint16_t port, char* req, char* host_req, uint16_t 
     if(nb <= 0) { break; }
     total = total + nb;
   }
-//FIXME
-puts(buff);
   free(buff);
   buff = NULL;
 
@@ -207,7 +200,7 @@ puts(buff);
    * Read server response.
    */
   total = 0;
-  /* Alloc the buffer requered for the request to receive */
+  /* Allocation of the buffer required for the request to receive */
   if(len_to_recv > 0)
   {
     buff = malloc(len_to_recv + 1);
@@ -225,14 +218,9 @@ puts(buff);
     if(total > len_to_recv) { total = len_to_recv; }
     buff[total] = '\0';
   }
-  /* The message has been sent. Now we can close the connexion */
+  /* The message has been sent. Now we can close the connection */
   NutTcpCloseSocket(sock);
-//FIXME
 
-puts(buff);
-/*
-printf("HEAP=%d\n",NutHeapAvailable());
-*/
   return buff;
 }
 
@@ -243,7 +231,7 @@ uint8_t http_status_get(void)
 
   buff = http_request("88.190.253.248", 80, "status.txt", "www.lebomb.fr", 400);
   if(buff == NULL) { return 1; }
-  out = strstr(buff, "safety.http_status");//, sizeof("safety.http_status"));
+  out = strstr(buff, "safety.http_status");
   free(buff);
   if(out) { return 0; }
   return 1;
@@ -259,7 +247,7 @@ uint8_t http_email_send_once(char* msg)
   strncat(url, msg, sizeof(url));
   buff = http_request("88.190.253.248", 80, url, "www.lebomb.fr", 400);
   if(buff == NULL) { return 1; }
-  out = strstr(buff, "OK");//, sizeof("OK"));
+  out = strstr(buff, "OK");
   free(buff);
   if(out) { return 0; }
   return 1;
@@ -269,7 +257,7 @@ uint8_t http_email_send(char* msg)
 {
   uint8_t i = 0;
 
-  //FIXME for(i=0; i<10; i++)
+  // TODO for(i=0; i<10; i++)
   {
     if(http_email_send_once(msg) == 0) { return 0; }
     NutSleep(1000);

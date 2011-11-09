@@ -2,15 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <sys/confnet.h>
-#include <sys/confos.h>
-
-#include <arpa/inet.h>
-#include <net/if_var.h>
 #include <pro/httpd.h>
 
-#include "../../devices/ir.h"
-#include "../../services/http.h"
 #include "../../services/web.h"
 #include "rc.h"
 
@@ -39,7 +32,6 @@ int rc_form(FILE * stream, REQUEST * req)
     nb   = NutHttpGetParameter(req, "nb"  );
     if(type && addr && cmd && nb)
     {
-      ir_send(strtol(type, NULL, 10), strtoul(addr, NULL, 10), strtoul(cmd, NULL, 10), strtoul(nb, NULL, 10));
     }
     fflush(stream);
   }
@@ -52,5 +44,6 @@ int rc_xml_get(FILE * stream)
   fprintf_XML_elt_header("RC", stream);
   fprintf_XML_elt_int("rc0" , 0 , stream);
   fprintf_XML_elt_trailer("RC", stream);
+
   return 0;
 }

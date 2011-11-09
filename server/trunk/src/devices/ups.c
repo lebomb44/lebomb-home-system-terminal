@@ -2,8 +2,6 @@
 
 #include <dev/gpio.h>
 
-#include <pro/httpd.h>
-
 #include "adc.h"
 #include "ups.h"
 

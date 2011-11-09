@@ -2,12 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <sys/confnet.h>
-#include <sys/confos.h>
-#include <sys/socket.h>
-
-#include <arpa/inet.h>
-#include <net/if_var.h>
 #include <pro/httpd.h>
 
 #include "../../services/http.h"

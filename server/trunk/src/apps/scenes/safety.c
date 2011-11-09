@@ -9,7 +9,6 @@
 
 #include "../../devices/ups.h"
 #include "../../devices/gsm.h"
-#include "../../devices/lcd.h"
 #include "../../services/http.h"
 #include "../../services/web.h"
 #include "../rooms/rooms.h"
@@ -55,15 +54,15 @@ uint8_t safety_init(void)
   safety_status.http           = 0;
   safety_status.gsm            = 0;
 
-  safety_control.rooms_error    = 0;
-  safety_control.rooms_temp_max = 0;
-  safety_control.rooms_temp_min = 0;
-  safety_control.rooms_hum      = 0;
-  safety_control.rooms_smoke    = 0;
-  safety_control.ups_temp       = 0;
-  safety_control.ups_power      = 0;
-  safety_control.http           = 0;
-  safety_control.gsm            = 0;
+  safety_control.rooms_error    = 0; // TODO
+  safety_control.rooms_temp_max = 0; // TODO
+  safety_control.rooms_temp_min = 0; // TODO
+  safety_control.rooms_hum      = 0; // TODO
+  safety_control.rooms_smoke    = 0; // TODO
+  safety_control.ups_temp       = 0; // TODO
+  safety_control.ups_power      = 0; // TODO
+  safety_control.http           = 0; // TODO
+  safety_control.gsm            = 0; // TODO
 
   safety_trig.rooms_error    = 0;
   safety_trig.rooms_temp_max = 0;
@@ -94,7 +93,6 @@ uint8_t safety_init(void)
 /* This function is executed if a safety problem is detected */
 uint8_t safety_action(char* msg)
 {
-  lcd_puts(msg);
   gsm_sms_send(gsm1, msg);
   gsm_sms_send(gsm2, msg);
   http_email_send(msg);
@@ -261,7 +259,7 @@ int safety_form(FILE * stream, REQUEST * req)
       if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.gsm); }
       else { safety_trig.gsm = 0; safety_control.gsm = strtoul(arg_s, NULL, 10); }
     }
-printf("SURVEY=%d %d %d %d %d | %d %d %d %d\n",safety_control.rooms_error,safety_control.rooms_temp_max,safety_control.rooms_temp_min,safety_control.rooms_hum,safety_control.rooms_smoke,safety_control.ups_temp,safety_control.ups_power,safety_control.http,safety_control.gsm);
+
     fflush(stream);
   }
 
