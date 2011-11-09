@@ -24,7 +24,6 @@
 #include "services/tftp.h"
 
 #include "apps/media/freebox.h"
-#include "apps/media/rc.h"
 
 #include "apps/rooms/rooms.h"
 #include "apps/rooms/ext.h"
@@ -50,7 +49,6 @@ int main(void)
   mon_init();
 
   freebox_init();
-  rc_init();
 
   rooms_init();
   ext_init();
@@ -88,7 +86,6 @@ int xml_get_form(FILE * stream, REQUEST * req)
   {
     fprintf_XML_header(stream);
     fprintf_XML_elt_header("Lost", stream);
-    rc_xml_get(stream);
     rooms_xml_get(stream);
     scenes_xml_get(stream);
     alarm_xml_get(stream);

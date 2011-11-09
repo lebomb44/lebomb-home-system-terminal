@@ -23,9 +23,9 @@ typedef enum _SCENE_STATUS_T
 typedef struct _Scene_T
 {
   SCENE_STATUS_T status;
-  uint8_t heure_start;
+  uint8_t hour_start;
   uint8_t minute_start;
-  uint8_t heure_end;
+  uint8_t hour_end;
   uint8_t minute_end;
   uint8_t rec;
   void (*fcnt_start)(void);
@@ -52,9 +52,9 @@ uint8_t scenes_init(void)
   for(i=0; i<SCENE_MAX; i++)
   {
     scene_list[i].status       = SCENE_STATUS_OFF;
-    scene_list[i].heure_start  = 0;
+    scene_list[i].hour_start  = 0;
     scene_list[i].minute_start = 0;
-    scene_list[i].heure_end    = 0;
+    scene_list[i].hour_end    = 0;
     scene_list[i].minute_end   = 0;
     scene_list[i].rec          = 0;
     scene_list[i].fcnt_start   = NULL;
@@ -89,11 +89,11 @@ THREAD(ScenesD, arg)
       /* If the scene is enabled */
       if(scene_list[i].status == SCENE_STATUS_ON)
       {
-        /* Check for a specific recurrence or for each days */
+        /* Check for a specific recurrence or for a one-shot scene */
         if((scene_list[i].rec & (1<<time_now.tm_wday)) || (scene_list[i].rec == 0))
         {
-          /* It the scene is programmed for now */
-          if((scene_list[i].heure_start == time_now.tm_hour) && (scene_list[i].minute_start == time_now.tm_min))
+          /* If the scene is programmed for now */
+          if((scene_list[i].hour_start == time_now.tm_hour) && (scene_list[i].minute_start == time_now.tm_min))
           {
             /* Check the process action and execute it */
             if(scene_list[i].fcnt_start != NULL) { scene_list[i].fcnt_start(); }
@@ -110,11 +110,11 @@ THREAD(ScenesD, arg)
         if(scene_list[i].fcnt_end != NULL)
         {
           /* If the end is programmed for now */
-          if((scene_list[i].heure_end == time_now.tm_hour) && (scene_list[i].minute_end == time_now.tm_min))
+          if((scene_list[i].hour_end == time_now.tm_hour) && (scene_list[i].minute_end == time_now.tm_min))
           {
             /* Execute the end function (this function has already been checked) */
             scene_list[i].fcnt_end();
-            /* If theres is a recurrence, we should let the scene enabled. Else it is a one-shot scene */
+            /* If there is a recurrence, we should let the scene enabled. Else it is a one-shot scene */
             if(scene_list[i].rec) { scene_list[i].status = SCENE_STATUS_ON; }
             else { scene_list[i].status = SCENE_STATUS_OFF; }
           }
@@ -122,7 +122,7 @@ THREAD(ScenesD, arg)
         else /* Maybe there is no end function */
         {
           /* We must wait one minute before to re-enable the scene */
-          if((scene_list[i].heure_end <= time_now.tm_hour) && (scene_list[i].minute_end < time_now.tm_min))
+          if((scene_list[i].hour_end <= time_now.tm_hour) && (scene_list[i].minute_end < time_now.tm_min))
           {
             /* Only re-enable if there is a recurrence */
             if(scene_list[i].rec) { scene_list[i].status = SCENE_STATUS_ON; }
@@ -164,8 +164,8 @@ int scenes_form(FILE * stream, REQUEST * req)
         arg_s = NutHttpGetParameter(req, "hs");
         if(arg_s)
         {
-          if(arg_s[0] == '?') { fprintf(stream, "%d", scene_list[scene].heure_start); }
-          else { scene_list[scene].heure_start = strtoul(arg_s, NULL, 10); }
+          if(arg_s[0] == '?') { fprintf(stream, "%d", scene_list[scene].hour_start); }
+          else { scene_list[scene].hour_start = strtoul(arg_s, NULL, 10); }
         }
         arg_s = NutHttpGetParameter(req, "ms");
         if(arg_s)
@@ -176,8 +176,8 @@ int scenes_form(FILE * stream, REQUEST * req)
         arg_s = NutHttpGetParameter(req, "he");
         if(arg_s)
         {
-          if(arg_s[0] == '?') { fprintf(stream, "%d", scene_list[scene].heure_end); }
-          else { scene_list[scene].heure_end = strtoul(arg_s, NULL, 10); }
+          if(arg_s[0] == '?') { fprintf(stream, "%d", scene_list[scene].hour_end); }
+          else { scene_list[scene].hour_end = strtoul(arg_s, NULL, 10); }
         }
         arg_s = NutHttpGetParameter(req, "me");
         if(arg_s)
@@ -202,7 +202,6 @@ int scenes_form(FILE * stream, REQUEST * req)
           }
         }
       }
-printf("EVENT=%d || %d | %d | %d %d | %d %d\n",scene,scene_list[scene].status,scene_list[scene].rec,scene_list[scene].heure_start,scene_list[scene].minute_start,scene_list[scene].heure_end,scene_list[scene].minute_end);
     }
     fflush(stream);
   }
@@ -226,9 +225,9 @@ int scenes_xml_get(FILE * stream)
     fprintf_XML_elt_int("rec5", (scene_list[i].rec & 0x20)>>5, stream);
     fprintf_XML_elt_int("rec6", (scene_list[i].rec & 0x40)>>6, stream);
     fprintf_XML_elt_int("rec0", (scene_list[i].rec & 0x01)>>0, stream);
-    fprintf_XML_elt_int("HStart", scene_list[i].heure_start, stream);
+    fprintf_XML_elt_int("HStart", scene_list[i].hour_start, stream);
     fprintf_XML_elt_int("MStart", scene_list[i].minute_start, stream);
-    fprintf_XML_elt_int("HEnd", scene_list[i].heure_end, stream);
+    fprintf_XML_elt_int("HEnd", scene_list[i].hour_end, stream);
     fprintf_XML_elt_int("MEnd", scene_list[i].minute_end, stream);
     fprintf_XML_elt_trailer(elt, stream);
   }

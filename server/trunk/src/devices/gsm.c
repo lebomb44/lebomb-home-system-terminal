@@ -88,8 +88,6 @@ uint8_t fbus_send(uint8_t cmd, uint16_t data_len, uint8_t *data, uint8_t seq)
   /* Build the frame trailer */
   fbus_trailer(frame, seq);
   /* Send the frame to the cell phone */
-  fpurge(uart1_fd);
-  fbus_sync();
   fwrite(frame, fbus_frame_len(data_len), 1, uart1_fd); fflush(uart1_fd);
   /* Free the frame buffer */
   free(frame);
@@ -186,6 +184,11 @@ uint8_t gsm_status_get(void)
   uint8_t * data_recv = NULL;
   uint8_t seq = 0;
 
+  /* Purge the receiving buffer of all previous data */
+  fpurge(uart1_fd);
+  /* Synchronize the phone for the start of FBUS exchange */
+  fbus_sync();
+
   if(fbus_send(NOKIA_3310_NETW, 5, data, 0x60) != 0) { return 1; }
 // 1E 00 0C 0A 00 06 00 01 00 70 01 60 13 1D
 
@@ -218,6 +221,11 @@ uint8_t gsm_version_get(void)
   uint16_t data_len = 0;
   uint8_t * data_recv = NULL;
   uint8_t seq = 0;
+
+  /* Purge the receiving buffer of all previous data */
+  fpurge(uart1_fd);
+  /* Synchronize the phone for the start of FBUS exchange */
+  fbus_sync();
 
   if(fbus_send(NOKIA_3310_HWSWV, 6, data, 0x60) != 0) { return 1; }
 // 1E 00 0C D1 00 07 00 01 00 03 00 01 60 00 72 D5

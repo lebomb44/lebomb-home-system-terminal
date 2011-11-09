@@ -7,7 +7,7 @@ include $(DEVBASE)/OS/Ethernut/$(OS_VERSION)/nutapp_21b/Makedefs
 SRCS =  $(PROJ).c \
 devices/eth.c devices/uart.c devices/adc.c devices/ups.c devices/gsm.c devices/i2c.c \
 services/http.c services/web.c services/monitor.c \
-apps/media/freebox.c apps/media/rc.c \
+apps/media/freebox.c \
 apps/rooms/ext.c apps/rooms/rooms.c \
 apps/scenes/alarm.c apps/scenes/safety.c apps/scenes/atmosphere.c apps/scenes/scenes.c \
 $(WEBFILE)
