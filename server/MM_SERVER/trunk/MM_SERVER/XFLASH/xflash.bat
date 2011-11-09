@@ -1,2 +1,2 @@
 @echo off
-crxflash html
+crxflash www

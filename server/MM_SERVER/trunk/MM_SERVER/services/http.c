@@ -28,7 +28,7 @@ uint8_t http_init(void)
    * Register our device for the file system.
    */
   NutRegisterDevice(&devUrom, 0, 0);
-  // TODO NutRegisterDevice(&devXflash, 0, 0);
+  NutRegisterDevice(&devXflash, 0, 0);
   // TODO NutRegisterHttpRoot("XFLASH:");
   /*
    * Register CGI routines.

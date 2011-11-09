@@ -66,7 +66,7 @@ int main(void)
   /* Register the XML global status form */
   NutRegisterCgi("get.xml", xml_get_form);
 
-  // TODO NutTFTPStart();
+  NutTFTPStart(); // TODO
   printf("Starting LOST\n");
   http_email_send("Starting_LOST");
 
