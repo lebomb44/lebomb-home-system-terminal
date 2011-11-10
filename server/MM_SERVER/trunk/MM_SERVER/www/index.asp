@@ -21,18 +21,7 @@
         <a href="#" id="waHomeButton">Home</a>
     </div>
     <div id="iGroup">
-        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/lost.js"></script>
-        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/lost_html.js"></script>
-        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/lost_alarm.js"></script>
-        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/lost_alarm_html.js"></script>
-        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/lost_atm.js"></script>
-        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/lost_atm_html.js"></script>
-        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/lost_safety.js"></script>
-        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/lost_safety_html.js"></script>
-        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/lost_rooms.js"></script>
-        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/lost_rooms_html.js"></script>
-        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/lost_ev.js"></script>
-        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/lost_ev_html.js"></script>
+        <script type="text/javascript" src="http://lebomb.free.fr/MM/lost/all.js"></script>
     </div>
 </div>
 </body>
