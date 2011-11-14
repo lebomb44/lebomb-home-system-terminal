@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     var string_remote = 'Précisez le code de votre Freebox qui se trouve dans les paramètres généraux sur la TV';
     // voir si code en cookies
-    var remotekey = '37996978'; // frenes='77674595' viala='37996978'; // $.cookies.get('remotekey');
+    var remotekey = '24243666'; // frenes='77674595' viala='24243666'; // $.cookies.get('remotekey');
     if(remotekey==null) {
         var remotekey = prompt(string_remote,'');
         if(remotekey!=null) {
