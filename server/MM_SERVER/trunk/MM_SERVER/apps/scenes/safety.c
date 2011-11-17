@@ -149,14 +149,19 @@ THREAD(SafetyRoomsD, arg)
 THREAD(SafetyGsmD, arg)
 {
   uint8_t gsm_nb = 0;
+// FIXME
+  uint8_t ret = 0;
+  char msg[10];
 
   NutThreadSetPriority(22);
 
   while(1)
   {
-    if(gsm_status_get() != 0) { if(gsm_nb < 0xFF) { gsm_nb++; } } else { gsm_nb = 0; }
-    if(gsm_nb > 30) { safety_status.gsm = 1; } else { safety_status.gsm = 0; }
-    if(safety_control.gsm) { if((!(safety_trig.gsm)) && (safety_status.gsm)) { safety_action("GSM"); safety_trig.gsm = 1; } }
+    // FIXME
+    ret = gsm_status_get();
+    if(ret != 0) { if(gsm_nb < 0xFF) { gsm_nb++; } } else { gsm_nb = 0; }
+    if(gsm_nb > 10) { safety_status.gsm = 1; } else { safety_status.gsm = 0; }
+    if(safety_control.gsm) { if((!(safety_trig.gsm)) && (safety_status.gsm)) { sprintf(msg, "GSM_%d",ret); safety_action(msg); safety_trig.gsm = 1; } }
 
     NutSleep(10000);
   }
