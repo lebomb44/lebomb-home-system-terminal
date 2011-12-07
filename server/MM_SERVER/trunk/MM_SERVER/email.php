@@ -9,6 +9,7 @@
   $sujet = 'LOST Alert : '.$msg;
   $message = $sujet."\n".'Sent by '.$from_mail.' at '.date('h:i:s d.m.Y');
 
+  /* TODO set the email adresses */
   $status_mail1 = mail("cambon.olivier@gmail.com", $sujet, $message, $header);
   $status_mail2 = mail("0689350159@orange.fr"    , $sujet, $message, $header);
 

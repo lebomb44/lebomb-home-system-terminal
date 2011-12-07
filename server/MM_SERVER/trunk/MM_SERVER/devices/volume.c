@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+#include <dev/gpio.h>
+
+#include "volume.h"
+
+#define VOLUME0_PORT NUTGPIO_PORTE
+#define VOLUME0_BIT 4
+#define VOLUME1_PORT NUTGPIO_PORTE
+#define VOLUME1_BIT 4
+#define VOLUME2_PORT NUTGPIO_PORTE
+#define VOLUME2_BIT 4
+#define VOLUME3_PORT NUTGPIO_PORTE
+#define VOLUME3_BIT 4
+#define VOLUME4_PORT NUTGPIO_PORTE
+#define VOLUME4_BIT 4
+#define VOLUME5_PORT NUTGPIO_PORTE
+#define VOLUME5_BIT 4
+#define VOLUME6_PORT NUTGPIO_PORTE
+#define VOLUME6_BIT 4
+#define VOLUME7_PORT NUTGPIO_PORTE
+#define VOLUME7_BIT 4
+
+uint8_t volume_init(void)
+{
+  GpioPinConfigSet(VOLUME0_PORT, VOLUME0_BIT, 0);
+  GpioPinConfigSet(VOLUME1_PORT, VOLUME1_BIT, 0);
+  GpioPinConfigSet(VOLUME2_PORT, VOLUME2_BIT, 0);
+  GpioPinConfigSet(VOLUME3_PORT, VOLUME3_BIT, 0);
+  GpioPinConfigSet(VOLUME4_PORT, VOLUME4_BIT, 0);
+  GpioPinConfigSet(VOLUME5_PORT, VOLUME5_BIT, 0);
+  GpioPinConfigSet(VOLUME6_PORT, VOLUME6_BIT, 0);
+  GpioPinConfigSet(VOLUME7_PORT, VOLUME7_BIT, 0);
+
+  return 0;
+}
+
+uint8_t volume_status_get(void)
+{
+  if((GpioPinGet(VOLUME0_PORT, VOLUME0_BIT) == 0) && \
+     (GpioPinGet(VOLUME1_PORT, VOLUME1_BIT) == 0) && \
+     (GpioPinGet(VOLUME2_PORT, VOLUME2_BIT) == 0) && \
+     (GpioPinGet(VOLUME3_PORT, VOLUME3_BIT) == 0) && \
+     (GpioPinGet(VOLUME4_PORT, VOLUME4_BIT) == 0) && \
+     (GpioPinGet(VOLUME5_PORT, VOLUME5_BIT) == 0) && \
+     (GpioPinGet(VOLUME6_PORT, VOLUME6_BIT) == 0) && \
+     (GpioPinGet(VOLUME7_PORT, VOLUME7_BIT) == 0))
+  {
+    return 0;
+  }
+  else
+  {
+    return 1;
+  }
+}

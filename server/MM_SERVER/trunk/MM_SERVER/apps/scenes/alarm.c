@@ -7,6 +7,7 @@
 
 #include <pro/httpd.h>
 
+#include "../../devices/volume.h"
 #include "../../devices/gsm.h"
 #include "../../services/http.h"
 #include "../../services/web.h"
@@ -45,7 +46,7 @@ uint8_t alarm_init(void)
 }
 
 /* This function is executed if an alarm is detected */
-uint8_t alarm_action(char* msg)
+uint8_t alarm_action_with_buzzer(char* msg)
 {
   gsm_sms_send(gsm1, msg);
   gsm_sms_send(gsm2, msg);
@@ -61,11 +62,11 @@ THREAD(AlarmD, arg)
   while(1)
   {
     alarm_status.perimeter  = rooms_perimeter_status_get();
-    alarm_status.volume     = rooms_volume_status_get();
+    alarm_status.volume     = rooms_volume_status_get() || volume_status_get(); // TODO
     alarm_status.simulation = rooms_simulation_status_get();
     /* Check all the status but we don t know from which room */
-    if(alarm_control.perimeter) { if((!(alarm_trig.perimeter)) && rooms_perimeter_trig_get()) { alarm_action("Alarm Perimeter"); alarm_trig.perimeter = 1; } }
-    if(alarm_control.volume   ) { if((!(alarm_trig.volume   )) && rooms_volume_trig_get()   ) { alarm_action("Alarm Volume"   ); alarm_trig.volume    = 1; } }
+    if(alarm_control.perimeter) { if((!(alarm_trig.perimeter)) && rooms_perimeter_trig_get()) { alarm_action_with_buzzer("Alarm_Perimeter"); alarm_trig.perimeter = 1; } }
+    if(alarm_control.volume   ) { if((!(alarm_trig.volume   )) && rooms_volume_trig_get()   ) { alarm_action_with_buzzer("Alarm_Volume"   ); alarm_trig.volume    = 1; } }
     NutSleep(1000);
   }
 }

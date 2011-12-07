@@ -13,8 +13,10 @@
 #include "devices/uart.h"
 #include "devices/eth.h"
 #include "devices/adc.h"
+#include "devices/buzzer.h"
 #include "devices/ups.h"
 #include "devices/rack.h"
+#include "devices/volume.h"
 #include "devices/gsm.h"
 #include "devices/i2c.h"
 #include "devices/xflash.h"
@@ -41,8 +43,10 @@ int main(void)
   uart_init();
   eth_init();
   adc_init();
+  buzzer_init();
   ups_init();
   rack_init();
+  volume_init();
   gsm_init();
   i2c_init();
 
