@@ -33,5 +33,4 @@ void power_set(POWER_T power, uint8_t status)
   if(power == POWER_1) { GpioPinSet(POWER1_PORT, POWER1_BIT, status); }
   if(power == POWER_2) { GpioPinSet(POWER2_PORT, POWER2_BIT, status); }
   if(power == POWER_3) { GpioPinSet(POWER3_PORT, POWER3_BIT, status); }
-  printf("POWER %d %d\n", power, status);
 }
