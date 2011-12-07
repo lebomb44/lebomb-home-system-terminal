@@ -347,7 +347,7 @@ int safety_xml_get(FILE * stream)
   fprintf_XML_elt_int("UPS_Temp_Ctrl"      , safety_control.ups_temp      , stream);
   fprintf_XML_elt_int("UPS_Power_Ctrl"     , safety_control.ups_power     , stream);
   fprintf_XML_elt_int("RACK_Temp_Ctrl"     , safety_control.rack_temp     , stream);
-  fprintf_XML_elt_int("RACK_Power_Ctrl"    , safety_control.rack_alarm    , stream);
+  fprintf_XML_elt_int("RACK_Alarm_Ctrl"    , safety_control.rack_alarm    , stream);
   fprintf_XML_elt_int("HTTP_Ctrl"          , safety_control.http          , stream);
   fprintf_XML_elt_int("GSM_Ctrl"           , safety_control.gsm           , stream);
 
