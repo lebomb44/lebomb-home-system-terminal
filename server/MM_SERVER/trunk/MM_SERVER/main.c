@@ -34,7 +34,7 @@
 #include "apps/scenes/alarm.h"
 #include "apps/scenes/atmosphere.h"
 #include "apps/scenes/safety.h"
-#include "apps/scenes/scenes.h"
+#include "apps/scenes/events.h"
 
 int xml_get_form(FILE * stream, REQUEST * req);
 
@@ -62,7 +62,7 @@ int main(void)
   alarm_init();
   atmosphere_init();
   safety_init();
-  scenes_init();
+  events_init();
 
   /* Set the time zone to Paris */
   _timezone = -1L * 60L * 60L; 
@@ -93,7 +93,7 @@ int xml_get_form(FILE * stream, REQUEST * req)
     fprintf_XML_header(stream);
     fprintf_XML_elt_header("Lost", stream);
     rooms_xml_get(stream);
-    scenes_xml_get(stream);
+    events_xml_get(stream);
     alarm_xml_get(stream);
     safety_xml_get(stream);
     ext_xml_get(stream);

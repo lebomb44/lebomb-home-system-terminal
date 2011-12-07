@@ -10,7 +10,7 @@ devices/gsm.c devices/i2c.c \
 services/http.c services/web.c services/monitor.c \
 apps/media/freebox.c \
 apps/rooms/ext.c apps/rooms/rooms.c \
-apps/scenes/alarm.c apps/scenes/safety.c apps/scenes/atmosphere.c apps/scenes/scenes.c \
+apps/scenes/alarm.c apps/scenes/safety.c apps/scenes/atmosphere.c apps/scenes/events.c \
 $(WEBFILE)
 
 #devices/xflash.c services/tftp.c \

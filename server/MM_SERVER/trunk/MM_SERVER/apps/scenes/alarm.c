@@ -8,6 +8,7 @@
 #include <pro/httpd.h>
 
 #include "../../devices/volume.h"
+#include "../../devices/buzzer.h"
 #include "../../devices/gsm.h"
 #include "../../services/http.h"
 #include "../../services/web.h"
@@ -51,6 +52,7 @@ uint8_t alarm_action_with_buzzer(char* msg)
   gsm_sms_send(gsm1, msg);
   gsm_sms_send(gsm2, msg);
   http_email_send(msg);
+  buzzer_set();
 
   return 0;
 }
