@@ -8,6 +8,7 @@
 #include <pro/httpd.h>
 
 #include "../../devices/ups.h"
+#include "../../devices/rack.h"
 #include "../../devices/gsm.h"
 #include "../../services/http.h"
 #include "../../services/web.h"
@@ -23,6 +24,8 @@ typedef struct _SAFETY_T
   uint8_t rooms_smoke    :1;
   uint8_t ups_temp       :1;
   uint8_t ups_power      :1;
+  uint8_t rack_temp      :1;
+  uint8_t rack_alarm     :1;
   uint8_t http           :1;
   uint8_t gsm            :1;
 } SAFETY_T;
@@ -35,6 +38,8 @@ typedef struct _SAFETY_VALUE_T
   uint16_t rooms_temp_min_th;
   uint16_t ups_temp;
   uint16_t ups_temp_th;
+  uint16_t rack_temp;
+  uint16_t rack_temp_th;
 } SAFETY_VALUE_T;
 
 SAFETY_T safety_status;
@@ -51,6 +56,8 @@ uint8_t safety_init(void)
   safety_status.rooms_smoke    = 0;
   safety_status.ups_temp       = 0;
   safety_status.ups_power      = 0;
+  safety_status.rack_temp      = 0;
+  safety_status.rack_alarm     = 0;
   safety_status.http           = 0;
   safety_status.gsm            = 0;
 
@@ -61,6 +68,8 @@ uint8_t safety_init(void)
   safety_control.rooms_smoke    = 0; // TODO
   safety_control.ups_temp       = 1;
   safety_control.ups_power      = 1;
+  safety_control.rack_temp      = 1;
+  safety_control.rack_alarm     = 1;
   safety_control.http           = 1;
   safety_control.gsm            = 1;
 
@@ -71,6 +80,8 @@ uint8_t safety_init(void)
   safety_trig.rooms_smoke    = 0;
   safety_trig.ups_temp       = 0;
   safety_trig.ups_power      = 0;
+  safety_trig.rack_temp      = 0;
+  safety_trig.rack_alarm     = 0;
   safety_trig.http           = 0;
   safety_trig.gsm            = 0;
 
@@ -80,8 +91,10 @@ uint8_t safety_init(void)
   safety_value.rooms_temp_min_th = 213;
   safety_value.ups_temp = 0;
   safety_value.ups_temp_th = 213; /* 40°C */
+  safety_value.rack_temp = 0;
+  safety_value.rack_temp_th = 213; /* 40°C */
 
-  NutThreadCreate("SafetyUpsD"  , SafetyUpsD  , 0, 512);
+  NutThreadCreate("SafetyUnRD"  , SafetyUpsRackD  , 0, 512);
   NutThreadCreate("SafetyRoomsD", SafetyRoomsD, 0, 512);
   NutThreadCreate("SafetyGsmD"  , SafetyGsmD  , 0, 512);
   NutThreadCreate("SafetyHttpD" , SafetyHttpD , 0, 512);
@@ -100,26 +113,37 @@ uint8_t safety_action(char* msg)
   return 0;
 }
 
-#define UPS_TEMP_NB 32
-THREAD(SafetyUpsD, arg)
+#define TEMP_NB 32
+THREAD(SafetyUpsRackD, arg)
 {
-  uint16_t ups_temp[UPS_TEMP_NB] = {0};
-  uint8_t ups_temp_index = 0;
-  uint32_t ups_temp_sum = 0;
+  uint16_t ups_temp[TEMP_NB] = {0};
+  uint16_t rack_temp[TEMP_NB] = {0};
+
+  uint8_t temp_index = 0;
+  uint32_t temp_sum = 0;
   uint8_t i = 0;
 
   NutThreadSetPriority(20);
 
   while(1)
   {
-    ups_temp[ups_temp_index] = ups_temp_get();
-    ups_temp_index++; ups_temp_index = ups_temp_index % UPS_TEMP_NB;
-    ups_temp_sum = 0;
-    for(i=0; i<UPS_TEMP_NB; i++) { ups_temp_sum = ups_temp_sum + ups_temp[i]; }
-    safety_value.ups_temp = ups_temp_sum / UPS_TEMP_NB;
+    ups_temp[temp_index] = ups_temp_get();
+    rack_temp[temp_index] = rack_temp_get();
+    temp_index++; temp_index = temp_index % TEMP_NB;
+
+    temp_sum = 0;
+    for(i=0; i<TEMP_NB; i++) { temp_sum = temp_sum + ups_temp[i]; }
+    safety_value.ups_temp = temp_sum / TEMP_NB;
     safety_status.ups_power = ups_power_status_get();
     if(safety_control.ups_temp ) { if((!(safety_trig.ups_temp )) && (safety_value.ups_temp>=safety_value.ups_temp_th)) { safety_action("UPS_Temp" ); safety_trig.ups_temp  = 1; } }
     if(safety_control.ups_power) { if((!(safety_trig.ups_power)) && (safety_status.ups_power                        )) { safety_action("UPS_Power"); safety_trig.ups_power = 1; } }
+
+    temp_sum = 0;
+    for(i=0; i<TEMP_NB; i++) { temp_sum = temp_sum + rack_temp[i]; }
+    safety_value.rack_temp = temp_sum / TEMP_NB;
+    safety_status.rack_alarm = rack_alarm_status_get();
+    if(safety_control.rack_temp ) { if((!(safety_trig.rack_temp )) && (safety_value.rack_temp>=safety_value.rack_temp_th)) { safety_action("RACK_Temp" ); safety_trig.rack_temp  = 1; } }
+    if(safety_control.rack_alarm) { if((!(safety_trig.rack_alarm)) && (safety_status.rack_alarm                         )) { safety_action("RACK_Alarm"); safety_trig.rack_alarm = 1; } }
 
     NutSleep(1000);
   }
@@ -252,6 +276,24 @@ int safety_form(FILE * stream, REQUEST * req)
       if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.ups_power); }
       else { safety_trig.ups_power = 0; safety_control.ups_power = strtoul(arg_s, NULL, 10); }
     }
+    arg_s = NutHttpGetParameter(req, "rack_temp_ctrl");
+    if(arg_s)
+    {
+      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rack_temp); }
+      else { safety_trig.rack_temp = 0; safety_control.rack_temp = strtoul(arg_s, NULL, 10); }
+    }
+    arg_s = NutHttpGetParameter(req, "rack_temp_th");
+    if(arg_s)
+    {
+      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_value.rack_temp_th); }
+      else { safety_value.rack_temp_th = strtoul(arg_s, NULL, 10); }
+    }
+    arg_s = NutHttpGetParameter(req, "rack_alarm_ctrl");
+    if(arg_s)
+    {
+      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rack_alarm); }
+      else { safety_trig.rack_alarm = 0; safety_control.rack_alarm = strtoul(arg_s, NULL, 10); }
+    }
     arg_s = NutHttpGetParameter(req, "http_ctrl");
     if(arg_s)
     {
@@ -284,6 +326,9 @@ int safety_xml_get(FILE * stream)
   fprintf_XML_elt_int("UPS_Temp"         , safety_value.ups_temp         , stream);
   fprintf_XML_elt_int("UPS_Temp_Th"      , safety_value.ups_temp_th      , stream);
   fprintf_XML_elt_int("UPS_Power"        , safety_status.ups_power       , stream);
+  fprintf_XML_elt_int("RACK_Temp"        , safety_value.rack_temp        , stream);
+  fprintf_XML_elt_int("RACK_Temp_Th"     , safety_value.rack_temp_th     , stream);
+  fprintf_XML_elt_int("RACK_Alarm"       , safety_status.rack_alarm      , stream);
   fprintf_XML_elt_int("HTTP"             , safety_status.http            , stream);
   fprintf_XML_elt_int("GSM"              , safety_status.gsm             , stream);
 
@@ -294,6 +339,8 @@ int safety_xml_get(FILE * stream)
   fprintf_XML_elt_int("Rooms_Smoke_Ctrl"   , safety_control.rooms_smoke   , stream);
   fprintf_XML_elt_int("UPS_Temp_Ctrl"      , safety_control.ups_temp      , stream);
   fprintf_XML_elt_int("UPS_Power_Ctrl"     , safety_control.ups_power     , stream);
+  fprintf_XML_elt_int("RACK_Temp_Ctrl"     , safety_control.rack_temp     , stream);
+  fprintf_XML_elt_int("RACK_Power_Ctrl"    , safety_control.rack_alarm    , stream);
   fprintf_XML_elt_int("HTTP_Ctrl"          , safety_control.http          , stream);
   fprintf_XML_elt_int("GSM_Ctrl"           , safety_control.gsm           , stream);
 
@@ -304,6 +351,8 @@ int safety_xml_get(FILE * stream)
   fprintf_XML_elt_int("Rooms_Smoke_Trig"   , safety_trig.rooms_smoke   , stream);
   fprintf_XML_elt_int("UPS_Temp_Trig"      , safety_trig.ups_temp      , stream);
   fprintf_XML_elt_int("UPS_Power_Trig"     , safety_trig.ups_power     , stream);
+  fprintf_XML_elt_int("RACK_Temp_Trig"     , safety_trig.rack_temp     , stream);
+  fprintf_XML_elt_int("RACK_Alarm_Trig"    , safety_trig.rack_alarm    , stream);
   fprintf_XML_elt_int("HTTP_Trig"          , safety_trig.http          , stream);
   fprintf_XML_elt_int("GSM_Trig"           , safety_trig.gsm           , stream);
   fprintf_XML_elt_trailer("Safety" , stream);

@@ -14,6 +14,7 @@
 #include "devices/eth.h"
 #include "devices/adc.h"
 #include "devices/ups.h"
+#include "devices/rack.h"
 #include "devices/gsm.h"
 #include "devices/i2c.h"
 #include "devices/xflash.h"
@@ -41,6 +42,7 @@ int main(void)
   eth_init();
   adc_init();
   ups_init();
+  rack_init();
   gsm_init();
   i2c_init();
 

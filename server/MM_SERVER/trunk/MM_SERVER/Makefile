@@ -5,7 +5,7 @@ WEBFILE= urom.c
 include $(DEVBASE)/OS/Ethernut/$(OS_VERSION)/nutapp_21b/Makedefs
 
 SRCS =  $(PROJ).c \
-devices/eth.c devices/uart.c devices/adc.c devices/ups.c devices/gsm.c devices/i2c.c \
+devices/eth.c devices/uart.c devices/adc.c devices/ups.c devices/rack.c devices/gsm.c devices/i2c.c \
 services/http.c services/web.c services/monitor.c \
 apps/media/freebox.c \
 apps/rooms/ext.c apps/rooms/rooms.c \

@@ -53,9 +53,20 @@ function lost_safety_ups_power_status_set()
   lost_set(url_safety+"ups_power_ctrl="+String(Number(document.getElementById("Safety_UPS_Power_Ctrl").checked)));
 }
 
-function lost_safety_ups_power_threshold_set()
+function lost_safety_rack_temp_status_set()
 {
-  lost_set(url_safety+"ups_power_th="+String(Number(document.getElementById("Safety_UPS_Power_Th").checked)));
+  var status = document.getElementById("Safety_RACK_Temp_Ctrl").checked;
+  document.getElementById("Safety_RACK_Temp_Th").disabled = status;
+  if(status==true)
+  { // *5*100)/1024)-32)*140)/252
+    lost_set(url_safety+"rack_temp_th="+String(Number((((((document.getElementById("Safety_RACK_Temp_Th").value)*252)/140)+32)*1024)/5)/100));
+  }
+  lost_set(url_safety+"rack_temp_ctrl="+String(Number(status)));
+}
+
+function lost_safety_rack_alarm_status_set()
+{
+  lost_set(url_safety+"rack_alarm_ctrl="+String(Number(document.getElementById("Safety_RACK_Alarm_Ctrl").checked)));
 }
 
 function lost_safety_http_status_set()
@@ -78,6 +89,8 @@ function lost_safety_xml_get(xml)
 
   lost_elt_F2C_update(xml, "Safety", "UPS_Temp");
   lost_elt_bool_update(xml, "Safety", "UPS_Power");
+  lost_elt_F2C_update(xml, "Safety", "RACK_Temp");
+  lost_elt_bool_update(xml, "Safety", "RACK_Alarm");
   lost_elt_bool_update(xml, "Safety", "HTTP");
   lost_elt_bool_update(xml, "Safety", "GSM");
 }
