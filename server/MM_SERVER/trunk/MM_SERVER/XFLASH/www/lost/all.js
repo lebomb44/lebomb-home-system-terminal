@@ -366,10 +366,16 @@ var ATM_CINEMA     = 1;
 var ATM_ROMANTIQUE = 2;
 var ATM_ECO        = 3;
 var url_atm="cgi/atm.cgi?atm=";
+var url_scene="cgi/scenes.cgi?scene=";
 
 function lost_atm_set(atm)
 {
   lost_set(url_atm+String(atm));
+}
+
+function lost_scene_set(scene, status)
+{
+  lost_set(url_scene+String(scene)+"&status="+String(status));
 }
 document.write("\
 <div class=\"iLayer\" id=\"waScenes\" title=\"Scenes\">\
@@ -381,6 +387,13 @@ document.write("\
                 <label><input type=\"radio\" name=\"radioAmbiances\" onClick=\"lost_atm_set(ATM_ECO);\">Economie d\"energie</label>\
             </li>\
             <li><a href=\"#_Evenements\"><img class=\"picto\" src=\""+lost_icons_path+"wakeup.jpg\"/>Evenements</a></li>\
+        </ul>\
+        <ul>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_REVEIL, EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_REVEIL, EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"sunrise.jpg\">Reveil</li>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_COUCHE, EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_COUCHE, EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Couche</li>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_MAX+0 , 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_MAX+0 , 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">WIFI</li>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_MAX+1 , 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_MAX+1 , 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">POWER1</li>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_MAX+2 , 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_MAX+2 , 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">POWER2</li>\
         </ul>\
     </div>\
 </div>\
@@ -1004,13 +1017,18 @@ printRoomInfo(ROOM_C2      , "Chambre M&M"   );
 printRoomInfo(ROOM_C3      , "Chambre Amis"  );
 printRoomInfo(ROOM_C4      , "Dressing"      );
 printRoomInfo(ROOM_WC      , "WC"            );
-var SCENE_REVEIL         = 0;
-var SCENE_COUCHE         = 1;
-var SCENE_CHAUFFAGE_SDB  = 2;
-var SCENE_CHAUFFAGE_CAFE = 3;
-var SCENE_LUMIERE_AUTO   = 4;
-var SCENE_MUSIQUE_AUTO   = 5;
-var url_ev="cgi/scenes.cgi?scene=";
+var EVENT_REVEIL         = 0;
+var EVENT_COUCHE         = 1;
+var EVENT_CHAUFFAGE_SDB  = 2;
+var EVENT_CHAUFFAGE_CAFE = 3;
+var EVENT_LUMIERE_AUTO   = 4;
+var EVENT_MUSIQUE_AUTO   = 5;
+var EVENT_MAX            = 6;
+
+var EVENT_STATUS_OFF = 0;
+var EVENT_STATUS_ON  = 1;
+
+var url_ev="cgi/events.cgi?event=";
 
 function lost_ev_date_status_update(event)
 {
@@ -1045,12 +1063,12 @@ function lost_ev_xml_update(xml, event)
 
 function lost_ev_xml_get(xml)
 {
-  lost_ev_xml_update(xml, SCENE_REVEIL);
-  lost_ev_xml_update(xml, SCENE_COUCHE);
-  lost_ev_xml_update(xml, SCENE_CHAUFFAGE_SDB);
-  lost_ev_xml_update(xml, SCENE_CHAUFFAGE_CAFE);
-  lost_ev_xml_update(xml, SCENE_LUMIERE_AUTO);
-  lost_ev_xml_update(xml, SCENE_MUSIQUE_AUTO);
+  lost_ev_xml_update(xml, EVENT_REVEIL);
+  lost_ev_xml_update(xml, EVENT_COUCHE);
+  lost_ev_xml_update(xml, EVENT_CHAUFFAGE_SDB);
+  lost_ev_xml_update(xml, EVENT_CHAUFFAGE_CAFE);
+  lost_ev_xml_update(xml, EVENT_LUMIERE_AUTO);
+  lost_ev_xml_update(xml, EVENT_MUSIQUE_AUTO);
 }
 
 /* ************* SET ************************ */
@@ -1083,17 +1101,17 @@ document.write("\
         <fieldset>\
             <legend>Rooms</legend>\
             <ul class=\"iArrow\">\
-                <li><a href=\"#_Event"+SCENE_REVEIL+"\"><img class=\"picto\" src=\""+lost_icons_path+"sunrise.jpg\">Reveil</a></li>\
-                <li><a href=\"#_Event"+SCENE_COUCHE+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Couche</a></li>\
-                <li><a href=\"#_Event"+SCENE_CHAUFFAGE_SDB+"\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Chauffage Salle de bain</a></li>\
-                <li><a href=\"#_Event"+SCENE_CHAUFFAGE_CAFE+"\"><img class=\"picto\" src=\""+lost_icons_path+"coffee.jpg\">Chauffage Cafe</a></li>\
+                <li><a href=\"#_Event"+EVENT_REVEIL+"\"><img class=\"picto\" src=\""+lost_icons_path+"sunrise.jpg\">Reveil</a></li>\
+                <li><a href=\"#_Event"+EVENT_COUCHE+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Couche</a></li>\
+                <li><a href=\"#_Event"+EVENT_CHAUFFAGE_SDB+"\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Chauffage Salle de bain</a></li>\
+                <li><a href=\"#_Event"+EVENT_CHAUFFAGE_CAFE+"\"><img class=\"picto\" src=\""+lost_icons_path+"coffee.jpg\">Chauffage Cafe</a></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
             <legend>Modes</legend>\
             <ul class=\"iArrow\">\
-                <li><a href=\"#_Event"+SCENE_LUMIERE_AUTO+"\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\">Lumiere automatique</a></li>\
-                <li><a href=\"#_Event"+SCENE_MUSIQUE_AUTO+"\"><img class=\"picto\" src=\""+lost_icons_path+"hifi.jpg\">Musique automatique</a></li>\
+                <li><a href=\"#_Event"+EVENT_LUMIERE_AUTO+"\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\">Lumiere automatique</a></li>\
+                <li><a href=\"#_Event"+EVENT_MUSIQUE_AUTO+"\"><img class=\"picto\" src=\""+lost_icons_path+"hifi.jpg\">Musique automatique</a></li>\
             </ul>\
         </fieldset>\
     </div>\
@@ -1142,9 +1160,9 @@ document.write("\
 ");
 }
 
-printEventInfo(SCENE_REVEIL        , "Reveil"                 );
-printEventInfo(SCENE_COUCHE        , "Couche"                 );
-printEventInfo(SCENE_CHAUFFAGE_SDB , "Chauffage Salle de Bain");
-printEventInfo(SCENE_CHAUFFAGE_CAFE, "Chauffage Cafe"         );
-printEventInfo(SCENE_LUMIERE_AUTO  , "Lumiere automatique"    );
-printEventInfo(SCENE_MUSIQUE_AUTO  , "Musique automatique"    );
+printEventInfo(EVENT_REVEIL        , "Reveil"                 );
+printEventInfo(EVENT_COUCHE        , "Couche"                 );
+printEventInfo(EVENT_CHAUFFAGE_SDB , "Chauffage Salle de Bain");
+printEventInfo(EVENT_CHAUFFAGE_CAFE, "Chauffage Cafe"         );
+printEventInfo(EVENT_LUMIERE_AUTO  , "Lumiere automatique"    );
+printEventInfo(EVENT_MUSIQUE_AUTO  , "Musique automatique"    );

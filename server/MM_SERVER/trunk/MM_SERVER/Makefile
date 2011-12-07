@@ -5,12 +5,12 @@ WEBFILE= urom.c
 include $(DEVBASE)/OS/Ethernut/$(OS_VERSION)/nutapp_21b/Makedefs
 
 SRCS =  $(PROJ).c \
-devices/eth.c devices/uart.c devices/adc.c devices/buzzer.c devices/ups.c devices/rack.c devices/volume.c \
+devices/eth.c devices/uart.c devices/adc.c devices/buzzer.c devices/power.c devices/ups.c devices/rack.c devices/volume.c \
 devices/gsm.c devices/i2c.c \
 services/http.c services/web.c services/monitor.c \
 apps/media/freebox.c \
 apps/rooms/ext.c apps/rooms/rooms.c \
-apps/scenes/alarm.c apps/scenes/safety.c apps/scenes/atmosphere.c apps/scenes/events.c \
+apps/scenes/alarm.c apps/scenes/safety.c apps/scenes/atmosphere.c apps/scenes/events.c apps/scenes/scenes.c \
 $(WEBFILE)
 
 #devices/xflash.c services/tftp.c \

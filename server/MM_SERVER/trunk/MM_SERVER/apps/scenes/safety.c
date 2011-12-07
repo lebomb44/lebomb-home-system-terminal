@@ -70,7 +70,7 @@ uint8_t safety_init(void)
   safety_control.ups_temp       = 1;
   safety_control.ups_power      = 1;
   safety_control.rack_temp      = 1;
-  safety_control.rack_alarm     = 1;
+  safety_control.rack_alarm     = 0;
   safety_control.http           = 1;
   safety_control.gsm            = 1;
 

@@ -20,6 +20,18 @@ typedef enum _ROOM_N_T
   ROOM_MAX
 } ROOM_N_T;
 
+#define ROOM_LIGHT_MAX 10
+#define ROOM_SHUTTER_MAX 10
+#define ROOM_HEATER_MAX 10
+#define ROOM_ELEC_MAX 10
+
+typedef enum _ROOM_SHUTTER_T
+{
+  ROOM_SHUTTER_NONE = 0,
+  ROOM_SHUTTER_UP,
+  ROOM_SHUTTER_STOP,
+  ROOM_SHUTTER_DOWN
+} ROOM_SHUTTER_T;
 
 extern uint8_t rooms_init(void);
 

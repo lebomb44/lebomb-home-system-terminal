@@ -11,14 +11,8 @@
 
 #include <time.h>
 
+#include "../rooms/rooms.h"
 #include "events.h"
-
-typedef enum _EVENT_STATUS_T
-{
-  EVENT_STATUS_OFF = 0,
-  EVENT_STATUS_ON,
-  EVENT_STATUS_IN_PROGRESS
-} EVENT_STATUS_T;
 
 typedef struct _Event_T
 {
@@ -32,22 +26,23 @@ typedef struct _Event_T
   void (*fcnt_end)(void);
 } Event_T;
 
-enum
-{
-  EVENT_REVEIL = 0,
-  EVENT_COUCHE,
-  EVENT_CHAUFFAGE_SDB,
-  EVENT_CHAUFFAGE_CAFE,
-  EVENT_LUMIERE_AUTO,
-  EVENT_MUSIQUE_AUTO,
-  EVENT_MAX
-};
-
 Event_T event_list[EVENT_MAX];
+
+void event_reveil(void)
+{
+  uint8_t i = 0;
+  for(i=0; i<ROOM_SHUTTER_MAX; i++) { rooms_shutter_set(i, ROOM_SHUTTER_UP); }
+}
+
+void event_couche(void)
+{
+  uint8_t i = 0;
+  for(i=0; i<ROOM_SHUTTER_MAX; i++) { rooms_shutter_set(i, ROOM_SHUTTER_DOWN); }
+}
 
 uint8_t events_init(void)
 {
-  uint8_t i=0;
+  EVENT_T i=0;
 
   for(i=0; i<EVENT_MAX; i++)
   {
@@ -60,17 +55,26 @@ uint8_t events_init(void)
     event_list[i].fcnt_start   = NULL;
     event_list[i].fcnt_end     = NULL;
   }
-  event_list[EVENT_REVEIL].fcnt_start = NULL; // set_led;
-  event_list[EVENT_REVEIL].fcnt_end = NULL; // clear_led;
+  event_list[EVENT_REVEIL].fcnt_start = event_reveil;
+  event_list[EVENT_COUCHE].fcnt_start = event_couche;
   NutThreadCreate("EventsD", EventsD, 0, 512);
   NutRegisterCgi("events.cgi", events_form);
 
   return 0;
 }
 
+void event_action(EVENT_T event, EVENT_STATUS_T status)
+{
+  if(event < EVENT_MAX)
+  {
+    if(status == EVENT_STATUS_ON ) { if(event_list[event].fcnt_start != NULL) { event_list[event].fcnt_start(); } }
+    if(status == EVENT_STATUS_OFF) { if(event_list[event].fcnt_end   != NULL) { event_list[event].fcnt_end()  ; } }
+  }
+}
+
 THREAD(EventsD, arg)
 {
-  uint8_t i=0;
+  EVENT_T i=0;
   time_t tt;
   tm time_now;
 
@@ -96,7 +100,7 @@ THREAD(EventsD, arg)
           if((event_list[i].hour_start == time_now.tm_hour) && (event_list[i].minute_start == time_now.tm_min))
           {
             /* Check the process action and execute it */
-            if(event_list[i].fcnt_start != NULL) { event_list[i].fcnt_start(); }
+        	event_action(i, EVENT_STATUS_ON);
             /* Now go to next step */
             event_list[i].status = EVENT_STATUS_IN_PROGRESS;
           }
@@ -113,7 +117,7 @@ THREAD(EventsD, arg)
           if((event_list[i].hour_end == time_now.tm_hour) && (event_list[i].minute_end == time_now.tm_min))
           {
             /* Execute the end function (this function has already been checked) */
-            event_list[i].fcnt_end();
+        	event_action(i, EVENT_STATUS_OFF);
             /* If there is a recurrence, we should let the event enabled. Else it is a one-shot event */
             if(event_list[i].rec) { event_list[i].status = EVENT_STATUS_ON; }
             else { event_list[i].status = EVENT_STATUS_OFF; }

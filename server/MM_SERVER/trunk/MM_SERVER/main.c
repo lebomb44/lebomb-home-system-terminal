@@ -14,6 +14,7 @@
 #include "devices/eth.h"
 #include "devices/adc.h"
 #include "devices/buzzer.h"
+#include "devices/power.h"
 #include "devices/ups.h"
 #include "devices/rack.h"
 #include "devices/volume.h"
@@ -35,6 +36,7 @@
 #include "apps/scenes/atmosphere.h"
 #include "apps/scenes/safety.h"
 #include "apps/scenes/events.h"
+#include "apps/scenes/scenes.h"
 
 int xml_get_form(FILE * stream, REQUEST * req);
 
@@ -44,6 +46,7 @@ int main(void)
   eth_init();
   adc_init();
   buzzer_init();
+  power_init();
   ups_init();
   rack_init();
   volume_init();
@@ -63,6 +66,7 @@ int main(void)
   atmosphere_init();
   safety_init();
   events_init();
+  scenes_init();
 
   /* Set the time zone to Paris */
   _timezone = -1L * 60L * 60L; 

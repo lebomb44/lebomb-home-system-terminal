@@ -4,17 +4,17 @@ document.write("\
         <fieldset>\
             <legend>Rooms</legend>\
             <ul class=\"iArrow\">\
-                <li><a href=\"#_Event"+SCENE_REVEIL+"\"><img class=\"picto\" src=\""+lost_icons_path+"sunrise.jpg\">Reveil</a></li>\
-                <li><a href=\"#_Event"+SCENE_COUCHE+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Couche</a></li>\
-                <li><a href=\"#_Event"+SCENE_CHAUFFAGE_SDB+"\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Chauffage Salle de bain</a></li>\
-                <li><a href=\"#_Event"+SCENE_CHAUFFAGE_CAFE+"\"><img class=\"picto\" src=\""+lost_icons_path+"coffee.jpg\">Chauffage Cafe</a></li>\
+                <li><a href=\"#_Event"+EVENT_REVEIL+"\"><img class=\"picto\" src=\""+lost_icons_path+"sunrise.jpg\">Reveil</a></li>\
+                <li><a href=\"#_Event"+EVENT_COUCHE+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Couche</a></li>\
+                <li><a href=\"#_Event"+EVENT_CHAUFFAGE_SDB+"\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Chauffage Salle de bain</a></li>\
+                <li><a href=\"#_Event"+EVENT_CHAUFFAGE_CAFE+"\"><img class=\"picto\" src=\""+lost_icons_path+"coffee.jpg\">Chauffage Cafe</a></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
             <legend>Modes</legend>\
             <ul class=\"iArrow\">\
-                <li><a href=\"#_Event"+SCENE_LUMIERE_AUTO+"\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\">Lumiere automatique</a></li>\
-                <li><a href=\"#_Event"+SCENE_MUSIQUE_AUTO+"\"><img class=\"picto\" src=\""+lost_icons_path+"hifi.jpg\">Musique automatique</a></li>\
+                <li><a href=\"#_Event"+EVENT_LUMIERE_AUTO+"\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\">Lumiere automatique</a></li>\
+                <li><a href=\"#_Event"+EVENT_MUSIQUE_AUTO+"\"><img class=\"picto\" src=\""+lost_icons_path+"hifi.jpg\">Musique automatique</a></li>\
             </ul>\
         </fieldset>\
     </div>\
@@ -63,9 +63,9 @@ document.write("\
 ");
 }
 
-printEventInfo(SCENE_REVEIL        , "Reveil"                 );
-printEventInfo(SCENE_COUCHE        , "Couche"                 );
-printEventInfo(SCENE_CHAUFFAGE_SDB , "Chauffage Salle de Bain");
-printEventInfo(SCENE_CHAUFFAGE_CAFE, "Chauffage Cafe"         );
-printEventInfo(SCENE_LUMIERE_AUTO  , "Lumiere automatique"    );
-printEventInfo(SCENE_MUSIQUE_AUTO  , "Musique automatique"    );
+printEventInfo(EVENT_REVEIL        , "Reveil"                 );
+printEventInfo(EVENT_COUCHE        , "Couche"                 );
+printEventInfo(EVENT_CHAUFFAGE_SDB , "Chauffage Salle de Bain");
+printEventInfo(EVENT_CHAUFFAGE_CAFE, "Chauffage Cafe"         );
+printEventInfo(EVENT_LUMIERE_AUTO  , "Lumiere automatique"    );
+printEventInfo(EVENT_MUSIQUE_AUTO  , "Musique automatique"    );

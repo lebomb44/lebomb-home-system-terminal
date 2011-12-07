@@ -1,10 +1,15 @@
-var SCENE_REVEIL         = 0;
-var SCENE_COUCHE         = 1;
-var SCENE_CHAUFFAGE_SDB  = 2;
-var SCENE_CHAUFFAGE_CAFE = 3;
-var SCENE_LUMIERE_AUTO   = 4;
-var SCENE_MUSIQUE_AUTO   = 5;
-var url_ev="cgi/scenes.cgi?scene=";
+var EVENT_REVEIL         = 0;
+var EVENT_COUCHE         = 1;
+var EVENT_CHAUFFAGE_SDB  = 2;
+var EVENT_CHAUFFAGE_CAFE = 3;
+var EVENT_LUMIERE_AUTO   = 4;
+var EVENT_MUSIQUE_AUTO   = 5;
+var EVENT_MAX            = 6;
+
+var EVENT_STATUS_OFF = 0;
+var EVENT_STATUS_ON  = 1;
+
+var url_ev="cgi/events.cgi?event=";
 
 function lost_ev_date_status_update(event)
 {
@@ -39,12 +44,12 @@ function lost_ev_xml_update(xml, event)
 
 function lost_ev_xml_get(xml)
 {
-  lost_ev_xml_update(xml, SCENE_REVEIL);
-  lost_ev_xml_update(xml, SCENE_COUCHE);
-  lost_ev_xml_update(xml, SCENE_CHAUFFAGE_SDB);
-  lost_ev_xml_update(xml, SCENE_CHAUFFAGE_CAFE);
-  lost_ev_xml_update(xml, SCENE_LUMIERE_AUTO);
-  lost_ev_xml_update(xml, SCENE_MUSIQUE_AUTO);
+  lost_ev_xml_update(xml, EVENT_REVEIL);
+  lost_ev_xml_update(xml, EVENT_COUCHE);
+  lost_ev_xml_update(xml, EVENT_CHAUFFAGE_SDB);
+  lost_ev_xml_update(xml, EVENT_CHAUFFAGE_CAFE);
+  lost_ev_xml_update(xml, EVENT_LUMIERE_AUTO);
+  lost_ev_xml_update(xml, EVENT_MUSIQUE_AUTO);
 }
 
 /* ************* SET ************************ */

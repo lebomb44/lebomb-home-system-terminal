@@ -21,10 +21,6 @@
 /**************************************************/
 
 #define ROOM_SLA 2
-#define ROOM_LIGHT_MAX 10
-#define ROOM_SHUTTER_MAX 10
-#define ROOM_HEATER_MAX 10
-#define ROOM_ELEC_MAX 10
 
 enum ROOM_REG_T
 {
