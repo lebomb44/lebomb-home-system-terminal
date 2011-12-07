@@ -67,12 +67,12 @@ uint8_t safety_init(void)
   safety_control.rooms_temp_min = 0; // TODO
   safety_control.rooms_hum      = 0; // TODO
   safety_control.rooms_smoke    = 0; // TODO
-  safety_control.ups_temp       = 1;
-  safety_control.ups_power      = 1;
-  safety_control.rack_temp      = 1;
+  safety_control.ups_temp       = 0;
+  safety_control.ups_power      = 0;
+  safety_control.rack_temp      = 0;
   safety_control.rack_alarm     = 0;
-  safety_control.http           = 1;
-  safety_control.gsm            = 1;
+  safety_control.http           = 0;
+  safety_control.gsm            = 0;
 
   safety_trig.rooms_error    = 0;
   safety_trig.rooms_temp_max = 0;
@@ -144,15 +144,15 @@ THREAD(SafetyUpsRackD, arg)
     for(i=0; i<TEMP_NB; i++) { temp_sum = temp_sum + ups_temp[i]; }
     safety_value.ups_temp = temp_sum / TEMP_NB;
     safety_status.ups_power = ups_power_status_get();
-    if(safety_control.ups_temp ) { if((!(safety_trig.ups_temp )) && (safety_value.ups_temp>=safety_value.ups_temp_th)) { safety_action_with_buzzer("UPS_Temp" ); safety_trig.ups_temp  = 1; } }
-    if(safety_control.ups_power) { if((!(safety_trig.ups_power)) && (safety_status.ups_power                        )) { safety_action("UPS_Power"); safety_trig.ups_power = 1; } }
+    if(safety_control.ups_temp ) { if((!(safety_trig.ups_temp )) && (safety_value.ups_temp>=safety_value.ups_temp_th)) { safety_action_with_buzzer("UPS-Temp" ); safety_trig.ups_temp  = 1; } }
+    if(safety_control.ups_power) { if((!(safety_trig.ups_power)) && (safety_status.ups_power                        )) { safety_action("UPS-Power"); safety_trig.ups_power = 1; } }
 
     temp_sum = 0;
     for(i=0; i<TEMP_NB; i++) { temp_sum = temp_sum + rack_temp[i]; }
     safety_value.rack_temp = temp_sum / TEMP_NB;
     safety_status.rack_alarm = rack_alarm_status_get();
-    if(safety_control.rack_temp ) { if((!(safety_trig.rack_temp )) && (safety_value.rack_temp>=safety_value.rack_temp_th)) { safety_action_with_buzzer("RACK_Temp" ); safety_trig.rack_temp  = 1; } }
-    if(safety_control.rack_alarm) { if((!(safety_trig.rack_alarm)) && (safety_status.rack_alarm                         )) { safety_action_with_buzzer("RACK_Alarm"); safety_trig.rack_alarm = 1; } }
+    if(safety_control.rack_temp ) { if((!(safety_trig.rack_temp )) && (safety_value.rack_temp>=safety_value.rack_temp_th)) { safety_action_with_buzzer("RACK-Temp" ); safety_trig.rack_temp  = 1; } }
+    if(safety_control.rack_alarm) { if((!(safety_trig.rack_alarm)) && (safety_status.rack_alarm                         )) { safety_action_with_buzzer("RACK-Alarm"); safety_trig.rack_alarm = 1; } }
 
     NutSleep(1000);
   }
@@ -169,11 +169,11 @@ THREAD(SafetyRoomsD, arg)
     safety_value.rooms_temp_min = rooms_temp_min_value_get();
     safety_status.rooms_hum     = rooms_hum_status_get();
     safety_status.rooms_smoke   = rooms_smoke_status_get();
-    if(safety_control.rooms_error   ) { if((!(safety_trig.rooms_error   )) && (safety_status.rooms_error)) { safety_action("ROOM_Error"    ); safety_trig.rooms_error    = 1; } }
-    if(safety_control.rooms_temp_max) { if((!(safety_trig.rooms_temp_max)) && (rooms_temp_max_trig_get())) { safety_action_with_buzzer("ROOM_Temp_Max" ); safety_trig.rooms_temp_max = 1; } }
-    if(safety_control.rooms_temp_min) { if((!(safety_trig.rooms_temp_min)) && (rooms_temp_min_trig_get())) { safety_action("ROOM_Temp_Min" ); safety_trig.rooms_temp_min = 1; } }
-    if(safety_control.rooms_hum     ) { if((!(safety_trig.rooms_hum     )) && (rooms_hum_trig_get()     )) { safety_action("ROOM_Hum"      ); safety_trig.rooms_hum      = 1; } }
-    if(safety_control.rooms_smoke   ) { if((!(safety_trig.rooms_smoke   )) && (rooms_smoke_trig_get()   )) { safety_action_with_buzzer("ROOM_Smoke"    ); safety_trig.rooms_smoke    = 1; } }
+    if(safety_control.rooms_error   ) { if((!(safety_trig.rooms_error   )) && (safety_status.rooms_error)) { safety_action("ROOM-Error"    ); safety_trig.rooms_error    = 1; } }
+    if(safety_control.rooms_temp_max) { if((!(safety_trig.rooms_temp_max)) && (rooms_temp_max_trig_get())) { safety_action_with_buzzer("ROOM-Temp-Max" ); safety_trig.rooms_temp_max = 1; } }
+    if(safety_control.rooms_temp_min) { if((!(safety_trig.rooms_temp_min)) && (rooms_temp_min_trig_get())) { safety_action("ROOM-Temp-Min" ); safety_trig.rooms_temp_min = 1; } }
+    if(safety_control.rooms_hum     ) { if((!(safety_trig.rooms_hum     )) && (rooms_hum_trig_get()     )) { safety_action("ROOM-Hum"      ); safety_trig.rooms_hum      = 1; } }
+    if(safety_control.rooms_smoke   ) { if((!(safety_trig.rooms_smoke   )) && (rooms_smoke_trig_get()   )) { safety_action_with_buzzer("ROOM-Smoke"    ); safety_trig.rooms_smoke    = 1; } }
 
     NutSleep(1000);
   }
@@ -192,7 +192,7 @@ THREAD(SafetyGsmD, arg)
     ret = gsm_status_get();
     if(ret != 0) { if(gsm_nb < 0xFF) { gsm_nb++; } } else { gsm_nb = 0; }
     if(gsm_nb > 10) { safety_status.gsm = 1; } else { safety_status.gsm = 0; }
-    if(safety_control.gsm) { if((!(safety_trig.gsm)) && (safety_status.gsm)) { sprintf(msg, "GSM_%d",ret); safety_action(msg); safety_trig.gsm = 1; } }
+    if(safety_control.gsm) { if((!(safety_trig.gsm)) && (safety_status.gsm)) { sprintf(msg, "GSM-%d",ret); safety_action(msg); safety_trig.gsm = 1; } }
 
     NutSleep(10000);
   }

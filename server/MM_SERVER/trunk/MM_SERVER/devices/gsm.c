@@ -103,28 +103,28 @@ uint8_t fbus_receive(uint8_t *cmd, uint16_t *data_len, uint8_t **data, uint8_t *
   uint8_t xor2 = 0;
   int ret = 0;
 
-  if(fgetc(uart1_fd) != 0x1E) { printf("ERROR header0\n"); return 1; }
-  if(fgetc(uart1_fd) != 0x0C) { printf("ERROR header1\n"); return 2; }
-  if(fgetc(uart1_fd) != 0x00) { printf("ERROR header2\n"); return 3; }
+  if(fgetc(uart1_fd) != 0x1E) { /*printf("ERROR header0\n");*/ return 1; }
+  if(fgetc(uart1_fd) != 0x0C) { /*printf("ERROR header1\n");*/ return 2; }
+  if(fgetc(uart1_fd) != 0x00) { /*printf("ERROR header2\n");*/ return 3; }
 
-  ret = fgetc(uart1_fd); if(ret<0) { printf("ERROR data lenH\n"); return 4; }
+  ret = fgetc(uart1_fd); if(ret<0) { /*printf("ERROR data lenH\n");*/ return 4; }
   *cmd = ret;
 
-  ret = fgetc(uart1_fd); if(ret<0) { printf("ERROR data lenH\n"); return 5; }
+  ret = fgetc(uart1_fd); if(ret<0) { /*printf("ERROR data lenH\n");*/ return 5; }
   *data_len = (((ret)&0x00FF)<<8);
-  ret = fgetc(uart1_fd); if(ret<0) { printf("ERROR data lenL\n"); return 6; }
+  ret = fgetc(uart1_fd); if(ret<0) { /*printf("ERROR data lenL\n");*/ return 6; }
   *data_len = *data_len + ret;
-  if(*data_len<1) { printf("ERROR data len\n"); return 7; }
+  if(*data_len<1) { /*printf("ERROR data len\n");*/ return 7; }
   *data_len = (*data_len) - 1;
 
   buff_len = (*data_len) + ((*data_len)+1)%2 + 1 + 2;
   *data = malloc(buff_len);
-  if(*data == NULL) { printf("ERROR malloc\n"); return 8; }
+  if(*data == NULL) { /*printf("ERROR malloc\n");*/ return 8; }
 
   for(i=0; i<buff_len; i++)
   {
     ret = fgetc(uart1_fd);
-    if(ret<0) { printf("ERROR data\n"); free(*data); *data=NULL; return 9; } 
+    if(ret<0) { /*printf("ERROR data\n");*/ free(*data); *data=NULL; return 9; }
     else { (*data)[i] = ret; }
   }
 
@@ -132,10 +132,10 @@ uint8_t fbus_receive(uint8_t *cmd, uint16_t *data_len, uint8_t **data, uint8_t *
 
   /* Compute the checksum on even data number */
   xor1 = 0x1E^0x00^((((*data_len)+1)>>8)&0x00FF); for(i=0; i<(buff_len-2); i=i+2) { xor1 = xor1^(*data)[i]; }
-  if(xor1 != (*data)[buff_len-2]) { printf("ERROR xor1\n"); free(*data); *data=NULL; return 10; }
+  if(xor1 != (*data)[buff_len-2]) { /*printf("ERROR xor1\n");*/ free(*data); *data=NULL; return 10; }
   /* Compute the checksum on odd data number */
   xor2 = 0x0C^(*cmd)^(((*data_len)+1)&0x00FF); for(i=1; i<(buff_len-2); i=i+2) { xor2 = xor2^(*data)[i]; }
-  if(xor2 != (*data)[buff_len-1]) { printf("ERROR xor2\n"); free(*data); *data=NULL; return 11; }
+  if(xor2 != (*data)[buff_len-1]) { /*printf("ERROR xor2\n");*/ free(*data); *data=NULL; return 11; }
 
   return 0;
 }
@@ -147,11 +147,11 @@ uint8_t fbus_receive_ack(uint8_t _cmd)
   uint8_t *data = NULL;
   uint8_t seq = 0;
 
-  if(fbus_receive(&cmd, &data_len, &data, &seq) != 0) { printf("ERROR receive\n"); return 1; }
-  if(cmd != NOKIA_3310_ACK) { free(data); printf("ERROR ack\n"); return 2; }
-  if(data_len != 1) { free(data); printf("ERROR ack len\n"); return 3; }
-  if(data[0] != _cmd) { free(data); printf("ERROR ack cmd\n"); return 4; }
-//if(seq != 0x00) { free(data); printf("ERROR ack seq\n"); return 5; }
+  if(fbus_receive(&cmd, &data_len, &data, &seq) != 0) { /*printf("ERROR receive\n");*/ return 1; }
+  if(cmd != NOKIA_3310_ACK) { free(data); /*printf("ERROR ack\n");*/ return 2; }
+  if(data_len != 1) { free(data); /*printf("ERROR ack len\n");*/ return 3; }
+  if(data[0] != _cmd) { free(data); /*printf("ERROR ack cmd\n");*/ return 4; }
+//if(seq != 0x00) { free(data); /*printf("ERROR ack seq\n");*/ return 5; }
   free(data);
   return 0;
 }
@@ -270,7 +270,7 @@ uint8_t gsm_sms_send(char * tel, char * msg)
 // Hi All. This message was sent through F-Bus. Cool!!
 
   /* Check the phone number */
-  if(strnlen(tel, 10) != 10) { printf ("TEL bad len\n"); return 1; }
+  if(strnlen(tel, 10) != 10) { /*printf ("TEL bad len\n");*/ return 1; }
   /* Get the message length */
   up_msg_len = strnlen(msg, 160);
   /* Force end of message */

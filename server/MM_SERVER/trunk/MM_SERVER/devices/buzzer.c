@@ -5,16 +5,16 @@
 #include "buzzer.h"
 
 #define BUZZER_PORT NUTGPIO_PORTE
-#define BUZZER_BIT 4
+#define BUZZER_BIT 2
 
 uint8_t buzzer_init(void)
 {
-  GpioPinConfigSet(BUZZER_PORT, BUZZER_BIT, 0);
+  GpioPinConfigSet(BUZZER_PORT, BUZZER_BIT, GPIO_CFG_OUTPUT);
 
   return 0;
 }
 
 void buzzer_set(void)
 {
-  GpioPinConfigSet(BUZZER_PORT, BUZZER_BIT, 0);
+	GpioPinSetHigh(BUZZER_PORT, BUZZER_BIT);
 }

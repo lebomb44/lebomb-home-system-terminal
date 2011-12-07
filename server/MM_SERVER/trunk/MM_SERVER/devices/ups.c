@@ -7,7 +7,7 @@
 
 #define UPS_ADC_CHANNEL 1
 #define UPS_POWER_PORT NUTGPIO_PORTE
-#define UPS_POWER_BIT 4
+#define UPS_POWER_BIT 6
 
 uint8_t ups_init(void)
 {

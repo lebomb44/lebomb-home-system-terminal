@@ -11,7 +11,7 @@
 
 uint8_t rack_init(void)
 {
-  GpioPinConfigSet(RACK_ALARM_PORT, RACK_ALARM_BIT, 0);
+  GpioPinConfigSet(RACK_ALARM_PORT, RACK_ALARM_BIT, GPIO_CFG_PULLUP);
 
   return 0;
 }
