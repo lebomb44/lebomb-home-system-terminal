@@ -11,7 +11,7 @@
 
 uint8_t ups_init(void)
 {
-  GpioPinConfigSet(UPS_POWER_PORT, UPS_POWER_BIT, 0);
+  GpioPinConfigSet(UPS_POWER_PORT, UPS_POWER_BIT, GPIO_CFG_PULLUP);
 
   return 0;
 }
