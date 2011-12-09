@@ -64,7 +64,7 @@ THREAD(AlarmD, arg)
   while(1)
   {
     alarm_status.perimeter  = rooms_perimeter_status_get();
-    alarm_status.volume     = rooms_volume_status_get() || volume_status_get(); // TODO
+    alarm_status.volume     = rooms_volume_status_get() | volume_status_get();
     alarm_status.simulation = rooms_simulation_status_get();
     /* Check all the status but we don t know from which room */
     if(alarm_control.perimeter) { if((!(alarm_trig.perimeter)) && rooms_perimeter_trig_get()) { alarm_action_with_buzzer("Alarm-Perimeter"); alarm_trig.perimeter = 1; } }

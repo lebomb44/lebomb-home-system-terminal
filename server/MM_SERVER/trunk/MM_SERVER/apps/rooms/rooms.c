@@ -95,44 +95,44 @@ uint8_t room_version_get           (ROOM_N_T room) { return room_list[room][ROOM
 uint8_t room_adress_get            (ROOM_N_T room) { return room_list[room][ROOM_REG_ADRESS          ]; }
 
 uint8_t room_error_status_get      (ROOM_N_T room) { return room_error[room]; }
-uint8_t rooms_error_status_get     (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_error_status_get(i)     ) { return 1; } } return 0; }
+uint8_t rooms_error_status_get     (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_error_status_get(i)     ) { return (i+1); } } return 0; }
 
 uint8_t room_temp_value_get        (ROOM_N_T room) { return room_list[room][ROOM_REG_TEMP_VALUE      ]; }
 uint8_t room_temp_max_th_get       (ROOM_N_T room) { return room_list[room][ROOM_REG_TEMP_MAX_TH     ]; }
 uint8_t room_temp_max_control_get  (ROOM_N_T room) { return room_list[room][ROOM_REG_TEMP_MAX_CONTROL]; }
 uint8_t room_temp_max_trig_get     (ROOM_N_T room) { return room_list[room][ROOM_REG_TEMP_MAX_TRIG   ]; }
-uint8_t rooms_temp_max_trig_get    (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_temp_max_trig_get(i)    ) { return 1; } } return 0; }
+uint8_t rooms_temp_max_trig_get    (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_temp_max_trig_get(i)    ) { return (i+1); } } return 0; }
 uint8_t room_temp_min_th_get       (ROOM_N_T room) { return room_list[room][ROOM_REG_TEMP_MIN_TH     ]; }
 uint8_t room_temp_min_control_get  (ROOM_N_T room) { return room_list[room][ROOM_REG_TEMP_MIN_CONTROL]; }
 uint8_t room_temp_min_trig_get     (ROOM_N_T room) { return room_list[room][ROOM_REG_TEMP_MIN_TRIG   ]; }
-uint8_t rooms_temp_min_trig_get    (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_temp_min_trig_get(i)    ) { return 1; } } return 0; }
+uint8_t rooms_temp_min_trig_get    (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_temp_min_trig_get(i)    ) { return (i+1); } } return 0; }
 
 uint8_t room_hum_status_get        (ROOM_N_T room) { return room_list[room][ROOM_REG_HUM_STATUS      ]; }
-uint8_t rooms_hum_status_get       (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_hum_status_get(i)       ) { return 1; } } return 0; }
+uint8_t rooms_hum_status_get       (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_hum_status_get(i)       ) { return (i+1); } } return 0; }
 uint8_t room_hum_control_get       (ROOM_N_T room) { return room_list[room][ROOM_REG_HUM_CONTROL     ]; }
 uint8_t room_hum_trig_get          (ROOM_N_T room) { return room_list[room][ROOM_REG_HUM_TRIG        ]; }
-uint8_t rooms_hum_trig_get         (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_hum_trig_get(i)         ) { return 1; } } return 0; }
+uint8_t rooms_hum_trig_get         (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_hum_trig_get(i)         ) { return (i+1); } } return 0; }
 
 uint8_t room_smoke_status_get      (ROOM_N_T room) { return room_list[room][ROOM_REG_SMOKE_STATUS    ]; }
-uint8_t rooms_smoke_status_get     (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_smoke_status_get(i)     ) { return 1; } } return 0; }
+uint8_t rooms_smoke_status_get     (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_smoke_status_get(i)     ) { return (i+1); } } return 0; }
 uint8_t room_smoke_control_get     (ROOM_N_T room) { return room_list[room][ROOM_REG_SMOKE_CONTROL   ]; }
 uint8_t room_smoke_trig_get        (ROOM_N_T room) { return room_list[room][ROOM_REG_SMOKE_TRIG      ]; }
-uint8_t rooms_smoke_trig_get       (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_smoke_trig_get(i)       ) { return 1; } } return 0; }
+uint8_t rooms_smoke_trig_get       (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_smoke_trig_get(i)       ) { return (i+1); } } return 0; }
 
 uint8_t room_perimeter_status_get  (ROOM_N_T room) { return room_list[room][ROOM_REG_PERI_STATUS     ]; }
-uint8_t rooms_perimeter_status_get (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_perimeter_status_get(i) ) { return 1; } } return 0; }
+uint8_t rooms_perimeter_status_get (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_perimeter_status_get(i) ) { return (i+1); } } return 0; }
 uint8_t room_perimeter_control_get (ROOM_N_T room) { return room_list[room][ROOM_REG_PERI_CONTROL    ]; }
 uint8_t room_perimeter_trig_get    (ROOM_N_T room) { return room_list[room][ROOM_REG_PERI_TRIG       ]; }
-uint8_t rooms_perimeter_trig_get   (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_perimeter_trig_get(i)   ) { return 1; } } return 0; }
+uint8_t rooms_perimeter_trig_get   (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_perimeter_trig_get(i)   ) { return (i+1); } } return 0; }
 
 uint8_t room_volume_status_get     (ROOM_N_T room) { return room_list[room][ROOM_REG_VOL_STATUS      ]; }
-uint8_t rooms_volume_status_get    (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_volume_status_get(i)    ) { return 1; } } return 0; }
+uint8_t rooms_volume_status_get    (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_volume_status_get(i)    ) { return (i+1); } } return 0; }
 uint8_t room_volume_control_get    (ROOM_N_T room) { return room_list[room][ROOM_REG_VOL_CONTROL     ]; }
 uint8_t room_volume_trig_get       (ROOM_N_T room) { return room_list[room][ROOM_REG_VOL_TRIG        ]; }
-uint8_t rooms_volume_trig_get      (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_volume_trig_get(i)      ) { return 1; } } return 0; }
+uint8_t rooms_volume_trig_get      (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_volume_trig_get(i)      ) { return (i+1); } } return 0; }
 
 uint8_t room_simulation_status_get (ROOM_N_T room) { return room_list[room][ROOM_REG_SIM_STATUS      ]; }
-uint8_t rooms_simulation_status_get(void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_simulation_status_get(i)) { return 1; } } return 0; }
+uint8_t rooms_simulation_status_get(void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_simulation_status_get(i)) { return (i+1); } } return 0; }
 uint8_t room_simulation_control_get(ROOM_N_T room) { return room_list[room][ROOM_REG_SIM_CONTROL     ]; }
 
 uint8_t room_light_get             (ROOM_N_T room, uint8_t no) { return room_list[room][ROOM_REG_LIGHT   + no]; }
