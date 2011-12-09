@@ -11,7 +11,7 @@
 
 #include <time.h>
 
-#include "../rooms/rooms.h"
+#include "events_proc.h"
 #include "events.h"
 
 typedef struct _Event_T
@@ -28,18 +28,6 @@ typedef struct _Event_T
 
 Event_T event_list[EVENT_MAX];
 
-void event_reveil(void)
-{
-  uint8_t i = 0;
-  for(i=0; i<ROOM_SHUTTER_MAX; i++) { rooms_shutter_set(i, ROOM_SHUTTER_UP); }
-}
-
-void event_couche(void)
-{
-  uint8_t i = 0;
-  for(i=0; i<ROOM_SHUTTER_MAX; i++) { rooms_shutter_set(i, ROOM_SHUTTER_DOWN); }
-}
-
 uint8_t events_init(void)
 {
   EVENT_T i=0;
@@ -55,12 +43,20 @@ uint8_t events_init(void)
     event_list[i].fcnt_start   = NULL;
     event_list[i].fcnt_end     = NULL;
   }
-  event_list[EVENT_REVEIL].fcnt_start = event_reveil;
-  event_list[EVENT_COUCHE].fcnt_start = event_couche;
+  events_proc_init();
   NutThreadCreate("EventsD", EventsD, 0, 512);
   NutRegisterCgi("events.cgi", events_form);
 
   return 0;
+}
+
+void event_set(EVENT_T event, void (*fcnt_start)(void), void (*fcnt_end)(void))
+{
+  if(event < EVENT_MAX)
+  {
+    event_list[EVENT_REVEIL].fcnt_start = fcnt_start;
+    event_list[EVENT_COUCHE].fcnt_start = fcnt_end;
+  }
 }
 
 void event_action(EVENT_T event, EVENT_STATUS_T status)
@@ -97,7 +93,7 @@ THREAD(EventsD, arg)
         if((event_list[i].rec & (1<<time_now.tm_wday)) || (event_list[i].rec == 0))
         {
           /* If the event is programmed for now */
-          if((event_list[i].hour_start == time_now.tm_hour) && (event_list[i].minute_start == time_now.tm_min))
+          if((event_list[i].hour_start == time_now.tm_hour) && (event_list[i].minute_start == time_now.tm_min) && (time_now.tm_sec < 30))
           {
             /* Check the process action and execute it */
         	event_action(i, EVENT_STATUS_ON);
@@ -114,7 +110,7 @@ THREAD(EventsD, arg)
         if(event_list[i].fcnt_end != NULL)
         {
           /* If the end is programmed for now */
-          if((event_list[i].hour_end == time_now.tm_hour) && (event_list[i].minute_end == time_now.tm_min))
+          if((event_list[i].hour_end == time_now.tm_hour) && (event_list[i].minute_end == time_now.tm_min) && (30 < time_now.tm_sec))
           {
             /* Execute the end function (this function has already been checked) */
         	event_action(i, EVENT_STATUS_OFF);
@@ -125,9 +121,8 @@ THREAD(EventsD, arg)
         }
         else /* Maybe there is no end function */
         {
-          /* We must wait one minute before to re-enable the event */
-          /* FIXME : ERROR with 23:59 */
-          if((event_list[i].hour_end <= time_now.tm_hour) && (event_list[i].minute_end < time_now.tm_min))
+          /* We must wait the end of the START minute before to re-enable the event */
+          if((event_list[i].hour_start == time_now.tm_hour) && (event_list[i].minute_start == time_now.tm_min) && (30 < time_now.tm_sec))
           {
             /* Only re-enable if there is a recurrence */
             if(event_list[i].rec) { event_list[i].status = EVENT_STATUS_ON; }
