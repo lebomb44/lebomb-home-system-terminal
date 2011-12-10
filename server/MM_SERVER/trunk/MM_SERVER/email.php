@@ -9,7 +9,6 @@
   $header .= 'X-Priority: 1'."\r\n";
   $header .= 'X-MSMail-Priority: High'."\r\n";
   $header .= 'Importance: High'."\r\n";
-  $header .= "\r\n";
   if(isset($_GET['msg']) && !empty($_GET['msg'])) { $msg=$_GET['msg']; } else { $msg="UNKNOWN ALERT"; }
   $sujet = 'LOST Alert : '.$msg;
   $message = $sujet."\r\n".'Sent by '.$from_mail.' at '.date('h:i:s  d.m.Y')."\r\n-- LOST\r\n";
