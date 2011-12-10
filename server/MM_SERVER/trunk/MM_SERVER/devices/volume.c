@@ -31,17 +31,10 @@ uint8_t volume_init(void)
 
 uint8_t volume_status_get(void)
 {
-  if((GpioPinGet(VOLUME0_PORT, VOLUME0_BIT) == 0) && \
-     (GpioPinGet(VOLUME1_PORT, VOLUME1_BIT) == 0) && \
-     (GpioPinGet(VOLUME2_PORT, VOLUME2_BIT) == 0) && \
-     (GpioPinGet(VOLUME3_PORT, VOLUME3_BIT) == 0) && \
-     (GpioPinGet(VOLUME4_PORT, VOLUME4_BIT) == 0) && \
-     (GpioPinGet(VOLUME5_PORT, VOLUME5_BIT) == 0))
-  {
-    return 0;
-  }
-  else
-  {
-    return 1;
-  }
+  return ((GpioPinGet(VOLUME0_PORT, VOLUME0_BIT) << 0 ) | \
+          (GpioPinGet(VOLUME1_PORT, VOLUME1_BIT) << 1 ) | \
+          (GpioPinGet(VOLUME2_PORT, VOLUME2_BIT) << 2 ) | \
+          (GpioPinGet(VOLUME3_PORT, VOLUME3_BIT) << 3 ) | \
+          (GpioPinGet(VOLUME4_PORT, VOLUME4_BIT) << 4 ) | \
+          (GpioPinGet(VOLUME5_PORT, VOLUME5_BIT) << 5 ));
 }

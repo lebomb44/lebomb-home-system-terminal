@@ -18,11 +18,11 @@
 
 typedef struct _SAFETY_T
 {
-  uint8_t rooms_error    :1;
-  uint8_t rooms_temp_max :1;
-  uint8_t rooms_temp_min :1;
-  uint8_t rooms_hum      :1;
-  uint8_t rooms_smoke    :1;
+  uint8_t rooms_error;
+  uint8_t rooms_temp_max;
+  uint8_t rooms_temp_min;
+  uint8_t rooms_hum;
+  uint8_t rooms_smoke;
   uint8_t ups_temp       :1;
   uint8_t ups_power      :1;
   uint8_t rack_temp      :1;
