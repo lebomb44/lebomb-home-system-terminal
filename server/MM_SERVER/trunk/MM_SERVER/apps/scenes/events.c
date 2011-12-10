@@ -54,8 +54,8 @@ void event_set(EVENT_T event, void (*fcnt_start)(void), void (*fcnt_end)(void))
 {
   if(event < EVENT_MAX)
   {
-    event_list[EVENT_REVEIL].fcnt_start = fcnt_start;
-    event_list[EVENT_COUCHE].fcnt_start = fcnt_end;
+    event_list[event].fcnt_start = fcnt_start;
+    event_list[event].fcnt_end = fcnt_end;
   }
 }
 
@@ -82,7 +82,6 @@ THREAD(EventsD, arg)
     tt = time(NULL);
     /* Convert the time in a human readable form */
     localtime_r(&tt, &time_now); time_now.tm_mon++;
-
     /* Process for each event */
     for(i=0; i<EVENT_MAX; i++)
     {
@@ -205,6 +204,7 @@ int events_form(FILE * stream, REQUEST * req)
     }
     fflush(stream);
   }
+
     return 0;
 }
 

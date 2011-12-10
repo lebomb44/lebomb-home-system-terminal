@@ -592,20 +592,17 @@ function lost_ev_rec_set(event, rec, value)
 
 function lost_ev_date_set(event)
 {
-  lost_set(url_ev+String(event)+"&hs="+String(Number(document.getElementById("Event"+String(event)+"_HStart").value)));
-  lost_set(url_ev+String(event)+"&ms="+String(Number(document.getElementById("Event"+String(event)+"_MStart").value)));
-  lost_set(url_ev+String(event)+"&he="+String(Number(document.getElementById("Event"+String(event)+"_HEnd").value)));
-  lost_set(url_ev+String(event)+"&me="+String(Number(document.getElementById("Event"+String(event)+"_MEnd").value)));
+  lost_set(url_ev+String(event)+"&hs="+String(Number(document.getElementById("Event"+String(event)+"_HStart").value))+"&ms="+String(Number(document.getElementById("Event"+String(event)+"_MStart").value))+"&he="+String(Number(document.getElementById("Event"+String(event)+"_HEnd").value))+"&me="+String(Number(document.getElementById("Event"+String(event)+"_MEnd").value)));
 }
 
 function lost_ev_status_set(event)
 {
-  lost_set(url_ev+String(event)+"&status="+String(Number(document.getElementById("Event"+String(event)+"_St").checked)));
-  lost_ev_date_status_update(event);
   if(document.getElementById("Event"+String(event)+"_St").checked == true)
   {
     lost_ev_date_set(event);
   }
+  lost_set(url_ev+String(event)+"&status="+String(Number(document.getElementById("Event"+String(event)+"_St").checked)));
+  lost_ev_date_status_update(event);
 }
 document.write("\
 <div class=\"iLayer\" id=\"waHome\" title=\"Home\">\
