@@ -146,6 +146,15 @@ document.write("\
             </ul>\
         </fieldset>\
         <fieldset>\
+            <legend>Climatisation</legend>\
+            <ul>\
+                <li>Temperature\
+                <SELECT id=\"Room"+String(ROOM_C1)+"_Clim_Temp\"><script language=\"Javascript\">printSelectOption(\"Room"+String(ROOM_C1)+"_Clim_Temp\",99);</script></SELECT>\
+                </li>\
+                <li><a href=\"javascript:lost_room_clim_set(ROOM_C1,ROOM_CLIM_ON);\" class=\"iButton iBAction\" style=\"width:60px\">ON</a><a href=\"javascript:lost_room_clim_set(ROOM_C1,ROOM_CLIM_OFF);\" class=\"iButton iBWarn\" style=\"width:60px\">OFF</a><img class=\"picto\" src=\""+lost_icons_path+"clim.jpg\">Commande</li>\
+            </ul>\
+        </fieldset>\
+        <fieldset>\
             <legend>Info</legend>\
             <ul class=\"iArrow\">\
                 <li><a href=\"#_Chambre MarineInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
@@ -315,6 +324,9 @@ document.write("\
             <ul>\
                 <li id=\"Room"+String(room)+"_Simulation_bg\"><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\"><span id=\"Room"+String(room)+"_Simulation\">Unknown</span>Simulation</li>\
                 <li id=\"Room"+String(room)+"_Simulation_Ctrl_bg\"><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\"><span id=\"Room"+String(room)+"_Simulation_Ctrl\">Unknown</span>Simulation Control</li>\
+            </ul>\
+            <ul>\
+                <li id=\"Room"+String(room)+"_Clim_Cmd_bg\"><img class=\"picto\" src=\""+lost_icons_path+"clim.jpg\"><span id=\"Room"+String(room)+"_Clim_Cmd\">Unknown</span>Climatisation</li>\
             </ul>\
         </fieldset>\
     </div>\

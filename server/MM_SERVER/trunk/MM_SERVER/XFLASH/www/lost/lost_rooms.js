@@ -2,8 +2,11 @@ var ROOM_SHUTTER_UP   = 1
 var ROOM_SHUTTER_STOP = 2
 var ROOM_SHUTTER_DOWN = 3
 
+var ROOM_CLIM_OFF = 0;
+var ROOM_CLIM_ON  = 1;
+
 var ROOM_SALON    = 0;
-var ROOM_CUISINE   = 1;
+var ROOM_CUISINE  = 1;
 var ROOM_BUREAU   = 2;
 var ROOM_TERRASSE = 3;
 var ROOM_C1       = 4;
@@ -60,6 +63,8 @@ function lost_rooms_xml_get(xml)
     lost_innerHTML_update(xml, "Room"+String(i), "Simulation");
     lost_innerHTML_update(xml, "Room"+String(i), "Simulation_Ctrl");
 
+    lost_innerHTML_update(xml, "Room"+String(i), "Clim_Cmd");
+
     for(j=0; j<ROOM_LIGHT_MAX; j++)
     {
       lost_ck_update(xml, "Room"+String(i), "Light"+String(j));
@@ -80,6 +85,18 @@ function lost_rooms_xml_get(xml)
 }
 
 /* ********** SET ********** */
+function lost_room_clim_set(room, action)
+{
+  if(action == ROOM_CLIM_ON)
+  {
+    lost_set(url_room+String(room)+"&clim="+String(Number(document.getElementById("Room"+String(room)+"_Clim_Temp").value)));
+  }
+  else
+  {
+    lost_set(url_room+String(room)+"&clim=0");
+  }
+}
+
 function lost_room_light_set(room, no)
 {
   lost_set(url_room+String(room)+"&light="+String(no)+"&value="+String(Number(document.getElementById("Room"+String(room)+"_Light"+String(no)).checked)));
