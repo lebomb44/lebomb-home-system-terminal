@@ -59,6 +59,8 @@ enum ROOM_REG_T
   ROOM_REG_IR_TYPE,
   ROOM_REG_IR_CMD0,
   ROOM_REG_IR_CMD1,
+  ROOM_REG_IR_CMD2,
+  ROOM_REG_CLIM,
 
   ROOM_REG_LIGHT,
   ROOM_REG_SHUTTER = ROOM_REG_LIGHT   + ROOM_LIGHT_MAX,
@@ -135,6 +137,8 @@ uint8_t room_simulation_status_get (ROOM_N_T room) { return room_list[room][ROOM
 uint8_t rooms_simulation_status_get(void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_simulation_status_get(i)) { return (i+1); } } return 0; }
 uint8_t room_simulation_control_get(ROOM_N_T room) { return room_list[room][ROOM_REG_SIM_CONTROL     ]; }
 
+uint8_t room_clim_get              (ROOM_N_T room) { return room_list[room][ROOM_REG_CLIM            ]; }
+
 uint8_t room_light_get             (ROOM_N_T room, uint8_t no) { return room_list[room][ROOM_REG_LIGHT   + no]; }
 uint8_t room_shutter_get           (ROOM_N_T room, uint8_t no) { return room_list[room][ROOM_REG_SHUTTER + no]; }
 uint8_t room_heater_get            (ROOM_N_T room, uint8_t no) { return room_list[room][ROOM_REG_HEATER  + no]; }
@@ -175,6 +179,22 @@ void rooms_volume_trig_set       (               uint8_t trig   ) {             
 
 void room_simulation_control_set (ROOM_N_T room, uint8_t control) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_SIM_CONTROL     , 1, &control); }
 void rooms_simulation_control_set(               uint8_t control) {                    i2c_broadcast_set(      ROOM_REG_SIM_CONTROL     , 1, &control); }
+
+void room_ir_set (ROOM_N_T room, uint8_t type, uint8_t cmd0, uint8_t cmd1, uint8_t cmd2)
+{
+  uint8_t ir_buff[4] = {0};
+  ir_buff[0] = type; ir_buff[1] = cmd0; ir_buff[2] = cmd1; ir_buff[3] = cmd2;
+  room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_IR_TYPE, 4, &ir_buff[0]);
+}
+void rooms_ir_set(uint8_t type, uint8_t cmd0, uint8_t cmd1, uint8_t cmd2)
+{
+  uint8_t ir_buff[4] = {0};
+  ir_buff[0] = type; ir_buff[1] = cmd0; ir_buff[2] = cmd1; ir_buff[3] = cmd2;
+  room_error[room] = i2c_broadcast_set(ROOM_REG_IR_TYPE, 4, &ir_buff[0]);
+}
+
+void room_clim_set (ROOM_N_T room, uint8_t temp) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_CLIM, 1, &temp); }
+void rooms_clim_set(               uint8_t temp) {                    i2c_broadcast_set(     ROOM_REG_CLIM, 1, &temp); }
 
 void room_light_set              (ROOM_N_T room, uint8_t no, uint8_t value) { if(room < ROOM_MAX) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_LIGHT  +no, 1, &value); } else { rooms_light_set(no, value); } }
 void rooms_light_set             (               uint8_t no, uint8_t value) {                    i2c_broadcast_set(      ROOM_REG_LIGHT  +no, 1, &value); }
@@ -234,6 +254,11 @@ int rooms_form(FILE * stream, REQUEST * req)
 {
   char* room_s=0;
   unsigned int room=0;
+  char* ir_type_s=0;
+  char* ir_cmd0_s=0;
+  char* ir_cmd1_s=0;
+  char* ir_cmd2_s=0;
+  char* clim_s=0;
   char* light_s=0;
   unsigned int light=0;
   char* shutter_s=0;
@@ -255,11 +280,32 @@ int rooms_form(FILE * stream, REQUEST * req)
       room = strtoul(room_s, NULL, 10);
       if((0 <= room) && (room <= ROOM_MAX))
       {
-        light_s = NutHttpGetParameter(req, "light");
+        ir_type_s = NutHttpGetParameter(req, "ir_type");
+        clim_s    = NutHttpGetParameter(req, "clim");
+        light_s   = NutHttpGetParameter(req, "light");
         shutter_s = NutHttpGetParameter(req, "shutter");
-        heater_s = NutHttpGetParameter(req, "heater");
-        elec_s = NutHttpGetParameter(req, "elec");
-        value_s = NutHttpGetParameter(req, "value");
+        heater_s  = NutHttpGetParameter(req, "heater");
+        elec_s    = NutHttpGetParameter(req, "elec");
+        value_s   = NutHttpGetParameter(req, "value");
+        /* FIXME : Do you think that we need this debug commands for ever ? */
+        if(ir_type_s)
+        {
+          ir_cmd0_s = NutHttpGetParameter(req, "ir_cmd0");
+          ir_cmd1_s = NutHttpGetParameter(req, "ir_cmd1");
+          ir_cmd2_s = NutHttpGetParameter(req, "ir_cmd2");
+          if(ir_cmd0_s && ir_cmd2_s && ir_cmd2_s)
+          {
+            room_ir_set(room, strtoul(ir_type_s, NULL, 10), strtoul(ir_cmd0_s, NULL, 10), strtoul(ir_cmd1_s, NULL, 10), strtoul(ir_cmd2_s, NULL, 10));
+          }
+        }
+        if(clim_s)
+        {
+          if(value_s[0] == '?') { fprintf(stream, "%d", room_clim_get(room)); }
+          else
+          {
+            room_clim_set(room, strtoul(clim_s, NULL, 10));
+          }
+        }
         if(light_s && value_s)
         {
           light = strtoul(light_s, NULL, 10);
@@ -386,6 +432,8 @@ int rooms_xml_get(FILE * stream)
 
     fprintf_XML_elt_int("Simulation"     , room_simulation_status_get(i) , stream);
     fprintf_XML_elt_int("Simulation_Ctrl", room_simulation_control_get(i), stream);
+
+    fprintf_XML_elt_int("Clim_Cmd"       , room_clim_get(i)              , stream);
 
     for(j=0; j<ROOM_LIGHT_MAX; j++)
     {
