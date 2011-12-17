@@ -54,6 +54,8 @@ uint8_t http_init(void)
 THREAD(HttpD, arg)
 {
   TCPSOCKET *sock = NULL;
+  uint16_t to = 30000;
+  int err = 0;
   FILE *stream = NULL;
 
   NutThreadSetPriority(150);
@@ -72,29 +74,37 @@ THREAD(HttpD, arg)
       NutSleep(100);
       continue;
     }
-    /*
-     * Listen on port 80. If we return,
-     * we got a client.
-     */
-    if(NutTcpAccept(sock, 80) == 0)
+    ret = NutTcpSetSockOpt(sock, SO_RCVTIMEO, &to, sizeof(to));
+    if(ret == 0)
     {
-      if(NutHeapAvailable() > 8192)
+      /*
+       * Listen on port 80. If we return,
+       * we got a client.
+       */
+      if(NutTcpAccept(sock, 80) == 0)
       {
-        /*
-         * Create a stream from the socket, so we can use stdio.
-         */
-        stream = _fdopen((int) ((uptr_t) sock), "r+b");
-        if(stream != NULL)
+        if(NutHeapAvailable() > 8192)
         {
           /*
-           * Process http request.
+           * Create a stream from the socket, so we can use stdio.
            */
-          NutHttpProcessRequest(stream);
-          /*
-           * Destroy our stream.
-           */
-          fclose(stream);
-          stream = NULL;
+          stream = _fdopen((int) ((uptr_t) sock), "r+b");
+          if(stream != NULL)
+          {
+            /*
+             * Process http request.
+             */
+            NutHttpProcessRequest(stream);
+            /*
+             * Destroy our stream.
+             */
+            fclose(stream);
+            stream = NULL;
+          }
+          else
+          {
+            NutSleep(1);
+          }
         }
         else
         {
@@ -105,14 +115,10 @@ THREAD(HttpD, arg)
       {
         NutSleep(1);
       }
+      /*
+       * Destroy our device.
+       */
     }
-    else
-    {
-      NutSleep(1);
-    }
-    /*
-     * Destroy our device.
-     */
     NutTcpCloseSocket(sock);
     sock = NULL;
   }
