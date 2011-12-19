@@ -1,0 +1,4404 @@
+.start
+XL
+H 3 areas 2 global symbols
+M version.c
+A text size 10 flags 0
+dbfile ../.././nut/os/version.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\version.c
+dbfunc e NutVersion 0 fl
+dbline FFFFFFFF 0
+dbline 12A 0
+dbline 12B 0
+dbline FFFFFFFE 8
+dbline 0 8
+dbfunc e NutVersionString A fpc
+dbline FFFFFFFF A
+dbline 13A A
+dbline 13B A
+dbline FFFFFFFE E
+dbline 0 E
+S _NutVersion Def0000
+S _NutVersionString Def000A
+A data size 9 flags 20
+dbfile ../.././nut/os/version.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\version.c
+dbsym s os_version_string 0 A[9:9]c
+A idata size 9 flags 0
+T 00 00 34 2E
+R 00 00 02 00
+T 02 00 31 30
+R 00 00 02 00
+T 04 00 2E 31
+R 00 00 02 00
+T 06 00 2E 31
+R 00 00 02 00
+T 08 00 00
+R 00 00 02 00
+T 00 00 01 E0 11 E0 2A E0 34 E0 08 95
+R 00 00 00 00
+T 0A 00 00 E0 10 E0 08 95
+R 00 00 00 00 20 02 01 00 00 00 40 04 01 00 00 00
+.end
+.start
+XL
+H 4 areas 1A global symbols
+M heap.c
+S push_xgsetF000 Ref0000
+S push_xgset300C Ref0000
+S push_xgset003C Ref0000
+S push_xgsetF00C Ref0000
+S push_xgsetF03C Ref0000
+S push_xgsetF0FC Ref0000
+S _fprintf Ref0000
+S push_arg4 Ref0000
+S pop_xgsetF000 Ref0000
+S pop_xgset300C Ref0000
+S pop_xgset003C Ref0000
+S pop_xgsetF00C Ref0000
+S pop_xgsetF03C Ref0000
+S pop_xgsetF0FC Ref0000
+S _memcpy Ref0000
+S _memset Ref0000
+A text size 61C flags 0
+dbfile ../.././nut/os/heap.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\heap.c
+dbstruct 4 _HEAPNODE
+dbfield 0 hn_size i
+dbfield 2 hn_next pS[_HEAPNODE]
+dbend
+dbfunc s PrepareUserArea 0 fpV
+dbsym r tp 14 pI
+dbsym r node 10 pS[_HEAPNODE]
+dbline FFFFFFFF 4
+dbline 66 4
+dbline 67 4
+dbline 6E C
+dbline FFFFFFFE 10
+dbline 0 10
+dbfunc s ValidateUserArea 16 fI
+dbsym l node 0 pS[_HEAPNODE]
+dbline FFFFFFFF 1A
+dbline 80 1A
+dbline 94 1A
+dbline FFFFFFFE 1E
+dbline 0 1E
+dbfunc e NutHeapRootAlloc 22 fpV
+dbsym r fpp A ppS[_HEAPNODE]
+dbsym r npp E ppS[_HEAPNODE]
+dbsym r need C i
+dbsym r fit 14 pS[_HEAPNODE]
+dbsym r node 16 pS[_HEAPNODE]
+dbsym r size 16 i
+dbsym r root E ppS[_HEAPNODE]
+dbline FFFFFFFF 2E
+dbline CB 2E
+dbline CE 2E
+dbline CF 32
+dbline D4 36
+dbline D5 40
+dbline D5 48
+dbline D6 48
+dbline D7 50
+dbline D8 50
+dbline DD 5C
+dbline DE 64
+dbline DF 66
+dbline E1 66
+dbline E1 74
+dbline E4 74
+dbline E4 88
+dbline E6 88
+dbline E7 8C
+dbline E9 90
+dbline E9 9E
+dbline EB 9E
+dbline ED A0
+dbline EE A0
+dbline EF A0
+dbline F0 AA
+dbline F1 B2
+dbline DF B2
+dbline F3 B8
+dbline F3 C0
+dbline F6 C0
+dbline F6 D4
+dbline F8 D4
+dbline F9 DC
+dbline FA EC
+dbline FB FC
+dbline FC 104
+dbline FD 10C
+dbline FD 10E
+dbline FF 10E
+dbline 100 11E
+dbline 10A 11E
+dbline 10B 128
+dbline 10C 128
+dbline FFFFFFFE 12C
+dbline 0 12C
+dbfunc e NutHeapRootAllocClear 130 fpV
+dbsym r ptr A pV
+dbsym r size C i
+dbsym r root A ppS[_HEAPNODE]
+dbline FFFFFFFF 13E
+dbline 129 13E
+dbline 12C 13E
+dbline 12D 154
+dbline 12F 160
+dbline FFFFFFFE 164
+dbline 0 164
+dbfunc e NutHeapRootFree 16A fI
+dbsym r npp 16 ppS[_HEAPNODE]
+dbsym r fnode 14 pS[_HEAPNODE]
+dbsym r node A pS[_HEAPNODE]
+dbsym r block 14 pV
+dbsym r root C ppS[_HEAPNODE]
+dbline FFFFFFFF 176
+dbline 14A 176
+dbline 152 176
+dbline 152 17C
+dbline 153 17C
+dbline 157 182
+dbline 164 186
+dbline 164 192
+dbline 165 192
+dbline 16D 198
+dbline 16E 1A0
+dbline 16F 1A6
+dbline 171 1A6
+dbline 171 1BE
+dbline 172 1BE
+dbline 177 1D6
+dbline 177 1EE
+dbline 178 1EE
+dbline 179 202
+dbline 17A 21A
+dbline 17B 21A
+dbline 181 21C
+dbline 181 224
+dbline 182 224
+dbline 187 22C
+dbline 187 242
+dbline 188 242
+dbline 189 25A
+dbline 18A 26A
+dbline 18B 26C
+dbline 18C 274
+dbline 194 276
+dbline 194 28C
+dbline 198 28C
+dbline 19B 292
+dbline 19C 29A
+dbline 19D 2A2
+dbline 16F 2A2
+dbline 1A2 2AE
+dbline 1A2 2B6
+dbline 1A3 2B6
+dbline 1A4 2BE
+dbline 1A5 2C6
+dbline 1A6 2C6
+dbline FFFFFFFE 2CA
+dbline 0 2CA
+dbfunc e NutHeapRootAdd 2CE fV
+dbsym r node 14 pS[_HEAPNODE]
+dbsym l size 6 i
+dbsym r addr 16 pV
+dbsym r root A ppS[_HEAPNODE]
+dbline FFFFFFFF 2DA
+dbline 1B4 2DA
+dbline 1B5 2DA
+dbline 1B7 2E4
+dbline 1BB 2FE
+dbline FFFFFFFE 30E
+dbline 0 30E
+dbfunc e NutHeapRootAvailable 312 fi
+dbsym r rc A i
+dbsym r node 14 pS[_HEAPNODE]
+dbsym r root 10 ppS[_HEAPNODE]
+dbline FFFFFFFF 316
+dbline 1C5 316
+dbline 1C6 316
+dbline 1CA 31A
+dbline 1CA 324
+dbline 1CC 324
+dbline 1CD 332
+dbline 1CA 332
+dbline 1CA 33A
+dbline 1CE 340
+dbline FFFFFFFE 344
+dbline 0 344
+dbfunc e NutHeapRootRegionAvailable 348 fi
+dbsym r rc 14 i
+dbsym r node 16 pS[_HEAPNODE]
+dbsym r root 10 ppS[_HEAPNODE]
+dbline FFFFFFFF 34C
+dbline 1D7 34C
+dbline 1D8 34C
+dbline 1DC 350
+dbline 1DC 35A
+dbline 1DD 35A
+dbline 1DD 368
+dbline 1DE 368
+dbline 1DF 36C
+dbline 1E0 36C
+dbline 1DC 36C
+dbline 1DC 374
+dbline 1E2 37A
+dbline FFFFFFFE 382
+dbline 0 382
+dbfunc e NutHeapRootRealloc 386 fpV
+dbsym r size_miss 14 i
+dbsym r newmem C pV
+dbsym r npp C ppS[_HEAPNODE]
+dbsym r fnode 16 pS[_HEAPNODE]
+dbsym r node E pS[_HEAPNODE]
+dbsym l size 10 i
+dbsym l block E pV
+dbsym l root C ppS[_HEAPNODE]
+dbline FFFFFFFF 390
+dbline 1F7 390
+dbline 212 390
+dbline 212 39C
+dbline 213 39C
+dbline 215 3A8
+dbline 215 3B4
+dbline 216 3B4
+dbline 216 3C4
+dbline 217 3C4
+dbline 219 3CA
+dbline 21B 3D0
+dbline 21C 3D8
+dbline 21C 3E8
+dbline 21D 3E8
+dbline 223 3EE
+dbline 224 3F8
+dbline 224 400
+dbline 225 400
+dbline 226 408
+dbline 227 408
+dbline 22C 414
+dbline 22C 428
+dbline 22D 428
+dbline 230 430
+dbline 231 438
+dbline 232 43E
+dbline 233 43E
+dbline 234 448
+dbline 235 450
+dbline 232 450
+dbline 239 462
+dbline 23A 498
+dbline 23C 498
+dbline 23C 4AE
+dbline 23E 4AE
+dbline 240 4BE
+dbline 243 4CE
+dbline 244 4E4
+dbline 245 4FC
+dbline 246 502
+dbline 246 504
+dbline 248 504
+dbline 249 51C
+dbline 24B 522
+dbline 24C 532
+dbline 24E 532
+dbline 255 538
+dbline 257 546
+dbline 257 54C
+dbline 258 54C
+dbline 25D 562
+dbline 25F 56C
+dbline 260 56C
+dbline 266 572
+dbline 266 586
+dbline 268 586
+dbline 269 58E
+dbline 26D 59E
+dbline 270 5B2
+dbline 271 5BE
+dbline 272 5C4
+dbline 273 5C4
+dbline FFFFFFFE 5C8
+dbline 0 5C8
+dbfunc e NutHeapCheck 5D2 fI
+dbline FFFFFFFF 5D2
+dbline 27F 5D2
+dbline 289 5D2
+dbline FFFFFFFE 5D6
+dbline 0 5D6
+dbfunc e NutHeapDump 5D8 fV
+dbsym r node 14 pS[_HEAPNODE]
+dbsym r stream A pV
+dbline FFFFFFFF 5E2
+dbline 292 5E2
+dbline 29B 5E2
+dbline 29B 5EC
+dbline 29C 5EC
+dbline 29D 608
+dbline 29B 608
+dbline 29B 610
+dbline FFFFFFFE 616
+dbline 0 616
+S _NutHeapRootAvailable Def0312
+S _NutHeapRootFree Def016A
+S _NutHeapRootRealloc Def0386
+S _NutHeapRootAllocClear Def0130
+S _NutHeapRootRegionAvailable Def0348
+S _NutHeapRootAlloc Def0022
+S _NutHeapDump Def05D8
+S _NutHeapRootAdd Def02CE
+S _NutHeapCheck Def05D2
+A bss size 2 flags 20
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\heap.c
+dbsym e heapFreeList 0 pS[_HEAPNODE]
+S _heapFreeList Def0000
+A data size 8 flags 20
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\heap.c
+A idata size 8 flags 0
+T 00 00 4A 93 5A 93 40 2F 51 2F 4E 5F 5F 4F 04 2F
+R 00 00 00 00
+T 0E 00 15 2F 59 91 49 91 08 95
+R 00 00 00 00
+T 16 00 1A 93 0A 93 00 27 11 27 22 96 08 95
+R 00 00 00 00
+T 22 00 0E 94 00 00 62 2F 73 2F E0 2E F1 2E 44 27
+R 00 00 00 00 12 04 05 00
+T 30 00 55 27 AA 24 BB 24 86 2F 97 2F 02 96 C8 2E
+R 00 00 00 00
+T 3E 00 D9 2E 84 30 E0 E0 9E 07 20 F4 84 E0 90 E0
+R 00 00 00 00
+T 4C 00 C8 2E D9 2E 8C 2D 9D 2D 01 96 8E 7F C8 2E
+R 00 00 00 00
+T 5A 00 D9 2E EE 2D FF 2D 60 81 71 81 26 C0 E6 2F
+R 00 00 00 00
+T 68 00 F7 2F 20 80 31 80 2C 14 3D 04 B0 F0 40 30
+R 00 00 00 00
+T 76 00 45 07 39 F0 E4 2F F5 2F 40 80 51 80 24 14
+R 00 00 00 00
+T 84 00 35 04 60 F4 46 2F 57 2F AE 2C BF 2C E6 2F
+R 00 00 00 00
+T 92 00 F7 2F 20 80 31 80 2C 14 3D 04 09 F4 0C C0
+R 00 00 00 00
+T A0 00 86 2F 97 2F 02 96 E8 2E F9 2E E6 2F F7 2F
+R 00 00 00 00
+T AE 00 62 81 73 81 60 30 67 07 B9 F6 40 30 45 07
+R 00 00 00 00
+T BC 00 09 F4 34 C0 E4 2F F5 2F 80 81 91 81 8C 19
+R 00 00 00 00
+T CA 00 9D 09 84 30 A0 E0 9A 07 E8 F0 6E 2F 7F 2F
+R 00 00 00 00
+T D8 00 6C 0D 7D 1D 20 80 31 80 2C 18 3D 08 E6 2F
+R 00 00 00 00
+T E6 00 F7 2F 31 82 20 82 E4 2F F5 2F 22 80 33 80
+R 00 00 00 00
+T F4 00 E6 2F F7 2F 33 82 22 82 E4 2F F5 2F D1 82
+R 00 00 00 00
+T 02 01 C0 82 EA 2D FB 2D 71 83 60 83 08 C0 E4 2F
+R 00 00 00 00
+T 10 01 F5 2F 22 80 33 80 EA 2D FB 2D 31 82 20 82
+R 00 00 00 00
+T 1E 01 04 2F 15 2F 6E DF 40 2F 51 2F 04 2F 15 2F
+R 00 00 00 00
+T 2C 01 0C 94 00 00
+R 00 00 00 00 12 04 0D 00
+T 30 01 0E 94 00 00 C2 2E D3 2E A0 2E B1 2E 22 97
+R 00 00 00 00 12 04 02 00
+T 3E 01 2C 2D 3D 2D 0A 2D 1B 2D 6D DF A0 2E B1 2E
+R 00 00 00 00
+T 4C 01 AA 20 11 F4 BB 20 31 F0 D9 82 C8 82 22 27
+R 00 00 00 00
+T 5A 01 33 27 0E 94 00 00 0A 2D 1B 2D 22 96
+R 00 00 00 00 12 06 0F 00
+T 66 01 0C 94 00 00
+R 00 00 00 00 12 04 0A 00
+T 6A 01 0E 94 00 00 42 2F 53 2F C0 2E D1 2E 40 30
+R 00 00 00 00 12 04 04 00
+T 78 01 45 07 19 F4 0D EF 1F EF A4 C0 42 50 50 40
+R 00 00 00 00
+T 86 01 04 2F 15 2F 45 DF 00 30 01 07 19 F0 0E EF
+R 00 00 00 00
+T 94 01 1F EF 99 C0 EC 2D FD 2D A0 80 B1 80 6E 2F
+R 00 00 00 00
+T A2 01 7F 2F 7E C0 EA 2D FB 2D 20 80 31 80 4E 2E
+R 00 00 00 00
+T B0 01 5F 2E 42 0C 53 1C 44 16 55 06 09 F0 2F C0
+R 00 00 00 00
+T BE 01 E4 2F F5 2F 20 80 31 80 EA 2D FB 2D 40 80
+R 00 00 00 00
+T CC 01 51 80 42 0C 53 1C 51 82 40 82 20 80 31 80
+R 00 00 00 00
+T DA 01 4E 2E 5F 2E 42 0C 53 1C 22 80 33 80 42 14
+R 00 00 00 00
+T E8 01 53 04 09 F0 60 C0 A2 81 B3 81 2D 90 3C 90
+R 00 00 00 00
+T F6 01 40 80 51 80 42 0C 53 1C 51 82 40 82 8E 2F
+R 00 00 00 00
+T 04 02 9F 2F 02 96 E8 2F F9 2F A0 81 B1 81 12 96
+R 00 00 00 00
+T 12 02 2D 90 3C 90 31 82 20 82 49 C0 4A 15 5B 05
+R 00 00 00 00
+T 20 02 08 F0 29 C0 E6 2F F7 2F 51 83 40 83 E4 2F
+R 00 00 00 00
+T 2E 02 F5 2F 20 80 31 80 4E 2E 5F 2E 42 0C 53 1C
+R 00 00 00 00
+T 3C 02 4A 14 5B 04 A9 F4 EA 2D FB 2D 20 80 31 80
+R 00 00 00 00
+T 4A 02 E4 2F F5 2F 40 80 51 80 42 0C 53 1C 51 82
+R 00 00 00 00
+T 58 02 40 82 EA 2D FB 2D 22 80 33 80 E4 2F F5 2F
+R 00 00 00 00
+T 66 02 33 82 22 82 21 C0 E4 2F F5 2F B3 82 A2 82
+R 00 00 00 00
+T 74 02 1C C0 EA 2D FB 2D 20 80 31 80 4E 2E 5F 2E
+R 00 00 00 00
+T 82 02 42 0C 53 1C 44 15 55 05 18 F4 0F EF 1F EF
+R 00 00 00 00
+T 90 02 1C C0 6A 2D 7B 2D 6E 5F 7F 4F EA 2D FB 2D
+R 00 00 00 00
+T 9E 02 A2 80 B3 80 AA 20 09 F0 7F CF BB 20 09 F0
+R 00 00 00 00
+T AC 02 7C CF AA 20 51 F4 BB 20 41 F4 E4 2F F5 2F
+R 00 00 00 00
+T BA 02 B3 82 A2 82 E6 2F F7 2F 51 83 40 83 00 27
+R 00 00 00 00
+T C8 02 11 27 0C 94 00 00
+R 00 00 00 00 12 06 0C 00
+T CE 02 0E 94 00 00 62 2F 73 2F A0 2E B1 2E 46 2F
+R 00 00 00 00 12 04 03 00
+T DC 02 57 2F 4F 5F 5F 4F 4E 7F 24 2E 35 2E 26 1A
+R 00 00 00 00
+T EA 02 37 0A 8E 81 9F 81 82 19 93 09 8E 7F E4 2F
+R 00 00 00 00
+T F8 02 F5 2F 91 83 80 83 0E 2F 1F 2F 7E DE 20 2F
+R 00 00 00 00
+T 06 03 31 2F 0A 2D 1B 2D 2E DF 0C 94 00 00
+R 00 00 00 00 12 0C 0B 00
+T 12 03 0E 94 00 00 AA 24 BB 24 E0 2F F1 2F 40 81
+R 00 00 00 00 12 04 01 00
+T 20 03 51 81 0B C0 E4 2F F5 2F 80 81 91 81 02 97
+R 00 00 00 00
+T 2E 03 A8 0E B9 1E E4 2F F5 2F 42 81 53 81 40 30
+R 00 00 00 00
+T 3C 03 45 07 91 F7 0A 2D 1B 2D 0C 94 00 00
+R 00 00 00 00 12 0C 09 00
+T 48 03 0E 94 00 00 44 27 55 27 E0 2F F1 2F 60 81
+R 00 00 00 00 12 04 00 00
+T 56 03 71 81 0D C0 E6 2F F7 2F 20 80 31 80 42 15
+R 00 00 00 00
+T 64 03 53 05 10 F4 40 81 51 81 E6 2F F7 2F 62 81
+R 00 00 00 00
+T 72 03 73 81 60 30 67 07 81 F7 04 2F 15 2F 02 50
+R 00 00 00 00
+T 80 03 10 40 0C 94 00 00
+R 00 00 00 00 12 06 08 00
+T 86 03 0E 94 00 00 0E 94 00 00 22 97 0E 84 1F 84
+R 00 00 00 00 12 04 07 00 12 08 05 00
+T 94 03 00 20 41 F4 11 20 31 F4 28 89 39 89 0C 85
+R 00 00 00 00
+T A2 03 1D 85 3E DE 10 C1 08 88 19 88 00 20 81 F4
+R 00 00 00 00
+T B0 03 11 20 71 F4 2E 85 3F 85 0C 85 1D 85 D6 DE
+R 00 00 00 00
+T BE 03 00 30 01 07 19 F0 00 27 11 27 FF C0 0E 85
+R 00 00 00 00
+T CC 03 1F 85 FC C0 6E 85 7F 85 62 50 70 40 06 2F
+R 00 00 00 00
+T DA 03 17 2F 1C DE A0 2E B1 2E 00 30 01 07 19 F0
+R 00 00 00 00
+T E8 03 00 27 11 27 ED C0 88 89 99 89 02 96 99 8B
+R 00 00 00 00
+T F6 03 88 8B 84 30 E0 E0 9E 07 20 F4 84 E0 90 E0
+R 00 00 00 00
+T 04 04 99 8B 88 8B 88 89 99 89 01 96 8E 7F 99 8B
+R 00 00 00 00
+T 12 04 88 8B E6 2F F7 2F 20 80 31 80 08 2E 19 2E
+R 00 00 00 00
+T 20 04 28 16 39 06 08 F0 A5 C0 48 2F 59 2F 42 19
+R 00 00 00 00
+T 2E 04 53 09 EC 85 FD 85 E0 80 F1 80 CE 2E DF 2E
+R 00 00 00 00
+T 3C 04 09 C0 8E 2D 9F 2D 02 96 C8 2E D9 2E EE 2D
+R 00 00 00 00
+T 4A 04 FF 2D E2 80 F3 80 AE 2C BF 2C EE 20 11 F4
+R 00 00 00 00
+T 58 04 FF 20 19 F0 E6 16 F7 06 70 F3 AE 2C BF 2C
+R 00 00 00 00
+T 66 04 EE 20 19 F4 FF 20 09 F4 64 C0 EE 2D FF 2D
+R 00 00 00 00
+T 74 04 20 80 31 80 24 16 35 06 08 F4 5C C0 E6 2F
+R 00 00 00 00
+T 82 04 F7 2F 20 80 31 80 4E 2E 5F 2E 42 0C 53 1C
+R 00 00 00 00
+T 90 04 4E 14 5F 04 09 F0 50 C0 EE 2D FF 2D 80 81
+R 00 00 00 00
+T 9E 04 91 81 84 1B 95 0B 84 30 E0 E0 9E 07 08 F4
+R 00 00 00 00
+T AC 04 2B C0 E6 2F F7 2F 20 80 31 80 24 0E 35 1E
+R 00 00 00 00
+T BA 04 31 82 20 82 2E 2C 3F 2C 24 0E 35 1E EC 2D
+R 00 00 00 00
+T C8 04 FD 2D 31 82 20 82 EE 2D FF 2D 22 80 33 80
+R 00 00 00 00
+T D6 04 EC 2D FD 2D A0 81 B1 81 12 96 2D 92 3C 92
+R 00 00 00 00
+T E4 04 EE 2D FF 2D 20 80 31 80 24 1A 35 0A EC 2D
+R 00 00 00 00
+T F2 04 FD 2D A0 81 B1 81 2D 92 3C 92 06 2F 17 2F
+R 00 00 00 00
+T 00 05 7F DD 17 C0 EE 2D FF 2D 20 80 31 80 E6 2F
+R 00 00 00 00
+T 0E 05 F7 2F 40 80 51 80 42 0C 53 1C 51 82 40 82
+R 00 00 00 00
+T 1C 05 0E 2F 1F 2F 6F DD EE 2D FF 2D 22 80 33 80
+R 00 00 00 00
+T 2A 05 EC 2D FD 2D 31 82 20 82 0E 85 1F 85 48 C0
+R 00 00 00 00
+T 38 05 28 89 39 89 0C 85 1D 85 70 DD C0 2E D1 2E
+R 00 00 00 00
+T 46 05 00 30 01 07 81 F0 E6 2F F7 2F 80 81 91 81
+R 00 00 00 00
+T 54 05 02 97 99 83 88 83 2E 85 3F 85 0E 94 00 00
+R 00 00 00 00 12 0E 0E 00
+T 62 05 2E 85 3F 85 0C 85 1D 85 FF DD 0C 2D 1D 2D
+R 00 00 00 00
+T 70 05 2B C0 E6 2F F7 2F 80 81 91 81 04 97 08 88
+R 00 00 00 00
+T 7E 05 19 88 08 16 19 06 F8 F4 EE 2E FF 2E E0 0C
+R 00 00 00 00
+T 8C 05 F1 1C 20 80 31 80 20 18 31 08 EE 2D FF 2D
+R 00 00 00 00
+T 9A 05 31 82 20 82 0E 2F 1F 2F 2E DD E0 2E F1 2E
+R 00 00 00 00
+T A8 05 2E 2D 3F 2D 0C 85 1D 85 DC DD E6 2F F7 2F
+R 00 00 00 00
+T B6 05 08 88 19 88 11 82 00 82 0E 2F 1F 2F 1E DD
+R 00 00 00 00
+T C4 05 0E 85 1F 85 22 96 0E 94 00 00 24 96 08 95
+R 00 00 00 00 12 0A 0D 00
+T D2 05 00 27 11 27 08 95
+R 00 00 00 00
+T D8 05 0E 94 00 00 A0 2E B1 2E 24 97 40 91 00 00
+R 00 00 00 00 12 04 01 00 00 0E 01 00
+T E6 05 50 91 01 00 12 C0 E4 2F F5 2F 20 80 31 80
+R 00 00 00 00 00 04 01 00
+T F4 05 3B 82 2A 82 59 83 48 83 20 E0 30 E0 0A 2D
+R 00 00 00 00 20 0A 02 00 00 00 40 0C 02 00 00 00
+T 02 06 1B 2D 0E 94 00 00 E4 2F F5 2F 42 81 53 81
+R 00 00 00 00 12 06 06 00
+T 10 06 40 30 45 07 59 F7 24 96 0C 94 00 00
+R 00 00 00 00 12 0C 09 00
+T 00 00 25 70 28 25 64 29 0A 00
+R 00 00 03 00
+.end
+.start
+XL
+H 2 areas E global symbols
+M bankmem.c
+S _heapFreeList Ref0000
+S _NutHeapRootAvailable Ref0000
+S _NutHeapRootFree Ref0000
+S _NutHeapRootAlloc Ref0000
+A text size 46C flags 0
+dbfile ../.././nut/os/bankmem.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\bankmem.c
+dbfunc e NutSegBufReset 0 fpc
+dbline FFFFFFFF 0
+dbline 5F 0
+dbline 60 0
+dbline 61 18
+dbline 62 22
+dbline 63 22
+dbline 64 28
+dbline 66 40
+dbline FFFFFFFE 48
+dbline 0 48
+dbfunc e NutSegBufInit 4A fpc
+dbsym r size A i
+dbline FFFFFFFF 52
+dbline 76 52
+dbline 7D 52
+dbline 7E 5A
+dbline 7F 6A
+dbline 7F 7A
+dbline 80 7A
+dbline 81 86
+dbline 82 86
+dbline 83 A0
+dbline 84 B0
+dbline 87 C8
+dbline FFFFFFFE CE
+dbline 0 CE
+dbfunc e NutSegBufWriteRequest D4 fpc
+dbsym r bcp 10 pi
+dbline FFFFFFFF D4
+dbline 97 D4
+dbline 98 D4
+dbline 99 FE
+dbline 9B 11C
+dbline 9D 138
+dbline 9E 138
+dbline FFFFFFFE 140
+dbline 0 140
+dbfunc e NutSegBufReadRequest 142 fpc
+dbsym r bcp 10 pi
+dbline FFFFFFFF 142
+dbline AE 142
+dbline AF 142
+dbline B0 14A
+dbline B1 158
+dbline B2 17A
+dbline B3 198
+dbline B4 1C8
+dbline B6 1CE
+dbline B7 1CE
+dbline FFFFFFFE 1D6
+dbline 0 1D6
+dbfunc e NutSegBufWriteCommit 1D8 fpc
+dbsym r bc 10 i
+dbline FFFFFFFF 1D8
+dbline C6 1D8
+dbline C7 1D8
+dbline C7 1DE
+dbline C8 1DE
+dbline C9 1F6
+dbline CA 1FC
+dbline CB 22C
+dbline CB 242
+dbline CC 242
+dbline D1 252
+dbline D2 252
+dbline D3 252
+dbline D4 252
+dbline FFFFFFFE 25A
+dbline 0 25A
+dbfunc e NutSegBufReadCommit 25C fpc
+dbsym r bc 10 i
+dbline FFFFFFFF 25C
+dbline E3 25C
+dbline E4 25C
+dbline E4 264
+dbline E5 264
+dbline E6 27C
+dbline E7 2AC
+dbline E7 2C2
+dbline E8 2C2
+dbline ED 2D2
+dbline EE 2D2
+dbline EF 2D2
+dbline F0 2F4
+dbline F1 2FA
+dbline F2 2FA
+dbline FFFFFFFE 302
+dbline 0 302
+dbfunc e NutSegBufWriteLast 304 fV
+dbsym r bc 10 i
+dbline FFFFFFFF 304
+dbline 100 304
+dbline 101 304
+dbline 101 30A
+dbline 102 30A
+dbline 103 322
+dbline 104 352
+dbline 105 358
+dbline 105 36E
+dbline 106 36E
+dbline 10B 37E
+dbline 10C 37E
+dbline 10D 37E
+dbline FFFFFFFE 37E
+dbline 0 37E
+dbfunc e NutSegBufReadLast 380 fV
+dbsym r bc 10 i
+dbline FFFFFFFF 380
+dbline 11A 380
+dbline 11B 380
+dbline 11B 388
+dbline 11C 388
+dbline 11D 3A0
+dbline 11E 3D0
+dbline 11E 3E6
+dbline 11F 3E6
+dbline 124 3F6
+dbline 125 3F6
+dbline 126 418
+dbline 127 41E
+dbline 128 41E
+dbline FFFFFFFE 41E
+dbline 0 41E
+dbfunc e NutSegBufAvailable 420 fl
+dbline FFFFFFFF 424
+dbline 132 424
+dbline 133 424
+dbline FFFFFFFE 44C
+dbline 0 44C
+dbfunc e NutSegBufUsed 452 fl
+dbline FFFFFFFF 456
+dbline 13C 456
+dbline 13D 456
+dbline FFFFFFFE 466
+dbline 0 466
+S _NutSegBufReadRequest Def0142
+S _NutSegBufWriteCommit Def01D8
+S _NutSegBufAvailable Def0420
+S _NutSegBufUsed Def0452
+S _NutSegBufInit Def004A
+S _NutSegBufWriteLast Def0304
+S _NutSegBufReadCommit Def025C
+S _NutSegBufWriteRequest Def00D4
+S _NutSegBufReset Def0000
+S _NutSegBufReadLast Def0380
+A bss size 13 flags 20
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\bankmem.c
+dbsym s segbuf_rs 0 c
+dbsym s segbuf_rp 1 pc
+dbsym s segbuf_ws 3 c
+dbsym s segbuf_wp 4 pc
+dbsym s segbuf_end 6 pc
+dbsym s segbuf_start 8 pc
+dbsym s segbuf_used A l
+dbsym s segbuf_total E l
+dbsym s segbuf_empty 12 c
+T 00 00 20 90 08 00 30 90 09 00 30 92 05 00 20 92
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0C 01 00
+T 0E 00 04 00 30 92 02 00 20 92 01 00 22 24 20 92
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 1C 00 03 00 20 92 00 00 81 E0 80 93 12 00 80 E0
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0C 01 00
+T 2A 00 90 E0 A0 E0 B0 E0 90 93 0B 00 80 93 0A 00
+R 00 00 00 00 00 0A 01 00 00 0E 01 00
+T 38 00 B0 93 0D 00 A0 93 0C 00 00 91 08 00 10 91
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0C 01 00
+T 46 00 09 00 08 95
+R 00 00 00 00 00 02 01 00
+T 4A 00 AA 92 BA 92 A0 2E B1 2E AA 20 51 F4 BB 20
+R 00 00 00 00
+T 58 00 41 F4 00 E0 10 E0
+R 00 00 00 00 22 04 00 00 00 00 42 06 00 00 00 00
+T 5E 00 0E 94 00 00 A0 2E B1 2E B6 94 A7 94 20 90
+R 00 00 00 00 12 04 01 00
+T 6C 00 08 00 30 90 09 00 22 20 11 F4 33 20 31 F0
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T 7A 00 22 2D 33 2D 00 E0 10 E0
+R 00 00 00 00 22 06 00 00 00 00 42 08 00 00 00 00
+T 82 00 0E 94 00 00 2A 2D 3B 2D 00 E0
+R 00 00 00 00 12 04 02 00 22 0A 00 00 00 00
+T 8C 00 10 E0 0E 94 00 00 10 93
+R 00 00 00 00 42 02 00 00 00 00 12 06 03 00
+T 94 00 09 00 00 93 08 00 00 30 01 07 41 F0 4A 2C
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T A2 00 5B 2C 40 0E 51 1E 50 92 07 00 40 92 06 00
+R 00 00 00 00 00 0A 01 00 00 0E 01 00
+T B0 00 2A 2C 3B 2C 44 24 55 24 30 92 0F 00 20 92
+R 00 00 00 00 00 0C 01 00
+T BE 00 0E 00 50 92 11 00 40 92 10 00 9B DF A0 2E
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T CC 00 B1 2E B9 90 A9 90 08 95
+R 00 00 00 00
+T D4 00 20 90 12 00 22 20 89 F4 20 90 00 00 30 90
+R 00 00 00 00 00 04 01 00 00 0C 01 00
+T E2 00 03 00 32 14 59 F4 20 90 01 00 30 90 02 00
+R 00 00 00 00 00 02 01 00 00 0A 01 00 00 0E 01 00
+T F0 00 40 90 04 00 50 90 05 00 24 14 35 04 78 F4
+R 00 00 00 00 00 04 01 00 00 08 01 00
+T FE 00 20 90 04 00 30 90 05 00 40 90 06 00 50 90
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0C 01 00
+T 0C 01 07 00 42 18 53 08 E0 2F F1 2F 51 82 40 82
+R 00 00 00 00 00 02 01 00
+T 1A 01 0E C0 20 90 04 00 30 90 05 00 40 90 01 00
+R 00 00 00 00 00 06 01 00 00 0A 01 00 00 0E 01 00
+T 28 01 50 90 02 00 42 18 53 08 E0 2F F1 2F 51 82
+R 00 00 00 00 00 04 01 00
+T 36 01 40 82 00 91 04 00 10 91 05 00 08 95
+R 00 00 00 00 00 06 01 00 00 0A 01 00
+T 42 01 20 90 12 00 22 20 39 F0 22 24 33 24 E0 2F
+R 00 00 00 00 00 04 01 00
+T 50 01 F1 2F 31 82 20 82 3B C0 20 90 00 00 30 90
+R 00 00 00 00 00 0C 01 00
+T 5E 01 03 00 32 14 59 F4 20 90 04 00 30 90 05 00
+R 00 00 00 00 00 02 01 00 00 0A 01 00 00 0E 01 00
+T 6C 01 40 90 01 00 50 90 02 00 42 14 53 04 78 F0
+R 00 00 00 00 00 04 01 00 00 08 01 00
+T 7A 01 20 90 01 00 30 90 02 00 40 90 06 00 50 90
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0C 01 00
+T 88 01 07 00 42 18 53 08 E0 2F F1 2F 51 82 40 82
+R 00 00 00 00 00 02 01 00
+T 96 01 1B C0 20 90 01 00 30 90 02 00 40 90 04 00
+R 00 00 00 00 00 06 01 00 00 0A 01 00 00 0E 01 00
+T A4 01 50 90 05 00 42 18 53 08 E0 2F F1 2F 51 82
+R 00 00 00 00 00 04 01 00
+T B2 01 40 82 44 20 59 F4 55 20 49 F4 20 90 00 00
+R 00 00 00 00 00 0E 01 00
+T C0 01 30 90 03 00 32 14 19 F4 81 E0 80 93 12 00
+R 00 00 00 00 00 04 01 00 00 0E 01 00
+T CE 01 00 91 01 00 10 91 02 00 08 95
+R 00 00 00 00 00 04 01 00 00 08 01 00
+T D8 01 00 30 01 07 D1 F1 20 90 04 00 30 90 05 00
+R 00 00 00 00 00 0A 01 00 00 0E 01 00
+T E6 01 40 2E 51 2E 42 0C 53 1C 50 92 05 00 40 92
+R 00 00 00 00 00 0C 01 00
+T F4 01 04 00 22 24 20 92 12 00 20 2E 31 2E 44 24
+R 00 00 00 00 00 02 01 00 00 08 01 00
+T 02 02 55 24 80 90 0C 00 90 90 0D 00 60 90 0A 00
+R 00 00 00 00 00 06 01 00 00 0A 01 00 00 0E 01 00
+T 10 02 70 90 0B 00 62 0C 73 1C 84 1C 95 1C 70 92
+R 00 00 00 00 00 04 01 00
+T 1E 02 0B 00 60 92 0A 00 90 92 0D 00 80 92
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 2A 02 0C 00 20 90 06 00 30 90 07 00 40 90
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 36 02 04 00 50 90 05 00 42 14 53 04 41 F4 20 90
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T 44 02 08 00 30 90 09 00 30 92 05 00 20 92
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 50 02 04 00 00 91 04 00 10 91 05 00 08 95
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 5C 02 00 30 01 07 09 F4 4B C0 20 90 01 00 30 90
+R 00 00 00 00 00 0C 01 00
+T 6A 02 02 00 40 2E 51 2E 42 0C 53 1C 50 92 02 00
+R 00 00 00 00 00 02 01 00 00 0E 01 00
+T 78 02 40 92 01 00 20 2E 31 2E 44 24 55 24 80 90
+R 00 00 00 00 00 04 01 00
+T 86 02 0C 00 90 90 0D 00 60 90 0A 00 70 90
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 92 02 0B 00 62 18 73 08 84 08 95 08 70 92 0B 00
+R 00 00 00 00 00 02 01 00 00 0E 01 00
+T A0 02 60 92 0A 00 90 92 0D 00 80 92 0C 00 20 90
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0C 01 00
+T AE 02 06 00 30 90 07 00 40 90 01 00 50 90
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T BA 02 02 00 42 14 53 04 41 F4 20 90 08 00 30 90
+R 00 00 00 00 00 02 01 00 00 0C 01 00
+T C8 02 09 00 30 92 02 00 20 92 01 00 20 90
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T D4 02 04 00 30 90 05 00 40 90 01 00 50 90
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T E0 02 02 00 42 14 53 04 49 F4 20 90 03 00 30 90
+R 00 00 00 00 00 02 01 00 00 0C 01 00
+T EE 02 00 00 32 14 19 F4 81 E0 80 93 12 00 00 91
+R 00 00 00 00 00 02 01 00 00 0C 01 00
+T FC 02 01 00 10 91 02 00 08 95
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T 04 03 00 30 01 07 D1 F1 20 90 04 00 30 90 05 00
+R 00 00 00 00 00 0A 01 00 00 0E 01 00
+T 12 03 40 2E 51 2E 42 0C 53 1C 50 92 05 00 40 92
+R 00 00 00 00 00 0C 01 00
+T 20 03 04 00 20 2E 31 2E 44 24 55 24 80 90 0C 00
+R 00 00 00 00 00 02 01 00 00 0E 01 00
+T 2E 03 90 90 0D 00 60 90 0A 00 70 90 0B 00 62 0C
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0C 01 00
+T 3C 03 73 1C 84 1C 95 1C 70 92 0B 00 60 92 0A 00
+R 00 00 00 00 00 0A 01 00 00 0E 01 00
+T 4A 03 90 92 0D 00 80 92 0C 00 22 24 20 92 12 00
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0E 01 00
+T 58 03 20 90 06 00 30 90 07 00 40 90 04 00 50 90
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0C 01 00
+T 66 03 05 00 42 14 53 04 41 F4 20 90 08 00 30 90
+R 00 00 00 00 00 02 01 00 00 0C 01 00
+T 74 03 09 00 30 92 05 00 20 92 04 00 08 95
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 80 03 00 30 01 07 09 F4 4B C0 20 90 01 00 30 90
+R 00 00 00 00 00 0C 01 00
+T 8E 03 02 00 40 2E 51 2E 42 0C 53 1C 50 92 02 00
+R 00 00 00 00 00 02 01 00 00 0E 01 00
+T 9C 03 40 92 01 00 20 2E 31 2E 44 24 55 24 80 90
+R 00 00 00 00 00 04 01 00
+T AA 03 0C 00 90 90 0D 00 60 90 0A 00 70 90
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T B6 03 0B 00 62 18 73 08 84 08 95 08 70 92 0B 00
+R 00 00 00 00 00 02 01 00 00 0E 01 00
+T C4 03 60 92 0A 00 90 92 0D 00 80 92 0C 00 20 90
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0C 01 00
+T D2 03 06 00 30 90 07 00 40 90 01 00 50 90
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T DE 03 02 00 42 14 53 04 41 F4 20 90 08 00 30 90
+R 00 00 00 00 00 02 01 00 00 0C 01 00
+T EC 03 09 00 30 92 02 00 20 92 01 00 20 90
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T F8 03 04 00 30 90 05 00 40 90 01 00 50 90
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 04 04 02 00 42 14 53 04 49 F4 20 90 03 00 30 90
+R 00 00 00 00 00 02 01 00 00 0C 01 00
+T 12 04 00 00 32 14 19 F4 81 E0 80 93 12 00 08 95
+R 00 00 00 00 00 02 01 00 00 0C 01 00
+T 20 04 AA 92 BA 92 40 90 0C 00 50 90 0D 00 20 90
+R 00 00 00 00 00 08 01 00 00 0C 01 00
+T 2E 04 0A 00 30 90 0B 00 20 91 10 00 30 91
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 3A 04 11 00 00 91 0E 00 10 91 0F 00 02 19 13 09
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 48 04 24 09 35 09 B9 90 A9 90 08 95
+R 00 00 00 00
+T 52 04 AA 92 BA 92 20 91 0C 00 30 91 0D 00 00 91
+R 00 00 00 00 00 08 01 00 00 0C 01 00
+T 60 04 0A 00 10 91 0B 00 B9 90 A9 90 08 95
+R 00 00 00 00 00 02 01 00 00 06 01 00
+.end
+.start
+XL
+H 2 areas 1B global symbols
+M thread.c
+S _heapFreeList Ref0000
+S push_xgset300C Ref0000
+S push_xgset303C Ref0000
+S _NutTimerProcessElapsed Ref0000
+S push_xgsetF03C Ref0000
+S _NutHeapRootFree Ref0000
+S _NutEventPostAsync Ref0000
+S _NutThreadSwitch Ref0000
+S push_arg4 Ref0000
+S pop_xgset300C Ref0000
+S pop_xgset303C Ref0000
+S pop_xgsetF03C Ref0000
+S _strcmp Ref0000
+A text size 414 flags 0
+dbfile ../.././nut/os/thread.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\thread.c
+dbstruct 25 _NUTTHREADINFO
+dbfield 0 td_next pS[_NUTTHREADINFO]
+dbfield 2 td_qnxt pS[_NUTTHREADINFO]
+dbfield 4 td_qpec i
+dbfield 6 td_name A[9:9]c
+dbfield 15 td_state c
+dbfield 16 td_sp i
+dbfield 18 td_priority c
+dbfield 19 td_memory pc
+dbfield 21 td_timer pV
+dbfield 23 td_queue pV
+dbend
+dbfunc e NutThreadAddPriQueue 0 fV
+dbsym r sreg A c
+dbsym r sreg A c
+dbsym r sreg A c
+dbsym r sreg A c
+dbsym r tqp 14 pS[_NUTTHREADINFO]
+dbsym r tqpp 12 ppS[_NUTTHREADINFO]
+dbsym r td 10 pS[_NUTTHREADINFO]
+dbline FFFFFFFF 4
+dbline 120 4
+dbline 123 4
+dbline 125 4
+dbline 126 C
+dbline 12D 14
+dbline 12D 14
+dbline 12D 16
+dbline 12D 1A
+dbline 12D 1A
+dbline 12E 1A
+dbline 130 22
+dbline 130 2A
+dbline 131 2A
+dbline 132 2E
+dbline 133 42
+dbline 133 44
+dbline 133 4A
+dbline 134 4A
+dbline 134 4A
+dbline 134 4C
+dbline 134 4E
+dbline 134 50
+dbline 134 50
+dbline 137 52
+dbline 138 52
+dbline 139 5A
+dbline 13A 62
+dbline 137 62
+dbline 13C 7E
+dbline 13C 7E
+dbline 13C 80
+dbline 13C 84
+dbline 13C 84
+dbline 13D 84
+dbline 13F 84
+dbline 141 8C
+dbline 142 94
+dbline 142 B6
+dbline 143 B6
+dbline 144 DC
+dbline 145 EE
+dbline 146 EE
+dbline 146 EE
+dbline 146 F0
+dbline 146 F2
+dbline 146 F4
+dbline 146 F4
+dbline FFFFFFFE F4
+dbline 0 F4
+dbfunc e NutThreadRemoveQueue F8 fV
+dbsym r sreg A c
+dbsym r sreg A c
+dbsym r sreg A c
+dbsym r sreg A c
+dbsym r tqp 14 pS[_NUTTHREADINFO]
+dbsym r tqpp 12 ppS[_NUTTHREADINFO]
+dbsym r td 10 pS[_NUTTHREADINFO]
+dbline FFFFFFFF FC
+dbline 154 FC
+dbline 157 FC
+dbline 157 FC
+dbline 157 FE
+dbline 157 102
+dbline 157 102
+dbline 158 102
+dbline 159 10A
+dbline 159 10A
+dbline 159 10C
+dbline 159 10E
+dbline 159 110
+dbline 159 110
+dbline 15B 110
+dbline 15B 11A
+dbline 15C 11C
+dbline 15D 11C
+dbline 15D 124
+dbline 15E 124
+dbline 15E 124
+dbline 15E 126
+dbline 15E 12A
+dbline 15E 12A
+dbline 15F 12A
+dbline 160 13A
+dbline 160 14A
+dbline 161 14A
+dbline 161 156
+dbline 162 156
+dbline 163 164
+dbline 164 164
+dbline 165 170
+dbline 166 170
+dbline 166 170
+dbline 166 172
+dbline 166 174
+dbline 166 176
+dbline 166 176
+dbline 168 176
+dbline 169 182
+dbline 16A 186
+dbline 16C 188
+dbline 16D 190
+dbline 16E 198
+dbline 15C 198
+dbline 16F 1A0
+dbline FFFFFFFE 1A0
+dbline 0 1A0
+dbfunc e NutThreadResume 1A4 fV
+dbsym r sreg A c
+dbsym r sreg A c
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r sreg A c
+dbsym r tqp 16 pS[_NUTTHREADINFO]
+dbsym r qhp A ppS[_NUTTHREADINFO]
+dbsym r cnt A i
+dbsym r td 14 pS[_NUTTHREADINFO]
+dbline FFFFFFFF 1A8
+dbline 17D 1A8
+dbline 186 1A8
+dbline 187 1B2
+dbline 188 1B2
+dbline 188 1B2
+dbline 188 1B4
+dbline 188 1B8
+dbline 188 1B8
+dbline 189 1B8
+dbline 18A 1C0
+dbline 18A 1C0
+dbline 18A 1C2
+dbline 18A 1C4
+dbline 18A 1C6
+dbline 18A 1C6
+dbline 18B 1C6
+dbline 18B 1CE
+dbline 18E 1CE
+dbline 18F 1D2
+dbline 18F 1D2
+dbline 18F 1D4
+dbline 18F 1D8
+dbline 18F 1D8
+dbline 190 1D8
+dbline 191 1EC
+dbline 192 1F4
+dbline 192 1F4
+dbline 192 1F6
+dbline 192 1F8
+dbline 192 1FA
+dbline 192 1FA
+dbline 193 1FA
+dbline 193 202
+dbline 194 202
+dbline 195 20A
+dbline 196 20A
+dbline 197 20A
+dbline 198 212
+dbline 187 212
+dbline 19E 21A
+dbline 1A1 21E
+dbline 1A1 234
+dbline 1A6 234
+dbline 1A6 23E
+dbline 1A7 23E
+dbline 1A8 242
+dbline 1A9 242
+dbline 1A9 242
+dbline 1A9 244
+dbline 1A9 248
+dbline 1A9 248
+dbline 1AA 248
+dbline 1AB 24C
+dbline 1AB 24C
+dbline 1AB 24E
+dbline 1AB 250
+dbline 1AB 252
+dbline 1AB 252
+dbline 1AC 252
+dbline FFFFFFFE 252
+dbline 0 252
+dbfunc e NutThreadWake 256 fV
+dbsym r th 14 pV
+dbsym l timer 2 pV
+dbline FFFFFFFF 262
+dbline 1C1 262
+dbline 1C2 262
+dbline 1C5 262
+dbline 1C6 26E
+dbline 1C7 272
+dbline FFFFFFFE 27C
+dbline 0 27C
+dbfunc e NutThreadYield 284 fV
+dbline FFFFFFFF 284
+dbline 1D3 284
+dbline 1E0 284
+dbline 1E0 298
+dbline 1E1 298
+dbline 1E2 2A2
+dbline 1E3 2B0
+dbline 1E6 2B0
+dbline FFFFFFFE 2B0
+dbline 0 2B0
+dbfunc e NutThreadSetPriority 2B2 fc
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r last A c
+dbsym r level 14 c
+dbline FFFFFFFF 2B8
+dbline 205 2B8
+dbline 206 2B8
+dbline 20D 2C2
+dbline 20E 2CC
+dbline 20F 2D6
+dbline 20F 2DA
+dbline 210 2DA
+dbline 211 2E8
+dbline 211 2EA
+dbline 212 2EA
+dbline 213 2EC
+dbline 219 2EC
+dbline 219 302
+dbline 21A 302
+dbline 21B 30A
+dbline 21B 30C
+dbline 21C 30C
+dbline 221 318
+dbline 221 318
+dbline 221 31A
+dbline 221 31E
+dbline 221 31E
+dbline 222 31E
+dbline 223 322
+dbline 223 322
+dbline 223 324
+dbline 223 326
+dbline 223 328
+dbline 223 328
+dbline 224 328
+dbline 226 328
+dbline FFFFFFFE 32A
+dbline 0 32A
+dbfunc e NutThreadExit 32E fV
+dbline FFFFFFFF 32E
+dbline 234 32E
+dbline 235 32E
+dbline FFFFFFFE 330
+dbline 0 330
+dbfunc e NutThreadDestroy 332 fV
+dbline FFFFFFFF 332
+dbline 242 332
+dbline 243 332
+dbline 243 342
+dbline 244 342
+dbline 245 352
+dbline 246 35E
+dbline FFFFFFFE 35E
+dbline 0 35E
+dbfunc e NutThreadKill 360 fV
+dbsym r pp 14 ppS[_NUTTHREADINFO]
+dbsym r pCur A pS[_NUTTHREADINFO]
+dbline FFFFFFFF 364
+dbline 251 364
+dbline 253 364
+dbline 254 36C
+dbline 257 370
+dbline 25A 374
+dbline 25B 374
+dbline 25B 382
+dbline 25C 382
+dbline 25D 392
+dbline 260 394
+dbline 261 398
+dbline 262 3A0
+dbline 25A 3A0
+dbline 265 3A8
+dbline FFFFFFFE 3B8
+dbline 0 3B8
+dbfunc e GetThreadByName 3BC fpV
+dbsym r tdp 14 pS[_NUTTHREADINFO]
+dbsym r name A pc
+dbline FFFFFFFF 3C4
+dbline 272 3C4
+dbline 275 3C4
+dbline 275 3CC
+dbline 276 3CC
+dbline 276 3D6
+dbline 277 3D6
+dbline 278 3EC
+dbline 279 3F2
+dbline 276 3F2
+dbline 276 3FA
+dbline 27A 400
+dbline 27A 402
+dbline 27B 402
+dbline 27D 40C
+dbline FFFFFFFE 410
+dbline 0 410
+S _GetThreadByName Def03BC
+S _NutThreadAddPriQueue Def0000
+S _NutThreadResume Def01A4
+S _NutThreadRemoveQueue Def00F8
+S _NutThreadWake Def0256
+S _NutThreadKill Def0360
+S _NutThreadSetPriority Def02B2
+S _NutThreadExit Def032E
+S _NutThreadDestroy Def0332
+S _NutThreadYield Def0284
+A bss size 8 flags 20
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\thread.c
+dbsym e killedThread 0 pS[_NUTTHREADINFO]
+dbsym e runQueue 2 pS[_NUTTHREADINFO]
+dbsym e nutThreadList 4 pS[_NUTTHREADINFO]
+dbsym e runningThread 6 pS[_NUTTHREADINFO]
+S _killedThread Def0000
+S _nutThreadList Def0004
+S _runningThread Def0006
+S _runQueue Def0002
+T 00 00 0E 94 00 00 E0 2F F1 2F 30 8F 27 8B 22 24
+R 00 00 00 00 12 04 01 00
+T 0E 00 33 24 35 82 24 82 AF B6 F8 94 AF 92 E2 2F
+R 00 00 00 00
+T 1C 00 F3 2F 40 81 51 81 4F 3F EF EF 5E 07 69 F4
+R 00 00 00 00
+T 2A 00 44 27 55 27 80 2F 91 2F 04 96 E8 2F F9 2F
+R 00 00 00 00
+T 38 00 80 81 91 81 01 96 91 83 80 83 20 C0 40 30
+R 00 00 00 00
+T 46 00 45 07 E9 F0 AA 24 AF 90 AF BE 08 C0 24 2F
+R 00 00 00 00
+T 54 00 35 2F 2E 5F 3F 4F E4 2F F5 2F 42 81 53 81
+R 00 00 00 00
+T 62 00 40 30 45 07 59 F0 E0 2F F1 2F 22 88 33 24
+R 00 00 00 00
+T 70 00 E4 2F F5 2F 42 88 55 24 24 14 35 04 54 F7
+R 00 00 00 00
+T 7E 00 AF B6 F8 94 AF 92 E0 2F F1 2F 53 83 42 83
+R 00 00 00 00
+T 8C 00 E2 2F F3 2F 11 83 00 83 E0 2F F1 2F 22 80
+R 00 00 00 00
+T 9A 00 33 80 22 20 19 F4 33 20 09 F4 24 C0 E2 2D
+R 00 00 00 00
+T A8 00 F3 2D 24 80 35 80 22 20 11 F4 33 20 E1 F0
+R 00 00 00 00
+T B6 00 40 2F 51 2F 4C 5F 5F 4F E0 2F F1 2F A2 81
+R 00 00 00 00
+T C4 00 B3 81 14 96 2D 90 3C 90 E4 2F F5 2F 40 80
+R 00 00 00 00
+T D2 00 51 80 42 0C 53 1C 51 82 40 82 22 24 33 24
+R 00 00 00 00
+T E0 00 E0 2F F1 2F A2 81 B3 81 14 96 2D 92 3C 92
+R 00 00 00 00
+T EE 00 AA 24 AF 90 AF BE 0C 94 00 00
+R 00 00 00 00 12 0A 09 00
+T F8 00 0E 94 00 00 AF B6 F8 94 AF 92 E2 2F F3 2F
+R 00 00 00 00 12 04 01 00
+T 06 01 40 81 51 81 AA 24 AF 90 AF BE 4F 3F EF EF
+R 00 00 00 00
+T 14 01 5E 07 09 F4 43 C0 3E C0 40 17 51 07 09 F0
+R 00 00 00 00
+T 22 01 32 C0 AF B6 F8 94 AF 92 E0 2F F1 2F 22 80
+R 00 00 00 00
+T 30 01 33 80 E2 2F F3 2F 31 82 20 82 E0 2F F1 2F
+R 00 00 00 00
+T 3E 01 24 80 35 80 22 20 11 F4 33 20 99 F0 22 80
+R 00 00 00 00
+T 4C 01 33 80 22 20 11 F4 33 20 39 F0 24 80 35 80
+R 00 00 00 00
+T 5A 01 A2 81 B3 81 14 96 2D 92 3C 92 22 24 33 24
+R 00 00 00 00
+T 68 01 E0 2F F1 2F 35 82 24 82 AA 24 AF 90 AF BE
+R 00 00 00 00
+T 76 01 22 24 33 24 E0 2F F1 2F 33 82 22 82 30 8E
+R 00 00 00 00
+T 84 01 27 8A 0C C0 24 2F 35 2F 2E 5F 3F 4F E4 2F
+R 00 00 00 00
+T 92 01 F5 2F 42 81 53 81 40 30 45 07 09 F0 BE CF
+R 00 00 00 00
+T A0 01 0C 94 00 00
+R 00 00 00 00 12 04 09 00
+T A4 01 0E 94 00 00 40 91 04 00 50 91 05 00 30 C0
+R 00 00 00 00 12 04 04 00 00 08 01 00 00 0C 01 00
+T B2 01 AF B6 F8 94 AF 92 E4 2F F5 2F A4 80 B5 80
+R 00 00 00 00
+T C0 01 CC 24 CF 90 CF BE AA 20 11 F4 BB 20 F1 F0
+R 00 00 00 00
+T CE 01 A7 88 B0 8C CF B6 F8 94 CF 92 8E 2F 9F 2F
+R 00 00 00 00
+T DC 01 04 96 E8 2F F9 2F 80 81 91 81 01 97 91 83
+R 00 00 00 00
+T EA 01 80 83 EA 2D FB 2D 60 81 71 81 CC 24 CF 90
+R 00 00 00 00
+T F8 01 CF BE 6F 3F AF EF 7A 07 21 F0 0E 2F 1F 2F
+R 00 00 00 00
+T 06 02 0E 94 00 00 E4 2F F5 2F 40 81 51 81 40 30
+R 00 00 00 00 12 04 06 00
+T 14 02 45 07 09 F0 CC CF 0E 94 00 00 20 90 02 00
+R 00 00 00 00 12 0A 03 00 00 0E 01 00
+T 22 02 30 90 03 00 40 90 06 00 50 90 07 00 42 14
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0C 01 00
+T 30 02 53 04 79 F0 E4 2D F5 2D 87 85 81 30 11 F4
+R 00 00 00 00
+T 3E 02 82 E0 87 87 AF B6 F8 94 AF 92 0E 94 00 00
+R 00 00 00 00 12 0E 07 00
+T 4C 02 AA 24 AF 90 AF BE 0C 94 00 00
+R 00 00 00 00 12 0A 0B 00
+T 56 02 0E 94 00 00 4A 93 5A 93 42 2F 53 2F 22 24
+R 00 00 00 00 12 04 08 00
+T 64 02 33 24 E4 2F F5 2F 36 8A 25 8A 82 E0 87 87
+R 00 00 00 00
+T 72 02 20 E0 30 E0 0E 2F 1F 2F C2 DE 59 91 49 91
+R 00 00 00 00 20 02 01 00 02 00 40 04 01 00 02 00
+T 80 02 24 96 08 95
+R 00 00 00 00
+T 84 02 E0 91 06 00 F0 91 07 00 22 80 33 80 22 20
+R 00 00 00 00 00 04 01 00 00 08 01 00
+T 92 02 11 F4 33 20 61 F0 20 E0 30 E0 0E 2F 1F 2F
+R 00 00 00 00 20 08 01 00 02 00 40 0A 01 00 02 00
+T A0 02 2B DF 20 E0 30 E0 00 91
+R 00 00 00 00 20 04 01 00 02 00 40 06 01 00 02 00
+T A8 02 06 00 10 91 07 00 A8 DE 79 CF
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T B2 02 0E 94 00 00 40 2F E0 91 06 00 F0 91 07 00
+R 00 00 00 00 12 04 02 00 00 0A 01 00 00 0E 01 00
+T C0 02 A2 88 20 E0 30 E0 0E 2F 1F 2F 16 DF E0 91
+R 00 00 00 00 20 04 01 00 02 00 40 06 01 00 02 00
+T CE 02 06 00 F0 91 07 00 42 8B 4F 3F 40 F4
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T DA 02 20 E0 30 E0 00 91
+R 00 00 00 00 20 02 01 00 02 00 40 04 01 00 02 00
+T E0 02 06 00 10 91 07 00 8C DE 01 C0 3A D0 20 90
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T EE 02 02 00 30 90 03 00 40 90 06 00 50 90
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T FA 02 07 00 42 14 53 04 29 F4 81 E0 E4 2D F5 2D
+R 00 00 00 00 00 02 01 00
+T 08 03 87 87 0E C0 82 E0 E0 91 06 00 F0 91 07 00
+R 00 00 00 00 00 0A 01 00 00 0E 01 00
+T 16 03 87 87 CF B6 F8 94 CF 92 0E 94 00 00 CC 24
+R 00 00 00 00 12 0C 07 00
+T 24 03 CF 90 CF BE 0A 2D 0C 94 00 00
+R 00 00 00 00 12 0A 0A 00
+T 2E 03 0F EF C0 CF
+R 00 00 00 00
+T 32 03 20 90 00 00 30 90 01 00 22 20 11 F4 33 20
+R 00 00 00 00 00 04 01 00 00 08 01 00
+T 40 03 71 F0 E2 2D F3 2D 23 89 34 89 00 E0 10 E0
+R 00 00 00 00 22 0C 00 00 00 00 42 0E 00 00 00 00
+T 4E 03 0E 94 00 00 22 24 33 24 30 92 01 00 20 92
+R 00 00 00 00 12 04 05 00 00 0C 01 00
+T 5C 03 00 00 08 95
+R 00 00 00 00 00 02 01 00
+T 60 03 0E 94 00 00 A0 90 04 00 B0 90 05 00
+R 00 00 00 00 12 04 01 00 00 08 01 00 00 0C 01 00
+T 6C 03 40 E0 50 E0 E0 DF 16 C0 20 90
+R 00 00 00 00 20 02 01 00 04 00 40 04 01 00 04 00
+T 76 03 06 00 30 90 07 00 A2 14 B3 04 49 F4 EA 2D
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T 84 03 FB 2D 20 80 31 80 E4 2F F5 2F 31 82 20 82
+R 00 00 00 00
+T 92 03 0A C0 4A 2D 5B 2D EA 2D FB 2D A0 80 B1 80
+R 00 00 00 00
+T A0 03 AA 20 41 F7 BB 20 31 F7 20 90 06 00 30 90
+R 00 00 00 00 00 0C 01 00
+T AE 03 07 00 30 92 01 00 20 92 00 00
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T B8 03 0C 94 00 00
+R 00 00 00 00 12 04 09 00
+T BC 03 0E 94 00 00 A0 2E B1 2E AA 20 11 F4 BB 20
+R 00 00 00 00 12 04 01 00
+T CA 03 D9 F0 40 91 04 00 50 91 05 00 12 C0 2A 2D
+R 00 00 00 00 00 06 01 00 00 0A 01 00
+T D8 03 3B 2D 04 2F 15 2F 0A 5F 1F 4F 0E 94 00 00
+R 00 00 00 00 12 0E 0C 00
+T E6 03 00 30 01 07 19 F4 04 2F 15 2F 0F C0 E4 2F
+R 00 00 00 00
+T F4 03 F5 2F 40 81 51 81 40 30 45 07 59 F7 05 C0
+R 00 00 00 00
+T 02 04 00 91 06 00 10 91 07 00 02 C0 00 27 11 27
+R 00 00 00 00 00 04 01 00 00 08 01 00
+T 10 04 0C 94 00 00
+R 00 00 00 00 12 04 09 00
+.end
+.start
+XL
+H 3 areas 29 global symbols
+M timer.c
+S _heapFreeList Ref0000
+S div32u Ref0000
+S push_xgsetF000 Ref0000
+S _NutGetTickClock Ref0000
+S push_xgsetF00C Ref0000
+S push_xgsetF03C Ref0000
+S _NutHeapRootFree Ref0000
+S _NutThreadResume Ref0000
+S _NutThreadRemoveQueue Ref0000
+S _NutThreadWake Ref0000
+S push_arg4 Ref0000
+S empy32u Ref0000
+S _NutHeapRootAlloc Ref0000
+S pop_xgsetF000 Ref0000
+S _runningThread Ref0000
+S _runQueue Ref0000
+S _NutTimerMillisToTicks Ref0000
+S pop_xgsetF00C Ref0000
+S pop_xgsetF03C Ref0000
+S _NutRegisterTimer Ref0000
+S exicall Ref0000
+S _NutThreadYield Ref0000
+S _memset Ref0000
+A text size 8B8 flags 0
+dbfile ../.././nut/os/timer.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\timer.c
+dbstruct 16 _NUTTIMERINFO
+dbfield 0 tn_next pS[_NUTTIMERINFO]
+dbfield 2 tn_prev pS[_NUTTIMERINFO]
+dbfield 4 tn_ticks l
+dbfield 8 tn_ticks_left l
+dbfield 12 tn_callback pfV
+dbfield 14 tn_arg pV
+dbend
+dbfunc s NutTimerIntr 0 fV
+dbsym l arg 0 pV
+dbline FFFFFFFF 4
+dbline 11C 4
+dbline 11D 4
+dbline FFFFFFFE 34
+dbline 0 34
+dbfunc e NutTimerInit 38 fV
+dbsym l cnt 0 l
+dbline FFFFFFFF 3E
+dbline 133 3E
+dbline 137 3E
+dbline 138 46
+dbline 13F 50
+dbline 141 50
+dbline 142 5A
+dbline 142 5A
+dbline 144 6E
+dbline 145 7A
+dbline 146 7A
+dbline 147 AA
+dbline 145 AA
+dbline 14E BE
+dbline 14F FA
+dbline 154 11E
+dbline FFFFFFFE 11E
+dbline 0 11E
+dbfunc e NutMicroDelay 124 fV
+dbsym l cnt 0 l
+dbsym l us C l
+dbline FFFFFFFF 12E
+dbline 176 12E
+dbline 17A 12E
+dbline 17C 170
+dbline 17D 170
+dbline 17E 172
+dbline 17C 172
+dbline FFFFFFFE 1B6
+dbline 0 1B6
+dbfunc e NutDelay 1C0 fV
+dbsym r ms A c
+dbline FFFFFFFF 1C6
+dbline 18E 1C6
+dbline 18F 1C6
+dbline FFFFFFFE 1EC
+dbline 0 1EC
+dbfunc e NutTimerInsert 1F0 fV
+dbsym r tnp 14 pS[_NUTTIMERINFO]
+dbsym r tn 10 pS[_NUTTIMERINFO]
+dbline FFFFFFFF 1F4
+dbline 19C 1F4
+dbline 19F 1F4
+dbline 1A1 1F4
+dbline 1A2 200
+dbline 1A2 20A
+dbline 1A3 20A
+dbline 1A3 22C
+dbline 1A4 22C
+dbline 1A5 256
+dbline 1A7 258
+dbline 1A8 286
+dbline 1A9 28E
+dbline 1A2 28E
+dbline 1A2 296
+dbline 1AA 29E
+dbline 1AB 2A6
+dbline 1AB 2B2
+dbline 1AC 2B2
+dbline 1AD 2BC
+dbline 1AE 2BC
+dbline 1AE 2CC
+dbline 1AF 2CC
+dbline 1B0 2D4
+dbline 1B1 2D6
+dbline 1B2 2D6
+dbline 1B3 2DE
+dbline FFFFFFFE 2DE
+dbline 0 2DE
+dbfunc e NutTimerProcessElapsed 2E4 fV
+dbsym l ticks 4 l
+dbsym l ticks_new 0 l
+dbsym r tn A pS[_NUTTIMERINFO]
+dbline FFFFFFFF 2EA
+dbline 1BD 2EA
+dbline 1C3 2EA
+dbline 1C4 2F4
+dbline 1C5 31C
+dbline 1C8 336
+dbline 1CA 336
+dbline 1CD 33E
+dbline 1CD 35E
+dbline 1CE 35E
+dbline 1CF 388
+dbline 1D0 398
+dbline 1D0 39A
+dbline 1D1 39A
+dbline 1D2 3C0
+dbline 1D3 3D4
+dbline 1D6 3D4
+dbline 1D6 3F0
+dbline 1D9 3F0
+dbline 1D9 400
+dbline 1DA 400
+dbline 1DB 414
+dbline 1DD 414
+dbline 1DE 428
+dbline 1DE 430
+dbline 1DF 430
+dbline 1E0 440
+dbline 1E1 440
+dbline 1E1 478
+dbline 1E2 478
+dbline 1E3 484
+dbline 1E4 486
+dbline 1E6 486
+dbline 1E7 48C
+dbline 1E8 48C
+dbline 1E9 48C
+dbline 1C8 48C
+dbline FFFFFFFE 4B2
+dbline 0 4B2
+dbfunc e NutTimerCreate 4B8 fpS[_NUTTIMERINFO]
+dbsym r tn A pS[_NUTTIMERINFO]
+dbsym l flags E c
+dbsym l arg C pV
+dbsym l callback A pfV
+dbsym l ticks 6 l
+dbline FFFFFFFF 4C0
+dbline 200 4C0
+dbline 203 4C0
+dbline 204 4D0
+dbline 204 4D8
+dbline 205 4D8
+dbline 20B 50E
+dbline 20B 514
+dbline 20C 514
+dbline 20D 524
+dbline 20D 526
+dbline 20E 526
+dbline 20F 53A
+dbline 212 53A
+dbline 213 546
+dbline 214 54E
+dbline 215 54E
+dbline FFFFFFFE 552
+dbline 0 552
+dbfunc e NutTimerStartTicks 55A fpV
+dbsym r tn A pS[_NUTTIMERINFO]
+dbsym l flags F c
+dbsym l arg D pV
+dbsym l callback B pfV
+dbsym l ticks 7 l
+dbline FFFFFFFF 564
+dbline 233 564
+dbline 236 564
+dbline 237 586
+dbline 237 58C
+dbline 239 58C
+dbline 23A 58E
+dbline 23B 58E
+dbline FFFFFFFE 592
+dbline 0 592
+dbfunc e NutTimerStart 59C fpV
+dbsym l flags D c
+dbsym l arg B pV
+dbsym l callback 9 pfV
+dbsym l ms 5 l
+dbline FFFFFFFF 5A2
+dbline 25B 5A2
+dbline 25C 5A2
+dbline FFFFFFFE 5C4
+dbline 0 5C4
+dbfunc e NutSleep 5C8 fV
+dbsym l ms 5 l
+dbline FFFFFFFF 5CE
+dbline 275 5CE
+dbline 276 5CE
+dbline 276 5E4
+dbline 279 5E4
+dbline 27A 5F4
+dbline 27C 602
+dbline 27C 636
+dbline 280 636
+dbline 281 63A
+dbline 282 63C
+dbline 284 63C
+dbline 285 64C
+dbline 286 658
+dbline 287 65C
+dbline 288 66C
+dbline 289 66C
+dbline 28A 66E
+dbline FFFFFFFE 672
+dbline 0 672
+dbfunc e NutTimerStop 676 fV
+dbsym r tn A pS[_NUTTIMERINFO]
+dbsym r handle C pV
+dbline FFFFFFFF 67E
+dbline 29A 67E
+dbline 29B 67E
+dbline 29D 682
+dbline 2A0 682
+dbline 2A1 696
+dbline 2A3 69E
+dbline 2A3 6B6
+dbline 2A4 6B6
+dbline 2A4 6C6
+dbline 2A5 6C6
+dbline 2A6 6D2
+dbline 2A7 6D4
+dbline 2A8 6D4
+dbline 2A9 6E4
+dbline 2AA 6E4
+dbline 2AA 6F4
+dbline 2AB 6F4
+dbline 2AC 702
+dbline 2AD 72C
+dbline 2AE 72C
+dbline 2AF 740
+dbline 2B0 746
+dbline FFFFFFFE 746
+dbline 0 746
+dbfunc e NutGetTickCount 74A fl
+dbsym r sreg 10 c
+dbsym r sreg 10 c
+dbsym l rc 0 l
+dbline FFFFFFFF 74C
+dbline 2BC 74C
+dbline 2C5 74C
+dbline 2C5 74C
+dbline 2C5 74E
+dbline 2C5 752
+dbline 2C5 752
+dbline 2C6 752
+dbline 2C7 76A
+dbline 2C7 76A
+dbline 2C7 76C
+dbline 2C7 76E
+dbline 2C7 770
+dbline 2C7 770
+dbline 2CA 770
+dbline FFFFFFFE 778
+dbline 0 778
+dbfunc e NutGetSeconds 77C fl
+dbline FFFFFFFF 77C
+dbline 2DC 77C
+dbline 2DD 77C
+dbline FFFFFFFE 7A2
+dbline 0 7A2
+dbfunc e NutGetMillis 7A6 fl
+dbsym l seconds 4 l
+dbsym l ticks 0 l
+dbline FFFFFFFF 7AC
+dbline 2F1 7AC
+dbline 2F3 7AC
+dbline 2F4 7B6
+dbline 2F5 7DE
+dbline 2F6 816
+dbline FFFFFFFE 886
+dbline 0 886
+dbfunc e NutClockSet 88C fI
+dbsym l freq 4 l
+dbsym l idx 2 I
+dbline FFFFFFFF 892
+dbline 322 892
+dbline 324 892
+dbline 326 8A6
+dbline FFFFFFFE 8AA
+dbline 0 8AA
+dbfunc e NutGetCpuClock 8AE fl
+dbline FFFFFFFF 8AE
+dbline 333 8AE
+dbline 337 8AE
+dbline FFFFFFFE 8B6
+dbline 0 8B6
+S _NutTimerInsert Def01F0
+S _NutGetMillis Def07A6
+S _NutTimerInit Def0038
+S _NutTimerProcessElapsed Def02E4
+S _NutTimerStop Def0676
+S _NutGetTickCount Def074A
+S _NutMicroDelay Def0124
+S _NutGetSeconds Def077C
+S _NutDelay Def01C0
+S _NutSleep Def05C8
+S _NutTimerStartTicks Def055A
+S _NutTimerStart Def059C
+S _NutClockSet Def088C
+S _NutGetCpuClock Def08AE
+S _NutTimerCreate Def04B8
+A bss size 12 flags 20
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\timer.c
+dbsym e nut_delay_loops 0 l
+dbsym s clock_cache 4 A[4:1]l
+dbsym e nut_ticks 8 l
+dbsym s nut_ticks_resume C l
+dbsym e nutTimerList 10 pS[_NUTTIMERINFO]
+S _nut_ticks Def0008
+S _nutTimerList Def0010
+S _nut_delay_loops Def0000
+A efunc_lit size 6 flags 0
+T 00 00 1A 93 0A 93 81 E0 90 E0 A0 E0 B0 E0 40 90
+R 00 00 00 00
+T 0E 00 0A 00 50 90 0B 00 20 90 08 00 30 90
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 1A 00 09 00 28 0E 39 1E 4A 1E 5B 1E 30 92 09 00
+R 00 00 00 00 00 02 01 00 00 0E 01 00
+T 28 00 20 92 08 00 50 92 0B 00 40 92 0A 00 22 96
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0C 01 00
+T 36 00 08 95
+R 00 00 00 00
+T 38 00 0E 94 00 00 24 97 00 E0
+R 00 00 00 00 12 04 04 00 20 08 02 00 03 00
+T 40 00 10 E0 0E 94 00 00 80 91 70 00 82 60 80 93
+R 00 00 00 00 40 02 02 00 03 00 12 06 13 00
+T 4E 00 70 00 7C D3 08 83 19 83 2A 83 3B 83 77 D3
+R 00 00 00 00
+T 5C 00 28 80 39 80 4A 80 5B 80 20 16 31 06 42 06
+R 00 00 00 00
+T 6A 00 53 06 B1 F3 6D D3 08 83 19 83 2A 83 3B 83
+R 00 00 00 00
+T 78 00 18 C0 41 E0 50 E0 60 E0 70 E0 40 90 02 00
+R 00 00 00 00 00 0E 01 00
+T 86 00 50 90 03 00 20 90 00 00 30 90 01 00 24 0E
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0C 01 00
+T 94 00 35 1E 46 1E 57 1E 30 92 01 00 20 92 00 00
+R 00 00 00 00 00 0A 01 00 00 0E 01 00
+T A2 00 50 92 03 00 40 92 02 00 4F D3 28 80 39 80
+R 00 00 00 00 00 04 01 00 00 08 01 00
+T B0 00 4A 80 5B 80 20 16 31 06 42 06 53 06 F1 F2
+R 00 00 00 00
+T BE 00 40 90 02 00 50 90 03 00 20 90 00 00 30 90
+R 00 00 00 00 00 04 01 00 00 08 01 00 00 0C 01 00
+T CC 00 01 00 47 E6 50 E0 60 E0 70 E0 5A 92 4A 92
+R 00 00 00 00 00 02 01 00
+T DA 00 3A 92 2A 92 04 2F 15 2F 26 2F 37 2F
+R 00 00 00 00
+T E6 00 0E 94 00 00 10 93 01 00 00 93 00 00 30 93
+R 00 00 00 00 12 04 0B 00 00 08 01 00 00 0C 01 00
+T F4 00 03 00 20 93 02 00 4A E1 50 E0 60 E0 70 E0
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T 02 01 7A 93 6A 93 5A 93 4A 93 0E 94 00 00 10 93
+R 00 00 00 00 12 0C 01 00
+T 10 01 01 00 00 93 00 00 30 93 03 00 20 93
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 1C 01 02 00 24 96 0C 94 00 00
+R 00 00 00 00 00 02 01 00 12 08 11 00
+T 24 01 0E 94 00 00 0E 94 00 00 28 97 2C 84 3D 84
+R 00 00 00 00 12 04 0A 00 12 08 02 00
+T 32 01 4E 84 5F 84 20 91 02 00 30 91 03 00 00 91
+R 00 00 00 00 00 08 01 00 00 0C 01 00
+T 40 01 00 00 10 91 01 00 5A 92 4A 92 3A 92 2A 92
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T 4E 01 0E 94 00 00 48 EE 53 E0 60 E0 70 E0 7A 93
+R 00 00 00 00 12 04 0B 00
+T 5C 01 6A 93 5A 93 4A 93 0E 94 00 00 08 83 19 83
+R 00 00 00 00 12 0A 01 00
+T 6A 01 2A 83 3B 83 01 C0 00 00 28 80 39 80 4A 80
+R 00 00 00 00
+T 78 01 5B 80 2C 82 3D 82 4E 82 5F 82 41 E0 50 E0
+R 00 00 00 00
+T 86 01 60 E0 70 E0 2C 80 3D 80 4E 80 5F 80 24 1A
+R 00 00 00 00
+T 94 01 35 0A 46 0A 57 0A 28 82 39 82 4A 82 5B 82
+R 00 00 00 00
+T A2 01 2C 80 3D 80 4E 80 5F 80 88 94 22 20 32 04
+R 00 00 00 00
+T B0 01 42 04 52 04 E9 F6 28 96 0E 94 00 00 24 96
+R 00 00 00 00 12 0C 0D 00
+T BE 01 08 95
+R 00 00 00 00
+T C0 01 0E 94 00 00 A0 2E 2A 2C 33 24 44 24 55 24
+R 00 00 00 00 12 04 04 00
+T CE 01 48 EE 53 E0 60 E0 70 E0 5A 92 4A 92 3A 92
+R 00 00 00 00
+T DC 01 2A 92 04 2F 15 2F 26 2F 37 2F 0E 94 00 00
+R 00 00 00 00 12 0E 0B 00
+T EA 01 9C DF 0C 94 00 00
+R 00 00 00 00 12 06 11 00
+T F0 01 4A 93 5A 93 22 24 33 24 E0 2F F1 2F 33 82
+R 00 00 00 00
+T FE 01 22 82 40 91 10 00 50 91 11 00 46 C0 E4 2F
+R 00 00 00 00 00 06 01 00 00 0A 01 00
+T 0C 02 F5 2F 20 84 31 84 42 84 53 84 E0 2F F1 2F
+R 00 00 00 00
+T 1A 02 60 84 71 84 82 84 93 84 62 14 73 04 84 04
+R 00 00 00 00
+T 28 02 95 04 B0 F4 84 2F 95 2F 08 96 20 84 31 84
+R 00 00 00 00
+T 36 02 42 84 53 84 E8 2F F9 2F 60 80 71 80 82 80
+R 00 00 00 00
+T 44 02 93 80 62 18 73 08 84 08 95 08 60 82 71 82
+R 00 00 00 00
+T 52 02 82 82 93 82 23 C0 80 2F 91 2F 08 96 E4 2F
+R 00 00 00 00
+T 60 02 F5 2F 20 84 31 84 42 84 53 84 E8 2F F9 2F
+R 00 00 00 00
+T 6E 02 60 80 71 80 82 80 93 80 62 18 73 08 84 08
+R 00 00 00 00
+T 7C 02 95 08 60 82 71 82 82 82 93 82 E0 2F F1 2F
+R 00 00 00 00
+T 8A 02 53 83 42 83 E4 2F F5 2F 40 81 51 81 40 30
+R 00 00 00 00
+T 98 02 45 07 09 F0 B6 CF E0 2F F1 2F 51 83 40 83
+R 00 00 00 00
+T A6 02 20 80 31 80 22 20 11 F4 33 20 29 F0 A0 81
+R 00 00 00 00
+T B4 02 B1 81 12 96 0D 93 1C 93 E0 2F F1 2F 22 80
+R 00 00 00 00
+T C2 02 33 80 22 20 11 F4 33 20 29 F0 A2 81 B3 81
+R 00 00 00 00
+T D0 02 0D 93 1C 93 04 C0 10 93 11 00 00 93 10 00
+R 00 00 00 00 00 0A 01 00 00 0E 01 00
+T DE 02 59 91 49 91 08 95
+R 00 00 00 00
+T E4 02 0E 94 00 00 2C 97 2F D2 0C 83 1D 83 2E 83
+R 00 00 00 00 12 04 04 00
+T F2 02 3F 83 40 90 0E 00 50 90 0F 00 20 90 0C 00
+R 00 00 00 00 00 06 01 00 00 0A 01 00 00 0E 01 00
+T 00 03 30 90 0D 00 6C 80 7D 80 8E 80 9F 80 62 18
+R 00 00 00 00 00 04 01 00
+T 0E 03 73 08 84 08 95 08 68 82 79 82 8A 82 9B 82
+R 00 00 00 00
+T 1C 03 2C 80 3D 80 4E 80 5F 80 30 92 0D 00 20 92
+R 00 00 00 00 00 0C 01 00
+T 2A 03 0C 00 50 92 0F 00 40 92 0E 00 AB C0 A0 90
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 38 03 10 00 B0 90 11 00 EA 2D FB 2D 38 96 20 80
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T 46 03 31 80 42 80 53 80 68 80 79 80 8A 80 9B 80
+R 00 00 00 00
+T 54 03 62 14 73 04 84 04 95 04 F0 F4 8A 2D 9B 2D
+R 00 00 00 00
+T 62 03 08 96 26 2C 37 2C 48 2C 59 2C E8 2F F9 2F
+R 00 00 00 00
+T 70 03 60 80 71 80 82 80 93 80 62 18 73 08 84 08
+R 00 00 00 00
+T 7E 03 95 08 60 82 71 82 82 82 93 82 40 E0 50 E0
+R 00 00 00 00
+T 8C 03 60 E0 70 E0 48 83 59 83 6A 83 7B 83 1D C0
+R 00 00 00 00
+T 9A 03 EA 2D FB 2D 38 96 20 80 31 80 42 80 53 80
+R 00 00 00 00
+T A8 03 68 80 79 80 8A 80 9B 80 62 18 73 08 84 08
+R 00 00 00 00
+T B6 03 95 08 68 82 79 82 8A 82 9B 82 40 E0 50 E0
+R 00 00 00 00
+T C4 03 60 E0 70 E0 EA 2D FB 2D 40 87 51 87 62 87
+R 00 00 00 00
+T D2 03 73 87 EA 2D FB 2D 38 96 20 80 31 80 42 80
+R 00 00 00 00
+T E0 03 53 80 88 94 22 20 32 04 42 04 52 04 09 F0
+R 00 00 00 00
+T EE 03 4E C0 EA 2D FB 2D 24 84 35 84 22 20 11 F4
+R 00 00 00 00
+T FC 03 33 20 51 F0 26 85 37 85 0E 2F 1F 2F A4 85
+R 00 00 00 00
+T 0A 04 B5 85 EA 2F FB 2F 0E 94 00 00 E0 91 10 00
+R 00 00 00 00 12 0A 14 00 00 0E 01 00
+T 18 04 F0 91 11 00 20 80 31 80 30 92 11 00 20 92
+R 00 00 00 00 00 04 01 00 00 0C 01 00
+T 26 04 10 00 22 20 11 F4 33 20 41 F0 22 24 33 24
+R 00 00 00 00 00 02 01 00
+T 34 04 E0 91 10 00 F0 91 11 00 33 82 22 82 EA 2D
+R 00 00 00 00 00 04 01 00 00 08 01 00
+T 42 04 FB 2D 34 96 20 80 31 80 42 80 53 80 28 86
+R 00 00 00 00
+T 50 04 39 86 4A 86 5B 86 28 84 39 84 4A 84 5B 84
+R 00 00 00 00
+T 5E 04 EA 2D FB 2D 38 96 20 82 31 82 42 82 53 82
+R 00 00 00 00
+T 6C 04 88 94 22 20 32 04 42 04 52 04 39 F4 2A 2D
+R 00 00 00 00
+T 7A 04 3B 2D 00 E0 10 E0
+R 00 00 00 00 22 04 00 00 00 00 42 06 00 00 00 00
+T 80 04 0E 94 00 00 03 C0 0A 2D 1B 2D B2 DE 20 90
+R 00 00 00 00 12 04 06 00
+T 8E 04 10 00 30 90 11 00 22 20 11 F4 33 20 59 F0
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T 9C 04 28 80 39 80 4A 80 5B 80 88 94 22 20 32 04
+R 00 00 00 00
+T AA 04 42 04 52 04 09 F0 42 CF 2C 96 0C 94 00 00
+R 00 00 00 00 12 0E 11 00
+T B8 04 0E 94 00 00 0E 94 00 00 20 E1 30 E0
+R 00 00 00 00 12 04 0A 00 12 08 04 00
+T C4 04 00 E0 10 E0
+R 00 00 00 00 22 02 00 00 00 00 42 04 00 00 00 00
+T C8 04 0E 94 00 00 A0 2E B1 2E 00 30 01 07 09 F4
+R 00 00 00 00 12 04 0C 00
+T D6 04 3B C0 38 D1 2E 80 3F 80 48 84 59 84 20 0E
+R 00 00 00 00
+T E4 04 31 1E 42 1E 53 1E 80 90 0E 00 90 90 0F 00
+R 00 00 00 00 00 0A 01 00 00 0E 01 00
+T F2 04 60 90 0C 00 70 90 0D 00 26 18 37 08 48 08
+R 00 00 00 00 00 04 01 00 00 08 01 00
+T 00 05 59 08 EA 2D FB 2D 20 86 31 86 42 86 53 86
+R 00 00 00 00
+T 0E 05 0E 84 00 FE 09 C0 40 E0 50 E0 60 E0 70 E0
+R 00 00 00 00
+T 1C 05 44 83 55 83 66 83 77 83 0A C0 2E 80 3F 80
+R 00 00 00 00
+T 2A 05 48 84 59 84 EA 2D FB 2D 24 82 35 82 46 82
+R 00 00 00 00
+T 38 05 57 82 EA 2D FB 2D 0A 84 1B 84 15 86 04 86
+R 00 00 00 00
+T 46 05 0C 84 1D 84 17 86 06 86 0A 2D 1B 2D
+R 00 00 00 00
+T 52 05 0E 94 00 00 24 96 08 95
+R 00 00 00 00 12 04 11 00
+T 5A 05 0E 94 00 00 AA 92 BA 92 25 97 0F 84 0C 82
+R 00 00 00 00 12 04 0A 00
+T 68 05 0D 84 1E 84 1B 82 0A 82 0B 84 1C 84 19 82
+R 00 00 00 00
+T 76 05 08 82 0F 81 18 85 29 85 3A 85 9B DF A0 2E
+R 00 00 00 00
+T 84 05 B1 2E 00 30 01 07 09 F0 31 DE 0A 2D 1B 2D
+R 00 00 00 00
+T 92 05 25 96 B9 90 A9 90 24 96 08 95
+R 00 00 00 00
+T 9C 05 0E 94 00 00 25 97 0D 81 1E 81 2F 81 38 85
+R 00 00 00 00 12 04 0A 00
+T AA 05 0E 94 00 00 0D 84 0C 82 0B 84 1C 84 1B 82
+R 00 00 00 00 12 04 10 00
+T B8 05 0A 82 09 84 1A 84 19 82 08 82 CB DF 29 96
+R 00 00 00 00
+T C6 05 08 95
+R 00 00 00 00
+T C8 05 0E 94 00 00 25 97 2D 80 3E 80 4F 80 58 84
+R 00 00 00 00 12 04 0A 00
+T D6 05 88 94 22 20 32 04 42 04 52 04 09 F4 45 C0
+R 00 00 00 00
+T E4 05 20 E0 30 E0 00 91
+R 00 00 00 00 22 02 0F 00 00 00 42 04 0F 00 00 00
+T EA 05 00 00 10 91 01 00 0E 94 00 00 83 E0 E0 91
+R 00 00 00 00 02 02 0E 00 02 06 0E 00 12 0A 08 00
+T F8 05 00 00 F0 91 01 00 3F 96 80 83 81 E0 8C 83
+R 00 00 00 00 02 02 0E 00 02 06 0E 00
+T 06 06 20 90 00 00 30 90 01 00 3B 82 2A 82
+R 00 00 00 00 02 04 0E 00 02 08 0E 00
+T 12 06 80 E0 90 E0 99 83 88 83 0D 81 1E 81 2F 81
+R 00 00 00 00 20 02 02 00 00 00 40 04 02 00 00 00
+T 20 06 38 85 2F 92 3F 92 BA DF FF 91 EF 91 16 8B
+R 00 00 00 00
+T 2E 06 05 8B 00 30 01 07 19 F0 0E 94 00 00 1B C0
+R 00 00 00 00 12 0C 07 00
+T 3C 06 80 E0 90 E0 E0 91
+R 00 00 00 00 22 02 0F 00 00 00 42 04 0F 00 00 00
+T 42 06 00 00 F0 91 01 00 90 8F 87 8B 20 90 00 00
+R 00 00 00 00 02 02 0E 00 02 06 0E 00 02 0E 0F 00
+T 50 06 30 90 01 00 33 82 22 82 81 E0 87 87 20 90
+R 00 00 00 00 02 04 0F 00
+T 5E 06 00 00 30 90 01 00 30 92 01 00 20 92
+R 00 00 00 00 02 02 0E 00 02 06 0E 00 02 0A 0F 00
+T 6A 06 00 00 02 C0 0E 94 00 00 29 96 08 95
+R 00 00 00 00 02 02 0F 00 12 08 15 00
+T 76 06 0E 94 00 00 C0 2E D1 2E AC 2C BD 2C 40 E0
+R 00 00 00 00 12 04 05 00
+T 84 06 50 E0 60 E0 70 E0 EA 2D FB 2D 44 83 55 83
+R 00 00 00 00
+T 92 06 66 83 77 83 22 24 33 24 35 86 24 86 38 96
+R 00 00 00 00
+T A0 06 20 80 31 80 42 80 53 80 88 94 22 20 32 04
+R 00 00 00 00
+T AE 06 42 04 52 04 09 F4 48 C0 EA 2D FB 2D 22 80
+R 00 00 00 00
+T BC 06 33 80 22 20 11 F4 33 20 39 F0 20 80 31 80
+R 00 00 00 00
+T CA 06 A2 81 B3 81 2D 92 3C 92 08 C0 EA 2D FB 2D
+R 00 00 00 00
+T D8 06 20 80 31 80 30 92 11 00 20 92 10 00 EA 2D
+R 00 00 00 00 00 08 01 00 00 0C 01 00
+T E6 06 FB 2D 20 80 31 80 22 20 11 F4 33 20 E1 F0
+R 00 00 00 00
+T F4 06 22 80 33 80 A0 81 B1 81 12 96 2D 92 3C 92
+R 00 00 00 00
+T 02 07 80 81 91 81 08 96 20 84 31 84 42 84 53 84
+R 00 00 00 00
+T 10 07 E8 2F F9 2F 60 80 71 80 82 80 93 80 62 0C
+R 00 00 00 00
+T 1E 07 73 1C 84 1C 95 1C 60 82 71 82 82 82 93 82
+R 00 00 00 00
+T 2C 07 40 E0 50 E0 60 E0 70 E0 EA 2D FB 2D 40 87
+R 00 00 00 00
+T 3A 07 51 87 62 87 73 87 0E 2F 1F 2F 55 DD
+R 00 00 00 00
+T 46 07 0C 94 00 00
+R 00 00 00 00 12 04 12 00
+T 4A 07 24 97 0F B7 F8 94 0F 93 40 90 0A 00 50 90
+R 00 00 00 00 00 0C 01 00
+T 58 07 0B 00 20 90 08 00 30 90 09 00 28 82 39 82
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0A 01 00
+T 66 07 4A 82 5B 82 00 27 0F 91 0F BF 08 81 19 81
+R 00 00 00 00
+T 74 07 2A 81 3B 81 24 96 08 95
+R 00 00 00 00
+T 7C 07 E6 DF 0F 93 1F 93 2F 93 3F 93 0E 94 00 00
+R 00 00 00 00 12 0E 03 00
+T 8A 07 5F 90 4F 90 3F 90 2F 90 3A 93 2A 93 1A 93
+R 00 00 00 00
+T 98 07 0A 93 02 2D 13 2D 24 2D 35 2D 0C 94 00 00
+R 00 00 00 00 12 0E 01 00
+T A6 07 0E 94 00 00 28 97 CE DF 08 83 19 83 2A 83
+R 00 00 00 00 12 04 02 00
+T B4 07 3B 83 0E 94 00 00 20 2E 31 2E 42 2E 53 2E
+R 00 00 00 00 12 06 03 00
+T C2 07 08 81 19 81 2A 81 3B 81 5A 92 4A 92 3A 92
+R 00 00 00 00
+T D0 07 2A 92 0E 94 00 00 0C 83 1D 83 2E 83 3F 83
+R 00 00 00 00 12 06 01 00
+T DE 07 0E 94 00 00 20 2E 31 2E 42 2E 53 2E 0C 81
+R 00 00 00 00 12 04 03 00
+T EC 07 1D 81 2E 81 3F 81 5A 92 4A 92 3A 92 2A 92
+R 00 00 00 00
+T FA 07 0E 94 00 00 28 80 39 80 4A 80 5B 80 20 1A
+R 00 00 00 00 12 04 0B 00
+T 08 08 31 0A 42 0A 53 0A 28 82 39 82 4A 82 5B 82
+R 00 00 00 00
+T 16 08 0E 94 00 00 20 2E 31 2E 42 2E 53 2E 68 80
+R 00 00 00 00 12 04 03 00
+T 24 08 79 80 8A 80 9B 80 48 EE 53 E0 60 E0 70 E0
+R 00 00 00 00
+T 32 08 9A 92 8A 92 7A 92 6A 92 04 2F 15 2F 26 2F
+R 00 00 00 00
+T 40 08 37 2F 0E 94 00 00 5A 92 4A 92 3A 92 2A 92
+R 00 00 00 00 12 06 0B 00
+T 4E 08 0E 94 00 00 20 2E 31 2E 42 2E 53 2E 6C 80
+R 00 00 00 00 12 04 01 00
+T 5C 08 7D 80 8E 80 9F 80 48 EE 53 E0 60 E0 70 E0
+R 00 00 00 00
+T 6A 08 9A 92 8A 92 7A 92 6A 92 04 2F 15 2F 26 2F
+R 00 00 00 00
+T 78 08 37 2F 0E 94 00 00 02 0D 13 1D 24 1D 35 1D
+R 00 00 00 00 12 06 0B 00
+T 86 08 28 96 0C 94 00 00
+R 00 00 00 00 12 06 0D 00
+T 8C 08 0E 94 00 00 22 97 84 E0 90 E0 99 83 88 83
+R 00 00 00 00 12 04 0A 00
+T 9A 08 22 27 33 27 00 E0 10 E0
+R 00 00 00 00 20 06 01 00 04 00 40 08 01 00 04 00
+T A2 08 0E 94 00 00 00 27 11 27 26 96 08 95
+R 00 00 00 00 12 04 16 00
+T AE 08 00 E0 10 E0 21 EE 30 E0 08 95
+R 00 00 00 00
+T 00 00 00 00 00 00 00 00
+R 00 00 02 00 0B 02 09 00 09 05 00 00
+.end
+.start
+XL
+H 2 areas 17 global symbols
+M event.c
+S push_xgset003C Ref0000
+S push_xgset303C Ref0000
+S _NutThreadAddPriQueue Ref0000
+S push_xgset30FC Ref0000
+S push_xgsetF03C Ref0000
+S _NutTimerStop Ref0000
+S _NutThreadResume Ref0000
+S _NutThreadRemoveQueue Ref0000
+S _NutTimerStart Ref0000
+S pop_xgset003C Ref0000
+S pop_xgset303C Ref0000
+S _runningThread Ref0000
+S _runQueue Ref0000
+S pop_xgset30FC Ref0000
+S pop_xgsetF03C Ref0000
+S _NutThreadYield Ref0000
+A text size 3CC flags 0
+dbfile ../.././nut/os/event.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\event.c
+dbstruct 25 _NUTTHREADINFO
+dbfield 0 td_next pS[_NUTTHREADINFO]
+dbfield 2 td_qnxt pS[_NUTTHREADINFO]
+dbfield 4 td_qpec i
+dbfield 6 td_name A[9:9]c
+dbfield 15 td_state c
+dbfield 16 td_sp i
+dbfield 18 td_priority c
+dbfield 19 td_memory pc
+dbfield 21 td_timer pV
+dbfield 23 td_queue pV
+dbend
+dbfunc e NutEventTimeout 0 fV
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r tqpp 16 ppS[_NUTTHREADINFO]
+dbsym r tqp 14 pS[_NUTTHREADINFO]
+dbsym r arg C pV
+dbsym r timer A pV
+dbline FFFFFFFF C
+dbline C5 C
+dbline C7 C
+dbline C9 10
+dbline CC 10
+dbline CC 10
+dbline CC 12
+dbline CC 16
+dbline CC 16
+dbline CD 16
+dbline CE 1E
+dbline CE 1E
+dbline CE 20
+dbline CE 22
+dbline CE 24
+dbline CE 24
+dbline D4 24
+dbline D4 2E
+dbline DB 30
+dbline DC 30
+dbline DC 40
+dbline DF 40
+dbline DF 40
+dbline DF 42
+dbline DF 46
+dbline DF 46
+dbline E0 46
+dbline E1 52
+dbline E1 62
+dbline E2 62
+dbline E2 6E
+dbline E3 6E
+dbline E4 7C
+dbline E5 7E
+dbline E6 7E
+dbline E7 8A
+dbline E8 8A
+dbline E9 96
+dbline EA 96
+dbline EA 96
+dbline EA 98
+dbline EA 9A
+dbline EA 9C
+dbline EA 9C
+dbline ED 9C
+dbline EE A4
+dbline F3 B0
+dbline F4 BC
+dbline F6 BE
+dbline F7 C6
+dbline F8 CE
+dbline DB CE
+dbline F9 D6
+dbline FFFFFFFE D6
+dbline 0 D6
+dbfunc e NutEventWait DA fI
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r tdp 14 pS[_NUTTHREADINFO]
+dbsym l ms B l
+dbsym r qhp A ppV
+dbline FFFFFFFF E8
+dbline 110 E8
+dbline 113 E8
+dbline 116 E8
+dbline 116 E8
+dbline 116 EA
+dbline 116 EE
+dbline 116 EE
+dbline 117 EE
+dbline 118 F6
+dbline 118 F6
+dbline 118 F8
+dbline 118 FA
+dbline 118 FC
+dbline 118 FC
+dbline 11D FC
+dbline 11D 104
+dbline 11F 104
+dbline 11F 104
+dbline 11F 106
+dbline 11F 10A
+dbline 11F 10A
+dbline 120 10A
+dbline 121 112
+dbline 121 112
+dbline 121 114
+dbline 121 116
+dbline 121 118
+dbline 121 118
+dbline 127 118
+dbline 128 11C
+dbline 12F 122
+dbline 130 132
+dbline 133 142
+dbline 134 150
+dbline 134 164
+dbline 135 164
+dbline 136 18C
+dbline 137 18E
+dbline 138 18E
+dbline 139 19E
+dbline 141 19E
+dbline 144 1A2
+dbline 144 1B6
+dbline 145 1B6
+dbline 146 1BE
+dbline 148 1C4
+dbline FFFFFFFE 1C8
+dbline 0 1C8
+dbfunc e NutEventWaitNext 1D2 fI
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym l ms 6 l
+dbsym r qhp A ppV
+dbline FFFFFFFF 1E0
+dbline 15F 1E0
+dbline 160 1E0
+dbline 165 1E0
+dbline 165 1E0
+dbline 165 1E2
+dbline 165 1E6
+dbline 165 1E6
+dbline 166 1E6
+dbline 167 1F6
+dbline 168 1FE
+dbline 168 1FE
+dbline 168 200
+dbline 168 202
+dbline 168 204
+dbline 168 204
+dbline 16A 204
+dbline FFFFFFFE 21A
+dbline 0 21A
+dbfunc e NutEventPostAsync 224 fI
+dbsym r sreg A c
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r td 14 pS[_NUTTHREADINFO]
+dbsym r qhp A ppV
+dbline FFFFFFFF 22C
+dbline 181 22C
+dbline 184 22C
+dbline 186 22C
+dbline 186 22C
+dbline 186 22E
+dbline 186 232
+dbline 186 232
+dbline 187 232
+dbline 188 23A
+dbline 188 23A
+dbline 188 23C
+dbline 188 23E
+dbline 188 240
+dbline 188 240
+dbline 18B 240
+dbline 18B 24A
+dbline 18E 24A
+dbline 18E 252
+dbline 190 252
+dbline 190 252
+dbline 190 254
+dbline 190 258
+dbline 190 258
+dbline 191 258
+dbline 192 268
+dbline 192 278
+dbline 193 278
+dbline 193 284
+dbline 194 284
+dbline 195 292
+dbline 196 294
+dbline 197 294
+dbline 198 2A0
+dbline 199 2A0
+dbline 19A 2AC
+dbline 19B 2AC
+dbline 19B 2AC
+dbline 19B 2AE
+dbline 19B 2B0
+dbline 19B 2B2
+dbline 19B 2B2
+dbline 19E 2B2
+dbline 19E 2C2
+dbline 19F 2C2
+dbline 1A0 2CA
+dbline 1A1 2D6
+dbline 1A3 2D6
+dbline 1A4 2DE
+dbline 1A6 2EA
+dbline 1AA 2F0
+dbline 1AB 2F0
+dbline 1AB 2F0
+dbline 1AB 2F2
+dbline 1AB 2F6
+dbline 1AB 2F6
+dbline 1AC 2F6
+dbline 1AD 302
+dbline 1AD 302
+dbline 1AD 304
+dbline 1AD 306
+dbline 1AD 308
+dbline 1AD 308
+dbline 1AE 308
+dbline 1AF 308
+dbline 1B0 308
+dbline FFFFFFFE 30C
+dbline 0 30C
+dbfunc e NutEventPost 310 fI
+dbsym r rc A I
+dbsym r qhp A ppV
+dbline FFFFFFFF 318
+dbline 1C7 318
+dbline 1CA 318
+dbline 1D0 322
+dbline 1D2 326
+dbline FFFFFFFE 32A
+dbline 0 32A
+dbfunc e NutEventBroadcastAsync 330 fI
+dbsym r sreg E c
+dbsym r sreg E c
+dbsym r sreg E c
+dbsym r sreg E c
+dbsym r sreg E c
+dbsym r sreg E c
+dbsym r rc A I
+dbsym r tdp 14 pS[_NUTTHREADINFO]
+dbsym r qhp C ppV
+dbline FFFFFFFF 338
+dbline 1E7 338
+dbline 1E8 338
+dbline 1EB 33C
+dbline 1EE 33C
+dbline 1EE 33C
+dbline 1EE 33E
+dbline 1EE 342
+dbline 1EE 342
+dbline 1EF 342
+dbline 1F0 34A
+dbline 1F0 34A
+dbline 1F0 34C
+dbline 1F0 34E
+dbline 1F0 350
+dbline 1F0 350
+dbline 1F2 350
+dbline 1F2 358
+dbline 1F3 358
+dbline 1F3 358
+dbline 1F3 35A
+dbline 1F3 35E
+dbline 1F3 35E
+dbline 1F4 35E
+dbline 1F5 366
+dbline 1F5 366
+dbline 1F5 368
+dbline 1F5 36A
+dbline 1F5 36C
+dbline 1F5 36C
+dbline 1F6 36C
+dbline 1F7 36E
+dbline 1F7 374
+dbline 1F8 374
+dbline 1F9 374
+dbline 1FB 37E
+dbline 1FB 37E
+dbline 1FB 380
+dbline 1FB 384
+dbline 1FB 384
+dbline 1FC 384
+dbline 1FD 38C
+dbline 1FD 38C
+dbline 1FD 38E
+dbline 1FD 390
+dbline 1FD 392
+dbline 1FD 392
+dbline 1FE 392
+dbline 1FE 392
+dbline 1FF 3A4
+dbline 200 3A4
+dbline FFFFFFFE 3A8
+dbline 0 3A8
+dbfunc e NutEventBroadcast 3AC fI
+dbsym r rc A I
+dbsym r qhp A ppV
+dbline FFFFFFFF 3B4
+dbline 216 3B4
+dbline 217 3B4
+dbline 219 3BE
+dbline 21B 3C2
+dbline FFFFFFFE 3C6
+dbline 0 3C6
+S _NutEventBroadcastAsync Def0330
+S _NutEventBroadcast Def03AC
+S _NutEventWait Def00DA
+S _NutEventPostAsync Def0224
+S _NutEventPost Def0310
+S _NutEventTimeout Def0000
+S _NutEventWaitNext Def01D2
+A efunc_lit size 3 flags 0
+T 00 00 0E 94 00 00 C2 2E D3 2E A0 2E B1 2E 6C 2D
+R 00 00 00 00 12 04 04 00
+T 0E 00 7D 2D CF B6 F8 94 CF 92 E6 2F F7 2F 40 81
+R 00 00 00 00
+T 1C 00 51 81 CC 24 CF 90 CF BE 4F 3F EF EF 5E 07
+R 00 00 00 00
+T 2A 00 09 F4 54 C0 4F C0 E4 2F F5 2F 25 88 36 88
+R 00 00 00 00
+T 38 00 2A 14 3B 04 09 F0 3F C0 CF B6 F8 94 CF 92
+R 00 00 00 00
+T 46 00 22 80 33 80 E6 2F F7 2F 31 82 20 82 E4 2F
+R 00 00 00 00
+T 54 00 F5 2F 24 80 35 80 22 20 11 F4 33 20 D1 F0
+R 00 00 00 00
+T 62 00 22 80 33 80 22 20 11 F4 33 20 41 F0 24 80
+R 00 00 00 00
+T 70 00 35 80 A2 81 B3 81 14 96 2D 92 3C 92 06 C0
+R 00 00 00 00
+T 7E 00 8F EF 9F EF E6 2F F7 2F 91 83 80 83 22 24
+R 00 00 00 00
+T 8C 00 33 24 E4 2F F5 2F 35 82 24 82 CC 24 CF 90
+R 00 00 00 00
+T 9A 00 CF BE 82 E0 E4 2F F5 2F 87 87 20 E0 30 E0
+R 00 00 00 00 22 0C 0C 00 00 00 42 0E 0C 00 00 00
+T A8 00 0E 2F 1F 2F 0E 94 00 00 8F EF 9F EF E4 2F
+R 00 00 00 00 12 08 02 00
+T B6 00 F5 2F 96 8B 85 8B 0C C0 64 2F 75 2F 6E 5F
+R 00 00 00 00
+T C4 00 7F 4F E4 2F F5 2F 42 81 53 81 40 30 45 07
+R 00 00 00 00
+T D2 00 09 F0 AD CF 0C 94 00 00
+R 00 00 00 00 12 08 0E 00
+T DA 00 3A 93 2A 93 0E 94 00 00 A0 2E B1 2E 25 97
+R 00 00 00 00 12 08 01 00
+T E8 00 CF B6 F8 94 CF 92 EA 2D FB 2D 40 81 51 81
+R 00 00 00 00
+T F6 00 CC 24 CF 90 CF BE 4F 3F AF EF 5A 07 79 F4
+R 00 00 00 00
+T 04 01 CF B6 F8 94 CF 92 22 24 33 24 31 82 20 82
+R 00 00 00 00
+T 12 01 CC 24 CF 90 CF BE 0E 94 00 00 00 27 11 27
+R 00 00 00 00 12 0A 0F 00
+T 20 01 53 C0 20 E0 30 E0 00 91
+R 00 00 00 00 22 04 0C 00 00 00 42 06 0C 00 00 00
+T 28 01 00 00 10 91 01 00 0E 94 00 00 2A 2D 3B 2D
+R 00 00 00 00 02 02 0B 00 02 06 0B 00 12 0A 07 00
+T 36 01 00 91 00 00 10 91 01 00 0E 94 00 00 83 E0
+R 00 00 00 00 02 04 0B 00 02 08 0B 00 12 0C 02 00
+T 44 01 E0 91 00 00 F0 91 01 00 3F 96 80 83 2B 84
+R 00 00 00 00 02 04 0B 00 02 08 0B 00
+T 52 01 3C 84 4D 84 5E 84 88 94 22 20 32 04 42 04
+R 00 00 00 00
+T 60 01 52 04 A9 F0 81 E0 8C 83 BB 82 AA 82 80 E0
+R 00 00 00 00 20 0E 01 00 00 00
+T 6E 01 90 E0 99 83 88 83 02 2D 13 2D 24 2D 35 2D
+R 00 00 00 00 40 02 01 00 00 00
+T 7C 01 0E 94 00 00 E0 91 00 00 F0 91 01 00 16 8B
+R 00 00 00 00 12 04 08 00 02 08 0B 00 02 0C 0B 00
+T 8A 01 05 8B 08 C0 22 24 33 24 E0 91 00 00 F0 91
+R 00 00 00 00 02 0C 0B 00
+T 98 01 01 00 36 8A 25 8A 0E 94 00 00 E0 91 00 00
+R 00 00 00 00 02 02 0B 00 12 0A 06 00 02 0E 0B 00
+T A6 01 F0 91 01 00 85 89 96 89 8F 3F AF EF 9A 07
+R 00 00 00 00 02 04 0B 00
+T B4 01 39 F4 22 24 33 24 36 8A 25 8A 0F EF 1F EF
+R 00 00 00 00
+T C2 01 02 C0 00 27 11 27 25 96 0E 94 00 00 22 96
+R 00 00 00 00 12 0C 0A 00
+T D0 01 08 95
+R 00 00 00 00
+T D2 01 3A 93 2A 93 0E 94 00 00 A0 2E B1 2E 22 97
+R 00 00 00 00 12 08 00 00
+T E0 01 CF B6 F8 94 CF 92 EA 2D FB 2D 80 81 91 81
+R 00 00 00 00
+T EE 01 8F 3F AF EF 9A 07 21 F4 22 24 33 24 31 82
+R 00 00 00 00
+T FC 01 20 82 CC 24 CF 90 CF BE 2E 80 3F 80 48 84
+R 00 00 00 00
+T 0A 02 59 84 48 82 59 82 22 2D 33 2D 0A 2D 1B 2D
+R 00 00 00 00
+T 18 02 60 DF 22 96 0E 94 00 00 22 96 08 95
+R 00 00 00 00 12 08 09 00
+T 24 02 0E 94 00 00 A0 2E B1 2E CF B6 F8 94 CF 92
+R 00 00 00 00 12 04 01 00
+T 32 02 EA 2D FB 2D 40 81 51 81 CC 24 CF 90 CF BE
+R 00 00 00 00
+T 40 02 4F 3F EF EF 5E 07 09 F4 5F C0 40 30 45 07
+R 00 00 00 00
+T 4E 02 09 F4 4F C0 CF B6 F8 94 CF 92 E4 2F F5 2F
+R 00 00 00 00
+T 5C 02 22 80 33 80 EA 2D FB 2D 31 82 20 82 E4 2F
+R 00 00 00 00
+T 6A 02 F5 2F 24 80 35 80 22 20 11 F4 33 20 D1 F0
+R 00 00 00 00
+T 78 02 22 80 33 80 22 20 11 F4 33 20 41 F0 24 80
+R 00 00 00 00
+T 86 02 35 80 A2 81 B3 81 14 96 2D 92 3C 92 06 C0
+R 00 00 00 00
+T 94 02 8F EF 9F EF EA 2D FB 2D 91 83 80 83 22 24
+R 00 00 00 00
+T A2 02 33 24 E4 2F F5 2F 35 82 24 82 CC 24 CF 90
+R 00 00 00 00
+T B0 02 CF BE E4 2F F5 2F 25 88 36 88 22 20 11 F4
+R 00 00 00 00
+T BE 02 33 20 51 F0 05 89 16 89 0E 94 00 00 22 24
+R 00 00 00 00 12 0C 05 00
+T CC 02 33 24 E4 2F F5 2F 36 8A 25 8A 82 E0 E4 2F
+R 00 00 00 00
+T DA 02 F5 2F 87 87 20 E0 30 E0 0E 2F 1F 2F
+R 00 00 00 00 22 06 0C 00 00 00 42 08 0C 00 00 00
+T E6 02 0E 94 00 00 01 E0 10 E0 0E C0 CF B6 F8 94
+R 00 00 00 00 12 04 02 00
+T F4 02 CF 92 8F EF 9F EF EA 2D FB 2D 91 83 80 83
+R 00 00 00 00
+T 02 03 AA 24 AF 90 AF BE 00 27 11 27 0C 94 00 00
+R 00 00 00 00 12 0E 0A 00
+T 10 03 AA 92 BA 92 A0 2E B1 2E 0A 2D 1B 2D 83 DF
+R 00 00 00 00
+T 1E 03 A0 2E B1 2E 0E 94 00 00 0A 2D 1B 2D B9 90
+R 00 00 00 00 12 08 0F 00
+T 2C 03 A9 90 08 95
+R 00 00 00 00
+T 30 03 0E 94 00 00 C0 2E D1 2E AA 24 BB 24 EF B6
+R 00 00 00 00 12 04 03 00
+T 3E 03 F8 94 EF 92 EC 2D FD 2D 40 81 51 81 EE 24
+R 00 00 00 00
+T 4C 03 EF 90 EF BE 4F 3F AF EF 5A 07 59 F4 EF B6
+R 00 00 00 00
+T 5A 03 F8 94 EF 92 22 24 33 24 31 82 20 82 EE 24
+R 00 00 00 00
+T 68 03 EF 90 EF BE 1B C0 40 30 45 07 C1 F0 0C 2D
+R 00 00 00 00
+T 76 03 1D 2D 55 DF A0 0E B1 1E EF B6 F8 94 EF 92
+R 00 00 00 00
+T 84 03 EC 2D FD 2D 40 81 51 81 EE 24 EF 90 EF BE
+R 00 00 00 00
+T 92 03 24 2E 35 2E 40 30 45 07 21 F0 4F 3F EF EF
+R 00 00 00 00
+T A0 03 5E 07 41 F7 0A 2D 1B 2D 0C 94 00 00
+R 00 00 00 00 12 0C 0D 00
+T AC 03 AA 92 BA 92 A0 2E B1 2E 0A 2D 1B 2D BB DF
+R 00 00 00 00
+T BA 03 A0 2E B1 2E 0E 94 00 00 0A 2D 1B 2D B9 90
+R 00 00 00 00 12 08 0F 00
+T C8 03 A9 90 08 95
+R 00 00 00 00
+T 00 00 00 00 00
+R 00 00 01 00 09 02 00 00
+.end
+.start
+XL
+H 3 areas 9 global symbols
+M devreg.c
+S push_xgset300C Ref0000
+S push_xgsetF03C Ref0000
+S pop_xgset300C Ref0000
+S pop_xgsetF03C Ref0000
+S exicall Ref0000
+S _strcmp Ref0000
+A text size C6 flags 0
+dbfile ../.././nut/os/devreg.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\devreg.c
+dbfunc e NutDeviceLookup 0 fpS[_NUTDEVICE]
+dbsym r dev 14 pS[_NUTDEVICE]
+dbsym r name A pc
+dbline FFFFFFFF 8
+dbline 5B 8
+dbline 5E 8
+dbline 5F 8
+dbline 60 12
+dbline 61 28
+dbline 5F 2A
+dbline 5F 32
+dbline 63 38
+dbline FFFFFFFE 3C
+dbline 0 3C
+dbfunc e NutRegisterDevice 40 fI
+dbsym r rc 14 I
+dbsym r irq A c
+dbsym r base C i
+dbsym r dev 16 pS[_NUTDEVICE]
+dbline FFFFFFFF 4E
+dbline 82 4E
+dbline 83 4E
+dbline 85 52
+dbline 87 52
+dbline 88 5A
+dbline 89 62
+dbline 8A 66
+dbline 8C 6C
+dbline 8C 7C
+dbline 8D 7C
+dbline 8D A2
+dbline 8E A2
+dbline 8F B2
+dbline 90 BA
+dbline 91 BE
+dbline 92 BE
+dbline 93 BE
+dbline FFFFFFFE C2
+dbline 0 C2
+S _NutRegisterDevice Def0040
+S _NutDeviceLookup Def0000
+A data size 2 flags 20
+dbfile ../.././nut/os/devreg.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\devreg.c
+dbstruct 6 _NUTFILE
+dbfield 0 nf_next pS[_NUTFILE]
+dbfield 2 nf_dev pS[_NUTDEVICE]
+dbfield 4 nf_fcb pV
+dbend
+dbstruct 35 _NUTDEVICE
+dbfield 0 dev_next pS[_NUTDEVICE]
+dbfield 2 dev_name A[9:9]c
+dbfield 11 dev_type c
+dbfield 12 dev_base i
+dbfield 14 dev_irq c
+dbfield 15 dev_icb pV
+dbfield 17 dev_dcb pV
+dbfield 19 dev_init pfI
+dbfield 21 dev_ioctl pfI
+dbfield 23 dev_read pfI
+dbfield 25 dev_write pfI
+dbfield 27 dev_write_P pfI
+dbfield 29 dev_open pfpS[_NUTFILE]
+dbfield 31 dev_close pfI
+dbfield 33 dev_size pfL
+dbend
+dbsym e nutDeviceList 0 pS[_NUTDEVICE]
+S _nutDeviceList Def0000
+A idata size 2 flags 0
+T 00 00 00 00
+R 00 00 02 00
+T 00 00 0E 94 00 00 A0 2E B1 2E 40 91 00 00 50 91
+R 00 00 00 00 12 04 00 00 00 0C 01 00
+T 0E 00 01 00 10 C0 2A 2D 3B 2D 04 2F 15 2F 0E 5F
+R 00 00 00 00 00 02 01 00
+T 1C 00 1F 4F 0E 94 00 00 00 30 01 07 09 F4 07 C0
+R 00 00 00 00 12 06 05 00
+T 2A 00 E4 2F F5 2F 40 81 51 81 40 30 45 07 69 F7
+R 00 00 00 00
+T 38 00 04 2F 15 2F 0C 94 00 00
+R 00 00 00 00 12 08 02 00
+T 40 00 0E 94 00 00 C2 2E D3 2E 60 2F 71 2F A8 84
+R 00 00 00 00 12 04 01 00
+T 4E 00 4F EF 5F EF CC 20 11 F4 DD 20 21 F0 E6 2F
+R 00 00 00 00
+T 5C 00 F7 2F D5 86 C4 86 AA 20 19 F0 E6 2F F7 2F
+R 00 00 00 00
+T 6A 00 A6 86 06 2F 17 2F 0E 5F 1F 4F C5 DF 00 30
+R 00 00 00 00
+T 78 00 01 07 09 F5 E6 2F F7 2F 23 88 34 88 22 20
+R 00 00 00 00
+T 86 00 11 F4 33 20 59 F0 0E 2F 1F 2F E2 2D F3 2D
+R 00 00 00 00
+T 94 00 0E 94 00 00 A0 2E B1 2E 00 30 01 07 71 F4
+R 00 00 00 00 12 04 04 00
+T A2 00 20 90 00 00 30 90 01 00 E6 2F F7 2F 31 82
+R 00 00 00 00 00 04 01 00 00 08 01 00
+T B0 00 20 82 70 93 01 00 60 93 00 00 44 27 55 27
+R 00 00 00 00 00 06 01 00 00 0A 01 00
+T BE 00 04 2F 15 2F 0C 94 00 00
+R 00 00 00 00 12 08 03 00
+.end
+.start
+XL
+H 4 areas 8 global symbols
+M confos.c
+S _strcpy Ref0000
+S _NutNvMemSave Ref0000
+S _memcmp Ref0000
+S _memcpy Ref0000
+S _NutNvMemLoad Ref0000
+A text size 8C flags 0
+dbfile ../.././nut/os/confos.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\confos.c
+dbfunc e NutLoadConfig 0 fI
+dbline FFFFFFFF 2
+dbline 73 2
+dbline 75 2
+dbline 77 2
+dbline 79 3E
+dbline 7A 3E
+dbline 7E 44
+dbline 7F 44
+dbline 81 50
+dbline FFFFFFFE 54
+dbline 0 54
+dbfunc e NutSaveConfig 58 fI
+dbline FFFFFFFF 5A
+dbline 8F 5A
+dbline 91 5A
+dbline 92 5A
+dbline 95 5A
+dbline 96 60
+dbline 98 74
+dbline FFFFFFFE 88
+dbline 0 88
+S _NutLoadConfig Def0000
+S _NutSaveConfig Def0058
+A bss size 13 flags 20
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\confos.c
+dbstruct 19 _CONFOS
+dbfield 0 size c
+dbfield 1 magic A[2:2]c
+dbfield 3 hostname A[16:16]c
+dbend
+dbsym e confos 0 S[_CONFOS]
+S _confos Def0000
+A data size C flags 20
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\confos.c
+A idata size C flags 0
+T 00 00 22 97 83 E1 90 E0 99 83 88 83 20 E0 30 E0
+R 00 00 00 00 20 0C 01 00 00 00 40 0E 01 00 00 00
+T 0E 00 00 27 11 27 0E 94 00 00 00 30 01 07 A1 F4
+R 00 00 00 00 12 08 04 00
+T 1C 00 80 91 00 00 83 31 81 F4 82 E0 90 E0 99 83
+R 00 00 00 00 00 04 01 00
+T 2A 00 88 83 20 E0 30 E0
+R 00 00 00 00 20 04 02 00 09 00 40 06 02 00 09 00
+T 30 00 00 E0 10 E0
+R 00 00 00 00 20 02 01 00 01 00 40 04 01 00 01 00
+T 34 00 0E 94 00 00 00 30 01 07 19 F4 00 27 11 27
+R 00 00 00 00 12 04 02 00
+T 42 00 08 C0 20 E0 30 E0
+R 00 00 00 00 20 04 02 00 00 00 40 06 02 00 00 00
+T 48 00 00 E0 10 E0
+R 00 00 00 00 20 02 01 00 03 00 40 04 01 00 03 00
+T 4C 00 0E 94 00 00 0F EF 1F EF 22 96 08 95
+R 00 00 00 00 12 04 00 00
+T 58 00 22 97 83 E1 80 93 00 00 82 E0 90 E0 99 83
+R 00 00 00 00 00 08 01 00
+T 66 00 88 83 20 E0 30 E0
+R 00 00 00 00 20 04 02 00 09 00 40 06 02 00 09 00
+T 6C 00 00 E0 10 E0
+R 00 00 00 00 20 02 01 00 01 00 40 04 01 00 01 00
+T 70 00 0E 94 00 00 83 E1 90 E0 99 83 88 83 20 E0
+R 00 00 00 00 12 04 03 00 20 0E 01 00 00 00
+T 7E 00 30 E0 00 27 11 27 0E 94 00 00 22 96 08 95
+R 00 00 00 00 40 02 01 00 00 00 12 0A 01 00
+T 00 00 65 74 68 65 72 6E 75 74 00
+R 00 00 03 00
+T 09 00 4F 53 00
+R 00 00 03 00
+.end
+.start
+XL
+H 1 areas 7 global symbols
+M semaphore.c
+S _NutEventPost Ref0000
+S _NutEventWaitNext Ref0000
+A text size 102 flags 0
+dbfile ../.././nut/os/semaphore.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\semaphore.c
+dbstruct 4 _SEM
+dbfield 0 qhp pV
+dbfield 2 value S
+dbend
+dbfunc e NutSemInit 0 fV
+dbsym r value 12 S
+dbsym r sem 10 pS[_SEM]
+dbline FFFFFFFF 0
+dbline 53 0
+dbline 54 0
+dbline 55 0
+dbline 56 C
+dbline FFFFFFFE 10
+dbline 0 10
+dbfunc e NutSemWait 12 fV
+dbsym r sem 14 pS[_SEM]
+dbline FFFFFFFF 1C
+dbline 58 1C
+dbline 60 1C
+dbline 61 1C
+dbline 62 30
+dbline 63 44
+dbline 64 44
+dbline 65 5C
+dbline FFFFFFFE 5C
+dbline 0 5C
+dbfunc e NutSemPost 64 fV
+dbsym r sem 14 pS[_SEM]
+dbline FFFFFFFF 6C
+dbline 6D 6C
+dbline 6E 6C
+dbline 6F 6C
+dbline 70 80
+dbline 71 92
+dbline 72 92
+dbline 73 9A
+dbline FFFFFFFE 9A
+dbline 0 9A
+dbfunc e NutSemTryWait A0 fI
+dbsym r sem 14 pS[_SEM]
+dbline FFFFFFFF A8
+dbline 7D A8
+dbline 7E A8
+dbline 7F A8
+dbline 80 BA
+dbline 82 C0
+dbline 83 C6
+dbline FFFFFFFE CA
+dbline 0 CA
+dbfunc e NutSemDestroy D0 fI
+dbsym r sem 10 pS[_SEM]
+dbline FFFFFFFF D0
+dbline 8D D0
+dbline 8E D0
+dbline 8F D0
+dbline 90 E0
+dbline 91 E6
+dbline 92 F6
+dbline 93 FC
+dbline FFFFFFFE 100
+dbline 0 100
+S _NutSemInit Def0000
+S _NutSemWait Def0012
+S _NutSemPost Def0064
+S _NutSemTryWait Def00A0
+S _NutSemDestroy Def00D0
+T 00 00 22 24 33 24 E0 2F F1 2F 31 82 20 82 33 83
+R 00 00 00 00
+T 0E 00 22 83 08 95
+R 00 00 00 00
+T 12 00 4A 93 5A 93 40 2F 51 2F 22 97 84 2F 95 2F
+R 00 00 00 00
+T 20 00 02 96 E8 2F F9 2F 80 81 91 81 01 97 91 83
+R 00 00 00 00
+T 2E 00 80 83 E4 2F F5 2F 82 81 93 81 EA 93 80 30
+R 00 00 00 00
+T 3C 00 E0 E0 9E 07 E9 91 64 F4 80 E0 90 E0 A0 E0
+R 00 00 00 00
+T 4A 00 B0 E0 A8 83 B9 83 28 2F 39 2F 0E 2F 1F 2F
+R 00 00 00 00
+T 58 00 0E 94 00 00 22 96 59 91 49 91 08 95
+R 00 00 00 00 12 04 01 00
+T 64 00 4A 93 5A 93 40 2F 51 2F 84 2F 95 2F 02 96
+R 00 00 00 00
+T 72 00 E8 2F F9 2F 80 81 91 81 01 96 91 83 80 83
+R 00 00 00 00
+T 80 00 22 24 33 24 E4 2F F5 2F 42 80 53 80 24 14
+R 00 00 00 00
+T 8E 00 35 04 24 F0 0E 2F 1F 2F 0E 94 00 00 59 91
+R 00 00 00 00 12 0C 00 00
+T 9C 00 49 91 08 95
+R 00 00 00 00
+T A0 00 4A 93 5A 93 40 2F 51 2F 22 24 33 24 E4 2F
+R 00 00 00 00
+T AE 00 F5 2F 42 80 53 80 24 14 35 04 1C F0 0F EF
+R 00 00 00 00
+T BC 00 1F EF 05 C0 04 2F 15 2F A6 DF 00 27 11 27
+R 00 00 00 00
+T CA 00 59 91 49 91 08 95
+R 00 00 00 00
+T D0 00 E0 2F F1 2F 80 81 91 81 8F 3F EF EF 9E 07
+R 00 00 00 00
+T DE 00 19 F4 00 27 11 27 0D C0 E0 2F F1 2F 20 80
+R 00 00 00 00
+T EC 00 31 80 22 20 29 F4 33 20 19 F4 00 27 11 27
+R 00 00 00 00
+T FA 00 02 C0 0F EF 1F EF 08 95
+R 00 00 00 00
+.end
+.start
+XL
+H 1 areas 8 global symbols
+M mutex.c
+S _NutEventPost Ref0000
+S _runningThread Ref0000
+S _NutEventWaitNext Ref0000
+A text size 154 flags 0
+dbfile ../.././nut/os/mutex.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\mutex.c
+dbstruct 25 _NUTTHREADINFO
+dbfield 0 td_next pS[_NUTTHREADINFO]
+dbfield 2 td_qnxt pS[_NUTTHREADINFO]
+dbfield 4 td_qpec i
+dbfield 6 td_name A[9:9]c
+dbfield 15 td_state c
+dbfield 16 td_sp i
+dbfield 18 td_priority c
+dbfield 19 td_memory pc
+dbfield 21 td_timer pV
+dbfield 23 td_queue pV
+dbend
+dbstruct 6 _MUTEX
+dbfield 0 qhp pV
+dbfield 2 thread pS[_NUTTHREADINFO]
+dbfield 4 count i
+dbend
+dbfunc e NutMutexInit 0 fV
+dbsym r mutex 10 pS[_MUTEX]
+dbline FFFFFFFF 0
+dbline 50 0
+dbline 51 0
+dbline 52 0
+dbline 53 C
+dbline 54 10
+dbline FFFFFFFE 14
+dbline 0 14
+dbfunc e NutMutexLock 16 fV
+dbsym r mutex 14 pS[_MUTEX]
+dbline FFFFFFFF 20
+dbline 60 20
+dbline 61 20
+dbline 62 20
+dbline 62 36
+dbline 64 38
+dbline 63 50
+dbline 65 60
+dbline 66 60
+dbline 67 70
+dbline FFFFFFFE 84
+dbline 0 84
+dbfunc e NutMutexTrylock 8C fI
+dbsym r mutex 14 pS[_MUTEX]
+dbline FFFFFFFF 94
+dbline 72 94
+dbline 73 94
+dbline 74 94
+dbline 75 B6
+dbline 76 BC
+dbline 77 C2
+dbline FFFFFFFE C6
+dbline 0 C6
+dbfunc e NutMutexUnlock CC fI
+dbsym r mutex 14 pS[_MUTEX]
+dbline FFFFFFFF D4
+dbline 82 D4
+dbline 83 D4
+dbline 84 D4
+dbline 85 EA
+dbline 86 F0
+dbline 86 10A
+dbline 87 10A
+dbline 88 112
+dbline 89 112
+dbline FFFFFFFE 116
+dbline 0 116
+dbfunc e NutMutexDestroy 11C fI
+dbsym r mutex 10 pS[_MUTEX]
+dbline FFFFFFFF 11C
+dbline 93 11C
+dbline 94 11C
+dbline 95 11C
+dbline 96 12C
+dbline 97 132
+dbline 98 148
+dbline 99 14E
+dbline FFFFFFFE 152
+dbline 0 152
+S _NutMutexUnlock Def00CC
+S _NutMutexLock Def0016
+S _NutMutexInit Def0000
+S _NutMutexTrylock Def008C
+S _NutMutexDestroy Def011C
+T 00 00 22 24 33 24 E0 2F F1 2F 33 82 22 82 35 82
+R 00 00 00 00
+T 0E 00 24 82 31 82 20 82 08 95
+R 00 00 00 00
+T 16 00 4A 93 5A 93 40 2F 51 2F 22 97 20 90 00 00
+R 00 00 00 00 02 0E 01 00
+T 24 00 30 90 01 00 E4 2F F5 2F 42 80 53 80 42 14
+R 00 00 00 00 02 04 01 00
+T 32 00 53 04 A9 F0 0C C0 80 E0 90 E0 A0 E0 B0 E0
+R 00 00 00 00
+T 40 00 A8 83 B9 83 28 2F 39 2F 04 2F 15 2F
+R 00 00 00 00
+T 4C 00 0E 94 00 00 E4 2F F5 2F 24 80 35 80 22 20
+R 00 00 00 00 12 04 02 00
+T 5A 00 71 F7 33 20 61 F7 20 90 00 00 30 90 01 00
+R 00 00 00 00 02 0A 01 00 02 0E 01 00
+T 68 00 E4 2F F5 2F 33 82 22 82 8E 2F 9F 2F 04 96
+R 00 00 00 00
+T 76 00 E8 2F F9 2F 80 81 91 81 01 96 91 83 80 83
+R 00 00 00 00
+T 84 00 22 96 59 91 49 91 08 95
+R 00 00 00 00
+T 8C 00 4A 93 5A 93 40 2F 51 2F E4 2F F5 2F 24 80
+R 00 00 00 00
+T 9A 00 35 80 22 20 11 F4 33 20 61 F0 20 90 00 00
+R 00 00 00 00 02 0E 01 00
+T A8 00 30 90 01 00 42 80 53 80 42 14 53 04 19 F0
+R 00 00 00 00 02 04 01 00
+T B6 00 0F EF 1F EF 05 C0 04 2F 15 2F AA DF 00 27
+R 00 00 00 00
+T C4 00 11 27 59 91 49 91 08 95
+R 00 00 00 00
+T CC 00 4A 93 5A 93 40 2F 51 2F 20 90 00 00 30 90
+R 00 00 00 00 02 0C 01 00
+T DA 00 01 00 E4 2F F5 2F 42 80 53 80 42 14 53 04
+R 00 00 00 00 02 02 01 00
+T E8 00 19 F0 0F EF 1F EF 13 C0 84 2F 95 2F 04 96
+R 00 00 00 00
+T F6 00 E8 2F F9 2F 80 81 91 81 01 97 91 83 80 83
+R 00 00 00 00
+T 04 01 80 30 89 07 21 F4 04 2F 15 2F 0E 94 00 00
+R 00 00 00 00 12 0E 00 00
+T 12 01 00 27 11 27 59 91 49 91 08 95
+R 00 00 00 00
+T 1C 01 E0 2F F1 2F 24 80 35 80 22 20 29 F4 33 20
+R 00 00 00 00
+T 2A 01 19 F4 00 27 11 27 10 C0 20 90 00 00 30 90
+R 00 00 00 00 02 0C 01 00
+T 38 01 01 00 E0 2F F1 2F 42 80 53 80 42 14 53 04
+R 00 00 00 00 02 02 01 00
+T 46 01 19 F4 00 27 11 27 02 C0 0F EF 1F EF 08 95
+R 00 00 00 00
+.end
+.start
+XL
+H 3 areas 23 global symbols
+M msg.c
+S _heapFreeList Ref0000
+S push_xgsetF000 Ref0000
+S push_xgset300C Ref0000
+S push_xgset003C Ref0000
+S _NutEventWait Ref0000
+S push_xgsetF00C Ref0000
+S push_xgsetF03C Ref0000
+S push_xgset30FC Ref0000
+S _NutEventPostAsync Ref0000
+S _NutTimerStop Ref0000
+S lsl8 Ref0000
+S _NutHeapRootAllocClear Ref0000
+S push_arg4 Ref0000
+S _NutHeapRootAlloc Ref0000
+S _NutTimerStartTicks Ref0000
+S _NutTimerStart Ref0000
+S pop_xgsetF000 Ref0000
+S pop_xgset300C Ref0000
+S pop_xgset003C Ref0000
+S pop_xgsetF00C Ref0000
+S pop_xgsetF03C Ref0000
+S pop_xgset30FC Ref0000
+S asgnblk Ref0000
+S _NutThreadYield Ref0000
+A text size 4CA flags 0
+dbfile ../.././nut/os/msg.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\msg.c
+dbstruct 11 _NUTMSGTMR
+dbfield 0 mt_que pS[_NUTMSGQ]
+dbfield 2 mt_param I
+dbfield 4 mt_data pV
+dbfield 6 mt_handle pV
+dbfield 8 mt_next pS[_NUTMSGTMR]
+dbfield 10 mt_flags c
+dbend
+dbstruct 5 _NUTMSG
+dbfield 0 id c
+dbfield 1 param I
+dbfield 3 data pV
+dbend
+dbstruct 14 _NUTMSGQ
+dbfield 0 mq_wait pV
+dbfield 2 mq_timers pS[_NUTMSGTMR]
+dbfield 4 mq_next pS[_NUTMSGQ]
+dbfield 6 mq_read c
+dbfield 7 mq_write c
+dbfield 8 mq_mask c
+dbfield 9 mq_que A[5:1]S[_NUTMSG]
+dbend
+dbfunc e NutMsgQCreate 0 fpS[_NUTMSGQ]
+dbsym r len 16 c
+dbsym r que 14 pS[_NUTMSGQ]
+dbsym r bits A c
+dbline FFFFFFFF 6
+dbline 64 6
+dbline 67 6
+dbline 69 10
+dbline 6A 10
+dbline 6C 10
+dbline 6E 28
+dbline 6F 2E
+dbline 71 30
+dbline 74 3A
+dbline 75 46
+dbline 77 4E
+dbline FFFFFFFE 52
+dbline 0 52
+dbfunc e NutMsgQBroadcast 56 fI
+dbsym r ret A I
+dbsym r pCur 14 pS[_NUTMSGQ]
+dbsym l data C pV
+dbsym r param C I
+dbsym r id E c
+dbline FFFFFFFF 62
+dbline 85 62
+dbline 87 62
+dbline 88 6A
+dbline 8A 70
+dbline 8B 70
+dbline 8C 88
+dbline 8D 90
+dbline 8A 90
+dbline 8F 96
+dbline FFFFFFFE 9A
+dbline 0 9A
+dbfunc e NutMsgQPost A0 fI
+dbsym r sreg A c
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r cur 16 pS[_NUTMSG]
+dbsym l data A pV
+dbsym l param 8 I
+dbsym r id A c
+dbsym r que 14 pS[_NUTMSGQ]
+dbline FFFFFFFF AA
+dbline 9E AA
+dbline A0 AA
+dbline A0 AA
+dbline A0 AC
+dbline A0 B0
+dbline A0 B0
+dbline A2 B0
+dbline A2 BC
+dbline A3 BC
+dbline A3 BC
+dbline A3 BE
+dbline A3 C0
+dbline A3 C2
+dbline A3 C2
+dbline A4 C2
+dbline A7 C8
+dbline A9 E0
+dbline AA E6
+dbline AB EE
+dbline AD F6
+dbline AE 106
+dbline B0 11E
+dbline B0 11E
+dbline B0 120
+dbline B0 122
+dbline B0 124
+dbline B0 124
+dbline B2 124
+dbline B4 12C
+dbline FFFFFFFE 130
+dbline 0 130
+dbfunc e NutMsgQSend 134 fI
+dbsym l data A pV
+dbsym l param 8 I
+dbsym r id C c
+dbsym r que A pS[_NUTMSGQ]
+dbline FFFFFFFF 140
+dbline C6 140
+dbline C7 140
+dbline C7 15E
+dbline C8 15E
+dbline C9 162
+dbline CB 168
+dbline FFFFFFFE 16C
+dbline 0 16C
+dbfunc e NutMsgQFull 172 fI
+dbsym r que 10 pS[_NUTMSGQ]
+dbline FFFFFFFF 172
+dbline D4 172
+dbline D5 172
+dbline D5 184
+dbline D6 184
+dbline D8 18A
+dbline FFFFFFFE 18E
+dbline 0 18E
+dbfunc s NutMsgQTimerCb 190 fV
+dbsym r timer 14 pS[_NUTMSGTMR]
+dbsym r arg A pV
+dbsym l hndl 9 pV
+dbline FFFFFFFF 19E
+dbline DD 19E
+dbline DE 19E
+dbline E0 1A2
+dbline E0 1C0
+dbline E6 1C0
+dbline E6 1CA
+dbline E7 1CA
+dbline E8 1EE
+dbline E9 1EE
+dbline E9 1F0
+dbline EB 1F0
+dbline EC 1FA
+dbline ED 202
+dbline FFFFFFFE 202
+dbline 0 202
+dbfunc e NutMsgQStartTimer 20C fpV
+dbsym r timer 14 pS[_NUTMSGTMR]
+dbsym r flags A c
+dbsym l data 11 pV
+dbsym l param F I
+dbsym l ms B l
+dbsym r que 16 pS[_NUTMSGQ]
+dbline FFFFFFFF 21C
+dbline FE 21C
+dbline FF 21C
+dbline 101 224
+dbline 103 224
+dbline 103 22A
+dbline 104 22A
+dbline 105 23A
+dbline 105 23C
+dbline 106 23C
+dbline 107 24C
+dbline 109 24C
+dbline 10A 254
+dbline 10B 25C
+dbline 10C 264
+dbline 10D 268
+dbline 10F 28A
+dbline 110 29A
+dbline 111 2A2
+dbline FFFFFFFE 2A6
+dbline 0 2A6
+dbfunc s NutMsgQFreeTimer 2B0 fV
+dbsym r tnpp 16 ppS[_NUTMSGTMR]
+dbsym r tnp 14 pS[_NUTMSGTMR]
+dbsym r handle 12 pS[_NUTMSGTMR]
+dbsym r que 10 pS[_NUTMSGQ]
+dbline FFFFFFFF 2B4
+dbline 115 2B4
+dbline 116 2B4
+dbline 117 2BC
+dbline 119 2C6
+dbline 11A 2C6
+dbline 11A 2CC
+dbline 11B 2CC
+dbline 11C 2DC
+dbline 11D 2EC
+dbline 11E 2F4
+dbline 120 2F6
+dbline 121 2FE
+dbline 122 306
+dbline 119 306
+dbline 124 30C
+dbline FFFFFFFE 30C
+dbline 0 30C
+dbfunc e NutMsgQStopTimer 310 fV
+dbsym r sreg A c
+dbsym r pos A c
+dbsym r sreg A c
+dbsym r t 16 pS[_NUTMSGTMR]
+dbsym r que 14 pS[_NUTMSGQ]
+dbsym r timer A pV
+dbline FFFFFFFF 318
+dbline 132 318
+dbline 133 318
+dbline 134 31C
+dbline 13A 324
+dbline 13A 324
+dbline 13A 326
+dbline 13A 32A
+dbline 13A 32A
+dbline 13B 32A
+dbline 13C 32A
+dbline 13E 332
+dbline 13F 332
+dbline 13F 358
+dbline 140 358
+dbline 141 36E
+dbline 143 36E
+dbline 144 37C
+dbline 13E 37C
+dbline 145 388
+dbline 147 388
+dbline 148 398
+dbline 14A 3A0
+dbline 14A 3A0
+dbline 14A 3A2
+dbline 14A 3A4
+dbline 14A 3A6
+dbline 14A 3A6
+dbline 14C 3A6
+dbline FFFFFFFE 3B0
+dbline 0 3B0
+dbfunc e NutMsgQGetMessage 3B4 fI
+dbsym r timer 16 pS[_NUTMSGTMR]
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym r sreg C c
+dbsym l timeout A l
+dbsym r msg A pS[_NUTMSG]
+dbsym r que 14 pS[_NUTMSGQ]
+dbline FFFFFFFF 3C2
+dbline 15A 3C2
+dbline 15B 3C2
+dbline 15B 3C2
+dbline 15B 3C4
+dbline 15B 3C8
+dbline 15B 3C8
+dbline 15D 3C8
+dbline 15D 3E6
+dbline 15E 3E6
+dbline 15E 3E6
+dbline 15E 3E8
+dbline 15E 3EA
+dbline 15E 3EC
+dbline 15E 3EC
+dbline 15F 3EC
+dbline 162 3F2
+dbline 164 3F2
+dbline 166 41A
+dbline 167 42A
+dbline 16A 442
+dbline 16B 44E
+dbline 16D 456
+dbline 16D 456
+dbline 16D 458
+dbline 16D 45A
+dbline 16D 45C
+dbline 16D 45C
+dbline 16F 45C
+dbline 16F 466
+dbline 170 466
+dbline 171 46A
+dbline 172 47A
+dbline 174 48A
+dbline 174 494
+dbline 175 494
+dbline 176 49E
+dbline 177 49E
+dbline 179 49E
+dbline FFFFFFFE 4A2
+dbline 0 4A2
+dbfunc e NutMsgQFlush 4A8 fV
+dbsym r sreg A c
+dbsym r sreg A c
+dbsym r que 10 pS[_NUTMSGQ]
+dbline FFFFFFFF 4AA
+dbline 180 4AA
+dbline 181 4AA
+dbline 181 4AA
+dbline 181 4AC
+dbline 181 4B0
+dbline 181 4B0
+dbline 183 4B0
+dbline 18A 4B8
+dbline 18B 4C0
+dbline 18B 4C0
+dbline 18B 4C2
+dbline 18B 4C4
+dbline 18B 4C6
+dbline 18B 4C6
+dbline FFFFFFFE 4C6
+dbline 0 4C6
+S _NutMsgQFlush Def04A8
+S _NutMsgQStartTimer Def020C
+S _NutMsgQCreate Def0000
+S _NutMsgQSend Def0134
+S _NutMsgQFull Def0172
+S _NutMsgQBroadcast Def0056
+S _NutMsgQPost Def00A0
+S _NutMsgQStopTimer Def0310
+S _NutMsgQGetMessage Def03B4
+A bss size 4 flags 20
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\msg.c
+dbsym e nutMsgFreeTimers 0 pS[_NUTMSGTMR]
+dbsym e nutMsgQue 2 pS[_NUTMSGQ]
+S _nutMsgQue Def0002
+S _nutMsgFreeTimers Def0000
+A efunc_lit size 3 flags 0
+T 00 00 0E 94 00 00 A0 2E 01 E0 1A 2D 0E 94 00 00
+R 00 00 00 00 12 04 05 00 12 0E 0A 00
+T 0E 00 60 2F 85 E0 86 9F 20 2D 31 2D 22 5F 3F 4F
+R 00 00 00 00
+T 1C 00 00 E0 10 E0
+R 00 00 00 00 22 02 00 00 00 00 42 04 00 00 00 00
+T 20 00 0E 94 00 00 40 2F 51 2F 00 30 01 07 09 F4
+R 00 00 00 00 12 04 0B 00
+T 2E 00 11 C0 86 2F 81 50 E4 2F F5 2F 80 87 20 90
+R 00 00 00 00
+T 3C 00 02 00 30 90 03 00 35 82 24 82 50 93 03 00
+R 00 00 00 00 00 02 01 00 00 06 01 00 00 0E 01 00
+T 4A 00 40 93 02 00 0E 2F 1F 2F 0C 94 00 00
+R 00 00 00 00 00 04 01 00 12 0C 13 00
+T 56 00 0E 94 00 00 C2 2E D3 2E E0 2E 24 97 40 91
+R 00 00 00 00 12 04 07 00
+T 64 00 02 00 50 91 03 00 AA 24 BB 24 10 C0 0C 84
+R 00 00 00 00 00 02 01 00 00 06 01 00
+T 72 00 1D 84 1B 82 0A 82 D9 82 C8 82 2E 2D 04 2F
+R 00 00 00 00
+T 80 00 15 2F 0E D0 A0 1A B1 0A E4 2F F5 2F 44 81
+R 00 00 00 00
+T 8E 00 55 81 40 30 45 07 69 F7 0A 2D 1B 2D 24 96
+R 00 00 00 00
+T 9C 00 0C 94 00 00
+R 00 00 00 00 12 04 15 00
+T A0 00 0E 94 00 00 A2 2E 40 2F 51 2F CF B6 F8 94
+R 00 00 00 00 12 04 06 00
+T AE 00 CF 92 04 2F 15 2F 5E D0 00 30 01 07 31 F0
+R 00 00 00 00
+T BC 00 CC 24 CF 90 CF BE 0F EF 1F EF 34 C0 E4 2F
+R 00 00 00 00
+T CA 00 F5 2F 27 80 85 E0 82 9D 60 2D 71 2D 8E 2F
+R 00 00 00 00
+T D8 00 9F 2F 09 96 68 0F 79 1F E6 2F F7 2F A0 82
+R 00 00 00 00
+T E6 00 08 84 19 84 12 82 01 82 0A 84 1B 84 14 82
+R 00 00 00 00
+T F4 00 03 82 84 2F 95 2F 07 96 E8 2F F9 2F 80 81
+R 00 00 00 00
+T 02 01 8F 5F 80 83 64 2F 75 2F 69 5F 7F 4F E4 2F
+R 00 00 00 00
+T 10 01 F5 2F 20 84 E6 2F F7 2F 30 80 32 20 30 82
+R 00 00 00 00
+T 1E 01 AA 24 AF 90 AF BE 04 2F 15 2F 0E 94 00 00
+R 00 00 00 00 12 0E 08 00
+T 2C 01 00 27 11 27 0C 94 00 00
+R 00 00 00 00 12 08 14 00
+T 34 01 0E 94 00 00 C2 2E A0 2E B1 2E 24 97 0A 84
+R 00 00 00 00 12 04 03 00
+T 42 01 1B 84 1B 82 0A 82 08 84 19 84 19 82 08 82
+R 00 00 00 00
+T 50 01 2C 2D 0A 2D 1B 2D A4 DF 00 30 01 07 29 F4
+R 00 00 00 00
+T 5E 01 0E 94 00 00 00 27 11 27 02 C0 0F EF 1F EF
+R 00 00 00 00 12 04 17 00
+T 6C 01 24 96 0C 94 00 00
+R 00 00 00 00 12 06 12 00
+T 72 01 E0 2F F1 2F 20 84 87 81 8F 5F 82 21 26 80
+R 00 00 00 00
+T 80 01 82 15 19 F4 0F EF 1F EF 02 C0 00 27 11 27
+R 00 00 00 00
+T 8E 01 08 95
+R 00 00 00 00
+T 90 01 0E 94 00 00 0E 94 00 00 A2 2E B3 2E 25 97
+R 00 00 00 00 12 04 0C 00 12 08 02 00
+T 9E 01 4A 2D 5B 2D 5B 83 4A 83 22 24 33 24 39 82
+R 00 00 00 00
+T AC 01 28 82 2E EF E4 2F F5 2F 00 81 11 81 73 DF
+R 00 00 00 00
+T BA 01 00 30 01 07 C1 F0 E4 2F F5 2F 22 84 22 20
+R 00 00 00 00
+T C8 01 E1 F0 81 E0 8C 83 5B 83 4A 83 80 E0 90 E0
+R 00 00 00 00 20 0C 02 00 00 00 40 0E 02 00 00 00
+T D6 01 99 83 88 83 01 E0 10 E0 20 E0 30 E0
+R 00 00 00 00
+T E2 01 0E 94 00 00 E4 2F F5 2F 17 83 06 83 09 C0
+R 00 00 00 00 12 04 0E 00
+T F0 01 E4 2F F5 2F 22 84 22 20 21 F0 22 24 33 24
+R 00 00 00 00
+T FE 01 37 82 26 82 25 96 0E 94 00 00 24 96 08 95
+R 00 00 00 00 12 0A 11 00
+T 0C 02 3A 93 2A 93 0E 94 00 00 60 2F 71 2F 25 97
+R 00 00 00 00 12 08 05 00
+T 1A 02 AB 88 40 91 00 00 50 91 01 00 40 30 45 07
+R 00 00 00 00 00 06 01 00 00 0A 01 00
+T 28 02 49 F0 E4 2F F5 2F 20 84 31 84 30 92 01 00
+R 00 00 00 00 00 0E 01 00
+T 36 02 20 92 00 00 08 C0 2B E0 30 E0 00 E0
+R 00 00 00 00 00 04 01 00 22 0C 00 00 00 00
+T 42 02 10 E0 0E 94 00 00 40 2F 51 2F E4 2F F5 2F
+R 00 00 00 00 42 02 00 00 00 00 12 06 0D 00
+T 50 02 71 83 60 83 09 88 1A 88 15 82 04 82 0F 84
+R 00 00 00 00
+T 5E 02 18 88 13 82 02 82 3A 96 A0 82 AC 82 5B 83
+R 00 00 00 00
+T 6C 02 4A 83 80 E0 90 E0 99 83 88 83 0B 85 1C 85
+R 00 00 00 00 20 04 02 00 00 00 40 06 02 00 00 00
+T 7A 02 2D 85 3E 85 0E 94 00 00 E4 2F F5 2F 17 83
+R 00 00 00 00 12 08 0F 00
+T 88 02 06 83 E6 2F F7 2F 22 80 33 80 E4 2F F5 2F
+R 00 00 00 00
+T 96 02 31 86 20 86 E6 2F F7 2F 53 83 42 83 04 2F
+R 00 00 00 00
+T A4 02 15 2F 25 96 0E 94 00 00 22 96 08 95
+R 00 00 00 00 12 08 13 00
+T B0 02 0E 94 00 00 E0 2F F1 2F 42 81 53 81 6E 2F
+R 00 00 00 00 12 04 01 00
+T BE 02 7F 2F 6E 5F 7F 4F 20 C0 42 17 53 07 A9 F4
+R 00 00 00 00
+T CC 02 E4 2F F5 2F 20 84 31 84 E6 2F F7 2F 31 82
+R 00 00 00 00
+T DA 02 20 82 20 90 00 00 30 90 01 00 E4 2F F5 2F
+R 00 00 00 00 00 06 01 00 00 0A 01 00
+T E8 02 31 86 20 86 50 93 01 00 40 93 00 00 0B C0
+R 00 00 00 00 00 08 01 00 00 0C 01 00
+T F6 02 64 2F 75 2F 68 5F 7F 4F E4 2F F5 2F 40 85
+R 00 00 00 00
+T 04 03 51 85 40 30 45 07 E9 F6 0C 94 00 00
+R 00 00 00 00 12 0C 10 00
+T 10 03 0E 94 00 00 A0 2E B1 2E 6A 2D 7B 2D E6 2F
+R 00 00 00 00 12 04 05 00
+T 1E 03 F7 2F 40 81 51 81 AF B6 F8 94 AF 92 E4 2F
+R 00 00 00 00
+T 2C 03 F5 2F A6 80 25 C0 85 E0 8A 9D 20 2C 31 2C
+R 00 00 00 00
+T 3A 03 84 2F 95 2F 09 96 28 0E 39 1E E2 2D F3 2D
+R 00 00 00 00
+T 48 03 80 81 8E 3F 81 F4 23 80 34 80 62 15 73 05
+R 00 00 00 00
+T 56 03 59 F4 85 E0 8A 9D E0 2D F1 2D 84 2F 95 2F
+R 00 00 00 00
+T 64 03 09 96 E8 0F F9 1F 8F EF 80 83 E4 2F F5 2F
+R 00 00 00 00
+T 72 03 20 84 8A 2D 8F 5F A8 2E A2 20 E4 2F F5 2F
+R 00 00 00 00
+T 80 03 27 80 A2 14 09 F0 D5 CF E6 2F F7 2F 26 80
+R 00 00 00 00
+T 8E 03 37 80 22 20 11 F4 33 20 21 F0 06 81 17 81
+R 00 00 00 00
+T 9C 03 0E 94 00 00 AA 24 AF 90 AF BE 26 2F 37 2F
+R 00 00 00 00 12 04 09 00
+T AA 03 04 2F 15 2F 80 DF 0C 94 00 00
+R 00 00 00 00 12 0A 13 00
+T B4 03 0E 94 00 00 A2 2E B3 2E 40 2F 51 2F 22 97
+R 00 00 00 00 12 04 06 00
+T C2 03 CF B6 F8 94 CF 92 2A 84 3B 84 4C 84 5D 84
+R 00 00 00 00
+T D0 03 48 82 59 82 22 2D 33 2D 04 2F 15 2F
+R 00 00 00 00
+T DC 03 0E 94 00 00 00 30 01 07 31 F0 CC 24 CF 90
+R 00 00 00 00 12 04 04 00
+T EA 03 CF BE 0F EF 1F EF 58 C0 E4 2F F5 2F 26 80
+R 00 00 00 00
+T F8 03 85 E0 82 9D 20 2C 31 2C 8E 2F 9F 2F 09 96
+R 00 00 00 00
+T 06 04 28 0E 39 1E 05 E0 10 E0 BA 92 AA 92 3A 92
+R 00 00 00 00
+T 14 04 2A 92 0E 94 00 00 84 2F 95 2F 06 96 E8 2F
+R 00 00 00 00 12 06 16 00
+T 22 04 F9 2F 80 81 8F 5F 80 83 64 2F 75 2F 6A 5F
+R 00 00 00 00
+T 30 04 7F 4F E4 2F F5 2F 20 84 E6 2F F7 2F 30 80
+R 00 00 00 00
+T 3E 04 32 20 30 82 E4 2F F5 2F 27 80 36 80 32 14
+R 00 00 00 00
+T 4C 04 21 F0 0E 2F 1F 2F 0E 94 00 00 CC 24 CF 90
+R 00 00 00 00 12 0A 08 00
+T 5A 04 CF BE EA 2D FB 2D 80 81 8E 3F E1 F4 63 81
+R 00 00 00 00
+T 68 04 74 81 E6 2F F7 2F 24 80 35 80 EA 2D FB 2D
+R 00 00 00 00
+T 76 04 34 82 23 82 E6 2F F7 2F 22 80 33 80 EA 2D
+R 00 00 00 00
+T 84 04 FB 2D 32 82 21 82 E6 2F F7 2F 22 84 20 FE
+R 00 00 00 00
+T 92 04 05 C0 2E 2F 3F 2F 04 2F 15 2F 09 DF 00 27
+R 00 00 00 00
+T A0 04 11 27 22 96 0C 94 00 00
+R 00 00 00 00 12 08 14 00
+T A8 04 AA 92 AF B6 F8 94 AF 92 E0 2F F1 2F 27 80
+R 00 00 00 00
+T B6 04 26 82 22 24 33 24 31 82 20 82 AA 24 AF 90
+R 00 00 00 00
+T C4 04 AF BE A9 90 08 95
+R 00 00 00 00
+T 00 00 C8 00 00
+R 00 00 02 00 09 02 00 00
+.end
+.start
+XL
+H 1 areas 13 global symbols
+M condition.c
+S _NutMutexUnlock Ref0000
+S _heapFreeList Ref0000
+S _NutGetMillis Ref0000
+S _NutEventBroadcast Ref0000
+S _NutEventWait Ref0000
+S _NutMutexLock Ref0000
+S _NutHeapRootFree Ref0000
+S _NutMutexInit Ref0000
+S _NutEventPost Ref0000
+S _NutMutexDestroy Ref0000
+S _NutHeapRootAlloc Ref0000
+A text size 1DA flags 0
+dbfile ../.././nut/os/condition.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\condition.c
+dbstruct 25 _NUTTHREADINFO
+dbfield 0 td_next pS[_NUTTHREADINFO]
+dbfield 2 td_qnxt pS[_NUTTHREADINFO]
+dbfield 4 td_qpec i
+dbfield 6 td_name A[9:9]c
+dbfield 15 td_state c
+dbfield 16 td_sp i
+dbfield 18 td_priority c
+dbfield 19 td_memory pc
+dbfield 21 td_timer pV
+dbfield 23 td_queue pV
+dbend
+dbstruct 6 _MUTEX
+dbfield 0 qhp pV
+dbfield 2 thread pS[_NUTTHREADINFO]
+dbfield 4 count i
+dbend
+dbstruct 8 _CONDITION
+dbfield 0 event pV
+dbfield 2 mutex S[_MUTEX]
+dbend
+dbfunc e NutConditionInit 0 fI
+dbsym r cond 14 pS[_CONDITION]
+dbline FFFFFFFF 8
+dbline 43 8
+dbline 44 8
+dbline 45 18
+dbline 45 1E
+dbline 46 24
+dbline 47 30
+dbline FFFFFFFE 34
+dbline 0 34
+dbfunc e NutConditionLock 3A fV
+dbsym r cond 14 pS[_CONDITION]
+dbline FFFFFFFF 42
+dbline 55 42
+dbline 56 42
+dbline 56 48
+dbline 57 4A
+dbline FFFFFFFE 56
+dbline 0 56
+dbfunc e NutConditionUnlock 5C fV
+dbsym r cond 14 pS[_CONDITION]
+dbline FFFFFFFF 64
+dbline 65 64
+dbline 66 64
+dbline 66 6A
+dbline 67 6C
+dbline FFFFFFFE 78
+dbline 0 78
+dbfunc e NutConditionWait 7E fI
+dbsym r cond 14 pS[_CONDITION]
+dbline FFFFFFFF 88
+dbline 82 88
+dbline 83 88
+dbline 83 8E
+dbline 84 94
+dbline 85 A0
+dbline 86 BC
+dbline 87 C8
+dbline FFFFFFFE CC
+dbline 0 CC
+dbfunc e NutConditionTimedWait D4 fI
+dbsym l ms 2 l
+dbsym l abs_ms 8 l
+dbsym r cond 14 pS[_CONDITION]
+dbline FFFFFFFF E2
+dbline A7 E2
+dbline AA E2
+dbline AA E8
+dbline AB EE
+dbline AC 10A
+dbline AC 124
+dbline AE 12A
+dbline AF 136
+dbline B0 14E
+dbline B1 15A
+dbline FFFFFFFE 15E
+dbline 0 15E
+dbfunc e NutConditionSignal 168 fI
+dbsym r cond A pS[_CONDITION]
+dbline FFFFFFFF 170
+dbline C1 170
+dbline C2 170
+dbline C2 178
+dbline C3 17E
+dbline FFFFFFFE 186
+dbline 0 186
+dbfunc e NutConditionBroadcast 18C fI
+dbsym r cond A pS[_CONDITION]
+dbline FFFFFFFF 194
+dbline D3 194
+dbline D4 194
+dbline D4 19C
+dbline D5 1A2
+dbline FFFFFFFE 1AA
+dbline 0 1AA
+dbfunc e NutConditionFree 1B0 fV
+dbsym r cond 14 pS[_CONDITION]
+dbline FFFFFFFF 1B8
+dbline DE 1B8
+dbline DF 1B8
+dbline E0 1C4
+dbline E1 1D0
+dbline FFFFFFFE 1D4
+dbline 0 1D4
+S _NutConditionSignal Def0168
+S _NutConditionUnlock Def005C
+S _NutConditionFree Def01B0
+S _NutConditionTimedWait Def00D4
+S _NutConditionLock Def003A
+S _NutConditionBroadcast Def018C
+S _NutConditionInit Def0000
+S _NutConditionWait Def007E
+T 00 00 4A 93 5A 93 40 2F 51 2F 28 E0 30 E0 00 E0
+R 00 00 00 00 22 0E 01 00 00 00
+T 0E 00 10 E0 0E 94 00 00 40 2F 51 2F 00 30 01 07
+R 00 00 00 00 42 02 01 00 00 00 12 06 0A 00
+T 1C 00 19 F4 01 E0 10 E0 08 C0 04 2F 15 2F 0E 5F
+R 00 00 00 00
+T 2A 00 1F 4F 0E 94 00 00 00 27 11 27 59 91 49 91
+R 00 00 00 00 12 06 07 00
+T 38 00 08 95
+R 00 00 00 00
+T 3A 00 4A 93 5A 93 40 2F 51 2F 40 30 45 07 09 F4
+R 00 00 00 00
+T 48 00 06 C0 04 2F 15 2F 0E 5F 1F 4F 0E 94 00 00
+R 00 00 00 00 12 0E 05 00
+T 56 00 59 91 49 91 08 95
+R 00 00 00 00
+T 5C 00 4A 93 5A 93 40 2F 51 2F 40 30 45 07 09 F4
+R 00 00 00 00
+T 6A 00 06 C0 04 2F 15 2F 0E 5F 1F 4F 0E 94 00 00
+R 00 00 00 00 12 0E 00 00
+T 78 00 59 91 49 91 08 95
+R 00 00 00 00
+T 7E 00 4A 93 5A 93 40 2F 51 2F 22 97 40 30 45 07
+R 00 00 00 00
+T 8C 00 19 F4 0F EF 1F EF 1C C0 04 2F 15 2F 0E 5F
+R 00 00 00 00
+T 9A 00 1F 4F 0E 94 00 00 80 E0 90 E0 A0 E0 B0 E0
+R 00 00 00 00 12 06 00 00
+T A8 00 A8 83 B9 83 28 2F 39 2F E4 2F F5 2F 00 81
+R 00 00 00 00
+T B6 00 11 81 0E 94 00 00 04 2F 15 2F 0E 5F 1F 4F
+R 00 00 00 00 12 06 04 00
+T C4 00 0E 94 00 00 00 27 11 27 22 96 59 91 49 91
+R 00 00 00 00 12 04 05 00
+T D2 00 08 95
+R 00 00 00 00
+T D4 00 3A 93 2A 93 4A 93 5A 93 40 2F 51 2F 26 97
+R 00 00 00 00
+T E2 00 40 30 45 07 19 F4 0F EF 1F EF 38 C0
+R 00 00 00 00
+T EE 00 0E 94 00 00 28 84 39 84 4A 84 5B 84 20 1A
+R 00 00 00 00 12 04 02 00
+T FC 00 31 0A 42 0A 53 0A 2A 82 3B 82 4C 82 5D 82
+R 00 00 00 00
+T 0A 01 8F EF 9F EF AF EF BF E7 2A 80 3B 80 4C 80
+R 00 00 00 00
+T 18 01 5D 80 82 15 93 05 A4 05 B5 05 18 F4 0F EF
+R 00 00 00 00
+T 26 01 1F EF 1A C0 04 2F 15 2F 0E 5F 1F 4F
+R 00 00 00 00
+T 32 01 0E 94 00 00 2A 80 3B 80 4C 80 5D 80 48 82
+R 00 00 00 00 12 04 00 00
+T 40 01 59 82 22 2D 33 2D 04 2F 15 2F 0E 94 00 00
+R 00 00 00 00 12 0E 04 00
+T 4E 01 04 2F 15 2F 0E 5F 1F 4F 0E 94 00 00 00 27
+R 00 00 00 00 12 0C 05 00
+T 5C 01 11 27 26 96 59 91 49 91 22 96 08 95
+R 00 00 00 00
+T 68 01 AA 92 BA 92 A0 2E B1 2E AA 20 29 F4 BB 20
+R 00 00 00 00
+T 76 01 19 F4 0F EF 1F EF 04 C0 0A 2D 1B 2D
+R 00 00 00 00
+T 82 01 0E 94 00 00 B9 90 A9 90 08 95
+R 00 00 00 00 12 04 08 00
+T 8C 01 AA 92 BA 92 A0 2E B1 2E AA 20 29 F4 BB 20
+R 00 00 00 00
+T 9A 01 19 F4 0F EF 1F EF 04 C0 0A 2D 1B 2D
+R 00 00 00 00
+T A6 01 0E 94 00 00 B9 90 A9 90 08 95
+R 00 00 00 00 12 04 03 00
+T B0 01 4A 93 5A 93 40 2F 51 2F 04 2F 15 2F 0E 5F
+R 00 00 00 00
+T BE 01 1F 4F 0E 94 00 00 24 2F 35 2F 00 E0
+R 00 00 00 00 12 06 09 00 22 0C 01 00 00 00
+T CA 01 10 E0 0E 94 00 00 44 27 55 27 59 91 49 91
+R 00 00 00 00 42 02 01 00 00 00 12 06 06 00
+T D8 01 08 95
+R 00 00 00 00
+.end
+.start
+XL
+H 6 areas 1D global symbols
+M osdebug.c
+S _fprintf_P Ref0000
+S _heapFreeList Ref0000
+S push_xgset300C Ref0000
+S push_xgsetF00C Ref0000
+S push_xgset30FC Ref0000
+S _NutHeapRootAvailable Ref0000
+S _fputs_P Ref0000
+S push_xgsetF0FC Ref0000
+S _nutTimerList Ref0000
+S _NutThreadStackAvailable Ref0000
+S _NutThreadWake Ref0000
+S _NutEventTimeout Ref0000
+S _fputc Ref0000
+S _fputs Ref0000
+S _nutThreadList Ref0000
+S pop_xgset300C Ref0000
+S pop_xgsetF00C Ref0000
+S pop_xgset30FC Ref0000
+S pop_xgsetF0FC Ref0000
+A text size 4E8 flags 0
+dbfile ../.././nut/os/osdebug.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\osdebug.c
+dbstruct 0 __iobuf
+dbend
+dbstruct 25 _NUTTHREADINFO
+dbfield 0 td_next pS[_NUTTHREADINFO]
+dbfield 2 td_qnxt pS[_NUTTHREADINFO]
+dbfield 4 td_qpec i
+dbfield 6 td_name A[9:9]c
+dbfield 15 td_state c
+dbfield 16 td_sp i
+dbfield 18 td_priority c
+dbfield 19 td_memory pc
+dbfield 21 td_timer pV
+dbfield 23 td_queue pV
+dbend
+dbstruct 16 _NUTTIMERINFO
+dbfield 0 tn_next pS[_NUTTIMERINFO]
+dbfield 2 tn_prev pS[_NUTTIMERINFO]
+dbfield 4 tn_ticks l
+dbfield 8 tn_ticks_left l
+dbfield 12 tn_callback pfV
+dbfield 14 tn_arg pV
+dbend
+dbstruct 4 _HEAPNODE
+dbfield 0 hn_size i
+dbfield 2 hn_next pS[_HEAPNODE]
+dbend
+dbfunc e NutDumpThreadQueue 0 fV
+dbsym r tdp A pS[_NUTTHREADINFO]
+dbsym r stream C pS[__iobuf]
+dbline FFFFFFFF E
+dbline 77 E
+dbline 7E E
+dbline 7F 1C
+dbline 81 2A
+dbline 86 2A
+dbline 8F 18E
+dbline 91 196
+dbline 81 196
+dbline 92 1A2
+dbline FFFFFFFE 1A2
+dbline 0 1A2
+dbfunc e NutDumpThreadList 1A8 fV
+dbsym r tqp 16 pS[_NUTTHREADINFO]
+dbsym r tdp 14 pS[_NUTTHREADINFO]
+dbsym r stream A pS[__iobuf]
+dbline FFFFFFFF 1B2
+dbline 9E 1B2
+dbline AA 1B2
+dbline AC 1BE
+dbline AD 1C8
+dbline B2 1C8
+dbline B8 284
+dbline B8 294
+dbline B9 294
+dbline BA 29C
+dbline BB 2A4
+dbline BD 2B2
+dbline BE 2B2
+dbline BF 2C2
+dbline C0 2CA
+dbline BD 2CA
+dbline C1 2D0
+dbline C2 2D0
+dbline C3 2D0
+dbline C4 2DC
+dbline C5 2E4
+dbline AD 2E4
+dbline FFFFFFFE 2EC
+dbline 0 2EC
+dbfunc e NutDumpTimerList 2F2 fV
+dbsym r tnp 14 pS[_NUTTIMERINFO]
+dbsym r stream A pS[__iobuf]
+dbline FFFFFFFF 2FC
+dbline D1 2FC
+dbline E2 2FC
+dbline E2 310
+dbline E3 310
+dbline E4 31E
+dbline E5 31E
+dbline E6 352
+dbline E7 364
+dbline E8 372
+dbline E9 384
+dbline EB 392
+dbline EC 3BA
+dbline ED 3D2
+dbline EE 3DA
+dbline E4 3DA
+dbline EF 3E2
+dbline FFFFFFFE 3E2
+dbline 0 3E2
+dbfunc e NutTraceOs 3E8 fV
+dbsym r flags 12 c
+dbsym r stream 10 pS[__iobuf]
+dbline FFFFFFFF 3E8
+dbline FA 3E8
+dbline FB 3E8
+dbline FC 3EE
+dbline FD 3F6
+dbline FE 406
+dbline 100 40C
+dbline FFFFFFFE 412
+dbline 0 412
+dbfunc e NutDumpHeap 414 fV
+dbsym r avail C i
+dbsym r sum E i
+dbsym r node 14 pS[_HEAPNODE]
+dbsym r stream A pS[__iobuf]
+dbline FFFFFFFF 41E
+dbline 10A 41E
+dbline 116 41E
+dbline 119 422
+dbline 11A 42E
+dbline 11A 438
+dbline 11B 438
+dbline 11C 444
+dbline 11E 458
+dbline 11F 46E
+dbline 120 470
+dbline 11A 470
+dbline 11A 478
+dbline 121 47E
+dbline 122 490
+dbline 124 4A6
+dbline FFFFFFFE 4B6
+dbline 0 4B6
+dbfunc e NutTraceHeap 4BC fV
+dbsym r flags 12 c
+dbsym r stream 10 pS[__iobuf]
+dbline FFFFFFFF 4BC
+dbline 12F 4BC
+dbline 130 4BC
+dbline 131 4C2
+dbline 132 4CA
+dbline 133 4DA
+dbline 135 4E0
+dbline FFFFFFFE 4E6
+dbline 0 4E6
+S _NutTraceHeap Def04BC
+S _NutDumpThreadList Def01A8
+S _NutTraceOs Def03E8
+S _NutDumpThreadQueue Def0000
+S _NutDumpHeap Def0414
+S _NutDumpTimerList Def02F2
+A data size 33 flags 20
+dbfile ../.././nut/os/osdebug.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\osdebug.c
+dbsym s states 0 A[8:4]pc
+A idata size 33 flags 0
+A lit size 122 flags 0
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\osdebug.c
+dbsym s qheader 0 A[57:57]kc
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\osdebug.c
+dbsym s fmt 39 A[45:45]kc
+dbsym s fmt2 91 A[6:6]kc
+dbsym s fmt1 66 A[43:43]kc
+dbsym s fmt3 E4 A[8:8]kc
+dbsym s fmt2 DE A[6:6]kc
+dbsym s fmt1 D0 A[14:14]kc
+dbsym s theader B5 A[27:27]kc
+dbsym s tname A5 A[16:16]kc
+dbsym s wname 97 A[14:14]kc
+dbsym s fmt3 113 A[15:15]kc
+dbsym s fmt2 F6 A[29:29]kc
+dbsym s fmt1 EC A[10:10]kc
+A bss size 6 flags 20
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\osdebug.c
+dbsym e __heap_trf 0 c
+dbsym e __heap_trs 1 pS[__iobuf]
+dbsym e __os_trf 3 c
+dbsym e __os_trs 4 pS[__iobuf]
+S ___heap_trf Def0000
+S ___heap_trs Def0001
+S ___os_trf Def0003
+S ___os_trs Def0004
+A efunc_lit size 6 flags 0
+T 00 00 2F 00
+R 00 00 02 00 00 02 01 00
+T 02 00 2B 00
+R 00 00 02 00 00 02 01 00
+T 04 00 27 00
+R 00 00 02 00 00 02 01 00
+T 06 00 23 00
+R 00 00 02 00 00 02 01 00
+T 00 00 0A 48 6E 64 6C 20 4E 61 6D 65 20 20 20 20
+R 00 00 03 00
+T 0E 00 20 50 72 69 6F 20 53 74 61 20 51 55 45 20
+R 00 00 03 00
+T 1C 00 20 54 69 6D 72 20 53 74 6B 50 20 46 72 65
+R 00 00 03 00
+T 2A 00 65 4D 65 6D 20 4D 69 6E 53 74 61 63 6B 0A
+R 00 00 03 00
+T 38 00 00 25 30 34 6C 58 20 25 2D 38 73 20 25 34
+R 00 00 03 00
+T 46 00 75 20 25 73 20 25 30 34 6C 58 20 25 30 34
+R 00 00 03 00
+T 54 00 6C 58 20 25 30 34 6C 58 20 25 35 6C 75 20
+R 00 00 03 00
+T 62 00 25 73 0A 00
+R 00 00 03 00
+T 00 00 0E 94 00 00 A2 2E B3 2E C0 2E D1 2E A0 97
+R 00 00 00 00 12 04 07 00
+T 0E 00 8A 2D 9B 2D 8F 3F EF EF 9E 07 09 F0 BD C0
+R 00 00 00 00
+T 1C 00 2C 2D 3D 2D 00 E0 10 E0
+R 00 00 00 00 20 06 01 00 19 00 40 08 01 00 19 00
+T 24 00 0E 94 00 00 BC C0 EA 2D FB 2D 63 88 74 88
+R 00 00 00 00 12 04 0D 00
+T 32 00 4F EE 5E EB 6D EA 7E ED E6 2D F7 2D 20 80
+R 00 00 00 00
+T 40 00 31 80 42 80 53 80 24 16 35 06 46 06 57 06
+R 00 00 00 00
+T 4E 00 61 F1 4F EE 5E EB 6D EA 7E ED 24 80 35 80
+R 00 00 00 00
+T 5C 00 46 80 57 80 24 16 35 06 46 06 57 06 F9 F0
+R 00 00 00 00
+T 6A 00 4F EE 5E EB 6D EA 7E ED 20 84 31 84 42 84
+R 00 00 00 00
+T 78 00 53 84 24 16 35 06 46 06 57 06 91 F0 4F EE
+R 00 00 00 00
+T 86 00 5E EB 6D EA 7E ED 24 84 35 84 46 84 57 84
+R 00 00 00 00
+T 94 00 24 16 35 06 46 06 57 06 29 F0 80 E0 90 E0
+R 00 00 00 00 20 0C 01 00 14 00 40 0E 01 00 14 00
+T A2 00 E8 2E F9 2E 04 C0 80 E0 90 E0 E8 2E F9 2E
+R 00 00 00 00 20 08 01 00 11 00 40 0A 01 00 11 00
+T B0 00 FB 8E EA 8E EA 2D FB 2D 70 96 20 80 31 80
+R 00 00 00 00
+T BE 00 44 24 55 24 2C 8E 3D 8E 4E 8E 5F 8E EA 2D
+R 00 00 00 00
+T CC 00 FB 2D 73 96 20 80 31 80 44 24 37 FC 40 94
+R 00 00 00 00
+T DA 00 55 24 47 FC 50 94 6C 8C 7D 8C 8E 8C 9F 8C
+R 00 00 00 00
+T E8 00 62 18 73 08 84 08 95 08 6E 8A 7F 8A 88 8E
+R 00 00 00 00
+T F6 00 99 8E 2C 8C 3D 8C 4E 8C 5F 8C 2A 8A 3B 8A
+R 00 00 00 00
+T 04 01 4C 8A 5D 8A EA 2D FB 2D 25 88 36 88 44 24
+R 00 00 00 00
+T 12 01 37 FC 40 94 55 24 47 FC 50 94 2E 86 3F 86
+R 00 00 00 00
+T 20 01 48 8A 59 8A 27 88 30 8C 44 24 37 FC 40 94
+R 00 00 00 00
+T 2E 01 55 24 47 FC 50 94 2A 86 3B 86 4C 86 5D 86
+R 00 00 00 00
+T 3C 01 80 E0 90 E0 E7 85 FF 27 EE 0F FF 1F E8 0F
+R 00 00 00 00 20 02 01 00 00 00 40 04 01 00 00 00
+T 4A 01 F9 1F 20 80 31 80 39 86 28 86 EA 2D FB 2D
+R 00 00 00 00
+T 58 01 22 88 33 24 3F 82 2E 82 8E 2F 9F 2F 06 96
+R 00 00 00 00
+T 66 01 9D 83 8C 83 2E 2E 3F 2E 44 24 37 FC 40 94
+R 00 00 00 00
+T 74 01 55 24 47 FC 50 94 28 82 39 82 4A 82 5B 82
+R 00 00 00 00
+T 82 01 20 E0 30 E0 0C 2D 1D 2D
+R 00 00 00 00 20 02 03 00 39 00 40 04 03 00 39 00
+T 8A 01 0E 94 00 00 EA 2D FB 2D A2 80 B3 80 AA 20
+R 00 00 00 00 12 04 00 00
+T 98 01 09 F0 47 CF BB 20 09 F0 44 CF A0 96
+R 00 00 00 00
+T A4 01 0C 94 00 00
+R 00 00 00 00 12 04 12 00
+T 66 00 25 30 34 58 20 25 2D 38 73 20 25 34 75 20
+R 00 00 03 00
+T 74 00 25 73 20 25 30 34 58 20 25 30 34 58 20 25
+R 00 00 03 00
+T 82 00 30 34 58 20 25 37 75 20 25 38 75 20 25 73
+R 00 00 03 00
+T 90 00 00 20 25 30 34 58 00
+R 00 00 03 00
+T A8 01 0E 94 00 00 A0 2E B1 2E 64 97 2A 2D 3B 2D
+R 00 00 00 00 12 04 03 00
+T B6 01 00 E0 10 E0
+R 00 00 00 00 20 02 03 00 00 00 40 04 03 00 00 00
+T BA 01 0E 94 00 00 40 91 00 00 50 91 01 00 8E C0
+R 00 00 00 00 12 04 06 00 02 08 0E 00 02 0C 0E 00
+T C8 01 04 2F 15 2F 0A 5F 1F 4F 0E 94 00 00 60 2E
+R 00 00 00 00 12 0C 09 00
+T D6 01 71 2E 8F EE 9E EB AD EA BE ED E4 2F F5 2F
+R 00 00 00 00
+T E4 01 73 96 AF 93 BF 93 A0 81 B1 81 EA 2F FB 2F
+R 00 00 00 00
+T F2 01 BF 91 AF 91 20 80 31 80 42 80 53 80 28 16
+R 00 00 00 00
+T 00 02 39 06 4A 06 5B 06 19 F0 60 E0 70 E0 02 C0
+R 00 00 00 00 20 0A 01 00 14 00 40 0C 01 00 14 00
+T 0E 02 60 E0 70 E0 7B 8B 6A 8B 79 8A 68 8A E4 2F
+R 00 00 00 00 20 02 01 00 11 00 40 04 01 00 11 00
+T 1C 02 F5 2F 60 88 71 88 23 88 34 88 46 2C 57 2C
+R 00 00 00 00
+T 2A 02 42 18 53 08 5F 86 4E 86 7D 86 6C 86 25 88
+R 00 00 00 00
+T 38 02 36 88 3B 86 2A 86 27 88 30 8C 39 86 28 86
+R 00 00 00 00
+T 46 02 80 E0 90 E0 E7 85 FF 27 EE 0F FF 1F E8 0F
+R 00 00 00 00 20 02 01 00 00 00 40 04 01 00 00 00
+T 54 02 F9 1F 20 80 31 80 3F 82 2E 82 E4 2F F5 2F
+R 00 00 00 00
+T 62 02 22 88 33 24 3D 82 2C 82 8E 2F 9F 2F 06 96
+R 00 00 00 00
+T 70 02 9B 83 8A 83 59 83 48 83 20 E0 30 E0 0A 2D
+R 00 00 00 00 20 0A 03 00 66 00 40 0C 03 00 66 00
+T 7E 02 1B 2D 0E 94 00 00 E4 2F F5 2F 27 88 30 8C
+R 00 00 00 00 12 06 00 00
+T 8C 02 22 20 11 F4 33 20 F1 F0 A7 89 B0 8D 6D 91
+R 00 00 00 00
+T 9A 02 7C 91 6F 3F EF EF 7E 07 99 F4 2A 2D 3B 2D
+R 00 00 00 00
+T A8 02 00 E0 10 E0
+R 00 00 00 00 20 02 01 00 08 00 40 04 01 00 08 00
+T AC 02 0E 94 00 00 0F C0 79 83 68 83 20 E0
+R 00 00 00 00 12 04 0D 00 20 0C 03 00 91 00
+T B8 02 30 E0 0A 2D 1B 2D 0E 94 00 00 E6 2F F7 2F
+R 00 00 00 00 40 02 03 00 91 00 12 0A 00 00
+T C6 02 62 81 73 81 60 30 67 07 89 F7 2A 2D 3B 2D
+R 00 00 00 00
+T D4 02 0A E0 10 E0 0E 94 00 00 E4 2F F5 2F 40 81
+R 00 00 00 00 12 08 0C 00
+T E2 02 51 81 40 30 45 07 09 F0 6E CF 64 96
+R 00 00 00 00
+T EE 02 0C 94 00 00
+R 00 00 00 00 12 04 10 00
+T 97 00 4E 75 74 54 68 72 65 61 64 57 61 6B 65 00
+R 00 00 03 00
+T A5 00 4E 75 74 45 76 65 6E 74 54 69 6D 65 6F 75
+R 00 00 03 00
+T B3 00 74 00 41 64 64 72 20 54 69 63 6B 73 20 20
+R 00 00 03 00
+T C1 00 4C 65 66 74 20 43 61 6C 6C 62 61 63 6B 0A
+R 00 00 03 00
+T CF 00 00 25 30 34 58 25 36 6C 75 25 36 6C 75 20
+R 00 00 03 00
+T DD 00 00 25 30 35 6C 58 00 28 25 30 34 58 29 0A
+R 00 00 03 00
+T EB 00 00
+R 00 00 03 00
+T F2 02 0E 94 00 00 A0 2E B1 2E 2A 97 20 90 00 00
+R 00 00 00 00 12 04 02 00 02 0E 08 00
+T 00 03 30 90 01 00 42 2D 53 2D 40 30 45 07 09 F4
+R 00 00 00 00 02 04 08 00
+T 0E 03 69 C0 2A 2D 3B 2D 00 E0 10 E0
+R 00 00 00 00 20 08 03 00 B5 00 40 0A 03 00 B5 00
+T 18 03 0E 94 00 00 5E C0 E4 2F F5 2F 20 84 31 84
+R 00 00 00 00 12 04 06 00
+T 26 03 42 84 53 84 2E 82 3F 82 48 86 59 86 24 80
+R 00 00 00 00
+T 34 03 35 80 46 80 57 80 2A 82 3B 82 4C 82 5D 82
+R 00 00 00 00
+T 42 03 59 83 48 83 20 E0 30 E0 0A 2D 1B 2D
+R 00 00 00 00 20 06 03 00 D0 00 40 08 03 00 D0 00
+T 4E 03 0E 94 00 00 80 E0
+R 00 00 00 00 12 04 00 00 20 06 05 00 03 00
+T 54 03 90 E0 E4 2F F5 2F 24 84 35 84 28 16 39 06
+R 00 00 00 00 40 02 05 00 03 00
+T 62 03 39 F4 2A 2D 3B 2D 00 E0 10 E0
+R 00 00 00 00 20 08 03 00 97 00 40 0A 03 00 97 00
+T 6C 03 0E 94 00 00 24 C0 80 E0
+R 00 00 00 00 12 04 06 00 20 08 05 00 00 00
+T 74 03 90 E0 E4 2F F5 2F 24 84 35 84 28 16 39 06
+R 00 00 00 00 40 02 05 00 00 00
+T 82 03 39 F4 2A 2D 3B 2D 00 E0 10 E0
+R 00 00 00 00 20 08 03 00 A5 00 40 0A 03 00 A5 00
+T 8C 03 0E 94 00 00 14 C0 E4 2F F5 2F 24 84 35 84
+R 00 00 00 00 12 04 06 00
+T 9A 03 44 24 55 24 22 0C 33 1C 44 1C 55 1C 28 82
+R 00 00 00 00
+T A8 03 39 82 4A 82 5B 82 20 E0 30 E0 0A 2D 1B 2D
+R 00 00 00 00 20 08 03 00 DE 00 40 0A 03 00 DE 00
+T B6 03 0E 94 00 00 E4 2F F5 2F 26 84 37 84 39 82
+R 00 00 00 00 12 04 00 00
+T C4 03 28 82 20 E0 30 E0 0A 2D 1B 2D
+R 00 00 00 00 20 04 03 00 E4 00 40 06 03 00 E4 00
+T CE 03 0E 94 00 00 E4 2F F5 2F 40 81 51 81 40 30
+R 00 00 00 00 12 04 00 00
+T DC 03 45 07 09 F0 9E CF 2A 96 0C 94 00 00
+R 00 00 00 00 12 0C 0F 00
+T E8 03 00 30 01 07 21 F0 10 93 05 00 00 93 04 00
+R 00 00 00 00 00 0A 04 00 00 0E 04 00
+T F6 03 20 90 04 00 30 90 05 00 22 20 11 F4 33 20
+R 00 00 00 00 00 04 04 00 00 08 04 00
+T 04 04 19 F0 20 93 03 00 03 C0 22 24 20 92 03 00
+R 00 00 00 00 00 06 04 00 00 0E 04 00
+T 12 04 08 95
+R 00 00 00 00
+T EC 00 25 30 34 78 20 25 35 64 0A 00 25 75 20 63
+R 00 00 03 00
+T FA 00 6F 75 6E 74 65 64 2C 20 62 75 74 20 25 75
+R 00 00 03 00
+T 08 01 20 72 65 70 6F 72 74 65 64 0A 00 25 75 20
+R 00 00 03 00
+T 16 01 62 79 74 65 73 20 66 72 65 65 0A 00
+R 00 00 03 00
+T 14 04 0E 94 00 00 A0 2E B1 2E 24 97 EE 24 FF 24
+R 00 00 00 00 12 04 04 00
+T 22 04 2A 2D 3B 2D 0A E0 10 E0 0E 94 00 00 40 91
+R 00 00 00 00 12 0C 0C 00
+T 30 04 00 00 50 91 01 00 20 C0 E4 2F F5 2F 20 80
+R 00 00 00 00 02 02 01 00 02 06 01 00
+T 3E 04 31 80 E2 0C F3 1C 3B 82 2A 82 59 83 48 83
+R 00 00 00 00
+T 4C 04 20 E0 30 E0 0A 2D 1B 2D
+R 00 00 00 00 20 02 03 00 EC 00 40 04 03 00 EC 00
+T 54 04 0E 94 00 00 24 2E 35 2E 40 36 E0 E0 5E 07
+R 00 00 00 00 12 04 00 00
+T 62 04 28 F0 8F EF 9F E7 84 17 95 07 08 F4 07 C0
+R 00 00 00 00
+T 70 04 E4 2F F5 2F 42 81 53 81 40 30 45 07 E9 F6
+R 00 00 00 00
+T 7E 04 00 E0 10 E0
+R 00 00 00 00 22 02 01 00 00 00 42 04 01 00 00 00
+T 82 04 0E 94 00 00 C0 2E D1 2E CE 14 DF 04 59 F0
+R 00 00 00 00 12 04 05 00
+T 90 04 DB 82 CA 82 F9 82 E8 82 20 E0 30 E0 0A 2D
+R 00 00 00 00 20 0A 03 00 F6 00 40 0C 03 00 F6 00
+T 9E 04 1B 2D 0E 94 00 00 08 C0 D9 82 C8 82 20 E0
+R 00 00 00 00 12 06 00 00 20 0E 03 00 13 01
+T AC 04 30 E0 0A 2D 1B 2D 0E 94 00 00 24 96
+R 00 00 00 00 40 02 03 00 13 01 12 0A 00 00
+T B8 04 0C 94 00 00
+R 00 00 00 00 12 04 11 00
+T BC 04 00 30 01 07 21 F0 10 93 02 00 00 93 01 00
+R 00 00 00 00 00 0A 04 00 00 0E 04 00
+T CA 04 20 90 01 00 30 90 02 00 22 20 11 F4 33 20
+R 00 00 00 00 00 04 04 00 00 08 04 00
+T D8 04 19 F0 20 93 00 00 03 C0 22 24 20 92 00 00
+R 00 00 00 00 00 06 04 00 00 0E 04 00
+T E6 04 08 95
+R 00 00 00 00
+T 08 00 53 49 47 4E 41 4C 45 44 00
+R 00 00 02 00
+T 11 00 4F 4B 00
+R 00 00 02 00
+T 14 00 46 41 49 4C 00
+R 00 00 02 00
+T 19 00 53 49 47 4E 41 4C 45 44 0A 00
+R 00 00 02 00
+T 23 00 53 4C 50 00
+R 00 00 02 00
+T 27 00 52 44 59 00
+R 00 00 02 00
+T 2B 00 52 55 4E 00
+R 00 00 02 00
+T 2F 00 54 52 4D 00
+R 00 00 02 00
+T 00 00 00 00 00 00 00 00
+R 00 00 05 00 0B 02 0B 00 0B 05 0A 00
+.end
+.start
+XL
+H 3 areas 4 global symbols
+M fatal.c
+S push_xgset003C Ref0000
+S pop_xgset003C Ref0000
+S _NUTPANIC Ref0000
+A text size 34 flags 0
+dbfile ../.././nut/os/fatal.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\fatal.c
+dbfunc e NUTFATAL 0 fV
+dbsym l expected C pc
+dbsym l line A I
+dbsym r file A pc
+dbsym r func C pc
+dbline FFFFFFFF E
+dbline 43 E
+dbline 44 E
+dbline FFFFFFFE 2E
+dbline 0 2E
+S _NUTFATAL Def0000
+A data size 21 flags 20
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\fatal.c
+A idata size 21 flags 0
+T 00 00 0E 94 00 00 A2 2E B3 2E C0 2E D1 2E 26 97
+R 00 00 00 00 12 04 00 00
+T 0E 00 DD 82 CC 82 0C 84 1D 84 1B 82 0A 82 0A 84
+R 00 00 00 00
+T 1C 00 1B 84 19 82 08 82 2A 2D 3B 2D 00 E0 10 E0
+R 00 00 00 00 20 0C 01 00 00 00 40 0E 01 00 00 00
+T 2A 00 0E 94 00 00 26 96 0C 94 00 00
+R 00 00 00 00 12 04 02 00 12 0A 01 00
+T 00 00 25 73 3A 25 64 3A 20 46 61 74 61 6C 3A 20
+R 00 00 02 00
+T 0E 00 45 78 70 65 63 74 65 64 20 25 73 20 69 6E
+R 00 00 02 00
+T 1C 00 20 25 73 0A 00
+R 00 00 02 00
+.end
+.start
+XL
+H 1 areas 4 global symbols
+M panic.c
+S ___iob Ref0000
+S push_arg4 Ref0000
+S _vfprintf Ref0000
+A text size 46 flags 0
+dbfile ../.././nut/os/panic.c
+dbfile e:\ethernut\ethernut-4.10.1\nut\os\panic.c
+dbfunc e NUTPANIC 0 fV
+dbsym r sreg A c
+dbsym r ap A pc
+dbsym l fmt 4 pc
+dbline FFFFFFFF A
+dbline 40 A
+dbline 43 A
+dbline 43 A
+dbline 43 C
+dbline 43 10
+dbline 43 10
+dbline 44 10
+dbline 45 26
+dbline 46 3A
+dbline 46 3A
+dbline 46 3A
+dbline 46 3A
+dbline FFFFFFFE 3C
+dbline 0 3C
+S _NUTPANIC Def0000
+T 00 00 0E 94 00 00 AA 92 BA 92 22 97 AF B6 F8 94
+R 00 00 00 00 12 04 01 00
+T 0E 00 AF 92 8C 2F 9D 2F 04 96 EE EF FF EF E3 70
+R 00 00 00 00
+T 1C 00 F0 70 AE 2E BF 2E A8 0E B9 1E B9 82 A8 82
+R 00 00 00 00
+T 2A 00 2C 81 3D 81 00 91 02 00 10 91 03 00
+R 00 00 00 00 02 08 00 00 02 0C 00 00
+T 36 00 0E 94 00 00 FF CF 22 96 B9 90 A9 90 24 96
+R 00 00 00 00 12 04 02 00
+T 44 00 08 95
+R 00 00 00 00
+.end

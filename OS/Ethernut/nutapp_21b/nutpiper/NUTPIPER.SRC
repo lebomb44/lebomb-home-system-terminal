@@ -1,0 +1,12 @@
+[Files]
+scanner.c
+display.c
+nutpiper.c
+player.c
+config.c
+[Headers]
+scanner.h
+display.h
+player.h
+config.h
+[Documents]
