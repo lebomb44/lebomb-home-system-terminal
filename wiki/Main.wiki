@@ -10,7 +10,7 @@ This project is dedicated to home automation.
 = Details =
 
 This based on a simple concept:
-  * [LOST_Server_Main A centralized board : LOST Server]
+  * [LOST_Server#LOST_Server_Main A centralized board : LOST Server]
   * [LOST_Nodes_Main Some intelligent nodes : LOST Node]
 
 
@@ -20,3 +20,12 @@ The centralized board is in charge of :
   * Alert (GSM, Email, Buzzer)
   * Scenario management
   * Command and Control dispatch
+
+= Architecture =
+All the system is based on a I2C bus. It has many advantages :
+  * Standard
+  * Low Cost
+  * Widely used
+  * Short cut tolerant
+
+[http://lebomb-home-system-terminal.googlecode.com/svn/wiki/Images/LOST_Archi.jpg]
