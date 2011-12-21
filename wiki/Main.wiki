@@ -10,8 +10,8 @@ This project is dedicated to home automation.
 = Details =
 
 This based on a simple concept:
-  * A centralized board
-  * Some intelligent nodes
+  * [LOST_Server_Main A centralized board : LOST Server]
+  * [LOST_Nodes_Main Some intelligent nodes : LOST Node]
 
 
 The centralized board is in charge of :
