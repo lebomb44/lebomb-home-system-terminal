@@ -1,0 +1,20 @@
+#summary LOST Nodes Main page.
+
+= Introduction =
+
+LOST Nodes are in charge of a part of the home.
+Usually, this is a room.
+
+
+= Details =
+
+The node collect data from the area for the LOST server:
+  * Temperature
+  * Smoke
+  * Humidity
+  * Perimeter detector
+  * Movement detector
+
+And act in this area:
+  * Power ON/OFF some devices: lights, heater, ...
+  * OPEN/CLOSE shutters
