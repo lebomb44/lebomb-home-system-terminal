@@ -1,0 +1,22 @@
+#summary LOST Project main page.
+
+= Introduction =
+
+Welcome to the LOST project (LeBomb hOme System Terminal).
+This project is dedicated to home automation.
+
+
+
+= Details =
+
+This based on a simple concept:
+  * A centralized board
+  * Some intelligent nodes
+
+
+The centralized board is in charge of :
+  * Home Safety
+  * Home Security
+  * Alert (GSM, Email, Buzzer)
+  * Scenario management
+  * Command and Control dispatch
