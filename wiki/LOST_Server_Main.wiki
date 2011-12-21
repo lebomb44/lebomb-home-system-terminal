@@ -1,0 +1,15 @@
+#summary LOST Server Main page.
+
+= Introduction =
+
+LOST Server is the centralized part of the LOST system.
+
+
+= Details =
+
+This server is charge of:
+  * Power system management.
+  * Alert management (GSM, Email, Buzzer).
+  * Motion detector management.
+  * Central heater management.
+  * Link to NODES.
