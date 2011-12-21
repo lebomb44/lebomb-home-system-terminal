@@ -9,10 +9,11 @@ This project is dedicated to home automation.
 
 = Details =
 
-This based on a simple concept:
+This is based on a simple concept:
   * [LOST_Server_Main A centralized board : LOST Server]
   * [LOST_Nodes_Main Some intelligent nodes : LOST Node]
 
+Everything is accessible through a Web Interface
 
 The centralized board is in charge of :
   * Home Safety
