@@ -1,0 +1,20 @@
+#summary LOST Server Hardware Main page.
+
+= Introduction =
+
+This pages describe all the hardware used in the Server.
+
+
+
+= Details =
+
+The Hardware can be divided in part as described in the [LOST_Server_Main Server Main page]:
+ * Micro-controller board : [http://www.ethernut.de/en/hardware/enut2/index.html Ethernut 2.1B]
+ * The I/O board : this a simple PCB with some connectors to peripheral functions:
+  * [LOST_Server_Hw_GSM GSM interface.]
+  * [LOST_Server_Hw_Power Power interface:]
+   * [LOST_Server_Hw_Power#Control Control power supply.]
+   * [LOST_Server_Hw_Power#Command Command 3 additional equipment.]
+  * [LOST_Server_Hw_Buzzer Buzzer interface.]
+  * [LOST_Server_Hw_Move Movement detectors.]
+  * [LOST_Server_Hw_I2C I2C Bus driver + Power.]
