@@ -12,12 +12,14 @@ The node collect data from the area for the LOST server:
   * Temperature
   * Smoke
   * Humidity
-  * Perimeter detector
-  * Movement detector
+  * Perimeter detectors
+  * Movement detectors
 
 And act in this area:
   * Power ON/OFF some devices: lights, heater, ...
   * OPEN/CLOSE shutters
   * Air-Conditioning
 
-Specific ROOM Node
+= Nodes type =
+  * [LOST_Nodes_Room_Main ROOM Node]
+  * TBD
