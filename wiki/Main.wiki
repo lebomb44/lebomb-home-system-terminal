@@ -16,14 +16,14 @@ This is based on a simple concept:
 Everything is accessible through a Web Interface
 
 The centralized board is in charge of :
-  * Home Safety
-  * Home Security
-  * Alert (GSM, Email, Buzzer)
+  * [http://en.wikipedia.org/wiki/Home_safety Home Safety.]
+  * [http://en.wikipedia.org/wiki/Security Home Security.]
+  * Alert ([http://en.wikipedia.org/wiki/GSM GSM], [http://en.wikipedia.org/wiki/Email Email], Buzzer)
   * Scenario management
   * Command and Control dispatch
 
 = Architecture =
-All the system is based on a I2C bus. It has many advantages :
+All the system is based on a [http://en.wikipedia.org/wiki/I%C2%B2C I2C bus]. It has many advantages :
   * Standard
   * Low Cost
   * Widely used
