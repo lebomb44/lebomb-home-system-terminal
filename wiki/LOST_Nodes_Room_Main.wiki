@@ -10,11 +10,11 @@ Zoom on the node:
 
 = Details =
 
-As explained in the main page, the node is linked to the Server through an I2C bus.
+As explained in the main page, the node is linked to the Server through an [http://en.wikipedia.org/wiki/I%C2%B2C I2C bus].
 
 The node is fully stand alone as it has its own micro-controller.
-The Board is organized around an ATMega8L.
+The Board is organized around an [http://www.atmel.com/dyn/products/product_card.asp?part_id=2004 ATMega8L].
 [LOST_Nodes_Room_Hw See hardware description]
 
-With a software developed with WinAVR
+With a software developed with [http://winavr.sourceforge.net WinAVR]
 [LOST_Nodes_Room_Sw See software description]
