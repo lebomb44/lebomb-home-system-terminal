@@ -1,0 +1,18 @@
+#summary LOST Room Node Hardware page.
+
+= Introduction =
+
+The board is organized around an ATMega8L.
+[http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Nodes/romm/Hw/images/Room_Hw_Top.jpg]
+
+= Details =
+
+As you can see on the picture, the board has:
+  * A micro-controller ATMega8L
+  * Power function
+  ** A power regulator DC-DC 12V to 5V. Ref : TEL 5-1211
+  ** A power regulation 12V to 9 V. Ref 78L05
+  * An RJ45 connector:
+  ** I2C bus
+  ** 12V Power
+  * 
