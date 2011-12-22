@@ -1,0 +1,35 @@
+#summary LOST Server GSM Interface.
+
+= Introduction =
+
+This page describe the interface to the GSM.
+We use a Nokia 3330 has a modem.
+
+It has many advantages:
+ * Low Cost (20 dollars on Ebay).
+ * Simple interface (UART 8bits).
+
+
+= Details =
+The phone is connected to the Ethernut board through the I/O board.
+We use a RJ11 connector as it is really simple to connect and disconnect when needed.
+
+Here is the connector pin-out:
+ * TX : Ethernut transmit -> GSM receive.
+ * RX : Ethernut receive <- GSM transmit.
+ * 12 V Power.
+ * GND.
+
+= Phone modification =
+The phone has been modified in order to be connected to the Ethernut board.
+Because of:
+ * Power : no battery needed.
+ * UART level adaptation : 5V (Ethernut) / 3.3V (GSM)
+
+= Phone communication =
+As we already said, the communication is done through the UART interface.
+The protocol has been built by Nokia. It is called FBUS.
+[http://www.embedtronics.com/nokia/fbus.html See a description of the protocol on Wayne's web pages.]
+[http://gnokii.org See also the GNOKII project for more information.]
+
+
