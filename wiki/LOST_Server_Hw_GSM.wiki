@@ -28,8 +28,9 @@ Because of:
 
 = Phone communication =
 As we already said, the communication is done through the UART interface.
+
 The protocol has been built by Nokia. It is called FBUS.
+
 [http://www.embedtronics.com/nokia/fbus.html See a description of the protocol on Wayne's web pages.]
+
 [http://gnokii.org See also the GNOKII project for more information.]
-
-
