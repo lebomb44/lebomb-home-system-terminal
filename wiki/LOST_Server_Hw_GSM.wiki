@@ -17,7 +17,7 @@ We use a RJ11 connector as it is really simple to connect and disconnect when ne
 Here is the connector pin-out:
  * TX : Ethernut transmit -> GSM receive.
  * RX : Ethernut receive <- GSM transmit.
- * 12 V Power.
+ * 12V Power.
  * GND.
 
 = Phone modification =
