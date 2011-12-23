@@ -37,3 +37,10 @@ The protocol has been built by Nokia. It is called FBUS.
 
 [http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_Front.jpg]
 [http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_Back.jpg]
+
+= Connection on I/O Board =
+The phone is connected through the RJ11 connector
+[http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_RJ11_Front.jpg]
+
+Here is the details of the pin-out on the connector
+[http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_RJ11_Back.jpg]
