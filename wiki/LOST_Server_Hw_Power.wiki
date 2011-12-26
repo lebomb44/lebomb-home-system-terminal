@@ -1,0 +1,25 @@
+#summary LOST Server Power interface.
+
+= Introduction =
+
+The power interface is designed to manage all the power functions of the server.
+
+
+= Details =
+
+Power functions:
+ * Check power supply: presence and temperature
+ * 3 power commands: you can command three independent power lines.
+
+
+= Detailed functions =
+
+== Check power supply  ==
+
+[http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Front.jpg]
+[http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Back_1.jpg]
+[http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Back_2.jpg]
+
+== Power lines commands ==
+
+[http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Switch.jpg]
