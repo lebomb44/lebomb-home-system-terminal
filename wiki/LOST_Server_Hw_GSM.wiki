@@ -15,8 +15,8 @@ The phone is connected to the Ethernut board through the I/O board.
 We use a RJ11 connector as it is really simple to connect and disconnect when needed.
 
 Here is the connector pin-out:
- * TX : Ethernut UART1 transmit -> GSM receive.
  * RX : Ethernut UART1 receive <- GSM transmit.
+ * TX : Ethernut UART1 transmit -> GSM receive.
  * 12V Power.
  * GND.
 
