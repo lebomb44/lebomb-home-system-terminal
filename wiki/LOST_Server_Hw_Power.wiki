@@ -8,6 +8,7 @@ The power interface is designed to manage all the power functions of the server.
 = Details =
 
 Power functions:
+ * Power supply 12V
  * Check power supply: presence and temperature
  * 3 power commands: you can command three independent power lines.
 
