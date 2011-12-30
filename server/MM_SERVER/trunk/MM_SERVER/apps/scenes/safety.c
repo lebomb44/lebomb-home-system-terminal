@@ -17,18 +17,18 @@
 #include "safety.h"
 
 typedef struct _SAFETY_T
-{
+{ /* 0 if no error else error code */
   uint8_t rooms_error;
   uint8_t rooms_temp_max;
   uint8_t rooms_temp_min;
   uint8_t rooms_hum;
   uint8_t rooms_smoke;
+  uint8_t http;
+  uint8_t gsm;
   uint8_t ups_temp       :1;
   uint8_t ups_power      :1;
   uint8_t rack_temp      :1;
   uint8_t rack_alarm     :1;
-  uint8_t http           :1;
-  uint8_t gsm            :1;
 } SAFETY_T;
 
 typedef struct _SAFETY_VALUE_T
@@ -191,8 +191,8 @@ THREAD(SafetyGsmD, arg)
   {
     ret = gsm_status_get();
     if(ret != 0) { if(gsm_nb < 0xFF) { gsm_nb++; } } else { gsm_nb = 0; }
-    if(gsm_nb > 10) { safety_status.gsm = 1; } else { safety_status.gsm = 0; }
-    if(safety_control.gsm) { if((!(safety_trig.gsm)) && (safety_status.gsm)) { sprintf(msg, "GSM-%d",ret); safety_action(msg); safety_trig.gsm = 1; } }
+    if(gsm_nb > 10) { safety_status.gsm = ret; } else { safety_status.gsm = 0; }
+    if(safety_control.gsm) { if((!(safety_trig.gsm)) && (safety_status.gsm)) { sprintf(msg, "GSM-%d", safety_control.gsm); safety_action(msg); safety_trig.gsm = 1; } }
 
     NutSleep(10000);
   }
@@ -201,14 +201,17 @@ THREAD(SafetyGsmD, arg)
 THREAD(SafetyHttpD, arg)
 {
   uint8_t http_nb = 0;
+  uint8_t ret = 0;
+  char msg[10];
 
   NutThreadSetPriority(23);
 
   while(1)
   {
-    if(http_status_get() != 0) { if(http_nb < 0xFF) { http_nb++; } } else { http_nb = 0; }
-    if(http_nb > 10) { safety_status.http = 1; } else { safety_status.http = 0; }
-    if(safety_control.http) { if((!(safety_trig.http)) && (safety_status.http)) { safety_action("HTTP"); safety_trig.http = 1; } }
+    ret = http_status_get();
+    if(ret != 0) { if(http_nb < 0xFF) { http_nb++; } } else { http_nb = 0; }
+    if(http_nb > 10) { safety_status.http = ret; } else { safety_status.http = 0; }
+    if(safety_control.http) { if((!(safety_trig.http)) && (safety_status.http)) { sprintf(msg, "HTTP-%d", safety_control.http); safety_action(msg); safety_trig.http = 1; } }
 
     NutSleep(30000);
   }
