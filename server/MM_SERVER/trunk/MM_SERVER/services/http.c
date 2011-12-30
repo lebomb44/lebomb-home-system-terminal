@@ -54,8 +54,8 @@ uint8_t http_init(void)
 THREAD(HttpD, arg)
 {
   TCPSOCKET *sock = NULL;
-  uint16_t to = 30000;
-  int err = 0;
+  u_long to = 30000;
+  int ret = 0;
   FILE *stream = NULL;
 
   NutThreadSetPriority(150);
@@ -118,6 +118,10 @@ THREAD(HttpD, arg)
       /*
        * Destroy our device.
        */
+    }
+    else
+    {
+      NutSleep(1);
     }
     NutTcpCloseSocket(sock);
     sock = NULL;
