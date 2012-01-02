@@ -19,13 +19,18 @@ uint8_t uart_init(void)
 {
   u_long uart_data = 0;
 
+  GpioPinConfigSet(NUTGPIO_PORTE, 0, GPIO_CFG_PULLUP);
+  GpioPinSetHigh(NUTGPIO_PORTE, 0);
+  GpioPinConfigSet(NUTGPIO_PORTE, 1, GPIO_CFG_OUTPUT);
+  GpioPinSetLow(NUTGPIO_PORTE, 1);
+
   NutRegisterDevice(&DEV_UART0, 0, 0);
   freopen(DEV_UART0_NAME, "r+b", stdout);
 
-  uart_data = 115200;
+  uart_data = 2400;
   _ioctl(_fileno(stdout), UART_SETSPEED, &uart_data);
   freopen(DEV_UART0_NAME, "r+b", stdin);
-  uart_data = 115200;
+  uart_data = 2400;
   _ioctl(_fileno(stdout), UART_SETSPEED   , &uart_data);
   uart_data = 8;
   _ioctl(_fileno(stdout), UART_SETDATABITS, &uart_data);
@@ -33,7 +38,7 @@ uint8_t uart_init(void)
   _ioctl(_fileno(stdout), UART_SETPARITY  , &uart_data);
   uart_data = 1;
   _ioctl(_fileno(stdout), UART_SETSTOPBITS, &uart_data);
-  uart_data=1;
+  uart_data=1000;
   _ioctl(_fileno(stdin), UART_SETREADTIMEOUT, &uart_data);
 
   GpioPinConfigSet(NUTGPIO_PORTD, 2, GPIO_CFG_PULLUP);
@@ -64,5 +69,6 @@ uint8_t uart_init(void)
   uart_data = 1228;
   _ioctl(_fileno(uart1_fd), UART_SETTXBUFLWMARK, &uart_data);
 */
+
   return 0;
 }
