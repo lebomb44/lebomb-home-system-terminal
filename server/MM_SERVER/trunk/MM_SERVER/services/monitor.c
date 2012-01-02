@@ -24,10 +24,14 @@ uint8_t mon_init(void)
 
 THREAD(Mond, arg)
 {
+  int ret = 0;
+
   NutThreadSetPriority(250);
   while(1)
   {
-    NutSleep(5000);
+    ret = fgetc(stdin);
+    if(ret != 0) { fputc(ret, stdout); }
+    NutSleep(1);
   }
 }
 
