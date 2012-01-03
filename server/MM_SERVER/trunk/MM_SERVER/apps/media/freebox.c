@@ -28,7 +28,7 @@ int freebox_form(FILE * stream, REQUEST * req)
   size_t len = 0;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
-  NutHttpSendHeaderBot(stream, "text/html", -1);
+  NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
   /* Alloc the buffer requered for the request to send */
   buff_send = malloc(FREEBOX_REQUEST_SIZE_MAX);

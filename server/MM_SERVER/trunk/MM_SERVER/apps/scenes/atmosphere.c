@@ -28,7 +28,7 @@ int atmosphere_form(FILE * stream, REQUEST * req)
   ATM_T value = ATM_UNKNOWN;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
-  NutHttpSendHeaderBot(stream, "text/html", -1);
+  NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
   if (req->req_method == METHOD_GET)
   {

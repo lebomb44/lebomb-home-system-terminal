@@ -78,7 +78,7 @@ int alarm_form(FILE * stream, REQUEST * req)
   char* arg_s=NULL;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
-  NutHttpSendHeaderBot(stream, "text/html", -1);
+  NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
   if (req->req_method == METHOD_GET)
   {

@@ -162,8 +162,6 @@ uint8_t gsm_init(void)
   strncpy(gsm1, "0689350159", 10);
   strncpy(gsm2, "0689350159", 10);
 
-  NutRegisterCgi("gsm.cgi", gsm_form);
-
   return 0;
 }
 
@@ -323,28 +321,4 @@ uint8_t gsm_sms_send(char * tel, char * msg)
 char* gsm_sms_receive(void)
 {
   return NULL;
-}
-
-int gsm_form(FILE * stream, REQUEST * req)
-{
-  char* tel_s=NULL;
-  char* msg_s=NULL;
-
-  NutHttpSendHeaderTop(stream, req, 200, "Ok");
-  NutHttpSendHeaderBot(stream, "text/html", -1);
-
-  if (req->req_method == METHOD_GET)
-  {
-    tel_s = NutHttpGetParameter(req, "tel");
-    msg_s = NutHttpGetParameter(req, "msg");
-    if(tel_s && msg_s) { gsm_sms_send(tel_s, msg_s); }
-    tel_s = NutHttpGetParameter(req, "status");
-    if(tel_s) { gsm_status_get(); }
-    tel_s = NutHttpGetParameter(req, "version");
-    if(tel_s) { gsm_version_get(); }
-    tel_s = NutHttpGetParameter(req, "sync");
-    if(tel_s) { fbus_sync(); }
-  }
-
-  return 0;
 }

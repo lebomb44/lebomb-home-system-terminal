@@ -30,7 +30,7 @@ int ext_form(FILE * stream, REQUEST * req)
   uint8_t ret=0;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
-  NutHttpSendHeaderBot(stream, "text/html", -1);
+  NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
   if (req->req_method == METHOD_GET)
   {

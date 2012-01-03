@@ -90,7 +90,7 @@ int main(void)
 int xml_get_form(FILE * stream, REQUEST * req)
 {
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
-  NutHttpSendHeaderBot(stream, "application/xml", -1);
+  NutHttpSendHeaderBottom(stream, req, "application/xml", -1);
 
   if (req->req_method == METHOD_GET)
   {

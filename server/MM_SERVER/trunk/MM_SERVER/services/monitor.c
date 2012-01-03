@@ -66,7 +66,7 @@ int mon_show(FILE * stream, REQUEST * req)
     static prog_char estb_P[] = "<FONT COLOR=#CC0000>ESTABL</FONT>";
 
     NutHttpSendHeaderTop(stream, req, 200, "Ok");
-    NutHttpSendHeaderBot(stream, "text/html", -1);
+    NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
     fputs_P(head1_P, stream);
 	fprintf_P(stream, PSTR("Available Heap : %d bytes\r\n"), (int) NutHeapAvailable());
