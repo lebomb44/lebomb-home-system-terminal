@@ -25,12 +25,13 @@ uint8_t mon_init(void)
 THREAD(Mond, arg)
 {
   int ret = 0;
+  char c = 0;
 
   NutThreadSetPriority(250);
   while(1)
   {
-    ret = fgetc(stdin);
-    if(ret != 0) { fputc(ret, stdout); }
+	ret = fread(&c, 1, 1, stdin);
+    if(ret > 0) { fputc(c, stdout); }
     NutSleep(1);
   }
 }
