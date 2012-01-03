@@ -1,0 +1,12 @@
+# Do not edit! Automatically generated on Tue Dec 13 18:00:56 2011
+
+top_srcdir = $(DEVBASE)/OS/Ethernut/2.1B_4.10.1.0/nut
+top_blddir = $(DEVBASE)/OS/Ethernut/2.1B_4.10.1.0/nutbld_21b
+top_appdir = $(DEVBASE)/OS/Ethernut/2.1B_4.10.1.0/nutapp_21b
+
+LIBDIR = $(DEVBASE)/OS/Ethernut/2.1B_4.10.1.0/nutbld_21b/lib
+INCFIRST=$(INCPRE)$(top_blddir)/include 
+include $(top_appdir)/NutConf.mk
+include $(top_srcdir)/app/Makedefs.avr-gcc
+include $(top_srcdir)/app/Makeburn.avr-dude
+
