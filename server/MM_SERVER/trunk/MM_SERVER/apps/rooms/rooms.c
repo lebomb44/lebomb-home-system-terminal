@@ -209,13 +209,13 @@ void room_ir_set (ROOM_N_T room, uint8_t type, uint8_t cmd0, uint8_t cmd1, uint8
 {
   uint8_t ir_buff[4] = {0};
   ir_buff[0] = type; ir_buff[1] = cmd0; ir_buff[2] = cmd1; ir_buff[3] = cmd2;
-  room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_IR_TYPE, 4, &ir_buff[0]);
+  room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_IR_TX_TYPE, 4, &ir_buff[0]);
 }
 void rooms_ir_set(uint8_t type, uint8_t cmd0, uint8_t cmd1, uint8_t cmd2)
 {
   uint8_t ir_buff[4] = {0};
   ir_buff[0] = type; ir_buff[1] = cmd0; ir_buff[2] = cmd1; ir_buff[3] = cmd2;
-  i2c_broadcast_set(ROOM_REG_IR_TYPE, 4, &ir_buff[0]);
+  i2c_broadcast_set(ROOM_REG_IR_TX_TYPE, 4, &ir_buff[0]);
 }
 
 void room_clim_set (ROOM_N_T room, uint8_t temp) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_CLIM, 1, &temp); }
