@@ -70,9 +70,9 @@ EEMEM u08 rf_rx_ctrl = 0x00; /* @ 113 */
 EEMEM u08 rf_rx_data[NODE_RF_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 114 - 123 */
 EEMEM u08 rf_rx_ack       = 0x00; /* @ 124 */
 
-EEMEM u08 clim = NODE_REG_MAX; /* @ 125 */
+EEMEM u08 clim = 0x00; /* @ 125 */
 
-u08 node[NODE_REG_MAX];
+u08 node[NODE_REG_MAX]; /* 126 */
 
 void node_init(void)
 {
