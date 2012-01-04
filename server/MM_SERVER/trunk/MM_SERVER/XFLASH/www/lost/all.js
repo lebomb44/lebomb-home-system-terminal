@@ -408,22 +408,22 @@ function lost_safety_xml_get(xml)
   lost_elt_bool_update(xml, "Safety", "HTTP");
   lost_elt_bool_update(xml, "Safety", "GSM");
 }
-var ROOM_SHUTTER_UP   = 1
-var ROOM_SHUTTER_STOP = 2
-var ROOM_SHUTTER_DOWN = 3
+var ROOM_SHUTTER_UP   = 255
+var ROOM_SHUTTER_STOP = 0
+var ROOM_SHUTTER_DOWN = 1
 
 var ROOM_CLIM_OFF = 0;
 var ROOM_CLIM_ON  = 1;
 
-var ROOM_SALON    = 0;
-var ROOM_CUISINE  = 1;
-var ROOM_BUREAU   = 2;
-var ROOM_TERRASSE = 3;
-var ROOM_C1       = 4;
-var ROOM_C2       = 5;
-var ROOM_C3       = 6;
-var ROOM_C4       = 7;
-var ROOM_WC       = 8;
+var ROOM_C1       = 0;
+var ROOM_C2       = 1;
+var ROOM_C3       = 2;
+var ROOM_C4       = 3;
+var ROOM_SDB      = 4;
+var ROOM_BUREAU   = 5;
+var ROOM_SALON    = 6;
+var ROOM_CUISINE  = 7;
+var ROOM_TERRASSE = 8;
 var ROOM_MAX      = 9;
 var ROOM_LIGHT_MAX   = 10;
 var ROOM_SHUTTER_MAX = 10;
@@ -701,7 +701,7 @@ document.write("\
             <li><a href=\"javascript:lost_scene_set(EVENT_REVEIL, EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_REVEIL, EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"sunrise.jpg\">Reveil</li>\
             <li><a href=\"javascript:lost_scene_set(EVENT_COUCHE, EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_COUCHE, EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Couche</li>\
             <li><a href=\"javascript:lost_scene_set(EVENT_MAX+0 , 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_MAX+0 , 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">WIFI</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_MAX+1 , 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_MAX+1 , 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">POWER1</li>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_MAX+1 , 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_MAX+1 , 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">Ethernet</li>\
             <li><a href=\"javascript:lost_scene_set(EVENT_MAX+2 , 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_MAX+2 , 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">POWER2</li>\
         </ul>\
     </div>\
@@ -791,7 +791,7 @@ document.write("\
             <li id=\"Room"+String(ROOM_C2)+"_bg\"><a href=\"#_C2\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre M&M</a></li>\
             <li id=\"Room"+String(ROOM_C3)+"_bg\"><a href=\"#_C3\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre Amis</a></li>\
             <li id=\"Room"+String(ROOM_C4)+"_bg\"><a href=\"#_C4\"><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\">Dressing</a></li>\
-            <li id=\"Room"+String(ROOM_WC)+"_bg\"><a href=\"#_Wc\"><img class=\"picto\" src=\""+lost_icons_path+"wc.jpg\">WC</a></li>\
+            <li id=\"Room"+String(ROOM_SDB)+"_bg\"><a href=\"#_Sdb\"><img class=\"picto\" src=\""+lost_icons_path+"sdb.jpg\">Salle de Bain</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
             <li><a href=\"#_Cameras\"><img class=\"picto\" src=\""+lost_icons_path+"cam.jpg\">Cameras</a></li>\
@@ -1021,26 +1021,26 @@ document.write("\
 </div>\
 ");
 document.write("\
-<div class=\"iLayer\" id=\"waWc\" title=\"WC\">\
+<div class=\"iLayer\" id=\"waSdb\" title=\"Salle de Bain\">\
     <div class=\"iMenu\">\
     <div class=\"iPanel\">\
         <fieldset>\
             <legend>Lumieres</legend>\
             <ul>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_WC)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_WC,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_WC)+"_Light0\">Plafond</label></li>\
+                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_SDB)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_SDB,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_SDB)+"_Light0\">Plafond</label></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
             <legend>Ouvertures</legend>\
             <ul>\
-                <li><a href=\"javascript:lost_room_shutter_set(ROOM_WC,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_WC,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_WC,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
-                <li><a href=\"javascript:lost_room_shutter_set(ROOM_WC,1,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_WC,1,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_WC,1,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
+                <li><a href=\"javascript:lost_room_shutter_set(ROOM_SDB,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_SDB,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_SDB,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
+                <li><a href=\"javascript:lost_room_shutter_set(ROOM_SDB,1,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_SDB,1,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_SDB,1,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
             </ul>\
         </fieldset>\
         <fieldset>\
             <legend>Info</legend>\
             <ul class=\"iArrow\">\
-                <li><a href=\"#_WCInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
+                <li><a href=\"#_SDBInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
             </ul>\
         </fieldset>\
     </div>\
@@ -1120,7 +1120,7 @@ printRoomInfo(ROOM_C1      , "Chambre Marine");
 printRoomInfo(ROOM_C2      , "Chambre M&M"   );
 printRoomInfo(ROOM_C3      , "Chambre Amis"  );
 printRoomInfo(ROOM_C4      , "Dressing"      );
-printRoomInfo(ROOM_WC      , "WC"            );
+printRoomInfo(ROOM_SDB     , "SDB"           );
 document.write("\
 <div class=\"iLayer\" id=\"waEvenements\" title=\"Evenements\">\
     <div class=\"iPanel\">\
