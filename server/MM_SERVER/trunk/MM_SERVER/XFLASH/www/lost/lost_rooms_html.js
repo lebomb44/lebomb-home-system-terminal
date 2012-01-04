@@ -13,7 +13,7 @@ document.write("\
             <li id=\"Room"+String(ROOM_C2)+"_bg\"><a href=\"#_C2\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre M&M</a></li>\
             <li id=\"Room"+String(ROOM_C3)+"_bg\"><a href=\"#_C3\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre Amis</a></li>\
             <li id=\"Room"+String(ROOM_C4)+"_bg\"><a href=\"#_C4\"><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\">Dressing</a></li>\
-            <li id=\"Room"+String(ROOM_SDB)+"_bg\"><a href=\"#_Sdb\"><img class=\"picto\" src=\""+lost_icons_path+"sdb.jpg\">Salle de Bain</a></li>\
+            <li id=\"Room"+String(ROOM_SDB)+"_bg\"><a href=\"#_Sdb\"><img class=\"picto\" src=\""+lost_icons_path+"water.jpg\">Salle de Bain</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
             <li><a href=\"#_Cameras\"><img class=\"picto\" src=\""+lost_icons_path+"cam.jpg\">Cameras</a></li>\
