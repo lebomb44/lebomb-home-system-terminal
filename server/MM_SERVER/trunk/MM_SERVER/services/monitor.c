@@ -24,7 +24,7 @@ uint8_t mon_init(void)
 
 THREAD(Mond, arg)
 {
-  int ret = 0;
+  size_t ret = 0;
   char c = 0;
 
   NutThreadSetPriority(250);
