@@ -37,14 +37,40 @@ EEMEM u08 sim_status  = 0x00; /* @ 22 */
 EEMEM u08 sim_control = 0x00; /* @ 23 */
 EEMEM u08 sim_trig    = 0x00; /* @ 24 */
 
-EEMEM u08 ir_type = 0x00; /* @ 25 */
-EEMEM u08 ir_cmd0 = 0x00; /* @ 26 */
-EEMEM u08 ir_cmd1 = 0x00; /* @ 27 */
+EEMEM u08 light[NODE_LIGHT_MAX]     = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 25 - 34 */
+EEMEM u08 shutter[NODE_SHUTTER_MAX] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 35 - 44 */
+EEMEM u08 heater[NODE_HEATER_MAX]   = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 45 - 54 */
+EEMEM u08 elec[NODE_ELEC_MAX]       = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 55 - 64 */
 
-EEMEM u08 light[NODE_LIGHT_MAX] = { 0,0,0,0,0,0,0,0,0,0 };
-EEMEM u08 shutter[NODE_SHUTTER_MAX] = { 0,0,0,0,0,0,0,0,0,0 };
-EEMEM u08 heater[NODE_HEATER_MAX] = { 0,0,0,0,0,0,0,0,0,0 };
-EEMEM u08 elec[NODE_ELEC_MAX] = { 0,0,0,0,0,0,0,0,0,0 };
+EEMEM u08 ir_tx_type      = 0x00; /* @ 65 */
+EEMEM u08 ir_tx_src_addr  = 0x00; /* @ 66 */
+EEMEM u08 ir_tx_dest_addr = 0x00; /* @ 67 */
+EEMEM u08 ir_tx_ctrl = 0x00; /* @ 68 */
+EEMEM u08 ir_tx_data[NODE_IR_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 69 - 78 */
+EEMEM u08 ir_tx_ack       = 0x00; /* @ 79 */
+
+EEMEM u08 ir_rx_type      = 0x00; /* @ 80 */
+EEMEM u08 ir_rx_src_addr  = 0x00; /* @ 81 */
+EEMEM u08 ir_rx_dest_addr = 0x00; /* @ 82 */
+EEMEM u08 ir_rx_ctrl = 0x00; /* @ 83 */
+EEMEM u08 ir_rx_data[NODE_IR_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 84 - 93 */
+EEMEM u08 ir_rx_ack       = 0x00; /* @ 94 */
+
+EEMEM u08 rf_tx_type      = 0x00; /* @ 95 */
+EEMEM u08 rf_tx_src_addr  = 0x00; /* @ 96 */
+EEMEM u08 rf_tx_dest_addr = 0x00; /* @ 97 */
+EEMEM u08 rf_tx_ctrl = 0x00; /* @ 98 */
+EEMEM u08 rf_tx_data[NODE_RF_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 99 - 108 */
+EEMEM u08 rf_tx_ack       = 0x00; /* @ 109 */
+
+EEMEM u08 rf_rx_type      = 0x00; /* @ 110 */
+EEMEM u08 rf_rx_src_addr  = 0x00; /* @ 111 */
+EEMEM u08 rf_rx_dest_addr = 0x00; /* @ 112 */
+EEMEM u08 rf_rx_ctrl = 0x00; /* @ 113 */
+EEMEM u08 rf_rx_data[NODE_RF_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 114 - 123 */
+EEMEM u08 rf_rx_ack       = 0x00; /* @ 124 */
+
+EEMEM u08 clim = NODE_REG_MAX; /* @ 125 */
 
 u08 node[NODE_REG_MAX];
 
