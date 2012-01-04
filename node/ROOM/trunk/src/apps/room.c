@@ -6,9 +6,9 @@
 
 #define ROOM_SHUTTER_NB 1
 
-#define SHUTTER_UP 1
-#define SHUTTER_STOP 2
-#define SHUTTER_DOWN 3
+#define SHUTTER_UP 255
+#define SHUTTER_STOP 0
+#define SHUTTER_DOWN 1
 
 u08 room_shutter_but_cmd_old[ROOM_SHUTTER_NB]  = { SHUTTER_STOP };
 u08 room_shutter_node_cmd_old[ROOM_SHUTTER_NB] = { SHUTTER_STOP };
