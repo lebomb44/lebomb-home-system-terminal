@@ -156,7 +156,7 @@ char* http_request(char* ip, uint16_t port, char* req, char* host_req, uint16_t 
   NutTcpSetSockOpt(sock, SO_RCVTIMEO, &sock_opt, sizeof(sock_opt));
   
   /* Connect the server of the IP */
-  if(NutTcpConnect(sock, rip, port) != 0) { return NULL; }
+  if(NutTcpConnect(sock, rip, port) != 0) { NutTcpCloseSocket(sock); return NULL; }
 
   /* Get the length of the prepared request */
   len_to_send = sizeof(HTTP_GET_HEAD ) + strnlen(req     , 500) + sizeof(HTTP_GET_END ) \
