@@ -24,7 +24,7 @@ OPT = s
 # List C source files here. (C dependencies are automatically generated.)
 SRC = $(TARGET).c \
 devices/adc.c devices/eeprom.c devices/i2c.c devices/ir.c devices/relay.c devices/timer.c devices/uart.c \
-apps/alarm.c apps/node.c apps/room.c apps/safety.c apps/rfif.c
+apps/alarm.c apps/node.c apps/room.c apps/safety.c apps/remote.c
 
 # List Assembler source files here.
 # Make them always end in a capital .S.  Files ending in a lowercase .s
