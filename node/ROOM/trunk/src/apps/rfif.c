@@ -9,10 +9,12 @@
 
 void rfif_init(void)
 {
-
+  node[NODE_REG_RF_TX_ACK] = PROT_FINISHED;
 }
 
+#define RFIF_HEADER_SIZE       (1 + NODE_REG_IR_TX_CTRL - NODE_REG_IR_TX_SRC_ADDR)
 #define RFIF_REG_LB_TX_DATA_NB (1+NODE_REG_RF_TX_CTRL-NODE_REG_RF_TX_SRC_ADDR)
+#define RFIF_REG_LB_CKSUM      (1 + 4 + buff[RFIF_REG_LB_TX_DATA_NB])
 
 void rfif_cycle(void)
 {
@@ -26,15 +28,15 @@ void rfif_cycle(void)
       /* Set synchro word */
       buff[0] = 0xAA;
       /* Copy all data from I2C registers */
-      for(i=0; i<(4 + NODE_RF_DATA_NB); i++) { buff[1+i] = node[NODE_REG_IR_TX_SRC_ADDR+i]; }
+      for(i=0; i<(RFIF_HEADER_SIZE + NODE_RF_DATA_NB); i++) { buff[1+i] = node[NODE_REG_IR_TX_SRC_ADDR+i]; }
       /* Check data number register */
       if(buff[RFIF_REG_LB_TX_DATA_NB] > NODE_RF_DATA_NB) { buff[RFIF_REG_LB_TX_DATA_NB] = NODE_RF_DATA_NB; }
       /* Erase checksum */
-      buff[4 + buff[RFIF_REG_LB_TX_DATA_NB]] = 0;
+      buff[RFIF_HEADER_SIZE + buff[RFIF_REG_LB_TX_DATA_NB]] = 0;
       /* Compute checksum */
-      for(i=0; i<(4 + buff[RFIF_REG_LB_TX_DATA_NB]); i++) { buff[1+ 4 + buff[RFIF_REG_LB_TX_DATA_NB]] = buff[1 + 4 + buff[RFIF_REG_LB_TX_DATA_NB]] + buff[1+i]; }
+      for(i=0; i<(RFIF_HEADER_SIZE + buff[RFIF_REG_LB_TX_DATA_NB]); i++) { buff[RFIF_REG_LB_CKSUM] = buff[RFIF_REG_LB_CKSUM] + buff[1+i]; }
       /* Send the frame */
-      uart_send(buff, 1 + 4 + buff[RFIF_REG_LB_TX_DATA_NB] + 1);
+      uart_send(buff, 1 + RFIF_HEADER_SIZE + buff[RFIF_REG_LB_TX_DATA_NB] + 1);
       /* Ack the command on I2C bus */
       node[NODE_REG_RF_TX_ACK] = PROT_FINISHED;
     }
