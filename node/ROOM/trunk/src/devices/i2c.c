@@ -191,15 +191,15 @@ SIGNAL(SIG_2WIRE_SERIAL)
      * 0x00: Bus error.
      */
     case TW_BUS_ERROR:
-uart_puts((u08*)"TW Error\n");
         tw_sr_idx = NODE_REG_MAX+1;
         tw_st_idx = NODE_REG_MAX;
         TWCR = TWGO | _BV(TWEA) | _BV(TWSTO);
+//uart_puts((u08*)"TW Error\n");
         break;
 
     default:
         TWCR = TWGO | _BV(TWEA);
-uart_puts((u08*)"TW Default\n");
+//uart_puts((u08*)"TW Default\n");
         break;
     }
 }
