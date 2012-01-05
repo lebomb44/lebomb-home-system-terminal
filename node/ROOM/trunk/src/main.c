@@ -12,7 +12,7 @@
 #include "apps/node.h"
 #include "apps/safety.h"
 #include "apps/alarm.h"
-#include "apps/rfif.h"
+#include "apps/remote.h"
 
 int main(void)
 {
@@ -28,7 +28,7 @@ int main(void)
   safety_init();
   alarm_init();
   room_init();
-  rfif_init();
+  remote_init();
 
   sleep_mode();
   sbi(SREG,7);
@@ -38,7 +38,7 @@ int main(void)
     safety_cycle();
     alarm_cycle();
     room_cycle();
-    rfif_cycle();
+    remote_cycle();
     sleep();
 /*  uart_putc((u08)'.'); */
   }
