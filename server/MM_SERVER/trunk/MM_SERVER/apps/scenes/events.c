@@ -35,9 +35,9 @@ uint8_t events_init(void)
   for(i=0; i<EVENT_MAX; i++)
   {
     event_list[i].status       = EVENT_STATUS_OFF;
-    event_list[i].hour_start  = 0;
+    event_list[i].hour_start   = 0;
     event_list[i].minute_start = 0;
-    event_list[i].hour_end    = 0;
+    event_list[i].hour_end     = 0;
     event_list[i].minute_end   = 0;
     event_list[i].rec          = 0;
     event_list[i].fcnt_start   = NULL;
@@ -55,7 +55,7 @@ void event_set(EVENT_T event, void (*fcnt_start)(void), void (*fcnt_end)(void))
   if(event < EVENT_MAX)
   {
     event_list[event].fcnt_start = fcnt_start;
-    event_list[event].fcnt_end = fcnt_end;
+    event_list[event].fcnt_end   = fcnt_end;
   }
 }
 
