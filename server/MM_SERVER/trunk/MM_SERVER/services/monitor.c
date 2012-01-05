@@ -46,6 +46,10 @@ Set NB    : http://lebomb.no-ip.com/cgi/ext.cgi?sla=6&addr=101&data=2
 Set Data0 : http://lebomb.no-ip.com/cgi/ext.cgi?sla=6&addr=102&data=0
 Set Data1 : http://lebomb.no-ip.com/cgi/ext.cgi?sla=6&addr=103&data=1
 Set ACK   : http://lebomb.no-ip.com/cgi/ext.cgi?sla=6&addr=112&data=1
+
+Check ACK : http://lebomb.no-ip.com/cgi/ext.cgi?sla=6&addr=112&data=?
+Set Data0 : http://lebomb.no-ip.com/cgi/ext.cgi?sla=6&addr=102&data=1
+Set ACK   : http://lebomb.no-ip.com/cgi/ext.cgi?sla=6&addr=112&data=1
 */
 
 THREAD(Mond, arg)
