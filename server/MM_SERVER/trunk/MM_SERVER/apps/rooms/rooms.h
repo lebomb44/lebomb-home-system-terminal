@@ -2,6 +2,7 @@
 #define _ROOMS_H_
 
 #include <stdio.h>
+#include <sys/thread.h>
 #include <pro/httpd.h>
 
 __BEGIN_DECLS
