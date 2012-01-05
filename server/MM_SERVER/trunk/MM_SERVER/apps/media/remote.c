@@ -46,7 +46,6 @@ Set ACK   : http://lebomb.no-ip.com/cgi/ext.cgi?sla=6&addr=112&data=1
 THREAD(RemoteD, arg)
 {
   size_t ret = 0;
-  char c = 0;
   uint8_t i = 0;
   uint8_t buff[RFIF_HEADER_SIZE + ROOM_RF_DATA_NB + 1] = { 0 };
   uint8_t cksum = 0;
@@ -54,46 +53,45 @@ THREAD(RemoteD, arg)
   NutThreadSetPriority(250);
   while(1)
   {
-    c = fgetc(stdin);
+    ret = fread(&buff[0], 1, 1, stdin);
     /* Search the synchro word */
-    if(c == 0xAA)
+    if((ret == 1) && (buff[0] == 0xAA))
     {
-printf("RF Sync OK\n");
       /* Get the mandatory header */
-      ret = fread(buff, RFIF_HEADER_SIZE, 1, stdin);
-      if(ret == RFIF_HEADER_SIZE)
+      ret = fread(&buff[0], 1, RFIF_HEADER_SIZE, stdin);
+      if((ret == RFIF_HEADER_SIZE) && ((buff[1] == 0) || (buff[1] == 1)))
       {
-printf("RF Header OK\n");
-        /* Check the data length received else go to start sequence */
-        if(buff[RFIF_REG_LB_TX_DATA_NB] > ROOM_RF_DATA_NB) { continue; }
-        /* Get the data using the length included in the header */
-        ret = fread(&buff[RFIF_REG_LB_TX_DATA_NB+1], buff[RFIF_REG_LB_TX_DATA_NB]+1, 1, stdin);
-        /* Check the received length */
-        if(ret == (buff[RFIF_REG_LB_TX_DATA_NB]+1))
+        /* Check the data length received */
+        if(buff[RFIF_REG_LB_TX_DATA_NB] <= ROOM_RF_DATA_NB)
         {
-printf("RF Nb=%d OK\n",ret);
-          /* Compute the checksum */
-          for(i=0; i<(RFIF_HEADER_SIZE + buff[RFIF_REG_LB_TX_DATA_NB]); i++) { cksum = cksum + buff[i]; }
-          /* And compare it to the one included in the frame */
-          if(cksum == buff[RFIF_REG_LB_CKSUM])
+          /* Get the data using the length included in the header */
+          ret = fread(&buff[RFIF_REG_LB_TX_DATA_NB+1], 1, buff[RFIF_REG_LB_TX_DATA_NB]+1, stdin);
+          /* Check the received length */
+          if(ret == (buff[RFIF_REG_LB_TX_DATA_NB]+1))
           {
-printf("RF : src=%d dest=%d cmd=%d nb=%d ", buff[0],buff[1],buff[2],buff[3]);
-for(i=0; i<(RFIF_HEADER_SIZE + ROOM_RF_DATA_NB + 1); i++) { printf("buff[%d]=%d ",i,buff[i]); }
-printf("\n");
-            /* If this is a SCENE command */
-            if(buff[2] == 1)
+            /* Erase the checksum */
+            cksum = 0;
+            /* Compute the checksum */
+            for(i=0; i<(RFIF_HEADER_SIZE + buff[RFIF_REG_LB_TX_DATA_NB]); i++) { cksum = cksum + buff[i]; }
+            /* And compare it to the one included in the frame */
+            if(cksum == buff[RFIF_REG_LB_CKSUM])
             {
-              /* We must have 2 data words */
-              if(buff[3] == 2)
-              /* Execute the corresponding scene */
-              if(buff[4] < EVENT_MAX) { event_action(buff[4], buff[5]); }
-              if((EVENT_MAX <= buff[4]) && (buff[4] < (EVENT_MAX + POWER_MAX))) { power_set(buff[4] - EVENT_MAX, buff[5]); }
+              /* If this is a SCENE command */
+              if(buff[2] == 1)
+              {
+                /* We must have 2 data words */
+                if(buff[3] == 2)
+                {
+                  /* Execute the corresponding scene */
+                  if(buff[4] < EVENT_MAX) { event_action(buff[4], buff[5]); }
+                  if((EVENT_MAX <= buff[4]) && (buff[4] < (EVENT_MAX + POWER_MAX))) { power_set(buff[4] - EVENT_MAX, buff[5]); }
+                }
+              }
             }
           }
         }
       }
     }
-    if(ret > 0) { fputc(c, stdout); }
     NutSleep(1);
   }
 }
