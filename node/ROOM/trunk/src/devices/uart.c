@@ -29,7 +29,7 @@ void uart_putc(u08 data)
   UDR=data;
 }
 
-void uart_send(u08 data, u08 nb)
+void uart_send(u08 *data, u08 nb)
 {
   u16 i=0;
   for(i=0; i<nb; i++) { uart_putc(data[i]); }
