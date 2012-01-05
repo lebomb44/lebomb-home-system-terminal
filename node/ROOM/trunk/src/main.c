@@ -38,6 +38,7 @@ int main(void)
     room_cycle();
     sleep();
 /*  uart_putc((u08)'.'); */
+    uart_puts("0123456789ABCDEFGHIJK");
   }
   return 0;
 }
