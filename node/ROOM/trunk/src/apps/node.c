@@ -86,8 +86,9 @@ void node_init(void)
     node[i] = eeprom_read(i);
   }
   i2c_adr_set(node[NODE_REG_ADRESS]);
-
+/*
 uart_printf((u08*)"type=%d\n",node[NODE_REG_TYPE]);
 uart_printf((u08*)"version=%d\n",node[NODE_REG_VERSION]);
 uart_printf((u08*)"adress=%d\n",node[NODE_REG_ADRESS]);
+*/
 }
