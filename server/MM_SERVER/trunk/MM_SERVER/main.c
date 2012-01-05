@@ -28,6 +28,7 @@
 #include "services/tftp.h"
 
 #include "apps/media/freebox.h"
+#include "apps/media/remote.h"
 
 #include "apps/rooms/rooms.h"
 #include "apps/rooms/ext.h"
@@ -58,6 +59,7 @@ int main(void)
   mon_init();
 
   freebox_init();
+  remote_init();
 
   rooms_init();
   ext_init();
