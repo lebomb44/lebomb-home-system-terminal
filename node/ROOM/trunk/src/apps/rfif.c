@@ -37,8 +37,8 @@ void rfif_cycle(void)
       for(i=0; i<(RFIF_HEADER_SIZE + buff[RFIF_REG_LB_TX_DATA_NB]); i++) { buff[RFIF_REG_LB_TX_CKSUM] = buff[RFIF_REG_LB_TX_CKSUM] + buff[1+i]; }
       /* Send the frame */
       uart_send(buff, 1 + RFIF_HEADER_SIZE + buff[RFIF_REG_LB_TX_DATA_NB] + 1);
-      /* Ack the command on I2C bus */
-      node[NODE_REG_RF_TX_ACK] = PROT_FINISHED;
     }
+    /* Ack the command on I2C bus */
+    node[NODE_REG_RF_TX_ACK] = PROT_FINISHED;
   }
 }
