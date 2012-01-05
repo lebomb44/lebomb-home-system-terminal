@@ -45,34 +45,38 @@ EEMEM u08 elec[NODE_ELEC_MAX]       = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 55 - 64 */
 EEMEM u08 ir_tx_type      = 0x00; /* @ 65 */
 EEMEM u08 ir_tx_src_addr  = 0x00; /* @ 66 */
 EEMEM u08 ir_tx_dest_addr = 0x00; /* @ 67 */
-EEMEM u08 ir_tx_ctrl = 0x00; /* @ 68 */
-EEMEM u08 ir_tx_data[NODE_IR_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 69 - 78 */
-EEMEM u08 ir_tx_ack       = 0x00; /* @ 79 */
+EEMEM u08 ir_tx_cmd       = 0x00; /* @ 68 */
+EEMEM u08 ir_tx_ctrl      = 0x00; /* @ 69 */
+EEMEM u08 ir_tx_data[NODE_IR_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 70 - 79 */
+EEMEM u08 ir_tx_ack       = 0x00; /* @ 80 */
 
-EEMEM u08 ir_rx_type      = 0x00; /* @ 80 */
-EEMEM u08 ir_rx_src_addr  = 0x00; /* @ 81 */
-EEMEM u08 ir_rx_dest_addr = 0x00; /* @ 82 */
-EEMEM u08 ir_rx_ctrl = 0x00; /* @ 83 */
-EEMEM u08 ir_rx_data[NODE_IR_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 84 - 93 */
-EEMEM u08 ir_rx_ack       = 0x00; /* @ 94 */
+EEMEM u08 ir_rx_type      = 0x00; /* @ 81 */
+EEMEM u08 ir_rx_src_addr  = 0x00; /* @ 82 */
+EEMEM u08 ir_rx_dest_addr = 0x00; /* @ 83 */
+EEMEM u08 ir_rx_cmd       = 0x00; /* @ 84 */
+EEMEM u08 ir_rx_ctrl      = 0x00; /* @ 85 */
+EEMEM u08 ir_rx_data[NODE_IR_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 86 - 95 */
+EEMEM u08 ir_rx_ack       = 0x00; /* @ 96 */
 
-EEMEM u08 rf_tx_type      = 0x00; /* @ 95 */
-EEMEM u08 rf_tx_src_addr  = 0x00; /* @ 96 */
-EEMEM u08 rf_tx_dest_addr = 0x00; /* @ 97 */
-EEMEM u08 rf_tx_ctrl = 0x00; /* @ 98 */
-EEMEM u08 rf_tx_data[NODE_RF_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 99 - 108 */
-EEMEM u08 rf_tx_ack       = 0x00; /* @ 109 */
+EEMEM u08 rf_tx_type      = 0x00; /* @ 97 */
+EEMEM u08 rf_tx_src_addr  = 0x00; /* @ 98 */
+EEMEM u08 rf_tx_dest_addr = 0x00; /* @ 99 */
+EEMEM u08 rf_tx_cmd       = 0x00; /* @ 100 */
+EEMEM u08 rf_tx_ctrl      = 0x00; /* @ 101 */
+EEMEM u08 rf_tx_data[NODE_RF_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 102 - 111 */
+EEMEM u08 rf_tx_ack       = 0x00; /* @ 112 */
 
-EEMEM u08 rf_rx_type      = 0x00; /* @ 110 */
-EEMEM u08 rf_rx_src_addr  = 0x00; /* @ 111 */
-EEMEM u08 rf_rx_dest_addr = 0x00; /* @ 112 */
-EEMEM u08 rf_rx_ctrl = 0x00; /* @ 113 */
-EEMEM u08 rf_rx_data[NODE_RF_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 114 - 123 */
-EEMEM u08 rf_rx_ack       = 0x00; /* @ 124 */
+EEMEM u08 rf_rx_type      = 0x00; /* @ 113 */
+EEMEM u08 rf_rx_src_addr  = 0x00; /* @ 114 */
+EEMEM u08 rf_rx_dest_addr = 0x00; /* @ 115 */
+EEMEM u08 rf_rx_cmd       = 0x00; /* @ 116 */
+EEMEM u08 rf_rx_ctrl      = 0x00; /* @ 117 */
+EEMEM u08 rf_rx_data[NODE_RF_DATA_NB] = { 0,0,0,0,0,0,0,0,0,0 }; /* @ 118 - 127 */
+EEMEM u08 rf_rx_ack       = 0x00; /* @ 128 */
 
-EEMEM u08 clim = 0x00; /* @ 125 */
+EEMEM u08 clim = 0x00; /* @ 129 */
 
-u08 node[NODE_REG_MAX]; /* 126 */
+u08 node[NODE_REG_MAX]; /* 130 */
 
 void node_init(void)
 {
