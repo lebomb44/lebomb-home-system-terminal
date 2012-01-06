@@ -47,19 +47,19 @@ void remote_cycle(void)
   /* Button 0 */
   if(!bit_is_set(PINC,0)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 0; }
   /* Button 1 */
-  if(!bit_is_set(PINC,1)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 0; }
+  if(!bit_is_set(PINC,1)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 1; }
   /* Button 2 */
-  if(!bit_is_set(PINC,2)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 0; }
+  if(!bit_is_set(PINC,2)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 2; }
   /* Button 3 */
-  if(!bit_is_set(PINC,3)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 0; }
+  if(!bit_is_set(PINC,3)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 3; }
   /* Button 4 */
-  if(!bit_is_set(PINC,4)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 0; }
+  if(!bit_is_set(PINC,4)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 4; }
   /* Button 5 */
-  if(!bit_is_set(PINC,5)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 0; }
+  if(!bit_is_set(PINC,5)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 5; }
   /* Button 6 */
-  if(!bit_is_set(PIND,6)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 0; }
+  if(!bit_is_set(PIND,6)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 6; }
   /* Button 7 */
-  if(!bit_is_set(PIND,7)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 0; }
+  if(!bit_is_set(PIND,7)) { buff[REMOTE_REG_LB_TX_DATA_NB+1] = 7; }
   /* Set SCENE ON */
   buff[REMOTE_REG_LB_TX_DATA_NB+2] = 1;
   /* Erase checksum */
