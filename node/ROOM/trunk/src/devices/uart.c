@@ -15,7 +15,7 @@ void uart_init(void)
 {
   // Initialisation de la transmission
   UBRRH=0x00;    // Baud Rate
-  UBRRL=207;//FIXME 51;      // Baud Rate 9600 bps
+  UBRRL=207;     // Baud Rate 2400 bps
   UCSRC=0x86;    // Mode 8 bits
   cbi(UCSRB,2);  // Disable 8 bits mode
   sbi(UCSRB,3);  // Autorise transmition
