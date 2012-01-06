@@ -8,7 +8,7 @@
 
 
 # MCU name
-MCU = atmega8
+MCU = attiny2313
 
 # Output format. (can be srec, ihex)
 FORMAT = ihex
