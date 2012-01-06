@@ -1,6 +1,5 @@
 #include "../global.h"
 #include "timer.h"
-#include "../devices/uart.h"
 
 void timer_init(void)
 {
@@ -25,7 +24,7 @@ void timer_stop(void)
 
 void sleep_mode(void)
 {
-  MCUCR = 0x80; // Sleep mode
+  MCUCR = 0x80; /* Sleep mode */
 }
 
 /* Timer0 */
