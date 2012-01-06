@@ -16,7 +16,7 @@ void remote_init(void)
   cbi(DDRD,7); sbi(PORTD,7);
 
   /* LED */
-  cbi(DDRB,0); cbi(PORTB,0);
+  sbi(DDRB,0); cbi(PORTB,0);
 }
 
 #define REMOTE_HEADER_SIZE       (1 + NODE_REG_RF_TX_CTRL - NODE_REG_RF_TX_SRC_ADDR)
