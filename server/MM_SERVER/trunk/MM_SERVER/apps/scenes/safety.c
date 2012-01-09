@@ -187,6 +187,8 @@ THREAD(SafetyGsmD, arg)
 
   NutThreadSetPriority(22);
 
+  NutSleep(3000);
+
   while(1)
   {
     ret = gsm_status_get();
@@ -194,7 +196,7 @@ THREAD(SafetyGsmD, arg)
     if(gsm_nb > 10) { safety_status.gsm = ret; } else { safety_status.gsm = 0; }
     if(safety_control.gsm) { if((!(safety_trig.gsm)) && (safety_status.gsm)) { sprintf(msg, "GSM-%d", safety_control.gsm); safety_action(msg); safety_trig.gsm = 1; } }
 
-    NutSleep(10000);
+    NutSleep(30000);
   }
 }
 
