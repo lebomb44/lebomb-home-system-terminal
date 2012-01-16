@@ -181,33 +181,38 @@ uint8_t gsm_status_get(void)
   uint16_t data_len = 0;
   uint8_t * data_recv = NULL;
   uint8_t seq = 0;
+  uint8_t ret = 0;
 
   /* Purge the receiving buffer of all previous data */
   fpurge(uart1_fd);
   /* Synchronize the phone for the start of FBUS exchange */
   fbus_sync();
 
-  if(fbus_send(NOKIA_3310_NETW, 5, data, 0x60) != 0) { return 1; }
+  ret = fbus_send(NOKIA_3310_NETW, 5, data, 0x60);
+  if(ret != 0) { return (10+ret); }
 // 1E 00 0C 0A 00 06 00 01 00 70 01 60 13 1D
 
-  if(fbus_receive_ack(NOKIA_3310_NETW) != 0) { return 2; }
+  ret = fbus_receive_ack(NOKIA_3310_NETW);
+  if(ret != 0) { return (20+ret); }
 // 1E 0C 00 7F 00 02 0A 00 14 71
 
-  if(fbus_receive(&cmd, &data_len, &data_recv, &seq) != 0) { return 3; }
+  ret = fbus_receive(&cmd, &data_len, &data_recv, &seq);
+  if(ret != 0) { return (30+ret); }
 // 0x0071, ?,?,?,length,netstatus,netsel,cellIDH,cellIDL,lacH,lacL,netcode,netcode,netcode
 // 1E 0C 00 0A 00 15 01 08 00 71 01 00 01 0B 01 02 0C 97 1D 4D 02 F8 01 00 00 01 47 00 4B 40
   if(data_recv != NULL)
   {
-    if(cmd != NOKIA_3310_NETW) { return 4; }
-    if(data_len != 20) { return 5; }
-    if(data_recv[8] != 0x01) { return 6; } // Home Network
-    if(data_recv[9] != 0x02) { return 7; } // Automatic Network selection
+    if(cmd != NOKIA_3310_NETW) { return 1; }
+    if(data_len != 20) { return 2; }
+    if(data_recv[8] != 0x01) { return 3; } // Home Network
+    if(data_recv[9] != 0x02) { return 4; } // Automatic Network selection
     free(data_recv);
   }
-  else { return 8; }
+  else { return 5; }
 
   data[0] = NOKIA_3310_NETW;
-  if(fbus_send(NOKIA_3310_ACK, 1, data, 0x01) != 0) { return 9; }
+  ret = fbus_send(NOKIA_3310_ACK, 1, data, 0x01);
+  if(ret != 0) { return (40+ret); }
 
   return 0;
 }
