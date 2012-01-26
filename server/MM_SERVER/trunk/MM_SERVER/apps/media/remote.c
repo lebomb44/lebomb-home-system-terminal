@@ -58,16 +58,24 @@ THREAD(RemoteD, arg)
     if((ret == 1) && (buff[0] == 0xAA))
     {
       /* Get the mandatory header */
-      ret = fread(&buff[0], 1, RFIF_HEADER_SIZE, stdin);
-      if((ret == RFIF_HEADER_SIZE) && ((buff[1] == 0) || (buff[1] == 1)))
+      for(i=0; i<RFIF_HEADER_SIZE; i++)
+      {
+        ret = fread(&buff[i], 1, 1, stdin);
+        if(ret != 1) { break; }
+      }
+      if((i == RFIF_HEADER_SIZE) && ((buff[1] == 0) || (buff[1] == 1)))
       {
         /* Check the data length received */
         if(buff[RFIF_REG_LB_TX_DATA_NB] <= ROOM_RF_DATA_NB)
         {
           /* Get the data using the length included in the header */
-          ret = fread(&buff[RFIF_REG_LB_TX_DATA_NB+1], 1, buff[RFIF_REG_LB_TX_DATA_NB]+1, stdin);
+          for(i=0; i<buff[RFIF_REG_LB_TX_DATA_NB]+1; i++)
+          {
+            ret = fread(&buff[RFIF_REG_LB_TX_DATA_NB+1+i], 1, 1, stdin);
+            if(ret != 1) { break; }
+          }
           /* Check the received length */
-          if(ret == (buff[RFIF_REG_LB_TX_DATA_NB]+1))
+          if(i == (buff[RFIF_REG_LB_TX_DATA_NB]+1))
           {
             /* Erase the checksum */
             cksum = 0;
