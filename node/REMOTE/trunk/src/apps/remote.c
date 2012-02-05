@@ -68,5 +68,5 @@ void remote_cycle(void)
   for(i=0; i<10; i++) { uart_send(buff, 1 + REMOTE_HEADER_SIZE + buff[REMOTE_REG_LB_TX_DATA_NB] + 1); }
 
   /* Set LED OFF */
-  sbi(PORTB,0);
+  cbi(PORTB,0);
 }
