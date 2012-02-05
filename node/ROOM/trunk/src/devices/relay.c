@@ -3,9 +3,9 @@
 
 #define RELAY_NB 2
 
-u08 * relay_cmd_ddr[RELAY_NB] = { (u08*)&DDRD, (u08*)&DDRB };
-u08 * relay_cmd_port[RELAY_NB] = { (u08*)&PORTD, (u08*)&PORTB };
-u08 relay_cmd_bit[RELAY_NB] = { 7, 1 };
+u08 * relay_cmd_ddr[RELAY_NB] = { (u08*)&DDRB, (u08*)&DDRB };
+u08 * relay_cmd_port[RELAY_NB] = { (u08*)&PORTB, (u08*)&PORTB };
+u08 relay_cmd_bit[RELAY_NB] = { 0, 1 };
 
 u08 * relay_st_ddr[RELAY_NB] = { NULL, NULL }; //{ (u08*)&DDRB, (u08*)&DDRD };
 u08 * relay_st_port[RELAY_NB] = { NULL, NULL }; //{ (u08*)&PORTB, (u08*)&PORTD };
