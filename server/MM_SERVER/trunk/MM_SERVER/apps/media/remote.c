@@ -14,7 +14,7 @@
 
 uint8_t remote_init(void)
 {
-  NutThreadCreate("RemoteD", RemoteD, 0, 128);
+  NutThreadCreate("RemoteD", RemoteD, 0, 512);
 
   return 0;
 }
@@ -61,7 +61,7 @@ THREAD(RemoteD, arg)
       for(i=0; i<RFIF_HEADER_SIZE; i++)
       {
         ret = fread(&buff[i], 1, 1, stdin);
-        if(ret != 1) { break; }
+        if(ret != 1) { i = 0; break; }
       }
       if((i == RFIF_HEADER_SIZE) && ((buff[1] == 0) || (buff[1] == 1)))
       {
@@ -69,7 +69,7 @@ THREAD(RemoteD, arg)
         if(buff[RFIF_REG_LB_TX_DATA_NB] <= ROOM_RF_DATA_NB)
         {
           /* Get the data using the length included in the header */
-          for(i=0; i<buff[RFIF_REG_LB_TX_DATA_NB]+1; i++)
+          for(i=0; i<(buff[RFIF_REG_LB_TX_DATA_NB]+1); i++)
           {
             ret = fread(&buff[RFIF_REG_LB_TX_DATA_NB+1+i], 1, 1, stdin);
             if(ret != 1) { break; }
@@ -91,8 +91,9 @@ THREAD(RemoteD, arg)
                 if(buff[3] == 2)
                 {
                   /* Execute the corresponding scene */
-                  if(buff[4] < EVENT_MAX) { event_action(buff[4], buff[5]); }
+                  if(buff[4] < EVENT_MAX) { event_action(buff[4], buff[5]); /* FIXME */ power_set(buff[4], buff[5]); }
                   if((EVENT_MAX <= buff[4]) && (buff[4] < (EVENT_MAX + POWER_MAX))) { power_set(buff[4] - EVENT_MAX, buff[5]); }
+                  printf("scene=%d data=%d\n",buff[4],buff[5]);
                 }
               }
             }
