@@ -32,8 +32,9 @@ typedef signed long long s64;
 
 // includes generaux
 #include <avr/io.h>
-#include <avr/iotn2313.h>  // definition du processeur
+#include <avr/iom8.h>  // definition du processeur
 #include <avr/interrupt.h>
+//#include <avr/signal.h>
 #include <stdlib.h>
 
 #define extr16_08_0(i) (*(char *)(&i))
