@@ -8,7 +8,7 @@
 
 
 # MCU name
-MCU = attiny2313
+MCU = atmega8
 
 # Output format. (can be srec, ihex)
 FORMAT = ihex
@@ -23,7 +23,7 @@ OPT = s
 
 # List C source files here. (C dependencies are automatically generated.)
 SRC = $(TARGET).c \
-devices/eeprom.c devices/ir.c devices/timer.c devices/uart.c \
+devices/eeprom.c devices/uart.c \
 apps/remote.c
 
 # List Assembler source files here.
