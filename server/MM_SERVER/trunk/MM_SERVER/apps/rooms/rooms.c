@@ -20,7 +20,7 @@
 /* Status                :                        */
 /**************************************************/
 
-#define ROOM_SLA 2
+#define ROOM_SLA 10
 
 enum ROOM_REG_T
 {
