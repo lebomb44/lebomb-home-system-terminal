@@ -33,7 +33,7 @@ void room_shutter_set(u08 shutter, u08 pos)
     relay_set(shutter_relay_down[shutter], RELAY_OFF);
     relay_set(shutter_relay_up[shutter], RELAY_OFF);
     return;
-  }  
+  }
   if(pos==SHUTTER_UP)
   {
     if(relay_set(shutter_relay_down[shutter], RELAY_OFF)!=RELAY_OK) { return; }
