@@ -17,6 +17,15 @@ document.write("\
                 <li><a href=\"#_Event"+EVENT_MUSIQUE_AUTO+"\"><img class=\"picto\" src=\""+lost_icons_path+"hifi.jpg\">Musique automatique</a></li>\
             </ul>\
         </fieldset>\
+        <fieldset>\
+            <legend>Power</legend>\
+            <ul class=\"iArrow\">\
+                <li><a href=\"#_Event"+EVENT_POWER_0+"\"><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">Wifi</a></li>\
+                <li><a href=\"#_Event"+EVENT_POWER_1+"\"><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">Ethernet</a></li>\
+                <li><a href=\"#_Event"+EVENT_POWER_2+"\"><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">Power 2</a></li>\
+                <li><a href=\"#_Event"+EVENT_POWER_3+"\"><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">Power 3</a></li>\
+            </ul>\
+        </fieldset>\
     </div>\
 </div>\
 ");
@@ -69,3 +78,7 @@ printEventInfo(EVENT_CHAUFFAGE_SDB , "Chauffage Salle de Bain");
 printEventInfo(EVENT_CHAUFFAGE_CAFE, "Chauffage Cafe"         );
 printEventInfo(EVENT_LUMIERE_AUTO  , "Lumiere automatique"    );
 printEventInfo(EVENT_MUSIQUE_AUTO  , "Musique automatique"    );
+printEventInfo(EVENT_POWER_0       , "Wifi"                   );
+printEventInfo(EVENT_POWER_1       , "Ethernet"               );
+printEventInfo(EVENT_POWER_2       , "Power 2"                );
+printEventInfo(EVENT_POWER_3       , "Power 3"                );
