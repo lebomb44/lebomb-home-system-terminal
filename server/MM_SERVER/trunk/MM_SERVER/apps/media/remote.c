@@ -91,9 +91,8 @@ THREAD(RemoteD, arg)
                 if(buff[3] == 2)
                 {
                   /* Execute the corresponding scene */
-                  if(buff[4] < EVENT_MAX) { event_action(buff[4], buff[5]); /* FIXME */ power_set(buff[4], buff[5]); }
-                  if((EVENT_MAX <= buff[4]) && (buff[4] < (EVENT_MAX + POWER_MAX))) { power_set(buff[4] - EVENT_MAX, buff[5]); }
-                  printf("scene=%d data=%d\n",buff[4],buff[5]);
+                  if(buff[4] < EVENT_MAX) { event_action(buff[4], buff[5]); }
+                  /*printf("scene=%d data=%d\n",buff[4],buff[5]);*/
                 }
               }
             }
