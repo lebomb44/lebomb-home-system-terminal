@@ -205,7 +205,7 @@ int events_form(FILE * stream, REQUEST * req)
     fflush(stream);
   }
 
-    return 0;
+  return 0;
 }
 
 int events_xml_get(FILE * stream)
