@@ -35,7 +35,6 @@ int scenes_form(FILE * stream, REQUEST * req)
       scene = strtoul(scene_s, NULL, 10);
       status = strtoul(status_s, NULL, 10);
       if(scene < EVENT_MAX) { event_action(scene, status); }
-      if((EVENT_MAX <= scene) && (scene < (EVENT_MAX + POWER_MAX))) { power_set(scene - EVENT_MAX, status); }
     }
     fflush(stream);
   }
