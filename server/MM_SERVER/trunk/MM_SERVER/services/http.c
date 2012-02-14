@@ -58,6 +58,7 @@ THREAD(HttpD, arg)
   int ret = 0;
   FILE *stream = NULL;
 
+  arg = arg;
   NutThreadSetPriority(150);
 
   /*
