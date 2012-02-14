@@ -7,13 +7,13 @@
 #include "../rooms/rooms.h"
 #include "atmosphere.h"
 
-typedef enum _ATM_T
+enum ATM_T
 {
-  ATM_UNKNOWN =0,
+  ATM_UNKNOWN = 0,
   ATM_CINEMA,
   ATM_ROMANTIQUE,
   ATM_ECO
-} ATM_T;
+};
 
 uint8_t atmosphere_init(void)
 {
@@ -25,7 +25,7 @@ uint8_t atmosphere_init(void)
 int atmosphere_form(FILE * stream, REQUEST * req)
 {
   char* atm=0;
-  ATM_T value = ATM_UNKNOWN;
+  unsigned int value = ATM_UNKNOWN;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
