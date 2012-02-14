@@ -50,6 +50,7 @@ THREAD(RemoteD, arg)
   uint8_t buff[RFIF_HEADER_SIZE + ROOM_RF_DATA_NB + 1] = { 0 };
   uint8_t cksum = 0;
 
+  arg = arg;
   NutThreadSetPriority(250);
   while(1)
   {
