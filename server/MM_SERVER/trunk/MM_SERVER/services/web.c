@@ -145,3 +145,8 @@ void fprintf_XML_elt_int(char* elt, int data, FILE *stream)
 {
   fprintf(stream, "<%s>%d</%s>", elt, data, elt);
 }
+
+void fprintf_XML_elt_str(char* elt, char* data, FILE *stream)
+{
+  fprintf(stream, "<%s>%s</%s>", elt, data, elt);
+}
