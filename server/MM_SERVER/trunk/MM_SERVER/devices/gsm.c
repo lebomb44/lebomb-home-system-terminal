@@ -259,8 +259,8 @@ uint8_t gsm_sms_send(char * tel, char * msg)
   uint16_t up_msg_len = 0;
   uint16_t p_msg_len = 0;
   uint8_t *frame = NULL;
-  int i = 0;
-  int j = 0;
+  unsigned int i = 0;
+  unsigned int j = 0;
   uint16_t pos = 0;
 
   uint8_t sms_header[8] = {0x00, 0x01, 0x00, 0x01, 0x02, 0x00, 0x07, 0x91};
