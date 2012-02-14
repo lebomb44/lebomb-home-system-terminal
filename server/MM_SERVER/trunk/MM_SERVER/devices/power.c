@@ -4,10 +4,10 @@
 
 #include "power.h"
 
-/* WIFI */
+/* Wifi */
 #define POWER0_PORT NUTGPIO_PORTB
 #define POWER0_BIT 5
-/* POWER1 Not Used */
+/* Ethernet */
 #define POWER1_PORT NUTGPIO_PORTB
 #define POWER1_BIT 6
 /* POWER2 Not Used */
