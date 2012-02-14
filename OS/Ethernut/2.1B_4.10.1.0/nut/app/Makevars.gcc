@@ -42,7 +42,7 @@ include $(top_srcdir)/app/Makevars.all
 BIN = $(TRGT)objcopy
 
 # Removes -Werror for application build
-CFLAGS_WRN = -Wall -Wstrict-prototypes
+CFLAGS_WRN = -Wall -Wstrict-prototypes -Wextra
 
 # Special libraries
 LIBMATH = -lm
