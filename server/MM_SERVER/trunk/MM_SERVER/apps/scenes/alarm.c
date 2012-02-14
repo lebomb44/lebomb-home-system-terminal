@@ -59,6 +59,7 @@ uint8_t alarm_action_with_buzzer(char* msg)
 
 THREAD(AlarmD, arg)
 {
+  arg = arg;
   NutThreadSetPriority(25);
 
   while(1)
