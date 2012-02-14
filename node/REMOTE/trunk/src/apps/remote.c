@@ -33,19 +33,19 @@ void remote_cycle(void)
   /* Button 1 ON */
   if(!bit_is_set(PINC,0)) { /* SCENE 0 */ scene = 0;   /* STATE ON */  state = 1; }
   /* Button 1 OFF */
-  if(!bit_is_set(PIND,6)) { /* SCENE 0 */ scene = 0;   /* STATE OFF */  state = 0; }
+  if(!bit_is_set(PIND,6)) { /* SCENE 1 */ scene = 1;   /* STATE ON */  state = 1; }
   /* Button 2 ON */
-  if(!bit_is_set(PINC,1)) { /* SCENE 1 */ scene = 1;   /* STATE ON */  state = 1; }
+  if(!bit_is_set(PINC,1)) { /* SCENE 2 */ scene = 6;   /* STATE ON */  state = 1; }
   /* Button 2 OFF */
-  if(!bit_is_set(PIND,5)) { /* SCENE 1 */ scene = 1;   /* STATE OFF */  state = 0; }
+  if(!bit_is_set(PIND,5)) { /* SCENE 2 */ scene = 6;   /* STATE OFF */  state = 0; }
   /* Button 3 ON */
-  if(!bit_is_set(PINC,2)) { /* SCENE 2 */ scene = 2;   /* STATE ON */  state = 1; }
+  if(!bit_is_set(PINC,2)) { /* SCENE 3 */ scene = 7;   /* STATE ON */  state = 1; }
   /* Button 3 OFF */
-  if(!bit_is_set(PINB,7)) { /* SCENE 2 */ scene = 2;   /* STATE OFF */  state = 0; }
+  if(!bit_is_set(PINB,7)) { /* SCENE 3 */ scene = 7;   /* STATE OFF */  state = 0; }
   /* Button 4 ON */
-  if(!bit_is_set(PINC,4)) { /* SCENE 3 */ scene = 3;   /* STATE ON */  state = 1; }
+  if(!bit_is_set(PINC,4)) { /* SCENE 4 */ scene = 8;   /* STATE ON */  state = 1; }
   /* Button 4 OFF */
-  if(!bit_is_set(PINB,6)) { /* SCENE 3 */ scene = 3;   /* STATE OFF */  state = 0; }
+  if(!bit_is_set(PINB,6)) { /* SCENE 4 */ scene = 8;   /* STATE OFF */  state = 0; }
 
   /* Set synchro word */
   buff[0] = 0xAA;
