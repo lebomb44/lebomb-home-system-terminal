@@ -98,6 +98,7 @@ int xml_get_form(FILE * stream, REQUEST * req)
   {
     fprintf_XML_header(stream);
     fprintf_XML_elt_header("Lost", stream);
+    mon_xml_get(stream);
     rooms_xml_get(stream);
     events_xml_get(stream);
     alarm_xml_get(stream);
