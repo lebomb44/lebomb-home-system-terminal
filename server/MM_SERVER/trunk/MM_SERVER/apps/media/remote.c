@@ -93,7 +93,8 @@ THREAD(RemoteD, arg)
                 {
                   /* Execute the corresponding scene */
                   if(buff[4] < EVENT_MAX) { event_action(buff[4], buff[5]); }
-                  /*printf("scene=%d data=%d\n",buff[4],buff[5]);*/
+                  printf("scene=%d data=%d\n",buff[4],buff[5]);
+                  fpurge(stdin);
                 }
               }
             }
