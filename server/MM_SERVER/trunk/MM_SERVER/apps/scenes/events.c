@@ -74,6 +74,7 @@ THREAD(EventsD, arg)
   time_t tt;
   tm time_now;
 
+  arg = arg;
   NutThreadSetPriority(240);
 
   while(1)
@@ -152,7 +153,7 @@ int events_form(FILE * stream, REQUEST * req)
     if(event_s)
     {
       event = strtoul(event_s, NULL, 10);
-      if((0 <= event) && (event < EVENT_MAX))
+      if(event < EVENT_MAX)
       {
         arg_s = NutHttpGetParameter(req, "status");
         if(arg_s)
