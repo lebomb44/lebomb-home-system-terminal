@@ -5,12 +5,14 @@
 #include <sys/atom.h>
 #include <sys/thread.h>
 #include <sys/timer.h>
+#include <sys/confos.h>
 #include <sys/socket.h>
 #include <sys/heap.h>
 
 #include <arpa/inet.h>
 #include <pro/httpd.h>
 
+#include "web.h"
 #include "monitor.h"
 
 uint8_t mon_init(void)
@@ -115,4 +117,25 @@ int mon_show(FILE * stream, REQUEST * req)
     fflush(stream);
 
     return 0;
+}
+
+int mon_xml_get(FILE * stream)
+{
+  time_t tt;
+  tm time_now;
+  tt = time(NULL);
+  localtime_r(&tt, &time_now);
+
+  fprintf_XML_elt_header("Mon", stream);
+  fprintf_XML_elt_str("host_name", confos.hostname      , stream);
+  fprintf_XML_elt_int("wday"     , time_now.tm_wday     , stream);
+  fprintf_XML_elt_int("mon"      , time_now.tm_mon+1    , stream);
+  fprintf_XML_elt_int("mday"     , time_now.tm_mday     , stream);
+  fprintf_XML_elt_int("hour"     , time_now.tm_hour     , stream);
+  fprintf_XML_elt_int("min"      , time_now.tm_min      , stream);
+  fprintf_XML_elt_int("sec"      , time_now.tm_sec      , stream);
+  fprintf_XML_elt_int("year"     , time_now.tm_year+1900, stream);
+  fprintf_XML_elt_trailer("Mon", stream);
+
+  return 0;
 }
