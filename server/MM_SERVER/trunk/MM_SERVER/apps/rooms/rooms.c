@@ -267,6 +267,7 @@ THREAD(RoomD, arg)
 {
   uint8_t i = 0;
 
+  arg = arg;
   NutThreadSetPriority(26);
 
   while(1)
@@ -307,7 +308,7 @@ int rooms_form(FILE * stream, REQUEST * req)
     if(room_s)
     {
       room = strtoul(room_s, NULL, 10);
-      if((0 <= room) && (room <= ROOM_MAX))
+      if(room <= ROOM_MAX)
       {
         ir_type_s = NutHttpGetParameter(req, "ir_type");
         clim_s    = NutHttpGetParameter(req, "clim");
