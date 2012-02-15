@@ -74,7 +74,7 @@ THREAD(RemoteD, arg)
           for(i=0; i<(buff[RFIF_REG_LB_TX_DATA_NB]+1); i++)
           {
             ret = fgetc(stdin);
-            if(ret > 0) { buff[RFIF_REG_LB_TX_DATA_NB+1+i] = ret; }
+            if(ret >= 0) { buff[RFIF_REG_LB_TX_DATA_NB+1+i] = ret; }
             else { break; }
           }
           /* Check the received length */
