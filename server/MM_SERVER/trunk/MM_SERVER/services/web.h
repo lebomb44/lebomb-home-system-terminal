@@ -23,6 +23,7 @@ extern void fprintf_XML_header(FILE *stream);
 extern void fprintf_XML_elt_header(char* elt, FILE *stream);
 extern void fprintf_XML_elt_trailer(char* elt, FILE *stream);
 extern void fprintf_XML_elt_int(char* elt, int data, FILE *stream);
+extern void fprintf_XML_elt_int02(char* elt, int data, FILE *stream);
 extern void fprintf_XML_elt_str(char* elt, char* data, FILE *stream);
 
 __END_DECLS
