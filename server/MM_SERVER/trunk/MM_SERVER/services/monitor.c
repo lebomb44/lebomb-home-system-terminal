@@ -127,14 +127,14 @@ int mon_xml_get(FILE * stream)
   localtime_r(&tt, &time_now);
 
   fprintf_XML_elt_header("Mon", stream);
-  fprintf_XML_elt_str("host_name", confos.hostname      , stream);
-  fprintf_XML_elt_int("wday"     , time_now.tm_wday     , stream);
-  fprintf_XML_elt_int("mon"      , time_now.tm_mon+1    , stream);
-  fprintf_XML_elt_int("mday"     , time_now.tm_mday     , stream);
-  fprintf_XML_elt_int("hour"     , time_now.tm_hour     , stream);
-  fprintf_XML_elt_int("min"      , time_now.tm_min      , stream);
-  fprintf_XML_elt_int("sec"      , time_now.tm_sec      , stream);
-  fprintf_XML_elt_int("year"     , time_now.tm_year+1900, stream);
+  fprintf_XML_elt_str("host_name"  , confos.hostname      , stream);
+  fprintf_XML_elt_int02("wday"     , time_now.tm_wday     , stream);
+  fprintf_XML_elt_int02("mon"      , time_now.tm_mon+1    , stream);
+  fprintf_XML_elt_int02("mday"     , time_now.tm_mday     , stream);
+  fprintf_XML_elt_int02("hour"     , time_now.tm_hour     , stream);
+  fprintf_XML_elt_int02("min"      , time_now.tm_min      , stream);
+  fprintf_XML_elt_int02("sec"      , time_now.tm_sec      , stream);
+  fprintf_XML_elt_int02("year"     , time_now.tm_year+1900, stream);
   fprintf_XML_elt_trailer("Mon", stream);
 
   return 0;
