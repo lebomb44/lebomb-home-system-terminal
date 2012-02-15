@@ -29,7 +29,7 @@ int web_ASPCallback (char *pASPFunction, FILE *stream)
   else if (strncmp_P(pASPFunction, PSTR("usr_time"), sizeof("usr_time")) == 0) {
     tt = time(NULL);
     localtime_r(&tt, &time_now);
-    fprintf_P(stream, PSTR("%d %02d %02d %02d:%02d:%02d %04d"),time_now.tm_wday, time_now.tm_mon+1, time_now.tm_mday, time_now.tm_hour, time_now.tm_min, time_now.tm_sec, time_now.tm_year+1900);
+    fprintf_P(stream, PSTR("%02d:%02d:%02d %04d-%02d-%02d"), time_now.tm_hour, time_now.tm_min, time_now.tm_sec, time_now.tm_year+1900, time_now.tm_mon+1, time_now.tm_mday);
     return(0);
   }
 
