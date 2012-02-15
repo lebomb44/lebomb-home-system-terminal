@@ -1,4 +1,5 @@
 type lost.js > all.js
+type lost_mon.js >> all.js
 type lost_alarm.js >> all.js
 type lost_atm.js >> all.js
 type lost_safety.js >> all.js
