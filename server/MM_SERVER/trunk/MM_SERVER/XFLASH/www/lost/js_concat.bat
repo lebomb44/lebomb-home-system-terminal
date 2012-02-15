@@ -6,6 +6,7 @@ type lost_safety.js >> all.js
 type lost_rooms.js >> all.js
 type lost_ev.js >> all.js
 type lost_html.js >> all.js
+type lost_mon_html.js >> all.js
 type lost_alarm_html.js >> all.js
 type lost_atm_html.js >> all.js
 type lost_safety_html.js >> all.js
