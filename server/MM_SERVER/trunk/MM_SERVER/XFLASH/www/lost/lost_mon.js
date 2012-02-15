@@ -16,13 +16,12 @@ function lost_mon_xml_get(xml)
       if(wday && mon && mday && hour && min && sec && year)
       {
         out_id.innerHTML = wday.firstChild.nodeValue + " " \
-                         + mon.firstChild.nodeValue + " " \
+                         + mon.firstChild.nodeValue  + " " \
                          + mday.firstChild.nodeValue + " " \
                          + hour.firstChild.nodeValue + ":" \
-                         + min.firstChild.nodeValue + ":" \
-                         + sec.firstChild.nodeValue + " " \
+                         + min.firstChild.nodeValue  + ":" \
+                         + sec.firstChild.nodeValue  + " " \
                          + year.firstChild.nodeValue;
-        %d %02d %02d %02d:%02d:%02d %04d
         lost_wa_refresh("waHeadTitle");
       }
       else
