@@ -45,7 +45,7 @@ Set ACK   : http://lebomb.no-ip.com/cgi/ext.cgi?sla=6&addr=112&data=1
 
 THREAD(RemoteD, arg)
 {
-  size_t ret = 0;
+  int ret = 0;
   uint8_t i = 0;
   uint8_t buff[RFIF_HEADER_SIZE + ROOM_RF_DATA_NB + 1] = { 0 };
   uint8_t cksum = 0;
@@ -54,15 +54,16 @@ THREAD(RemoteD, arg)
   NutThreadSetPriority(250);
   while(1)
   {
-    ret = fread(&buff[0], 1, 1, stdin);
+    ret = fgetc(stdin);
     /* Search the synchro word */
-    if((ret == 1) && (buff[0] == 0xAA))
+    if(ret == 0xAA)
     {
       /* Get the mandatory header */
       for(i=0; i<RFIF_HEADER_SIZE; i++)
       {
-        ret = fread(&buff[i], 1, 1, stdin);
-        if(ret != 1) { i = 0; break; }
+        ret = fgetc(stdin);
+        if(ret >= 0) { buff[i] = ret; }
+        else { i = 0; break; }
       }
       if((i == RFIF_HEADER_SIZE) && ((buff[1] == 0) || (buff[1] == 1)))
       {
@@ -72,8 +73,9 @@ THREAD(RemoteD, arg)
           /* Get the data using the length included in the header */
           for(i=0; i<(buff[RFIF_REG_LB_TX_DATA_NB]+1); i++)
           {
-            ret = fread(&buff[RFIF_REG_LB_TX_DATA_NB+1+i], 1, 1, stdin);
-            if(ret != 1) { break; }
+            ret = fgetc(stdin);
+            if(ret > 0) { buff[RFIF_REG_LB_TX_DATA_NB+1+i] = ret; }
+            else { break; }
           }
           /* Check the received length */
           if(i == (buff[RFIF_REG_LB_TX_DATA_NB]+1))
