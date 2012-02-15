@@ -253,6 +253,7 @@ function indexLoading(evt)
         xml=xhr.responseXML;
         if(xml)
         {
+          lost_mon_xml_get(xml);
           lost_alarm_xml_get(xml);
           lost_safety_xml_get(xml);
           lost_rooms_xml_get(xml);
