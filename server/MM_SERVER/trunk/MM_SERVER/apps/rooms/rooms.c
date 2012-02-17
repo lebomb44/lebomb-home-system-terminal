@@ -323,7 +323,7 @@ int rooms_form(FILE * stream, REQUEST * req)
           ir_cmd0_s = NutHttpGetParameter(req, "ir_cmd0");
           ir_cmd1_s = NutHttpGetParameter(req, "ir_cmd1");
           ir_cmd2_s = NutHttpGetParameter(req, "ir_cmd2");
-          if(ir_cmd0_s && ir_cmd2_s && ir_cmd2_s)
+          if(ir_cmd0_s && ir_cmd1_s && ir_cmd2_s)
           {
             room_ir_set(room, strtoul(ir_type_s, NULL, 10), strtoul(ir_cmd0_s, NULL, 10), strtoul(ir_cmd1_s, NULL, 10), strtoul(ir_cmd2_s, NULL, 10));
           }
