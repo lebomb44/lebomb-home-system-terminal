@@ -80,7 +80,7 @@ int main(void)
   http_email_send("Starting_LOST");
 
   NutThreadSetPriority(149);
-  NutWatchDogStart(10000, 0);
+  NutWatchDogStart(60000, 0);
   while(1) { NutSleep(1000); printf("."); NutWatchDogRestart(); }
 
   return 0;
