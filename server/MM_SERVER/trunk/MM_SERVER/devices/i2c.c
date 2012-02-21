@@ -33,13 +33,19 @@ uint8_t i2c_init(void)
 
 uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
 {
+  int ret = 0;
+
   /* Check the pointer on data area */
   if(data==NULL) { return 6; }
-  /* Do the exchange and the returned number of data */
-  if(TwMasterTransact(sla, &addr, (uint16_t) 1, data, (uint16_t) nb, (uint32_t) 1000) != ((int) nb)) { return 7; }
+  /* Do the exchange and check the returned number of data */
+  if(TwMasterTransact(sla, &addr, (uint16_t) 1, data, (uint16_t) nb, (uint32_t) 1000) != ((int) nb))
+  {
+    ret = TwMasterError();
+    if(ret == 0) { return 7; } else { return ret; }
+  }
 
   /* Verify that there was no error during the transmission */
-  return TwSlaveError();
+  return TwMasterError();
 }
 
 uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
@@ -49,28 +55,33 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   int ret = 0;
 
   /* Check the pointer on the data area */
-  if(data == NULL) { return 1; }
+  if(data == NULL) { return 8; }
   /* Allocate a new area in order to build the frame */
   buff = malloc(nb+1);
   /* Check the allocation */
-  if(buff == NULL) { return 2; }
+  if(buff == NULL) { return 9; }
   /* Copy the data to the new area */
   for(i=0; i<nb; i++) { buff[i+1] = data[i]; }
-  /* But the first data is the destination adress */
+  /* But the first data is the destination address */
   buff[0] = addr;
 
   /* Do the exchange */
-  ret = TwMasterTransact(sla, buff, ((uint16_t)nb)+1, NULL, 0, 1000);
+  ret = TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 1000);
   /* Before to exit, free the allocated area */
   free(buff);
   /* Check the returned code of the exchange */
-  if(ret!=0) { return 3; }
+  if(ret!=0)
+  {
+    ret = TwMasterError();
+	if(ret == 0) { return 10; } else { return ret; }
+  }
 
-  return 0;
+  /* Verify that there was no error during the transmission */
+  return TwMasterError();
 }
 
 uint8_t i2c_broadcast_set(uint8_t addr, uint8_t nb, uint8_t* data)
 {
-  /* Broadcast is a set for adress 0 */
+  /* Broadcast is a set for address 0 */
   return i2c_set(0, addr, nb, data);
 }
