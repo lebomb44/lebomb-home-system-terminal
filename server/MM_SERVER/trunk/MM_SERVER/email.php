@@ -15,7 +15,6 @@
 
   /* TODO set the email adresses */
   $status_mail1 = mail("cambon.olivier@gmail.com", $sujet, $message, $header);
-  $status_mail2 = mail("0689350159@orange.fr"    , $sujet, $message, $header);
 
   if((status_mail1 == true) && (status_mail2 == true)) { print('OK'); } else { print('KO'); }
 ?>
