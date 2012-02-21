@@ -20,12 +20,10 @@
 #include "devices/volume.h"
 #include "devices/gsm.h"
 #include "devices/i2c.h"
-#include "devices/xflash.h"
 
 #include "services/http.h"
 #include "services/monitor.h"
 #include "services/web.h"
-#include "services/tftp.h"
 
 #include "apps/media/freebox.h"
 #include "apps/media/remote.h"
@@ -78,7 +76,6 @@ int main(void)
   /* Register the XML global status form */
   NutRegisterCgi("get.xml", xml_get_form);
 
-  // TODO NutTFTPStart();
   printf("Starting LOST\n");
   http_email_send("Starting_LOST");
 
