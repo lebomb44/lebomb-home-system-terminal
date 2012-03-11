@@ -272,6 +272,9 @@ THREAD(RoomD, arg)
 
   while(1)
   {
+    /* Send a STOP on I2C in order to initialize the trasmission */
+    outb(TWCR, (_BV(TWINT) | _BV(TWEN) | _BV(TWIE)) | _BV(TWEA) | _BV(TWSTO));
+    /* Acquire all the rooms */
     for(i=0; i<ROOM_MAX; i++)
     {
       room_error[i] = i2c_get(ROOM_SLA+i, 0, ROOM_REG_MAX, &room_list[i][0]);
