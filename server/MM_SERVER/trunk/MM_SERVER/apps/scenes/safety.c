@@ -67,9 +67,9 @@ uint8_t safety_init(void)
   safety_control.rooms_temp_min = 0; // TODO
   safety_control.rooms_hum      = 0; // TODO
   safety_control.rooms_smoke    = 0; // TODO
-  safety_control.ups_temp       = 0; // TODO
-  safety_control.ups_power      = 0; // TODO
-  safety_control.rack_temp      = 0; // TODO
+  safety_control.ups_temp       = 1;
+  safety_control.ups_power      = 1;
+  safety_control.rack_temp      = 1;
   safety_control.rack_alarm     = 0; // Do not watch at the rack alarm when stating because the door is open !
   safety_control.http           = 0; // TODO
   safety_control.gsm            = 0; // TODO
