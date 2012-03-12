@@ -23,7 +23,7 @@ uint8_t i2c_init(void)
   sbi(PORTD,1);
 
   /* Set as I2C master */
-  TwInit(0);
+  TwInit(1);
   /* Set the bus speed */
   val = 2400;
   TwIOCtl(TWI_SETSPEED, &val);
