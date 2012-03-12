@@ -71,7 +71,7 @@ uint8_t safety_init(void)
   safety_control.ups_power      = 1;
   safety_control.rack_temp      = 1;
   safety_control.rack_alarm     = 0; // Do not watch at the rack alarm when stating because the door is open !
-  safety_control.http           = 0; // TODO
+  safety_control.http           = 1;
   safety_control.gsm            = 0; // TODO
 
   safety_trig.rooms_error    = 0;
