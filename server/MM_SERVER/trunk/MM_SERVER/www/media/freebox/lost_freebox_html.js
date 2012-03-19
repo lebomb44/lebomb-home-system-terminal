@@ -5,8 +5,8 @@ document.write("\
   <meta http-equiv=\"content-style-type\" content=\"text/css\" />\
   <meta http-equiv=\"content-language\" content=\"fr\" />\
   <title>FreeCommande</title>\
-  <style type=\"text/css\" media=\"screen\">@import \"http://lebomb.free.fr/MM/media/freebox/css/reset.css\";</style>\
-  <style type=\"text/css\" media=\"screen\">@import \"http://lebomb.free.fr/MM/media/freebox/css/freecommande-v2.css\";</style>\
+  <style type=\"text/css\" media=\"screen\">@import \"http://lebomb.free.fr/LOST/media/freebox/css/reset.css\";</style>\
+  <style type=\"text/css\" media=\"screen\">@import \"http://lebomb.free.fr/LOST/media/freebox/css/freecommande-v2.css\";</style>\
   <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/jquery-1.4.2.min.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
   <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/jquery.cookies.2.2.0.min.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
   <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/jquery.timers.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
