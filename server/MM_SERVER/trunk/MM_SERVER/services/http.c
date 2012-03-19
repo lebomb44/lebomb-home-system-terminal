@@ -18,6 +18,7 @@
 
 #include <sys/atom.h>
 
+#include "../config.h"
 #include "http.h"
 #include "web.h"
 #include "../devices/xflash.h"
