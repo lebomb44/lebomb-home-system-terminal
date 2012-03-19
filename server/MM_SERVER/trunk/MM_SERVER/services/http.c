@@ -248,11 +248,11 @@ uint8_t http_status_get(void)
 
 uint8_t http_email_send_once(char* msg)
 {
-  char url[sizeof("email.php?msg=")+20];
+  char url[sizeof(LOST_EMAIL)+20];
   char* buff=NULL;
   char* out=NULL;
 
-  strncpy(url, "email.php?msg=", sizeof(url));
+  strncpy(url, LOST_EMAIL, sizeof(url));
   strncat(url, msg, sizeof(url));
   buff = http_request("88.190.253.248", 80, url, "www.lebomb.fr", 400);
   if(buff == NULL) { return 1; }
