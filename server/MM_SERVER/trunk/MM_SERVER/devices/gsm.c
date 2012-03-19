@@ -5,6 +5,7 @@
 #include <sys/thread.h>
 #include <sys/timer.h>
 
+#include "../config.h"
 #include "uart.h"
 #include "gsm.h"
 
@@ -158,9 +159,9 @@ uint8_t fbus_receive_ack(uint8_t _cmd)
 
 uint8_t gsm_init(void)
 {
-  /* TODO set the GSM phone number */
-  strncpy(gsm1, "0689350159", 10);
-  strncpy(gsm2, "0689350159", 10);
+  /* Set the GSM phone number */
+  strncpy(gsm1, LOST_GSM1, 10);
+  strncpy(gsm2, LOST_GSM2, 10);
 
   return 0;
 }
