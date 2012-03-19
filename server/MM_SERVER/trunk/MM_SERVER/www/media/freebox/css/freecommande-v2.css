@@ -1,0 +1,403 @@
+/*
+Feuille de style pour FreeCommande
+Licence LGPL 2010 - Yves Tannier [http://www.grafactory.net/blog/]
+*/
+body {
+    background-color: #2D3D40;
+    color: #fff;
+    font-family: Helvetica, sans-serif;
+}
+a {
+    color: #fff;
+    text-decoration: none;
+}
+#telecommande {
+    width: 320px;
+    height: 460px;
+    background: url(../images/freecommande-v2.png) no-repeat;
+}
+#telecommande span {
+    display: none;
+}
+/* décommente la bordure pour le débugage des placements boutons */
+#telecommande li, #telecommande a {
+    display: block;
+    /*border: 1px solid;*/
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#telecommande li#home a {
+    top: 362px;
+    left: 79px;
+    width: 66px;
+    height: 38px;
+}
+#telecommande li#list a {
+    top: 362px;
+    left: 165px;
+    width: 66px;
+    height: 38px;
+}
+#telecommande li#mute a {
+    top: 314px;
+    left: 8px;
+    width: 44px;
+    height: 38px;
+}
+#telecommande li#remotekey a {
+    top: 314px;
+    left: 260px;
+    width: 44px;
+    height: 38px;
+}
+
+#telecommande li#red a {
+    top: 5px;
+    left: 71px;
+    width: 48px;
+    height: 28px;
+}
+#telecommande li#green a {
+    top: 5px;
+    left: 132px;
+    width: 48px;
+    height: 28px;
+}
+#telecommande li#yellow a {
+    top: 5px;
+    left: 256px;
+    width: 50px;
+    height: 28px;
+}
+#telecommande li#blue a {
+    top: 5px;
+    left: 193px;
+    width: 50px;
+    height: 28px;
+}
+#telecommande li#id1 a {
+    top: 50px;
+    left: 2px;
+    width: 58px;
+    height: 38px;
+}
+#telecommande li#id4 a {
+    top: 88px;
+    left: 2px;
+    width: 58px;
+    height: 38px;
+}
+#telecommande li#id7 a {
+    top: 128px;
+    left: 2px;
+    width: 58px;
+    height: 38px;
+}
+#telecommande li#back a {
+    top: 167px;
+    left: 2px;
+    width: 58px;
+    height: 38px;
+}
+#telecommande li#id2 a {
+    top: 50px;
+    left: 63px;
+    width: 58px;
+    height: 38px;
+}
+#telecommande li#id5 a {
+    top: 88px;
+    left: 63px;
+    width: 58px;
+    height: 38px;
+}
+#telecommande li#id8 a {
+    top: 128px;
+    left: 63px;
+    width: 58px;
+    height: 38px;
+}
+#telecommande li#id0 a {
+    top: 167px;
+    left: 63px;
+    width: 58px;
+    height: 38px;
+}
+#telecommande li#id3 a {
+    top: 50px;
+    left: 124px;
+    width: 58px;
+    height: 38px;
+}
+#telecommande li#id6 a {
+    top: 88px;
+    left: 124px;
+    width: 58px;
+    height: 38px;
+}
+#telecommande li#id9 a {
+    top: 128px;
+    left: 124px;
+    width: 58px;
+    height: 38px;
+}
+#telecommande li#swap a {
+    top: 167px;
+    left: 124px;
+    width: 58px;
+    height: 38px;
+}
+#telecommande li#info a {
+    top: 52px;
+    left: 196px;
+    width: 48px;
+    height: 28px;
+}
+#telecommande li#mail a {
+    top: 92px;
+    left: 196px;
+    width: 48px;
+    height: 28px;
+}
+#telecommande li#options a {
+    top: 134px;
+    left: 196px;
+    width: 48px;
+    height: 28px;
+}
+#telecommande li#pip a {
+    top: 174px;
+    left: 196px;
+    width: 48px;
+    height: 28px;
+}
+#telecommande li#linkkey a {
+    top: 174px;
+    left: 256px;
+    width: 48px;
+    height: 28px;
+}
+#telecommande li#epg a {
+    top: 52px;
+    left: 256px;
+    width: 48px;
+    height: 28px;
+}
+#telecommande li#media a {
+    top: 92px;
+    left: 256px;
+    width: 48px;
+    height: 28px;
+}
+#telecommande li#help a {
+    top: 134px;
+    left: 256px;
+    width: 48px;
+    height: 28px;
+}
+
+#telecommande li#ok a {
+    top: 264px;
+    left: 128px;
+    width: 58px;
+    height: 36px;
+}
+#telecommande li#right a {
+    top: 264px;
+    left: 188px;
+    width: 58px;
+    height: 36px;
+}
+#telecommande li#left a {
+    top: 264px;
+    left: 66px;
+    width: 58px;
+    height: 36px;
+}
+#telecommande li#up a {
+    top: 224px;
+    left: 128px;
+    width: 58px;
+    height: 36px;
+}
+#telecommande li#down a {
+    top: 304px;
+    left: 128px;
+    width: 58px;
+    height: 36px;
+}
+
+#telecommande li#prev a {
+    top: 410px;
+    left: 10px;
+    width: 48px;
+    height: 46px;
+}
+#telecommande li#bwd a {
+    top: 410px;
+    left: 58px;
+    width: 48px;
+    height: 46px;
+}
+#telecommande li#next a {
+    top: 410px;
+    left: 260px;
+    width: 48px;
+    height: 46px;
+}
+#telecommande li#fwd a {
+    top: 410px;
+    left: 210px;
+    width: 48px;
+    height: 46px;
+}
+#telecommande li#play a {
+    top: 410px;
+    left: 156px;
+    width: 52px;
+    height: 46px;
+}
+#telecommande li#stop a {
+    top: 410px;
+    left: 108px;
+    width: 46px;
+    height: 46px;
+}
+
+#telecommande li#vol_inc a {
+    top: 218px;
+    left: 8px;
+    width: 44px;
+    height: 36px;
+}
+#telecommande li#vol_dec a {
+    top: 268px;
+    left: 8px;
+    width: 44px;
+    height: 36px;
+}
+
+#telecommande li#prgm_inc a {
+    top: 218px;
+    left: 260px;
+    width: 44px;
+    height: 36px;
+}
+#telecommande li#prgm_dec a {
+    top: 268px;
+    left: 260px;
+    width: 44px;
+    height: 36px;
+}
+
+#telecommande li#power a {
+    top: 1px;
+    left: 6px;
+    width: 44px;
+    height: 36px;
+}
+#telecommande li#tv a {
+    top: 364px;
+    left: 6px;
+    width: 44px;
+    height: 36px;
+}
+#telecommande li#rec a {
+    top: 364px;
+    left: 260px;
+    width: 44px;
+    height: 36px;
+}
+
+/* @end */
+/* @group Plastic */
+#plastic {
+    background: #17181a;
+}
+ul.plastic {
+    background: #17181a;
+    color: #aaa;
+    font: bold 18px Helvetica;
+    margin: 0;
+    padding: 0;
+    border-width: 0 0 1px 0;
+}
+ul.plastic li {
+    border-width: 1px 0;
+    border-style: solid;
+    border-top-color: #222;
+    border-bottom-color: #000;
+    color: #666;
+    list-style-type: none;
+    overflow: hidden;
+    padding: 10px 10px 10px 10px;
+}
+ul.plastic li a.active.loading {
+    background-image: url(img/loading.gif);
+    background-position: 95% center;
+    background-repeat: no-repeat;
+}
+ul.plastic li small {
+    color: #888;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 24px;
+    text-transform: uppercase;
+}
+ul.plastic li:nth-child(odd) {
+    background-color: #1c1c1f;
+}
+/*ul.plastic li.arrow {
+    background-image: url(img/chevron.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+ul.plastic li.arrow a.active {
+    background-image: url(img/chevron.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+ul.plastic li.forward {
+    background-image: url(img/chevron_circle.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+}*/
+ul.plastic li.forward a.active {
+    background-image: url(img/chevron_circle.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+.blackbar {
+    background: top left url(../images/bg-topbar.png) repeat-x;
+    height: 44px;
+}
+.backbutton {
+    padding-top: 6px;
+    padding-left: 10px;
+}
+.backbutton a {
+    background: top left url(../images/back-button.png) no-repeat;
+    height: 30px;
+    width: 63px;
+    display: block;
+}
+.backbutton a span {
+    display: none;
+}
+.hide {
+    display: none;    
+}
+#infosblock .conteneur {
+    padding: 20px;
+}
+#infosblock p a {
+    font-weight: bold;
+    border-bottom: 1px dotted #ccc;
+}
+#infosblock p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 ff=unix fenc=utf8: */
