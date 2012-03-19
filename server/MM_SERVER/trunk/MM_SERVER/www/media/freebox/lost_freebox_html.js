@@ -7,10 +7,10 @@ document.write("\
   <title>FreeCommande</title>\
   <style type=\"text/css\" media=\"screen\">@import \"http://lebomb.free.fr/MM/media/freebox/css/reset.css\";</style>\
   <style type=\"text/css\" media=\"screen\">@import \"http://lebomb.free.fr/MM/media/freebox/css/freecommande-v2.css\";</style>\
-  <script src=\"http://lebomb.free.fr/MM/media/freebox/js/jquery-1.4.2.min.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
-  <script src=\"http://lebomb.free.fr/MM/media/freebox/js/jquery.cookies.2.2.0.min.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
-  <script src=\"http://lebomb.free.fr/MM/media/freebox/js/jquery.timers.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
-  <script src=\"http://lebomb.free.fr/MM/media/freebox/js/freecommande.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
+  <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/jquery-1.4.2.min.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
+  <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/jquery.cookies.2.2.0.min.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
+  <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/jquery.timers.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
+  <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/freecommande.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
   <link rel=\"apple-touch-icon-precomposed\" href=\"http://lebomb.free.fr/MM/media/freebox/images/icon-freecommande.png\" />\
   <link rel=\"apple-touch-startup-image\" href=\"http://lebomb.free.fr/MM/media/freebox/images/startup-freecommande.png\" />\
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;\" />\
