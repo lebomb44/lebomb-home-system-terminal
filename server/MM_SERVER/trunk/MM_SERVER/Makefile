@@ -1,5 +1,5 @@
 PROJ = main
-WEBDIR = www
+WEBDIR = flash
 WEBFILE= urom.c
 
 include $(DEVBASE)/OS/Ethernut/$(OS_VERSION)/nutapp_21b/Makedefs
