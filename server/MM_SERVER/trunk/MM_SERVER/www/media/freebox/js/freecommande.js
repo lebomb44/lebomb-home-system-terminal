@@ -5,7 +5,7 @@ $(document).ready(function() {
         expiresAt: new Date(2011, 1, 1)
     };
 
-    var string_remote = 'Précisez le code de votre Freebox qui se trouve dans les paramètres généraux sur la TV';
+    var string_remote = 'Precisez le code de votre Freebox qui se trouve dans les parametres generaux sur la TV';
     // voir si code en cookies
     if(lost_fbcode==null) {
         var lost_fbcode = prompt(string_remote,'');
@@ -15,7 +15,7 @@ $(document).ready(function() {
     }
 
     // url de l'API
-    var url_api = 'http://'+lost_url'/cgi/freebox.cgi?code='+lost_fbcode+'&key=';
+    var url_api = 'http://'+lost_url+'/cgi/freebox.cgi?code='+lost_fbcode+'&key=';
     //var url_api = 'http://hd1.freebox.fr/pub/remote_control?code='+lost_fbcode+'&key=';
 
     // fichier des chaines
