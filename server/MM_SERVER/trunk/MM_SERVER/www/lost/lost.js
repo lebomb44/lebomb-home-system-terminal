@@ -1,4 +1,4 @@
-var lost_path = "http://lebomb.free.fr/MM/";
+var lost_path = "http://lebomb.free.fr/LOST/";
 var lost_icons_path = lost_path + "icons/";
 
 function lost_getXHR()
