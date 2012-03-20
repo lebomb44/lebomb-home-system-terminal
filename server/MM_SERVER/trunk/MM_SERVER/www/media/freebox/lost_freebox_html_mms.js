@@ -10,9 +10,10 @@ document.write("\
   <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/jquery-1.4.2.min.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
   <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/jquery.cookies.2.2.0.min.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
   <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/jquery.timers.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
+  <script type=\"text/javascript\"> var lost_url = 'mmms.no-ip.org'; var lost_fbcode = '24243666' </script>\
   <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/freecommande.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
-  <link rel=\"apple-touch-icon-precomposed\" href=\"http://lebomb.free.fr/MM/media/freebox/images/icon-freecommande.png\" />\
-  <link rel=\"apple-touch-startup-image\" href=\"http://lebomb.free.fr/MM/media/freebox/images/startup-freecommande.png\" />\
+  <link rel=\"apple-touch-icon-precomposed\" href=\"http://lebomb.free.fr/LOST/media/freebox/images/icon-freecommande.png\" />\
+  <link rel=\"apple-touch-startup-image\" href=\"http://lebomb.free.fr/LOST/media/freebox/images/startup-freecommande.png\" />\
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;\" />\
   <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />\
   <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black\" />\
