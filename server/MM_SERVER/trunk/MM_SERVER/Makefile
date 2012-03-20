@@ -1,8 +1,9 @@
 PROJ = main
-WEBDIR = flash
+WEBDIR = flash/$(LOST_CONFIG)
 WEBFILE= urom.c
 
 include $(DEVBASE)/OS/Ethernut/$(OS_VERSION)/nutapp_21b/Makedefs
+CFLAGS += -DLOST_CONFIG_$(LOST_CONFIG)
 
 SRCS =  $(PROJ).c \
 devices/eth.c devices/uart.c devices/adc.c devices/buzzer.c devices/power.c devices/ups.c devices/rack.c devices/volume.c \
