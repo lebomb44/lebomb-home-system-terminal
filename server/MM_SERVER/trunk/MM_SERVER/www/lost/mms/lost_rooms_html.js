@@ -273,8 +273,8 @@ document.write("\
 <div class=\"iLayer\" id=\"waCameras\" title=\"Cameras\">\
     <div class=\"iMenu\">\
         <ul>\
-            <li><a href=\"http://bourdilot.no-ip.info:81\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"heden.jpg\">Salle a manger</a></li>\
-            <li><a href=\"http://bourdilot.no-ip.info:82\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"heden.jpg\">Bureau</a></li>\
+            <li><a href=\"http://bourdilot.no-ip.info:81\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"heden_V2_2.jpg\">Salle a manger</a></li>\
+            <li><a href=\"http://bourdilot.no-ip.info:82\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"heden_V2_2.jpg\">Bureau</a></li>\
             <li><a href=\"http://bourdilot.no-ip.info:83\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"wvc54gca.jpg\">Exterieur</a></li>\
         </ul>\
     </div>\
