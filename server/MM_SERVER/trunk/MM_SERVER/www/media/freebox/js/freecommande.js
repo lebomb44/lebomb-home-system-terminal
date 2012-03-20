@@ -7,17 +7,16 @@ $(document).ready(function() {
 
     var string_remote = 'Précisez le code de votre Freebox qui se trouve dans les paramètres généraux sur la TV';
     // voir si code en cookies
-    var remotekey = '24243666'; // frenes='77674595' viala='24243666'; // $.cookies.get('remotekey');
-    if(remotekey==null) {
-        var remotekey = prompt(string_remote,'');
-        if(remotekey!=null) {
-            $.cookies.set('remotekey',remotekey, options_cookies);
+    if(lost_fbcode==null) {
+        var lost_fbcode = prompt(string_remote,'');
+        if(lost_fbcode!=null) {
+            $.cookies.set('lost_fbcode',lost_fbcode, options_cookies);
         }
     }
 
     // url de l'API
-    var url_api = 'http://lebomb.no-ip.com/cgi/freebox.cgi?code='+remotekey+'&key=';
-    //var url_api = 'http://hd1.freebox.fr/pub/remote_control?code='+remotekey+'&key=';
+    var url_api = 'http://'+lost_url'/cgi/freebox.cgi?code='+lost_fbcode+'&key=';
+    //var url_api = 'http://hd1.freebox.fr/pub/remote_control?code='+lost_fbcode+'&key=';
 
     // fichier des chaines
     var url_channels = 'channels/channels.json';
@@ -91,10 +90,10 @@ $(document).ready(function() {
     });
 
     // click sur le bouton code
-    $('#remotekey a').click(function() {
-        var remotekey = prompt(string_remote,'');
-        if(remotekey!=null) {
-            $.cookies.set('remotekey',remotekey, options_cookies);
+    $('#lost_fbcode a').click(function() {
+        var lost_fbcode = prompt(string_remote,'');
+        if(lost_fbcode!=null) {
+            $.cookies.set('lost_fbcode',lost_fbcode, options_cookies);
         }
     });
 
