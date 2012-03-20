@@ -10,7 +10,7 @@ document.write("\
   <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/jquery-1.4.2.min.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
   <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/jquery.cookies.2.2.0.min.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
   <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/jquery.timers.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
-  <script type=\"text/javascript\"> var lost_url = 'mmms.no-ip.org'; var lost_fbcode = '24243666' </script>\
+  <script type=\"text/javascript\"> var lost_url = \"mmms.no-ip.org\"; var lost_fbcode = \"24243666\"; </script>\
   <script src=\"http://lebomb.free.fr/LOST/media/freebox/js/freecommande.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\
   <link rel=\"apple-touch-icon-precomposed\" href=\"http://lebomb.free.fr/LOST/media/freebox/images/icon-freecommande.png\" />\
   <link rel=\"apple-touch-startup-image\" href=\"http://lebomb.free.fr/LOST/media/freebox/images/startup-freecommande.png\" />\
