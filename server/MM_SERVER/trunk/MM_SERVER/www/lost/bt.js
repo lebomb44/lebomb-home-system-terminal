@@ -3,10 +3,10 @@ var lost_icons_path = lost_path + "icons/";
 
 function lost_getXHR()
 {
-  var xhr = null; 
+  var xhr = null;
   if(window.XMLHttpRequest) // Firefox et autres
   {
-    xhr = new XMLHttpRequest(); 
+    xhr = new XMLHttpRequest();
   }
   else
   {
@@ -22,9 +22,9 @@ function lost_getXHR()
       }
     }
     else
-    { // XMLHttpRequest non supporte par le navigateur 
+    { // XMLHttpRequest non supporte par le navigateur
       alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest..."); 
-      xhr = false; 
+      xhr = false;
     }
   }
   return xhr;
@@ -329,17 +329,32 @@ var url_alarm="cgi/alarm.cgi?";
 
 function lost_alarm_perimeter_set()
 {
-  lost_set(url_alarm+"perimeter_ctrl="+String(Number(document.getElementById("Alarm_Perimeter_Ctrl").checked)));
+  var elt;
+  elt = document.getElementById("Alarm_Perimeter_Ctrl");
+  if(elt)
+  {
+    lost_set(url_alarm+"perimeter_ctrl="+String(Number(elt.checked)));
+  }
 }
 
 function lost_alarm_volume_set()
 {
-  lost_set(url_alarm+"volume_ctrl="+String(Number(document.getElementById("Alarm_Volume_Ctrl").checked)));
+  var elt;
+  elt = document.getElementById("Alarm_Volume_Ctrl");
+  if(elt)
+  {
+    lost_set(url_alarm+"volume_ctrl="+String(Number(elt.checked)));
+  }
 }
 
 function lost_alarm_simulation_set()
 {
-  lost_set(url_alarm+"simulation_ctrl="+String(Number(document.getElementById("Alarm_Simulation_Ctrl").checked)));
+  var elt;
+  elt = document.getElementById("Alarm_Simulation_Ctrl");
+  if(elt)
+  {
+    lost_set(url_alarm+"simulation_ctrl="+String(Number(elt.checked)));
+  }
 }
 
 function lost_alarm_xml_get(xml)
@@ -368,81 +383,164 @@ var url_safety="cgi/safety.cgi?";
 
 function lost_safety_rooms_error_status_set()
 {
-  lost_set(url_safety+"rooms_error_ctrl="+String(Number(document.getElementById("Safety_Rooms_Error_Ctrl").checked)));
+  var elt;
+  elt = document.getElementById("Safety_Rooms_Error_Ctrl");
+  if(elt)
+  {
+    lost_set(url_safety+"rooms_error_ctrl="+String(Number(elt.checked)));
+  }
 }
 
 function lost_safety_rooms_temp_max_status_set()
 {
-  var status = document.getElementById("Safety_Rooms_Temp_Max_Ctrl").checked;
-  document.getElementById("Safety_Rooms_Temp_Max_Th").disabled = status;
-  if(status==true)
-  { // *5*100)/1024)-32)*140)/252
-    lost_set(url_safety+"rooms_temp_max_th="+String(Number((((((document.getElementById("Safety_Rooms_Temp_Max_Th").value)*252)/140)+32)*1024)/5)/100));
+  var elt_Ctrl;
+  var elt_Th;
+  var status;
+
+  elt_Ctrl = document.getElementById("Safety_Rooms_Temp_Max_Ctrl");
+  if(elt_Ctrl)
+  {
+    status = elt_Ctrl.checked;
+    elt_Th = document.getElementById("Safety_Rooms_Temp_Max_Th");
+    if(elt_Th)
+    {
+      elt_Th.disabled = status;
+      if(status == true)
+      { // *5*100)/1024)-32)*140)/252
+        lost_set(url_safety+"rooms_temp_max_th="+String(Number((((((elt_Th.value)*252)/140)+32)*1024)/5)/100));
+      }
+      lost_set(url_safety+"rooms_temp_max_ctrl="+String(Number(status)));
+    }
   }
-  lost_set(url_safety+"rooms_temp_max_ctrl="+String(Number(status)));
 }
 
 function lost_safety_rooms_temp_min_status_set()
 {
-  var status = document.getElementById("Safety_Rooms_Temp_Min_Ctrl").checked;
-  document.getElementById("Safety_Rooms_Temp_Min_Th").disabled = status;
-  if(status==true)
-  { // *5*100)/1024)-32)*140)/252
-    lost_set(url_safety+"rooms_temp_min_th="+String(Number((((((document.getElementById("Safety_Rooms_Temp_Min_Th").value)*252)/140)+32)*1024)/5)/100));
+  var elt_Ctrl;
+  var elt_Th;
+  var status;
+
+  elt_Ctrl = document.getElementById("Safety_Rooms_Temp_Min_Ctrl");
+  if(elt_Ctrl)
+  {
+    status = elt_Ctrl.checked;
+    elt_Th = document.getElementById("Safety_Rooms_Temp_Min_Th");
+    if(elt_Th)
+    {
+      elt_Th.disabled = status;
+      if(status == true)
+      { // *5*100)/1024)-32)*140)/252
+        lost_set(url_safety+"rooms_temp_min_th="+String(Number((((((elt_Th.value)*252)/140)+32)*1024)/5)/100));
+      }
+      lost_set(url_safety+"rooms_temp_min_ctrl="+String(Number(status)));
+    }
   }
-  lost_set(url_safety+"rooms_temp_min_ctrl="+String(Number(status)));
 }
 
 function lost_safety_rooms_hum_status_set()
 {
-  lost_set(url_safety+"rooms_hum_ctrl="+String(Number(document.getElementById("Safety_Rooms_Hum_Ctrl").checked)));
+  var elt;
+  elt = document.getElementById("Safety_Rooms_Hum_Ctrl");
+  if(elt)
+  {
+    lost_set(url_safety+"rooms_hum_ctrl="+String(Number(elt.checked)));
+  }
 }
 
 function lost_safety_rooms_smoke_status_set()
 {
-  lost_set(url_safety+"rooms_smoke_ctrl="+String(Number(document.getElementById("Safety_Rooms_Smoke_Ctrl").checked)));
+  var elt;
+  elt = document.getElementById("Safety_Rooms_Smoke_Ctrl");
+  if(elt)
+  {
+    lost_set(url_safety+"rooms_smoke_ctrl="+String(Number(elt.checked)));
+  }
 }
 
 function lost_safety_ups_temp_status_set()
 {
-  var status = document.getElementById("Safety_UPS_Temp_Ctrl").checked;
-  document.getElementById("Safety_UPS_Temp_Th").disabled = status;
-  if(status==true)
-  { // *5*100)/1024)-32)*140)/252
-    lost_set(url_safety+"ups_temp_th="+String(Number((((((document.getElementById("Safety_UPS_Temp_Th").value)*252)/140)+32)*1024)/5)/100));
+  var elt_Ctrl;
+  var elt_Th;
+  var status;
+
+  elt_Ctrl = document.getElementById("Safety_UPS_Temp_Ctrl");
+  if(elt_Ctrl)
+  {
+    status = elt_Ctrl.checked;
+    elt_Th = document.getElementById("Safety_UPS_Temp_Th");
+    if(elt_Th)
+    {
+      elt_Th.disabled = status;
+      if(status == true)
+      { // *5*100)/1024)-32)*140)/252
+        lost_set(url_safety+"ups_temp_th="+String(Number((((((elt_Th.value)*252)/140)+32)*1024)/5)/100));
+      }
+      lost_set(url_safety+"ups_temp_ctrl="+String(Number(status)));
+    }
   }
-  lost_set(url_safety+"ups_temp_ctrl="+String(Number(status)));
 }
 
 function lost_safety_ups_power_status_set()
 {
-  lost_set(url_safety+"ups_power_ctrl="+String(Number(document.getElementById("Safety_UPS_Power_Ctrl").checked)));
+  var elt;
+  elt = document.getElementById("Safety_UPS_Power_Ctrl");
+  if(elt)
+  {
+    lost_set(url_safety+"ups_power_ctrl="+String(Number(elt.checked)));
+  }
 }
 
 function lost_safety_rack_temp_status_set()
 {
-  var status = document.getElementById("Safety_RACK_Temp_Ctrl").checked;
-  document.getElementById("Safety_RACK_Temp_Th").disabled = status;
-  if(status==true)
-  { // *5*100)/1024)-32)*140)/252
-    lost_set(url_safety+"rack_temp_th="+String(Number((((((document.getElementById("Safety_RACK_Temp_Th").value)*252)/140)+32)*1024)/5)/100));
+  var elt_Ctrl;
+  var elt_Th;
+  var status;
+
+  elt_Ctrl = document.getElementById("Safety_RACK_Temp_Ctrl");
+  if(elt_Ctrl)
+  {
+    status = elt_Ctrl.checked;
+    elt_Th = document.getElementById("Safety_RACK_Temp_Th");
+    if(elt_Th)
+    {
+      elt_Th.disabled = status;
+      if(status == true)
+      { // *5*100)/1024)-32)*140)/252
+        lost_set(url_safety+"rack_temp_th="+String(Number((((((elt_Th.value)*252)/140)+32)*1024)/5)/100));
+      }
+      lost_set(url_safety+"rack_temp_ctrl="+String(Number(status)));
+    }
   }
-  lost_set(url_safety+"rack_temp_ctrl="+String(Number(status)));
 }
 
 function lost_safety_rack_alarm_status_set()
 {
-  lost_set(url_safety+"rack_alarm_ctrl="+String(Number(document.getElementById("Safety_RACK_Alarm_Ctrl").checked)));
+  var elt;
+  elt = document.getElementById("Safety_RACK_Alarm_Ctrl");
+  if(elt)
+  {
+    lost_set(url_safety+"rack_alarm_ctrl="+String(Number(elt.checked)));
+  }
 }
 
 function lost_safety_http_status_set()
 {
-  lost_set(url_safety+"http_ctrl="+String(Number(document.getElementById("Safety_HTTP_Ctrl").checked)));
+  var elt;
+  elt = document.getElementById("Safety_HTTP_Ctrl");
+  if(elt)
+  {
+    lost_set(url_safety+"http_ctrl="+String(Number(elt.checked)));
+  }
 }
 
 function lost_safety_gsm_status_set()
 {
-  lost_set(url_safety+"gsm_ctrl="+String(Number(document.getElementById("Safety_GSM_Ctrl").checked)));
+  var elt;
+  elt = document.getElementById("Safety_GSM_Ctrl");
+  if(elt)
+  {
+    lost_set(url_safety+"gsm_ctrl="+String(Number(elt.checked)));
+  }
 }
 
 function lost_safety_xml_get(xml)
@@ -549,9 +647,14 @@ function lost_rooms_xml_get(xml)
 /* ********** SET ********** */
 function lost_room_clim_set(room, action)
 {
+  var elt;
   if(action == ROOM_CLIM_ON)
   {
-    lost_set(url_room+String(room)+"&clim="+String(Number(document.getElementById("Room"+String(room)+"_Clim_Temp").value)));
+    elt = document.getElementById("Room"+String(room)+"_Clim_Temp");
+    if(elt)
+    {
+      lost_set(url_room+String(room)+"&clim="+String(Number(elt.value)));
+    }
   }
   else
   {
@@ -561,7 +664,12 @@ function lost_room_clim_set(room, action)
 
 function lost_room_light_set(room, no)
 {
-  lost_set(url_room+String(room)+"&light="+String(no)+"&value="+String(Number(document.getElementById("Room"+String(room)+"_Light"+String(no)).checked)));
+  var elt;
+  elt = document.getElementById("Room"+String(room)+"_Light"+String(no));
+  if(elt)
+  {
+    lost_set(url_room+String(room)+"&light="+String(no)+"&value="+String(Number(elt.checked)));
+  }
 }
 
 function lost_room_light_all_set(value)
@@ -581,7 +689,12 @@ function lost_room_shutter_all_set(value)
 
 function lost_room_heater_set(room, no)
 {
-  lost_set(url_room+String(room)+"&heater="+String(no)+"&value="+String(Number(document.getElementById("Room"+String(room)+"_Heater"+String(no)).checked)));
+  var elt;
+  elt = document.getElementById("Room"+String(room)+"_Heater"+String(no));
+  if(elt)
+  {
+    lost_set(url_room+String(room)+"&heater="+String(no)+"&value="+String(Number(elt.checked)));
+  }
 }
 
 function lost_room_heater_all_set(value)
@@ -591,7 +704,12 @@ function lost_room_heater_all_set(value)
 
 function lost_room_elec_set(room, no)
 {
-  lost_set(url_room+String(room)+"&elec="+String(no)+"&value="+String(Number(document.getElementById("Room"+String(room)+"_Elec"+String(no)).checked)));
+  var elt;
+  elt = document.getElementById("Room"+String(room)+"_Elec"+String(no));
+  if(elt)
+  {
+    lost_set(url_room+String(room)+"&elec="+String(no)+"&value="+String(Number(elt.checked)));
+  }
 }
 
 function lost_room_elec_all_set(value)
@@ -617,15 +735,32 @@ var url_ev="cgi/events.cgi?event=";
 
 function lost_ev_date_status_update(event)
 {
-  var status = document.getElementById("Event"+String(event)+"_St").checked;
-  document.getElementById("Event"+String(event)+"_HStart").disabled=status;
-  document.getElementById("Event"+String(event)+"_MStart").disabled=status;
-  document.getElementById("Event"+String(event)+"_HEnd").disabled=status;
-  document.getElementById("Event"+String(event)+"_MEnd").disabled=status;
+  var elt_St;
+  var elt_HStart;
+  var elt_MStart;
+  var elt_HEnd;
+  var elt_MEnd;
+  var status;
+
+  elt_St = document.getElementById("Event"+String(event)+"_St");
+  if(elt_St)
+  {
+    status = elt_St.checked;
+    elt_HStart = document.getElementById("Event"+String(event)+"_HStart");
+    if(elt_HStart) { elt_HStart.disabled = status; }
+    elt_MStart = document.getElementById("Event"+String(event)+"_MStart")
+    if(elt_MStart) { elt_MStart.disabled = status; }
+    elt_HEnd = document.getElementById("Event"+String(event)+"_HEnd")
+    if(elt_HEnd) { elt_HEnd.disabled = status; }
+    elt_MEnd = document.getElementById("Event"+String(event)+"_MEnd")
+    if(elt_MEnd) { elt_MEnd.disabled = status; }
+  }
 }
 
 function lost_ev_xml_update(xml, event)
 {
+  var elt;
+
   lost_ck_update(xml, "Event"+String(event), "St");
 
   lost_ck_update(xml, "Event"+String(event), "rec1");
@@ -636,12 +771,16 @@ function lost_ev_xml_update(xml, event)
   lost_ck_update(xml, "Event"+String(event), "rec6");
   lost_ck_update(xml, "Event"+String(event), "rec0");
 
-  if(document.getElementById("Event"+String(event)+"_St").checked==true)
+  elt = document.getElementById("Event"+String(event)+"_St");
+  if(elt)
   {
-    lost_select_update(xml, "Event"+String(event), "HStart");
-    lost_select_update(xml, "Event"+String(event), "MStart");
-    lost_select_update(xml, "Event"+String(event), "HEnd");
-    lost_select_update(xml, "Event"+String(event), "MEnd");
+    if(elt.checked==true)
+    {
+      lost_select_update(xml, "Event"+String(event), "HStart");
+      lost_select_update(xml, "Event"+String(event), "MStart");
+      lost_select_update(xml, "Event"+String(event), "HEnd");
+      lost_select_update(xml, "Event"+String(event), "MEnd");
+    }
   }
   lost_ev_date_status_update(event);
 }
@@ -669,23 +808,38 @@ function lost_ev_rec_set(event, rec, value)
 
 function lost_ev_date_set(event)
 {
-  lost_set(url_ev+String(event)+"&hs="+String(Number(document.getElementById("Event"+String(event)+"_HStart").value))+"&ms="+String(Number(document.getElementById("Event"+String(event)+"_MStart").value))+"&he="+String(Number(document.getElementById("Event"+String(event)+"_HEnd").value))+"&me="+String(Number(document.getElementById("Event"+String(event)+"_MEnd").value)));
+  var elt_HStart;
+  var elt_MStart;
+  var elt_HEnd;
+  var elt_MEnd;
+  elt_HStart = document.getElementById("Event"+String(event)+"_HStart");
+  elt_MStart = document.getElementById("Event"+String(event)+"_MStart")
+  elt_HEnd = document.getElementById("Event"+String(event)+"_HEnd");
+  elt_MEnd = document.getElementById("Event"+String(event)+"_MEnd");
+  if(elt_HStart && elt_MStart && elt_HEnd && elt_MEnd)
+  {
+    lost_set(url_ev+String(event)+"&hs="+String(Number(elt_HStart.value))+"&ms="+String(Number(elt_MStart.value))+"&he="+String(Number(elt_HEnd.value))+"&me="+String(Number(elt_MEnd.value)));
+  }
 }
 
 function lost_ev_status_set(event)
 {
-  if(document.getElementById("Event"+String(event)+"_St").checked == true)
+  var elt;
+  elt = document.getElementById("Event"+String(event)+"_St");
+  if(elt)
   {
-    lost_ev_date_set(event);
+    if(elt.checked == true)
+    {
+      lost_ev_date_set(event);
+    }
+    lost_set(url_ev+String(event)+"&status="+String(Number(elt.checked)));
   }
-  lost_set(url_ev+String(event)+"&status="+String(Number(document.getElementById("Event"+String(event)+"_St").checked)));
   lost_ev_date_status_update(event);
 }
 document.write("\
 <div class=\"iLayer\" id=\"waHome\" title=\"Home\">\
     <div class=\"iMenu\">\
         <ul class=\"iArrow\">\
-            <li id=\"Media_bg\"><a href=\"#_Media\"><img class=\"picto\" src=\""+lost_icons_path+"media.jpg\" alt=\"Media\">Media</a></li>\
             <li id=\"Rooms_bg\"><a href=\"#_Rooms\"><img class=\"picto\" src=\""+lost_icons_path+"home.jpg\" alt=\"Home\">Rooms</a></li>\
             <li id=\"Scenes_bg\"><a href=\"#_Scenes\"><img class=\"picto\" src=\""+lost_icons_path+"scenes.jpg\" alt=\"Scenes\">Scenes</a></li>\
         </ul>\
@@ -695,19 +849,6 @@ document.write("\
         </ul>\
         <ul class=\"iArrow\">\
             <li><a href=\"cgi/monitor.cgi\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"system.jpg\" alt=\"System\">System</a></li>\
-        </ul>\
-    </div>\
-</div>\
-");
-
-document.write("\
-<div class=\"iLayer\" id=\"waMedia\" title=\"Media\">\
-    <div class=\"iMenu\">\
-        <ul class=\"iArrow\">\
-            <li><a href=\"tv.asp\"><img class=\"picto\" src=\""+lost_icons_path+"tv.jpg\" alt=\"TV\">TV</a></li>\
-            <li><a href=\"freebox.asp\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"fb.jpg\" alt=\"FB\">Freebox</a></li>\
-            <li><a href=\"sat.asp\"><img class=\"picto\" src=\""+lost_icons_path+"sat.jpg\" alt=\"Sat\">Satellite</a></li>\
-            <li><a href=\"hifi.asp\"><img class=\"picto\" src=\""+lost_icons_path+"hifi.jpg\" alt=\"Hifi\">Hifi</a></li>\
         </ul>\
     </div>\
 </div>\
