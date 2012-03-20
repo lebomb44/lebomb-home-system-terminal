@@ -164,12 +164,17 @@ function lost_innerHTML_F2C_update(xml, node, id)
 
 function printSelectOption(id, nb)
 {
+  var elt;
   var i;
-  document.getElementById(id).length = nb;
-  for(i=0; i<nb; i++)
+  elt = document.getElementById(id);
+  if(elt)
   {
-    document.getElementById(id).options[i].value = i;
-    document.getElementById(id).options[i].text = String(i);
+    elt.length = nb;
+    for(i=0; i<nb; i++)
+    {
+      elt.options[i].value = i;
+      elt.options[i].text = String(i);
+    }
   }
 }
 
