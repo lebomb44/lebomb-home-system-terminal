@@ -7,7 +7,7 @@
 
 EEMEM u08 type    = 0x01; /* @ 0 */
 EEMEM u08 version = 0x01; /* @ 1 */
-EEMEM u08 adress  = 0x0A; /* @ 2 */
+EEMEM u08 adress  = 0x10; /* @ 2 */
 
 EEMEM u08 temp_value       = 0x00; /* @ 3 */
 EEMEM u08 temp_max_th      = 0x00; /* @ 4 */
