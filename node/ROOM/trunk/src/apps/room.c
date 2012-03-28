@@ -4,27 +4,27 @@
 #include "node.h"
 #include "room.h"
 
-#define ROOM_SHUTTER_NB 1
+#define ROOM_SHUTTER_NB 3
 
 #define SHUTTER_UP 255
 #define SHUTTER_STOP 0
 #define SHUTTER_DOWN 1
 
-u08 room_shutter_but_cmd_old[ROOM_SHUTTER_NB]  = { SHUTTER_STOP };
-u08 room_shutter_node_cmd_old[ROOM_SHUTTER_NB] = { SHUTTER_STOP };
+u08 room_shutter_but_cmd_old[ROOM_SHUTTER_NB]  = { SHUTTER_STOP, SHUTTER_STOP, SHUTTER_STOP };
+u08 room_shutter_node_cmd_old[ROOM_SHUTTER_NB] = { SHUTTER_STOP, SHUTTER_STOP, SHUTTER_STOP };
 
-u08 * shutter_but_up_ddr[ROOM_SHUTTER_NB] = { (u08*)&DDRD };
-u08 * shutter_but_up_port[ROOM_SHUTTER_NB] = { (u08*)&PORTD };
-u08 * shutter_but_up_pin[ROOM_SHUTTER_NB] = { (u08*)&PIND };
-u08 shutter_but_up_bit[ROOM_SHUTTER_NB] = { 5  };
+u08 * shutter_but_up_ddr[ROOM_SHUTTER_NB] = { (u08*)&DDRD, (u08*)&DDRC, (u08*)&DDRC };
+u08 * shutter_but_up_port[ROOM_SHUTTER_NB] = { (u08*)&PORTD, (u08*)&PORTC, (u08*)&PORTC };
+u08 * shutter_but_up_pin[ROOM_SHUTTER_NB] = { (u08*)&PIND, (u08*)&PINC, (u08*)&PINC };
+u08 shutter_but_up_bit[ROOM_SHUTTER_NB] = { 5, 1, 3 };
 
-u08 * shutter_but_down_ddr[ROOM_SHUTTER_NB] = { (u08*)&DDRB };
-u08 * shutter_but_down_port[ROOM_SHUTTER_NB] = { (u08*)&PORTB };
-u08 * shutter_but_down_pin[ROOM_SHUTTER_NB] = { (u08*)&PINB };
-u08 shutter_but_down_bit[ROOM_SHUTTER_NB] = { 7 };
+u08 * shutter_but_down_ddr[ROOM_SHUTTER_NB] = { (u08*)&DDRB, (u08*)&DDRC, (u08*)&DDRB };
+u08 * shutter_but_down_port[ROOM_SHUTTER_NB] = { (u08*)&PORTB, (u08*)&PORTC, (u08*)&PORTB };
+u08 * shutter_but_down_pin[ROOM_SHUTTER_NB] = { (u08*)&PINB, (u08*)&PINC, (u08*)&PINB };
+u08 shutter_but_down_bit[ROOM_SHUTTER_NB] = { 7, 2, 2 };
 
-u08 shutter_relay_up[ROOM_SHUTTER_NB] = { 0 };
-u08 shutter_relay_down[ROOM_SHUTTER_NB] = { 1 };
+u08 shutter_relay_up[ROOM_SHUTTER_NB] = { 0, 2, 4 };
+u08 shutter_relay_down[ROOM_SHUTTER_NB] = { 1, 3, 5 };
 
 void room_shutter_set(u08 shutter, u08 pos)
 {
