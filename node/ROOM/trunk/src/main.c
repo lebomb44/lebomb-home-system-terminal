@@ -17,7 +17,7 @@
 int main(void)
 {
   relay_init();
-  uart_init();
+  //uart_init();
   i2c_init();
   ir_init();
   adc_init();
