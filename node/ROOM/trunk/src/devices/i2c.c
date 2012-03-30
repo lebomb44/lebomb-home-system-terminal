@@ -1,5 +1,6 @@
 #include <util/twi.h>
 #include "../global.h"
+#include "../config.h"
 #include "uart.h"
 #include "relay.h"
 #include "../apps/node.h"
@@ -216,15 +217,11 @@ void i2c_init(void)
   /* Slave Mode : SCL is an input line */
   cbi(DDRC, 5);
 
-  TWAR = ((0x02) << 1) | 0x01;
-//TWCR = _BV(TWINT);
+  TWAR = ((NODE_ROOM_CONFIG_ADDR) << 1) | 0x01;
   TWCR = _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
-//TWCR=0x45;
-uart_printf((u08*)"TWCR=0x%x\n",TWCR);
-uart_printf((u08*)"TWAR=0x%x\n",TWAR);
 }
 
 void i2c_adr_set(u08 adr)
 {
-  TWAR = ((adr) << 1) | 0x01; /* Adress and Broadcast */
+  TWAR = ((adr) << 1) | 0x01; /* Address and Broadcast */
 }

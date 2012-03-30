@@ -94,3 +94,18 @@ u08 alarm_trig_shutters(void)
 {
   return bit_is_set(node[NODE_REG_PERI_TRIG], ALARM_SHUTTERS);
 }
+
+u08 alarm_control_lights(void)
+{
+  return bit_is_set(node[NODE_REG_VOL_CONTROL], ALARM_MOVE1);
+}
+
+u08 alarm_control_heaters(void)
+{
+  return bit_is_set(node[NODE_REG_VOL_CONTROL], ALARM_MOVE1);
+}
+
+u08 alarm_control_elecs(void)
+{
+  return bit_is_set(node[NODE_REG_VOL_CONTROL], ALARM_MOVE1);
+}

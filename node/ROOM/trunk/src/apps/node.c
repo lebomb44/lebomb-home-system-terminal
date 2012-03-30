@@ -1,13 +1,14 @@
 #include "../global.h"
+#include "../config.h"
 #include "../devices/eeprom.h"
 #include "../devices/i2c.h"
 #include "../devices/uart.h"
 #include "node.h"
 #include <avr/eeprom.h>
 
-EEMEM u08 type    = 0x01; /* @ 0 */
-EEMEM u08 version = 0x01; /* @ 1 */
-EEMEM u08 adress  = 0x10; /* @ 2 */
+EEMEM u08 type    = NODE_ROOM_CONFIG_TYPE; /* @ 0 */
+EEMEM u08 version = NODE_ROOM_CONFIG_VERSION; /* @ 1 */
+EEMEM u08 adress  = NODE_ROOM_CONFIG_ADDR; /* @ 2 */
 
 EEMEM u08 temp_value       = 0x00; /* @ 3 */
 EEMEM u08 temp_max_th      = 0x00; /* @ 4 */
@@ -83,9 +84,12 @@ void node_init(void)
   u08 i=0;
   for(i=0; i<NODE_REG_MAX; i++)
   {
-    node[i] = eeprom_read(i);
+    node[i] = 0x00; /* eeprom_read(i); */
   }
-  i2c_adr_set(node[NODE_REG_ADRESS]);
+  node[NODE_REG_TYPE]    = NODE_ROOM_CONFIG_TYPE;
+  node[NODE_REG_VERSION] = NODE_ROOM_CONFIG_VERSION;
+  node[NODE_REG_ADDRESS]  = NODE_ROOM_CONFIG_ADDR;
+  i2c_adr_set(node[NODE_REG_ADDRESS]);
 /*
 uart_printf((u08*)"type=%d\n",node[NODE_REG_TYPE]);
 uart_printf((u08*)"version=%d\n",node[NODE_REG_VERSION]);

@@ -8,5 +8,8 @@ extern void alarm_cycle(void);
 extern u08 alarm_control_shutters(void);
 extern u08 alarm_status_shutters(void);
 extern u08 alarm_trig_shutters(void);
+extern u08 alarm_control_lights(void);
+extern u08 alarm_control_heaters(void);
+extern u08 alarm_control_elecs(void);
 
 #endif

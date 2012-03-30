@@ -1,6 +1,7 @@
 #include "global.h"
 
 #include "devices/adc.h"
+#include "devices/button.h"
 #include "devices/eeprom.h"
 #include "devices/i2c.h"
 #include "devices/ir.h"
@@ -8,7 +9,10 @@
 #include "devices/timer.h"
 #include "devices/uart.h"
 
-#include "apps/room.h"
+#include "apps/light.h"
+#include "apps/shutter.h"
+#include "apps/heater.h"
+#include "apps/elec.h"
 #include "apps/node.h"
 #include "apps/safety.h"
 #include "apps/alarm.h"
@@ -16,6 +20,7 @@
 
 int main(void)
 {
+  button_init();
   relay_init();
   //uart_init();
   i2c_init();
@@ -27,7 +32,10 @@ int main(void)
   node_init();
   safety_init();
   alarm_init();
-  room_init();
+  light_init();
+  shutter_init();
+  heater_init();
+  elec_init();
   remote_init();
 
   sleep_mode();
@@ -37,7 +45,10 @@ int main(void)
   {
     safety_cycle();
     alarm_cycle();
-    room_cycle();
+    light_cycle();
+    shutter_cycle();
+    heater_cycle();
+    elec_cycle();
     remote_cycle();
     sleep();
 /*  uart_putc((u08)'.'); */
