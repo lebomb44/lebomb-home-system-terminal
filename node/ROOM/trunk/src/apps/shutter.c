@@ -105,7 +105,7 @@ void shutter_cycle(void)
     shutters_update();
   }
   else
-  { /* FIXME : What if presence simulation */
+  {
     if(!alarm_status_shutters())
     {
       shutter_set_all(SHUTTER_DOWN);
