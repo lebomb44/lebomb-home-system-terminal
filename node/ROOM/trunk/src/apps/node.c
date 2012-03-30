@@ -8,7 +8,7 @@
 
 EEMEM u08 type    = NODE_ROOM_CONFIG_TYPE; /* @ 0 */
 EEMEM u08 version = NODE_ROOM_CONFIG_VERSION; /* @ 1 */
-EEMEM u08 adress  = NODE_ROOM_CONFIG_ADDR; /* @ 2 */
+EEMEM u08 address = NODE_ROOM_CONFIG_ADDR; /* @ 2 */
 
 EEMEM u08 temp_value       = 0x00; /* @ 3 */
 EEMEM u08 temp_max_th      = 0x00; /* @ 4 */
