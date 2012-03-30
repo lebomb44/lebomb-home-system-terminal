@@ -1,14 +1,74 @@
 #ifndef _NODE_ROOM_CONFIG_H_
 #define _NODE_ROOM_CONFIG_H_
 
+#define NODE_ROOM_CONFIG_TYPE           0x01
+#define NODE_ROOM_CONFIG_VERSION        0x01
 #define NODE_ROOM_CONFIG_HEATER_BUT     { 255, 255, 255 }
 #define NODE_ROOM_CONFIG_HEATER_RELAY   { 255, 255, 255 }
 #define NODE_ROOM_CONFIG_ELEC_BUT       { 255, 255, 255 }
 #define NODE_ROOM_CONFIG_ELEC_RELAY     { 255, 255, 255 }
 
+#ifdef NODE_ROOM_CONFIG_mms_c1
+#define NODE_ROOM_CONFIG_ADDR               (10+0)
+#define NODE_ROOM_CONFIG_LIGHT_BUT          { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_LIGHT_RELAY        { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_UP     { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_DOWN   { 1, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_UP   { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_DOWN { 1, 255, 255 }
+#endif
+
+#ifdef NODE_ROOM_CONFIG_mms_c2
+#define NODE_ROOM_CONFIG_ADDR               (10+1)
+#define NODE_ROOM_CONFIG_LIGHT_BUT          { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_LIGHT_RELAY        { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_UP     { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_DOWN   { 1, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_UP   { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_DOWN { 1, 255, 255 }
+#endif
+
+#ifdef NODE_ROOM_CONFIG_mms_c3
+#define NODE_ROOM_CONFIG_ADDR               (10+2)
+#define NODE_ROOM_CONFIG_LIGHT_BUT          { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_LIGHT_RELAY        { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_UP     { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_DOWN   { 1, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_UP   { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_DOWN { 1, 255, 255 }
+#endif
+
+#ifdef NODE_ROOM_CONFIG_mms_c4
+#define NODE_ROOM_CONFIG_ADDR               (10+3)
+#define NODE_ROOM_CONFIG_LIGHT_BUT          { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_LIGHT_RELAY        { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_UP     { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_DOWN   { 1, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_UP   { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_DOWN { 1, 255, 255 }
+#endif
+
+#ifdef NODE_ROOM_CONFIG_mms_sdb
+#define NODE_ROOM_CONFIG_ADDR               (10+4)
+#define NODE_ROOM_CONFIG_LIGHT_BUT          { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_LIGHT_RELAY        { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_UP     { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_DOWN   { 1, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_UP   { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_DOWN { 1, 255, 255 }
+#endif
+
+#ifdef NODE_ROOM_CONFIG_mms_bureau
+#define NODE_ROOM_CONFIG_ADDR               (10+5)
+#define NODE_ROOM_CONFIG_LIGHT_BUT          { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_LIGHT_RELAY        { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_UP     { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_DOWN   { 1, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_UP   { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_DOWN { 1, 255, 255 }
+#endif
+
 #ifdef NODE_ROOM_CONFIG_mms_salon
-#define NODE_ROOM_CONFIG_TYPE               0x01
-#define NODE_ROOM_CONFIG_VERSION            0x01
 #define NODE_ROOM_CONFIG_ADDR               (10+6)
 #define NODE_ROOM_CONFIG_LIGHT_BUT          { 255, 255, 255 }
 #define NODE_ROOM_CONFIG_LIGHT_RELAY        { 255, 255, 255 }
@@ -19,8 +79,6 @@
 #endif
 
 #ifdef NODE_ROOM_CONFIG_mms_cuisine
-#define NODE_ROOM_CONFIG_TYPE               0x01
-#define NODE_ROOM_CONFIG_VERSION            0x01
 #define NODE_ROOM_CONFIG_ADDR               (10+7)
 #define NODE_ROOM_CONFIG_LIGHT_BUT          { 2, 3, 4 }
 #define NODE_ROOM_CONFIG_LIGHT_RELAY        { 2, 3, 4 }
@@ -30,16 +88,24 @@
 #define NODE_ROOM_CONFIG_SHUTTER_RELAY_DOWN { 1, 255, 255 }
 #endif
 
+#ifdef NODE_ROOM_CONFIG_mms_couloir
+#define NODE_ROOM_CONFIG_ADDR               (10+8)
+#define NODE_ROOM_CONFIG_LIGHT_BUT          { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_LIGHT_RELAY        { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_UP     { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_DOWN   { 1, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_UP   { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_DOWN { 1, 255, 255 }
 #endif
-/*
-  ROOM_C1 = 0,
-  ROOM_C2,
-  ROOM_C3,
-  ROOM_C4,
-  ROOM_SDB,
-  ROOM_BUREAU,
-  ROOM_SALON,
-  ROOM_CUISINE,
-  ROOM_COULOIR,
-  ROOM_TERRASSE,
-*/
+
+#ifdef NODE_ROOM_CONFIG_mms_terrasse
+#define NODE_ROOM_CONFIG_ADDR               (10+9)
+#define NODE_ROOM_CONFIG_LIGHT_BUT          { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_LIGHT_RELAY        { 2, 3, 4 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_UP     { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_BUT_DOWN   { 1, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_UP   { 0, 255, 255 }
+#define NODE_ROOM_CONFIG_SHUTTER_RELAY_DOWN { 1, 255, 255 }
+#endif
+
+#endif
