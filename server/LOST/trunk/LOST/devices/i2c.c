@@ -66,7 +66,8 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   buff[0] = addr;
 
   /* Do the exchange */
-  ret = TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 1000);
+  ret = 0;
+  for(i=0; i<3; i++) { ret += TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 1000); NutSleep(10); }
   /* Before to exit, free the allocated area */
   free(buff);
   /* Check the returned code of the exchange */
