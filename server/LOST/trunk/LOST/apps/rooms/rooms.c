@@ -229,6 +229,7 @@ void room_light_set              (ROOM_N_T room, uint8_t no, uint8_t value) { if
 void rooms_light_set             (               uint8_t no, uint8_t value) {                    i2c_broadcast_set(      ROOM_REG_LIGHT  +no, 1, &value); }
 void room_shutter_set            (ROOM_N_T room, uint8_t no, uint8_t value) { if(room < ROOM_MAX) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_SHUTTER+no, 1, &value); } else { rooms_shutter_set(no, value); } }
 void rooms_shutter_set           (               uint8_t no, uint8_t value) {                    i2c_broadcast_set(      ROOM_REG_SHUTTER+no, 1, &value); }
+void room_shutters_set           (ROOM_N_T room, uint8_t value            ) { uint8_t i = 0; for(i=0; i<ROOM_SHUTTER_MAX; i++) { room_shutter_set(room, i, value); } }
 void room_heater_set             (ROOM_N_T room, uint8_t no, uint8_t value) { if(room < ROOM_MAX) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_HEATER  +no, 1, &value); } else { rooms_heater_set(no, value); } }
 void rooms_heater_set            (               uint8_t no, uint8_t value) {                    i2c_broadcast_set(      ROOM_REG_HEATER  +no, 1, &value); }
 void room_elec_set               (ROOM_N_T room, uint8_t no, uint8_t value) { if(room < ROOM_MAX) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_ELEC    +no, 1, &value); } else { rooms_elec_set(no, value); } }
