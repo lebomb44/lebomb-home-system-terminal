@@ -2,19 +2,24 @@ document.write("\
 <div class=\"iLayer\" id=\"waEvenements\" title=\"Evenements\">\
     <div class=\"iPanel\">\
         <fieldset>\
-            <legend>Rooms</legend>\
+            <legend>Volets</legend>\
             <ul class=\"iArrow\">\
-                <li><a href=\"#_Event"+EVENT_REVEIL+"\"><img class=\"picto\" src=\""+lost_icons_path+"sunrise.jpg\">Reveil</a></li>\
-                <li><a href=\"#_Event"+EVENT_COUCHE+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Couche</a></li>\
-                <li><a href=\"#_Event"+EVENT_CHAUFFAGE_SDB+"\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Chauffage Salle de bain</a></li>\
-                <li><a href=\"#_Event"+EVENT_CHAUFFAGE_CAFE+"\"><img class=\"picto\" src=\""+lost_icons_path+"coffee.jpg\">Chauffage Cafe</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_ALL+"\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Tous</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_UPSTAIRS+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Etage</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_DOWNSTAIRS+"\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Rez de Chaussé</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_MARINE+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Marine</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_MM+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">M&M</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_FRIENDS+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Amis</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_DRESSING+"\"><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\">Dressing</a></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
-            <legend>Modes</legend>\
+            <legend>Alarme</legend>\
             <ul class=\"iArrow\">\
-                <li><a href=\"#_Event"+EVENT_LUMIERE_AUTO+"\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\">Lumiere automatique</a></li>\
-                <li><a href=\"#_Event"+EVENT_MUSIQUE_AUTO+"\"><img class=\"picto\" src=\""+lost_icons_path+"hifi.jpg\">Musique automatique</a></li>\
+                <li><a href=\"#_Event"+EVENT_ALARM_ALL+"\"><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\">Toutes</a></li>\
+                <li><a href=\"#_Event"+EVENT_ALARM_PERIMETER+"\"><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\">Périmétrique</a></li>\
+                <li><a href=\"#_Event"+EVENT_ALARM_VOLUME+"\"><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\">Volumétrique</a></li>\
+                <li><a href=\"#_Event"+EVENT_SIMU+"\"><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\">Simulation Presence</a></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
@@ -72,13 +77,18 @@ document.write("\
 ");
 }
 
-printEventInfo(EVENT_REVEIL        , "Reveil"                 );
-printEventInfo(EVENT_COUCHE        , "Couche"                 );
-printEventInfo(EVENT_CHAUFFAGE_SDB , "Chauffage Salle de Bain");
-printEventInfo(EVENT_CHAUFFAGE_CAFE, "Chauffage Cafe"         );
-printEventInfo(EVENT_LUMIERE_AUTO  , "Lumiere automatique"    );
-printEventInfo(EVENT_MUSIQUE_AUTO  , "Musique automatique"    );
-printEventInfo(EVENT_POWER_0       , "Wifi"                   );
-printEventInfo(EVENT_POWER_1       , "Ethernet"               );
-printEventInfo(EVENT_POWER_2       , "Power 2"                );
-printEventInfo(EVENT_POWER_3       , "Power 3"                );
+printEventInfo(EVENT_SHUTTERS_ALL        , "Tous"               );
+printEventInfo(EVENT_SHUTTERS_UPSTAIRS   , "Etage"              );
+printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS , "Rez de Chaussé"     );
+printEventInfo(EVENT_SHUTTERS_MARINE     , "Marine"             );
+printEventInfo(EVENT_SHUTTERS_MM         , "M&M"                );
+printEventInfo(EVENT_SHUTTERS_FRIENDS    , "Amis"               );
+printEventInfo(EVENT_SHUTTERS_DRESSING   , "Dressing"           );
+printEventInfo(EVENT_ALARM_ALL           , "Toutes"             );
+printEventInfo(EVENT_ALARM_PERIMETER     , "Perimetrique"       );
+printEventInfo(EVENT_ALARM_VOLUME        , "Volumetrique"       );
+printEventInfo(EVENT_SIMU                , "Simulation Presence");
+printEventInfo(EVENT_POWER_0             , "Wifi"               );
+printEventInfo(EVENT_POWER_1             , "Ethernet"           );
+printEventInfo(EVENT_POWER_2             , "Power 2"            );
+printEventInfo(EVENT_POWER_3             , "Power 3"            );

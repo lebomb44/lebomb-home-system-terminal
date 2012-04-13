@@ -717,17 +717,22 @@ function lost_room_elec_all_set(value)
 {
   lost_set(url_room+String(ROOM_MAX)+"&elec="+String(ROOM_ELEC_MAX)+"&value="+String(value));
 }
-var EVENT_REVEIL         = 0;
-var EVENT_COUCHE         = 1;
-var EVENT_CHAUFFAGE_SDB  = 2;
-var EVENT_CHAUFFAGE_CAFE = 3;
-var EVENT_LUMIERE_AUTO   = 4;
-var EVENT_MUSIQUE_AUTO   = 5;
-var EVENT_POWER_0        = 6;
-var EVENT_POWER_1        = 7;
-var EVENT_POWER_2        = 8;
-var EVENT_POWER_3        = 9;
-var EVENT_MAX            = 10;
+var EVENT_SHUTTERS_ALL        = 0;
+var EVENT_SHUTTERS_UPSTAIRS   = 1;
+var EVENT_SHUTTERS_DOWNSTAIRS = 2;
+var EVENT_SHUTTERS_MARINE     = 3;
+var EVENT_SHUTTERS_MM         = 4;
+var EVENT_SHUTTERS_FRIENDS    = 5;
+var EVENT_SHUTTERS_DRESSING   = 6;
+var EVENT_ALARM_ALL           = 7;
+var EVENT_ALARM_PERIMETER     = 8;
+var EVENT_ALARM_VOLUME        = 9;
+var EVENT_SIMU                = 10;
+var EVENT_POWER_0             = 11;
+var EVENT_POWER_1             = 12;
+var EVENT_POWER_2             = 13;
+var EVENT_POWER_3             = 14;
+var EVENT_MAX                 = 15;
 
 var EVENT_STATUS_OFF = 0;
 var EVENT_STATUS_ON  = 1;
@@ -788,16 +793,7 @@ function lost_ev_xml_update(xml, event)
 
 function lost_ev_xml_get(xml)
 {
-  lost_ev_xml_update(xml, EVENT_REVEIL);
-  lost_ev_xml_update(xml, EVENT_COUCHE);
-  lost_ev_xml_update(xml, EVENT_CHAUFFAGE_SDB);
-  lost_ev_xml_update(xml, EVENT_CHAUFFAGE_CAFE);
-  lost_ev_xml_update(xml, EVENT_LUMIERE_AUTO);
-  lost_ev_xml_update(xml, EVENT_MUSIQUE_AUTO);
-  lost_ev_xml_update(xml, EVENT_POWER_0);
-  lost_ev_xml_update(xml, EVENT_POWER_1);
-  lost_ev_xml_update(xml, EVENT_POWER_2);
-  lost_ev_xml_update(xml, EVENT_POWER_3);
+  for(var i=0; i<EVENT_MAX; i++) { lost_ev_xml_update(xml, i); }
 }
 
 /* ************* SET ************************ */
