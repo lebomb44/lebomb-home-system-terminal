@@ -25,7 +25,7 @@ uint8_t i2c_init(void)
   /* Set as I2C master */
   TwInit(1);
   /* Set the bus speed */
-  val = 2400;
+  val = 5000;
   TwIOCtl(TWI_SETSPEED, &val);
 
   return 0;
@@ -69,10 +69,6 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   for(i=0; i<nb; i++) { buff[i+1] = data[i]; }
   /* But the first data is the destination address */
   buff[0] = addr;
-
-  /* Send a STOP on I2C in order to initialize the transmission */
-  outb(TWCR, _BV(TWINT));
-  outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
 
   /* Do the exchange */
   ret = 0;
