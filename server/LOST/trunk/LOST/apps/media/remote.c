@@ -98,7 +98,9 @@ THREAD(RemoteD, arg)
                   /* printf("scene=%d data=%d\n",buff[4],buff[5]); */
                   fpurge(stdin);
                 }
+                fpurge(stdin);
               }
+              fpurge(stdin);
             }
           }
         }
