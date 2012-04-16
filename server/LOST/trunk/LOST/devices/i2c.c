@@ -37,6 +37,11 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
 
   /* Check the pointer on data area */
   if(data==NULL) { return 6; }
+
+  /* Send a STOP on I2C in order to initialize the transmission */
+  outb(TWCR, _BV(TWINT));
+  outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
+
   /* Do the exchange and check the returned number of data */
   if(TwMasterTransact(sla, &addr, (uint16_t) 1, data, (uint16_t) nb, (uint32_t) 1000) != ((int) nb))
   {
@@ -65,9 +70,13 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   /* But the first data is the destination address */
   buff[0] = addr;
 
+  /* Send a STOP on I2C in order to initialize the transmission */
+  outb(TWCR, _BV(TWINT));
+  outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
+
   /* Do the exchange */
   ret = 0;
-  for(i=0; i<3; i++) { ret += TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 1000); NutSleep(10); }
+  for(i=0; i<3; i++) { ret += TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 1000); NutSleep(100); }
   /* Before to exit, free the allocated area */
   free(buff);
   /* Check the returned code of the exchange */
