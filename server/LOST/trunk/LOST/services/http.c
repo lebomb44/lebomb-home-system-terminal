@@ -42,10 +42,6 @@ uint8_t http_init(void)
   NutThreadCreate("HttpD1", HttpD, 0, 512);
   NutThreadCreate("HttpD2", HttpD, 0, 512);
   NutThreadCreate("HttpD3", HttpD, 0, 512);
-  NutThreadCreate("HttpD4", HttpD, 0, 512);
-  NutThreadCreate("HttpD5", HttpD, 0, 512);
-  NutThreadCreate("HttpD6", HttpD, 0, 512);
-  NutThreadCreate("HttpD7", HttpD, 0, 512);
 
   return 0;
 }
