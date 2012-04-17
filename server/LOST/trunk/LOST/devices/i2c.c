@@ -85,7 +85,7 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
 
   /* Wait for the hardware interface to be free */
   ret = NutEventWait(&i2c_mutex, 1000);
-  if(ret != 0) { return 10; }
+  if(ret != 0) { free(buff); return 10; }
 
   /* Do the exchange */
   ret = 0;
