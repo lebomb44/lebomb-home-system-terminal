@@ -7,10 +7,13 @@
 #include <sys/event.h>
 #include <sys/atom.h>
 #include <sys/timer.h>
+#include <sys/event.h>
 #include <sys/thread.h>
 #include <sys/heap.h>
 
 #include "i2c.h"
+
+static HANDLE i2c_mutex;
 
 uint8_t i2c_init(void)
 {
@@ -38,6 +41,10 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   /* Check the pointer on data area */
   if(data==NULL) { return 6; }
 
+  /* Wait for the hardware interface to be free */
+  ret = NutEventWait(&i2c_mutex, 1000);
+  if(ret != 0) { return 7; }
+
   /* Send a STOP on I2C in order to initialize the transmission */
   outb(TWCR, _BV(TWINT));
   outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
@@ -46,11 +53,17 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   if(TwMasterTransact(sla, &addr, (uint16_t) 1, data, (uint16_t) nb, (uint32_t) 1000) != ((int) nb))
   {
     ret = TwMasterError();
-    if(ret == 0) { return 7; } else { return ret; }
+    /* Free the hardware interface */
+    NutEventPost(&i2c_mutex);
+    if(ret == 0) { return 8; } else { return ret; }
   }
 
   /* Verify that there was no error during the transmission */
-  return TwMasterError();
+  ret = TwMasterError();
+  /* Free the hardware interface */
+  NutEventPost(&i2c_mutex);
+
+  return ret;
 }
 
 uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
@@ -70,6 +83,10 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   /* But the first data is the destination address */
   buff[0] = addr;
 
+  /* Wait for the hardware interface to be free */
+  ret = NutEventWait(&i2c_mutex, 1000);
+  if(ret != 0) { return 10; }
+
   /* Do the exchange */
   ret = 0;
   for(i=0; i<3; i++) { ret += TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 1000); NutSleep(100); }
@@ -79,11 +96,17 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   if(ret!=0)
   {
     ret = TwMasterError();
-	if(ret == 0) { return 10; } else { return ret; }
+    /* Free the hardware interface */
+    NutEventPost(&i2c_mutex);
+    if(ret == 0) { return 11; } else { return ret; }
   }
 
   /* Verify that there was no error during the transmission */
-  return TwMasterError();
+  ret = TwMasterError();
+  /* Free the hardware interface */
+  NutEventPost(&i2c_mutex);
+
+  return ret;
 }
 
 uint8_t i2c_broadcast_set(uint8_t addr, uint8_t nb, uint8_t* data)
