@@ -212,12 +212,10 @@ int events_form(FILE * stream, REQUEST * req)
 int events_xml_get(FILE * stream)
 {
   uint8_t i=0;
-  char elt[8]="Event  ";
-  elt[7]='\0';
+  char elt[10];
   for(i=0; i<EVENT_MAX; i++)
   {
-    elt[5]='0'+(i/10);
-    elt[6]='0'+(i%10);
+    sprintf(elt, "Event%d", i);
     fprintf_XML_elt_header(elt, stream);
     fprintf_XML_elt_int("St", event_list[i].status, stream);
     fprintf_XML_elt_int("rec1", (event_list[i].rec & 0x02)>>1, stream);
