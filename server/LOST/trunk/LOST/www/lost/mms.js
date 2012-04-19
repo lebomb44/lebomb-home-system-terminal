@@ -626,6 +626,19 @@ function lost_rooms_shutters_update(xml, room)
       lost_wa_refresh(out_str);
     }
   }
+  /* FIXME */
+  if((room==ROOM_SALON) && in_id1)
+  {
+    in_id2 = in_id1.getElementsByTagName("Volume")[0];
+    out_str = "Room"+String(ROOM_SALON)+"_Shutter"+String(2)+"_Status";
+    out_id1 = document.getElementById(out_str);
+    out_id2 = document.getElementById(out_str+"_bg");
+    if(in_id2 && out_id1 && out_id2)
+    {
+      if(in_id2.firstChild.nodeValue & 1) { out_id1.innerHTML = "OUVERT"; out_id2.style.backgroundColor = "#FFFF99"; }
+      else { out_id1.innerHTML = "FERME"; out_id2.style.backgroundColor = "#000099"; }
+    }
+  }
 }
 
 function lost_rooms_xml_get(xml)
@@ -901,7 +914,7 @@ document.write("\
             <ul>\
                 <li id=\"Room"+String(ROOM_SALON)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter0_Status\">Unknown</span>Salon Grande Baie</li>\
                 <li id=\"Room"+String(ROOM_SALON)+"_Shutter1_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter1_Status\">Unknown</span>Salon Petite Baie</li>\
-                <li id=\"Room"+String(ROOM_SALON)+"_Shutter2_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter2_Status\">Unknown</span>Salon Simple Biae</li>\
+                <li id=\"Room"+String(ROOM_SALON)+"_Shutter2_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter2_Status\">Unknown</span>Salon Simple Baie</li>\
                 <li id=\"Room"+String(ROOM_CUISINE)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_CUISINE)+"_Shutter0_Status\">Unknown</span>Cuisine</li>\
                 <li id=\"Room"+String(ROOM_BUREAU)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_BUREAU)+"_Shutter0_Status\">Unknown</span>Bureau</li>\
                 <li id=\"Room"+String(ROOM_C1)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_C1)+"_Shutter0_Status\">Unknown</span>Marine</li>\

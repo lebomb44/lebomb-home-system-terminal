@@ -66,6 +66,19 @@ function lost_rooms_shutters_update(xml, room)
       lost_wa_refresh(out_str);
     }
   }
+  /* FIXME */
+  if((room==ROOM_SALON) && in_id1)
+  {
+    in_id2 = in_id1.getElementsByTagName("Volume")[0];
+    out_str = "Room"+String(ROOM_SALON)+"_Shutter"+String(2)+"_Status";
+    out_id1 = document.getElementById(out_str);
+    out_id2 = document.getElementById(out_str+"_bg");
+    if(in_id2 && out_id1 && out_id2)
+    {
+      if(in_id2.firstChild.nodeValue & 1) { out_id1.innerHTML = "OUVERT"; out_id2.style.backgroundColor = "#FFFF99"; }
+      else { out_id1.innerHTML = "FERME"; out_id2.style.backgroundColor = "#000099"; }
+    }
+  }
 }
 
 function lost_rooms_xml_get(xml)
