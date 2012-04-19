@@ -22,6 +22,52 @@ var ROOM_HEATER_MAX  = 10;
 var ROOM_ELEC_MAX    = 10;
 var url_room="cgi/rooms.cgi?room=";
 
+function lost_rooms_shutters_update(xml, room)
+{
+  var i=0;
+  var out_str;
+  var out_id1;
+  var out_id2;
+  var in_id1 = xml.getElementsByTagName("Room"+String(room))[0];
+  var in_id2;
+  if(in_id1)
+  {
+    in_id2 = in_id1.getElementsByTagName("Perimeter")[0];
+  }
+  else
+  {
+    in_id2 = null;
+  }
+  for(i=0; i<ROOM_SHUTTER_MAX; i++)
+  {
+    out_str = "Room"+String(room)+"_Shutter"+String(i)+"_Status";
+    out_id1 = document.getElementById(out_str);
+    out_id2 = document.getElementById(out_str+"_bg");
+    if(out_id1)
+    {
+      if(in_id2)
+      {
+        if(in_id2.firstChild.nodeValue & (1<<i))
+        {
+          out_id1.innerHTML = "OUVERT";
+          if(out_id2) { out_id2.style.backgroundColor = "#FFFF99"; }
+        }
+        else
+        {
+          out_id1.innerHTML = "FERME";
+          if(out_id2) { out_id2.style.backgroundColor = "#000099"; }
+        }
+      }
+      else
+      {
+        out_id1.innerHTML = "Unknown";
+        if(out_id2) { out_id2.style.backgroundColor = "#FE8800"; }
+      }
+      lost_wa_refresh(out_str);
+    }
+  }
+}
+
 function lost_rooms_xml_get(xml)
 {
   var i=0;
@@ -56,6 +102,7 @@ function lost_rooms_xml_get(xml)
     lost_innerHTML_update(xml, "Room"+String(i), "Perimeter");
     lost_innerHTML_update(xml, "Room"+String(i), "Perimeter_Ctrl");
     lost_trig2bg_update(xml, "Room"+String(i), "Perimeter");
+    lost_rooms_shutters_update(xml, i);
 
     lost_innerHTML_update(xml, "Room"+String(i), "Volume");
     lost_innerHTML_update(xml, "Room"+String(i), "Volume_Ctrl");

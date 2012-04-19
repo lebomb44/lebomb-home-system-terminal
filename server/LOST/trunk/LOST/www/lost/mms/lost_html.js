@@ -17,17 +17,17 @@ document.write("\
         <fieldset>\
             <legend>Volets</legend>\
             <ul>\
-                <li><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter0_Status\">Unknown</span>Salon Grande Baie</li>\
-                <li><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter1_Status\">Unknown</span>Salon Petite Baie</li>\
-                <li><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter2_Status\">Unknown</span>Salon Simple Biae</li>\
-                <li><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_CUISINE)+"_Shutter0_Status\">Unknown</span>Cuisine</li>\
-                <li><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_BUREAU)+"_Shutter0_Status\">Unknown</span>Bureau</li>\
-                <li><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_TERRASSE)+"_Shutter0_Status\">Unknown</span>Terrasse</li>\
-                <li><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_C1)+"_Shutter0_Status\">Unknown</span>Marine</li>\
-                <li><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_C2)+"_Shutter0_Status\">Unknown</span>M&M</li>\
-                <li><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_C3)+"_Shutter0_Status\">Unknown</span>Amis</li>\
-                <li><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_C4)+"_Shutter0_Status\">Unknown</span>Dressing</li>\
-                <li><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SDB)+"_Shutter0_Status\">Unknown</span>Salle de Bain</li>\
+                <li id=\"Room"+String(ROOM_SALON)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter0_Status\">Unknown</span>Salon Grande Baie</li>\
+                <li id=\"Room"+String(ROOM_SALON)+"_Shutter1_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter1_Status\">Unknown</span>Salon Petite Baie</li>\
+                <li id=\"Room"+String(ROOM_SALON)+"_Shutter2_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter2_Status\">Unknown</span>Salon Simple Biae</li>\
+                <li id=\"Room"+String(ROOM_CUISINE)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_CUISINE)+"_Shutter0_Status\">Unknown</span>Cuisine</li>\
+                <li id=\"Room"+String(ROOM_BUREAU)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_BUREAU)+"_Shutter0_Status\">Unknown</span>Bureau</li>\
+                <li id=\"Room"+String(ROOM_TERRASSE)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_TERRASSE)+"_Shutter0_Status\">Unknown</span>Terrasse</li>\
+                <li id=\"Room"+String(ROOM_C1)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_C1)+"_Shutter0_Status\">Unknown</span>Marine</li>\
+                <li id=\"Room"+String(ROOM_C2)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_C2)+"_Shutter0_Status\">Unknown</span>M&M</li>\
+                <li id=\"Room"+String(ROOM_C3)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_C3)+"_Shutter0_Status\">Unknown</span>Amis</li>\
+                <li id=\"Room"+String(ROOM_C4)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_C4)+"_Shutter0_Status\">Unknown</span>Dressing</li>\
+                <li id=\"Room"+String(ROOM_SDB)+"_Shutter0_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SDB)+"_Shutter0_Status\">Unknown</span>Salle de Bain</li>\
             </ul>\
         </fieldset>\
         <fieldset>\
