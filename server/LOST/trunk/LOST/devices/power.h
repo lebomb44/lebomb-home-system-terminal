@@ -14,6 +14,7 @@ typedef enum _POWER_T
 
 extern uint8_t power_init(void);
 extern void power_set(POWER_T power, uint8_t status);
+extern uint8_t power_get(POWER_T power)
 
 __END_DECLS
 
