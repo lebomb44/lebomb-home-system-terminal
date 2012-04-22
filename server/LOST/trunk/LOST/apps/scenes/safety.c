@@ -8,6 +8,7 @@
 #include <pro/httpd.h>
 
 #include "../../devices/ups.h"
+#include "../../devices/power.h"
 #include "../../devices/rack.h"
 #include "../../devices/buzzer.h"
 #include "../../devices/gsm.h"
@@ -342,9 +343,14 @@ int safety_xml_get(FILE * stream)
   fprintf_XML_elt_int("UPS_Temp"         , safety_value.ups_temp         , stream);
   fprintf_XML_elt_int("UPS_Temp_Th"      , safety_value.ups_temp_th      , stream);
   fprintf_XML_elt_int("UPS_Power"        , safety_status.ups_power       , stream);
+  fprintf_XML_elt_int("Power0"           , power_get(POWER_0)             , stream);
+  fprintf_XML_elt_int("Power1"           , power_get(POWER_1)             , stream);
+  fprintf_XML_elt_int("Power2"           , power_get(POWER_2)             , stream);
   fprintf_XML_elt_int("RACK_Temp"        , safety_value.rack_temp        , stream);
   fprintf_XML_elt_int("RACK_Temp_Th"     , safety_value.rack_temp_th     , stream);
   fprintf_XML_elt_int("RACK_Alarm"       , safety_status.rack_alarm      , stream);
+  fprintf_XML_elt_int("Heater"           , power_get(POWER_3)             , stream);
+  fprintf_XML_elt_int("Buzzer"           , buzzer_get()                  , stream);
   fprintf_XML_elt_int("HTTP"             , safety_status.http            , stream);
   fprintf_XML_elt_int("GSM"              , safety_status.gsm             , stream);
 
