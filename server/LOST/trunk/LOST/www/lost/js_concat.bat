@@ -8,7 +8,7 @@ type com\lost_ev.js >> mms.js
 type mms\lost_html.js >> mms.js
 type com\lost_mon_html.js >> mms.js
 type com\lost_alarm_html.js >> mms.js
-type mms\lost_atm_html.js >> mms.js
+type mms\lost_scenes_html.js >> mms.js
 type com\lost_safety_html.js >> mms.js
 type mms\lost_rooms_html.js >> mms.js
 type mms\lost_ev_html.js >> mms.js
