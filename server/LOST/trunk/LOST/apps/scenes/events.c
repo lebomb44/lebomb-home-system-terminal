@@ -63,8 +63,8 @@ void event_action(EVENT_T event, EVENT_STATUS_T status)
 {
   if(event < EVENT_MAX)
   {
-    if(status == EVENT_STATUS_ON ) { if(event_list[event].fcnt_start != NULL) { event_list[event].fcnt_start(); } }
-    if(status == EVENT_STATUS_OFF) { if(event_list[event].fcnt_end   != NULL) { event_list[event].fcnt_end()  ; } }
+    if(status == EVENT_STATUS_ON ) { if(event_list[event].fcnt_start != NULL) { (*(event_list[event].fcnt_start))(); } }
+    if(status == EVENT_STATUS_OFF) { if(event_list[event].fcnt_end   != NULL) { (*(event_list[event].fcnt_end))()  ; } }
   }
 }
 

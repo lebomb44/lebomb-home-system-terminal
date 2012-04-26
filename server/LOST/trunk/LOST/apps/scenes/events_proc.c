@@ -39,23 +39,23 @@ void event_proc_power_3_end(void)   { power_set(POWER_3, 0); }
 
 uint8_t events_proc_init(void)
 {
-  event_set(EVENT_SHUTTERS_ALL       , event_proc_shutters_all_start       , event_proc_shutters_all_end);
-  event_set(EVENT_SHUTTERS_UPSTAIRS  , event_proc_shutters_upstairs_start  , event_proc_shutters_upstairs_end);
-  event_set(EVENT_SHUTTERS_DOWNSTAIRS, event_proc_shutters_downstairs_start, event_proc_shutters_downstairs_end);
-  event_set(EVENT_SHUTTERS_MARINE    , event_proc_shutters_marine_start    , event_proc_shutters_marine_end);
-  event_set(EVENT_SHUTTERS_MM        , event_proc_shutters_mm_start        , event_proc_shutters_mm_end);
-  event_set(EVENT_SHUTTERS_FRIENDS   , event_proc_shutters_friends_start   , event_proc_shutters_friends_end);
-  event_set(EVENT_SHUTTERS_DRESSING  , event_proc_shutters_dressing_start  , event_proc_shutters_dressing_end);
+  event_set(EVENT_SHUTTERS_ALL       , &event_proc_shutters_all_start       , &event_proc_shutters_all_end);
+  event_set(EVENT_SHUTTERS_UPSTAIRS  , &event_proc_shutters_upstairs_start  , &event_proc_shutters_upstairs_end);
+  event_set(EVENT_SHUTTERS_DOWNSTAIRS, &event_proc_shutters_downstairs_start, &event_proc_shutters_downstairs_end);
+  event_set(EVENT_SHUTTERS_MARINE    , &event_proc_shutters_marine_start    , &event_proc_shutters_marine_end);
+  event_set(EVENT_SHUTTERS_MM        , &event_proc_shutters_mm_start        , &event_proc_shutters_mm_end);
+  event_set(EVENT_SHUTTERS_FRIENDS   , &event_proc_shutters_friends_start   , &event_proc_shutters_friends_end);
+  event_set(EVENT_SHUTTERS_DRESSING  , &event_proc_shutters_dressing_start  , &event_proc_shutters_dressing_end);
 
   event_set(EVENT_ALARM_ALL      , NULL, NULL);
   event_set(EVENT_ALARM_PERIMETER, NULL, NULL);
   event_set(EVENT_ALARM_VOLUME   , NULL, NULL);
   event_set(EVENT_SIMU           , NULL, NULL);
 
-  event_set(EVENT_POWER_0, event_proc_wifi_start   , event_proc_wifi_end);
-  event_set(EVENT_POWER_1, event_proc_eth_start    , event_proc_eth_end);
-  event_set(EVENT_POWER_2, event_proc_power_2_start, event_proc_power_2_end);
-  event_set(EVENT_POWER_3, event_proc_power_3_start, event_proc_power_3_end);
+  event_set(EVENT_POWER_0, &event_proc_wifi_start   , &event_proc_wifi_end);
+  event_set(EVENT_POWER_1, &event_proc_eth_start    , &event_proc_eth_end);
+  event_set(EVENT_POWER_2, &event_proc_power_2_start, &event_proc_power_2_end);
+  event_set(EVENT_POWER_3, &event_proc_power_3_start, &event_proc_power_3_end);
 
   return 0;
 }
