@@ -69,7 +69,7 @@ int main(void)
   scenes_init();
 
   /* Set the time zone to Paris */
-  _timezone = -1L * 60L * 60L; 
+  _timezone = -1L * 60L * 60L;
   /* Start the NTP client and connect to ntp.laas.fr */
   NutSNTPStartThread(inet_addr("195.83.132.135"), 60000);
 
