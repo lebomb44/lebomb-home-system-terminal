@@ -5,7 +5,7 @@ __BEGIN_DECLS
 
 extern uint8_t buzzer_init(void);
 extern void buzzer_set(void);
-extern uint8_t buzzer_get();
+extern uint8_t buzzer_get(void);
 
 __END_DECLS
 
