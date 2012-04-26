@@ -42,7 +42,7 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   if(data==NULL) { return 6; }
 
   /* Wait for the hardware interface to be free */
-  ret = NutEventWait(&i2c_mutex, 1000);
+  ret = NutEventWait(&i2c_mutex, 100);
   if(ret != 0) { return 7; }
 
   /* Send a STOP on I2C in order to initialize the transmission */
@@ -84,9 +84,8 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   buff[0] = addr;
 
   /* Wait for the hardware interface to be free */
-  ret = NutEventWait(&i2c_mutex, 1000);
+  ret = NutEventWait(&i2c_mutex, 100);
   if(ret != 0) { free(buff); return 10; }
-
   /* Do the exchange */
   ret = 0;
   for(i=0; i<3; i++) { ret += TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 1000); NutSleep(100); }
