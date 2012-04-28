@@ -28,7 +28,7 @@ uint8_t i2c_init(void)
   /* Set as I2C master */
   TwInit(1);
   /* Set the bus speed */
-  val = 5000;
+  val = 50000;
   TwIOCtl(TWI_SETSPEED, &val);
   /* Authorize the use of the hardware interface */
   NutEventPost(&i2c_mutex);
@@ -52,7 +52,7 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   //outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
 
   /* Do the exchange and check the returned number of data */
-  if(TwMasterTransact(sla, &addr, (uint16_t) 1, data, (uint16_t) nb, (uint32_t) 100) != ((int) nb))
+  if(TwMasterTransact(sla, &addr, (uint16_t) 1, data, (uint16_t) nb, (uint32_t) 500) != ((int) nb))
   {
     ret = TwMasterError();
     /* Free the hardware interface */
@@ -64,6 +64,7 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   ret = TwMasterError();
   /* Free the hardware interface */
   NutEventPost(&i2c_mutex);
+  NutSleep(1);
 
   return ret;
 }
@@ -85,27 +86,28 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   /* But the first data is the destination address */
   buff[0] = addr;
 
-  /* Wait for the hardware interface to be free */
-  ret = NutEventWait(&i2c_mutex, 100);
-  if(ret != 0) { free(buff); return 10; }
+  /* Send a STOP on I2C in order to initialize the transmission */
+  //outb(TWCR, _BV(TWINT));
+  //outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
+
   /* Do the exchange */
   ret = 0;
-  for(i=0; i<3; i++) { ret += TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 100); NutSleep(100); }
-  /* Before to exit, free the allocated area */
-  free(buff);
-  /* Check the returned code of the exchange */
-  if(ret!=0)
+  for(i=0; i<3; i++)
   {
-    ret = TwMasterError();
+    /* Wait for the hardware interface to be free */
+    ret = NutEventWait(&i2c_mutex, 100);
+    if(ret != 0) { continue; }
+    ret += TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 100);
+    if(i==2)
+    {
+      ret = TwMasterError();
+    }
     /* Free the hardware interface */
     NutEventPost(&i2c_mutex);
-    if(ret == 0) { return 11; } else { return ret; }
+    NutSleep(5);
   }
-
-  /* Verify that there was no error during the transmission */
-  ret = TwMasterError();
-  /* Free the hardware interface */
-  NutEventPost(&i2c_mutex);
+  /* Before to exit, free the allocated area */
+  free(buff);
 
   return ret;
 }
