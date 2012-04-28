@@ -48,8 +48,8 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   if(ret != 0) { return 7; }
 
   /* Send a STOP on I2C in order to initialize the transmission */
-  outb(TWCR, _BV(TWINT));
-  outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
+  //outb(TWCR, _BV(TWINT));
+  //outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
 
   /* Do the exchange and check the returned number of data */
   if(TwMasterTransact(sla, &addr, (uint16_t) 1, data, (uint16_t) nb, (uint32_t) 500) != ((int) nb))
