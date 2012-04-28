@@ -13,7 +13,7 @@ void remote_init(void)
   cbi(DDRC,2); sbi(PORTC,2);
   cbi(DDRB,0); sbi(PORTB,0);
   cbi(DDRC,4); sbi(PORTC,4);
-  cbi(DDRD,7); sbi(PORTD,7);
+  cbi(DDRB,1); sbi(PORTB,1);
 }
 
 #define REMOTE_HEADER_SIZE       (4)
@@ -51,7 +51,7 @@ void remote_cycle(void)
 
   /* Get the pressed button */
 
-#define NODE_REMOTE_TYPE_2
+#define NODE_REMOTE_TYPE_1
 #ifdef NODE_REMOTE_TYPE_1
   /* Button 1 ON */
   if(!bit_is_set(PINC,0)) { /* SCENE 0 */ scene = 0xCA + EVENT_SHUTTERS_ALL;   /* STATE ON */  state = 0xCA + 1; }
@@ -68,7 +68,7 @@ void remote_cycle(void)
   /* Button 4 ON */
   if(!bit_is_set(PINC,4)) { /* SCENE 4 */ scene = 0xCA + EVENT_ALARM_PERIMETER;   /* STATE ON */  state = 0xCA + 1; }
   /* Button 4 OFF */
-  if(!bit_is_set(PIND,7)) { /* SCENE 4 */ scene = 0xCA + EVENT_ALARM_PERIMETER;   /* STATE OFF */  state = 0xCA + 0; }
+  if(!bit_is_set(PINB,1)) { /* SCENE 4 */ scene = 0xCA + EVENT_ALARM_PERIMETER;   /* STATE OFF */  state = 0xCA + 0; }
 #endif
 #ifdef NODE_REMOTE_TYPE_2
   /* Button 1 ON */
@@ -86,7 +86,7 @@ void remote_cycle(void)
   /* Button 4 ON */
   if(!bit_is_set(PINC,4)) { /* SCENE 4 */ scene = 0xCA + EVENT_SHUTTERS_ALL;   /* STATE ON */  state = 0xCA + 1; }
   /* Button 4 OFF */
-  if(!bit_is_set(PIND,7)) { /* SCENE 4 */ scene = 0xCA + EVENT_SHUTTERS_ALL;   /* STATE OFF */  state = 0xCA + 0; }
+  if(!bit_is_set(PINB,1)) { /* SCENE 4 */ scene = 0xCA + EVENT_SHUTTERS_ALL;   /* STATE OFF */  state = 0xCA + 0; }
 #endif
 
   /* Set synchro word */
