@@ -48,8 +48,8 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   if(ret != 0) { return 7; }
 
   /* Send a STOP on I2C in order to initialize the transmission */
-  //outb(TWCR, _BV(TWINT));
-  //outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
+  outb(TWCR, _BV(TWINT));
+  outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
 
   /* Do the exchange and check the returned number of data */
   if(TwMasterTransact(sla, &addr, (uint16_t) 1, data, (uint16_t) nb, (uint32_t) 500) != ((int) nb))
@@ -86,10 +86,6 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   /* But the first data is the destination address */
   buff[0] = addr;
 
-  /* Send a STOP on I2C in order to initialize the transmission */
-  //outb(TWCR, _BV(TWINT));
-  //outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
-
   /* Do the exchange */
   ret = 0;
   for(i=0; i<3; i++)
@@ -97,6 +93,9 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
     /* Wait for the hardware interface to be free */
     ret = NutEventWait(&i2c_mutex, 100);
     if(ret != 0) { continue; }
+    /* Send a STOP on I2C in order to initialize the transmission */
+    outb(TWCR, _BV(TWINT));
+    outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
     ret += TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 100);
     if(i==2)
     {
