@@ -124,14 +124,13 @@ THREAD(HttpD, arg)
   }
 }
 
-#define HTTP_GET_HEAD  "GET /"
-#define HTTP_GET_END   " HTTP/1.0\r\n"
-#define HTTP_HOST_HEAD "Host: "
-#define HTTP_HOST_END  "\r\n"
-#define HTTP_USER      "User-Agent: LOST\r\n"
-#define HTTP_REQ_END   "\r\n"
+#define HTTP_METHOD_END " HTTP/1.0\r\n"
+#define HTTP_HOST_HEAD  "Host: "
+#define HTTP_HOST_END   "\r\n"
+#define HTTP_USER       "User-Agent: LOST\r\n"
+#define HTTP_REQ_END    "\r\n"
 
-uint8_t http_request_get_start(char* ip, uint16_t port, TCPSOCKET **sock, FILE **stream)
+uint8_t http_request_header_start(char* ip, uint16_t port, int method, TCPSOCKET **sock, FILE **stream)
 {
   uint32_t rip = 0;
   u_long sock_opt = 0;
@@ -163,19 +162,21 @@ uint8_t http_request_get_start(char* ip, uint16_t port, TCPSOCKET **sock, FILE *
   /* Check the returned stream */
   if(*stream == NULL) { NutTcpCloseSocket(*sock); *sock = NULL; }
 
-  /* Send the HTTP GET header */
-  fputs(HTTP_GET_HEAD, *stream);
+  /* Send the HTTP header according to the chosen method */
+  if(method == METHOD_GET) { fputs("GET", *stream); }
+  if(method == METHOD_POST) { fputs("POST", *stream); }
+  fputs(" /", *stream);
 
   return 0;
 }
 
-void http_request_get_end(char* host_req, FILE *stream)
+void http_request_header_end(char* host_req, FILE *stream)
 {
   /* Check the input stream */
   if(stream != NULL)
   {
     /* Send all the fields of the header */
-    fputs(HTTP_GET_END, stream);
+    fputs(HTTP_METHOD_END, stream);
     /* Send the host target if needed */
     if(host_req!=NULL)
     {
@@ -195,7 +196,7 @@ void http_request_close(TCPSOCKET **sock, FILE **stream)
 {
   /* The message has been sent. Now we can close the connection */
   /* Check the pointers and there contents */
-  if(stream != NULL) { if(*stream != NULL) { fclose(*stream); *stream = NULL; } }
+  if(stream != NULL) { if(*stream != NULL) { fflush(*stream); fclose(*stream); *stream = NULL; } }
   /* Also close the associated raw socket */
   if(sock != NULL) { if(*sock != NULL) { NutTcpCloseSocket(*sock); *sock = NULL; } }
 }
@@ -208,12 +209,12 @@ uint8_t http_status_get(void)
   char* out = NULL;
 
   /* Connect and send the HTTP header */
-  if(http_request_get_start("88.190.253.248", 80, &sock, &stream) == 0)
+  if(http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream) == 0)
   {
     /* Send the URL */
     fputs("status.txt", stream);
     /* Send the host target */
-    http_request_get_end("www.lebomb.fr", stream);
+    http_request_header_end("www.lebomb.fr", stream);
     /* Catch the answer */
     buff = malloc(400);
     if(buff != NULL)
@@ -247,14 +248,14 @@ uint8_t http_email_send_once(char* msg)
   char* out = NULL;
 
   /* Connect and send the HTTP header */
-  if(http_request_get_start("88.190.253.248", 80, &sock, &stream) == 0)
+  if(http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream) == 0)
   {
     /* Send the URL */
     fputs(LOST_EMAIL, stream);
     /* and the parameters of the URL */
     if(msg != NULL) { fputs(msg, stream); }
     /* Send the host target */
-    http_request_get_end("www.lebomb.fr", stream);
+    http_request_header_end("www.lebomb.fr", stream);
     buff = malloc(400);
     /* Catch the answer */
     if(buff != NULL)
