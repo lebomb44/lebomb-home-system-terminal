@@ -130,136 +130,153 @@ THREAD(HttpD, arg)
 #define HTTP_HOST_END  "\r\n"
 #define HTTP_USER      "User-Agent: LOST\r\n"
 #define HTTP_REQ_END   "\r\n"
-char* http_request(char* ip, uint16_t port, char* req, char* host_req, uint16_t len_to_recv)
+
+uint8_t http_request_get_start(char* ip, uint16_t port, TCPSOCKET **sock, FILE **stream)
 {
   uint32_t rip = 0;
-  TCPSOCKET *sock = NULL;
   u_long sock_opt = 0;
-  char* buff = NULL;
-  size_t len_to_send = 0;
-  size_t total = 0;
-  int nb = 0;
+
+  /* Check the entries */
+  if((ip == NULL) || (sock == NULL) || (stream == NULL)) { return 1; }
 
   /* Get the inet for the IP */
   rip = inet_addr(ip);
   /* Check the inet we got */
-  if(rip == 0) { return  NULL; }
+  if(rip == 0) { *sock = NULL; *stream = NULL; return  2; }
 
   /* Create of socket for the connection to the IP */
-  sock = NutTcpCreateSocket();
-  if(sock == NULL) { return NULL; }
+  *sock = NutTcpCreateSocket();
+  if(*sock == NULL) { *stream = NULL; return 3; }
   /* Set send timeout */
   sock_opt = 10000;
-  NutTcpSetSockOpt(sock, SO_SNDTIMEO, &sock_opt, sizeof(sock_opt));
+  NutTcpSetSockOpt(*sock, SO_SNDTIMEO, &sock_opt, sizeof(sock_opt));
   /* Set receive timeout */
   sock_opt = 10000;
-  NutTcpSetSockOpt(sock, SO_RCVTIMEO, &sock_opt, sizeof(sock_opt));
+  NutTcpSetSockOpt(*sock, SO_RCVTIMEO, &sock_opt, sizeof(sock_opt));
 
   /* Connect the server of the IP */
-  if(NutTcpConnect(sock, rip, port) != 0) { return NULL; }
+  if(NutTcpConnect(*sock, rip, port) != 0) { *sock = NULL; *stream = NULL; return 4; }
 
-  /* Get the length of the prepared request */
-  len_to_send = sizeof(HTTP_GET_HEAD ) + strnlen(req     , 500) + sizeof(HTTP_GET_END ) \
-              + sizeof(HTTP_HOST_HEAD) + strnlen(host_req, 100) + sizeof(HTTP_HOST_END) \
-              + sizeof(HTTP_USER     ) \
-              + sizeof(HTTP_GET_END  );
+  /* Assign a stream to our connected socket */
+  *stream = _fdopen((int) *sock, "r+b");
 
-  /* Allocation of the buffer required for the request to send */
-  buff = malloc(len_to_send + 1);
-  /* If the allocation failed return in error */
-  if(buff == NULL) { NutTcpCloseSocket(sock); return NULL; }
+  /* Check the returned stream */
+  if(*stream == NULL) { NutTcpCloseSocket(*sock); *sock = NULL; }
 
-  /* Create the HTTP request beginning */
-  strncpy(buff, HTTP_GET_HEAD, sizeof(HTTP_GET_HEAD));
-  /* Build the URL */
-  if(req) { strncat(buff, req, 500); }
-  /* Finish to build the URL */
-  strncat(buff, HTTP_GET_END, sizeof(HTTP_GET_END));
+  /* Send the HTTP GET header */
+  fputs(HTTP_GET_HEAD, *stream);
 
-  /* Add the host target if necessary */
-  if(host_req)
+  return 0;
+}
+
+void http_request_get_end(char* host_req, FILE *stream)
+{
+  /* Check the input stream */
+  if(stream != NULL)
   {
-    strncat(buff, HTTP_HOST_HEAD, sizeof(HTTP_HOST_HEAD));
-    strncat(buff, host_req, 100);
-    strncat(buff, HTTP_HOST_END, sizeof(HTTP_HOST_END));
-  }
-
-  /* Add the user agent */
-  strncat(buff, HTTP_USER, sizeof(HTTP_USER));
-
-  /* Add the request end */
-  strncat(buff, HTTP_REQ_END, sizeof(HTTP_REQ_END));
-
-  /*
-   * Send HTTP request to the server. NutTcpSend() doesn't
-   * guarantee to send out all bytes, thus the loop.
-  */
-  total = 0;
-  while(total < len_to_send)
-  {
-    // Send the message by block
-    nb = NutTcpSend(sock, buff + total, len_to_send - total);
-    // And verify that there is no error
-    if(nb <= 0) { break; }
-    total = total + nb;
-  }
-  free(buff);
-  buff = NULL;
-
-  /*
-   * Read server response.
-   */
-  total = 0;
-  /* Allocation of the buffer required for the request to receive */
-  if(len_to_recv > 0)
-  {
-    buff = malloc(len_to_recv + 1);
-    //If the allocation failed return in error
-    if(buff == NULL) { NutTcpCloseSocket(sock); return NULL; }
-    while (total < len_to_recv)
+    /* Send all the fields of the header */
+    fputs(HTTP_GET_END, stream);
+    /* Send the host target if needed */
+    if(host_req!=NULL)
     {
-      //Receive the message by block
-      nb = NutTcpReceive(sock, buff + total, len_to_recv - total);
-      //And verify that there is no error
-      if(nb <= 0) { break; }
-      total = total + nb;
-    }
-    //Force the position of the end because of possible corruption
-    if(total > len_to_recv) { total = len_to_recv; }
-    buff[total] = '\0';
-  }
-  /* The message has been sent. Now we can close the connection */
-  NutTcpCloseSocket(sock);
+      fputs(HTTP_HOST_HEAD, stream);
+      fputs(host_req, stream);
+      fputs(HTTP_HOST_END, stream);
 
-  return buff;
+    }
+    fputs(HTTP_USER, stream);
+    fputs(HTTP_REQ_END, stream);
+    /* Flush the stream to really send the datas */
+    fflush(stream);
+  }
+}
+
+void http_request_close(TCPSOCKET **sock, FILE **stream)
+{
+  /* The message has been sent. Now we can close the connection */
+  /* Check the pointers and there contents */
+  if(stream != NULL) { if(*stream != NULL) { fclose(*stream); *stream = NULL; } }
+  /* Also close the associated raw socket */
+  if(sock != NULL) { if(*sock != NULL) { NutTcpCloseSocket(*sock); *sock = NULL; } }
 }
 
 uint8_t http_status_get(void)
 {
-  char* buff=NULL;
-  char* out=NULL;
+  TCPSOCKET *sock = NULL;
+  FILE *stream = NULL;
+  char* buff = NULL;
+  char* out = NULL;
 
-  buff = http_request("88.190.253.248", 80, "status.txt", "www.lebomb.fr", 400);
-  if(buff == NULL) { return 1; }
-  out = strstr(buff, "safety.http_status");
-  free(buff);
-  if(out) { return 0; }
+  /* Connect and send the HTTP header */
+  if(http_request_get_start("88.190.253.248", 80, &sock, &stream) == 0)
+  {
+    /* Send the URL */
+    fputs("status.txt", stream);
+    /* Send the host target */
+    http_request_get_end("www.lebomb.fr", stream);
+    /* Catch the answer */
+    buff = malloc(400);
+    if(buff != NULL)
+    {
+      while(fgets(buff, 399, stream))
+      {
+        /* Force the end of the string */
+        buff[399] = '\0';
+        /* On each string search the good answer */
+        out = strstr(buff, "safety.http_status");
+        /* If the good answer is found, we can break the loop */
+        if(out) { break; }
+      }
+      /* The analyze is finished, so free the answer buffer */
+      free(buff);
+    }
+    /* Close the connection : raw socket and the corresponding stream */
+    http_request_close(&sock, &stream);
+  }
+  /* Build the return status */
+  if(out) { printf("Safety HTTP status OK\n"); return 0; }
+printf("Safety HTTP status KO\n");
   return 1;
 }
 
 uint8_t http_email_send_once(char* msg)
 {
-  char url[sizeof(LOST_EMAIL)+20];
-  char* buff=NULL;
-  char* out=NULL;
+  TCPSOCKET *sock = NULL;
+  FILE *stream = NULL;
+  char* buff = NULL;
+  char* out = NULL;
 
-  strncpy(url, LOST_EMAIL, sizeof(url));
-  strncat(url, msg, sizeof(url));
-  buff = http_request("88.190.253.248", 80, url, "www.lebomb.fr", 400);
-  if(buff == NULL) { return 1; }
-  out = strstr(buff, "OK");
-  free(buff);
-  if(out) { return 0; }
+  /* Connect and send the HTTP header */
+  if(http_request_get_start("88.190.253.248", 80, &sock, &stream) == 0)
+  {
+    /* Send the URL */
+    fputs(LOST_EMAIL, stream);
+    /* and the parameters of the URL */
+    if(msg != NULL) { fputs(msg, stream); }
+    /* Send the host target */
+    http_request_get_end("www.lebomb.fr", stream);
+    buff = malloc(400);
+    /* Catch the answer */
+    if(buff != NULL)
+    {
+      while(fgets(buff, 400, stream))
+      {
+        /* Force the end of the string */
+        buff[399] = '\0';
+        /* On each string search the good answer */
+        out = strstr(buff, "safety.http_status");
+        /* If the good answer is found, we can break the loop */
+        if(out) { break; }
+      }
+      /* The analyze is finished, so free the answer buffer */
+      free(buff);
+    }
+    /* Close the connection : raw socket and the corresponding stream */
+    http_request_close(&sock, &stream);
+  }
+  /* Build the return status */
+  if(out) { printf("Email OK\n"); return 0; }
+printf("Email KO\n");
   return 1;
 }
 
