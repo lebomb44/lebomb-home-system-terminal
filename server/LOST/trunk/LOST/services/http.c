@@ -150,7 +150,7 @@ uint8_t http_request_header_start(char* ip, uint16_t port, int method, TCPSOCKET
   sock_opt = 10000;
   NutTcpSetSockOpt(*sock, SO_SNDTIMEO, &sock_opt, sizeof(sock_opt));
   /* Set receive timeout */
-  sock_opt = 10000;
+  sock_opt = 30000;
   NutTcpSetSockOpt(*sock, SO_RCVTIMEO, &sock_opt, sizeof(sock_opt));
 
   /* Connect the server of the IP */
@@ -170,7 +170,7 @@ uint8_t http_request_header_start(char* ip, uint16_t port, int method, TCPSOCKET
   return 0;
 }
 
-void http_request_header_end(char* host_req, FILE *stream)
+void http_request_header_end(char* host_req, uint32_t content_length, FILE *stream)
 {
   /* Check the input stream */
   if(stream != NULL)
@@ -186,9 +186,13 @@ void http_request_header_end(char* host_req, FILE *stream)
 
     }
     fputs(HTTP_USER, stream);
+    fputs("Accept: text/html\r\n",stream);
+    fputs("Content-Type: application/x-www-form-urlencoded\r\n", stream);
+    fputs("Connection: Close\r\n",stream);
+    if(content_length > 0) { fprintf(stream, "Content-Length: %ld\r\n", content_length); }
     fputs(HTTP_REQ_END, stream);
     /* Flush the stream to really send the datas */
-    fflush(stream);
+    if(content_length == 0 ) { fflush(stream); }
   }
 }
 
@@ -214,7 +218,7 @@ uint8_t http_status_get(void)
     /* Send the URL */
     fputs("status.txt", stream);
     /* Send the host target */
-    http_request_header_end("www.lebomb.fr", stream);
+    http_request_header_end("www.lebomb.fr", 0, stream);
     /* Catch the answer */
     buff = malloc(400);
     if(buff != NULL)
@@ -224,7 +228,7 @@ uint8_t http_status_get(void)
         /* Force the end of the string */
         buff[399] = '\0';
         /* On each string search the good answer */
-        out = strstr(buff, "safety.http_status");
+        out = strstr(buff, "LOST safety.http_status OK");
         /* If the good answer is found, we can break the loop */
         if(out) { break; }
       }
@@ -255,7 +259,7 @@ uint8_t http_email_send_once(char* msg)
     /* and the parameters of the URL */
     if(msg != NULL) { fputs(msg, stream); }
     /* Send the host target */
-    http_request_header_end("www.lebomb.fr", stream);
+    http_request_header_end("www.lebomb.fr", 0, stream);
     buff = malloc(400);
     /* Catch the answer */
     if(buff != NULL)
@@ -265,7 +269,7 @@ uint8_t http_email_send_once(char* msg)
         /* Force the end of the string */
         buff[399] = '\0';
         /* On each string search the good answer */
-        out = strstr(buff, "safety.http_status");
+        out = strstr(buff, "LOST Email OK");
         /* If the good answer is found, we can break the loop */
         if(out) { break; }
       }
@@ -285,7 +289,7 @@ uint8_t http_email_send(char* msg)
 {
   uint8_t i = 0;
 
-  // TODO for(i=0; i<10; i++)
+  for(i=0; i<10; i++)
   {
     if(http_email_send_once(msg) == 0) { return 0; }
     NutSleep(1000);
