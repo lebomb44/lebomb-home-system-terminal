@@ -8,6 +8,8 @@
 __BEGIN_DECLS
 
 extern uint8_t safety_init(void);
+extern uint16_t safety_ups_temp_value_get(void);
+extern uint16_t safety_rack_temp_value_get(void);
 extern void SafetyUpsRackD(void *arg) __attribute__ ((noreturn));
 extern void SafetyRoomsD(void *arg) __attribute__ ((noreturn));
 extern void SafetyGsmD(void *arg) __attribute__ ((noreturn));

@@ -105,6 +105,16 @@ uint8_t safety_init(void)
   return 0;
 }
 
+uint16_t safety_ups_temp_value_get(void)
+{
+  return (safety_value.ups_temp);
+}
+
+uint16_t safety_rack_temp_value_get(void)
+{
+  return (safety_value.rack_temp);
+}
+
 /* This function is executed if a safety problem is detected */
 uint8_t safety_action(char* msg)
 {
