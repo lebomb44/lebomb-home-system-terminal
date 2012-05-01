@@ -29,16 +29,16 @@ int freebox_form(FILE * stream, REQUEST * req)
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
-  if(http_request_get_start("212.027.040.254", 80, &sock_out, &stream_out) == 0)
+  if(http_request_header_start("212.027.040.254", 80, METHOD_GET, &sock_out, &stream_out) == 0)
   {
-    /* Create the HTTP request beginning */
+    /* Build the beginning of the URL */
     fputs("pub/remote_control?", stream_out);
     /* Count the arguments in the request */
     nb = NutHttpGetParameterCount(req);
     /* Build the new request with all the arguments coming from the request */
     for (i=0; i<nb; i++)
     {
-      /* Get the a parameter name */
+      /* Get the parameter name */
       name = NutHttpGetParameterName(req, i);
       /* Get the parameter value */
       value = NutHttpGetParameterValue(req, i);
@@ -55,7 +55,7 @@ int freebox_form(FILE * stream, REQUEST * req)
         fputs(value, stream_out);
       }
     }
-    http_request_get_end(NULL, stream_out);
+    http_request_header_end(NULL, 0, stream_out);
     http_request_close(&sock_out, &stream_out);
   }
 
