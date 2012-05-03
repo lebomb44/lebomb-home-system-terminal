@@ -16,6 +16,9 @@ document.write("\
             <li id=\"Room"+String(ROOM_SDB)+"_bg\"><a href=\"#_Sdb\"><img class=\"picto\" src=\""+lost_icons_path+"water.jpg\">Salle de Bain</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
+            <li><a href=\"http://lebomb.free.fr/LOST/charts/index_mms.php\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Courbes de temperature</a></li>\
+        </ul>\
+        <ul class=\"iArrow\">\
             <li><a href=\"#_Cameras\"><img class=\"picto\" src=\""+lost_icons_path+"cam.jpg\">Cameras</a></li>\
         </ul>\
         <ul>\
