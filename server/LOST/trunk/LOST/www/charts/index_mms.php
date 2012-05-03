@@ -55,7 +55,7 @@
   
       for($i=0; $i<10; $i++)
       {
-      	echo $r['room'.$i.'_temp_value'].",";
+      	echo $r['room'.sprintf('%02d',$i).'_temp_value'].",";
       }
       echo $r['safety_ups_temp'].",";
       echo $r['safety_rack_temp']."]";

@@ -19,7 +19,7 @@ $request= "INSERT INTO mms (DATE, ";
 // Add the names of the parameters
 for($i=0; $i<10; $i++)
 {
-  $request .= "room".$i."_temp_value, ";
+  $request .= "room".sprintf('%02d',$i)."_temp_value, ";
 }
 $request .= "safety_ups_temp, ";
 $request .= "safety_rack_temp)";
@@ -28,7 +28,7 @@ $request .= "safety_rack_temp)";
 $request .= " VALUES (NOW(), ";
 for($i=0; $i<10; $i++)
 {
-  $request .= "'".$_POST['room'.$i.'_temp_value']."',";
+  $request .= "'".$_POST['room'.sprintf('%02d',$i).'_temp_value']."',";
 }
 $request .= "'".$_POST['safety_ups_temp']."',";
 $request .= "'".$_POST['safety_rack_temp']."')";
