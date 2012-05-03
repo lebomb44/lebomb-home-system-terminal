@@ -239,8 +239,8 @@ uint8_t http_status_get(void)
     http_request_close(&sock, &stream);
   }
   /* Build the return status */
-  if(out) { printf("Safety HTTP status OK\n"); return 0; }
-printf("Safety HTTP status KO\n");
+  if(out) { return 0; }
+
   return 1;
 }
 
@@ -280,8 +280,8 @@ uint8_t http_email_send_once(char* msg)
     http_request_close(&sock, &stream);
   }
   /* Build the return status */
-  if(out) { printf("Email OK\n"); return 0; }
-printf("Email KO\n");
+  if(out) { return 0; }
+
   return 1;
 }
 
