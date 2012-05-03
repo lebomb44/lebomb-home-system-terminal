@@ -9,10 +9,18 @@
     function drawVisualization() {
       var data = new google.visualization.DataTable();
       data.addColumn('date', 'Date');
-      data.addColumn('number', 'Temp Marine');
-      data.addColumn('number', 'Temp M&M');
-	  data.addColumn('number', 'Temp Bureau');
-	  data.addColumn('number', 'Temp Amis');
+      data.addColumn('number', 'Marine');
+      data.addColumn('number', 'M&M');
+      data.addColumn('number', 'Amis');
+      data.addColumn('number', 'Dressing');
+      data.addColumn('number', 'SdB');
+      data.addColumn('number', 'Bureau');
+      data.addColumn('number', 'Salon');
+      data.addColumn('number', 'Cuisine');
+      data.addColumn('number', 'Couloir');
+      data.addColumn('number', 'Terrasse');
+      data.addColumn('number', 'UPS');
+      data.addColumn('number', 'Rack');
       data.addRows([
 <?php
   define("NOM","lebomb");         //monnom = login chez free
@@ -34,17 +42,24 @@
   while($r=mysql_fetch_array($result, MYSQL_ASSOC))
     //{echo "DATE: $r[DATE] TEMP0: $r[TEMP0] TEMP1: $r[TEMP1] TEMP2: $r[TEMP2] TEMP3: $r[TEMP3]<br>";}
     {
-	  if($first==1) {$first=0;} else {echo ",";}
-	  $fullDate = $r[DATE];
-	  $temp = substr($fullDate, 0, 4).","; // Annee
-	  $temp .= ((string)(((int)substr($fullDate, 5, 2))-1)).","; // Mois
-	  $temp .= substr($fullDate, 8, 2).","; // Jour
-	  $temp .= substr($fullDate, 11, 2).","; // Heure
-	  $temp .= substr($fullDate, 14, 2).","; // Minute
-	  $temp .= substr($fullDate, 17, 2); // Second
+      if($first==1) {$first=0;} else {echo ",";}
+      $fullDate = $r[DATE];
+      $temp = substr($fullDate, 0, 4).","; // Annee
+      $temp .= ((string)(((int)substr($fullDate, 5, 2))-1)).","; // Mois
+      $temp .= substr($fullDate, 8, 2).","; // Jour
+      $temp .= substr($fullDate, 11, 2).","; // Heure
+      $temp .= substr($fullDate, 14, 2).","; // Minute
+      $temp .= substr($fullDate, 17, 2); // Second
 
-	  echo("[new Date(".$temp."),".$r[TEMP0].",".$r[TEMP1].",".$r[TEMP2].",".$r[TEMP0]."]");
-	}
+      echo "[new Date(".$temp."),";
+  
+      for($i=0; $i<10; $i++)
+      {
+      	echo $r['room'.$i.'_temp_value'].",";
+      }
+      echo $r['safety_ups_temp'].",";
+      echo $r['safety_rack_temp']."]";
+    }
 ?>
 	]);
     
