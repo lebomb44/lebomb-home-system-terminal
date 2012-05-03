@@ -33,11 +33,12 @@ for($i=0; $i<10; $i++)
 $request .= "'".$_POST['safety_ups_temp']."',";
 $request .= "'".$_POST['safety_rack_temp']."')";
 
-echo var_dump($_POST);
-echo "<br>".$request;
 // Send the request
 mysql_query($request, $link) or die("Insertion failed".mysql_error());
 
 // Close the link
 mysql_close($link);
+
+// Returned code OK
+echo "SQL Insert OK\r\n";
 ?>
