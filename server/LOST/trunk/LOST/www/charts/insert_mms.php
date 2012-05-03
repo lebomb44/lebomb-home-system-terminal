@@ -28,10 +28,10 @@ $request .= "safety_rack_temp)";
 $request .= " VALUES (NOW(), ";
 for($i=0; $i<10; $i++)
 {
-  $request .= "'".$_POST['room'.sprintf('%02d',$i).'_temp_value']."',";
+  $request .= "'".sprintf("%.01d",((((((intval($_POST['room'.sprintf('%02d',$i).'_temp_value'])*5*100)/1024)-32)*140)/252)*10)/10)."',";
 }
-$request .= "'".$_POST['safety_ups_temp']."',";
-$request .= "'".$_POST['safety_rack_temp']."')";
+$request .= "'".sprintf("%.01d",((((((intval($_POST['safety_ups_temp'])*5*100)/1024)-32)*140)/252)*10)/10)."',";
+$request .= "'".sprintf("%.01d",((((((intval($_POST['safety_rack_temp'])*5*100)/1024)-32)*140)/252)*10)/10)."')";
 
 // Send the request
 mysql_query($request, $link) or die("Insertion failed".mysql_error());

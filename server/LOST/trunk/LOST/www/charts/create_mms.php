@@ -20,10 +20,10 @@ $requete = "CREATE TABLE `mms` (";
 $requete .= "`DATE` DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,";
 for($i=0; $i<10; $i++)
 {
-  $requete .= "`room".sprintf('%02d',$i)."_temp_value` INT( 8 ) NOT NULL,";
+  $requete .= "`room".sprintf('%02d',$i)."_temp_value` DECIMAL(4,1) NOT NULL,";
 }
-$requete .= "`safety_ups_temp` INT( 8 ) NOT NULL,";
-$requete .= "`safety_rack_temp` INT( 8 ) NOT NULL,";
+$requete .= "`safety_ups_temp` DECIMAL(4,1) NOT NULL,";
+$requete .= "`safety_rack_temp` DECIMAL(4,1) NOT NULL,";
 $requete .= "PRIMARY KEY (`DATE`));";
 
 // Send the request
