@@ -65,7 +65,7 @@
     
       var annotatedtimeline = new google.visualization.AnnotatedTimeLine(
           document.getElementById('visualization'));
-      annotatedtimeline.draw(data, {'displayAnnotations': true});
+      annotatedtimeline.draw(data, {'dateFormat': 'HH:mm MMMM dd, yyyy'}, {'displayAnnotations': true});
     }
     
     google.setOnLoadCallback(drawVisualization);
