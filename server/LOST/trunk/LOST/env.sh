@@ -1,4 +1,0 @@
-export DEVBASE_DRIVE=/media/D
-export DEVBASE=$DEVBASE_DRIVE/Electronique/08_Lost/SERVEUR/V2
-export COMPILER_VERSION=WinAVR_20100110
-export OS_VERSION=Ethernut_4.8.9
