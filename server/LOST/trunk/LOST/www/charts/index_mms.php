@@ -3,6 +3,10 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <title>Temperature des Chambres</title>
+<?php
+// http://www.highcharts.com/stock/demo/
+// http://dygraphs.com/tests/range-selector.html
+?>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
   <script type="text/javascript">
     google.load('visualization', '1', {packages: ['annotatedtimeline']});
@@ -32,7 +36,7 @@
   $link = mysql_connect(SERVEUR,NOM,PASSE);
 
   if(!$link) {echo "Impossible de se connecter au serveur".mysql_error();exit;}
-  //--Connexion à la base
+  //--Connexion ï¿½ la base
   mysql_select_db(BASE,$link);
 
   $requete= "SELECT * FROM mms WHERE `DATE` BETWEEN '2012-01-01 00:00:00' AND '2012-12-31 23:59:59'";
