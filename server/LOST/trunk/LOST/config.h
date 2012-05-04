@@ -13,5 +13,11 @@
 #define LOST_EMAIL "email_bt.php?msg="
 #define LOST_INSERT "LOST/charts/insert_bt.php"
 #endif
+#ifdef LOST_CONFIG_lb
+#define LOST_GSM1 "0689350159"
+#define LOST_GSM2 "0689350159"
+#define LOST_EMAIL "email_lb.php?msg="
+#define LOST_INSERT "LOST/charts/insert_lb.php"
+#endif
 
 #endif
