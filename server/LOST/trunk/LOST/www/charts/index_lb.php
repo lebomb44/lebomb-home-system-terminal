@@ -35,7 +35,7 @@
   //--Connexion à la base
   mysql_select_db(BASE,$link);
 
-  $requete= "SELECT * FROM lb WHERE `DATE` BETWEEN '2012-01-01 00:00:00' AND '2012-12-31 23:59:59'";
+  $requete= "SELECT * FROM lb WHERE `DATE` BETWEEN '2012-01-01 00:00:00' AND '2012-12-31 23:59:59' ORDER BY DATE";
   $result=mysql_query($requete, $link) or die("Echec de lecture".mysql_error());
 
   $first = 1;
