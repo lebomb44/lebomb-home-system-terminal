@@ -56,7 +56,7 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   {
     ret = TwMasterError();
     /* Restart the I2C core component */
-    TWCR = ~(1<<TWIE); NutSleep(10); TWCR = (1<<TWIE);
+    TWCR = TWCR & ~(1<<TWIE); NutSleep(10); TWCR = TWCR | (1<<TWIE);
     /* Free the hardware interface */
     NutEventPost(&i2c_mutex);
     if(ret == 0) { return 8; } else { return ret; }
@@ -103,7 +103,7 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
     {
       ret = TwMasterError();
       /* Restart the I2C core component */
-      TWCR = ~(1<<TWIE); NutSleep(10); TWCR = (1<<TWIE);
+      TWCR = TWCR & ~(1<<TWIE); NutSleep(10); TWCR = TWCR | (1<<TWIE);
     }
     /* Free the hardware interface */
     NutEventPost(&i2c_mutex);
