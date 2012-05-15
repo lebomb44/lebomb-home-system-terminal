@@ -277,6 +277,7 @@ THREAD(RoomD, arg)
     for(i=0; i<ROOM_MAX; i++)
     {
       room_error[i] = i2c_get(ROOM_SLA+i, 0, ROOM_REG_MAX, &room_list[i][0]);
+      NutSleep(1);
     }
     NutSleep(10000);
   }

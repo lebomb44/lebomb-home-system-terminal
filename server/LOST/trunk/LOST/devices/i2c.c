@@ -31,13 +31,28 @@ uint8_t i2c_init(void)
   val = 50000;
   TwIOCtl(TWI_SETSPEED, &val);
   /* Authorize the use of the hardware interface */
-  NutEventPost(&i2c_mutex);
+  NutEventPostAsync(&i2c_mutex);
 
   return 0;
 }
 
+void i2c_reset(void)
+{
+  /* Clear the interrupt */
+  TWCR = (1<<TWINT) | (1<<TWEN);
+  /* Generate a STOP */
+  TWCR = (1<<TWSTO) | (1<<TWEN);
+  /* Stop the I2C core component */
+  TWCR = 0;
+  /* Wait a little bit */
+  NutSleep(1);
+  /* Start the I2C core component */
+  TWCR = (1<<TWEA) | (1<<TWEN) | (1<<TWIE);
+}
+
 uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
 {
+  int nb_rec = 0;
   int ret = 0;
 
   /* Check the pointer on data area */
@@ -47,26 +62,20 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   ret = NutEventWait(&i2c_mutex, 100);
   if(ret != 0) { return 7; }
 
-  /* Send a STOP on I2C in order to initialize the transmission */
-  //outb(TWCR, _BV(TWINT));
-  //outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
-
   /* Do the exchange and check the returned number of data */
-  if(TwMasterTransact(sla, &addr, (uint16_t) 1, data, (uint16_t) nb, (uint32_t) 500) != ((int) nb))
-  {
-    ret = TwMasterError();
-    /* Restart the I2C core component */
-    TWCR = TWCR & ~(1<<TWEN); NutSleep(10); TWCR = TWCR | (1<<TWEN);
-    /* Free the hardware interface */
-    NutEventPost(&i2c_mutex);
-    if(ret == 0) { return 8; } else { return ret; }
-  }
-
-  /* Verify that there was no error during the transmission */
+  nb_rec = TwMasterTransact(sla, &addr, (uint16_t) 1, data, (uint16_t) nb, (uint32_t) 500);
+  /* Check the error occurred */
   ret = TwMasterError();
+  /* If an error is detected */
+  if((nb_rec != nb) || (ret != 0))
+  {
+    /* Reset the I2C hardware interface */
+    i2c_reset();
+    /* If no error on transmission, set the returned value to indicate that the error occurred on the number of data */
+    if(ret == 0) { ret = 8; }
+  }
   /* Free the hardware interface */
-  NutEventPost(&i2c_mutex);
-  NutSleep(1);
+  NutEventPostAsync(&i2c_mutex);
 
   return ret;
 }
@@ -75,14 +84,15 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
 {
   uint16_t i = 0;
   uint8_t* buff=NULL;
+  int nb_rec = 0;
   int ret = 0;
 
   /* Check the pointer on the data area */
-  if(data == NULL) { return 8; }
+  if(data == NULL) { return 9; }
   /* Allocate a new area in order to build the frame */
   buff = malloc(nb+1);
   /* Check the allocation */
-  if(buff == NULL) { return 9; }
+  if(buff == NULL) { return 10; }
   /* Copy the data to the new area */
   if(nb > 0) { for(i=0; i<nb; i++) { buff[i+1] = data[i]; } }
   /* But the first data is the destination address */
@@ -94,19 +104,27 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   {
     /* Wait for the hardware interface to be free */
     ret = NutEventWait(&i2c_mutex, 100);
-    if(ret != 0) { continue; }
-    /* Send a STOP on I2C in order to initialize the transmission */
-    outb(TWCR, _BV(TWINT));
-    outb(TWCR, _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWSTO));
-    ret += TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 100);
-    if(i==2)
+    if(ret != 0) { NutSleep(100); continue; }
+
+    /* Execute the transmission */
+    nb_rec = TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 100);
+    /* Check the error occurred */
+    ret = TwMasterError();
+    /* If an error is detected */
+    if((nb_rec != 0) || (ret != 0))
     {
-      ret = TwMasterError();
-      /* Restart the I2C core component */
-      TWCR = TWCR & ~(1<<TWEN); NutSleep(10); TWCR = TWCR | (1<<TWEN);
+      /* Reset the I2C hardware interface */
+      i2c_reset();
+      /* If no error on transmission, set the returned value to indicate that the error occurred on the number of data */
+      if(ret == 0) { ret = 11; }
     }
     /* Free the hardware interface */
-    NutEventPost(&i2c_mutex);
+    NutEventPostAsync(&i2c_mutex);
+    if((nb_rec == 0) && (ret == 0))
+    {
+      /* No error, so break the loop */
+      break;
+    }
     NutSleep(5);
   }
   /* Before to exit, free the allocated area */
