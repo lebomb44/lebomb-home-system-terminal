@@ -19,6 +19,8 @@ u08 elec_relay[ELEC_NB]   = NODE_ROOM_CONFIG_ELEC_RELAY;
 
 void elec_set(u08 elec, u08 pos)
 {
+  if(elec >= ELEC_NB) { return; }
+
   if(pos==ELEC_ON)
   {
     if(relay_set(elec_relay[elec], RELAY_ON)!=RELAY_OK) { return; }
