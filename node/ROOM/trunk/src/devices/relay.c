@@ -38,7 +38,11 @@ u08 relay_get(u08 ch)
     if(bit_is_set((*relay_st_pin[ch]), relay_st_bit[ch])) { return RELAY_OFF; }
     else { return RELAY_ON; }
   }
-  else { return RELAY_UNKNOWN; }
+  else
+  {
+    if(bit_is_set((*relay_cmd_port[ch]), relay_cmd_bit[ch])) { return RELAY_ON; }
+    else { return RELAY_OFF; }
+  }
 }
 
 u08 relay_set(u08 ch, u08 val)
@@ -59,7 +63,7 @@ u08 relay_set(u08 ch, u08 val)
     }
     i = 255;
     j = 0;
-    while((i>0) && (relay_get(ch)!=val) && (relay_get(ch)!=RELAY_UNKNOWN)) { for(j=0;j<100;j++) {nop();} i--; }
+    while((i>0) && (relay_get(ch)!=val)) { for(j=0;j<100;j++) {nop();} i--; }
     if(i==0) { return RELAY_ERROR; }
   }
 

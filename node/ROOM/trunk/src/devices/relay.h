@@ -5,7 +5,6 @@
 
 #define RELAY_OFF 0
 #define RELAY_ON 1
-#define RELAY_UNKNOWN 2
 
 #define RELAY_OK 0
 #define RELAY_ERROR 1
