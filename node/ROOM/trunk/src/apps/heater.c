@@ -19,6 +19,8 @@ u08 heater_relay[HEATER_NB]   = NODE_ROOM_CONFIG_HEATER_RELAY;
 
 void heater_set(u08 heater, u08 pos)
 {
+  if(heater >= HEATER_NB) { return; }
+
   if(pos==HEATER_ON)
   {
     if(relay_set(heater_relay[heater], RELAY_ON)!=RELAY_OK) { return; }
