@@ -23,6 +23,8 @@ u08 shutter_relay_down[SHUTTER_NB] = NODE_ROOM_CONFIG_SHUTTER_RELAY_DOWN;
 
 void shutter_set(u08 shutter, u08 pos)
 {
+  if(shutter >= SHUTTER_NB) { return; }
+
   if((relay_get(shutter_relay_up[shutter])==RELAY_ON) && (relay_get(shutter_relay_down[shutter])==RELAY_ON))
   {
     relay_set(shutter_relay_down[shutter], RELAY_OFF);
