@@ -7,6 +7,7 @@
 #include "light.h"
 
 #define LIGHT_NB 3
+#define LIGHT_PUSH_NB 3
 
 #define LIGHT_ON  1
 #define LIGHT_OFF 0
@@ -56,13 +57,18 @@ void lights_update(void)
   for(i=0; i<LIGHT_NB; i++)
   {
     but_state_new = button_get(light_but[i]);
-    if((light_but_state_old[i] == LIGHT_ON) && (but_state_new == LIGHT_OFF))
+    if(i < LIGHT_PUSH_NB)
     {
-      if(light_get(i) == LIGHT_OFF) { light_set(i, LIGHT_ON ); } else { light_set(i, LIGHT_OFF); }
+      if((light_but_state_old[i] == LIGHT_ON) && (but_state_new == LIGHT_OFF))
+      {
+        if(light_get(i) == LIGHT_OFF) { light_set(i, LIGHT_ON ); } else { light_set(i, LIGHT_OFF); }
+      }
+      light_but_state_old[i] = but_state_new;
     }
-    light_but_state_old[i] = but_state_new;
-
-// if(button_get(light_but[i]) == BUTTON_ON) { but_cmd_new = LIGHT_ON; } else { but_cmd_new = LIGHT_OFF; }
+    else
+    {
+      if(but_state_new == BUTTON_ON) { but_cmd_new = LIGHT_ON; } else { but_cmd_new = LIGHT_OFF; }
+    }
 
     if(node[NODE_REG_LIGHT+i] != light_node_cmd_old[i])
     {
