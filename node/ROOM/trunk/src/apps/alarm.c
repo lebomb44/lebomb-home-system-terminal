@@ -82,25 +82,30 @@ void alarm_cycle(void)
 
 u08 alarm_control_shutters(void)
 {
-  return bit_is_set(node[NODE_REG_PERI_CONTROL], ALARM_SHUTTERS);
+  if(node[NODE_REG_PERI_CONTROL] > 0) { return 1; }
+  else { return 0; }
 }
 
 u08 alarm_status_shutters(void)
 {
-  return bit_is_set(node[NODE_REG_PERI_STATUS], ALARM_SHUTTERS);
+  if(node[NODE_REG_PERI_STATUS] > 0) { return 1; }
+  else { return 0; }
 }
 
 u08 alarm_control_lights(void)
 {
-  return bit_is_set(node[NODE_REG_VOL_CONTROL], ALARM_MOVE1);
+  if(node[NODE_REG_VOL_CONTROL] > 0) { return 1; }
+  else { return 0; }
 }
 
 u08 alarm_control_heaters(void)
 {
-  return bit_is_set(node[NODE_REG_VOL_CONTROL], ALARM_MOVE1);
+  if(node[NODE_REG_VOL_CONTROL] > 0) { return 1; }
+  else { return 0; }
 }
 
 u08 alarm_control_elecs(void)
 {
-  return bit_is_set(node[NODE_REG_VOL_CONTROL], ALARM_MOVE1);
+  if(node[NODE_REG_VOL_CONTROL] > 0) { return 1; }
+  else { return 0; }
 }
