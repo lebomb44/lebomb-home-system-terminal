@@ -109,7 +109,7 @@ uint8_t sql_send_once(void)
   return 1;
 }
 
-THREAD(XMLPost, arg)
+THREAD(SQLPostD, arg)
 {
   uint8_t i = 0;
 
@@ -172,7 +172,7 @@ int main(void)
   NutRegisterCgi("get.xml", xml_get_form);
 
   /* Start the push thread */
-  NutThreadCreate("XMLPostD" , XMLPost , 0, 512);
+  NutThreadCreate("SQLPostD" , SQLPostD , 0, 512);
 
   printf("Starting LOST\n");
   http_email_send("Starting_LOST");
