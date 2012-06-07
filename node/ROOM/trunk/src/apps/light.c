@@ -74,8 +74,13 @@ void light_cycle(void)
           node[NODE_REG_LIGHT+i] = but_state_new;
         }
       }
-      light_set(i, node[NODE_REG_LIGHT+i]);
     }
+    else
+    {
+      node[NODE_REG_LIGHT+i] = LIGHT_OFF;
+    }
+    light_set(i, node[NODE_REG_LIGHT+i]);
+
     light_but_state_old[i] = but_state_new;
   }
 }
