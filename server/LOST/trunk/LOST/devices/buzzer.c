@@ -16,7 +16,7 @@ uint8_t buzzer_init(void)
 
 void buzzer_set(void)
 {
-  GpioPinSetHigh(BUZZER_PORT, BUZZER_BIT);
+  /* FIXME GpioPinSetHigh(BUZZER_PORT, BUZZER_BIT); */
 }
 
 uint8_t buzzer_get(void)
