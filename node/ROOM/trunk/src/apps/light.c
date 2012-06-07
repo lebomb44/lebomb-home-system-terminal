@@ -13,8 +13,6 @@
 #define LIGHT_OFF 0
 
 u08 light_but_state_old[LIGHT_NB] = { LIGHT_OFF, LIGHT_OFF, LIGHT_OFF };
-u08 light_but_cmd_old[LIGHT_NB]   = { LIGHT_OFF, LIGHT_OFF, LIGHT_OFF };
-u08 light_node_cmd_old[LIGHT_NB]  = { LIGHT_OFF, LIGHT_OFF, LIGHT_OFF };
 
 u08 light_but[LIGHT_NB]     = NODE_ROOM_CONFIG_LIGHT_BUT;
 u08 light_relay[LIGHT_NB]   = NODE_ROOM_CONFIG_LIGHT_RELAY;
@@ -48,65 +46,37 @@ void light_set_all(u08 pos)
   }
 }
 
-void lights_update(void)
-{
-  u08 but_state_new = LIGHT_OFF;
-  u08 but_cmd_new   = LIGHT_OFF;
-  u08 i = 0;
-
-  for(i=0; i<LIGHT_NB; i++)
-  {
-    but_state_new = button_get(light_but[i]);
-    if(i < LIGHT_PUSH_NB)
-    {
-      if((light_but_state_old[i] == LIGHT_ON) && (but_state_new == LIGHT_OFF))
-      {
-        if(light_get(i) == LIGHT_OFF) { light_set(i, LIGHT_ON ); } else { light_set(i, LIGHT_OFF); }
-      }
-      light_but_state_old[i] = but_state_new;
-    }
-    else
-    {
-      if(but_state_new == BUTTON_ON) { but_cmd_new = LIGHT_ON; } else { but_cmd_new = LIGHT_OFF; }
-    }
-
-    if(node[NODE_REG_LIGHT+i] != light_node_cmd_old[i])
-    {
-      light_node_cmd_old[i] = node[NODE_REG_LIGHT+i];
-      light_set(i, light_node_cmd_old[i]);
-    }
-    else
-    {
-      if(but_cmd_new != light_but_cmd_old[i])
-      {
-        light_but_cmd_old[i] = but_cmd_new;
-        light_set(i, light_but_cmd_old[i]);
-      }
-    }
-  }
-}
-
 void light_init(void)
 {
 }
 
 void light_cycle(void)
 {
+  u08 but_state_new = LIGHT_OFF;
   u08 i = 0;
-  if(!alarm_control_lights())
+
+  for(i=0; i<LIGHT_NB; i++)
   {
-    lights_update();
-  }
-  else
-  {
-    /* Only consider the remote control */
-    for(i=0; i<LIGHT_NB; i++)
+    but_state_new = button_get(light_but[i]);
+    if(!alarm_control_lights())
     {
-      if(node[NODE_REG_LIGHT+i] != light_node_cmd_old[i])
+      if(i < LIGHT_PUSH_NB)
       {
-        light_node_cmd_old[i] = node[NODE_REG_LIGHT+i];
-        light_set(i, light_node_cmd_old[i]);
+        if((light_but_state_old[i] == LIGHT_ON) && (but_state_new == LIGHT_OFF))
+        {
+          if(light_get(i) == LIGHT_OFF) { node[NODE_REG_LIGHT+i] = LIGHT_ON; } else { node[NODE_REG_LIGHT+i] = LIGHT_OFF; }
+        }
+      }
+      else
+      {
+        if(but_state_new != light_but_state_old[i])
+        {
+          node[NODE_REG_LIGHT+i] = but_state_new;
+        }
       }
     }
+    light_but_state_old[i] = but_state_new;
+
+    light_set(i, node[NODE_REG_LIGHT+i]);
   }
 }
