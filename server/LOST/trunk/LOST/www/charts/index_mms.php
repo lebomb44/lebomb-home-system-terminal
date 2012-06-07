@@ -10,6 +10,10 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
   <script type="text/javascript">
+var current_year = 2012;
+var current_month = 4;
+var current_day = 30;
+var current_hour = 0;
 var chart; // globally available
 $(document).ready(function() {
       chart = new Highcharts.StockChart({
@@ -78,9 +82,15 @@ $(document).ready(function() {
 	echo "chart.redraw();\n";
 ?>
    });
+function zoomDay()
+{
+  chart.xAxis[0].setExtremes(Date.UTC(current_year, current_month, current_day-1), Date.UTC(current_year, current_month, current_day));
+  current_day = current_day-1;
+}
    </script>
 </head>
 <body style="font-family: Arial;border: 0 none;">
 <div id="container" style="width: 100%; height: 400px"></div>
+<input type="button" onClick="zoomDay()" value="May">
 </body>
 </html>
