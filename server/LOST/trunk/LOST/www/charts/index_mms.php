@@ -10,10 +10,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
   <script type="text/javascript">
-var current_year = 2012;
-var current_month = 4;
-var current_day = 30;
-var current_hour = 0;
+var myDate = new Date();
+var current_date = Date.UTC(myDate.getUTCFullYear(), myDate.getUTCMonth(), myDate.getUTCDate(), myDate.getHours());
 var chart; // globally available
 $(document).ready(function() {
       chart = new Highcharts.StockChart({
@@ -82,15 +80,35 @@ $(document).ready(function() {
 	echo "chart.redraw();\n";
 ?>
    });
-function zoomDay()
+function previousDay()
 {
-  chart.xAxis[0].setExtremes(Date.UTC(current_year, current_month, current_day-1), Date.UTC(current_year, current_month, current_day));
-  current_day = current_day-1;
+  myDate.setUTCDate(-1);
+  
+  var current_date = Date.UTC(myDate.getUTCFullYear(), myDate.getUTCMonth(), myDate.getUTCDate(), 0) - 1000*3600*24;
+  chart.xAxis[0].setExtremes(current_date, current_date + 1000*3600*24);
+}
+function nextDay()
+{
+  current_date = current_date + 1000*3600*24;
+  chart.xAxis[0].setExtremes(current_date, current_date + 1000*3600*24);
 }
    </script>
 </head>
 <body style="font-family: Arial;border: 0 none;">
 <div id="container" style="width: 100%; height: 400px"></div>
-<input type="button" onClick="zoomDay()" value="May">
+<table width="100%">
+ <tr>
+  <td align="left"><input type="button" onClick="previousMonth()" value="Mois Precedent"></td>
+  <td align="right"><input type="button" onClick="nextMonth()" value="Mois Suivant"></td>
+ </tr>
+ <tr>
+  <td align="left"><input type="button" onClick="previousDay()" value="Jour Precedent"></td>
+  <td align="right"><input type="button" onClick="nextDay()" value="Jour Suivant"></td>
+ </tr>
+ <tr>
+  <td align="left"><input type="button" onClick="previousHour()" value="Heure Precedente"></td>
+  <td align="right"><input type="button" onClick="nextHour()" value="Heure Suivante"></td>
+ </tr>
+</table>
 </body>
 </html>
