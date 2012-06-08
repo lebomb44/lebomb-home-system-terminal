@@ -10,6 +10,19 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
   <script type="text/javascript">
+var myDate = new Date();
+<?php
+if(isset($_GET["year"]))
+{
+  echo "myDate.setUTCFullYear(".$_GET["year"].");";
+  echo "myDate.setUTCMonth(0);";
+  echo "myDate.setUTCDate(1);";
+  echo "myDate.setUTCHours(0);";
+}
+?>
+myDate.setUTCMinutes(0);
+myDate.setUTCSeconds(0);
+myDate.setUTCMilliseconds(0);
 var chart; // globally available
 $(document).ready(function() {
       chart = new Highcharts.StockChart({
@@ -48,10 +61,11 @@ $(document).ready(function() {
   //--Connexion ? la base
   mysql_select_db(BASE,$link);
 
-  $requete= "SELECT * FROM lb WHERE `DATE` BETWEEN '2012-01-01 00:00:00' AND '2012-12-31 23:59:59' ORDER BY DATE";
+  if(isset($_GET["year"])) { $year = $_GET["year"]; } else { $year = date("Y"); }
+  $requete  = "SELECT * FROM lb WHERE `DATE` BETWEEN '".$year."-01-01 00:00:00' AND '".$year."-12-31 23:59:59' ORDER BY DATE";
   $result=mysql_query($requete, $link) or die("Echec de lecture".mysql_error());
 
-  $first = 1;
+  //$first = 1;
   while($r=mysql_fetch_array($result, MYSQL_ASSOC))
     //{echo "DATE: $r[DATE] TEMP0: $r[TEMP0] TEMP1: $r[TEMP1] TEMP2: $r[TEMP2] TEMP3: $r[TEMP3]<br>";}
     {
@@ -78,9 +92,80 @@ $(document).ready(function() {
 	echo "chart.redraw();\n";
 ?>
    });
+function chart_setInterval(date, interval)
+{
+  var current_date = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours());
+  chart.xAxis[0].setExtremes(current_date, current_date + interval);
+}
+function previousYear()
+{
+  window.location = "<?php if(isset($_GET["year"])) { $year = $_GET["year"]; } else { $year = date("Y"); } echo "?year=".(intval($year)-1); ?>";
+}
+function nextYear()
+{
+  window.location = "<?php if(isset($_GET["year"])) { $year = $_GET["year"]; } else { $year = date("Y"); } echo "?year=".(intval($year)+1); ?>";
+}
+function previousMonth()
+{
+  myDate.setUTCMonth(myDate.getUTCMonth()-1);
+  myDate.setUTCDate(1);
+
+  chart_setInterval(myDate, 1000*3600*24*31);
+}
+function nextMonth()
+{
+  myDate.setUTCMonth(myDate.getUTCMonth()+1);
+  myDate.setUTCDate(1);
+
+  chart_setInterval(myDate, 1000*3600*24*31);
+}
+function previousDay()
+{
+  myDate.setUTCDate(myDate.getUTCDate()-1);
+  myDate.setUTCHours(0);
+
+  chart_setInterval(myDate, 1000*3600*24);
+}
+function nextDay()
+{
+  myDate.setUTCDate(myDate.getUTCDate()+1);
+  myDate.setUTCHours(0);
+
+  chart_setInterval(myDate, 1000*3600*24);
+}
+function previousHour()
+{
+  myDate.setUTCHours(myDate.getUTCHours()-1);
+
+  chart_setInterval(myDate, 1000*3600);
+}
+function nextHour()
+{
+  myDate.setUTCHours(myDate.getUTCHours()+1);
+
+  chart_setInterval(myDate, 1000*3600);
+}
    </script>
 </head>
 <body style="font-family: Arial;border: 0 none;">
 <div id="container" style="width: 100%; height: 400px"></div>
+<table width="100%">
+ <tr>
+  <td align="left"><input type="button" onClick="previousYear()" value="Annee Precedente"></td>
+  <td align="right"><input type="button" onClick="nextYear()" value="Annee Suivante"></td>
+ </tr>
+ <tr>
+  <td align="left"><input type="button" onClick="previousMonth()" value="Mois Precedent"></td>
+  <td align="right"><input type="button" onClick="nextMonth()" value="Mois Suivant"></td>
+ </tr>
+ <tr>
+  <td align="left"><input type="button" onClick="previousDay()" value="Jour Precedent"></td>
+  <td align="right"><input type="button" onClick="nextDay()" value="Jour Suivant"></td>
+ </tr>
+ <tr>
+  <td align="left"><input type="button" onClick="previousHour()" value="Heure Precedente"></td>
+  <td align="right"><input type="button" onClick="nextHour()" value="Heure Suivante"></td>
+ </tr>
+</table>
 </body>
 </html>
