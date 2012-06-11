@@ -13,6 +13,8 @@ type com\lost_safety_html.js >> mms.js
 type mms\lost_rooms_html.js >> mms.js
 type mms\lost_ev_html.js >> mms.js
 
+type mms.js > lb.js
+
 type com\lost.js > bt.js
 type com\lost_mon.js >> bt.js
 type com\lost_alarm.js >> bt.js
