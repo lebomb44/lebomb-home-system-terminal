@@ -60,13 +60,15 @@ document.write("\
         <fieldset>\
             <legend>Horloges</legend>\
             <ul>\
-                <li>Depart : Heure / Minute\
+                <li><input type=\"checkbox\" id=\"Event"+String(event)+"_StStart\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_ev_date_status_update("+String(event)+");\"><label for=\"Event"+String(event)+"_StStart\">Depart : Heure / Minute</label></li>\
+                <li>\
                 <SELECT id=\"Event"+String(event)+"_HStart\"><script language=\"Javascript\">printSelectOption(\"Event"+String(event)+"_HStart\",24);</script></SELECT>\
                 <SELECT id=\"Event"+String(event)+"_MStart\"><script language=\"Javascript\">printSelectOption(\"Event"+String(event)+"_MStart\",60);</script></SELECT>\
                 </li>\
             </ul>\
             <ul>\
-                <li>Fin : Heure / Minute\
+                <li><input type=\"checkbox\" id=\"Event"+String(event)+"_StEnd\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_ev_date_status_update("+String(event)+");\"><label for=\"Event"+String(event)+"_StEnd\">Fin : Heure / Minute</label></li>\
+                <li>\
                 <SELECT id=\"Event"+String(event)+"_HEnd\"><script language=\"Javascript\">printSelectOption(\"Event"+String(event)+"_HEnd\",24);</script></SELECT>\
                 <SELECT id=\"Event"+String(event)+"_MEnd\"><script language=\"Javascript\">printSelectOption(\"Event"+String(event)+"_MEnd\",60);</script></SELECT>\
                 </li>\

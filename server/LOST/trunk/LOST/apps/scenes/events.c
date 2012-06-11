@@ -17,8 +17,10 @@
 typedef struct _Event_T
 {
   EVENT_STATUS_T status;
+  EVENT_STATUS_T status_start;
   uint8_t hour_start;
   uint8_t minute_start;
+  EVENT_STATUS_T status_end;
   uint8_t hour_end;
   uint8_t minute_end;
   uint8_t rec;
@@ -35,8 +37,10 @@ uint8_t events_init(void)
   for(i=0; i<EVENT_MAX; i++)
   {
     event_list[i].status       = EVENT_STATUS_OFF;
+    event_list[i].status_start = EVENT_STATUS_ON;
     event_list[i].hour_start   = 0;
     event_list[i].minute_start = 0;
+    event_list[i].status_end   = EVENT_STATUS_ON;
     event_list[i].hour_end     = 0;
     event_list[i].minute_end   = 0;
     event_list[i].rec          = 0;
@@ -63,8 +67,8 @@ void event_action(EVENT_T event, EVENT_STATUS_T status)
 {
   if(event < EVENT_MAX)
   {
-    if(status == EVENT_STATUS_ON ) { if(event_list[event].fcnt_start != NULL) { (*(event_list[event].fcnt_start))(); } }
-    if(status == EVENT_STATUS_OFF) { if(event_list[event].fcnt_end   != NULL) { (*(event_list[event].fcnt_end))()  ; } }
+    if((status == EVENT_STATUS_ON ) && (status_start == EVENT_STATUS_ON)) { if(event_list[event].fcnt_start != NULL) { (*(event_list[event].fcnt_start))(); } }
+    if((status == EVENT_STATUS_OFF) && (status_end   == EVENT_STATUS_ON)) { if(event_list[event].fcnt_end   != NULL) { (*(event_list[event].fcnt_end))()  ; } }
   }
 }
 
@@ -161,6 +165,12 @@ int events_form(FILE * stream, REQUEST * req)
           if(arg_s[0] == '?') { fprintf(stream, "%d", event_list[event].status); }
           else { event_list[event].status = strtoul(arg_s, NULL, 10); }
         }
+        arg_s = NutHttpGetParameter(req, "ss");
+        if(arg_s)
+        {
+          if(arg_s[0] == '?') { fprintf(stream, "%d", event_list[event].status_start); }
+          else { event_list[event].status_start = strtoul(arg_s, NULL, 10); }
+        }
         arg_s = NutHttpGetParameter(req, "hs");
         if(arg_s)
         {
@@ -172,6 +182,12 @@ int events_form(FILE * stream, REQUEST * req)
         {
           if(arg_s[0] == '?') { fprintf(stream, "%d", event_list[event].minute_start); }
           else { event_list[event].minute_start = strtoul(arg_s, NULL, 10); }
+        }
+        arg_s = NutHttpGetParameter(req, "se");
+        if(arg_s)
+        {
+          if(arg_s[0] == '?') { fprintf(stream, "%d", event_list[event].status_end); }
+          else { event_list[event].status_end = strtoul(arg_s, NULL, 10); }
         }
         arg_s = NutHttpGetParameter(req, "he");
         if(arg_s)
@@ -225,10 +241,12 @@ int events_xml_get(FILE * stream)
     fprintf_XML_elt_int("rec5", (event_list[i].rec & 0x20)>>5, stream);
     fprintf_XML_elt_int("rec6", (event_list[i].rec & 0x40)>>6, stream);
     fprintf_XML_elt_int("rec0", (event_list[i].rec & 0x01)>>0, stream);
-    fprintf_XML_elt_int("HStart", event_list[i].hour_start, stream);
-    fprintf_XML_elt_int("MStart", event_list[i].minute_start, stream);
-    fprintf_XML_elt_int("HEnd", event_list[i].hour_end, stream);
-    fprintf_XML_elt_int("MEnd", event_list[i].minute_end, stream);
+    fprintf_XML_elt_int("StStart", event_list[i].status_start, stream);
+    fprintf_XML_elt_int("HStart" , event_list[i].hour_start  , stream);
+    fprintf_XML_elt_int("MStart" , event_list[i].minute_start, stream);
+    fprintf_XML_elt_int("StEnd"  , event_list[i].status_end  , stream);
+    fprintf_XML_elt_int("HEnd"   , event_list[i].hour_end    , stream);
+    fprintf_XML_elt_int("MEnd"   , event_list[i].minute_end  , stream);
     fprintf_XML_elt_trailer(elt, stream);
   }
   return 0;

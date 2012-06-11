@@ -23,20 +23,28 @@ var url_ev="cgi/events.cgi?event=";
 function lost_ev_date_status_update(event)
 {
   var elt_St;
+  var elt_StStart;
   var elt_HStart;
   var elt_MStart;
+  var elt_StEnd;
   var elt_HEnd;
   var elt_MEnd;
   var status;
 
   elt_St = document.getElementById("Event"+String(event)+"_St");
-  if(elt_St)
+  elt_StStart = document.getElementById("Event"+String(event)+"_StStart");
+  elt_StEnd = document.getElementById("Event"+String(event)+"_StEnd");
+  if(elt_St && elt_StStart && elt_StEnd)
   {
     status = elt_St.checked;
+    elt_StStart.disabled = status;
+    elt_StEnd.disabled = status;
+    status = elt_St.checked || !(elt_StStart.checked);
     elt_HStart = document.getElementById("Event"+String(event)+"_HStart");
     if(elt_HStart) { elt_HStart.disabled = status; }
     elt_MStart = document.getElementById("Event"+String(event)+"_MStart")
     if(elt_MStart) { elt_MStart.disabled = status; }
+    status = elt_St.checked || !(elt_StEnd.checked);
     elt_HEnd = document.getElementById("Event"+String(event)+"_HEnd")
     if(elt_HEnd) { elt_HEnd.disabled = status; }
     elt_MEnd = document.getElementById("Event"+String(event)+"_MEnd")
@@ -57,6 +65,9 @@ function lost_ev_xml_update(xml, event)
   lost_ck_update(xml, "Event"+String(event), "rec5");
   lost_ck_update(xml, "Event"+String(event), "rec6");
   lost_ck_update(xml, "Event"+String(event), "rec0");
+
+  lost_ck_update(xml, "Event"+String(event), "StStart");
+  lost_ck_update(xml, "Event"+String(event), "StEnd");
 
   elt = document.getElementById("Event"+String(event)+"_St");
   if(elt)
@@ -86,17 +97,21 @@ function lost_ev_rec_set(event, rec, value)
 
 function lost_ev_date_set(event)
 {
+  var elt_StStart;
   var elt_HStart;
   var elt_MStart;
+  var elt_StEnd;
   var elt_HEnd;
   var elt_MEnd;
+  elt_StStart = document.getElementById("Event"+String(event)+"_StStart");
   elt_HStart = document.getElementById("Event"+String(event)+"_HStart");
-  elt_MStart = document.getElementById("Event"+String(event)+"_MStart")
+  elt_MStart = document.getElementById("Event"+String(event)+"_MStart");
+  elt_StEnd = document.getElementById("Event"+String(event)+"_StEnd");
   elt_HEnd = document.getElementById("Event"+String(event)+"_HEnd");
   elt_MEnd = document.getElementById("Event"+String(event)+"_MEnd");
-  if(elt_HStart && elt_MStart && elt_HEnd && elt_MEnd)
+  if(elt_StStart && elt_HStart && elt_MStart && elt_StEnd && elt_HEnd && elt_MEnd)
   {
-    lost_set(url_ev+String(event)+"&hs="+String(Number(elt_HStart.value))+"&ms="+String(Number(elt_MStart.value))+"&he="+String(Number(elt_HEnd.value))+"&me="+String(Number(elt_MEnd.value)));
+    lost_set(url_ev+String(event)+"&ss="+String(Number(elt_StStart.checked))+"&hs="+String(Number(elt_HStart.value))+"&ms="+String(Number(elt_MStart.value))+"&se="+String(Number(elt_StEnd.checked))+"&he="+String(Number(elt_HEnd.value))+"&me="+String(Number(elt_MEnd.value)));
   }
 }
 
