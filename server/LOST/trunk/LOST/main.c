@@ -112,6 +112,8 @@ uint8_t sql_send_once(uint8_t start)
 
 void sql_send(uint8_t start)
 {
+  uint8_t i = 0;
+
   /* Retry if error */
   for(i=0; i<10; i++)
   {
@@ -124,8 +126,6 @@ void sql_send(uint8_t start)
 
 THREAD(SQLPostD, arg)
 {
-  uint8_t i = 0;
-
   arg = arg;
   NutThreadSetPriority(149);
 
