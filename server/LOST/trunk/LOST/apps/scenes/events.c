@@ -48,6 +48,14 @@ uint8_t events_init(void)
     event_list[i].fcnt_end     = NULL;
   }
   events_proc_init();
+
+  /* Set the default configuration for the Ethernet power line */
+  /* Force the poweroff everyday in the night */
+  event_list[EVENT_POWER_1].status       = EVENT_STATUS_ON;
+  event_list[EVENT_POWER_1].status_start = EVENT_STATUS_OFF; event_list[EVENT_POWER_1].hour_start = 0; event_list[EVENT_POWER_1].minute_start = 0;
+  event_list[EVENT_POWER_1].status_end   = EVENT_STATUS_ON;  event_list[EVENT_POWER_1].hour_end   = 1; event_list[EVENT_POWER_1].minute_end   = 0;
+  event_list[EVENT_POWER_1].rec          = 0xFF;
+
   NutThreadCreate("EventsD", EventsD, 0, 512);
   NutRegisterCgi("events.cgi", events_form);
 
