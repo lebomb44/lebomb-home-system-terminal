@@ -52,9 +52,32 @@ uint8_t alarm_action_with_buzzer(char* msg)
   gsm_sms_send(gsm1, msg);
   gsm_sms_send(gsm2, msg);
   http_email_send(msg);
-  buzzer_set();
+  buzzer_start(5*60); /* 5 minutes */
 
   return 0;
+}
+
+void alarm_perimeter_set(uint8_t control)
+{
+  alarm_trig.perimeter = 0;
+  buzzer_stop();
+  alarm_control.perimeter = control;
+  rooms_perimeter_control_set(alarm_control.perimeter);
+}
+
+void alarm_volume_set(uint8_t control)
+{
+  alarm_trig.volume = 0;
+  buzzer_stop();
+  alarm_control.volume = control;
+  rooms_volume_control_set(alarm_control.volume);
+}
+
+void alarm_simulation_set(uint8_t control)
+{
+  alarm_trig.simulation = 0;
+  alarm_control.simulation = control;
+  rooms_simulation_control_set(alarm_control.simulation);
 }
 
 THREAD(AlarmD, arg)
@@ -87,19 +110,19 @@ int alarm_form(FILE * stream, REQUEST * req)
     if(arg_s)
     {
       if(arg_s[0] == '?') { fprintf(stream, "%d", alarm_control.perimeter); }
-      else { alarm_trig.perimeter = 0; alarm_control.perimeter = strtoul(arg_s, NULL, 10); rooms_perimeter_control_set(alarm_control.perimeter); }
+      else { alarm_perimeter_set(strtoul(arg_s, NULL, 10)); }
     }
     arg_s = NutHttpGetParameter(req, "volume_ctrl");
     if(arg_s)
     {
       if(arg_s[0] == '?') { fprintf(stream, "%d", alarm_control.volume); }
-      else { alarm_trig.volume = 0; alarm_control.volume = strtoul(arg_s, NULL, 10); rooms_volume_control_set(alarm_control.volume); }
+      else { alarm_volume_set(strtoul(arg_s, NULL, 10)); }
     }
     arg_s = NutHttpGetParameter(req, "simulation_ctrl");
     if(arg_s)
     {
       if(arg_s[0] == '?') { fprintf(stream, "%d", alarm_control.simulation); }
-      else { alarm_trig.simulation = 0; alarm_control.simulation = strtoul(arg_s, NULL, 10); rooms_simulation_control_set(alarm_control.simulation); }
+      else { alarm_simulation_set(strtoul(arg_s, NULL, 10)); }
     }
 
     fflush(stream);

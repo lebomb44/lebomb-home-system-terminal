@@ -128,7 +128,7 @@ uint8_t safety_action(char* msg)
 uint8_t safety_action_with_buzzer(char* msg)
 {
   safety_action(msg);
-  buzzer_set();
+  buzzer_start(1*60); /* 1 minute */
 
   return 0;
 }
@@ -165,6 +165,8 @@ THREAD(SafetyUpsRackD, arg)
     safety_status.rack_alarm = rack_alarm_status_get();
     if(safety_control.rack_temp ) { if((!(safety_trig.rack_temp )) && (safety_value.rack_temp>=safety_value.rack_temp_th)) { safety_action_with_buzzer("RACK-Temp" ); safety_trig.rack_temp  = 1; } }
     if(safety_control.rack_alarm) { if((!(safety_trig.rack_alarm)) && (safety_status.rack_alarm                         )) { safety_action_with_buzzer("RACK-Alarm"); safety_trig.rack_alarm = 1; } }
+
+    buzzer_update();
 
     NutSleep(1000);
   }
@@ -253,7 +255,7 @@ int safety_form(FILE * stream, REQUEST * req)
     if(arg_s)
     {  
       if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rooms_temp_max); }
-      else { safety_trig.rooms_temp_max = 0; safety_control.rooms_temp_max = strtoul(arg_s, NULL, 10); rooms_temp_max_control_set(safety_control.rooms_temp_max); }
+      else { safety_trig.rooms_temp_max = 0; buzzer_stop(); safety_control.rooms_temp_max = strtoul(arg_s, NULL, 10); rooms_temp_max_control_set(safety_control.rooms_temp_max); }
     }
     arg_s = NutHttpGetParameter(req, "rooms_temp_max_th");
     if(arg_s)
@@ -283,13 +285,13 @@ int safety_form(FILE * stream, REQUEST * req)
     if(arg_s)
     {
       if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rooms_smoke); }
-      else { safety_trig.rooms_smoke = 0; safety_control.rooms_smoke = strtoul(arg_s, NULL, 10); rooms_smoke_control_set(safety_control.rooms_smoke); }
+      else { safety_trig.rooms_smoke = 0; buzzer_stop(); safety_control.rooms_smoke = strtoul(arg_s, NULL, 10); rooms_smoke_control_set(safety_control.rooms_smoke); }
     }
     arg_s = NutHttpGetParameter(req, "ups_temp_ctrl");
     if(arg_s)
     {
       if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.ups_temp); }
-      else { safety_trig.ups_temp = 0; safety_control.ups_temp = strtoul(arg_s, NULL, 10); }
+      else { safety_trig.ups_temp = 0; buzzer_stop(); safety_control.ups_temp = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "ups_temp_th");
     if(arg_s)
@@ -307,7 +309,7 @@ int safety_form(FILE * stream, REQUEST * req)
     if(arg_s)
     {
       if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rack_temp); }
-      else { safety_trig.rack_temp = 0; safety_control.rack_temp = strtoul(arg_s, NULL, 10); }
+      else { safety_trig.rack_temp = 0; buzzer_stop(); safety_control.rack_temp = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "rack_temp_th");
     if(arg_s)
@@ -319,7 +321,7 @@ int safety_form(FILE * stream, REQUEST * req)
     if(arg_s)
     {
       if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rack_alarm); }
-      else { safety_trig.rack_alarm = 0; safety_control.rack_alarm = strtoul(arg_s, NULL, 10); }
+      else { safety_trig.rack_alarm = 0; buzzer_stop(); safety_control.rack_alarm = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "http_ctrl");
     if(arg_s)
@@ -353,14 +355,14 @@ int safety_xml_get(FILE * stream)
   fprintf_XML_elt_int("UPS_Temp"         , safety_value.ups_temp         , stream);
   fprintf_XML_elt_int("UPS_Temp_Th"      , safety_value.ups_temp_th      , stream);
   fprintf_XML_elt_int("UPS_Power"        , safety_status.ups_power       , stream);
-  fprintf_XML_elt_int("Power0"           , power_get(POWER_0)             , stream);
-  fprintf_XML_elt_int("Power1"           , power_get(POWER_1)             , stream);
-  fprintf_XML_elt_int("Power2"           , power_get(POWER_2)             , stream);
+  fprintf_XML_elt_int("Power0"           , power_get(POWER_0)            , stream);
+  fprintf_XML_elt_int("Power1"           , power_get(POWER_1)            , stream);
+  fprintf_XML_elt_int("Power2"           , power_get(POWER_2)            , stream);
   fprintf_XML_elt_int("RACK_Temp"        , safety_value.rack_temp        , stream);
   fprintf_XML_elt_int("RACK_Temp_Th"     , safety_value.rack_temp_th     , stream);
   fprintf_XML_elt_int("RACK_Alarm"       , safety_status.rack_alarm      , stream);
-  fprintf_XML_elt_int("Heater"           , power_get(POWER_3)             , stream);
-  fprintf_XML_elt_int("Buzzer"           , buzzer_get()                  , stream);
+  fprintf_XML_elt_int("Heater"           , power_get(POWER_3)            , stream);
+  fprintf_XML_elt_int("Buzzer"           , buzzer_state()                , stream);
   fprintf_XML_elt_int("HTTP"             , safety_status.http            , stream);
   fprintf_XML_elt_int("GSM"              , safety_status.gsm             , stream);
 
