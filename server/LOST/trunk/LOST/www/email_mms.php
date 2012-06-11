@@ -13,8 +13,10 @@
   $sujet = 'LOST Alert MM : '.$msg;
   $message = $sujet."\r\n".'Sent by '.$from_mail.' at '.date('H:i:s  d.m.Y')."\r\n-- LOST\r\n";
 
-  /* TODO set the email adresses */
+  /* Set the email adresses */
   $status_mail1 = mail("cambon.olivier@gmail.com", $sujet, $message, $header);
+  $status_mail1 = mail("maximedarde@gmail.com", $sujet, $message, $header);
+  $status_mail1 = mail("mariaucam@gmail.com", $sujet, $message, $header);
 
   if((status_mail1 == true) && (status_mail2 == true)) { print("LOST Email OK\r\n"); } else { print("LOST Email KO\r\n"); }
 ?>

@@ -2,7 +2,7 @@
 #define _LOST_CONFIG_H_
 
 #ifdef LOST_CONFIG_mms
-#define LOST_GSM1 "0689350159"
+#define LOST_GSM1 "0683585066"
 #define LOST_GSM2 "0689350159"
 #define LOST_EMAIL "email_mms.php?msg="
 #define LOST_INSERT "LOST/charts/insert_mms.php"
