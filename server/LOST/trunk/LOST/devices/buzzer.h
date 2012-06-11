@@ -4,8 +4,10 @@
 __BEGIN_DECLS
 
 extern uint8_t buzzer_init(void);
-extern void buzzer_set(void);
-extern uint8_t buzzer_get(void);
+extern void buzzer_start(uint16_t duration);
+extern void buzzer_stop(void);
+extern void buzzer_update(void);
+extern uint16_t buzzer_state(void);
 
 __END_DECLS
 

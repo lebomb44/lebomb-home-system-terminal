@@ -7,19 +7,38 @@
 #define BUZZER_PORT NUTGPIO_PORTE
 #define BUZZER_BIT 2
 
+uint16_t buzzer_time = 0;
+
 uint8_t buzzer_init(void)
 {
   GpioPinConfigSet(BUZZER_PORT, BUZZER_BIT, GPIO_CFG_OUTPUT);
+  buzzer_stop();
 
   return 0;
 }
 
-void buzzer_set(void)
+void buzzer_start(uint16_t duration)
 {
-  /* FIXME GpioPinSetHigh(BUZZER_PORT, BUZZER_BIT); */
+  if(buzzer_time == 0)
+  {
+    /* FIXME GpioPinSetHigh(BUZZER_PORT, BUZZER_BIT); */
+    buzzer_time = duration;
+  }
 }
 
-uint8_t buzzer_get(void)
+void buzzer_stop(void)
 {
-  return GpioPinGet(BUZZER_PORT, BUZZER_BIT);
+  buzzer_time = 0;
+  GpioPinSetLow(BUZZER_PORT, BUZZER_BIT);
+}
+
+void buzzer_update(void)
+{
+  if(buzzer_time > 0) { buzzer_time--; }
+  else { buzzer_stop(); }
+}
+
+uint16_t buzzer_state(void)
+{
+  return buzzer_time;
 }
