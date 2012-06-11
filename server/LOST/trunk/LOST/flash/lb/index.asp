@@ -3,5 +3,5 @@
 <script type="text/javascript" src="http://lebomb.free.fr/LOST/lost/head.js"></script>
 </head>
 <body><div id="WebApp"><div id="iHeader"><span id="waHeadTitle">LOST <%usr_time%></span><a href="#" id="waBackButton">Back</a><a href="#" id="waHomeButton">Home</a></div>
-<div id="iGroup"><script type="text/javascript" src="http://lebomb.free.fr/LOST/lost/mms.js"></script></div>
+<div id="iGroup"><script type="text/javascript" src="http://lebomb.free.fr/LOST/lost/lb.js"></script></div>
 </div></body></html>
