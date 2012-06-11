@@ -61,7 +61,7 @@ int xml_get_form(FILE * stream, REQUEST * req)
   return 0;
 }
 
-uint8_t sql_send_once(void)
+uint8_t sql_send_once(uint8_t start)
 {
   TCPSOCKET *sock = NULL;
   FILE *stream = NULL;
@@ -84,6 +84,7 @@ uint8_t sql_send_once(void)
     }
     fprintf(stream, "&safety_ups_temp=%05d", safety_ups_temp_value_get());
     fprintf(stream, "&safety_rack_temp=%05d", safety_rack_temp_value_get());
+    fprintf(stream, "&start=%d", start);
     fflush(stream);
     /* Catch the answer */
     buff = malloc(400);
@@ -109,6 +110,18 @@ uint8_t sql_send_once(void)
   return 1;
 }
 
+void sql_send(uint8_t start)
+{
+  /* Retry if error */
+  for(i=0; i<10; i++)
+  {
+    /* If OK break the retry loop */
+    if(sql_send_once(start) == 0) { break; }
+    /* Wait before retry */
+    NutSleep(10000);
+  }
+}
+
 THREAD(SQLPostD, arg)
 {
   uint8_t i = 0;
@@ -116,19 +129,15 @@ THREAD(SQLPostD, arg)
   arg = arg;
   NutThreadSetPriority(149);
 
-  /* Wait 5 minutes */
-  NutSleep(300000);
+  /* Wait 1 minute */
+  NutSleep(60000);
+  /* Insert datas with start flag */
+  sql_send(1);
 
   while(1)
   {
-    /* Retry if error */
-    for(i=0; i<10; i++)
-    {
-      /* If OK break the retry loop */
-      if(sql_send_once() == 0) { break; }
-      /* Wait before retry */
-      NutSleep(10000);
-    }
+    /* Insert datas without start flag */
+    sql_send(0);
     /* Wait 15 minutes */
     NutSleep(900000);
   }
