@@ -59,18 +59,22 @@ uint8_t alarm_action_with_buzzer(char* msg)
 
 void alarm_perimeter_set(uint8_t control)
 {
+  alarm_control.perimeter = control;
   alarm_trig.perimeter = 0;
   buzzer_stop();
-  alarm_control.perimeter = control;
   rooms_perimeter_control_set(alarm_control.perimeter);
+  NutSleep(100);
+  rooms_perimeter_trig_set(0);
 }
 
 void alarm_volume_set(uint8_t control)
 {
+  alarm_control.volume = control;
   alarm_trig.volume = 0;
   buzzer_stop();
-  alarm_control.volume = control;
   rooms_volume_control_set(alarm_control.volume);
+  NutSleep(100);
+  rooms_volume_trig_set(0);
 }
 
 void alarm_simulation_set(uint8_t control)
@@ -91,8 +95,8 @@ THREAD(AlarmD, arg)
     alarm_status.volume     = rooms_volume_trig_get() | volume_status_get();
     alarm_status.simulation = rooms_simulation_status_get();
     /* Check all the status but we don t know from which room */
-    if(alarm_control.perimeter) { if((!(alarm_trig.perimeter)) && rooms_perimeter_trig_get()) { alarm_action_with_buzzer("Alarm-Perimeter"); alarm_trig.perimeter = 1; } }
-    if(alarm_control.volume   ) { if((!(alarm_trig.volume   )) && rooms_volume_trig_get()   ) { alarm_action_with_buzzer("Alarm-Volume"   ); alarm_trig.volume    = 1; } }
+    if(alarm_control.perimeter) { if(!(alarm_trig.perimeter)) { alarm_action_with_buzzer("Alarm-Perimeter"); alarm_trig.perimeter = 1; } }
+    if(alarm_control.volume   ) { if(!(alarm_trig.volume   )) { alarm_action_with_buzzer("Alarm-Volume"   ); alarm_trig.volume    = 1; } }
     NutSleep(1000);
   }
 }
