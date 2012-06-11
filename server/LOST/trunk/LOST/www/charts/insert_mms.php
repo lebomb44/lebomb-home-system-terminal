@@ -22,7 +22,8 @@ for($i=0; $i<10; $i++)
   $request .= "room".sprintf('%02d',$i)."_temp_value, ";
 }
 $request .= "safety_ups_temp, ";
-$request .= "safety_rack_temp)";
+$request .= "safety_rack_temp, ";
+$request .= "start)";
 
 // Add the values of the parameters
 $request .= " VALUES (NOW(), ";
@@ -31,7 +32,8 @@ for($i=0; $i<10; $i++)
   $request .= "'".sprintf("%.01f",round((((((((floatval($_POST['room'.sprintf('%02d',$i).'_temp_value'])*5*100)/1024)-32)*140)/252)*10)/10),2))."',";
 }
 $request .= "'".sprintf("%.01f",round((((((((floatval($_POST['safety_ups_temp'])*5*100)/1024)-32)*140)/252)*10)/10),2))."',";
-$request .= "'".sprintf("%.01f",round((((((((floatval($_POST['safety_rack_temp'])*5*100)/1024)-32)*140)/252)*10)/10),2))."')";
+$request .= "'".sprintf("%.01f",round((((((((floatval($_POST['safety_rack_temp'])*5*100)/1024)-32)*140)/252)*10)/10),2))."',";
+$request .= "'".sprintf("%d",$_POST['start'])."')";
 
 // Send the request
 mysql_query($request, $link) or die("Insertion failed".mysql_error());

@@ -45,7 +45,7 @@ $(document).ready(function() {
 		series: [
 			{name: 'Marine', data:[]},{name: 'M&M', data:[]},{name: 'Amis', data:[]},{name: 'Dressing', data:[]},{name: 'SdB', data:[]},
 			{name: 'Bureau', data:[]},{name: 'Salon', data:[]},{name: 'Cuisine', data:[]},{name: 'Couloir', data:[]},{name: 'Terrasse', data:[]},
-			{name: 'UPS', data:[]},{name: 'Rack', data:[]}
+			{name: 'UPS', data:[]},{name: 'Rack', data:[]},{type: 'flags', name: 'Start', data:[]}
 		]
       });
 <?php
@@ -80,16 +80,18 @@ $(document).ready(function() {
 
       for($i=0; $i<10; $i++)
       {
-		echo "chart.series[".$i."].addPoint([Date.UTC(".$temp."),".$r['room'.sprintf('%02d',$i).'_temp_value']."],false);\n";
+        echo "chart.series[".$i."].addPoint([Date.UTC(".$temp."),".$r['room'.sprintf('%02d',$i).'_temp_value']."],false);\n";
       	//echo $r['room'.sprintf('%02d',$i).'_temp_value'].",";
       }
-	  echo "chart.series[".$i."].addPoint([Date.UTC(".$temp."),".$r['safety_ups_temp']."],false);\n";
+      echo "chart.series[".$i."].addPoint([Date.UTC(".$temp."),".$r['safety_ups_temp']."],false);\n";
       //echo $r['safety_ups_temp'].",";
-	  $i = $i + 1;
-	  echo "chart.series[".$i."].addPoint([Date.UTC(".$temp."),".$r['safety_rack_temp']."],false);\n";
+      $i = $i + 1;
+      echo "chart.series[".$i."].addPoint([Date.UTC(".$temp."),".$r['safety_rack_temp']."],false);\n";
       //echo $r['safety_rack_temp']."]";
+      $i = $i + 1;
+      if($r['start'] == "1") { echo "chart.series[".$i."].addPoint({x: Date.UTC(".$temp."),title: 'S',text: 'Start'},false);\n"; }
     }
-	echo "chart.redraw();\n";
+    echo "chart.redraw();\n";
 ?>
    });
 function chart_setInterval(date, interval)

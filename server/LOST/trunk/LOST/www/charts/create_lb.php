@@ -24,6 +24,7 @@ for($i=0; $i<10; $i++)
 }
 $requete .= "`safety_ups_temp` DECIMAL(4,1) NOT NULL,";
 $requete .= "`safety_rack_temp` DECIMAL(4,1) NOT NULL,";
+$requete .= "`start` BOOL NULL DEFAULT '0',";
 $requete .= "PRIMARY KEY (`DATE`));";
 
 // Send the request
