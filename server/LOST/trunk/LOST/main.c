@@ -136,10 +136,10 @@ THREAD(SQLPostD, arg)
 
   while(1)
   {
-    /* Insert datas without start flag */
-    sql_send(0);
     /* Wait 15 minutes */
     NutSleep(900000);
+    /* Insert datas without start flag */
+    sql_send(0);
   }
 }
 
