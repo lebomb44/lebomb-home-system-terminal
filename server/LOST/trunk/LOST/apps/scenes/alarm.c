@@ -59,20 +59,20 @@ uint8_t alarm_action_with_buzzer(char* msg)
 
 void alarm_perimeter_set(uint8_t control)
 {
-  alarm_control.perimeter = control;
+  if(control > 0) { alarm_control.perimeter = 30; } else { alarm_control.perimeter = 0; }
   alarm_trig.perimeter = 0;
   buzzer_stop();
-  rooms_perimeter_control_set(alarm_control.perimeter);
+  rooms_perimeter_control_set(0);
   NutSleep(100);
   rooms_perimeter_trig_set(0);
 }
 
 void alarm_volume_set(uint8_t control)
 {
-  alarm_control.volume = control;
+  if(control > 0) { alarm_control.volume = 30; } else { alarm_control.volume = 0; }
   alarm_trig.volume = 0;
   buzzer_stop();
-  rooms_volume_control_set(alarm_control.volume);
+  rooms_volume_control_set(0);
   NutSleep(100);
   rooms_volume_trig_set(0);
 }
@@ -94,9 +94,39 @@ THREAD(AlarmD, arg)
     alarm_status.perimeter  = rooms_perimeter_trig_get();
     alarm_status.volume     = rooms_volume_trig_get() | volume_status_get();
     alarm_status.simulation = rooms_simulation_status_get();
-    /* Check all the status but we don t know from which room */
-    if(alarm_control.perimeter) { if(!(alarm_trig.perimeter)) { alarm_action_with_buzzer("Alarm-Perimeter"); alarm_trig.perimeter = 1; } }
-    if(alarm_control.volume   ) { if(!(alarm_trig.volume   )) { alarm_action_with_buzzer("Alarm-Volume"   ); alarm_trig.volume    = 1; } }
+
+    /* Manage the watchdog ENABLE / DISABLE for the alarm PERIMETER */
+    /* Step : Alarm enabled */
+    if(alarm_control.perimeter == 1)
+    {
+      /* Step : Alarm trig watchdog is going to finish */
+      if(alarm_trig.perimeter == 2) { alarm_action_with_buzzer("Alarm-Perimeter"); }
+      /* Step : Alarm trig during watchdog */
+      if(alarm_trig.perimeter > 1)  { alarm_trig.perimeter--; }
+      /* Step : Alarm did not triggered. Check to status */
+      if(alarm_trig.perimeter == 0) { if(alarm_status.perimeter) { alarm_trig.perimeter = 30; } }
+    }
+    /* Step : Alarm control is going to be enabled */
+    if(alarm_control.perimeter == 2) { rooms_perimeter_control_set(0x01); } /* FIXME Perimeter control only available on the firts input in ROOM Nodes */
+    /* Step : Alarm control during watchdog for being enabled */
+    if(alarm_control.perimeter >  1) { alarm_control.perimeter--; }
+
+    /* Manage the watchdog ENABLE / DISABLE for the alarm VOLUME */
+    /* Step : Alarm enabled */
+    if(alarm_control.volume == 1)
+    {
+      /* Step : Alarm trig watchdog is going to finish */
+      if(alarm_trig.volume == 2) { alarm_action_with_buzzer("Alarm-Volume"); }
+      /* Step : Alarm trig during watchdog */
+      if(alarm_trig.volume > 1)  { alarm_trig.volume--; }
+      /* Step : Alarm did not triggered. Check to status */
+      if(alarm_trig.volume == 0) { if(alarm_status.volume) { alarm_trig.volume = 30; } }
+    }
+    /* Step : Alarm control is going to be enabled */
+    if(alarm_control.volume == 2) { rooms_volume_control_set(0x00); } /* FIXME Volume not yet available in ROOM Nodes */
+    /* Step : Alarm control during watchdog for being enabled */
+    if(alarm_control.volume >  1) { alarm_control.volume--; }
+
     NutSleep(1000);
   }
 }
@@ -149,7 +179,6 @@ int alarm_xml_get(FILE * stream)
   fprintf_XML_elt_int("Perimeter_Trig" , alarm_trig.perimeter , stream);
   fprintf_XML_elt_int("Volume_Trig"    , alarm_trig.volume    , stream);
   fprintf_XML_elt_int("Simulation_Trig", alarm_trig.simulation, stream);
-
   fprintf_XML_elt_trailer("Alarm", stream);
 
   return 0;
