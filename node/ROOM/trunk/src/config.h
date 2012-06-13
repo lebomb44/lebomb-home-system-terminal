@@ -81,7 +81,6 @@
 #endif
 
 #ifdef NODE_ROOM_CONFIG_mms_cuisine
-#undef IR_USED
 #define NODE_ROOM_CONFIG_ADDR               (10+7)
 #define NODE_ROOM_CONFIG_LIGHT_BUT          { 2, 3, 4 }
 #define NODE_ROOM_CONFIG_LIGHT_RELAY        { 2, 3, 4 }
