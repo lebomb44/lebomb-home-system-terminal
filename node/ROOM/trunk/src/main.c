@@ -22,9 +22,9 @@ int main(void)
 {
   button_init();
   relay_init();
-  //uart_init();
+  /* uart_init(); UART pins used as output for relay */
   i2c_init();
-  //ir_init();
+  ir_init();
   adc_init();
   eeprom_init();
   timer_init();
@@ -36,7 +36,7 @@ int main(void)
   shutter_init();
   heater_init();
   elec_init();
-  //remote_init();
+  /* remote_init();  UART pins used as output for relay */
 
   sleep_mode();
   sbi(SREG,7);
@@ -49,9 +49,9 @@ int main(void)
     shutter_cycle();
     heater_cycle();
     elec_cycle();
-/*  remote_cycle(); */
+    /* remote_cycle(); UART pins used as output for relay */
     sleep();
-/*  uart_putc((u08)'.'); */
+    /* uart_putc((u08)'.'); UART pins used as output for relay */
   }
   return 0;
 }

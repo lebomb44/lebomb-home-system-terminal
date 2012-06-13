@@ -1,9 +1,15 @@
 #include "../global.h"
+#include "../config.h"
 #include "button.h"
 
 #define BUTTON_NB 6
 
-u08 * but_ddr[BUTTON_NB] = { (u08*)&DDRD, (u08*)&DDRB, (u08*)&DDRC, (u08*)&DDRC, (u08*)&DDRC, (u08*)&DDRB };
+#ifdef IR_USED
+#define BUT_DDR_5 (NULL)
+#else
+#define BUT_DDR_5 ((u08*)&DDRB)
+#endif
+u08 * but_ddr[BUTTON_NB] = { (u08*)&DDRD, (u08*)&DDRB, (u08*)&DDRC, (u08*)&DDRC, (u08*)&DDRC, BUT_DDR_5 };
 u08 * but_port[BUTTON_NB] = { (u08*)&PORTD, (u08*)&PORTB, (u08*)&PORTC, (u08*)&PORTC, (u08*)&PORTC, (u08*)&PORTB };
 u08 * but_pin[BUTTON_NB] = { (u08*)&PIND, (u08*)&PINB, (u08*)&PINC, (u08*)&PINC, (u08*)&PINC, (u08*)&PINB };
 u08 but_bit[BUTTON_NB] = { 5, 7, 1, 2, 3, 2 };

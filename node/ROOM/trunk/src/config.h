@@ -1,6 +1,7 @@
 #ifndef _NODE_ROOM_CONFIG_H_
 #define _NODE_ROOM_CONFIG_H_
 
+#define IR_USED
 #define NODE_ROOM_CONFIG_TYPE           0x01
 #define NODE_ROOM_CONFIG_VERSION        0x01
 #define NODE_ROOM_CONFIG_HEATER_BUT     { 255, 255, 255 }
@@ -69,6 +70,7 @@
 #endif
 
 #ifdef NODE_ROOM_CONFIG_mms_salon
+#undef IR_USED
 #define NODE_ROOM_CONFIG_ADDR               (10+6)
 #define NODE_ROOM_CONFIG_LIGHT_BUT          { 255, 255, 255 }
 #define NODE_ROOM_CONFIG_LIGHT_RELAY        { 255, 255, 255 }
@@ -79,6 +81,7 @@
 #endif
 
 #ifdef NODE_ROOM_CONFIG_mms_cuisine
+#undef IR_USED
 #define NODE_ROOM_CONFIG_ADDR               (10+7)
 #define NODE_ROOM_CONFIG_LIGHT_BUT          { 2, 3, 4 }
 #define NODE_ROOM_CONFIG_LIGHT_RELAY        { 2, 3, 4 }
