@@ -41,8 +41,7 @@ function lost_set(url)
 
 function lost_wa_refresh(elt)
 {
-  //var i = document.getElementsByTagName(elt);
-  //if(i)
+  if(elt)
   {
     WA.Refresh(elt);
   }

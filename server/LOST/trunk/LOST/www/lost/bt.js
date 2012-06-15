@@ -41,8 +41,7 @@ function lost_set(url)
 
 function lost_wa_refresh(elt)
 {
-  //var i = document.getElementsByTagName(elt);
-  //if(i)
+  if(elt)
   {
     WA.Refresh(elt);
   }
@@ -381,6 +380,59 @@ function lost_scene_set(scene, status)
 }
 var url_safety="cgi/safety.cgi?";
 
+function lost_safety_power_update(xml)
+{
+  var i=0;
+  var out_sc_str;
+  var out_sc_id1;
+  var out_sc_id2;
+  var out_ev_str;
+  var out_ev_id1;
+  var out_ev_id2;
+  var in_id1 = xml.getElementsByTagName("Safety")[0];
+  var in_id2;
+
+  for(i=0; i<3; i++)
+  {
+    if(in_id1) { in_id2 = in_id1.getElementsByTagName("Power"+String(i))[0]; } else { in_id2 = null; }
+    out_sc_str = "Scene"+String(EVENT_POWER_0+i)+"_Status";
+    out_sc_id1 = document.getElementById(out_sc_str);
+    out_sc_id2 = document.getElementById(out_sc_str+"_bg");
+    out_ev_str = "Event"+String(EVENT_POWER_0+i)+"_Status";
+    out_ev_id1 = document.getElementById(out_ev_str);
+    out_ev_id2 = document.getElementById(out_ev_str+"_bg");
+    if(out_sc_id1 || out_sc_id2 || out_ev_id1 || out_ev_id2)
+    {
+      if(in_id2)
+      {
+        if(in_id2.firstChild.nodeValue == 1)
+        {
+          if(out_sc_id1) { out_sc_id1.innerHTML = "ON"; }
+          if(out_sc_id2) { out_sc_id2.style.backgroundColor = "#FFFF99"; }
+          if(out_ev_id1) { out_ev_id1.innerHTML = "ON"; }
+          if(out_ev_id2) { out_ev_id2.style.backgroundColor = "#FFFF99"; }
+        }
+        else
+        {
+          if(out_sc_id1) { out_sc_id1.innerHTML = "OFF"; }
+          if(out_sc_id2) { out_sc_id2.style.backgroundColor = "#000099"; }
+          if(out_ev_id1) { out_ev_id1.innerHTML = "OFF"; }
+          if(out_ev_id2) { out_ev_id2.style.backgroundColor = "#000099"; }
+        }
+      }
+      else
+      {
+        if(out_sc_id1) { out_sc_id1.innerHTML = "Unknown"; }
+        if(out_sc_id2) { out_sc_id2.style.backgroundColor = "#FE8800"; }
+        if(out_ev_id1) { out_ev_id1.innerHTML = "Unknown"; }
+        if(out_ev_id2) { out_ev_id2.style.backgroundColor = "#FE8800"; }
+      }
+      lost_wa_refresh(out_sc_str);
+      lost_wa_refresh(out_ev_str);
+    }
+  }
+}
+
 function lost_safety_rooms_error_status_set()
 {
   var elt;
@@ -557,6 +609,8 @@ function lost_safety_xml_get(xml)
   lost_elt_bool_update(xml, "Safety", "RACK_Alarm");
   lost_elt_bool_update(xml, "Safety", "HTTP");
   lost_elt_bool_update(xml, "Safety", "GSM");
+
+  lost_safety_power_update(xml);
 }
 var ROOM_SHUTTER_UP   = 255
 var ROOM_SHUTTER_STOP = 0

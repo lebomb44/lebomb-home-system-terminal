@@ -41,8 +41,7 @@ function lost_set(url)
 
 function lost_wa_refresh(elt)
 {
-  //var i = document.getElementsByTagName(elt);
-  //if(i)
+  if(elt)
   {
     WA.Refresh(elt);
   }
@@ -381,6 +380,59 @@ function lost_scene_set(scene, status)
 }
 var url_safety="cgi/safety.cgi?";
 
+function lost_safety_power_update(xml)
+{
+  var i=0;
+  var out_sc_str;
+  var out_sc_id1;
+  var out_sc_id2;
+  var out_ev_str;
+  var out_ev_id1;
+  var out_ev_id2;
+  var in_id1 = xml.getElementsByTagName("Safety")[0];
+  var in_id2;
+
+  for(i=0; i<3; i++)
+  {
+    if(in_id1) { in_id2 = in_id1.getElementsByTagName("Power"+String(i))[0]; } else { in_id2 = null; }
+    out_sc_str = "Scene"+String(EVENT_POWER_0+i)+"_Status";
+    out_sc_id1 = document.getElementById(out_sc_str);
+    out_sc_id2 = document.getElementById(out_sc_str+"_bg");
+    out_ev_str = "Event"+String(EVENT_POWER_0+i)+"_Status";
+    out_ev_id1 = document.getElementById(out_ev_str);
+    out_ev_id2 = document.getElementById(out_ev_str+"_bg");
+    if(out_sc_id1 || out_sc_id2 || out_ev_id1 || out_ev_id2)
+    {
+      if(in_id2)
+      {
+        if(in_id2.firstChild.nodeValue == 1)
+        {
+          if(out_sc_id1) { out_sc_id1.innerHTML = "ON"; }
+          if(out_sc_id2) { out_sc_id2.style.backgroundColor = "#FFFF99"; }
+          if(out_ev_id1) { out_ev_id1.innerHTML = "ON"; }
+          if(out_ev_id2) { out_ev_id2.style.backgroundColor = "#FFFF99"; }
+        }
+        else
+        {
+          if(out_sc_id1) { out_sc_id1.innerHTML = "OFF"; }
+          if(out_sc_id2) { out_sc_id2.style.backgroundColor = "#000099"; }
+          if(out_ev_id1) { out_ev_id1.innerHTML = "OFF"; }
+          if(out_ev_id2) { out_ev_id2.style.backgroundColor = "#000099"; }
+        }
+      }
+      else
+      {
+        if(out_sc_id1) { out_sc_id1.innerHTML = "Unknown"; }
+        if(out_sc_id2) { out_sc_id2.style.backgroundColor = "#FE8800"; }
+        if(out_ev_id1) { out_ev_id1.innerHTML = "Unknown"; }
+        if(out_ev_id2) { out_ev_id2.style.backgroundColor = "#FE8800"; }
+      }
+      lost_wa_refresh(out_sc_str);
+      lost_wa_refresh(out_ev_str);
+    }
+  }
+}
+
 function lost_safety_rooms_error_status_set()
 {
   var elt;
@@ -557,6 +609,8 @@ function lost_safety_xml_get(xml)
   lost_elt_bool_update(xml, "Safety", "RACK_Alarm");
   lost_elt_bool_update(xml, "Safety", "HTTP");
   lost_elt_bool_update(xml, "Safety", "GSM");
+
+  lost_safety_power_update(xml);
 }
 var ROOM_SHUTTER_UP   = 255
 var ROOM_SHUTTER_STOP = 0
@@ -1005,27 +1059,27 @@ document.write("\
     <div class=\"iMenu\">\
         <legend>Volets</legend>\
         <ul class=\"iArrow\">\
-            <li><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_ALL        , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_ALL        , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Tous</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_UPSTAIRS   , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_UPSTAIRS   , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Etage</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_DOWNSTAIRS , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_DOWNSTAIRS , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Rez de Chaussé</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_MARINE     , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_MARINE     , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Marine</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_MM         , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_MM         , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">M&M</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_FRIENDS    , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_FRIENDS    , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Amis</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_DRESSING   , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_DRESSING   , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\">Dressing</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_ALL)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_ALL               , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_ALL        , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_ALL)+"_Status\">Unknown</span>Tous</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_UPSTAIRS)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_UPSTAIRS     , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_UPSTAIRS   , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_UPSTAIRS)+"_Status\">Unknown</span>Etage</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_DOWNSTAIRS)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_DOWNSTAIRS , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_DOWNSTAIRS , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_DOWNSTAIRS)+"_Status\">Unknown</span>Rez de Chaussé</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_MARINE)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_MARINE         , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_MARINE     , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_MARINE)+"_Status\">Unknown</span>Marine</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_MM)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_MM                 , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_MM         , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_MM)+"_Status\">Unknown</span>M&M</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_FRIENDS)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_FRIENDS       , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_FRIENDS    , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_FRIENDS)+"_Status\">Unknown</span>Amis</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_DRESSING)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_DRESSING     , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_DRESSING   , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_DRESSING)+"_Status\">Unknown</span>Dressing</li>\
         </ul>\
         <legend>Alarme</legend>\
         <ul class=\"iArrow\">\
-            <li><a href=\"javascript:lost_scene_set(EVENT_ALARM_ALL       , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_ALL       , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\">Toutes</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\">Périmétrique</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_ALARM_VOLUME    , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_VOLUME    , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\">Volumétrique</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_SIMU            , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SIMU            , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\">Simulation Présence</li>\
+            <li id=\"Scene"+String(EVENT_ALARM_ALL)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_ALL             , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_ALL       , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\"><span id=\"Scene"+String(EVENT_ALARM_ALL)+"_Status\">Unknown</span>Toutes</li>\
+            <li id=\"Scene"+String(EVENT_ALARM_PERIMETER)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\"><span id=\"Scene"+String(EVENT_ALARM_PERIMETER)+"_Status\">Unknown</span>Périmétrique</li>\
+            <li id=\"Scene"+String(EVENT_ALARM_VOLUME)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_VOLUME       , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_VOLUME    , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\"><span id=\"Scene"+String(EVENT_ALARM_VOLUME)+"_Status\">Unknown</span>Volumétrique</li>\
+            <li id=\"Scene"+String(EVENT_SIMU)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SIMU                       , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SIMU            , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\"><span id=\"Scene"+String(EVENT_SIMU)+"_Status\">Unknown</span>Simulation Présence</li>\
         </ul>\
         <legend>Power</legend>\
         <ul class=\"iArrow\">\
-            <li><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">Wifi</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">Reseau</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_POWER_2, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_2, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">POWER 2</li>\
-            <li><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">POWER 3</li>\
+            <li id=\"Scene"+String(EVENT_POWER_0)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"Scene"+String(EVENT_POWER_0)+"_Status\">Unknown</span>Wifi</li>\
+            <li id=\"Scene"+String(EVENT_POWER_1)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"Scene"+String(EVENT_POWER_1)+"_Status\">Unknown</span>Reseau</li>\
+            <li id=\"Scene"+String(EVENT_POWER_2)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_2, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_2, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\"><span id=\"Scene"+String(EVENT_POWER_2)+"_Status\">Unknown</span>POWER 2</li>\
+            <li id=\"Scene"+String(EVENT_POWER_3)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\"><span id=\"Scene"+String(EVENT_POWER_3)+"_Status\">Unknown</span>POWER 3</li>\
         </ul>\
     </div>\
 </div>\
