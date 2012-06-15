@@ -108,7 +108,7 @@ THREAD(EventsD, arg)
           if((event_list[i].hour_start == time_now.tm_hour) && (event_list[i].minute_start == time_now.tm_min) && (time_now.tm_sec < 30))
           {
             /* Check the process action and execute it */
-        	if(event_list[event].status_start == EVENT_STATUS_ON) { event_action(i, EVENT_STATUS_ON); }
+        	if(event_list[i].status_start == EVENT_STATUS_ON) { event_action(i, EVENT_STATUS_ON); }
             /* Now go to next step */
             event_list[i].status = EVENT_STATUS_IN_PROGRESS;
           }
@@ -125,7 +125,7 @@ THREAD(EventsD, arg)
           if((event_list[i].hour_end == time_now.tm_hour) && (event_list[i].minute_end == time_now.tm_min) && (30 < time_now.tm_sec))
           {
             /* Execute the end function (this function has already been checked) */
-        	if(event_list[event].status_end   == EVENT_STATUS_ON) { event_action(i, EVENT_STATUS_OFF); }
+        	if(event_list[i].status_end   == EVENT_STATUS_ON) { event_action(i, EVENT_STATUS_OFF); }
             /* If there is a recurrence, we should let the event enabled. Else it is a one-shot event */
             if(event_list[i].rec) { event_list[i].status = EVENT_STATUS_ON; }
             else { event_list[i].status = EVENT_STATUS_OFF; }
