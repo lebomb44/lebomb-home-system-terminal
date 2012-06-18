@@ -77,6 +77,10 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   /* Free the hardware interface */
   NutEventPostAsync(&i2c_mutex);
 
+  /* Clear the data if not received */
+  if(nb_rec < 0) { nb_rec = 0; }
+  while(nb_rec < nb ) { data[nb_rec] = 0; nb_rec++; }
+
   return ret;
 }
 
