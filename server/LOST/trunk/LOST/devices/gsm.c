@@ -78,10 +78,12 @@ uint8_t fbus_send(uint8_t cmd, uint16_t data_len, uint8_t *data, uint8_t seq)
 {
   uint8_t *frame = NULL;
 
-  /* Alloc the frame buffer */
+  /* Check the data pointer to send */
+  if(data == NULL) { return 1; }
+  /* Allocate the frame buffer */
   frame = malloc(fbus_frame_len(data_len));
   /* Check the frame pointer */
-  if(frame == NULL) { return 1; }
+  if(frame == NULL) { return 2; }
   /* Build the frame header */
   fbus_header(frame, cmd, data_len);
   /* Copy the data in the frame buffer */
@@ -201,15 +203,15 @@ uint8_t gsm_status_get(void)
   if(ret != 0) { return (30+ret); }
 // 0x0071, ?,?,?,length,netstatus,netsel,cellIDH,cellIDL,lacH,lacL,netcode,netcode,netcode
 // 1E 0C 00 0A 00 15 01 08 00 71 01 00 01 0B 01 02 0C 97 1D 4D 02 F8 01 00 00 01 47 00 4B 40
-  if(data_recv != NULL)
-  {
-    if(cmd != NOKIA_3310_NETW) { return 1; }
-    if(data_len != 20) { return 2; }
-    if(data_recv[8] != 0x01) { return 3; } // Home Network
-    if(data_recv[9] != 0x02) { return 4; } // Automatic Network selection
-    free(data_recv);
-  }
-  else { return 5; }
+  if(data_recv == NULL) { return 1; }
+  /* Check the received data */
+  ret = 0;
+  if(cmd != NOKIA_3310_NETW) { ret = 2; }
+  if(data_len != 20)         { ret = 3; }
+  if(data_recv[8] != 0x01)   { ret = 4; } // Home Network
+  if(data_recv[9] != 0x02)   { ret = 5; } // Automatic Network selection
+  free(data_recv);
+  if(ret != 0) { return ret; }
 
   data[0] = NOKIA_3310_NETW;
   ret = fbus_send(NOKIA_3310_ACK, 1, data, 0x01);
