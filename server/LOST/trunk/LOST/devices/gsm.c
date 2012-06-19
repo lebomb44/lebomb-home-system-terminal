@@ -208,8 +208,9 @@ uint8_t gsm_status_get(void)
   ret = 0;
   if(cmd != NOKIA_3310_NETW) { ret = 2; }
   if(data_len != 20)         { ret = 3; }
-  if(data_recv[8] != 0x01)   { ret = 4; } // Home Network
+  if((data_recv[8] != 0x01) && (data_recv[8] != 0x02))   { ret = 4; } // Home Network
   if(data_recv[9] != 0x02)   { ret = 5; } // Automatic Network selection
+
   free(data_recv);
   if(ret != 0) { return ret; }
 
