@@ -13,7 +13,7 @@
 
 #include "i2c.h"
 
-static HANDLE i2c_mutex;
+uint8_t i2c_mutex;
 
 uint8_t i2c_init(void)
 {
@@ -31,7 +31,7 @@ uint8_t i2c_init(void)
   val = 50000;
   TwIOCtl(TWI_SETSPEED, &val);
   /* Authorize the use of the hardware interface */
-  NutEventPostAsync(&i2c_mutex);
+  i2c_mutex = 0;
 
   return 0;
 }
@@ -59,8 +59,9 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   if(data==NULL) { return 6; }
 
   /* Wait for the hardware interface to be free */
-  ret = NutEventWait(&i2c_mutex, 100);
-  if(ret != 0) { return 7; }
+  ret = 10;
+  while(ret > 0) { if(i2c_mutex == 0) { i2c_mutex = 1; break; } else { NutSleep(10); ret--; } }
+  if(ret == 0) { for(nb_rec=0; nb_rec<nb; nb_rec++) { data[nb_rec] = 0; } return 7; }
 
   /* Do the exchange and check the returned number of data */
   nb_rec = TwMasterTransact(sla, &addr, (uint16_t) 1, data, (uint16_t) nb, (uint32_t) 500);
@@ -75,7 +76,7 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
     if(ret == 0) { ret = 8; }
   }
   /* Free the hardware interface */
-  NutEventPostAsync(&i2c_mutex);
+  i2c_mutex = 0;
 
   /* Clear the data if not received */
   if(nb_rec < 0) { nb_rec = 0; }
@@ -107,8 +108,9 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   for(i=0; i<3; i++)
   {
     /* Wait for the hardware interface to be free */
-    ret = NutEventWait(&i2c_mutex, 100);
-    if(ret != 0) { NutSleep(100); continue; }
+    ret = 10;
+    while(ret > 0) { if(i2c_mutex == 0) { i2c_mutex = 1; break; } else { NutSleep(10); ret--; } }
+    if(ret == 0) { NutSleep(100); ret = 11; continue; }
 
     /* Execute the transmission */
     nb_rec = TwMasterTransact(sla, buff, (uint16_t) (((uint16_t)nb)+1), NULL, (uint16_t) 0, (uint32_t) 100);
@@ -123,7 +125,7 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
       if(ret == 0) { ret = 11; }
     }
     /* Free the hardware interface */
-    NutEventPostAsync(&i2c_mutex);
+    i2c_mutex = 0;
     if((nb_rec == 0) && (ret == 0))
     {
       /* No error, so break the loop */
