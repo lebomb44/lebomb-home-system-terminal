@@ -107,7 +107,12 @@ THREAD(AlarmD, arg)
       if(alarm_trig.perimeter == 0) { if(alarm_status.perimeter) { alarm_trig.perimeter = 30; } }
     }
     /* Step : Alarm control is going to be enabled */
-    if(alarm_control.perimeter == 2) { rooms_perimeter_control_set(0x01); } /* FIXME Perimeter control only available on the first input in ROOM Nodes */
+    if(alarm_control.perimeter == 2)
+    {
+      rooms_perimeter_control_set(0x01); /* FIXME Perimeter control only available on the first input in ROOM Nodes */
+      room_perimeter_control_set(ROOM_SALON, 0x07); /* FIXME But we have the 3 shutters of the SALON available */
+      room_perimeter_control_set(ROOM_BUREAU, 0x07); /* FIXME But we have the 1 shutter and 2 doors of the BUREAU available */
+    }
     /* Step : Alarm control during watchdog for being enabled */
     if(alarm_control.perimeter >  1) { alarm_control.perimeter--; }
 
