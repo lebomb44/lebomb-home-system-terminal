@@ -66,16 +66,15 @@ function lost_ev_xml_update(xml, event)
   lost_ck_update(xml, "Event"+String(event), "rec6");
   lost_ck_update(xml, "Event"+String(event), "rec0");
 
-  lost_ck_update(xml, "Event"+String(event), "StStart");
-  lost_ck_update(xml, "Event"+String(event), "StEnd");
-
   elt = document.getElementById("Event"+String(event)+"_St");
   if(elt)
   {
     if(elt.checked==true)
     {
+      lost_ck_update(xml, "Event"+String(event), "StStart");
       lost_select_update(xml, "Event"+String(event), "HStart");
       lost_select_update(xml, "Event"+String(event), "MStart");
+      lost_ck_update(xml, "Event"+String(event), "StEnd");
       lost_select_update(xml, "Event"+String(event), "HEnd");
       lost_select_update(xml, "Event"+String(event), "MEnd");
     }
