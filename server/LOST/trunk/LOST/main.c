@@ -105,7 +105,7 @@ int main(void)
 
   NutThreadSetPriority(148);
   NutWatchDogStart(60000, 0);
-  while(1) { NutSleep(1000); printf(".Heap=%d\n",(int)NutHeapAvailable()); NutWatchDogRestart(); } /* REMOVEME */
+  while(1) { NutSleep(1000); printf("."); NutWatchDogRestart(); }
 
   return 0;
 }
