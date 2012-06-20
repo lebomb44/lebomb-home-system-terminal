@@ -14,9 +14,6 @@
 #define NOKIA_3310_SMSSEND 0x02
 #define NOKIA_3310_ACK     0x7F
 
-char gsm1[11];
-char gsm2[11];
-
 extern int gsm_form(FILE * stream, REQUEST * req);
 
 void fbus_sync(void)
@@ -161,10 +158,6 @@ uint8_t fbus_receive_ack(uint8_t _cmd)
 
 uint8_t gsm_init(void)
 {
-  /* Set the GSM phone number */
-  strncpy(gsm1, LOST_GSM1, 10);
-  strncpy(gsm2, LOST_GSM2, 10);
-
   return 0;
 }
 
@@ -258,7 +251,7 @@ uint8_t gsm_version_get(void)
   return 0;
 }
 
-uint8_t gsm_sms_send(char * tel, char * msg)
+uint8_t gsm_sms_send_with_tel(char * tel, char * msg)
 {
   uint16_t up_msg_len = 0;
   uint16_t p_msg_len = 0;
@@ -268,8 +261,20 @@ uint8_t gsm_sms_send(char * tel, char * msg)
   uint16_t pos = 0;
 
   uint8_t sms_header[8] = {0x00, 0x01, 0x00, 0x01, 0x02, 0x00, 0x07, 0x91};
+#ifdef LOST_GSM_SMS_CENTER_SFR
   uint8_t sms_tel_center[10] = {0x33, 0x06, 0x09, 0x10, 0x93, 0xF0, 0x00, 0x00, 0x00, 0x00};
-  /* +33 6 09 00 13 90 */
+#endif
+#ifdef LOST_GSM_SMS_CENTER_FREE
+  uint8_t sms_tel_center[10] = {0x33, 0x96, 0x05, 0x00, 0x96, 0xF5, 0x00, 0x00, 0x00, 0x00};
+#endif
+#ifdef LOST_GSM_SMS_CENTER_ORANGE
+  uint8_t sms_tel_center[10] = {0x33, 0x86, 0x09, 0x40, 0x00, 0xF0, 0x00, 0x00, 0x00, 0x00};
+#endif
+  /* SMS Center
+   * SFR    : +33 6 09 00 13 90
+   * FREE   : +33 6 95 00 06 95
+   * ORANGE : +33 6 89 00 40 00
+   */
   uint8_t sms_body[7] = {0x15, 0x00, 0x00, 0x00, 0x33, 0x0A, 0xA1};
   uint8_t sms_trailer[7] = {0xA7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
@@ -317,7 +322,7 @@ uint8_t gsm_sms_send(char * tel, char * msg)
   fpurge(uart1_fd);
   fbus_sync();
   fwrite(frame, fbus_frame_len(8+10+7+10+7+p_msg_len+1), 1, uart1_fd); fflush(uart1_fd);
-//fwrite(frame, fbus_frame_len(8+10+7+10+7+p_msg_len+1), 1, stdout); fflush(stdout);
+fwrite(frame, fbus_frame_len(8+10+7+10+7+p_msg_len+1), 1, stdout); fflush(stdout);
   /* Free the frame buffer */
   free(frame);
 // 1E 0C 00 7F 00 02 02 00 1C 71
@@ -325,6 +330,11 @@ uint8_t gsm_sms_send(char * tel, char * msg)
 // 1E 00 0C 7F 00 02 02 04 10 79
 
   return 0;
+}
+
+uint8_t gsm_sms_send(char * msg)
+{
+  return (gsm_sms_send_with_tel(LOST_GSM1, msg) + gsm_sms_send_with_tel(LOST_GSM2, msg));
 }
 
 char* gsm_sms_receive(void)
