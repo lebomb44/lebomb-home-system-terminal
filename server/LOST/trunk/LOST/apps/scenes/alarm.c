@@ -49,8 +49,7 @@ uint8_t alarm_init(void)
 /* This function is executed if an alarm is detected */
 uint8_t alarm_action_with_buzzer(char* msg)
 {
-  gsm_sms_send(gsm1, msg);
-  gsm_sms_send(gsm2, msg);
+  gsm_sms_send(msg);
   http_email_send(msg);
   buzzer_start(5*60); /* 5 minutes */
 
