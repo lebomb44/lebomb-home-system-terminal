@@ -118,8 +118,7 @@ uint16_t safety_rack_temp_value_get(void)
 /* This function is executed if a safety problem is detected */
 uint8_t safety_action(char* msg)
 {
-  gsm_sms_send(gsm1, msg);
-  gsm_sms_send(gsm2, msg);
+  gsm_sms_send(msg);
   http_email_send(msg);
 
   return 0;
