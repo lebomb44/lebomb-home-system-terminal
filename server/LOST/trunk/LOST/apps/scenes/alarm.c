@@ -109,8 +109,8 @@ THREAD(AlarmD, arg)
     /* Step : Alarm control is going to be enabled */
     if(alarm_control.perimeter == 2)
     {
-      /* Only set activate the alarm if all the shutters are closed */
-      /* FIXME if(!rooms_volume_status_get()) can be checked if all statuses are at 0 */
+      /* Only activate the alarm if all the shutters are closed */
+      /* FIXME if(!rooms_perimeter_status_get()) can be checked if all statuses are at 0 */
       {
         rooms_perimeter_control_set(0x01); /* FIXME Perimeter control only available on the first input in ROOM Nodes */
         room_perimeter_control_set(ROOM_SALON, 0x07); /* FIXME But we have the 3 shutters of the SALON available */
@@ -139,9 +139,17 @@ THREAD(AlarmD, arg)
       if(alarm_trig.volume == 0) { if(alarm_status.volume) { alarm_trig.volume = 30; } }
     }
     /* Step : Alarm control is going to be enabled */
-    if(alarm_control.volume == 2) { rooms_volume_control_set(0x00); } /* FIXME Volume not yet available in ROOM Nodes */
+    if(alarm_control.volume == 2)
+    {
+      /* Only activate the alarm if nothing is moving */
+      if((!rooms_volume_status_get()) && (!volume_status_get()))
+      {
+        rooms_volume_control_set(0x00); /* FIXME Volume not yet available in ROOM Nodes */
+        alarm_control.volume--;
+      }
+    }
     /* Step : Alarm control during watchdog for being enabled */
-    if(alarm_control.volume >  1) { alarm_control.volume--; }
+    if(alarm_control.volume >  2) { alarm_control.volume--; }
 
     NutSleep(1000);
   }
