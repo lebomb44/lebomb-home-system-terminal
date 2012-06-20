@@ -322,7 +322,7 @@ uint8_t gsm_sms_send_with_tel(char * tel, char * msg)
   fpurge(uart1_fd);
   fbus_sync();
   fwrite(frame, fbus_frame_len(8+10+7+10+7+p_msg_len+1), 1, uart1_fd); fflush(uart1_fd);
-fwrite(frame, fbus_frame_len(8+10+7+10+7+p_msg_len+1), 1, stdout); fflush(stdout);
+//fwrite(frame, fbus_frame_len(8+10+7+10+7+p_msg_len+1), 1, stdout); fflush(stdout);
   /* Free the frame buffer */
   free(frame);
 // 1E 0C 00 7F 00 02 02 00 1C 71
