@@ -8,8 +8,8 @@
 #include "events.h"
 #include "events_proc.h"
 
-void event_proc_shutters_all_start(void)        { uint8_t i = 0; for(i=0; i<ROOM_SHUTTER_MAX; i++) { rooms_shutter_set(i, ROOM_SHUTTER_UP); } }
-void event_proc_shutters_all_end(void)          { uint8_t i = 0; for(i=0; i<ROOM_SHUTTER_MAX; i++) { rooms_shutter_set(i, ROOM_SHUTTER_DOWN); } }
+void event_proc_shutters_all_start(void)        { rooms_shutters_set(ROOM_SHUTTER_UP); }
+void event_proc_shutters_all_end(void)          { rooms_shutters_set(ROOM_SHUTTER_DOWN); }
 void event_proc_shutters_upstairs_start(void)   { room_shutters_set(ROOM_C1, ROOM_SHUTTER_UP); room_shutters_set(ROOM_C2, ROOM_SHUTTER_UP);
                                                   room_shutters_set(ROOM_C3, ROOM_SHUTTER_UP); room_shutters_set(ROOM_C4, ROOM_SHUTTER_UP); }
 void event_proc_shutters_upstairs_end(void)     { room_shutters_set(ROOM_C1, ROOM_SHUTTER_DOWN); room_shutters_set(ROOM_C2, ROOM_SHUTTER_DOWN);
