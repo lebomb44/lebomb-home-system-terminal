@@ -15,8 +15,10 @@
 
   /* Set the email adresses */
   $status_mail1 = mail("cambon.olivier@gmail.com", $sujet, $message, $header);
-  $status_mail1 = mail("maximedarde@gmail.com", $sujet, $message, $header);
-  $status_mail1 = mail("mariaucam@gmail.com", $sujet, $message, $header);
+  $status_mail2 = mail("maximedarde@gmail.com", $sujet, $message, $header);
+  $status_mail3 = mail("mariaucam@gmail.com", $sujet, $message, $header);
 
-  if((status_mail1 == true) && (status_mail2 == true)) { print("LOST Email OK\r\n"); } else { print("LOST Email KO\r\n"); }
+  if(($status_mail1 == true) && ($status_mail2 == true) && ($status_mail3 == true))
+  { print("LOST Email OK\r\n"); }
+  else { print("LOST Email KO\r\n"); }
 ?>
