@@ -125,9 +125,10 @@ extern void room_light_set              (ROOM_N_T room, uint8_t no, uint8_t valu
 extern void rooms_light_set             (               uint8_t no, uint8_t value);
 extern void room_shutter_set            (ROOM_N_T room, uint8_t no, uint8_t value);
 extern void rooms_shutter_set           (               uint8_t no, uint8_t value);
+extern void room_shutters_set           (ROOM_N_T room, uint8_t value            );
+extern void rooms_shutters_set          (                           uint8_t value);
 extern void room_heater_set             (ROOM_N_T room, uint8_t no, uint8_t value);
 extern void rooms_heater_set            (               uint8_t no, uint8_t value);
-extern void room_shutters_set           (ROOM_N_T room, uint8_t value            );
 extern void room_elec_set               (ROOM_N_T room, uint8_t no, uint8_t value);
 extern void rooms_elec_set              (               uint8_t no, uint8_t value);
 
