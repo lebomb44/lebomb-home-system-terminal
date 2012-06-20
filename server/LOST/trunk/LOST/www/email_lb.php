@@ -16,5 +16,5 @@
   /* Set the email adresses */
   $status_mail1 = mail("cambon.olivier@gmail.com", $sujet, $message, $header);
 
-  if((status_mail1 == true) && (status_mail2 == true)) { print("LOST Email OK\r\n"); } else { print("LOST Email KO\r\n"); }
+  if($status_mail1 == true) { print("LOST Email OK\r\n"); } else { print("LOST Email KO\r\n"); }
 ?>
