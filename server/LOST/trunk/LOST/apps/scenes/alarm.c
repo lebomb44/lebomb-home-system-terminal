@@ -109,12 +109,23 @@ THREAD(AlarmD, arg)
     /* Step : Alarm control is going to be enabled */
     if(alarm_control.perimeter == 2)
     {
-      rooms_perimeter_control_set(0x01); /* FIXME Perimeter control only available on the first input in ROOM Nodes */
-      room_perimeter_control_set(ROOM_SALON, 0x07); /* FIXME But we have the 3 shutters of the SALON available */
-      room_perimeter_control_set(ROOM_BUREAU, 0x07); /* FIXME But we have the 1 shutter and 2 doors of the BUREAU available */
+      /* Only set activate the alarm if all the shutters are closed */
+      /* FIXME if(!rooms_volume_status_get()) can be checked if all statuses are at 0 */
+      {
+        rooms_perimeter_control_set(0x01); /* FIXME Perimeter control only available on the first input in ROOM Nodes */
+        room_perimeter_control_set(ROOM_SALON, 0x07); /* FIXME But we have the 3 shutters of the SALON available */
+        room_perimeter_control_set(ROOM_BUREAU, 0x07); /* FIXME But we have the 1 shutter and 2 doors of the BUREAU available */
+        alarm_control.perimeter--;
+      }
+      /* If the shutters are not closed try to close them */
+      /* FIXME else
+      {
+        rooms_shutters_set(ROOM_SHUTTER_DOWN);
+      }*/
     }
+    /* Force all shutters down when enabling alarm perimeter */
     /* Step : Alarm control during watchdog for being enabled */
-    if(alarm_control.perimeter >  1) { alarm_control.perimeter--; }
+    if(alarm_control.perimeter >  2) { rooms_shutters_set(ROOM_SHUTTER_DOWN); alarm_control.perimeter--; }
 
     /* Manage the watchdog ENABLE / DISABLE for the alarm VOLUME */
     /* Step : Alarm enabled */
