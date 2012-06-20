@@ -681,6 +681,7 @@ function lost_rooms_shutters_update(xml, room)
     }
   }
   /* FIXME */
+  /*
   if((room==ROOM_SALON) && in_id1)
   {
     in_id2 = in_id1.getElementsByTagName("Volume")[0];
@@ -693,6 +694,7 @@ function lost_rooms_shutters_update(xml, room)
       else { out_id1.innerHTML = "FERME"; out_id2.style.backgroundColor = "#000099"; }
     }
   }
+  */
 }
 
 function lost_rooms_xml_get(xml)
