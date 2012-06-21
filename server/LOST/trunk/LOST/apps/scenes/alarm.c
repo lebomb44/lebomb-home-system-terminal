@@ -47,10 +47,18 @@ uint8_t alarm_init(void)
 }
 
 /* This function is executed if an alarm is detected */
-uint8_t alarm_action_with_buzzer(char* msg)
+uint8_t alarm_action(char* msg)
 {
   gsm_sms_send(msg);
   http_email_send(msg);
+
+  return 0;
+}
+
+/* This function is executed if an alarm is detected */
+uint8_t alarm_action_with_buzzer(char* msg)
+{
+  alarm_action(msg);
   buzzer_start(5*60); /* 5 minutes */
 
   return 0;
@@ -109,7 +117,7 @@ THREAD(AlarmD, arg)
     if(alarm_control.perimeter == 2)
     {
       /* Only activate the alarm if all the shutters are closed */
-      /* FIXME if(!rooms_perimeter_status_get()) can be checked if all statuses are at 0 */
+      if(!rooms_perimeter_status_get())
       {
         rooms_perimeter_control_set(0x01); /* FIXME Perimeter control only available on the first input in ROOM Nodes */
         room_perimeter_control_set(ROOM_SALON, 0x07); /* FIXME But we have the 3 shutters of the SALON available */
@@ -117,10 +125,19 @@ THREAD(AlarmD, arg)
         alarm_control.perimeter--;
       }
       /* If the shutters are not closed try to close them */
-      /* FIXME else
+      else
       {
         rooms_shutters_set(ROOM_SHUTTER_DOWN);
-      }*/
+      }
+    }
+    /* Step before enabling the alarm */
+    if(alarm_control.perimeter == 3)
+    {
+      /* Check if all the shutters are closed else send alert message */
+      if(rooms_perimeter_status_get())
+      {
+        alarm_action("Impossible to activate Alarm-Perimeter");
+      }
     }
     /* Force all shutters down when enabling alarm perimeter */
     /* Step : Alarm control during watchdog for being enabled */
@@ -145,6 +162,15 @@ THREAD(AlarmD, arg)
       {
         rooms_volume_control_set(0x00); /* FIXME Volume not yet available in ROOM Nodes */
         alarm_control.volume--;
+      }
+    }
+    /* Step before enabling the alarm */
+    if(alarm_control.volume == 3)
+    {
+      /* Check if all the shutters are closed else send alert message */
+      if(rooms_volume_status_get() || volume_status_get())
+      {
+        alarm_action("Impossible to activate Alarm-Volume");
       }
     }
     /* Step : Alarm control during watchdog for being enabled */
