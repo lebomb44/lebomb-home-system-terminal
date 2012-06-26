@@ -13,7 +13,7 @@
 
 #include "i2c.h"
 
-uint8_t i2c_mutex;
+volatile uint8_t i2c_mutex;
 
 uint8_t i2c_init(void)
 {
