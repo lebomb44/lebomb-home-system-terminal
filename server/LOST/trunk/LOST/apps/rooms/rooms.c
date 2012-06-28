@@ -150,7 +150,7 @@ uint8_t room_smoke_trig_get        (ROOM_N_T room) { return room_list[room][ROOM
 uint8_t rooms_smoke_trig_get       (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_smoke_trig_get(i)       ) { return (i+1); } } return 0; }
 
 uint8_t room_perimeter_status_get  (ROOM_N_T room) { return room_list[room][ROOM_REG_PERI_STATUS     ]; }
-uint8_t rooms_perimeter_status_get (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_perimeter_status_get(i) ) { return (i+1); } } return 0; }
+uint8_t rooms_perimeter_status_get (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_perimeter_status_get(i) & 0x01 /* FIXME All lines must be checked */ ) { return (i+1); } } return 0; }
 uint8_t room_perimeter_control_get (ROOM_N_T room) { return room_list[room][ROOM_REG_PERI_CONTROL    ]; }
 uint8_t room_perimeter_trig_get    (ROOM_N_T room) { return room_list[room][ROOM_REG_PERI_TRIG       ]; }
 uint8_t rooms_perimeter_trig_get   (void)          { uint8_t i; for(i=0; i<ROOM_MAX; i++) { if(room_perimeter_trig_get(i)   ) { return (i+1); } } return 0; }
