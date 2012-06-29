@@ -117,7 +117,7 @@ THREAD(AlarmD, arg)
     if(alarm_control.perimeter == 2)
     {
       /* Only activate the alarm if all the shutters are closed */
-      if(!rooms_perimeter_status_get())
+      if(1)//!rooms_perimeter_status_get())
       {
         rooms_perimeter_control_set(0x01); /* FIXME Perimeter control only available on the first input in ROOM Nodes */
         room_perimeter_control_set(ROOM_SALON, 0x07); /* FIXME But we have the 3 shutters of the SALON available */
@@ -136,7 +136,7 @@ THREAD(AlarmD, arg)
       /* Check if all the shutters are closed else send alert message */
       if(rooms_perimeter_status_get())
       {
-        alarm_action("Impossible to activate Alarm-Perimeter");
+        alarm_action("Impossible-to-activate-Alarm-Perimeter");
       }
     }
     /* Force all shutters down when enabling alarm perimeter */
