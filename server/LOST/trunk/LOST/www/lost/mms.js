@@ -818,22 +818,23 @@ function lost_room_elec_all_set(value)
 {
   lost_set(url_room+String(ROOM_MAX)+"&elec="+String(ROOM_ELEC_MAX)+"&value="+String(value));
 }
-var EVENT_SHUTTERS_ALL        = 0;
-var EVENT_SHUTTERS_UPSTAIRS   = 1;
-var EVENT_SHUTTERS_DOWNSTAIRS = 2;
-var EVENT_SHUTTERS_MARINE     = 3;
-var EVENT_SHUTTERS_MM         = 4;
-var EVENT_SHUTTERS_FRIENDS    = 5;
-var EVENT_SHUTTERS_DRESSING   = 6;
-var EVENT_ALARM_ALL           = 7;
-var EVENT_ALARM_PERIMETER     = 8;
-var EVENT_ALARM_VOLUME        = 9;
-var EVENT_SIMU                = 10;
-var EVENT_POWER_0             = 11;
-var EVENT_POWER_1             = 12;
-var EVENT_POWER_2             = 13;
-var EVENT_POWER_3             = 14;
-var EVENT_MAX                 = 15;
+var EVENT_SHUTTERS_ALL          = 0;
+var EVENT_SHUTTERS_UPSTAIRS     = 1;
+var EVENT_SHUTTERS_DOWNSTAIRS   = 2;
+var EVENT_SHUTTERS_MARINE       = 3;
+var EVENT_SHUTTERS_MM           = 4;
+var EVENT_SHUTTERS_FRIENDS      = 5;
+var EVENT_SHUTTERS_DRESSING     = 6;
+var EVENT_ALARM_ALL             = 7;
+var EVENT_ALARM_PERIMETER       = 8;
+var EVENT_ALARM_VOLUME          = 9;
+var EVENT_SIMU                  = 10;
+var EVENT_POWER_0               = 11;
+var EVENT_POWER_1               = 12;
+var EVENT_POWER_2               = 13;
+var EVENT_POWER_3               = 14;
+var EVENT_ALARM_PERIMETER_CHECK = 15;
+var EVENT_MAX                   = 16;
 
 var EVENT_STATUS_OFF = 0;
 var EVENT_STATUS_ON  = 1;
@@ -1055,10 +1056,11 @@ document.write("\
         </ul>\
         <legend>Alarme</legend>\
         <ul class=\"iArrow\">\
-            <li id=\"Scene"+String(EVENT_ALARM_ALL)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_ALL             , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_ALL       , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\"><span id=\"Scene"+String(EVENT_ALARM_ALL)+"_Status\">Unknown</span>Toutes</li>\
-            <li id=\"Scene"+String(EVENT_ALARM_PERIMETER)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\"><span id=\"Scene"+String(EVENT_ALARM_PERIMETER)+"_Status\">Unknown</span>Périmétrique</li>\
-            <li id=\"Scene"+String(EVENT_ALARM_VOLUME)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_VOLUME       , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_VOLUME    , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\"><span id=\"Scene"+String(EVENT_ALARM_VOLUME)+"_Status\">Unknown</span>Volumétrique</li>\
-            <li id=\"Scene"+String(EVENT_SIMU)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SIMU                       , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SIMU            , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\"><span id=\"Scene"+String(EVENT_SIMU)+"_Status\">Unknown</span>Simulation Présence</li>\
+            <li id=\"Scene"+String(EVENT_ALARM_ALL)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_ALL                        , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_ALL            , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\"><span id=\"Scene"+String(EVENT_ALARM_ALL)+"_Status\">Unknown</span>Toutes</li>\
+            <li id=\"Scene"+String(EVENT_ALARM_PERIMETER)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER            , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER      , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\"><span id=\"Scene"+String(EVENT_ALARM_PERIMETER)+"_Status\">Unknown</span>Périmétrique</li>\
+            <li id=\"Scene"+String(EVENT_ALARM_PERIMETER_CHECK)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER_CHECK, EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER_CHECK, EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\"><span id=\"Scene"+String(EVENT_ALARM_PERIMETER_CHECK)+"_Status\">Unknown</span>Périmétrique Auto</li>\
+            <li id=\"Scene"+String(EVENT_ALARM_VOLUME)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_VOLUME                  , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_VOLUME         , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\"><span id=\"Scene"+String(EVENT_ALARM_VOLUME)+"_Status\">Unknown</span>Volumétrique</li>\
+            <li id=\"Scene"+String(EVENT_SIMU)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SIMU                                  , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SIMU                 , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\"><span id=\"Scene"+String(EVENT_SIMU)+"_Status\">Unknown</span>Simulation Présence</li>\
         </ul>\
         <legend>Power</legend>\
         <ul class=\"iArrow\">\
@@ -1508,6 +1510,7 @@ document.write("\
             <ul class=\"iArrow\">\
                 <li><a href=\"#_Event"+EVENT_ALARM_ALL+"\"><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\">Toutes</a></li>\
                 <li><a href=\"#_Event"+EVENT_ALARM_PERIMETER+"\"><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\">Périmétrique</a></li>\
+                <li><a href=\"#_Event"+EVENT_ALARM_PERIMETER_CHECK+"\"><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\">Périmétrique Auto</a></li>\
                 <li><a href=\"#_Event"+EVENT_ALARM_VOLUME+"\"><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\">Volumétrique</a></li>\
                 <li><a href=\"#_Event"+EVENT_SIMU+"\"><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\">Simulation Presence</a></li>\
             </ul>\
@@ -1569,18 +1572,19 @@ document.write("\
 ");
 }
 
-printEventInfo(EVENT_SHUTTERS_ALL        , "Tous"               );
-printEventInfo(EVENT_SHUTTERS_UPSTAIRS   , "Etage"              );
-printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS , "Rez de Chaussé"     );
-printEventInfo(EVENT_SHUTTERS_MARINE     , "Marine"             );
-printEventInfo(EVENT_SHUTTERS_MM         , "M&M"                );
-printEventInfo(EVENT_SHUTTERS_FRIENDS    , "Amis"               );
-printEventInfo(EVENT_SHUTTERS_DRESSING   , "Dressing"           );
-printEventInfo(EVENT_ALARM_ALL           , "Toutes"             );
-printEventInfo(EVENT_ALARM_PERIMETER     , "Perimetrique"       );
-printEventInfo(EVENT_ALARM_VOLUME        , "Volumetrique"       );
-printEventInfo(EVENT_SIMU                , "Simulation Presence");
-printEventInfo(EVENT_POWER_0             , "Wifi"               );
-printEventInfo(EVENT_POWER_1             , "Ethernet"           );
-printEventInfo(EVENT_POWER_2             , "Power 2"            );
-printEventInfo(EVENT_POWER_3             , "Power 3"            );
+printEventInfo(EVENT_SHUTTERS_ALL         , "Tous"               );
+printEventInfo(EVENT_SHUTTERS_UPSTAIRS    , "Etage"              );
+printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS  , "Rez de Chaussé"     );
+printEventInfo(EVENT_SHUTTERS_MARINE      , "Marine"             );
+printEventInfo(EVENT_SHUTTERS_MM          , "M&M"                );
+printEventInfo(EVENT_SHUTTERS_FRIENDS     , "Amis"               );
+printEventInfo(EVENT_SHUTTERS_DRESSING    , "Dressing"           );
+printEventInfo(EVENT_ALARM_ALL            , "Toutes"             );
+printEventInfo(EVENT_ALARM_PERIMETER_CHECK, "Perimetrique"       );
+printEventInfo(EVENT_ALARM_PERIMETER      , "Perimetrique Auto"  );
+printEventInfo(EVENT_ALARM_VOLUME         , "Volumetrique"       );
+printEventInfo(EVENT_SIMU                 , "Simulation Presence");
+printEventInfo(EVENT_POWER_0              , "Wifi"               );
+printEventInfo(EVENT_POWER_1              , "Ethernet"           );
+printEventInfo(EVENT_POWER_2              , "Power 2"            );
+printEventInfo(EVENT_POWER_3              , "Power 3"            );

@@ -49,6 +49,13 @@ uint8_t events_init(void)
   }
   events_proc_init();
 
+  /* Set the default configuration for the Alarm Perimeter */
+  /* Force the Alarm ON everyday in the night and OFF in the morning */
+  event_list[EVENT_ALARM_PERIMETER_CHECK].status       = EVENT_STATUS_ON;
+  event_list[EVENT_ALARM_PERIMETER_CHECK].status_start = EVENT_STATUS_ON; event_list[EVENT_ALARM_PERIMETER_CHECK].hour_start = 0; event_list[EVENT_ALARM_PERIMETER_CHECK].minute_start = 5;
+  event_list[EVENT_ALARM_PERIMETER_CHECK].status_end   = EVENT_STATUS_ON; event_list[EVENT_ALARM_PERIMETER_CHECK].hour_end   = 6; event_list[EVENT_ALARM_PERIMETER_CHECK].minute_end   = 0;
+  event_list[EVENT_ALARM_PERIMETER_CHECK].rec          = 0xFF;
+
   /* Set the default configuration for the Ethernet power line */
   /* Force the poweroff everyday in the night */
   event_list[EVENT_POWER_1].status       = EVENT_STATUS_ON;
