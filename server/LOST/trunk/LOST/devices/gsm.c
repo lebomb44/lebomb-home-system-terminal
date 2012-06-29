@@ -334,7 +334,14 @@ uint8_t gsm_sms_send_with_tel(char * tel, char * msg)
 
 uint8_t gsm_sms_send(char * msg)
 {
-  return (gsm_sms_send_with_tel(LOST_GSM1, msg) + gsm_sms_send_with_tel(LOST_GSM2, msg));
+  uint8_t ret1 = 0;
+  uint8_t ret2 = 0;
+
+  ret1 = gsm_sms_send_with_tel(LOST_GSM1, msg);
+  NutSleep(2000);
+  ret2 = gsm_sms_send_with_tel(LOST_GSM2, msg);
+
+  return (ret1 + ret2);
 }
 
 char* gsm_sms_receive(void)
