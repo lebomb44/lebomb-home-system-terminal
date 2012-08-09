@@ -289,7 +289,7 @@ uint8_t http_email_send(char* msg)
 {
   uint8_t i = 0;
 
-  //for(i=0; i<10; i++)
+  for(i=0; i<10; i++)
   {
     if(http_email_send_once(msg) == 0) { return 0; }
     NutSleep(1000);
