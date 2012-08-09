@@ -143,7 +143,7 @@ THREAD(SafetyUpsRackD, arg)
   uint8_t i = 0;
 
   arg = arg;
-  NutThreadSetPriority(20);
+  NutThreadSetPriority(100);
 
   while(1)
   {
@@ -174,7 +174,7 @@ THREAD(SafetyUpsRackD, arg)
 THREAD(SafetyRoomsD, arg)
 {
   arg = arg;
-  NutThreadSetPriority(21);
+  NutThreadSetPriority(101);
 
   while(1)
   {
@@ -200,7 +200,7 @@ THREAD(SafetyGsmD, arg)
   char msg[10];
 
   arg = arg;
-  NutThreadSetPriority(22);
+  NutThreadSetPriority(102);
 
   NutSleep(3000);
 
@@ -222,7 +222,7 @@ THREAD(SafetyHttpD, arg)
   char msg[10];
 
   arg = arg;
-  NutThreadSetPriority(23);
+  NutThreadSetPriority(103);
 
   while(1)
   {
