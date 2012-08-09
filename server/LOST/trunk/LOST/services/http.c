@@ -154,13 +154,13 @@ uint8_t http_request_header_start(char* ip, uint16_t port, int method, TCPSOCKET
   NutTcpSetSockOpt(*sock, SO_RCVTIMEO, &sock_opt, sizeof(sock_opt));
 
   /* Connect the server of the IP */
-  if(NutTcpConnect(*sock, rip, port) != 0) { *sock = NULL; *stream = NULL; return 4; }
+  if(NutTcpConnect(*sock, rip, port) != 0) { NutTcpCloseSocket(*sock); *sock = NULL; *stream = NULL; return 4; }
 
   /* Assign a stream to our connected socket */
   *stream = _fdopen((int) *sock, "r+b");
 
   /* Check the returned stream */
-  if(*stream == NULL) { NutTcpCloseSocket(*sock); *sock = NULL; }
+  if(*stream == NULL) { NutTcpCloseSocket(*sock); *sock = NULL; return 5; }
 
   /* Send the HTTP header according to the chosen method */
   if(method == METHOD_GET) { fputs("GET", *stream); }
@@ -289,7 +289,7 @@ uint8_t http_email_send(char* msg)
 {
   uint8_t i = 0;
 
-  for(i=0; i<10; i++)
+  //for(i=0; i<10; i++)
   {
     if(http_email_send_once(msg) == 0) { return 0; }
     NutSleep(1000);

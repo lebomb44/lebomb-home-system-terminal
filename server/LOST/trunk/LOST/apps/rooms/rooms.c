@@ -269,7 +269,7 @@ THREAD(RoomD, arg)
   uint8_t i = 0;
 
   arg = arg;
-  NutThreadSetPriority(26);
+  NutThreadSetPriority(106);
 
   while(1)
   {

@@ -94,7 +94,7 @@ void alarm_simulation_set(uint8_t control)
 THREAD(AlarmD, arg)
 {
   arg = arg;
-  NutThreadSetPriority(25);
+  NutThreadSetPriority(105);
 
   while(1)
   {
