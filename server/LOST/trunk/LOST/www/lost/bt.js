@@ -326,6 +326,62 @@ function lost_mon_xml_get(xml)
 }
 var url_alarm="cgi/alarm.cgi?";
 
+function lost_alarm_update(xml, type)
+{
+  var out_str;
+  var out_id;
+  var in_id1 = xml.getElementsByTagName("Alarm")[0];
+  var in_id2;
+  if(in_id1)
+  {
+    in_id2 = in_id1.getElementsByTagName(type+"_Ctrl")[0];
+  }
+  else
+  {
+    in_id2 = null;
+  }
+  out_str = "Alarm_"+type+"_Status";
+  out_id = document.getElementById(out_str);
+  if(out_id)
+  {
+    if(in_id2)
+    {
+      if(in_id2.firstChild.nodeValue > 0)
+      {
+        if(in_id2.firstChild.nodeValue == 1)
+        {
+          out_id.innerHTML = "Running&nbsp;";
+        }
+        else
+        {
+          out_id.innerHTML = "Starting in "+in_id2.firstChild.nodeValue+"s&nbsp;";
+        }
+      }
+      else
+      {
+        out_id.innerHTML = "";
+      }
+    }
+    else
+    {
+      out_id.innerHTML = "Unknown&nbsp;";
+    }
+    lost_wa_refresh(out_str);
+  }
+}
+
+function lost_alarm_xml_get(xml)
+{
+  lost_elt_bool_update(xml, "Alarm", "Perimeter");
+  lost_elt_bool_update(xml, "Alarm", "Volume");
+  lost_elt_bool_update(xml, "Alarm", "Simulation");
+
+  lost_alarm_update(xml, "Perimeter");
+  lost_alarm_update(xml, "Volume");
+  lost_alarm_update(xml, "Simulation");
+}
+
+/* ********** SET ********** */
 function lost_alarm_perimeter_set()
 {
   var elt;
@@ -354,13 +410,6 @@ function lost_alarm_simulation_set()
   {
     lost_set(url_alarm+"simulation_ctrl="+String(Number(elt.checked)));
   }
-}
-
-function lost_alarm_xml_get(xml)
-{
-  lost_elt_bool_update(xml, "Alarm", "Perimeter");
-  lost_elt_bool_update(xml, "Alarm", "Volume");
-  lost_elt_bool_update(xml, "Alarm", "Simulation");
 }
 var ATM_UNKNOWN    = 0;
 var ATM_CINEMA     = 1;
@@ -974,9 +1023,9 @@ document.write("\
         <fieldset>\
             <legend>Alarmes</legend>\
             <ul class=\"iArrow\">\
-                <li id=\"Alarm_Perimeter_Ctrl_bg\"><input type=\"checkbox\" id=\"Alarm_Perimeter_Ctrl\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_alarm_perimeter_set();\"><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\"><label for=\"Alarm_Perimeter_Ctrl\">Perimetrique</label></li>\
-                <li id=\"Alarm_Volume_Ctrl_bg\"><input type=\"checkbox\" id=\"Alarm_Volume_Ctrl\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_alarm_volume_set();\"><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\"><label for=\"Alarm_Volume_Ctrl\">Volumetrique</label></li>\
-                <li id=\"Alarm_Simulation_Ctrl_bg\"><input type=\"checkbox\" id=\"Alarm_Simulation_Ctrl\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_alarm_simulation_set();\"><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\"><label for=\"Alarm_Simulation_Ctrl\">Simulation de presence</label></li>\
+                <li id=\"Alarm_Perimeter_Ctrl_bg\"><input type=\"checkbox\" id=\"Alarm_Perimeter_Ctrl\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_alarm_perimeter_set();\"><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\"><label for=\"Alarm_Perimeter_Ctrl\">Perimetrique</label><span id=\"Alarm_Perimeter_Status\">Unknown</span></li>\
+                <li id=\"Alarm_Volume_Ctrl_bg\"><input type=\"checkbox\" id=\"Alarm_Volume_Ctrl\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_alarm_volume_set();\"><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\"><label for=\"Alarm_Volume_Ctrl\">Volumetrique</label><span id=\"Alarm_Volume_Status\">Unknown</span></li>\
+                <li id=\"Alarm_Simulation_Ctrl_bg\"><input type=\"checkbox\" id=\"Alarm_Simulation_Ctrl\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_alarm_simulation_set();\"><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\"><label for=\"Alarm_Simulation_Ctrl\">Simulation de presence</label><span id=\"Alarm_Simulation_Status\">Unknown</span></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
