@@ -1,0 +1,12 @@
+[Files]
+nutpiper\scanner.c
+nutpiper\display.c
+nutpiper\nutpiper.c
+nutpiper\player.c
+nutpiper\config.c
+[Headers]
+nutpiper\scanner.h
+nutpiper\display.h
+nutpiper\player.h
+nutpiper\config.h
+[Documents]

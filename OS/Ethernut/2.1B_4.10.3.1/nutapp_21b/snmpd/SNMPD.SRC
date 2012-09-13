@@ -1,0 +1,8 @@
+[Files]
+snmpd\snmpd.c
+snmpd\mib2if.c
+snmpd\mib2sys.c
+[Headers]
+snmpd\mib2if.h
+snmpd\mib2sys.h
+[Documents]
