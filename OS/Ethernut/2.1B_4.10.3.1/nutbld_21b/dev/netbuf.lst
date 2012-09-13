@@ -1,0 +1,681 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s 			page 1
+
+
+   1               		.file	"netbuf.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutNetBufFree
+  10               		.type	NutNetBufFree, @function
+  11               	NutNetBufFree:
+  12 0000 CF93      		push r28
+  13 0002 DF93      		push r29
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0004 EC01      		movw r28,r24
+  17 0006 2A81      		ldd r18,Y+2
+  18 0008 422F      		mov r20,r18
+  19 000a 50E0      		ldi r21,lo8(0)
+  20 000c CA01      		movw r24,r20
+  21 000e 8770      		andi r24,lo8(7)
+  22 0010 9070      		andi r25,hi8(7)
+  23 0012 892B      		or r24,r25
+  24 0014 01F0      		breq .L2
+  25 0016 2150      		subi r18,lo8(-(-1))
+  26 0018 2A83      		std Y+2,r18
+  27 001a 00C0      		rjmp .L9
+  28               	.L2:
+  29 001c 24FF      		sbrs r18,4
+  30 001e 00C0      		rjmp .L4
+  31 0020 6B81      		ldd r22,Y+3
+  32 0022 7C81      		ldd r23,Y+4
+  33 0024 80E0      		ldi r24,lo8(heapFreeList)
+  34 0026 90E0      		ldi r25,hi8(heapFreeList)
+  35 0028 0E94 0000 		call NutHeapRootFree
+  36               	.L4:
+  37 002c 8A81      		ldd r24,Y+2
+  38 002e 85FF      		sbrs r24,5
+  39 0030 00C0      		rjmp .L5
+  40 0032 6F81      		ldd r22,Y+7
+  41 0034 7885      		ldd r23,Y+8
+  42 0036 80E0      		ldi r24,lo8(heapFreeList)
+  43 0038 90E0      		ldi r25,hi8(heapFreeList)
+  44 003a 0E94 0000 		call NutHeapRootFree
+  45               	.L5:
+  46 003e 8A81      		ldd r24,Y+2
+  47 0040 86FF      		sbrs r24,6
+  48 0042 00C0      		rjmp .L6
+  49 0044 6B85      		ldd r22,Y+11
+  50 0046 7C85      		ldd r23,Y+12
+  51 0048 80E0      		ldi r24,lo8(heapFreeList)
+  52 004a 90E0      		ldi r25,hi8(heapFreeList)
+  53 004c 0E94 0000 		call NutHeapRootFree
+  54               	.L6:
+  55 0050 8A81      		ldd r24,Y+2
+  56 0052 87FF      		sbrs r24,7
+  57 0054 00C0      		rjmp .L7
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s 			page 2
+
+
+  58 0056 6F85      		ldd r22,Y+15
+  59 0058 7889      		ldd r23,Y+16
+  60 005a 80E0      		ldi r24,lo8(heapFreeList)
+  61 005c 90E0      		ldi r25,hi8(heapFreeList)
+  62 005e 0E94 0000 		call NutHeapRootFree
+  63               	.L7:
+  64 0062 8B89      		ldd r24,Y+19
+  65 0064 9C89      		ldd r25,Y+20
+  66 0066 0097      		sbiw r24,0
+  67 0068 01F0      		breq .L8
+  68 006a 0E94 0000 		call NutNetBufFree
+  69               	.L8:
+  70 006e 80E0      		ldi r24,lo8(heapFreeList)
+  71 0070 90E0      		ldi r25,hi8(heapFreeList)
+  72 0072 BE01      		movw r22,r28
+  73 0074 0E94 0000 		call NutHeapRootFree
+  74               	.L9:
+  75               	/* epilogue start */
+  76 0078 DF91      		pop r29
+  77 007a CF91      		pop r28
+  78 007c 0895      		ret
+  79               		.size	NutNetBufFree, .-NutNetBufFree
+  80               		.type	NutNetBufAllocData, @function
+  81               	NutNetBufAllocData:
+  82 007e 0F93      		push r16
+  83 0080 1F93      		push r17
+  84 0082 CF93      		push r28
+  85 0084 DF93      		push r29
+  86               	/* prologue: function */
+  87               	/* frame size = 0 */
+  88 0086 8C01      		movw r16,r24
+  89 0088 EB01      		movw r28,r22
+  90 008a 80E0      		ldi r24,lo8(heapFreeList)
+  91 008c 90E0      		ldi r25,hi8(heapFreeList)
+  92 008e 0E94 0000 		call NutHeapRootAlloc
+  93 0092 F801      		movw r30,r16
+  94 0094 9183      		std Z+1,r25
+  95 0096 8083      		st Z,r24
+  96 0098 892B      		or r24,r25
+  97 009a 01F4      		brne .L11
+  98 009c 2FEF      		ldi r18,lo8(-1)
+  99 009e 3FEF      		ldi r19,hi8(-1)
+ 100 00a0 00C0      		rjmp .L12
+ 101               	.L11:
+ 102 00a2 F801      		movw r30,r16
+ 103 00a4 D383      		std Z+3,r29
+ 104 00a6 C283      		std Z+2,r28
+ 105 00a8 20E0      		ldi r18,lo8(0)
+ 106 00aa 30E0      		ldi r19,hi8(0)
+ 107               	.L12:
+ 108 00ac C901      		movw r24,r18
+ 109               	/* epilogue start */
+ 110 00ae DF91      		pop r29
+ 111 00b0 CF91      		pop r28
+ 112 00b2 1F91      		pop r17
+ 113 00b4 0F91      		pop r16
+ 114 00b6 0895      		ret
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s 			page 3
+
+
+ 115               		.size	NutNetBufAllocData, .-NutNetBufAllocData
+ 116               	.global	NutNetBufCollect
+ 117               		.type	NutNetBufCollect, @function
+ 118               	NutNetBufCollect:
+ 119 00b8 6F92      		push r6
+ 120 00ba 7F92      		push r7
+ 121 00bc 8F92      		push r8
+ 122 00be 9F92      		push r9
+ 123 00c0 AF92      		push r10
+ 124 00c2 BF92      		push r11
+ 125 00c4 CF92      		push r12
+ 126 00c6 DF92      		push r13
+ 127 00c8 EF92      		push r14
+ 128 00ca FF92      		push r15
+ 129 00cc 0F93      		push r16
+ 130 00ce 1F93      		push r17
+ 131 00d0 DF93      		push r29
+ 132 00d2 CF93      		push r28
+ 133 00d4 00D0      		rcall .
+ 134 00d6 00D0      		rcall .
+ 135 00d8 CDB7      		in r28,__SP_L__
+ 136 00da DEB7      		in r29,__SP_H__
+ 137               	/* prologue: function */
+ 138               	/* frame size = 4 */
+ 139 00dc 6C01      		movw r12,r24
+ 140 00de 3B01      		movw r6,r22
+ 141 00e0 CE01      		movw r24,r28
+ 142 00e2 0196      		adiw r24,1
+ 143 00e4 0E94 0000 		call NutNetBufAllocData
+ 144 00e8 892B      		or r24,r25
+ 145 00ea 01F0      		breq .L15
+ 146 00ec 8824      		clr r8
+ 147 00ee 9924      		clr r9
+ 148 00f0 00C0      		rjmp .L16
+ 149               	.L15:
+ 150 00f2 8981      		ldd r24,Y+1
+ 151 00f4 9A81      		ldd r25,Y+2
+ 152 00f6 5C01      		movw r10,r24
+ 153 00f8 D601      		movw r26,r12
+ 154 00fa 1F96      		adiw r26,15
+ 155 00fc 6C91      		ld r22,X
+ 156 00fe 1F97      		sbiw r26,15
+ 157 0100 5096      		adiw r26,16
+ 158 0102 7C91      		ld r23,X
+ 159 0104 5097      		sbiw r26,16
+ 160 0106 5196      		adiw r26,17
+ 161 0108 4D91      		ld r20,X+
+ 162 010a 5C91      		ld r21,X
+ 163 010c 5297      		sbiw r26,17+1
+ 164 010e 0E94 0000 		call memcpy
+ 165 0112 F601      		movw r30,r12
+ 166 0114 8189      		ldd r24,Z+17
+ 167 0116 9289      		ldd r25,Z+18
+ 168 0118 9C83      		std Y+4,r25
+ 169 011a 8B83      		std Y+3,r24
+ 170 011c E080      		ld r14,Z
+ 171 011e F180      		ldd r15,Z+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s 			page 4
+
+
+ 172 0120 8824      		clr r8
+ 173 0122 9924      		clr r9
+ 174 0124 00C0      		rjmp .L18
+ 175               	.L21:
+ 176 0126 D701      		movw r26,r14
+ 177 0128 1C91      		ld r17,X
+ 178 012a 1196      		adiw r26,1
+ 179 012c 0C91      		ld r16,X
+ 180 012e 1197      		sbiw r26,1
+ 181 0130 2A0D      		add r18,r10
+ 182 0132 3B1D      		adc r19,r11
+ 183 0134 1F96      		adiw r26,15
+ 184 0136 6C91      		ld r22,X
+ 185 0138 1F97      		sbiw r26,15
+ 186 013a 5096      		adiw r26,16
+ 187 013c 7C91      		ld r23,X
+ 188 013e C901      		movw r24,r18
+ 189 0140 AF01      		movw r20,r30
+ 190 0142 0E94 0000 		call memcpy
+ 191 0146 8B81      		ldd r24,Y+3
+ 192 0148 9C81      		ldd r25,Y+4
+ 193 014a F701      		movw r30,r14
+ 194 014c 2189      		ldd r18,Z+17
+ 195 014e 3289      		ldd r19,Z+18
+ 196 0150 820F      		add r24,r18
+ 197 0152 931F      		adc r25,r19
+ 198 0154 9C83      		std Y+4,r25
+ 199 0156 8B83      		std Y+3,r24
+ 200 0158 C701      		movw r24,r14
+ 201 015a 0E94 0000 		call NutNetBufFree
+ 202 015e 0894      		sec
+ 203 0160 811C      		adc r8,__zero_reg__
+ 204 0162 911C      		adc r9,__zero_reg__
+ 205 0164 212F      		mov r18,r17
+ 206 0166 302F      		mov r19,r16
+ 207 0168 C901      		movw r24,r18
+ 208 016a 7C01      		movw r14,r24
+ 209               	.L18:
+ 210 016c E114      		cp r14,__zero_reg__
+ 211 016e F104      		cpc r15,__zero_reg__
+ 212 0170 01F0      		breq .L20
+ 213 0172 2B81      		ldd r18,Y+3
+ 214 0174 3C81      		ldd r19,Y+4
+ 215 0176 D701      		movw r26,r14
+ 216 0178 5196      		adiw r26,17
+ 217 017a ED91      		ld r30,X+
+ 218 017c FC91      		ld r31,X
+ 219 017e 5297      		sbiw r26,17+1
+ 220 0180 CF01      		movw r24,r30
+ 221 0182 820F      		add r24,r18
+ 222 0184 931F      		adc r25,r19
+ 223 0186 6816      		cp r6,r24
+ 224 0188 7906      		cpc r7,r25
+ 225 018a 04F4      		brge .L21
+ 226               	.L20:
+ 227 018c F601      		movw r30,r12
+ 228 018e F182      		std Z+1,r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s 			page 5
+
+
+ 229 0190 E082      		st Z,r14
+ 230 0192 8281      		ldd r24,Z+2
+ 231 0194 87FF      		sbrs r24,7
+ 232 0196 00C0      		rjmp .L22
+ 233 0198 6785      		ldd r22,Z+15
+ 234 019a 7089      		ldd r23,Z+16
+ 235 019c 80E0      		ldi r24,lo8(heapFreeList)
+ 236 019e 90E0      		ldi r25,hi8(heapFreeList)
+ 237 01a0 0E94 0000 		call NutHeapRootFree
+ 238 01a4 00C0      		rjmp .L23
+ 239               	.L22:
+ 240 01a6 8068      		ori r24,lo8(-128)
+ 241 01a8 D601      		movw r26,r12
+ 242 01aa 1296      		adiw r26,2
+ 243 01ac 8C93      		st X,r24
+ 244               	.L23:
+ 245 01ae 8981      		ldd r24,Y+1
+ 246 01b0 9A81      		ldd r25,Y+2
+ 247 01b2 F601      		movw r30,r12
+ 248 01b4 908B      		std Z+16,r25
+ 249 01b6 8787      		std Z+15,r24
+ 250 01b8 8B81      		ldd r24,Y+3
+ 251 01ba 9C81      		ldd r25,Y+4
+ 252 01bc 928B      		std Z+18,r25
+ 253 01be 818B      		std Z+17,r24
+ 254               	.L16:
+ 255 01c0 C401      		movw r24,r8
+ 256               	/* epilogue start */
+ 257 01c2 0F90      		pop __tmp_reg__
+ 258 01c4 0F90      		pop __tmp_reg__
+ 259 01c6 0F90      		pop __tmp_reg__
+ 260 01c8 0F90      		pop __tmp_reg__
+ 261 01ca CF91      		pop r28
+ 262 01cc DF91      		pop r29
+ 263 01ce 1F91      		pop r17
+ 264 01d0 0F91      		pop r16
+ 265 01d2 FF90      		pop r15
+ 266 01d4 EF90      		pop r14
+ 267 01d6 DF90      		pop r13
+ 268 01d8 CF90      		pop r12
+ 269 01da BF90      		pop r11
+ 270 01dc AF90      		pop r10
+ 271 01de 9F90      		pop r9
+ 272 01e0 8F90      		pop r8
+ 273 01e2 7F90      		pop r7
+ 274 01e4 6F90      		pop r6
+ 275 01e6 0895      		ret
+ 276               		.size	NutNetBufCollect, .-NutNetBufCollect
+ 277               	.global	NutNetBufClonePart
+ 278               		.type	NutNetBufClonePart, @function
+ 279               	NutNetBufClonePart:
+ 280 01e8 8F92      		push r8
+ 281 01ea 9F92      		push r9
+ 282 01ec AF92      		push r10
+ 283 01ee BF92      		push r11
+ 284 01f0 CF92      		push r12
+ 285 01f2 DF92      		push r13
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s 			page 6
+
+
+ 286 01f4 EF92      		push r14
+ 287 01f6 FF92      		push r15
+ 288 01f8 0F93      		push r16
+ 289 01fa 1F93      		push r17
+ 290 01fc CF93      		push r28
+ 291 01fe DF93      		push r29
+ 292               	/* prologue: function */
+ 293               	/* frame size = 0 */
+ 294 0200 8C01      		movw r16,r24
+ 295 0202 A62E      		mov r10,r22
+ 296 0204 FC01      		movw r30,r24
+ 297 0206 8281      		ldd r24,Z+2
+ 298 0208 8770      		andi r24,lo8(7)
+ 299 020a 8730      		cpi r24,lo8(7)
+ 300 020c 01F4      		brne .L26
+ 301 020e 80EF      		ldi r24,lo8(-16)
+ 302 0210 A82E      		mov r10,r24
+ 303               	.L26:
+ 304 0212 80E0      		ldi r24,lo8(heapFreeList)
+ 305 0214 90E0      		ldi r25,hi8(heapFreeList)
+ 306 0216 65E1      		ldi r22,lo8(21)
+ 307 0218 70E0      		ldi r23,hi8(21)
+ 308 021a 0E94 0000 		call NutHeapRootAllocClear
+ 309 021e EC01      		movw r28,r24
+ 310 0220 4C01      		movw r8,r24
+ 311 0222 0097      		sbiw r24,0
+ 312 0224 01F4      		brne .+2
+ 313 0226 00C0      		rjmp .L27
+ 314 0228 F801      		movw r30,r16
+ 315 022a E580      		ldd r14,Z+5
+ 316 022c F680      		ldd r15,Z+6
+ 317 022e E114      		cp r14,__zero_reg__
+ 318 0230 F104      		cpc r15,__zero_reg__
+ 319 0232 01F4      		brne .L28
+ 320 0234 BB24      		clr r11
+ 321 0236 00C0      		rjmp .L46
+ 322               	.L28:
+ 323 0238 A4FE      		sbrs r10,4
+ 324 023a 00C0      		rjmp .L30
+ 325 023c 0396      		adiw r24,3
+ 326 023e B701      		movw r22,r14
+ 327 0240 0E94 0000 		call NutNetBufAllocData
+ 328 0244 6C01      		movw r12,r24
+ 329 0246 0097      		sbiw r24,0
+ 330 0248 01F4      		brne .L47
+ 331               	.L31:
+ 332 024a F801      		movw r30,r16
+ 333 024c 6381      		ldd r22,Z+3
+ 334 024e 7481      		ldd r23,Z+4
+ 335 0250 8B81      		ldd r24,Y+3
+ 336 0252 9C81      		ldd r25,Y+4
+ 337 0254 A701      		movw r20,r14
+ 338 0256 0E94 0000 		call memcpy
+ 339 025a 8A81      		ldd r24,Y+2
+ 340 025c 8061      		ori r24,lo8(16)
+ 341 025e 8A83      		std Y+2,r24
+ 342               	.L47:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s 			page 7
+
+
+ 343 0260 BB24      		clr r11
+ 344 0262 00C0      		rjmp .L29
+ 345               	.L30:
+ 346 0264 F801      		movw r30,r16
+ 347 0266 8381      		ldd r24,Z+3
+ 348 0268 9481      		ldd r25,Z+4
+ 349 026a 9C83      		std Y+4,r25
+ 350 026c 8B83      		std Y+3,r24
+ 351 026e FE82      		std Y+6,r15
+ 352 0270 ED82      		std Y+5,r14
+ 353 0272 BB24      		clr r11
+ 354 0274 B394      		inc r11
+ 355               	.L46:
+ 356 0276 CC24      		clr r12
+ 357 0278 DD24      		clr r13
+ 358               	.L29:
+ 359 027a F801      		movw r30,r16
+ 360 027c E184      		ldd r14,Z+9
+ 361 027e F284      		ldd r15,Z+10
+ 362 0280 E114      		cp r14,__zero_reg__
+ 363 0282 F104      		cpc r15,__zero_reg__
+ 364 0284 01F0      		breq .L33
+ 365 0286 C114      		cp r12,__zero_reg__
+ 366 0288 D104      		cpc r13,__zero_reg__
+ 367 028a 01F4      		brne .L33
+ 368 028c A5FE      		sbrs r10,5
+ 369 028e 00C0      		rjmp .L34
+ 370 0290 CE01      		movw r24,r28
+ 371 0292 0796      		adiw r24,7
+ 372 0294 B701      		movw r22,r14
+ 373 0296 0E94 0000 		call NutNetBufAllocData
+ 374 029a 6C01      		movw r12,r24
+ 375 029c 0097      		sbiw r24,0
+ 376 029e 01F4      		brne .L33
+ 377 02a0 F801      		movw r30,r16
+ 378 02a2 6781      		ldd r22,Z+7
+ 379 02a4 7085      		ldd r23,Z+8
+ 380 02a6 8F81      		ldd r24,Y+7
+ 381 02a8 9885      		ldd r25,Y+8
+ 382 02aa A701      		movw r20,r14
+ 383 02ac 0E94 0000 		call memcpy
+ 384 02b0 8A81      		ldd r24,Y+2
+ 385 02b2 8062      		ori r24,lo8(32)
+ 386 02b4 8A83      		std Y+2,r24
+ 387 02b6 00C0      		rjmp .L33
+ 388               	.L34:
+ 389 02b8 F801      		movw r30,r16
+ 390 02ba 8781      		ldd r24,Z+7
+ 391 02bc 9085      		ldd r25,Z+8
+ 392 02be 9887      		std Y+8,r25
+ 393 02c0 8F83      		std Y+7,r24
+ 394 02c2 FA86      		std Y+10,r15
+ 395 02c4 E986      		std Y+9,r14
+ 396 02c6 BB24      		clr r11
+ 397 02c8 B394      		inc r11
+ 398               	.L33:
+ 399 02ca F801      		movw r30,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s 			page 8
+
+
+ 400 02cc E584      		ldd r14,Z+13
+ 401 02ce F684      		ldd r15,Z+14
+ 402 02d0 E114      		cp r14,__zero_reg__
+ 403 02d2 F104      		cpc r15,__zero_reg__
+ 404 02d4 01F0      		breq .L36
+ 405 02d6 C114      		cp r12,__zero_reg__
+ 406 02d8 D104      		cpc r13,__zero_reg__
+ 407 02da 01F4      		brne .L36
+ 408 02dc A6FE      		sbrs r10,6
+ 409 02de 00C0      		rjmp .L37
+ 410 02e0 CE01      		movw r24,r28
+ 411 02e2 0B96      		adiw r24,11
+ 412 02e4 B701      		movw r22,r14
+ 413 02e6 0E94 0000 		call NutNetBufAllocData
+ 414 02ea 6C01      		movw r12,r24
+ 415 02ec 0097      		sbiw r24,0
+ 416 02ee 01F4      		brne .L36
+ 417 02f0 F801      		movw r30,r16
+ 418 02f2 6385      		ldd r22,Z+11
+ 419 02f4 7485      		ldd r23,Z+12
+ 420 02f6 8B85      		ldd r24,Y+11
+ 421 02f8 9C85      		ldd r25,Y+12
+ 422 02fa A701      		movw r20,r14
+ 423 02fc 0E94 0000 		call memcpy
+ 424 0300 8A81      		ldd r24,Y+2
+ 425 0302 8064      		ori r24,lo8(64)
+ 426 0304 8A83      		std Y+2,r24
+ 427 0306 00C0      		rjmp .L36
+ 428               	.L37:
+ 429 0308 F801      		movw r30,r16
+ 430 030a 8385      		ldd r24,Z+11
+ 431 030c 9485      		ldd r25,Z+12
+ 432 030e 9C87      		std Y+12,r25
+ 433 0310 8B87      		std Y+11,r24
+ 434 0312 FE86      		std Y+14,r15
+ 435 0314 ED86      		std Y+13,r14
+ 436 0316 BB24      		clr r11
+ 437 0318 B394      		inc r11
+ 438               	.L36:
+ 439 031a F801      		movw r30,r16
+ 440 031c E188      		ldd r14,Z+17
+ 441 031e F288      		ldd r15,Z+18
+ 442 0320 E114      		cp r14,__zero_reg__
+ 443 0322 F104      		cpc r15,__zero_reg__
+ 444 0324 01F0      		breq .L39
+ 445 0326 CD28      		or r12,r13
+ 446 0328 01F4      		brne .L40
+ 447 032a A7FE      		sbrs r10,7
+ 448 032c 00C0      		rjmp .L41
+ 449 032e CE01      		movw r24,r28
+ 450 0330 0F96      		adiw r24,15
+ 451 0332 B701      		movw r22,r14
+ 452 0334 0E94 0000 		call NutNetBufAllocData
+ 453 0338 892B      		or r24,r25
+ 454 033a 01F4      		brne .L40
+ 455 033c F801      		movw r30,r16
+ 456 033e 6785      		ldd r22,Z+15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s 			page 9
+
+
+ 457 0340 7089      		ldd r23,Z+16
+ 458 0342 8F85      		ldd r24,Y+15
+ 459 0344 9889      		ldd r25,Y+16
+ 460 0346 A701      		movw r20,r14
+ 461 0348 0E94 0000 		call memcpy
+ 462 034c 8A81      		ldd r24,Y+2
+ 463 034e 8068      		ori r24,lo8(-128)
+ 464 0350 8A83      		std Y+2,r24
+ 465 0352 00C0      		rjmp .L43
+ 466               	.L41:
+ 467 0354 F801      		movw r30,r16
+ 468 0356 8785      		ldd r24,Z+15
+ 469 0358 9089      		ldd r25,Z+16
+ 470 035a 988B      		std Y+16,r25
+ 471 035c 8F87      		std Y+15,r24
+ 472 035e FA8A      		std Y+18,r15
+ 473 0360 E98A      		std Y+17,r14
+ 474 0362 00C0      		rjmp .L44
+ 475               	.L39:
+ 476 0364 CD28      		or r12,r13
+ 477 0366 01F0      		breq .L43
+ 478               	.L40:
+ 479 0368 CE01      		movw r24,r28
+ 480 036a 0E94 0000 		call NutNetBufFree
+ 481 036e 8824      		clr r8
+ 482 0370 9924      		clr r9
+ 483 0372 00C0      		rjmp .L27
+ 484               	.L43:
+ 485 0374 BB20      		tst r11
+ 486 0376 01F0      		breq .L27
+ 487               	.L44:
+ 488 0378 1C8B      		std Y+20,r17
+ 489 037a 0B8B      		std Y+19,r16
+ 490 037c F801      		movw r30,r16
+ 491 037e 8281      		ldd r24,Z+2
+ 492 0380 8F5F      		subi r24,lo8(-(1))
+ 493 0382 8283      		std Z+2,r24
+ 494               	.L27:
+ 495 0384 C401      		movw r24,r8
+ 496               	/* epilogue start */
+ 497 0386 DF91      		pop r29
+ 498 0388 CF91      		pop r28
+ 499 038a 1F91      		pop r17
+ 500 038c 0F91      		pop r16
+ 501 038e FF90      		pop r15
+ 502 0390 EF90      		pop r14
+ 503 0392 DF90      		pop r13
+ 504 0394 CF90      		pop r12
+ 505 0396 BF90      		pop r11
+ 506 0398 AF90      		pop r10
+ 507 039a 9F90      		pop r9
+ 508 039c 8F90      		pop r8
+ 509 039e 0895      		ret
+ 510               		.size	NutNetBufClonePart, .-NutNetBufClonePart
+ 511               	.global	NutNetBufClone
+ 512               		.type	NutNetBufClone, @function
+ 513               	NutNetBufClone:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s 			page 10
+
+
+ 514               	/* prologue: function */
+ 515               	/* frame size = 0 */
+ 516 03a0 60EF      		ldi r22,lo8(-16)
+ 517 03a2 0E94 0000 		call NutNetBufClonePart
+ 518               	/* epilogue start */
+ 519 03a6 0895      		ret
+ 520               		.size	NutNetBufClone, .-NutNetBufClone
+ 521               	.global	NutNetBufAlloc
+ 522               		.type	NutNetBufAlloc, @function
+ 523               	NutNetBufAlloc:
+ 524 03a8 DF92      		push r13
+ 525 03aa EF92      		push r14
+ 526 03ac FF92      		push r15
+ 527 03ae 0F93      		push r16
+ 528 03b0 1F93      		push r17
+ 529 03b2 CF93      		push r28
+ 530 03b4 DF93      		push r29
+ 531               	/* prologue: function */
+ 532               	/* frame size = 0 */
+ 533 03b6 8C01      		movw r16,r24
+ 534 03b8 D62E      		mov r13,r22
+ 535 03ba 7A01      		movw r14,r20
+ 536 03bc 0097      		sbiw r24,0
+ 537 03be 01F4      		brne .L51
+ 538 03c0 80E0      		ldi r24,lo8(heapFreeList)
+ 539 03c2 90E0      		ldi r25,hi8(heapFreeList)
+ 540 03c4 65E1      		ldi r22,lo8(21)
+ 541 03c6 70E0      		ldi r23,hi8(21)
+ 542 03c8 0E94 0000 		call NutHeapRootAllocClear
+ 543 03cc 8C01      		movw r16,r24
+ 544 03ce 0097      		sbiw r24,0
+ 545 03d0 01F0      		breq .L52
+ 546               	.L51:
+ 547 03d2 80E2      		ldi r24,lo8(32)
+ 548 03d4 D816      		cp r13,r24
+ 549 03d6 01F0      		breq .L55
+ 550 03d8 E0E4      		ldi r30,lo8(64)
+ 551 03da DE16      		cp r13,r30
+ 552 03dc 01F0      		breq .L56
+ 553 03de F0E1      		ldi r31,lo8(16)
+ 554 03e0 DF16      		cp r13,r31
+ 555 03e2 01F4      		brne .L63
+ 556 03e4 E801      		movw r28,r16
+ 557 03e6 2396      		adiw r28,3
+ 558 03e8 00C0      		rjmp .L57
+ 559               	.L55:
+ 560 03ea E801      		movw r28,r16
+ 561 03ec 2796      		adiw r28,7
+ 562 03ee 00C0      		rjmp .L57
+ 563               	.L56:
+ 564 03f0 E801      		movw r28,r16
+ 565 03f2 2B96      		adiw r28,11
+ 566 03f4 00C0      		rjmp .L57
+ 567               	.L63:
+ 568 03f6 E801      		movw r28,r16
+ 569 03f8 2F96      		adiw r28,15
+ 570               	.L57:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s 			page 11
+
+
+ 571 03fa F801      		movw r30,r16
+ 572 03fc 8281      		ldd r24,Z+2
+ 573 03fe 8D21      		and r24,r13
+ 574 0400 01F0      		breq .L58
+ 575 0402 8A81      		ldd r24,Y+2
+ 576 0404 9B81      		ldd r25,Y+3
+ 577 0406 8E15      		cp r24,r14
+ 578 0408 9F05      		cpc r25,r15
+ 579 040a 04F4      		brge .L59
+ 580 040c 6881      		ld r22,Y
+ 581 040e 7981      		ldd r23,Y+1
+ 582 0410 80E0      		ldi r24,lo8(heapFreeList)
+ 583 0412 90E0      		ldi r25,hi8(heapFreeList)
+ 584 0414 0E94 0000 		call NutHeapRootFree
+ 585 0418 00C0      		rjmp .L58
+ 586               	.L59:
+ 587 041a FB82      		std Y+3,r15
+ 588 041c EA82      		std Y+2,r14
+ 589 041e 00C0      		rjmp .L60
+ 590               	.L58:
+ 591 0420 1B82      		std Y+3,__zero_reg__
+ 592 0422 1A82      		std Y+2,__zero_reg__
+ 593               	.L60:
+ 594 0424 8A81      		ldd r24,Y+2
+ 595 0426 9B81      		ldd r25,Y+3
+ 596 0428 892B      		or r24,r25
+ 597 042a 01F4      		brne .L52
+ 598 042c CE01      		movw r24,r28
+ 599 042e B701      		movw r22,r14
+ 600 0430 0E94 0000 		call NutNetBufAllocData
+ 601 0434 892B      		or r24,r25
+ 602 0436 01F0      		breq .L61
+ 603 0438 C801      		movw r24,r16
+ 604 043a 0E94 0000 		call NutNetBufFree
+ 605 043e 00E0      		ldi r16,lo8(0)
+ 606 0440 10E0      		ldi r17,hi8(0)
+ 607 0442 00C0      		rjmp .L52
+ 608               	.L61:
+ 609 0444 F801      		movw r30,r16
+ 610 0446 8281      		ldd r24,Z+2
+ 611 0448 8D29      		or r24,r13
+ 612 044a 8283      		std Z+2,r24
+ 613               	.L52:
+ 614 044c C801      		movw r24,r16
+ 615               	/* epilogue start */
+ 616 044e DF91      		pop r29
+ 617 0450 CF91      		pop r28
+ 618 0452 1F91      		pop r17
+ 619 0454 0F91      		pop r16
+ 620 0456 FF90      		pop r15
+ 621 0458 EF90      		pop r14
+ 622 045a DF90      		pop r13
+ 623 045c 0895      		ret
+ 624               		.size	NutNetBufAlloc, .-NutNetBufAlloc
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 netbuf.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s:11     .text:00000000 NutNetBufFree
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s:81     .text:0000007e NutNetBufAllocData
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s:118    .text:000000b8 NutNetBufCollect
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s:279    .text:000001e8 NutNetBufClonePart
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s:513    .text:000003a0 NutNetBufClone
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbl142M.s:523    .text:000003a8 NutNetBufAlloc
+
+UNDEFINED SYMBOLS
+heapFreeList
+NutHeapRootFree
+NutHeapRootAlloc
+memcpy
+NutHeapRootAllocClear

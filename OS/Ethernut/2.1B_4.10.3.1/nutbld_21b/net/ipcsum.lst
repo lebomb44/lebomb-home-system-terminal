@@ -1,0 +1,166 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s 			page 1
+
+
+   1               		.file	"ipcsum.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutIpChkSumPartial
+  10               		.type	NutIpChkSumPartial, @function
+  11               	NutIpChkSumPartial:
+  12 0000 EF92      		push r14
+  13 0002 FF92      		push r15
+  14 0004 0F93      		push r16
+  15 0006 1F93      		push r17
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0008 7C01      		movw r14,r24
+  19 000a 00E0      		ldi r16,lo8(0)
+  20 000c 10E0      		ldi r17,hi8(0)
+  21 000e FB01      		movw r30,r22
+  22 0010 00C0      		rjmp .L2
+  23               	.L3:
+  24 0012 3181      		ldd r19,Z+1
+  25 0014 20E0      		ldi r18,lo8(0)
+  26 0016 8081      		ld r24,Z
+  27 0018 90E0      		ldi r25,lo8(0)
+  28 001a 822B      		or r24,r18
+  29 001c 932B      		or r25,r19
+  30 001e A0E0      		ldi r26,lo8(0)
+  31 0020 B0E0      		ldi r27,hi8(0)
+  32 0022 E80E      		add r14,r24
+  33 0024 F91E      		adc r15,r25
+  34 0026 0A1F      		adc r16,r26
+  35 0028 1B1F      		adc r17,r27
+  36 002a 3296      		adiw r30,2
+  37 002c 4250      		subi r20,lo8(-(-2))
+  38 002e 5040      		sbci r21,hi8(-(-2))
+  39               	.L2:
+  40 0030 4230      		cpi r20,2
+  41 0032 5105      		cpc r21,__zero_reg__
+  42 0034 04F4      		brge .L3
+  43 0036 452B      		or r20,r21
+  44 0038 01F0      		breq .L7
+  45 003a 8081      		ld r24,Z
+  46 003c E80E      		add r14,r24
+  47 003e F11C      		adc r15,__zero_reg__
+  48 0040 011D      		adc r16,__zero_reg__
+  49 0042 111D      		adc r17,__zero_reg__
+  50 0044 00C0      		rjmp .L7
+  51               	.L5:
+  52 0046 00E0      		ldi r16,lo8(0)
+  53 0048 10E0      		ldi r17,hi8(0)
+  54 004a E80E      		add r14,r24
+  55 004c F91E      		adc r15,r25
+  56 004e 0A1F      		adc r16,r26
+  57 0050 1B1F      		adc r17,r27
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s 			page 2
+
+
+  58               	.L7:
+  59 0052 C801      		movw r24,r16
+  60 0054 AA27      		clr r26
+  61 0056 BB27      		clr r27
+  62 0058 0097      		sbiw r24,0
+  63 005a A105      		cpc r26,__zero_reg__
+  64 005c B105      		cpc r27,__zero_reg__
+  65 005e 01F4      		brne .L5
+  66 0060 C701      		movw r24,r14
+  67               	/* epilogue start */
+  68 0062 1F91      		pop r17
+  69 0064 0F91      		pop r16
+  70 0066 FF90      		pop r15
+  71 0068 EF90      		pop r14
+  72 006a 0895      		ret
+  73               		.size	NutIpChkSumPartial, .-NutIpChkSumPartial
+  74               	.global	NutIpChkSum
+  75               		.type	NutIpChkSum, @function
+  76               	NutIpChkSum:
+  77               	/* prologue: function */
+  78               	/* frame size = 0 */
+  79 006c 0E94 0000 		call NutIpChkSumPartial
+  80 0070 9C01      		movw r18,r24
+  81 0072 2095      		com r18
+  82 0074 3095      		com r19
+  83 0076 C901      		movw r24,r18
+  84               	/* epilogue start */
+  85 0078 0895      		ret
+  86               		.size	NutIpChkSum, .-NutIpChkSum
+  87               	.global	NutIpPseudoChkSumPartial
+  88               		.type	NutIpPseudoChkSumPartial, @function
+  89               	NutIpPseudoChkSumPartial:
+  90 007a EF92      		push r14
+  91 007c FF92      		push r15
+  92 007e 0F93      		push r16
+  93 0080 DF93      		push r29
+  94 0082 CF93      		push r28
+  95 0084 CDB7      		in r28,__SP_L__
+  96 0086 DEB7      		in r29,__SP_H__
+  97 0088 2C97      		sbiw r28,12
+  98 008a 0FB6      		in __tmp_reg__,__SREG__
+  99 008c F894      		cli
+ 100 008e DEBF      		out __SP_H__,r29
+ 101 0090 0FBE      		out __SREG__,__tmp_reg__
+ 102 0092 CDBF      		out __SP_L__,r28
+ 103               	/* prologue: function */
+ 104               	/* frame size = 12 */
+ 105 0094 6983      		std Y+1,r22
+ 106 0096 7A83      		std Y+2,r23
+ 107 0098 8B83      		std Y+3,r24
+ 108 009a 9C83      		std Y+4,r25
+ 109 009c 2D83      		std Y+5,r18
+ 110 009e 3E83      		std Y+6,r19
+ 111 00a0 4F83      		std Y+7,r20
+ 112 00a2 5887      		std Y+8,r21
+ 113 00a4 1986      		std Y+9,__zero_reg__
+ 114 00a6 0A87      		std Y+10,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s 			page 3
+
+
+ 115 00a8 FC86      		std Y+12,r15
+ 116 00aa EB86      		std Y+11,r14
+ 117 00ac 80E0      		ldi r24,lo8(0)
+ 118 00ae 90E0      		ldi r25,hi8(0)
+ 119 00b0 BE01      		movw r22,r28
+ 120 00b2 6F5F      		subi r22,lo8(-(1))
+ 121 00b4 7F4F      		sbci r23,hi8(-(1))
+ 122 00b6 4CE0      		ldi r20,lo8(12)
+ 123 00b8 50E0      		ldi r21,hi8(12)
+ 124 00ba 0E94 0000 		call NutIpChkSumPartial
+ 125 00be BC01      		movw r22,r24
+ 126 00c0 80E0      		ldi r24,lo8(0)
+ 127 00c2 90E0      		ldi r25,lo8(0)
+ 128               	/* epilogue start */
+ 129 00c4 2C96      		adiw r28,12
+ 130 00c6 0FB6      		in __tmp_reg__,__SREG__
+ 131 00c8 F894      		cli
+ 132 00ca DEBF      		out __SP_H__,r29
+ 133 00cc 0FBE      		out __SREG__,__tmp_reg__
+ 134 00ce CDBF      		out __SP_L__,r28
+ 135 00d0 CF91      		pop r28
+ 136 00d2 DF91      		pop r29
+ 137 00d4 0F91      		pop r16
+ 138 00d6 FF90      		pop r15
+ 139 00d8 EF90      		pop r14
+ 140 00da 0895      		ret
+ 141               		.size	NutIpPseudoChkSumPartial, .-NutIpPseudoChkSumPartial
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ipcsum.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s:11     .text:00000000 NutIpChkSumPartial
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s:76     .text:0000006c NutIpChkSum
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctdgGZf.s:89     .text:0000007a NutIpPseudoChkSumPartial
+
+NO UNDEFINED SYMBOLS

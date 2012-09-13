@@ -1,0 +1,185 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccosi0RQ.s 			page 1
+
+
+   1               		.file	"dencode.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutDecodeHex
+  10               		.type	NutDecodeHex, @function
+  11               	NutDecodeHex:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 982F      		mov r25,r24
+  15 0002 8053      		subi r24,lo8(-(-48))
+  16 0004 8A30      		cpi r24,lo8(10)
+  17 0006 00F4      		brsh .L2
+  18 0008 292F      		mov r18,r25
+  19 000a 3327      		clr r19
+  20 000c 27FD      		sbrc r18,7
+  21 000e 3095      		com r19
+  22 0010 2053      		subi r18,lo8(-(-48))
+  23 0012 3040      		sbci r19,hi8(-(-48))
+  24 0014 00C0      		rjmp .L3
+  25               	.L2:
+  26 0016 892F      		mov r24,r25
+  27 0018 8156      		subi r24,lo8(-(-97))
+  28 001a 8630      		cpi r24,lo8(6)
+  29 001c 00F4      		brsh .L4
+  30 001e 292F      		mov r18,r25
+  31 0020 3327      		clr r19
+  32 0022 27FD      		sbrc r18,7
+  33 0024 3095      		com r19
+  34 0026 2755      		subi r18,lo8(-(-87))
+  35 0028 3040      		sbci r19,hi8(-(-87))
+  36 002a 00C0      		rjmp .L3
+  37               	.L4:
+  38 002c 892F      		mov r24,r25
+  39 002e 8154      		subi r24,lo8(-(-65))
+  40 0030 8630      		cpi r24,lo8(6)
+  41 0032 00F0      		brlo .L5
+  42 0034 2FEF      		ldi r18,lo8(-1)
+  43 0036 3FEF      		ldi r19,hi8(-1)
+  44 0038 00C0      		rjmp .L3
+  45               	.L5:
+  46 003a 292F      		mov r18,r25
+  47 003c 3327      		clr r19
+  48 003e 27FD      		sbrc r18,7
+  49 0040 3095      		com r19
+  50 0042 2753      		subi r18,lo8(-(-55))
+  51 0044 3040      		sbci r19,hi8(-(-55))
+  52               	.L3:
+  53 0046 C901      		movw r24,r18
+  54               	/* epilogue start */
+  55 0048 0895      		ret
+  56               		.size	NutDecodeHex, .-NutDecodeHex
+  57               	.global	NutDecodePath
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccosi0RQ.s 			page 2
+
+
+  58               		.type	NutDecodePath, @function
+  59               	NutDecodePath:
+  60 004a 8F92      		push r8
+  61 004c 9F92      		push r9
+  62 004e AF92      		push r10
+  63 0050 BF92      		push r11
+  64 0052 CF92      		push r12
+  65 0054 DF92      		push r13
+  66 0056 EF92      		push r14
+  67 0058 FF92      		push r15
+  68 005a 0F93      		push r16
+  69 005c 1F93      		push r17
+  70 005e CF93      		push r28
+  71 0060 DF93      		push r29
+  72               	/* prologue: function */
+  73               	/* frame size = 0 */
+  74 0062 7C01      		movw r14,r24
+  75 0064 FC01      		movw r30,r24
+  76 0066 9080      		ld r9,Z
+  77 0068 FFE2      		ldi r31,lo8(47)
+  78 006a 9F16      		cp r9,r31
+  79 006c 01F0      		breq .L8
+  80 006e EE24      		clr r14
+  81 0070 FF24      		clr r15
+  82 0072 00C0      		rjmp .L9
+  83               	.L8:
+  84 0074 EC01      		movw r28,r24
+  85 0076 6C01      		movw r12,r24
+  86 0078 2FE2      		ldi r18,lo8(47)
+  87 007a 822E      		mov r8,r18
+  88 007c 00C0      		rjmp .L20
+  89               	.L16:
+  90 007e 8532      		cpi r24,lo8(37)
+  91 0080 01F4      		brne .L11
+  92 0082 F501      		movw r30,r10
+  93 0084 8181      		ldd r24,Z+1
+  94 0086 0E94 0000 		call NutDecodeHex
+  95 008a 8C01      		movw r16,r24
+  96 008c 97FD      		sbrc r25,7
+  97 008e 00C0      		rjmp .L11
+  98 0090 2396      		adiw r28,3
+  99 0092 8881      		ld r24,Y
+ 100 0094 0E94 0000 		call NutDecodeHex
+ 101 0098 97FD      		sbrc r25,7
+ 102 009a 00C0      		rjmp .L11
+ 103 009c 94E0      		ldi r25,4
+ 104 009e 000F      	1:	lsl r16
+ 105 00a0 111F      		rol r17
+ 106 00a2 9A95      		dec r25
+ 107 00a4 01F4      		brne 1b
+ 108 00a6 800F      		add r24,r16
+ 109 00a8 8883      		st Y,r24
+ 110 00aa 8823      		tst r24
+ 111 00ac 01F4      		brne .L13
+ 112 00ae 00C0      		rjmp .L12
+ 113               	.L11:
+ 114 00b0 E501      		movw r28,r10
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccosi0RQ.s 			page 3
+
+
+ 115               	.L13:
+ 116 00b2 8881      		ld r24,Y
+ 117 00b4 8C35      		cpi r24,lo8(92)
+ 118 00b6 01F4      		brne .L14
+ 119 00b8 8882      		st Y,r8
+ 120               	.L14:
+ 121 00ba 892D      		mov r24,r9
+ 122 00bc 8E52      		subi r24,lo8(-(-46))
+ 123 00be 8230      		cpi r24,lo8(2)
+ 124 00c0 00F4      		brsh .L15
+ 125 00c2 8881      		ld r24,Y
+ 126 00c4 8E52      		subi r24,lo8(-(-46))
+ 127 00c6 8230      		cpi r24,lo8(2)
+ 128 00c8 00F0      		brlo .L20
+ 129               	.L15:
+ 130 00ca 9880      		ld r9,Y
+ 131 00cc F601      		movw r30,r12
+ 132 00ce 9192      		st Z+,r9
+ 133 00d0 6F01      		movw r12,r30
+ 134               	.L20:
+ 135 00d2 5E01      		movw r10,r28
+ 136 00d4 0894      		sec
+ 137 00d6 A11C      		adc r10,__zero_reg__
+ 138 00d8 B11C      		adc r11,__zero_reg__
+ 139 00da 8981      		ldd r24,Y+1
+ 140 00dc 8823      		tst r24
+ 141 00de 01F4      		brne .L16
+ 142               	.L12:
+ 143 00e0 F601      		movw r30,r12
+ 144 00e2 1082      		st Z,__zero_reg__
+ 145               	.L9:
+ 146 00e4 C701      		movw r24,r14
+ 147               	/* epilogue start */
+ 148 00e6 DF91      		pop r29
+ 149 00e8 CF91      		pop r28
+ 150 00ea 1F91      		pop r17
+ 151 00ec 0F91      		pop r16
+ 152 00ee FF90      		pop r15
+ 153 00f0 EF90      		pop r14
+ 154 00f2 DF90      		pop r13
+ 155 00f4 CF90      		pop r12
+ 156 00f6 BF90      		pop r11
+ 157 00f8 AF90      		pop r10
+ 158 00fa 9F90      		pop r9
+ 159 00fc 8F90      		pop r8
+ 160 00fe 0895      		ret
+ 161               		.size	NutDecodePath, .-NutDecodePath
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccosi0RQ.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 dencode.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccosi0RQ.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccosi0RQ.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccosi0RQ.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccosi0RQ.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccosi0RQ.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccosi0RQ.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccosi0RQ.s:11     .text:00000000 NutDecodeHex
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccosi0RQ.s:59     .text:0000004a NutDecodePath
+
+NO UNDEFINED SYMBOLS

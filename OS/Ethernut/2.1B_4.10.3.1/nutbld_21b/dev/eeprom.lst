@@ -1,0 +1,146 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s 			page 1
+
+
+   1               		.file	"eeprom.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	EEReadData
+  10               		.type	EEReadData, @function
+  11               	EEReadData:
+  12 0000 EF92      		push r14
+  13 0002 FF92      		push r15
+  14 0004 0F93      		push r16
+  15 0006 1F93      		push r17
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0008 9A01      		movw r18,r20
+  19 000a 40E0      		ldi r20,lo8(0)
+  20 000c 50E0      		ldi r21,hi8(0)
+  21 000e 7C01      		movw r14,r24
+  22 0010 00E0      		ldi r16,lo8(0)
+  23 0012 10E0      		ldi r17,hi8(0)
+  24 0014 80E0      		ldi r24,lo8(at24c32s)
+  25 0016 90E0      		ldi r25,hi8(at24c32s)
+  26 0018 0E94 0000 		call At24cRead
+  27               	/* epilogue start */
+  28 001c 1F91      		pop r17
+  29 001e 0F91      		pop r16
+  30 0020 FF90      		pop r15
+  31 0022 EF90      		pop r14
+  32 0024 0895      		ret
+  33               		.size	EEReadData, .-EEReadData
+  34               	.global	EEInit
+  35               		.type	EEInit, @function
+  36               	EEInit:
+  37 0026 EF92      		push r14
+  38 0028 FF92      		push r15
+  39 002a 0F93      		push r16
+  40 002c 1F93      		push r17
+  41 002e DF93      		push r29
+  42 0030 CF93      		push r28
+  43 0032 0F92      		push __tmp_reg__
+  44 0034 CDB7      		in r28,__SP_L__
+  45 0036 DEB7      		in r29,__SP_H__
+  46               	/* prologue: function */
+  47               	/* frame size = 1 */
+  48 0038 E0E0      		ldi r30,lo8(at24c32s+2)
+  49 003a F0E0      		ldi r31,hi8(at24c32s+2)
+  50 003c 80E2      		ldi r24,lo8(32)
+  51 003e 8093 0000 		sts at24c32s+2,r24
+  52 0042 80E8      		ldi r24,lo8(-128)
+  53 0044 8093 0000 		sts at24c32s+3,r24
+  54 0048 80E0      		ldi r24,lo8(4096)
+  55 004a 90E1      		ldi r25,hi8(4096)
+  56 004c A0E0      		ldi r26,hlo8(4096)
+  57 004e B0E0      		ldi r27,hhi8(4096)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s 			page 2
+
+
+  58 0050 8093 0000 		sts at24c32s+4,r24
+  59 0054 9093 0000 		sts (at24c32s+4)+1,r25
+  60 0058 A093 0000 		sts (at24c32s+4)+2,r26
+  61 005c B093 0000 		sts (at24c32s+4)+3,r27
+  62 0060 3297      		sbiw r30,2
+  63 0062 80E5      		ldi r24,lo8(80)
+  64 0064 8083      		st Z,r24
+  65 0066 82E0      		ldi r24,lo8(2)
+  66 0068 8093 0000 		sts at24c32s+1,r24
+  67 006c 84E1      		ldi r24,lo8(20)
+  68 006e 8093 0000 		sts at24c32s+8,r24
+  69 0072 CF01      		movw r24,r30
+  70 0074 BE01      		movw r22,r28
+  71 0076 6F5F      		subi r22,lo8(-(1))
+  72 0078 7F4F      		sbci r23,hi8(-(1))
+  73 007a 21E0      		ldi r18,lo8(1)
+  74 007c 30E0      		ldi r19,hi8(1)
+  75 007e 40E0      		ldi r20,hlo8(1)
+  76 0080 50E0      		ldi r21,hhi8(1)
+  77 0082 EE24      		clr r14
+  78 0084 FF24      		clr r15
+  79 0086 8701      		movw r16,r14
+  80 0088 0E94 0000 		call At24cRead
+  81               	/* epilogue start */
+  82 008c 0F90      		pop __tmp_reg__
+  83 008e CF91      		pop r28
+  84 0090 DF91      		pop r29
+  85 0092 1F91      		pop r17
+  86 0094 0F91      		pop r16
+  87 0096 FF90      		pop r15
+  88 0098 EF90      		pop r14
+  89 009a 0895      		ret
+  90               		.size	EEInit, .-EEInit
+  91               	.global	EEWriteData
+  92               		.type	EEWriteData, @function
+  93               	EEWriteData:
+  94 009c EF92      		push r14
+  95 009e FF92      		push r15
+  96 00a0 0F93      		push r16
+  97 00a2 1F93      		push r17
+  98               	/* prologue: function */
+  99               	/* frame size = 0 */
+ 100 00a4 9A01      		movw r18,r20
+ 101 00a6 40E0      		ldi r20,lo8(0)
+ 102 00a8 50E0      		ldi r21,hi8(0)
+ 103 00aa 7C01      		movw r14,r24
+ 104 00ac 00E0      		ldi r16,lo8(0)
+ 105 00ae 10E0      		ldi r17,hi8(0)
+ 106 00b0 80E0      		ldi r24,lo8(at24c32s)
+ 107 00b2 90E0      		ldi r25,hi8(at24c32s)
+ 108 00b4 0E94 0000 		call At24cWrite
+ 109               	/* epilogue start */
+ 110 00b8 1F91      		pop r17
+ 111 00ba 0F91      		pop r16
+ 112 00bc FF90      		pop r15
+ 113 00be EF90      		pop r14
+ 114 00c0 0895      		ret
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s 			page 3
+
+
+ 115               		.size	EEWriteData, .-EEWriteData
+ 116               		.lcomm at24c32s,9
+ 117               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 eeprom.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s:11     .text:00000000 EEReadData
+                             .bss:00000000 at24c32s
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s:36     .text:00000026 EEInit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdcECAg.s:93     .text:0000009c EEWriteData
+
+UNDEFINED SYMBOLS
+At24cRead
+At24cWrite
+__do_clear_bss

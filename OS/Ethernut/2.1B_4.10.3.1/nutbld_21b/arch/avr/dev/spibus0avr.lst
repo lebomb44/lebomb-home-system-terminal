@@ -1,0 +1,410 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s 			page 1
+
+
+   1               		.file	"spibus0avr.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	AvrSpi0ChipSelect, @function
+  10               	AvrSpi0ChipSelect:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 8130      		cpi r24,lo8(1)
+  14 0002 01F0      		breq .L13
+  15 0004 8130      		cpi r24,lo8(1)
+  16 0006 00F0      		brlo .L3
+  17 0008 8230      		cpi r24,lo8(2)
+  18 000a 01F4      		brne .L12
+  19 000c 00C0      		rjmp .L14
+  20               	.L3:
+  21 000e 6623      		tst r22
+  22 0010 01F0      		breq .L7
+  23 0012 C49A      		sbi 56-32,4
+  24 0014 00C0      		rjmp .L8
+  25               	.L7:
+  26 0016 C498      		cbi 56-32,4
+  27               	.L8:
+  28 0018 BC9A      		sbi 55-32,4
+  29               	.L13:
+  30 001a 20E0      		ldi r18,lo8(0)
+  31 001c 30E0      		ldi r19,hi8(0)
+  32 001e 00C0      		rjmp .L6
+  33               	.L14:
+  34 0020 6623      		tst r22
+  35 0022 01F0      		breq .L9
+  36 0024 979A      		sbi 50-32,7
+  37 0026 00C0      		rjmp .L10
+  38               	.L9:
+  39 0028 9798      		cbi 50-32,7
+  40               	.L10:
+  41 002a 8F9A      		sbi 49-32,7
+  42 002c 00C0      		rjmp .L13
+  43               	.L12:
+  44 002e 85E0      		ldi r24,lo8(5)
+  45 0030 90E0      		ldi r25,hi8(5)
+  46 0032 9093 0000 		sts (errno)+1,r25
+  47 0036 8093 0000 		sts errno,r24
+  48 003a 2FEF      		ldi r18,lo8(-1)
+  49 003c 3FEF      		ldi r19,hi8(-1)
+  50               	.L6:
+  51 003e C901      		movw r24,r18
+  52               	/* epilogue start */
+  53 0040 0895      		ret
+  54               		.size	AvrSpi0ChipSelect, .-AvrSpi0ChipSelect
+  55               		.type	AvrSpi0Interrupt, @function
+  56               	AvrSpi0Interrupt:
+  57               	/* prologue: function */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s 			page 2
+
+
+  58               	/* frame size = 0 */
+  59 0042 2FB1      		in r18,47-32
+  60 0044 8091 0000 		lds r24,spi0_xc
+  61 0048 9091 0000 		lds r25,(spi0_xc)+1
+  62 004c 892B      		or r24,r25
+  63 004e 01F0      		breq .L16
+  64 0050 8091 0000 		lds r24,spi0_rxp
+  65 0054 9091 0000 		lds r25,(spi0_rxp)+1
+  66 0058 892B      		or r24,r25
+  67 005a 01F0      		breq .L17
+  68 005c E091 0000 		lds r30,spi0_rxp
+  69 0060 F091 0000 		lds r31,(spi0_rxp)+1
+  70 0064 2193      		st Z+,r18
+  71 0066 F093 0000 		sts (spi0_rxp)+1,r31
+  72 006a E093 0000 		sts spi0_rxp,r30
+  73               	.L17:
+  74 006e 8091 0000 		lds r24,spi0_xc
+  75 0072 9091 0000 		lds r25,(spi0_xc)+1
+  76 0076 0197      		sbiw r24,1
+  77 0078 9093 0000 		sts (spi0_xc)+1,r25
+  78 007c 8093 0000 		sts spi0_xc,r24
+  79               	.L16:
+  80 0080 8091 0000 		lds r24,spi0_xc
+  81 0084 9091 0000 		lds r25,(spi0_xc)+1
+  82 0088 892B      		or r24,r25
+  83 008a 01F4      		brne .L18
+  84 008c E091 0000 		lds r30,spi0_que
+  85 0090 F091 0000 		lds r31,(spi0_que)+1
+  86 0094 3097      		sbiw r30,0
+  87 0096 01F4      		brne .L19
+  88 0098 8FEF      		ldi r24,lo8(-1)
+  89 009a 9FEF      		ldi r25,hi8(-1)
+  90 009c 9093 0000 		sts (spi0_que)+1,r25
+  91 00a0 8093 0000 		sts spi0_que,r24
+  92 00a4 00C0      		rjmp .L18
+  93               	.L19:
+  94 00a6 8FEF      		ldi r24,hi8(-1)
+  95 00a8 EF3F      		cpi r30,lo8(-1)
+  96 00aa F807      		cpc r31,r24
+  97 00ac 01F0      		breq .L18
+  98 00ae 8481      		ldd r24,Z+4
+  99 00b0 9581      		ldd r25,Z+5
+ 100 00b2 0196      		adiw r24,1
+ 101 00b4 9583      		std Z+5,r25
+ 102 00b6 8483      		std Z+4,r24
+ 103               	.L18:
+ 104 00b8 8091 0000 		lds r24,spi0_xc
+ 105 00bc 9091 0000 		lds r25,(spi0_xc)+1
+ 106 00c0 892B      		or r24,r25
+ 107 00c2 01F0      		breq .L22
+ 108 00c4 8091 0000 		lds r24,spi0_txp
+ 109 00c8 9091 0000 		lds r25,(spi0_txp)+1
+ 110 00cc 892B      		or r24,r25
+ 111 00ce 01F0      		breq .L21
+ 112 00d0 E091 0000 		lds r30,spi0_txp
+ 113 00d4 F091 0000 		lds r31,(spi0_txp)+1
+ 114 00d8 2191      		ld r18,Z+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s 			page 3
+
+
+ 115 00da F093 0000 		sts (spi0_txp)+1,r31
+ 116 00de E093 0000 		sts spi0_txp,r30
+ 117               	.L21:
+ 118 00e2 2FB9      		out 47-32,r18
+ 119               	.L22:
+ 120 00e4 0895      		ret
+ 121               		.size	AvrSpi0Interrupt, .-AvrSpi0Interrupt
+ 122               	.global	AvrSpiBus0Deselect
+ 123               		.type	AvrSpiBus0Deselect, @function
+ 124               	AvrSpiBus0Deselect:
+ 125 00e6 0F93      		push r16
+ 126 00e8 1F93      		push r17
+ 127               	/* prologue: function */
+ 128               	/* frame size = 0 */
+ 129 00ea 8C01      		movw r16,r24
+ 130 00ec FC01      		movw r30,r24
+ 131 00ee 8185      		ldd r24,Z+9
+ 132 00f0 682F      		mov r22,r24
+ 133 00f2 6295      		swap r22
+ 134 00f4 6695      		lsr r22
+ 135 00f6 6695      		lsr r22
+ 136 00f8 6370      		andi r22,lo8(3)
+ 137 00fa 6095      		com r22
+ 138 00fc 6170      		andi r22,lo8(1)
+ 139 00fe 8385      		ldd r24,Z+11
+ 140 0100 0E94 0000 		call AvrSpi0ChipSelect
+ 141 0104 F801      		movw r30,r16
+ 142 0106 8081      		ld r24,Z
+ 143 0108 9181      		ldd r25,Z+1
+ 144 010a 0E94 0000 		call NutEventPost
+ 145 010e 80E0      		ldi r24,lo8(0)
+ 146 0110 90E0      		ldi r25,hi8(0)
+ 147               	/* epilogue start */
+ 148 0112 1F91      		pop r17
+ 149 0114 0F91      		pop r16
+ 150 0116 0895      		ret
+ 151               		.size	AvrSpiBus0Deselect, .-AvrSpiBus0Deselect
+ 152               	.global	AvrSpiBus0Transfer
+ 153               		.type	AvrSpiBus0Transfer, @function
+ 154               	AvrSpiBus0Transfer:
+ 155               	/* prologue: function */
+ 156               	/* frame size = 0 */
+ 157 0118 2115      		cp r18,__zero_reg__
+ 158 011a 3105      		cpc r19,__zero_reg__
+ 159 011c 01F0      		breq .L26
+ 160 011e 7093 0000 		sts (spi0_txp)+1,r23
+ 161 0122 6093 0000 		sts spi0_txp,r22
+ 162 0126 5093 0000 		sts (spi0_rxp)+1,r21
+ 163 012a 4093 0000 		sts spi0_rxp,r20
+ 164 012e 3093 0000 		sts (spi0_xc)+1,r19
+ 165 0132 2093 0000 		sts spi0_xc,r18
+ 166 0136 8091 0000 		lds r24,spi0_txp
+ 167 013a 9091 0000 		lds r25,(spi0_txp)+1
+ 168 013e 892B      		or r24,r25
+ 169 0140 01F4      		brne .L27
+ 170 0142 8FEF      		ldi r24,lo8(-1)
+ 171 0144 00C0      		rjmp .L28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s 			page 4
+
+
+ 172               	.L27:
+ 173 0146 E091 0000 		lds r30,spi0_txp
+ 174 014a F091 0000 		lds r31,(spi0_txp)+1
+ 175 014e 8191      		ld r24,Z+
+ 176 0150 F093 0000 		sts (spi0_txp)+1,r31
+ 177 0154 E093 0000 		sts spi0_txp,r30
+ 178               	.L28:
+ 179 0158 6F9A      		sbi 45-32,7
+ 180 015a 8FB9      		out 47-32,r24
+ 181 015c 80E0      		ldi r24,lo8(spi0_que)
+ 182 015e 90E0      		ldi r25,hi8(spi0_que)
+ 183 0160 40E0      		ldi r20,lo8(0)
+ 184 0162 50E0      		ldi r21,hi8(0)
+ 185 0164 60E0      		ldi r22,hlo8(0)
+ 186 0166 70E0      		ldi r23,hhi8(0)
+ 187 0168 0E94 0000 		call NutEventWait
+ 188 016c 6F98      		cbi 45-32,7
+ 189               	.L26:
+ 190 016e 80E0      		ldi r24,lo8(0)
+ 191 0170 90E0      		ldi r25,hi8(0)
+ 192               	/* epilogue start */
+ 193 0172 0895      		ret
+ 194               		.size	AvrSpiBus0Transfer, .-AvrSpiBus0Transfer
+ 195               	.global	AvrSpiBus0Select
+ 196               		.type	AvrSpiBus0Select, @function
+ 197               	AvrSpiBus0Select:
+ 198 0174 0F93      		push r16
+ 199 0176 1F93      		push r17
+ 200 0178 CF93      		push r28
+ 201 017a DF93      		push r29
+ 202               	/* prologue: function */
+ 203               	/* frame size = 0 */
+ 204 017c 8C01      		movw r16,r24
+ 205 017e FC01      		movw r30,r24
+ 206 0180 8081      		ld r24,Z
+ 207 0182 9181      		ldd r25,Z+1
+ 208 0184 0E94 0000 		call NutEventWait
+ 209 0188 EC01      		movw r28,r24
+ 210 018a 0097      		sbiw r24,0
+ 211 018c 01F0      		breq .L31
+ 212 018e 85E0      		ldi r24,lo8(5)
+ 213 0190 90E0      		ldi r25,hi8(5)
+ 214 0192 9093 0000 		sts (errno)+1,r25
+ 215 0196 8093 0000 		sts errno,r24
+ 216 019a 00C0      		rjmp .L32
+ 217               	.L31:
+ 218 019c F801      		movw r30,r16
+ 219 019e C281      		ldd r28,Z+2
+ 220 01a0 D381      		ldd r29,Z+3
+ 221 01a2 8085      		ldd r24,Z+8
+ 222 01a4 9185      		ldd r25,Z+9
+ 223 01a6 97FF      		sbrs r25,7
+ 224 01a8 00C0      		rjmp .L33
+ 225 01aa C801      		movw r24,r16
+ 226 01ac 0E94 0000 		call AvrSpiSetup
+ 227               	.L33:
+ 228 01b0 8881      		ld r24,Y
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s 			page 5
+
+
+ 229 01b2 83FF      		sbrs r24,3
+ 230 01b4 00C0      		rjmp .L34
+ 231 01b6 C198      		cbi 56-32,1
+ 232 01b8 00C0      		rjmp .L35
+ 233               	.L34:
+ 234 01ba C19A      		sbi 56-32,1
+ 235               	.L35:
+ 236 01bc B99A      		sbi 55-32,1
+ 237 01be C298      		cbi 56-32,2
+ 238 01c0 BA9A      		sbi 55-32,2
+ 239 01c2 B89B      		sbis 55-32,0
+ 240 01c4 C09A      		sbi 56-32,0
+ 241               	.L36:
+ 242 01c6 C39A      		sbi 56-32,3
+ 243 01c8 8DB9      		out 45-32,r24
+ 244 01ca 8981      		ldd r24,Y+1
+ 245 01cc 8EB9      		out 46-32,r24
+ 246 01ce 8EB1      		in r24,46-32
+ 247 01d0 8FB1      		in r24,47-32
+ 248 01d2 F801      		movw r30,r16
+ 249 01d4 6185      		ldd r22,Z+9
+ 250 01d6 6295      		swap r22
+ 251 01d8 6695      		lsr r22
+ 252 01da 6695      		lsr r22
+ 253 01dc 6170      		andi r22,lo8(1)
+ 254 01de 8385      		ldd r24,Z+11
+ 255 01e0 0E94 0000 		call AvrSpi0ChipSelect
+ 256 01e4 EC01      		movw r28,r24
+ 257 01e6 0097      		sbiw r24,0
+ 258 01e8 01F0      		breq .L32
+ 259 01ea F801      		movw r30,r16
+ 260 01ec 8081      		ld r24,Z
+ 261 01ee 9181      		ldd r25,Z+1
+ 262 01f0 0E94 0000 		call NutEventPost
+ 263               	.L32:
+ 264 01f4 CE01      		movw r24,r28
+ 265               	/* epilogue start */
+ 266 01f6 DF91      		pop r29
+ 267 01f8 CF91      		pop r28
+ 268 01fa 1F91      		pop r17
+ 269 01fc 0F91      		pop r16
+ 270 01fe 0895      		ret
+ 271               		.size	AvrSpiBus0Select, .-AvrSpiBus0Select
+ 272               	.global	AvrSpiBus0NodeInit
+ 273               		.type	AvrSpiBus0NodeInit, @function
+ 274               	AvrSpiBus0NodeInit:
+ 275 0200 0F93      		push r16
+ 276 0202 1F93      		push r17
+ 277 0204 CF93      		push r28
+ 278 0206 DF93      		push r29
+ 279               	/* prologue: function */
+ 280               	/* frame size = 0 */
+ 281 0208 EC01      		movw r28,r24
+ 282 020a 8985      		ldd r24,Y+9
+ 283 020c 682F      		mov r22,r24
+ 284 020e 6295      		swap r22
+ 285 0210 6695      		lsr r22
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s 			page 6
+
+
+ 286 0212 6695      		lsr r22
+ 287 0214 6370      		andi r22,lo8(3)
+ 288 0216 6095      		com r22
+ 289 0218 6170      		andi r22,lo8(1)
+ 290 021a 8B85      		ldd r24,Y+11
+ 291 021c 0E94 0000 		call AvrSpi0ChipSelect
+ 292 0220 8C01      		movw r16,r24
+ 293 0222 0097      		sbiw r24,0
+ 294 0224 01F4      		brne .L39
+ 295 0226 8A81      		ldd r24,Y+2
+ 296 0228 9B81      		ldd r25,Y+3
+ 297 022a 892B      		or r24,r25
+ 298 022c 01F4      		brne .L39
+ 299 022e 82E0      		ldi r24,lo8(2)
+ 300 0230 90E0      		ldi r25,hi8(2)
+ 301 0232 0E94 0000 		call malloc
+ 302 0236 9B83      		std Y+3,r25
+ 303 0238 8A83      		std Y+2,r24
+ 304 023a 0097      		sbiw r24,0
+ 305 023c 01F4      		brne .L40
+ 306 023e 0FEF      		ldi r16,lo8(-1)
+ 307 0240 1FEF      		ldi r17,hi8(-1)
+ 308 0242 00C0      		rjmp .L39
+ 309               	.L40:
+ 310 0244 CE01      		movw r24,r28
+ 311 0246 0E94 0000 		call AvrSpiSetup
+ 312 024a E881      		ld r30,Y
+ 313 024c F981      		ldd r31,Y+1
+ 314 024e 8681      		ldd r24,Z+6
+ 315 0250 9781      		ldd r25,Z+7
+ 316 0252 60E0      		ldi r22,lo8(gs(AvrSpi0Interrupt))
+ 317 0254 70E0      		ldi r23,hi8(gs(AvrSpi0Interrupt))
+ 318 0256 40E0      		ldi r20,lo8(0)
+ 319 0258 50E0      		ldi r21,hi8(0)
+ 320 025a 0E94 0000 		call NutRegisterIrqHandler
+ 321               	.L39:
+ 322 025e C801      		movw r24,r16
+ 323               	/* epilogue start */
+ 324 0260 DF91      		pop r29
+ 325 0262 CF91      		pop r28
+ 326 0264 1F91      		pop r17
+ 327 0266 0F91      		pop r16
+ 328 0268 0895      		ret
+ 329               		.size	AvrSpiBus0NodeInit, .-AvrSpiBus0NodeInit
+ 330               	.global	spiBus0Avr
+ 331               		.data
+ 332               		.type	spiBus0Avr, @object
+ 333               		.size	spiBus0Avr, 24
+ 334               	spiBus0Avr:
+ 335 0000 0000      		.word	0
+ 336 0002 0000      		.word	0
+ 337 0004 0000      		.word	0
+ 338 0006 0000      		.word	sig_SPI
+ 339 0008 0000      		.word	gs(AvrSpiBus0NodeInit)
+ 340 000a 0000      		.word	gs(AvrSpiBus0Select)
+ 341 000c 0000      		.word	gs(AvrSpiBus0Deselect)
+ 342 000e 0000      		.word	gs(AvrSpiBus0Transfer)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s 			page 7
+
+
+ 343 0010 0000      		.word	gs(NutSpiBusWait)
+ 344 0012 0000      		.word	gs(NutSpiBusSetMode)
+ 345 0014 0000      		.word	gs(NutSpiBusSetRate)
+ 346 0016 0000      		.word	gs(NutSpiBusSetBits)
+ 347               		.lcomm spi0_txp,2
+ 348               		.lcomm spi0_rxp,2
+ 349               		.lcomm spi0_que,2
+ 350               		.lcomm spi0_xc,2
+ 351               	.global __do_copy_data
+ 352               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 spibus0avr.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:10     .text:00000000 AvrSpi0ChipSelect
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:56     .text:00000042 AvrSpi0Interrupt
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:349    .bss:00000006 spi0_xc
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:347    .bss:00000002 spi0_rxp
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:348    .bss:00000004 spi0_que
+                             .bss:00000000 spi0_txp
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:124    .text:000000e6 AvrSpiBus0Deselect
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:154    .text:00000118 AvrSpiBus0Transfer
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:197    .text:00000174 AvrSpiBus0Select
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:274    .text:00000200 AvrSpiBus0NodeInit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBUGUlV.s:334    .data:00000000 spiBus0Avr
+
+UNDEFINED SYMBOLS
+errno
+NutEventPost
+NutEventWait
+AvrSpiSetup
+malloc
+NutRegisterIrqHandler
+sig_SPI
+NutSpiBusWait
+NutSpiBusSetMode
+NutSpiBusSetRate
+NutSpiBusSetBits
+__do_copy_data
+__do_clear_bss

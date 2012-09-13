@@ -1,0 +1,189 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s 			page 1
+
+
+   1               		.file	"papin.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	PapRxAuthNak
+  10               		.type	PapRxAuthNak, @function
+  11               	PapRxAuthNak:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 DC01      		movw r26,r24
+  15 0002 5196      		adiw r26,17
+  16 0004 ED91      		ld r30,X+
+  17 0006 FC91      		ld r31,X
+  18 0008 5297      		sbiw r26,17+1
+  19 000a 86AD      		ldd r24,Z+62
+  20 000c 8330      		cpi r24,lo8(3)
+  21 000e 01F4      		brne .L3
+  22 0010 85E0      		ldi r24,lo8(5)
+  23 0012 86AF      		std Z+62,r24
+  24 0014 CD01      		movw r24,r26
+  25 0016 0E94 0000 		call IpcpLowerDown
+  26               	.L3:
+  27 001a 0895      		ret
+  28               		.size	PapRxAuthNak, .-PapRxAuthNak
+  29               	.global	PapRxAuthAck
+  30               		.type	PapRxAuthAck, @function
+  31               	PapRxAuthAck:
+  32               	/* prologue: function */
+  33               	/* frame size = 0 */
+  34 001c DC01      		movw r26,r24
+  35 001e 5196      		adiw r26,17
+  36 0020 ED91      		ld r30,X+
+  37 0022 FC91      		ld r31,X
+  38 0024 5297      		sbiw r26,17+1
+  39 0026 86AD      		ldd r24,Z+62
+  40 0028 8330      		cpi r24,lo8(3)
+  41 002a 01F4      		brne .L6
+  42 002c 84E0      		ldi r24,lo8(4)
+  43 002e 86AF      		std Z+62,r24
+  44 0030 CD01      		movw r24,r26
+  45 0032 0E94 0000 		call IpcpLowerUp
+  46               	.L6:
+  47 0036 0895      		ret
+  48               		.size	PapRxAuthAck, .-PapRxAuthAck
+  49               	.global	PapRxAuthReq
+  50               		.type	PapRxAuthReq, @function
+  51               	PapRxAuthReq:
+  52               	/* prologue: function */
+  53               	/* frame size = 0 */
+  54 0038 762F      		mov r23,r22
+  55 003a 9A01      		movw r18,r20
+  56 003c 62E0      		ldi r22,lo8(2)
+  57 003e 472F      		mov r20,r23
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s 			page 2
+
+
+  58 0040 0E94 0000 		call NutPapOutput
+  59               	/* epilogue start */
+  60 0044 0895      		ret
+  61               		.size	PapRxAuthReq, .-PapRxAuthReq
+  62               	.global	NutPapInput
+  63               		.type	NutPapInput, @function
+  64               	NutPapInput:
+  65 0046 CF93      		push r28
+  66 0048 DF93      		push r29
+  67               	/* prologue: function */
+  68               	/* frame size = 0 */
+  69 004a DC01      		movw r26,r24
+  70 004c EB01      		movw r28,r22
+  71 004e 4985      		ldd r20,Y+9
+  72 0050 5A85      		ldd r21,Y+10
+  73 0052 4430      		cpi r20,4
+  74 0054 5105      		cpc r21,__zero_reg__
+  75 0056 00F4      		brsh .+2
+  76 0058 00C0      		rjmp .L14
+  77               	.L10:
+  78 005a EF81      		ldd r30,Y+7
+  79 005c F885      		ldd r31,Y+8
+  80 005e 2281      		ldd r18,Z+2
+  81 0060 3381      		ldd r19,Z+3
+  82 0062 C901      		movw r24,r18
+  83               	/* #APP */
+  84               	 ;  305 "../../nut/include/sys/types.h" 1
+  85 0064 082E      		mov __tmp_reg__, r24
+  86 0066 892F      		mov r24, r25
+  87 0068 902D      		mov r25, __tmp_reg__
+  88               		
+  89               	 ;  0 "" 2
+  90               	/* #NOAPP */
+  91 006a 8430      		cpi r24,4
+  92 006c 9105      		cpc r25,__zero_reg__
+  93 006e 00F0      		brlo .L14
+  94 0070 4817      		cp r20,r24
+  95 0072 5907      		cpc r21,r25
+  96 0074 00F0      		brlo .L14
+  97               	.L13:
+  98 0076 3496      		adiw r30,4
+  99 0078 F88B      		std Y+16,r31
+ 100 007a EF87      		std Y+15,r30
+ 101 007c 3497      		sbiw r30,4
+ 102               	/* #APP */
+ 103               	 ;  305 "../../nut/include/sys/types.h" 1
+ 104 007e 022E      		mov __tmp_reg__, r18
+ 105 0080 232F      		mov r18, r19
+ 106 0082 302D      		mov r19, __tmp_reg__
+ 107               		
+ 108               	 ;  0 "" 2
+ 109               	/* #NOAPP */
+ 110 0084 2450      		subi r18,lo8(-(-4))
+ 111 0086 3040      		sbci r19,hi8(-(-4))
+ 112 0088 3A8B      		std Y+18,r19
+ 113 008a 298B      		std Y+17,r18
+ 114 008c 8081      		ld r24,Z
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s 			page 3
+
+
+ 115 008e 8230      		cpi r24,lo8(2)
+ 116 0090 01F0      		breq .L16
+ 117 0092 8330      		cpi r24,lo8(3)
+ 118 0094 01F0      		breq .L17
+ 119 0096 8130      		cpi r24,lo8(1)
+ 120 0098 01F4      		brne .L14
+ 121 009a CD01      		movw r24,r26
+ 122 009c 62E0      		ldi r22,lo8(2)
+ 123 009e 4181      		ldd r20,Z+1
+ 124 00a0 9E01      		movw r18,r28
+ 125 00a2 0E94 0000 		call NutPapOutput
+ 126 00a6 00C0      		rjmp .L14
+ 127               	.L16:
+ 128 00a8 5196      		adiw r26,17
+ 129 00aa ED91      		ld r30,X+
+ 130 00ac FC91      		ld r31,X
+ 131 00ae 5297      		sbiw r26,17+1
+ 132 00b0 86AD      		ldd r24,Z+62
+ 133 00b2 8330      		cpi r24,lo8(3)
+ 134 00b4 01F4      		brne .L14
+ 135 00b6 84E0      		ldi r24,lo8(4)
+ 136 00b8 86AF      		std Z+62,r24
+ 137 00ba CD01      		movw r24,r26
+ 138 00bc 0E94 0000 		call IpcpLowerUp
+ 139 00c0 00C0      		rjmp .L14
+ 140               	.L17:
+ 141 00c2 5196      		adiw r26,17
+ 142 00c4 ED91      		ld r30,X+
+ 143 00c6 FC91      		ld r31,X
+ 144 00c8 5297      		sbiw r26,17+1
+ 145 00ca 86AD      		ldd r24,Z+62
+ 146 00cc 8330      		cpi r24,lo8(3)
+ 147 00ce 01F4      		brne .L14
+ 148 00d0 85E0      		ldi r24,lo8(5)
+ 149 00d2 86AF      		std Z+62,r24
+ 150 00d4 CD01      		movw r24,r26
+ 151 00d6 0E94 0000 		call IpcpLowerDown
+ 152               	.L14:
+ 153 00da CE01      		movw r24,r28
+ 154 00dc 0E94 0000 		call NutNetBufFree
+ 155               	/* epilogue start */
+ 156 00e0 DF91      		pop r29
+ 157 00e2 CF91      		pop r28
+ 158 00e4 0895      		ret
+ 159               		.size	NutPapInput, .-NutPapInput
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 papin.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s:11     .text:00000000 PapRxAuthNak
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s:31     .text:0000001c PapRxAuthAck
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s:51     .text:00000038 PapRxAuthReq
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccJvi0RQ.s:64     .text:00000046 NutPapInput
+
+UNDEFINED SYMBOLS
+IpcpLowerDown
+IpcpLowerUp
+NutPapOutput
+NutNetBufFree

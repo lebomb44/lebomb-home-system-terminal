@@ -1,0 +1,38 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccG9p3Cz.s 			page 1
+
+
+   1               		.file	"putchar.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	putchar
+  10               		.type	putchar, @function
+  11               	putchar:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 6091 0000 		lds r22,__iob+2
+  15 0004 7091 0000 		lds r23,(__iob+2)+1
+  16 0008 0E94 0000 		call fputc
+  17               	/* epilogue start */
+  18 000c 0895      		ret
+  19               		.size	putchar, .-putchar
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccG9p3Cz.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 putchar.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccG9p3Cz.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccG9p3Cz.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccG9p3Cz.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccG9p3Cz.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccG9p3Cz.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccG9p3Cz.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccG9p3Cz.s:11     .text:00000000 putchar
+
+UNDEFINED SYMBOLS
+__iob
+fputc

@@ -1,0 +1,1532 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 1
+
+
+   1               		.file	"phatdbg.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.data
+   9               	.LC0:
+  10 0000 2D2D 2D20 		.string	"--- %s ---\n"
+  10      2573 202D 
+  10      2D2D 0A00 
+  11               	.LC1:
+  12 000c 426F 6F74 		.string	"Boot jump      : %02X %02X %02X\n"
+  12      206A 756D 
+  12      7020 2020 
+  12      2020 203A 
+  12      2025 3032 
+  13               	.LC2:
+  14 002d 4F45 4D20 		.string	"OEM name       : %.8s\n"
+  14      6E61 6D65 
+  14      2020 2020 
+  14      2020 203A 
+  14      2025 2E38 
+  15               	.LC3:
+  16 0044 4279 7465 		.string	"Bytes/sector   : %u\n"
+  16      732F 7365 
+  16      6374 6F72 
+  16      2020 203A 
+  16      2025 750A 
+  17               	.LC4:
+  18 0059 5365 6374 		.string	"Sectors/cluster: %u\n"
+  18      6F72 732F 
+  18      636C 7573 
+  18      7465 723A 
+  18      2025 750A 
+  19               	.LC5:
+  20 006e 5273 7664 		.string	"Rsvd. sectors  : %u\n"
+  20      2E20 7365 
+  20      6374 6F72 
+  20      7320 203A 
+  20      2025 750A 
+  21               	.LC6:
+  22 0083 416C 6C6F 		.string	"Alloc. tables  : %u\n"
+  22      632E 2074 
+  22      6162 6C65 
+  22      7320 203A 
+  22      2025 750A 
+  23               	.LC7:
+  24 0098 526F 6F74 		.string	"Root entries   : %u\n"
+  24      2065 6E74 
+  24      7269 6573 
+  24      2020 203A 
+  24      2025 750A 
+  25               	.LC8:
+  26 00ad 546F 7461 		.string	"Total sectors  : %lu\n"
+  26      6C20 7365 
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 2
+
+
+  26      6374 6F72 
+  26      7320 203A 
+  26      2025 6C75 
+  27               	.LC9:
+  28 00c3 4D65 6469 		.string	"Media type     : 0x%02X\n"
+  28      6120 7479 
+  28      7065 2020 
+  28      2020 203A 
+  28      2030 7825 
+  29               	.LC10:
+  30 00dc 5365 6374 		.string	"Sectors/table  : %u %lu\n"
+  30      6F72 732F 
+  30      7461 626C 
+  30      6520 203A 
+  30      2025 7520 
+  31               	.LC11:
+  32 00f5 5365 6374 		.string	"Sectors/track  : %u\n"
+  32      6F72 732F 
+  32      7472 6163 
+  32      6B20 203A 
+  32      2025 750A 
+  33               	.LC12:
+  34 010a 4865 6164 		.string	"Heads          : %u\n"
+  34      7320 2020 
+  34      2020 2020 
+  34      2020 203A 
+  34      2025 750A 
+  35               	.LC13:
+  36 011f 4869 6464 		.string	"Hidden sectors : %lu\n"
+  36      656E 2073 
+  36      6563 746F 
+  36      7273 203A 
+  36      2025 6C75 
+  37               	.LC14:
+  38 0135 4D69 7272 		.string	"Mirror flags   : 0x%04u\n"
+  38      6F72 2066 
+  38      6C61 6773 
+  38      2020 203A 
+  38      2030 7825 
+  39               	.LC15:
+  40 014e 4669 6C65 		.string	"File system ver: %u\n"
+  40      2073 7973 
+  40      7465 6D20 
+  40      7665 723A 
+  40      2025 750A 
+  41               	.LC16:
+  42 0163 526F 6F74 		.string	"Root dir clust : %lu\n"
+  42      2064 6972 
+  42      2063 6C75 
+  42      7374 203A 
+  42      2025 6C75 
+  43               	.LC17:
+  44 0179 4653 496E 		.string	"FSInfo sector  : %u\n"
+  44      666F 2073 
+  44      6563 746F 
+  44      7220 203A 
+  44      2025 750A 
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 3
+
+
+  45               	.LC18:
+  46 018e 426F 6F74 		.string	"Boot back sect : %u\n"
+  46      2062 6163 
+  46      6B20 7365 
+  46      6374 203A 
+  46      2025 750A 
+  47               	.LC19:
+  48 01a3 4C6F 6769 		.string	"Logical drive  : %u\n"
+  48      6361 6C20 
+  48      6472 6976 
+  48      6520 203A 
+  48      2025 750A 
+  49               	.LC20:
+  50 01b8 5273 7664 		.string	"Rsvd NT(head)  : %u\n"
+  50      204E 5428 
+  50      6865 6164 
+  50      2920 203A 
+  50      2025 750A 
+  51               	.LC21:
+  52 01cd 4578 742E 		.string	"Ext. signature : 0x%02X\n"
+  52      2073 6967 
+  52      6E61 7475 
+  52      7265 203A 
+  52      2030 7825 
+  53               	.LC22:
+  54 01e6 566F 6C75 		.string	"Volume ID      : 0x%08lX\n"
+  54      6D65 2049 
+  54      4420 2020 
+  54      2020 203A 
+  54      2030 7825 
+  55               	.LC23:
+  56 0200 566F 6C75 		.string	"Volume label   : %.11s\n"
+  56      6D65 206C 
+  56      6162 656C 
+  56      2020 203A 
+  56      2025 2E31 
+  57               	.LC24:
+  58 0218 4669 6C65 		.string	"Filesystem     : %.8s\n"
+  58      7379 7374 
+  58      656D 2020 
+  58      2020 203A 
+  58      2025 2E38 
+  59               		.text
+  60               	.global	PhatDbgVbr
+  61               		.type	PhatDbgVbr, @function
+  62               	PhatDbgVbr:
+  63 0000 EF92      		push r14
+  64 0002 FF92      		push r15
+  65 0004 0F93      		push r16
+  66 0006 1F93      		push r17
+  67 0008 CF93      		push r28
+  68 000a DF93      		push r29
+  69               	/* prologue: function */
+  70               	/* frame size = 0 */
+  71 000c 7C01      		movw r14,r24
+  72 000e EA01      		movw r28,r20
+  73 0010 6115      		cp r22,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 4
+
+
+  74 0012 7105      		cpc r23,__zero_reg__
+  75 0014 01F0      		breq .L2
+  76 0016 00D0      		rcall .
+  77 0018 00D0      		rcall .
+  78 001a 00D0      		rcall .
+  79 001c EDB7      		in r30,__SP_L__
+  80 001e FEB7      		in r31,__SP_H__
+  81 0020 3196      		adiw r30,1
+  82 0022 ADB7      		in r26,__SP_L__
+  83 0024 BEB7      		in r27,__SP_H__
+  84 0026 1296      		adiw r26,1+1
+  85 0028 9C93      		st X,r25
+  86 002a 8E93      		st -X,r24
+  87 002c 1197      		sbiw r26,1
+  88 002e 80E0      		ldi r24,lo8(.LC0)
+  89 0030 90E0      		ldi r25,hi8(.LC0)
+  90 0032 9383      		std Z+3,r25
+  91 0034 8283      		std Z+2,r24
+  92 0036 7583      		std Z+5,r23
+  93 0038 6483      		std Z+4,r22
+  94 003a 0E94 0000 		call fprintf
+  95 003e EDB7      		in r30,__SP_L__
+  96 0040 FEB7      		in r31,__SP_H__
+  97 0042 3696      		adiw r30,6
+  98 0044 0FB6      		in __tmp_reg__,__SREG__
+  99 0046 F894      		cli
+ 100 0048 FEBF      		out __SP_H__,r31
+ 101 004a 0FBE      		out __SREG__,__tmp_reg__
+ 102 004c EDBF      		out __SP_L__,r30
+ 103               	.L2:
+ 104 004e 2DB7      		in r18,__SP_L__
+ 105 0050 3EB7      		in r19,__SP_H__
+ 106 0052 2A50      		subi r18,lo8(-(-10))
+ 107 0054 3040      		sbci r19,hi8(-(-10))
+ 108 0056 0FB6      		in __tmp_reg__,__SREG__
+ 109 0058 F894      		cli
+ 110 005a 3EBF      		out __SP_H__,r19
+ 111 005c 0FBE      		out __SREG__,__tmp_reg__
+ 112 005e 2DBF      		out __SP_L__,r18
+ 113 0060 EDB7      		in r30,__SP_L__
+ 114 0062 FEB7      		in r31,__SP_H__
+ 115 0064 3196      		adiw r30,1
+ 116 0066 ADB7      		in r26,__SP_L__
+ 117 0068 BEB7      		in r27,__SP_H__
+ 118 006a 1296      		adiw r26,1+1
+ 119 006c FC92      		st X,r15
+ 120 006e EE92      		st -X,r14
+ 121 0070 1197      		sbiw r26,1
+ 122 0072 80E0      		ldi r24,lo8(.LC1)
+ 123 0074 90E0      		ldi r25,hi8(.LC1)
+ 124 0076 9383      		std Z+3,r25
+ 125 0078 8283      		std Z+2,r24
+ 126 007a 8881      		ld r24,Y
+ 127 007c 8483      		std Z+4,r24
+ 128 007e 1582      		std Z+5,__zero_reg__
+ 129 0080 8981      		ldd r24,Y+1
+ 130 0082 8683      		std Z+6,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 5
+
+
+ 131 0084 1782      		std Z+7,__zero_reg__
+ 132 0086 8A81      		ldd r24,Y+2
+ 133 0088 8087      		std Z+8,r24
+ 134 008a 1186      		std Z+9,__zero_reg__
+ 135 008c 0E94 0000 		call fprintf
+ 136 0090 0F90      		pop __tmp_reg__
+ 137 0092 0F90      		pop __tmp_reg__
+ 138 0094 0F90      		pop __tmp_reg__
+ 139 0096 0F90      		pop __tmp_reg__
+ 140 0098 EDB7      		in r30,__SP_L__
+ 141 009a FEB7      		in r31,__SP_H__
+ 142 009c 3196      		adiw r30,1
+ 143 009e ADB7      		in r26,__SP_L__
+ 144 00a0 BEB7      		in r27,__SP_H__
+ 145 00a2 1296      		adiw r26,1+1
+ 146 00a4 FC92      		st X,r15
+ 147 00a6 EE92      		st -X,r14
+ 148 00a8 1197      		sbiw r26,1
+ 149 00aa 80E0      		ldi r24,lo8(.LC2)
+ 150 00ac 90E0      		ldi r25,hi8(.LC2)
+ 151 00ae 9383      		std Z+3,r25
+ 152 00b0 8283      		std Z+2,r24
+ 153 00b2 2396      		adiw r28,3
+ 154 00b4 D583      		std Z+5,r29
+ 155 00b6 C483      		std Z+4,r28
+ 156 00b8 2397      		sbiw r28,3
+ 157 00ba 0E94 0000 		call fprintf
+ 158 00be EDB7      		in r30,__SP_L__
+ 159 00c0 FEB7      		in r31,__SP_H__
+ 160 00c2 3196      		adiw r30,1
+ 161 00c4 ADB7      		in r26,__SP_L__
+ 162 00c6 BEB7      		in r27,__SP_H__
+ 163 00c8 1296      		adiw r26,1+1
+ 164 00ca FC92      		st X,r15
+ 165 00cc EE92      		st -X,r14
+ 166 00ce 1197      		sbiw r26,1
+ 167 00d0 80E0      		ldi r24,lo8(.LC3)
+ 168 00d2 90E0      		ldi r25,hi8(.LC3)
+ 169 00d4 9383      		std Z+3,r25
+ 170 00d6 8283      		std Z+2,r24
+ 171 00d8 8B85      		ldd r24,Y+11
+ 172 00da 9C85      		ldd r25,Y+12
+ 173 00dc 9583      		std Z+5,r25
+ 174 00de 8483      		std Z+4,r24
+ 175 00e0 0E94 0000 		call fprintf
+ 176 00e4 EDB7      		in r30,__SP_L__
+ 177 00e6 FEB7      		in r31,__SP_H__
+ 178 00e8 3196      		adiw r30,1
+ 179 00ea ADB7      		in r26,__SP_L__
+ 180 00ec BEB7      		in r27,__SP_H__
+ 181 00ee 1296      		adiw r26,1+1
+ 182 00f0 FC92      		st X,r15
+ 183 00f2 EE92      		st -X,r14
+ 184 00f4 1197      		sbiw r26,1
+ 185 00f6 80E0      		ldi r24,lo8(.LC4)
+ 186 00f8 90E0      		ldi r25,hi8(.LC4)
+ 187 00fa 9383      		std Z+3,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 6
+
+
+ 188 00fc 8283      		std Z+2,r24
+ 189 00fe 8D85      		ldd r24,Y+13
+ 190 0100 8483      		std Z+4,r24
+ 191 0102 1582      		std Z+5,__zero_reg__
+ 192 0104 0E94 0000 		call fprintf
+ 193 0108 EDB7      		in r30,__SP_L__
+ 194 010a FEB7      		in r31,__SP_H__
+ 195 010c 3196      		adiw r30,1
+ 196 010e ADB7      		in r26,__SP_L__
+ 197 0110 BEB7      		in r27,__SP_H__
+ 198 0112 1296      		adiw r26,1+1
+ 199 0114 FC92      		st X,r15
+ 200 0116 EE92      		st -X,r14
+ 201 0118 1197      		sbiw r26,1
+ 202 011a 80E0      		ldi r24,lo8(.LC5)
+ 203 011c 90E0      		ldi r25,hi8(.LC5)
+ 204 011e 9383      		std Z+3,r25
+ 205 0120 8283      		std Z+2,r24
+ 206 0122 8E85      		ldd r24,Y+14
+ 207 0124 9F85      		ldd r25,Y+15
+ 208 0126 9583      		std Z+5,r25
+ 209 0128 8483      		std Z+4,r24
+ 210 012a 0E94 0000 		call fprintf
+ 211 012e EDB7      		in r30,__SP_L__
+ 212 0130 FEB7      		in r31,__SP_H__
+ 213 0132 3196      		adiw r30,1
+ 214 0134 ADB7      		in r26,__SP_L__
+ 215 0136 BEB7      		in r27,__SP_H__
+ 216 0138 1296      		adiw r26,1+1
+ 217 013a FC92      		st X,r15
+ 218 013c EE92      		st -X,r14
+ 219 013e 1197      		sbiw r26,1
+ 220 0140 80E0      		ldi r24,lo8(.LC6)
+ 221 0142 90E0      		ldi r25,hi8(.LC6)
+ 222 0144 9383      		std Z+3,r25
+ 223 0146 8283      		std Z+2,r24
+ 224 0148 8889      		ldd r24,Y+16
+ 225 014a 8483      		std Z+4,r24
+ 226 014c 1582      		std Z+5,__zero_reg__
+ 227 014e 0E94 0000 		call fprintf
+ 228 0152 EDB7      		in r30,__SP_L__
+ 229 0154 FEB7      		in r31,__SP_H__
+ 230 0156 3196      		adiw r30,1
+ 231 0158 ADB7      		in r26,__SP_L__
+ 232 015a BEB7      		in r27,__SP_H__
+ 233 015c 1296      		adiw r26,1+1
+ 234 015e FC92      		st X,r15
+ 235 0160 EE92      		st -X,r14
+ 236 0162 1197      		sbiw r26,1
+ 237 0164 80E0      		ldi r24,lo8(.LC7)
+ 238 0166 90E0      		ldi r25,hi8(.LC7)
+ 239 0168 9383      		std Z+3,r25
+ 240 016a 8283      		std Z+2,r24
+ 241 016c 8989      		ldd r24,Y+17
+ 242 016e 9A89      		ldd r25,Y+18
+ 243 0170 9583      		std Z+5,r25
+ 244 0172 8483      		std Z+4,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 7
+
+
+ 245 0174 0E94 0000 		call fprintf
+ 246 0178 8B89      		ldd r24,Y+19
+ 247 017a 9C89      		ldd r25,Y+20
+ 248 017c EDB7      		in r30,__SP_L__
+ 249 017e FEB7      		in r31,__SP_H__
+ 250 0180 3696      		adiw r30,6
+ 251 0182 0FB6      		in __tmp_reg__,__SREG__
+ 252 0184 F894      		cli
+ 253 0186 FEBF      		out __SP_H__,r31
+ 254 0188 0FBE      		out __SREG__,__tmp_reg__
+ 255 018a EDBF      		out __SP_L__,r30
+ 256 018c 0097      		sbiw r24,0
+ 257 018e 01F0      		breq .L3
+ 258 0190 9C01      		movw r18,r24
+ 259 0192 40E0      		ldi r20,lo8(0)
+ 260 0194 50E0      		ldi r21,hi8(0)
+ 261 0196 00C0      		rjmp .L4
+ 262               	.L3:
+ 263 0198 28A1      		ldd r18,Y+32
+ 264 019a 39A1      		ldd r19,Y+33
+ 265 019c 4AA1      		ldd r20,Y+34
+ 266 019e 5BA1      		ldd r21,Y+35
+ 267               	.L4:
+ 268 01a0 8DB7      		in r24,__SP_L__
+ 269 01a2 9EB7      		in r25,__SP_H__
+ 270 01a4 0897      		sbiw r24,8
+ 271 01a6 0FB6      		in __tmp_reg__,__SREG__
+ 272 01a8 F894      		cli
+ 273 01aa 9EBF      		out __SP_H__,r25
+ 274 01ac 0FBE      		out __SREG__,__tmp_reg__
+ 275 01ae 8DBF      		out __SP_L__,r24
+ 276 01b0 EDB7      		in r30,__SP_L__
+ 277 01b2 FEB7      		in r31,__SP_H__
+ 278 01b4 3196      		adiw r30,1
+ 279 01b6 ADB7      		in r26,__SP_L__
+ 280 01b8 BEB7      		in r27,__SP_H__
+ 281 01ba 1296      		adiw r26,1+1
+ 282 01bc FC92      		st X,r15
+ 283 01be EE92      		st -X,r14
+ 284 01c0 1197      		sbiw r26,1
+ 285 01c2 80E0      		ldi r24,lo8(.LC8)
+ 286 01c4 90E0      		ldi r25,hi8(.LC8)
+ 287 01c6 9383      		std Z+3,r25
+ 288 01c8 8283      		std Z+2,r24
+ 289 01ca 2483      		std Z+4,r18
+ 290 01cc 3583      		std Z+5,r19
+ 291 01ce 4683      		std Z+6,r20
+ 292 01d0 5783      		std Z+7,r21
+ 293 01d2 0E94 0000 		call fprintf
+ 294 01d6 0F90      		pop __tmp_reg__
+ 295 01d8 0F90      		pop __tmp_reg__
+ 296 01da EDB7      		in r30,__SP_L__
+ 297 01dc FEB7      		in r31,__SP_H__
+ 298 01de 3196      		adiw r30,1
+ 299 01e0 ADB7      		in r26,__SP_L__
+ 300 01e2 BEB7      		in r27,__SP_H__
+ 301 01e4 1296      		adiw r26,1+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 8
+
+
+ 302 01e6 FC92      		st X,r15
+ 303 01e8 EE92      		st -X,r14
+ 304 01ea 1197      		sbiw r26,1
+ 305 01ec 80E0      		ldi r24,lo8(.LC9)
+ 306 01ee 90E0      		ldi r25,hi8(.LC9)
+ 307 01f0 9383      		std Z+3,r25
+ 308 01f2 8283      		std Z+2,r24
+ 309 01f4 8D89      		ldd r24,Y+21
+ 310 01f6 8483      		std Z+4,r24
+ 311 01f8 1582      		std Z+5,__zero_reg__
+ 312 01fa 0E94 0000 		call fprintf
+ 313 01fe 00D0      		rcall .
+ 314 0200 00D0      		rcall .
+ 315 0202 EDB7      		in r30,__SP_L__
+ 316 0204 FEB7      		in r31,__SP_H__
+ 317 0206 3196      		adiw r30,1
+ 318 0208 ADB7      		in r26,__SP_L__
+ 319 020a BEB7      		in r27,__SP_H__
+ 320 020c 1296      		adiw r26,1+1
+ 321 020e FC92      		st X,r15
+ 322 0210 EE92      		st -X,r14
+ 323 0212 1197      		sbiw r26,1
+ 324 0214 80E0      		ldi r24,lo8(.LC10)
+ 325 0216 90E0      		ldi r25,hi8(.LC10)
+ 326 0218 9383      		std Z+3,r25
+ 327 021a 8283      		std Z+2,r24
+ 328 021c 8E89      		ldd r24,Y+22
+ 329 021e 9F89      		ldd r25,Y+23
+ 330 0220 9583      		std Z+5,r25
+ 331 0222 8483      		std Z+4,r24
+ 332 0224 8CA1      		ldd r24,Y+36
+ 333 0226 9DA1      		ldd r25,Y+37
+ 334 0228 AEA1      		ldd r26,Y+38
+ 335 022a BFA1      		ldd r27,Y+39
+ 336 022c 8683      		std Z+6,r24
+ 337 022e 9783      		std Z+7,r25
+ 338 0230 A087      		std Z+8,r26
+ 339 0232 B187      		std Z+9,r27
+ 340 0234 0E94 0000 		call fprintf
+ 341 0238 0F90      		pop __tmp_reg__
+ 342 023a 0F90      		pop __tmp_reg__
+ 343 023c 0F90      		pop __tmp_reg__
+ 344 023e 0F90      		pop __tmp_reg__
+ 345 0240 EDB7      		in r30,__SP_L__
+ 346 0242 FEB7      		in r31,__SP_H__
+ 347 0244 3196      		adiw r30,1
+ 348 0246 ADB7      		in r26,__SP_L__
+ 349 0248 BEB7      		in r27,__SP_H__
+ 350 024a 1296      		adiw r26,1+1
+ 351 024c FC92      		st X,r15
+ 352 024e EE92      		st -X,r14
+ 353 0250 1197      		sbiw r26,1
+ 354 0252 80E0      		ldi r24,lo8(.LC11)
+ 355 0254 90E0      		ldi r25,hi8(.LC11)
+ 356 0256 9383      		std Z+3,r25
+ 357 0258 8283      		std Z+2,r24
+ 358 025a 888D      		ldd r24,Y+24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 9
+
+
+ 359 025c 998D      		ldd r25,Y+25
+ 360 025e 9583      		std Z+5,r25
+ 361 0260 8483      		std Z+4,r24
+ 362 0262 0E94 0000 		call fprintf
+ 363 0266 EDB7      		in r30,__SP_L__
+ 364 0268 FEB7      		in r31,__SP_H__
+ 365 026a 3196      		adiw r30,1
+ 366 026c ADB7      		in r26,__SP_L__
+ 367 026e BEB7      		in r27,__SP_H__
+ 368 0270 1296      		adiw r26,1+1
+ 369 0272 FC92      		st X,r15
+ 370 0274 EE92      		st -X,r14
+ 371 0276 1197      		sbiw r26,1
+ 372 0278 80E0      		ldi r24,lo8(.LC12)
+ 373 027a 90E0      		ldi r25,hi8(.LC12)
+ 374 027c 9383      		std Z+3,r25
+ 375 027e 8283      		std Z+2,r24
+ 376 0280 8A8D      		ldd r24,Y+26
+ 377 0282 9B8D      		ldd r25,Y+27
+ 378 0284 9583      		std Z+5,r25
+ 379 0286 8483      		std Z+4,r24
+ 380 0288 0E94 0000 		call fprintf
+ 381 028c 00D0      		rcall .
+ 382 028e EDB7      		in r30,__SP_L__
+ 383 0290 FEB7      		in r31,__SP_H__
+ 384 0292 3196      		adiw r30,1
+ 385 0294 ADB7      		in r26,__SP_L__
+ 386 0296 BEB7      		in r27,__SP_H__
+ 387 0298 1296      		adiw r26,1+1
+ 388 029a FC92      		st X,r15
+ 389 029c EE92      		st -X,r14
+ 390 029e 1197      		sbiw r26,1
+ 391 02a0 80E0      		ldi r24,lo8(.LC13)
+ 392 02a2 90E0      		ldi r25,hi8(.LC13)
+ 393 02a4 9383      		std Z+3,r25
+ 394 02a6 8283      		std Z+2,r24
+ 395 02a8 8C8D      		ldd r24,Y+28
+ 396 02aa 9D8D      		ldd r25,Y+29
+ 397 02ac AE8D      		ldd r26,Y+30
+ 398 02ae BF8D      		ldd r27,Y+31
+ 399 02b0 8483      		std Z+4,r24
+ 400 02b2 9583      		std Z+5,r25
+ 401 02b4 A683      		std Z+6,r26
+ 402 02b6 B783      		std Z+7,r27
+ 403 02b8 0E94 0000 		call fprintf
+ 404 02bc 0F90      		pop __tmp_reg__
+ 405 02be 0F90      		pop __tmp_reg__
+ 406 02c0 EDB7      		in r30,__SP_L__
+ 407 02c2 FEB7      		in r31,__SP_H__
+ 408 02c4 3196      		adiw r30,1
+ 409 02c6 ADB7      		in r26,__SP_L__
+ 410 02c8 BEB7      		in r27,__SP_H__
+ 411 02ca 1296      		adiw r26,1+1
+ 412 02cc FC92      		st X,r15
+ 413 02ce EE92      		st -X,r14
+ 414 02d0 1197      		sbiw r26,1
+ 415 02d2 80E0      		ldi r24,lo8(.LC14)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 10
+
+
+ 416 02d4 90E0      		ldi r25,hi8(.LC14)
+ 417 02d6 9383      		std Z+3,r25
+ 418 02d8 8283      		std Z+2,r24
+ 419 02da 88A5      		ldd r24,Y+40
+ 420 02dc 99A5      		ldd r25,Y+41
+ 421 02de 9583      		std Z+5,r25
+ 422 02e0 8483      		std Z+4,r24
+ 423 02e2 0E94 0000 		call fprintf
+ 424 02e6 EDB7      		in r30,__SP_L__
+ 425 02e8 FEB7      		in r31,__SP_H__
+ 426 02ea 3196      		adiw r30,1
+ 427 02ec ADB7      		in r26,__SP_L__
+ 428 02ee BEB7      		in r27,__SP_H__
+ 429 02f0 1296      		adiw r26,1+1
+ 430 02f2 FC92      		st X,r15
+ 431 02f4 EE92      		st -X,r14
+ 432 02f6 1197      		sbiw r26,1
+ 433 02f8 80E0      		ldi r24,lo8(.LC15)
+ 434 02fa 90E0      		ldi r25,hi8(.LC15)
+ 435 02fc 9383      		std Z+3,r25
+ 436 02fe 8283      		std Z+2,r24
+ 437 0300 8AA5      		ldd r24,Y+42
+ 438 0302 9BA5      		ldd r25,Y+43
+ 439 0304 9583      		std Z+5,r25
+ 440 0306 8483      		std Z+4,r24
+ 441 0308 0E94 0000 		call fprintf
+ 442 030c 00D0      		rcall .
+ 443 030e EDB7      		in r30,__SP_L__
+ 444 0310 FEB7      		in r31,__SP_H__
+ 445 0312 3196      		adiw r30,1
+ 446 0314 ADB7      		in r26,__SP_L__
+ 447 0316 BEB7      		in r27,__SP_H__
+ 448 0318 1296      		adiw r26,1+1
+ 449 031a FC92      		st X,r15
+ 450 031c EE92      		st -X,r14
+ 451 031e 1197      		sbiw r26,1
+ 452 0320 80E0      		ldi r24,lo8(.LC16)
+ 453 0322 90E0      		ldi r25,hi8(.LC16)
+ 454 0324 9383      		std Z+3,r25
+ 455 0326 8283      		std Z+2,r24
+ 456 0328 8CA5      		ldd r24,Y+44
+ 457 032a 9DA5      		ldd r25,Y+45
+ 458 032c AEA5      		ldd r26,Y+46
+ 459 032e BFA5      		ldd r27,Y+47
+ 460 0330 8483      		std Z+4,r24
+ 461 0332 9583      		std Z+5,r25
+ 462 0334 A683      		std Z+6,r26
+ 463 0336 B783      		std Z+7,r27
+ 464 0338 0E94 0000 		call fprintf
+ 465 033c 0F90      		pop __tmp_reg__
+ 466 033e 0F90      		pop __tmp_reg__
+ 467 0340 EDB7      		in r30,__SP_L__
+ 468 0342 FEB7      		in r31,__SP_H__
+ 469 0344 3196      		adiw r30,1
+ 470 0346 ADB7      		in r26,__SP_L__
+ 471 0348 BEB7      		in r27,__SP_H__
+ 472 034a 1296      		adiw r26,1+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 11
+
+
+ 473 034c FC92      		st X,r15
+ 474 034e EE92      		st -X,r14
+ 475 0350 1197      		sbiw r26,1
+ 476 0352 80E0      		ldi r24,lo8(.LC17)
+ 477 0354 90E0      		ldi r25,hi8(.LC17)
+ 478 0356 9383      		std Z+3,r25
+ 479 0358 8283      		std Z+2,r24
+ 480 035a 88A9      		ldd r24,Y+48
+ 481 035c 99A9      		ldd r25,Y+49
+ 482 035e 9583      		std Z+5,r25
+ 483 0360 8483      		std Z+4,r24
+ 484 0362 0E94 0000 		call fprintf
+ 485 0366 EDB7      		in r30,__SP_L__
+ 486 0368 FEB7      		in r31,__SP_H__
+ 487 036a 3196      		adiw r30,1
+ 488 036c ADB7      		in r26,__SP_L__
+ 489 036e BEB7      		in r27,__SP_H__
+ 490 0370 1296      		adiw r26,1+1
+ 491 0372 FC92      		st X,r15
+ 492 0374 EE92      		st -X,r14
+ 493 0376 1197      		sbiw r26,1
+ 494 0378 80E0      		ldi r24,lo8(.LC18)
+ 495 037a 90E0      		ldi r25,hi8(.LC18)
+ 496 037c 9383      		std Z+3,r25
+ 497 037e 8283      		std Z+2,r24
+ 498 0380 8AA9      		ldd r24,Y+50
+ 499 0382 9BA9      		ldd r25,Y+51
+ 500 0384 9583      		std Z+5,r25
+ 501 0386 8483      		std Z+4,r24
+ 502 0388 0E94 0000 		call fprintf
+ 503 038c EDB7      		in r30,__SP_L__
+ 504 038e FEB7      		in r31,__SP_H__
+ 505 0390 3196      		adiw r30,1
+ 506 0392 ADB7      		in r26,__SP_L__
+ 507 0394 BEB7      		in r27,__SP_H__
+ 508 0396 1296      		adiw r26,1+1
+ 509 0398 FC92      		st X,r15
+ 510 039a EE92      		st -X,r14
+ 511 039c 1197      		sbiw r26,1
+ 512 039e 80E0      		ldi r24,lo8(.LC19)
+ 513 03a0 90E0      		ldi r25,hi8(.LC19)
+ 514 03a2 9383      		std Z+3,r25
+ 515 03a4 8283      		std Z+2,r24
+ 516 03a6 C05C      		subi r28,lo8(-(64))
+ 517 03a8 DF4F      		sbci r29,hi8(-(64))
+ 518 03aa 8991      		ld r24,Y+
+ 519 03ac 8483      		std Z+4,r24
+ 520 03ae 1582      		std Z+5,__zero_reg__
+ 521 03b0 0E94 0000 		call fprintf
+ 522 03b4 EDB7      		in r30,__SP_L__
+ 523 03b6 FEB7      		in r31,__SP_H__
+ 524 03b8 3196      		adiw r30,1
+ 525 03ba ADB7      		in r26,__SP_L__
+ 526 03bc BEB7      		in r27,__SP_H__
+ 527 03be 1296      		adiw r26,1+1
+ 528 03c0 FC92      		st X,r15
+ 529 03c2 EE92      		st -X,r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 12
+
+
+ 530 03c4 1197      		sbiw r26,1
+ 531 03c6 80E0      		ldi r24,lo8(.LC20)
+ 532 03c8 90E0      		ldi r25,hi8(.LC20)
+ 533 03ca 9383      		std Z+3,r25
+ 534 03cc 8283      		std Z+2,r24
+ 535 03ce 8881      		ld r24,Y
+ 536 03d0 C154      		subi r28,lo8(-(-65))
+ 537 03d2 D040      		sbci r29,hi8(-(-65))
+ 538 03d4 8483      		std Z+4,r24
+ 539 03d6 1582      		std Z+5,__zero_reg__
+ 540 03d8 0E94 0000 		call fprintf
+ 541 03dc EDB7      		in r30,__SP_L__
+ 542 03de FEB7      		in r31,__SP_H__
+ 543 03e0 3196      		adiw r30,1
+ 544 03e2 ADB7      		in r26,__SP_L__
+ 545 03e4 BEB7      		in r27,__SP_H__
+ 546 03e6 1296      		adiw r26,1+1
+ 547 03e8 FC92      		st X,r15
+ 548 03ea EE92      		st -X,r14
+ 549 03ec 1197      		sbiw r26,1
+ 550 03ee 80E0      		ldi r24,lo8(.LC21)
+ 551 03f0 90E0      		ldi r25,hi8(.LC21)
+ 552 03f2 9383      		std Z+3,r25
+ 553 03f4 8283      		std Z+2,r24
+ 554 03f6 8E01      		movw r16,r28
+ 555 03f8 0E5B      		subi r16,lo8(-(66))
+ 556 03fa 1F4F      		sbci r17,hi8(-(66))
+ 557 03fc D801      		movw r26,r16
+ 558 03fe 8C91      		ld r24,X
+ 559 0400 8483      		std Z+4,r24
+ 560 0402 1582      		std Z+5,__zero_reg__
+ 561 0404 0E94 0000 		call fprintf
+ 562 0408 F801      		movw r30,r16
+ 563 040a 8081      		ld r24,Z
+ 564 040c 8852      		subi r24,lo8(-(-40))
+ 565 040e 2DB7      		in r18,__SP_L__
+ 566 0410 3EB7      		in r19,__SP_H__
+ 567 0412 2A5F      		subi r18,lo8(-(6))
+ 568 0414 3F4F      		sbci r19,hi8(-(6))
+ 569 0416 0FB6      		in __tmp_reg__,__SREG__
+ 570 0418 F894      		cli
+ 571 041a 3EBF      		out __SP_H__,r19
+ 572 041c 0FBE      		out __SREG__,__tmp_reg__
+ 573 041e 2DBF      		out __SP_L__,r18
+ 574 0420 8230      		cpi r24,lo8(2)
+ 575 0422 00F0      		brlo .+2
+ 576 0424 00C0      		rjmp .L6
+ 577 0426 8DB7      		in r24,__SP_L__
+ 578 0428 9EB7      		in r25,__SP_H__
+ 579 042a 0897      		sbiw r24,8
+ 580 042c 0FB6      		in __tmp_reg__,__SREG__
+ 581 042e F894      		cli
+ 582 0430 9EBF      		out __SP_H__,r25
+ 583 0432 0FBE      		out __SREG__,__tmp_reg__
+ 584 0434 8DBF      		out __SP_L__,r24
+ 585 0436 EDB7      		in r30,__SP_L__
+ 586 0438 FEB7      		in r31,__SP_H__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 13
+
+
+ 587 043a 3196      		adiw r30,1
+ 588 043c ADB7      		in r26,__SP_L__
+ 589 043e BEB7      		in r27,__SP_H__
+ 590 0440 1296      		adiw r26,1+1
+ 591 0442 FC92      		st X,r15
+ 592 0444 EE92      		st -X,r14
+ 593 0446 1197      		sbiw r26,1
+ 594 0448 80E0      		ldi r24,lo8(.LC22)
+ 595 044a 90E0      		ldi r25,hi8(.LC22)
+ 596 044c 9383      		std Z+3,r25
+ 597 044e 8283      		std Z+2,r24
+ 598 0450 CD5B      		subi r28,lo8(-(67))
+ 599 0452 DF4F      		sbci r29,hi8(-(67))
+ 600 0454 8991      		ld r24,Y+
+ 601 0456 9991      		ld r25,Y+
+ 602 0458 A991      		ld r26,Y+
+ 603 045a B991      		ld r27,Y+
+ 604 045c 8483      		std Z+4,r24
+ 605 045e 9583      		std Z+5,r25
+ 606 0460 A683      		std Z+6,r26
+ 607 0462 B783      		std Z+7,r27
+ 608 0464 0E94 0000 		call fprintf
+ 609 0468 0F90      		pop __tmp_reg__
+ 610 046a 0F90      		pop __tmp_reg__
+ 611 046c EDB7      		in r30,__SP_L__
+ 612 046e FEB7      		in r31,__SP_H__
+ 613 0470 3196      		adiw r30,1
+ 614 0472 ADB7      		in r26,__SP_L__
+ 615 0474 BEB7      		in r27,__SP_H__
+ 616 0476 1296      		adiw r26,1+1
+ 617 0478 FC92      		st X,r15
+ 618 047a EE92      		st -X,r14
+ 619 047c 1197      		sbiw r26,1
+ 620 047e 80E0      		ldi r24,lo8(.LC23)
+ 621 0480 90E0      		ldi r25,hi8(.LC23)
+ 622 0482 9383      		std Z+3,r25
+ 623 0484 8283      		std Z+2,r24
+ 624 0486 D583      		std Z+5,r29
+ 625 0488 C483      		std Z+4,r28
+ 626 048a 0E94 0000 		call fprintf
+ 627 048e EDB7      		in r30,__SP_L__
+ 628 0490 FEB7      		in r31,__SP_H__
+ 629 0492 3196      		adiw r30,1
+ 630 0494 ADB7      		in r26,__SP_L__
+ 631 0496 BEB7      		in r27,__SP_H__
+ 632 0498 1296      		adiw r26,1+1
+ 633 049a FC92      		st X,r15
+ 634 049c EE92      		st -X,r14
+ 635 049e 1197      		sbiw r26,1
+ 636 04a0 80E0      		ldi r24,lo8(.LC24)
+ 637 04a2 90E0      		ldi r25,hi8(.LC24)
+ 638 04a4 9383      		std Z+3,r25
+ 639 04a6 8283      		std Z+2,r24
+ 640 04a8 2B96      		adiw r28,11
+ 641 04aa D583      		std Z+5,r29
+ 642 04ac C483      		std Z+4,r28
+ 643 04ae 0E94 0000 		call fprintf
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 14
+
+
+ 644 04b2 EDB7      		in r30,__SP_L__
+ 645 04b4 FEB7      		in r31,__SP_H__
+ 646 04b6 3696      		adiw r30,6
+ 647 04b8 0FB6      		in __tmp_reg__,__SREG__
+ 648 04ba F894      		cli
+ 649 04bc FEBF      		out __SP_H__,r31
+ 650 04be 0FBE      		out __SREG__,__tmp_reg__
+ 651 04c0 EDBF      		out __SP_L__,r30
+ 652               	.L6:
+ 653               	/* epilogue start */
+ 654 04c2 DF91      		pop r29
+ 655 04c4 CF91      		pop r28
+ 656 04c6 1F91      		pop r17
+ 657 04c8 0F91      		pop r16
+ 658 04ca FF90      		pop r15
+ 659 04cc EF90      		pop r14
+ 660 04ce 0895      		ret
+ 661               		.size	PhatDbgVbr, .-PhatDbgVbr
+ 662               	.global	PhatDbgAttrList
+ 663               		.type	PhatDbgAttrList, @function
+ 664               	PhatDbgAttrList:
+ 665               	/* prologue: function */
+ 666               	/* frame size = 0 */
+ 667 04d0 9C01      		movw r18,r24
+ 668 04d2 60FF      		sbrs r22,0
+ 669 04d4 00C0      		rjmp .L8
+ 670 04d6 82E5      		ldi r24,lo8(82)
+ 671 04d8 90E0      		ldi r25,hi8(82)
+ 672 04da 00C0      		rjmp .L15
+ 673               	.L8:
+ 674 04dc 61FF      		sbrs r22,1
+ 675 04de 00C0      		rjmp .L10
+ 676 04e0 88E4      		ldi r24,lo8(72)
+ 677 04e2 90E0      		ldi r25,hi8(72)
+ 678 04e4 00C0      		rjmp .L15
+ 679               	.L10:
+ 680 04e6 62FF      		sbrs r22,2
+ 681 04e8 00C0      		rjmp .L11
+ 682 04ea 83E5      		ldi r24,lo8(83)
+ 683 04ec 90E0      		ldi r25,hi8(83)
+ 684 04ee 00C0      		rjmp .L15
+ 685               	.L11:
+ 686 04f0 63FF      		sbrs r22,3
+ 687 04f2 00C0      		rjmp .L12
+ 688 04f4 86E5      		ldi r24,lo8(86)
+ 689 04f6 90E0      		ldi r25,hi8(86)
+ 690 04f8 00C0      		rjmp .L15
+ 691               	.L12:
+ 692 04fa 64FF      		sbrs r22,4
+ 693 04fc 00C0      		rjmp .L13
+ 694 04fe 84E4      		ldi r24,lo8(68)
+ 695 0500 90E0      		ldi r25,hi8(68)
+ 696               	.L15:
+ 697 0502 B901      		movw r22,r18
+ 698 0504 0E94 0000 		call fputc
+ 699 0508 0895      		ret
+ 700               	.L13:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 15
+
+
+ 701 050a 65FF      		sbrs r22,5
+ 702 050c 00C0      		rjmp .L14
+ 703 050e 81E4      		ldi r24,lo8(65)
+ 704 0510 90E0      		ldi r25,hi8(65)
+ 705 0512 B901      		movw r22,r18
+ 706 0514 0E94 0000 		call fputc
+ 707               	.L14:
+ 708 0518 0895      		ret
+ 709               		.size	PhatDbgAttrList, .-PhatDbgAttrList
+ 710               		.data
+ 711               	.LC25:
+ 712 022f 4465 6E74 		.string	"DentFName: '%.11s'\n"
+ 712      464E 616D 
+ 712      653A 2027 
+ 712      252E 3131 
+ 712      7327 0A00 
+ 713               	.LC26:
+ 714 0243 4465 6E74 		.string	"DentFAttr: "
+ 714      4641 7474 
+ 714      723A 2000 
+ 715               	.LC27:
+ 716 024f 4465 6E74 		.string	"DentRsrvd: 0x%02X\n"
+ 716      5273 7276 
+ 716      643A 2030 
+ 716      7825 3032 
+ 716      580A 00
+ 717               	.LC28:
+ 718 0262 4465 6E74 		.string	"DentCTime: 0x%04X 0x%04X 0x%02X\n"
+ 718      4354 696D 
+ 718      653A 2030 
+ 718      7825 3034 
+ 718      5820 3078 
+ 719               	.LC29:
+ 720 0283 4465 6E74 		.string	"DentADate: 0x%04X\n"
+ 720      4144 6174 
+ 720      653A 2030 
+ 720      7825 3034 
+ 720      580A 00
+ 721               	.LC30:
+ 722 0296 4465 6E74 		.string	"DentMTime: 0x%04X 0x%04X\n"
+ 722      4D54 696D 
+ 722      653A 2030 
+ 722      7825 3034 
+ 722      5820 3078 
+ 723               	.LC31:
+ 724 02b0 4465 6E74 		.string	"DentClust: %lu\n"
+ 724      436C 7573 
+ 724      743A 2025 
+ 724      6C75 0A00 
+ 725               	.LC32:
+ 726 02c0 4465 6E74 		.string	"DentFSize: %lu\n"
+ 726      4653 697A 
+ 726      653A 2025 
+ 726      6C75 0A00 
+ 727               		.text
+ 728               	.global	PhatDbgDirEntry
+ 729               		.type	PhatDbgDirEntry, @function
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 16
+
+
+ 730               	PhatDbgDirEntry:
+ 731 051a 0F93      		push r16
+ 732 051c 1F93      		push r17
+ 733 051e CF93      		push r28
+ 734 0520 DF93      		push r29
+ 735               	/* prologue: function */
+ 736               	/* frame size = 0 */
+ 737 0522 8C01      		movw r16,r24
+ 738 0524 EA01      		movw r28,r20
+ 739 0526 6115      		cp r22,__zero_reg__
+ 740 0528 7105      		cpc r23,__zero_reg__
+ 741 052a 01F0      		breq .L17
+ 742 052c 00D0      		rcall .
+ 743 052e 00D0      		rcall .
+ 744 0530 00D0      		rcall .
+ 745 0532 EDB7      		in r30,__SP_L__
+ 746 0534 FEB7      		in r31,__SP_H__
+ 747 0536 3196      		adiw r30,1
+ 748 0538 ADB7      		in r26,__SP_L__
+ 749 053a BEB7      		in r27,__SP_H__
+ 750 053c 1296      		adiw r26,1+1
+ 751 053e 9C93      		st X,r25
+ 752 0540 8E93      		st -X,r24
+ 753 0542 1197      		sbiw r26,1
+ 754 0544 80E0      		ldi r24,lo8(.LC0)
+ 755 0546 90E0      		ldi r25,hi8(.LC0)
+ 756 0548 9383      		std Z+3,r25
+ 757 054a 8283      		std Z+2,r24
+ 758 054c 7583      		std Z+5,r23
+ 759 054e 6483      		std Z+4,r22
+ 760 0550 0E94 0000 		call fprintf
+ 761 0554 8DB7      		in r24,__SP_L__
+ 762 0556 9EB7      		in r25,__SP_H__
+ 763 0558 0696      		adiw r24,6
+ 764 055a 0FB6      		in __tmp_reg__,__SREG__
+ 765 055c F894      		cli
+ 766 055e 9EBF      		out __SP_H__,r25
+ 767 0560 0FBE      		out __SREG__,__tmp_reg__
+ 768 0562 8DBF      		out __SP_L__,r24
+ 769               	.L17:
+ 770 0564 00D0      		rcall .
+ 771 0566 00D0      		rcall .
+ 772 0568 00D0      		rcall .
+ 773 056a EDB7      		in r30,__SP_L__
+ 774 056c FEB7      		in r31,__SP_H__
+ 775 056e 3196      		adiw r30,1
+ 776 0570 ADB7      		in r26,__SP_L__
+ 777 0572 BEB7      		in r27,__SP_H__
+ 778 0574 1296      		adiw r26,1+1
+ 779 0576 1C93      		st X,r17
+ 780 0578 0E93      		st -X,r16
+ 781 057a 1197      		sbiw r26,1
+ 782 057c 80E0      		ldi r24,lo8(.LC25)
+ 783 057e 90E0      		ldi r25,hi8(.LC25)
+ 784 0580 9383      		std Z+3,r25
+ 785 0582 8283      		std Z+2,r24
+ 786 0584 D583      		std Z+5,r29
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 17
+
+
+ 787 0586 C483      		std Z+4,r28
+ 788 0588 0E94 0000 		call fprintf
+ 789 058c 8DB7      		in r24,__SP_L__
+ 790 058e 9EB7      		in r25,__SP_H__
+ 791 0590 0696      		adiw r24,6
+ 792 0592 0FB6      		in __tmp_reg__,__SREG__
+ 793 0594 F894      		cli
+ 794 0596 9EBF      		out __SP_H__,r25
+ 795 0598 0FBE      		out __SREG__,__tmp_reg__
+ 796 059a 8DBF      		out __SP_L__,r24
+ 797 059c 80E0      		ldi r24,lo8(.LC26)
+ 798 059e 90E0      		ldi r25,hi8(.LC26)
+ 799 05a0 B801      		movw r22,r16
+ 800 05a2 0E94 0000 		call fputs
+ 801 05a6 C801      		movw r24,r16
+ 802 05a8 6B85      		ldd r22,Y+11
+ 803 05aa 0E94 0000 		call PhatDbgAttrList
+ 804 05ae 8AE0      		ldi r24,lo8(10)
+ 805 05b0 90E0      		ldi r25,hi8(10)
+ 806 05b2 B801      		movw r22,r16
+ 807 05b4 0E94 0000 		call fputc
+ 808 05b8 00D0      		rcall .
+ 809 05ba 00D0      		rcall .
+ 810 05bc 00D0      		rcall .
+ 811 05be EDB7      		in r30,__SP_L__
+ 812 05c0 FEB7      		in r31,__SP_H__
+ 813 05c2 3196      		adiw r30,1
+ 814 05c4 ADB7      		in r26,__SP_L__
+ 815 05c6 BEB7      		in r27,__SP_H__
+ 816 05c8 1296      		adiw r26,1+1
+ 817 05ca 1C93      		st X,r17
+ 818 05cc 0E93      		st -X,r16
+ 819 05ce 1197      		sbiw r26,1
+ 820 05d0 80E0      		ldi r24,lo8(.LC27)
+ 821 05d2 90E0      		ldi r25,hi8(.LC27)
+ 822 05d4 9383      		std Z+3,r25
+ 823 05d6 8283      		std Z+2,r24
+ 824 05d8 8C85      		ldd r24,Y+12
+ 825 05da 8483      		std Z+4,r24
+ 826 05dc 1582      		std Z+5,__zero_reg__
+ 827 05de 0E94 0000 		call fprintf
+ 828 05e2 00D0      		rcall .
+ 829 05e4 00D0      		rcall .
+ 830 05e6 EDB7      		in r30,__SP_L__
+ 831 05e8 FEB7      		in r31,__SP_H__
+ 832 05ea 3196      		adiw r30,1
+ 833 05ec ADB7      		in r26,__SP_L__
+ 834 05ee BEB7      		in r27,__SP_H__
+ 835 05f0 1296      		adiw r26,1+1
+ 836 05f2 1C93      		st X,r17
+ 837 05f4 0E93      		st -X,r16
+ 838 05f6 1197      		sbiw r26,1
+ 839 05f8 80E0      		ldi r24,lo8(.LC28)
+ 840 05fa 90E0      		ldi r25,hi8(.LC28)
+ 841 05fc 9383      		std Z+3,r25
+ 842 05fe 8283      		std Z+2,r24
+ 843 0600 8889      		ldd r24,Y+16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 18
+
+
+ 844 0602 9989      		ldd r25,Y+17
+ 845 0604 9583      		std Z+5,r25
+ 846 0606 8483      		std Z+4,r24
+ 847 0608 8E85      		ldd r24,Y+14
+ 848 060a 9F85      		ldd r25,Y+15
+ 849 060c 9783      		std Z+7,r25
+ 850 060e 8683      		std Z+6,r24
+ 851 0610 8D85      		ldd r24,Y+13
+ 852 0612 8087      		std Z+8,r24
+ 853 0614 1186      		std Z+9,__zero_reg__
+ 854 0616 0E94 0000 		call fprintf
+ 855 061a 0F90      		pop __tmp_reg__
+ 856 061c 0F90      		pop __tmp_reg__
+ 857 061e 0F90      		pop __tmp_reg__
+ 858 0620 0F90      		pop __tmp_reg__
+ 859 0622 EDB7      		in r30,__SP_L__
+ 860 0624 FEB7      		in r31,__SP_H__
+ 861 0626 3196      		adiw r30,1
+ 862 0628 ADB7      		in r26,__SP_L__
+ 863 062a BEB7      		in r27,__SP_H__
+ 864 062c 1296      		adiw r26,1+1
+ 865 062e 1C93      		st X,r17
+ 866 0630 0E93      		st -X,r16
+ 867 0632 1197      		sbiw r26,1
+ 868 0634 80E0      		ldi r24,lo8(.LC29)
+ 869 0636 90E0      		ldi r25,hi8(.LC29)
+ 870 0638 9383      		std Z+3,r25
+ 871 063a 8283      		std Z+2,r24
+ 872 063c 8A89      		ldd r24,Y+18
+ 873 063e 9B89      		ldd r25,Y+19
+ 874 0640 9583      		std Z+5,r25
+ 875 0642 8483      		std Z+4,r24
+ 876 0644 0E94 0000 		call fprintf
+ 877 0648 00D0      		rcall .
+ 878 064a EDB7      		in r30,__SP_L__
+ 879 064c FEB7      		in r31,__SP_H__
+ 880 064e 3196      		adiw r30,1
+ 881 0650 ADB7      		in r26,__SP_L__
+ 882 0652 BEB7      		in r27,__SP_H__
+ 883 0654 1296      		adiw r26,1+1
+ 884 0656 1C93      		st X,r17
+ 885 0658 0E93      		st -X,r16
+ 886 065a 1197      		sbiw r26,1
+ 887 065c 80E0      		ldi r24,lo8(.LC30)
+ 888 065e 90E0      		ldi r25,hi8(.LC30)
+ 889 0660 9383      		std Z+3,r25
+ 890 0662 8283      		std Z+2,r24
+ 891 0664 888D      		ldd r24,Y+24
+ 892 0666 998D      		ldd r25,Y+25
+ 893 0668 9583      		std Z+5,r25
+ 894 066a 8483      		std Z+4,r24
+ 895 066c 8E89      		ldd r24,Y+22
+ 896 066e 9F89      		ldd r25,Y+23
+ 897 0670 9783      		std Z+7,r25
+ 898 0672 8683      		std Z+6,r24
+ 899 0674 0E94 0000 		call fprintf
+ 900 0678 EDB7      		in r30,__SP_L__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 19
+
+
+ 901 067a FEB7      		in r31,__SP_H__
+ 902 067c 3196      		adiw r30,1
+ 903 067e ADB7      		in r26,__SP_L__
+ 904 0680 BEB7      		in r27,__SP_H__
+ 905 0682 1296      		adiw r26,1+1
+ 906 0684 1C93      		st X,r17
+ 907 0686 0E93      		st -X,r16
+ 908 0688 1197      		sbiw r26,1
+ 909 068a 80E0      		ldi r24,lo8(.LC31)
+ 910 068c 90E0      		ldi r25,hi8(.LC31)
+ 911 068e 9383      		std Z+3,r25
+ 912 0690 8283      		std Z+2,r24
+ 913 0692 8C89      		ldd r24,Y+20
+ 914 0694 9D89      		ldd r25,Y+21
+ 915 0696 A0E0      		ldi r26,lo8(0)
+ 916 0698 B0E0      		ldi r27,hi8(0)
+ 917 069a DC01      		movw r26,r24
+ 918 069c 9927      		clr r25
+ 919 069e 8827      		clr r24
+ 920 06a0 2A8D      		ldd r18,Y+26
+ 921 06a2 3B8D      		ldd r19,Y+27
+ 922 06a4 40E0      		ldi r20,lo8(0)
+ 923 06a6 50E0      		ldi r21,hi8(0)
+ 924 06a8 820F      		add r24,r18
+ 925 06aa 931F      		adc r25,r19
+ 926 06ac A41F      		adc r26,r20
+ 927 06ae B51F      		adc r27,r21
+ 928 06b0 8483      		std Z+4,r24
+ 929 06b2 9583      		std Z+5,r25
+ 930 06b4 A683      		std Z+6,r26
+ 931 06b6 B783      		std Z+7,r27
+ 932 06b8 0E94 0000 		call fprintf
+ 933 06bc EDB7      		in r30,__SP_L__
+ 934 06be FEB7      		in r31,__SP_H__
+ 935 06c0 3196      		adiw r30,1
+ 936 06c2 ADB7      		in r26,__SP_L__
+ 937 06c4 BEB7      		in r27,__SP_H__
+ 938 06c6 1296      		adiw r26,1+1
+ 939 06c8 1C93      		st X,r17
+ 940 06ca 0E93      		st -X,r16
+ 941 06cc 1197      		sbiw r26,1
+ 942 06ce 80E0      		ldi r24,lo8(.LC32)
+ 943 06d0 90E0      		ldi r25,hi8(.LC32)
+ 944 06d2 9383      		std Z+3,r25
+ 945 06d4 8283      		std Z+2,r24
+ 946 06d6 8C8D      		ldd r24,Y+28
+ 947 06d8 9D8D      		ldd r25,Y+29
+ 948 06da AE8D      		ldd r26,Y+30
+ 949 06dc BF8D      		ldd r27,Y+31
+ 950 06de 8483      		std Z+4,r24
+ 951 06e0 9583      		std Z+5,r25
+ 952 06e2 A683      		std Z+6,r26
+ 953 06e4 B783      		std Z+7,r27
+ 954 06e6 0E94 0000 		call fprintf
+ 955 06ea 8DB7      		in r24,__SP_L__
+ 956 06ec 9EB7      		in r25,__SP_H__
+ 957 06ee 0896      		adiw r24,8
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 20
+
+
+ 958 06f0 0FB6      		in __tmp_reg__,__SREG__
+ 959 06f2 F894      		cli
+ 960 06f4 9EBF      		out __SP_H__,r25
+ 961 06f6 0FBE      		out __SREG__,__tmp_reg__
+ 962 06f8 8DBF      		out __SP_L__,r24
+ 963               	/* epilogue start */
+ 964 06fa DF91      		pop r29
+ 965 06fc CF91      		pop r28
+ 966 06fe 1F91      		pop r17
+ 967 0700 0F91      		pop r16
+ 968 0702 0895      		ret
+ 969               		.size	PhatDbgDirEntry, .-PhatDbgDirEntry
+ 970               		.data
+ 971               	.LC33:
+ 972 02d0 4669 6C65 		.string	"File Pos   : %lu\n"
+ 972      2050 6F73 
+ 972      2020 203A 
+ 972      2025 6C75 
+ 972      0A00 
+ 973               	.LC34:
+ 974 02e2 436C 7573 		.string	"Cluster    : %lu  Prev %lu\n"
+ 974      7465 7220 
+ 974      2020 203A 
+ 974      2025 6C75 
+ 974      2020 5072 
+ 975               	.LC35:
+ 976 02fe 436C 7573 		.string	"Cluster Pos: %lu\n"
+ 976      7465 7220 
+ 976      506F 733A 
+ 976      2025 6C75 
+ 976      0A00 
+ 977               	.LC36:
+ 978 0310 5365 6374 		.string	"Sector Pos : %lu\n"
+ 978      6F72 2050 
+ 978      6F73 203A 
+ 978      2025 6C75 
+ 978      0A00 
+ 979               	.LC37:
+ 980 0322 5061 7265 		.string	"Parent Clust: %lu\n"
+ 980      6E74 2043 
+ 980      6C75 7374 
+ 980      3A20 256C 
+ 980      750A 00
+ 981               	.LC38:
+ 982 0335 4469 7245 		.string	"DirEnt Sect : %lu\n"
+ 982      6E74 2053 
+ 982      6563 7420 
+ 982      3A20 256C 
+ 982      750A 00
+ 983               	.LC39:
+ 984 0348 4469 7245 		.string	"DirEnt Offs : %lu\n"
+ 984      6E74 204F 
+ 984      6666 7320 
+ 984      3A20 256C 
+ 984      750A 00
+ 985               	.LC40:
+ 986 035b 4469 7245 		.string	"DirEnt Dirty: %u\n"
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 21
+
+
+ 986      6E74 2044 
+ 986      6972 7479 
+ 986      3A20 2575 
+ 986      0A00 
+ 987               		.text
+ 988               	.global	PhatDbgFileInfo
+ 989               		.type	PhatDbgFileInfo, @function
+ 990               	PhatDbgFileInfo:
+ 991 0704 0F93      		push r16
+ 992 0706 1F93      		push r17
+ 993 0708 CF93      		push r28
+ 994 070a DF93      		push r29
+ 995               	/* prologue: function */
+ 996               	/* frame size = 0 */
+ 997 070c 8C01      		movw r16,r24
+ 998 070e EA01      		movw r28,r20
+ 999 0710 6115      		cp r22,__zero_reg__
+ 1000 0712 7105      		cpc r23,__zero_reg__
+ 1001 0714 01F0      		breq .L20
+ 1002 0716 00D0      		rcall .
+ 1003 0718 00D0      		rcall .
+ 1004 071a 00D0      		rcall .
+ 1005 071c EDB7      		in r30,__SP_L__
+ 1006 071e FEB7      		in r31,__SP_H__
+ 1007 0720 3196      		adiw r30,1
+ 1008 0722 ADB7      		in r26,__SP_L__
+ 1009 0724 BEB7      		in r27,__SP_H__
+ 1010 0726 1296      		adiw r26,1+1
+ 1011 0728 9C93      		st X,r25
+ 1012 072a 8E93      		st -X,r24
+ 1013 072c 1197      		sbiw r26,1
+ 1014 072e 80E0      		ldi r24,lo8(.LC0)
+ 1015 0730 90E0      		ldi r25,hi8(.LC0)
+ 1016 0732 9383      		std Z+3,r25
+ 1017 0734 8283      		std Z+2,r24
+ 1018 0736 7583      		std Z+5,r23
+ 1019 0738 6483      		std Z+4,r22
+ 1020 073a 0E94 0000 		call fprintf
+ 1021 073e 8DB7      		in r24,__SP_L__
+ 1022 0740 9EB7      		in r25,__SP_H__
+ 1023 0742 0696      		adiw r24,6
+ 1024 0744 0FB6      		in __tmp_reg__,__SREG__
+ 1025 0746 F894      		cli
+ 1026 0748 9EBF      		out __SP_H__,r25
+ 1027 074a 0FBE      		out __SREG__,__tmp_reg__
+ 1028 074c 8DBF      		out __SP_L__,r24
+ 1029               	.L20:
+ 1030 074e ADB7      		in r26,__SP_L__
+ 1031 0750 BEB7      		in r27,__SP_H__
+ 1032 0752 1897      		sbiw r26,8
+ 1033 0754 0FB6      		in __tmp_reg__,__SREG__
+ 1034 0756 F894      		cli
+ 1035 0758 BEBF      		out __SP_H__,r27
+ 1036 075a 0FBE      		out __SREG__,__tmp_reg__
+ 1037 075c ADBF      		out __SP_L__,r26
+ 1038 075e EDB7      		in r30,__SP_L__
+ 1039 0760 FEB7      		in r31,__SP_H__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 22
+
+
+ 1040 0762 3196      		adiw r30,1
+ 1041 0764 1296      		adiw r26,1+1
+ 1042 0766 1C93      		st X,r17
+ 1043 0768 0E93      		st -X,r16
+ 1044 076a 1197      		sbiw r26,1
+ 1045 076c 80E0      		ldi r24,lo8(.LC33)
+ 1046 076e 90E0      		ldi r25,hi8(.LC33)
+ 1047 0770 9383      		std Z+3,r25
+ 1048 0772 8283      		std Z+2,r24
+ 1049 0774 8881      		ld r24,Y
+ 1050 0776 9981      		ldd r25,Y+1
+ 1051 0778 AA81      		ldd r26,Y+2
+ 1052 077a BB81      		ldd r27,Y+3
+ 1053 077c 8483      		std Z+4,r24
+ 1054 077e 9583      		std Z+5,r25
+ 1055 0780 A683      		std Z+6,r26
+ 1056 0782 B783      		std Z+7,r27
+ 1057 0784 0E94 0000 		call fprintf
+ 1058 0788 00D0      		rcall .
+ 1059 078a 00D0      		rcall .
+ 1060 078c EDB7      		in r30,__SP_L__
+ 1061 078e FEB7      		in r31,__SP_H__
+ 1062 0790 3196      		adiw r30,1
+ 1063 0792 ADB7      		in r26,__SP_L__
+ 1064 0794 BEB7      		in r27,__SP_H__
+ 1065 0796 1296      		adiw r26,1+1
+ 1066 0798 1C93      		st X,r17
+ 1067 079a 0E93      		st -X,r16
+ 1068 079c 1197      		sbiw r26,1
+ 1069 079e 80E0      		ldi r24,lo8(.LC34)
+ 1070 07a0 90E0      		ldi r25,hi8(.LC34)
+ 1071 07a2 9383      		std Z+3,r25
+ 1072 07a4 8283      		std Z+2,r24
+ 1073 07a6 8C81      		ldd r24,Y+4
+ 1074 07a8 9D81      		ldd r25,Y+5
+ 1075 07aa AE81      		ldd r26,Y+6
+ 1076 07ac BF81      		ldd r27,Y+7
+ 1077 07ae 8483      		std Z+4,r24
+ 1078 07b0 9583      		std Z+5,r25
+ 1079 07b2 A683      		std Z+6,r26
+ 1080 07b4 B783      		std Z+7,r27
+ 1081 07b6 8889      		ldd r24,Y+16
+ 1082 07b8 9989      		ldd r25,Y+17
+ 1083 07ba AA89      		ldd r26,Y+18
+ 1084 07bc BB89      		ldd r27,Y+19
+ 1085 07be 8087      		std Z+8,r24
+ 1086 07c0 9187      		std Z+9,r25
+ 1087 07c2 A287      		std Z+10,r26
+ 1088 07c4 B387      		std Z+11,r27
+ 1089 07c6 0E94 0000 		call fprintf
+ 1090 07ca 0F90      		pop __tmp_reg__
+ 1091 07cc 0F90      		pop __tmp_reg__
+ 1092 07ce 0F90      		pop __tmp_reg__
+ 1093 07d0 0F90      		pop __tmp_reg__
+ 1094 07d2 EDB7      		in r30,__SP_L__
+ 1095 07d4 FEB7      		in r31,__SP_H__
+ 1096 07d6 3196      		adiw r30,1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 23
+
+
+ 1097 07d8 ADB7      		in r26,__SP_L__
+ 1098 07da BEB7      		in r27,__SP_H__
+ 1099 07dc 1296      		adiw r26,1+1
+ 1100 07de 1C93      		st X,r17
+ 1101 07e0 0E93      		st -X,r16
+ 1102 07e2 1197      		sbiw r26,1
+ 1103 07e4 80E0      		ldi r24,lo8(.LC35)
+ 1104 07e6 90E0      		ldi r25,hi8(.LC35)
+ 1105 07e8 9383      		std Z+3,r25
+ 1106 07ea 8283      		std Z+2,r24
+ 1107 07ec 8885      		ldd r24,Y+8
+ 1108 07ee 9985      		ldd r25,Y+9
+ 1109 07f0 AA85      		ldd r26,Y+10
+ 1110 07f2 BB85      		ldd r27,Y+11
+ 1111 07f4 8483      		std Z+4,r24
+ 1112 07f6 9583      		std Z+5,r25
+ 1113 07f8 A683      		std Z+6,r26
+ 1114 07fa B783      		std Z+7,r27
+ 1115 07fc 0E94 0000 		call fprintf
+ 1116 0800 EDB7      		in r30,__SP_L__
+ 1117 0802 FEB7      		in r31,__SP_H__
+ 1118 0804 3196      		adiw r30,1
+ 1119 0806 ADB7      		in r26,__SP_L__
+ 1120 0808 BEB7      		in r27,__SP_H__
+ 1121 080a 1296      		adiw r26,1+1
+ 1122 080c 1C93      		st X,r17
+ 1123 080e 0E93      		st -X,r16
+ 1124 0810 1197      		sbiw r26,1
+ 1125 0812 80E0      		ldi r24,lo8(.LC36)
+ 1126 0814 90E0      		ldi r25,hi8(.LC36)
+ 1127 0816 9383      		std Z+3,r25
+ 1128 0818 8283      		std Z+2,r24
+ 1129 081a 8C85      		ldd r24,Y+12
+ 1130 081c 9D85      		ldd r25,Y+13
+ 1131 081e AE85      		ldd r26,Y+14
+ 1132 0820 BF85      		ldd r27,Y+15
+ 1133 0822 8483      		std Z+4,r24
+ 1134 0824 9583      		std Z+5,r25
+ 1135 0826 A683      		std Z+6,r26
+ 1136 0828 B783      		std Z+7,r27
+ 1137 082a 0E94 0000 		call fprintf
+ 1138 082e 8DB7      		in r24,__SP_L__
+ 1139 0830 9EB7      		in r25,__SP_H__
+ 1140 0832 0896      		adiw r24,8
+ 1141 0834 0FB6      		in __tmp_reg__,__SREG__
+ 1142 0836 F894      		cli
+ 1143 0838 9EBF      		out __SP_H__,r25
+ 1144 083a 0FBE      		out __SREG__,__tmp_reg__
+ 1145 083c 8DBF      		out __SP_L__,r24
+ 1146 083e 6896      		adiw r28,24
+ 1147 0840 C801      		movw r24,r16
+ 1148 0842 60E0      		ldi r22,lo8(0)
+ 1149 0844 70E0      		ldi r23,hi8(0)
+ 1150 0846 AE01      		movw r20,r28
+ 1151 0848 0E94 0000 		call PhatDbgDirEntry
+ 1152 084c ADB7      		in r26,__SP_L__
+ 1153 084e BEB7      		in r27,__SP_H__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 24
+
+
+ 1154 0850 1897      		sbiw r26,8
+ 1155 0852 0FB6      		in __tmp_reg__,__SREG__
+ 1156 0854 F894      		cli
+ 1157 0856 BEBF      		out __SP_H__,r27
+ 1158 0858 0FBE      		out __SREG__,__tmp_reg__
+ 1159 085a ADBF      		out __SP_L__,r26
+ 1160 085c EDB7      		in r30,__SP_L__
+ 1161 085e FEB7      		in r31,__SP_H__
+ 1162 0860 3196      		adiw r30,1
+ 1163 0862 1296      		adiw r26,1+1
+ 1164 0864 1C93      		st X,r17
+ 1165 0866 0E93      		st -X,r16
+ 1166 0868 1197      		sbiw r26,1
+ 1167 086a 80E0      		ldi r24,lo8(.LC37)
+ 1168 086c 90E0      		ldi r25,hi8(.LC37)
+ 1169 086e 9383      		std Z+3,r25
+ 1170 0870 8283      		std Z+2,r24
+ 1171 0872 AC96      		adiw r28,44
+ 1172 0874 8881      		ld r24,Y
+ 1173 0876 9981      		ldd r25,Y+1
+ 1174 0878 A0E0      		ldi r26,lo8(0)
+ 1175 087a B0E0      		ldi r27,hi8(0)
+ 1176 087c DC01      		movw r26,r24
+ 1177 087e 9927      		clr r25
+ 1178 0880 8827      		clr r24
+ 1179 0882 3A91      		ld r19,-Y
+ 1180 0884 2A91      		ld r18,-Y
+ 1181 0886 C254      		subi r28,lo8(-(-66))
+ 1182 0888 D040      		sbci r29,hi8(-(-66))
+ 1183 088a 40E0      		ldi r20,lo8(0)
+ 1184 088c 50E0      		ldi r21,hi8(0)
+ 1185 088e 820F      		add r24,r18
+ 1186 0890 931F      		adc r25,r19
+ 1187 0892 A41F      		adc r26,r20
+ 1188 0894 B51F      		adc r27,r21
+ 1189 0896 8483      		std Z+4,r24
+ 1190 0898 9583      		std Z+5,r25
+ 1191 089a A683      		std Z+6,r26
+ 1192 089c B783      		std Z+7,r27
+ 1193 089e 0E94 0000 		call fprintf
+ 1194 08a2 EDB7      		in r30,__SP_L__
+ 1195 08a4 FEB7      		in r31,__SP_H__
+ 1196 08a6 3196      		adiw r30,1
+ 1197 08a8 ADB7      		in r26,__SP_L__
+ 1198 08aa BEB7      		in r27,__SP_H__
+ 1199 08ac 1296      		adiw r26,1+1
+ 1200 08ae 1C93      		st X,r17
+ 1201 08b0 0E93      		st -X,r16
+ 1202 08b2 1197      		sbiw r26,1
+ 1203 08b4 80E0      		ldi r24,lo8(.LC38)
+ 1204 08b6 90E0      		ldi r25,hi8(.LC38)
+ 1205 08b8 9383      		std Z+3,r25
+ 1206 08ba 8283      		std Z+2,r24
+ 1207 08bc 88AD      		ldd r24,Y+56
+ 1208 08be 99AD      		ldd r25,Y+57
+ 1209 08c0 AAAD      		ldd r26,Y+58
+ 1210 08c2 BBAD      		ldd r27,Y+59
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 25
+
+
+ 1211 08c4 8483      		std Z+4,r24
+ 1212 08c6 9583      		std Z+5,r25
+ 1213 08c8 A683      		std Z+6,r26
+ 1214 08ca B783      		std Z+7,r27
+ 1215 08cc 0E94 0000 		call fprintf
+ 1216 08d0 EDB7      		in r30,__SP_L__
+ 1217 08d2 FEB7      		in r31,__SP_H__
+ 1218 08d4 3196      		adiw r30,1
+ 1219 08d6 ADB7      		in r26,__SP_L__
+ 1220 08d8 BEB7      		in r27,__SP_H__
+ 1221 08da 1296      		adiw r26,1+1
+ 1222 08dc 1C93      		st X,r17
+ 1223 08de 0E93      		st -X,r16
+ 1224 08e0 1197      		sbiw r26,1
+ 1225 08e2 80E0      		ldi r24,lo8(.LC39)
+ 1226 08e4 90E0      		ldi r25,hi8(.LC39)
+ 1227 08e6 9383      		std Z+3,r25
+ 1228 08e8 8283      		std Z+2,r24
+ 1229 08ea 8CAD      		ldd r24,Y+60
+ 1230 08ec 9DAD      		ldd r25,Y+61
+ 1231 08ee AEAD      		ldd r26,Y+62
+ 1232 08f0 BFAD      		ldd r27,Y+63
+ 1233 08f2 8483      		std Z+4,r24
+ 1234 08f4 9583      		std Z+5,r25
+ 1235 08f6 A683      		std Z+6,r26
+ 1236 08f8 B783      		std Z+7,r27
+ 1237 08fa 0E94 0000 		call fprintf
+ 1238 08fe 0F90      		pop __tmp_reg__
+ 1239 0900 0F90      		pop __tmp_reg__
+ 1240 0902 EDB7      		in r30,__SP_L__
+ 1241 0904 FEB7      		in r31,__SP_H__
+ 1242 0906 3196      		adiw r30,1
+ 1243 0908 ADB7      		in r26,__SP_L__
+ 1244 090a BEB7      		in r27,__SP_H__
+ 1245 090c 1296      		adiw r26,1+1
+ 1246 090e 1C93      		st X,r17
+ 1247 0910 0E93      		st -X,r16
+ 1248 0912 1197      		sbiw r26,1
+ 1249 0914 80E0      		ldi r24,lo8(.LC40)
+ 1250 0916 90E0      		ldi r25,hi8(.LC40)
+ 1251 0918 9383      		std Z+3,r25
+ 1252 091a 8283      		std Z+2,r24
+ 1253 091c C05C      		subi r28,lo8(-(64))
+ 1254 091e DF4F      		sbci r29,hi8(-(64))
+ 1255 0920 8881      		ld r24,Y
+ 1256 0922 9981      		ldd r25,Y+1
+ 1257 0924 9583      		std Z+5,r25
+ 1258 0926 8483      		std Z+4,r24
+ 1259 0928 0E94 0000 		call fprintf
+ 1260 092c 8DB7      		in r24,__SP_L__
+ 1261 092e 9EB7      		in r25,__SP_H__
+ 1262 0930 0696      		adiw r24,6
+ 1263 0932 0FB6      		in __tmp_reg__,__SREG__
+ 1264 0934 F894      		cli
+ 1265 0936 9EBF      		out __SP_H__,r25
+ 1266 0938 0FBE      		out __SREG__,__tmp_reg__
+ 1267 093a 8DBF      		out __SP_L__,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 26
+
+
+ 1268               	/* epilogue start */
+ 1269 093c DF91      		pop r29
+ 1270 093e CF91      		pop r28
+ 1271 0940 1F91      		pop r17
+ 1272 0942 0F91      		pop r16
+ 1273 0944 0895      		ret
+ 1274               		.size	PhatDbgFileInfo, .-PhatDbgFileInfo
+ 1275               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s 			page 27
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 phatdbg.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s:62     .text:00000000 PhatDbgVbr
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s:664    .text:000004d0 PhatDbgAttrList
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s:730    .text:0000051a PhatDbgDirEntry
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccsISLoe.s:990    .text:00000704 PhatDbgFileInfo
+
+UNDEFINED SYMBOLS
+fprintf
+fputc
+fputs
+__do_copy_data

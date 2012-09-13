@@ -1,0 +1,97 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciPi0RQ.s 			page 1
+
+
+   1               		.file	"getenv.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	nextenv
+  10               		.type	nextenv, @function
+  11               	nextenv:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 FC01      		movw r30,r24
+  15 0002 0097      		sbiw r24,0
+  16 0004 01F0      		breq .L2
+  17 0006 8081      		ld r24,Z
+  18 0008 8823      		tst r24
+  19 000a 01F0      		breq .L2
+  20 000c CF01      		movw r24,r30
+  21 000e 0E94 0000 		call findenv
+  22 0012 FC01      		movw r30,r24
+  23 0014 0097      		sbiw r24,0
+  24 0016 01F0      		breq .L3
+  25 0018 0190      		ld __tmp_reg__,Z+
+  26 001a F081      		ld r31,Z
+  27 001c E02D      		mov r30,__tmp_reg__
+  28 001e 00C0      		rjmp .L8
+  29               	.L2:
+  30 0020 E091 0000 		lds r30,nut_environ
+  31 0024 F091 0000 		lds r31,(nut_environ)+1
+  32               	.L8:
+  33 0028 3097      		sbiw r30,0
+  34 002a 01F0      		breq .L3
+  35 002c 2481      		ldd r18,Z+4
+  36 002e 3581      		ldd r19,Z+5
+  37 0030 00C0      		rjmp .L4
+  38               	.L3:
+  39 0032 20E0      		ldi r18,lo8(0)
+  40 0034 30E0      		ldi r19,hi8(0)
+  41               	.L4:
+  42 0036 C901      		movw r24,r18
+  43               	/* epilogue start */
+  44 0038 0895      		ret
+  45               		.size	nextenv, .-nextenv
+  46               	.global	getenv
+  47               		.type	getenv, @function
+  48               	getenv:
+  49               	/* prologue: function */
+  50               	/* frame size = 0 */
+  51 003a 0E94 0000 		call findenv
+  52 003e FC01      		movw r30,r24
+  53 0040 0097      		sbiw r24,0
+  54 0042 01F4      		brne .L10
+  55 0044 20E0      		ldi r18,lo8(0)
+  56 0046 30E0      		ldi r19,hi8(0)
+  57 0048 00C0      		rjmp .L11
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciPi0RQ.s 			page 2
+
+
+  58               	.L10:
+  59 004a 2681      		ldd r18,Z+6
+  60 004c 3781      		ldd r19,Z+7
+  61 004e 2115      		cp r18,__zero_reg__
+  62 0050 3105      		cpc r19,__zero_reg__
+  63 0052 01F4      		brne .L11
+  64 0054 20E0      		ldi r18,lo8(empty_envval)
+  65 0056 30E0      		ldi r19,hi8(empty_envval)
+  66               	.L11:
+  67 0058 C901      		movw r24,r18
+  68               	/* epilogue start */
+  69 005a 0895      		ret
+  70               		.size	getenv, .-getenv
+  71               		.lcomm empty_envval,1
+  72               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciPi0RQ.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 getenv.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciPi0RQ.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciPi0RQ.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciPi0RQ.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciPi0RQ.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciPi0RQ.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciPi0RQ.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciPi0RQ.s:11     .text:00000000 nextenv
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciPi0RQ.s:48     .text:0000003a getenv
+                             .bss:00000000 empty_envval
+
+UNDEFINED SYMBOLS
+findenv
+nut_environ
+__do_clear_bss

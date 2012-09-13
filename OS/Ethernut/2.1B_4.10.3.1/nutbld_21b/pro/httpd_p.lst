@@ -1,0 +1,294 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s 			page 1
+
+
+   1               		.file	"httpd_p.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	DestroyRequestInfo
+  10               		.type	DestroyRequestInfo, @function
+  11               	DestroyRequestInfo:
+  12 0000 CF93      		push r28
+  13 0002 DF93      		push r29
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0004 EC01      		movw r28,r24
+  17 0006 0097      		sbiw r24,0
+  18 0008 01F4      		brne .+2
+  19 000a 00C0      		rjmp .L13
+  20 000c 8885      		ldd r24,Y+8
+  21 000e 9985      		ldd r25,Y+9
+  22 0010 0097      		sbiw r24,0
+  23 0012 01F0      		breq .L3
+  24 0014 0E94 0000 		call free
+  25               	.L3:
+  26 0018 8A85      		ldd r24,Y+10
+  27 001a 9B85      		ldd r25,Y+11
+  28 001c 0097      		sbiw r24,0
+  29 001e 01F0      		breq .L4
+  30 0020 0E94 0000 		call free
+  31               	.L4:
+  32 0024 8C85      		ldd r24,Y+12
+  33 0026 9D85      		ldd r25,Y+13
+  34 0028 0097      		sbiw r24,0
+  35 002a 01F0      		breq .L5
+  36 002c 0E94 0000 		call free
+  37               	.L5:
+  38 0030 8E85      		ldd r24,Y+14
+  39 0032 9F85      		ldd r25,Y+15
+  40 0034 0097      		sbiw r24,0
+  41 0036 01F0      		breq .L6
+  42 0038 0E94 0000 		call free
+  43               	.L6:
+  44 003c 8889      		ldd r24,Y+16
+  45 003e 9989      		ldd r25,Y+17
+  46 0040 0097      		sbiw r24,0
+  47 0042 01F0      		breq .L7
+  48 0044 0E94 0000 		call free
+  49               	.L7:
+  50 0048 8A89      		ldd r24,Y+18
+  51 004a 9B89      		ldd r25,Y+19
+  52 004c 0097      		sbiw r24,0
+  53 004e 01F0      		breq .L8
+  54 0050 0E94 0000 		call free
+  55               	.L8:
+  56 0054 8C89      		ldd r24,Y+20
+  57 0056 9D89      		ldd r25,Y+21
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s 			page 2
+
+
+  58 0058 0097      		sbiw r24,0
+  59 005a 01F0      		breq .L9
+  60 005c 0E94 0000 		call free
+  61               	.L9:
+  62 0060 8C8D      		ldd r24,Y+28
+  63 0062 9D8D      		ldd r25,Y+29
+  64 0064 0097      		sbiw r24,0
+  65 0066 01F0      		breq .L10
+  66 0068 0E94 0000 		call free
+  67               	.L10:
+  68 006c 8E8D      		ldd r24,Y+30
+  69 006e 9F8D      		ldd r25,Y+31
+  70 0070 0097      		sbiw r24,0
+  71 0072 01F0      		breq .L11
+  72 0074 0E94 0000 		call free
+  73               	.L11:
+  74 0078 8AA1      		ldd r24,Y+34
+  75 007a 9BA1      		ldd r25,Y+35
+  76 007c 0097      		sbiw r24,0
+  77 007e 01F0      		breq .L12
+  78 0080 0E94 0000 		call free
+  79               	.L12:
+  80 0084 CE01      		movw r24,r28
+  81 0086 0E94 0000 		call free
+  82               	.L13:
+  83               	/* epilogue start */
+  84 008a DF91      		pop r29
+  85 008c CF91      		pop r28
+  86 008e 0895      		ret
+  87               		.size	DestroyRequestInfo, .-DestroyRequestInfo
+  88               		.data
+  89               	.LC0:
+  90 0000 5552 4F4D 		.string	"UROM:"
+  90      3A00 
+  91               		.text
+  92               	.global	CreateFilePath
+  93               		.type	CreateFilePath, @function
+  94               	CreateFilePath:
+  95 0090 AF92      		push r10
+  96 0092 BF92      		push r11
+  97 0094 CF92      		push r12
+  98 0096 DF92      		push r13
+  99 0098 EF92      		push r14
+ 100 009a FF92      		push r15
+ 101 009c 0F93      		push r16
+ 102 009e 1F93      		push r17
+ 103 00a0 CF93      		push r28
+ 104 00a2 DF93      		push r29
+ 105               	/* prologue: function */
+ 106               	/* frame size = 0 */
+ 107 00a4 7C01      		movw r14,r24
+ 108 00a6 5B01      		movw r10,r22
+ 109 00a8 C090 0000 		lds r12,http_root
+ 110 00ac D090 0000 		lds r13,(http_root)+1
+ 111 00b0 C114      		cp r12,__zero_reg__
+ 112 00b2 D104      		cpc r13,__zero_reg__
+ 113 00b4 01F4      		brne .L15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s 			page 3
+
+
+ 114 00b6 80E0      		ldi r24,lo8(.LC0)
+ 115 00b8 C82E      		mov r12,r24
+ 116 00ba 80E0      		ldi r24,hi8(.LC0)
+ 117 00bc D82E      		mov r13,r24
+ 118               	.L15:
+ 119 00be D701      		movw r26,r14
+ 120 00c0 0D90      		ld __tmp_reg__,X+
+ 121 00c2 0020      		tst __tmp_reg__
+ 122 00c4 01F4      		brne .-6
+ 123 00c6 8D01      		movw r16,r26
+ 124 00c8 0150      		subi r16,lo8(-(-1))
+ 125 00ca 1040      		sbci r17,hi8(-(-1))
+ 126 00cc 0E19      		sub r16,r14
+ 127 00ce 1F09      		sbc r17,r15
+ 128 00d0 F601      		movw r30,r12
+ 129 00d2 0190      		ld __tmp_reg__,Z+
+ 130 00d4 0020      		tst __tmp_reg__
+ 131 00d6 01F4      		brne .-6
+ 132 00d8 3197      		sbiw r30,1
+ 133 00da EC19      		sub r30,r12
+ 134 00dc FD09      		sbc r31,r13
+ 135 00de E501      		movw r28,r10
+ 136 00e0 0990      		ld __tmp_reg__,Y+
+ 137 00e2 0020      		tst __tmp_reg__
+ 138 00e4 01F4      		brne .-6
+ 139 00e6 CE01      		movw r24,r28
+ 140 00e8 0197      		sbiw r24,1
+ 141 00ea 8A19      		sub r24,r10
+ 142 00ec 9B09      		sbc r25,r11
+ 143 00ee E00F      		add r30,r16
+ 144 00f0 F11F      		adc r31,r17
+ 145 00f2 3196      		adiw r30,1
+ 146 00f4 8E0F      		add r24,r30
+ 147 00f6 9F1F      		adc r25,r31
+ 148 00f8 0E94 0000 		call malloc
+ 149 00fc EC01      		movw r28,r24
+ 150 00fe 0097      		sbiw r24,0
+ 151 0100 01F0      		breq .L16
+ 152 0102 B601      		movw r22,r12
+ 153 0104 0E94 0000 		call strcpy
+ 154 0108 CE01      		movw r24,r28
+ 155 010a B701      		movw r22,r14
+ 156 010c 0E94 0000 		call strcat
+ 157 0110 F501      		movw r30,r10
+ 158 0112 8081      		ld r24,Z
+ 159 0114 8823      		tst r24
+ 160 0116 01F0      		breq .L16
+ 161 0118 0115      		cp r16,__zero_reg__
+ 162 011a 1105      		cpc r17,__zero_reg__
+ 163 011c 01F0      		breq .L21
+ 164               	.L17:
+ 165 011e 60E0      		ldi r22,lo8(0)
+ 166 0120 70E0      		ldi r23,hi8(0)
+ 167 0122 E00E      		add r14,r16
+ 168 0124 F11E      		adc r15,r17
+ 169 0126 0894      		sec
+ 170 0128 E108      		sbc r14,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s 			page 4
+
+
+ 171 012a F108      		sbc r15,__zero_reg__
+ 172 012c D701      		movw r26,r14
+ 173 012e 8C91      		ld r24,X
+ 174 0130 8F32      		cpi r24,lo8(47)
+ 175 0132 01F4      		brne .L18
+ 176               	.L21:
+ 177 0134 61E0      		ldi r22,lo8(1)
+ 178 0136 70E0      		ldi r23,hi8(1)
+ 179               	.L18:
+ 180 0138 6A0D      		add r22,r10
+ 181 013a 7B1D      		adc r23,r11
+ 182 013c CE01      		movw r24,r28
+ 183 013e 0E94 0000 		call strcat
+ 184               	.L16:
+ 185 0142 CE01      		movw r24,r28
+ 186               	/* epilogue start */
+ 187 0144 DF91      		pop r29
+ 188 0146 CF91      		pop r28
+ 189 0148 1F91      		pop r17
+ 190 014a 0F91      		pop r16
+ 191 014c FF90      		pop r15
+ 192 014e EF90      		pop r14
+ 193 0150 DF90      		pop r13
+ 194 0152 CF90      		pop r12
+ 195 0154 BF90      		pop r11
+ 196 0156 AF90      		pop r10
+ 197 0158 0895      		ret
+ 198               		.size	CreateFilePath, .-CreateFilePath
+ 199               	.global	default_files
+ 200               		.data
+ 201               	.LC1:
+ 202 0006 00        		.string	""
+ 203               	.LC2:
+ 204 0007 2F69 6E64 		.string	"/index.html"
+ 204      6578 2E68 
+ 204      746D 6C00 
+ 205               	.LC3:
+ 206 0013 2F69 6E64 		.string	"/index.htm"
+ 206      6578 2E68 
+ 206      746D 00
+ 207               	.LC4:
+ 208 001e 2F64 6566 		.string	"/default.html"
+ 208      6175 6C74 
+ 208      2E68 746D 
+ 208      6C00 
+ 209               	.LC5:
+ 210 002c 2F64 6566 		.string	"/default.htm"
+ 210      6175 6C74 
+ 210      2E68 746D 
+ 210      00
+ 211               	.LC6:
+ 212 0039 2F69 6E64 		.string	"/index.shtml"
+ 212      6578 2E73 
+ 212      6874 6D6C 
+ 212      00
+ 213               	.LC7:
+ 214 0046 2F69 6E64 		.string	"/index.xhtml"
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s 			page 5
+
+
+ 214      6578 2E78 
+ 214      6874 6D6C 
+ 214      00
+ 215               	.LC8:
+ 216 0053 2F69 6E64 		.string	"/index.asp"
+ 216      6578 2E61 
+ 216      7370 00
+ 217               	.LC9:
+ 218 005e 2F64 6566 		.string	"/default.asp"
+ 218      6175 6C74 
+ 218      2E61 7370 
+ 218      00
+ 219               		.type	default_files, @object
+ 220               		.size	default_files, 20
+ 221               	default_files:
+ 222 006b 0000      		.word	.LC1
+ 223 006d 0000      		.word	.LC2
+ 224 006f 0000      		.word	.LC3
+ 225 0071 0000      		.word	.LC4
+ 226 0073 0000      		.word	.LC5
+ 227 0075 0000      		.word	.LC6
+ 228 0077 0000      		.word	.LC7
+ 229 0079 0000      		.word	.LC8
+ 230 007b 0000      		.word	.LC9
+ 231 007d 0000      		.word	0
+ 232               		.comm http_root,2,1
+ 233               	.global __do_copy_data
+ 234               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 httpd_p.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s:11     .text:00000000 DestroyRequestInfo
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s:94     .text:00000090 CreateFilePath
+                            *COM*:00000002 http_root
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccD1ViDu.s:221    .data:0000006b default_files
+
+UNDEFINED SYMBOLS
+free
+malloc
+strcpy
+strcat
+__do_copy_data
+__do_clear_bss

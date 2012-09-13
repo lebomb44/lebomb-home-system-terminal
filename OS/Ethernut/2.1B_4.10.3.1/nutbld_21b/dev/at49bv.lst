@@ -1,0 +1,580 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s 			page 1
+
+
+   1               		.file	"at49bv.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	At49bvInit
+  10               		.type	At49bvInit, @function
+  11               	At49bvInit:
+  12 0000 EF92      		push r14
+  13 0002 FF92      		push r15
+  14 0004 0F93      		push r16
+  15 0006 1F93      		push r17
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0008 EAEA      		ldi r30,lo8(2730)
+  19 000a FAE0      		ldi r31,hi8(2730)
+  20 000c 9AEA      		ldi r25,lo8(170)
+  21 000e E92E      		mov r14,r25
+  22 0010 F12C      		mov r15,__zero_reg__
+  23 0012 F182      		std Z+1,r15
+  24 0014 E082      		st Z,r14
+  25 0016 04E5      		ldi r16,lo8(5460)
+  26 0018 15E1      		ldi r17,hi8(5460)
+  27 001a 65E5      		ldi r22,lo8(85)
+  28 001c 70E0      		ldi r23,hi8(85)
+  29 001e D801      		movw r26,r16
+  30 0020 1196      		adiw r26,1
+  31 0022 7C93      		st X,r23
+  32 0024 6E93      		st -X,r22
+  33 0026 80E9      		ldi r24,lo8(144)
+  34 0028 90E0      		ldi r25,hi8(144)
+  35 002a 9183      		std Z+1,r25
+  36 002c 8083      		st Z,r24
+  37 002e 2091 0000 		lds r18,0
+  38 0032 3091 0100 		lds r19,(0)+1
+  39 0036 40E0      		ldi r20,lo8(0)
+  40 0038 50E0      		ldi r21,hi8(0)
+  41 003a A901      		movw r20,r18
+  42 003c 3327      		clr r19
+  43 003e 2227      		clr r18
+  44 0040 8091 0200 		lds r24,2
+  45 0044 9091 0300 		lds r25,(2)+1
+  46 0048 F182      		std Z+1,r15
+  47 004a E082      		st Z,r14
+  48 004c 1196      		adiw r26,1
+  49 004e 7C93      		st X,r23
+  50 0050 6E93      		st -X,r22
+  51 0052 60EF      		ldi r22,lo8(240)
+  52 0054 70E0      		ldi r23,hi8(240)
+  53 0056 7183      		std Z+1,r23
+  54 0058 6083      		st Z,r22
+  55 005a A0E0      		ldi r26,lo8(0)
+  56 005c B0E0      		ldi r27,hi8(0)
+  57 005e 282B      		or r18,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s 			page 2
+
+
+  58 0060 392B      		or r19,r25
+  59 0062 4A2B      		or r20,r26
+  60 0064 5B2B      		or r21,r27
+  61 0066 B901      		movw r22,r18
+  62 0068 CA01      		movw r24,r20
+  63               	/* epilogue start */
+  64 006a 1F91      		pop r17
+  65 006c 0F91      		pop r16
+  66 006e FF90      		pop r15
+  67 0070 EF90      		pop r14
+  68 0072 0895      		ret
+  69               		.size	At49bvInit, .-At49bvInit
+  70               	.global	AT49bvReadProtectionRegister
+  71               		.type	AT49bvReadProtectionRegister, @function
+  72               	AT49bvReadProtectionRegister:
+  73 0074 AF92      		push r10
+  74 0076 BF92      		push r11
+  75 0078 CF92      		push r12
+  76 007a DF92      		push r13
+  77 007c EF92      		push r14
+  78 007e FF92      		push r15
+  79 0080 0F93      		push r16
+  80 0082 1F93      		push r17
+  81               	/* prologue: function */
+  82               	/* frame size = 0 */
+  83 0084 2AEA      		ldi r18,lo8(170)
+  84 0086 30E0      		ldi r19,hi8(170)
+  85 0088 3093 AB0A 		sts (2730)+1,r19
+  86 008c 2093 AA0A 		sts 2730,r18
+  87 0090 25E5      		ldi r18,lo8(85)
+  88 0092 30E0      		ldi r19,hi8(85)
+  89 0094 3093 5515 		sts (5460)+1,r19
+  90 0098 2093 5415 		sts 5460,r18
+  91 009c 20E9      		ldi r18,lo8(144)
+  92 009e 30E0      		ldi r19,hi8(144)
+  93 00a0 3093 AB0A 		sts (2730)+1,r19
+  94 00a4 2093 AA0A 		sts 2730,r18
+  95 00a8 892B      		or r24,r25
+  96 00aa 01F0      		breq .L4
+  97 00ac 4091 0201 		lds r20,258
+  98 00b0 5091 0301 		lds r21,(258)+1
+  99 00b4 9A01      		movw r18,r20
+ 100 00b6 40E0      		ldi r20,lo8(0)
+ 101 00b8 50E0      		ldi r21,lo8(0)
+ 102 00ba 60E0      		ldi r22,lo8(0)
+ 103 00bc 70E0      		ldi r23,lo8(0)
+ 104 00be 80E0      		ldi r24,lo8(0)
+ 105 00c0 90E0      		ldi r25,lo8(0)
+ 106 00c2 00E1      		ldi r16,lo8(16)
+ 107 00c4 0E94 0000 		call __ashldi3
+ 108 00c8 A090 0401 		lds r10,260
+ 109 00cc B090 0501 		lds r11,(260)+1
+ 110 00d0 2A29      		or r18,r10
+ 111 00d2 3B29      		or r19,r11
+ 112 00d4 00E1      		ldi r16,lo8(16)
+ 113 00d6 0E94 0000 		call __ashldi3
+ 114 00da A090 0601 		lds r10,262
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s 			page 3
+
+
+ 115 00de B090 0701 		lds r11,(262)+1
+ 116 00e2 2A29      		or r18,r10
+ 117 00e4 3B29      		or r19,r11
+ 118 00e6 00E1      		ldi r16,lo8(16)
+ 119 00e8 0E94 0000 		call __ashldi3
+ 120 00ec F22F      		mov r31,r18
+ 121 00ee E32F      		mov r30,r19
+ 122 00f0 C090 0801 		lds r12,264
+ 123 00f4 D090 0901 		lds r13,(264)+1
+ 124 00f8 00C0      		rjmp .L7
+ 125               	.L4:
+ 126 00fa 4091 0A01 		lds r20,266
+ 127 00fe 5091 0B01 		lds r21,(266)+1
+ 128 0102 9A01      		movw r18,r20
+ 129 0104 40E0      		ldi r20,lo8(0)
+ 130 0106 50E0      		ldi r21,lo8(0)
+ 131 0108 60E0      		ldi r22,lo8(0)
+ 132 010a 70E0      		ldi r23,lo8(0)
+ 133 010c 80E0      		ldi r24,lo8(0)
+ 134 010e 90E0      		ldi r25,lo8(0)
+ 135 0110 00E1      		ldi r16,lo8(16)
+ 136 0112 0E94 0000 		call __ashldi3
+ 137 0116 A090 0C01 		lds r10,268
+ 138 011a B090 0D01 		lds r11,(268)+1
+ 139 011e 2A29      		or r18,r10
+ 140 0120 3B29      		or r19,r11
+ 141 0122 00E1      		ldi r16,lo8(16)
+ 142 0124 0E94 0000 		call __ashldi3
+ 143 0128 A090 0E01 		lds r10,270
+ 144 012c B090 0F01 		lds r11,(270)+1
+ 145 0130 2A29      		or r18,r10
+ 146 0132 3B29      		or r19,r11
+ 147 0134 00E1      		ldi r16,lo8(16)
+ 148 0136 0E94 0000 		call __ashldi3
+ 149 013a F22F      		mov r31,r18
+ 150 013c E32F      		mov r30,r19
+ 151 013e C090 1001 		lds r12,272
+ 152 0142 D090 1101 		lds r13,(272)+1
+ 153               	.L7:
+ 154 0146 FC29      		or r31,r12
+ 155 0148 ED29      		or r30,r13
+ 156 014a B82F      		mov r27,r24
+ 157 014c A92F      		mov r26,r25
+ 158 014e 8AEA      		ldi r24,lo8(170)
+ 159 0150 90E0      		ldi r25,hi8(170)
+ 160 0152 9093 AB0A 		sts (2730)+1,r25
+ 161 0156 8093 AA0A 		sts 2730,r24
+ 162 015a 85E5      		ldi r24,lo8(85)
+ 163 015c 90E0      		ldi r25,hi8(85)
+ 164 015e 9093 5515 		sts (5460)+1,r25
+ 165 0162 8093 5415 		sts 5460,r24
+ 166 0166 80EF      		ldi r24,lo8(240)
+ 167 0168 90E0      		ldi r25,hi8(240)
+ 168 016a 9093 AB0A 		sts (2730)+1,r25
+ 169 016e 8093 AA0A 		sts 2730,r24
+ 170 0172 2F2F      		mov r18,r31
+ 171 0174 3E2F      		mov r19,r30
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s 			page 4
+
+
+ 172 0176 8B2F      		mov r24,r27
+ 173 0178 9A2F      		mov r25,r26
+ 174               	/* epilogue start */
+ 175 017a 1F91      		pop r17
+ 176 017c 0F91      		pop r16
+ 177 017e FF90      		pop r15
+ 178 0180 EF90      		pop r14
+ 179 0182 DF90      		pop r13
+ 180 0184 CF90      		pop r12
+ 181 0186 BF90      		pop r11
+ 182 0188 AF90      		pop r10
+ 183 018a 0895      		ret
+ 184               		.size	AT49bvReadProtectionRegister, .-AT49bvReadProtectionRegister
+ 185               	.global	At49bvSectorWrite
+ 186               		.type	At49bvSectorWrite, @function
+ 187               	At49bvSectorWrite:
+ 188 018c AF92      		push r10
+ 189 018e BF92      		push r11
+ 190 0190 CF92      		push r12
+ 191 0192 DF92      		push r13
+ 192 0194 EF92      		push r14
+ 193 0196 FF92      		push r15
+ 194 0198 0F93      		push r16
+ 195 019a 1F93      		push r17
+ 196 019c CF93      		push r28
+ 197 019e DF93      		push r29
+ 198               	/* prologue: function */
+ 199               	/* frame size = 0 */
+ 200 01a0 8C01      		movw r16,r24
+ 201 01a2 DB01      		movw r26,r22
+ 202 01a4 60E0      		ldi r22,lo8(0)
+ 203 01a6 70E0      		ldi r23,hi8(0)
+ 204 01a8 EAEA      		ldi r30,lo8(170)
+ 205 01aa AE2E      		mov r10,r30
+ 206 01ac B12C      		mov r11,__zero_reg__
+ 207 01ae 35E5      		ldi r19,lo8(85)
+ 208 01b0 C32E      		mov r12,r19
+ 209 01b2 D12C      		mov r13,__zero_reg__
+ 210 01b4 20EA      		ldi r18,lo8(160)
+ 211 01b6 E22E      		mov r14,r18
+ 212 01b8 F12C      		mov r15,__zero_reg__
+ 213 01ba 00C0      		rjmp .L9
+ 214               	.L14:
+ 215 01bc 8081      		ld r24,Z
+ 216 01be 9181      		ldd r25,Z+1
+ 217 01c0 8F5F      		subi r24,lo8(-1)
+ 218 01c2 9F4F      		sbci r25,hi8(-1)
+ 219 01c4 01F0      		breq .L10
+ 220 01c6 B092 AB0A 		sts (2730)+1,r11
+ 221 01ca A092 AA0A 		sts 2730,r10
+ 222 01ce D092 5515 		sts (5460)+1,r13
+ 223 01d2 C092 5415 		sts 5460,r12
+ 224 01d6 F092 AB0A 		sts (2730)+1,r15
+ 225 01da E092 AA0A 		sts 2730,r14
+ 226 01de 8081      		ld r24,Z
+ 227 01e0 9181      		ldd r25,Z+1
+ 228 01e2 9983      		std Y+1,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s 			page 5
+
+
+ 229 01e4 8883      		st Y,r24
+ 230 01e6 0190      		ld __tmp_reg__,Z+
+ 231 01e8 F081      		ld r31,Z
+ 232 01ea E02D      		mov r30,__tmp_reg__
+ 233 01ec 20E0      		ldi r18,lo8(0)
+ 234 01ee 30E0      		ldi r19,hi8(0)
+ 235 01f0 00C0      		rjmp .L11
+ 236               	.L13:
+ 237 01f2 2F5F      		subi r18,lo8(-(1))
+ 238 01f4 3F4F      		sbci r19,hi8(-(1))
+ 239 01f6 83E0      		ldi r24,hi8(1001)
+ 240 01f8 293E      		cpi r18,lo8(1001)
+ 241 01fa 3807      		cpc r19,r24
+ 242 01fc 01F4      		brne .L11
+ 243 01fe 2FEF      		ldi r18,lo8(-1)
+ 244 0200 3FEF      		ldi r19,hi8(-1)
+ 245 0202 00C0      		rjmp .L12
+ 246               	.L11:
+ 247 0204 8881      		ld r24,Y
+ 248 0206 9981      		ldd r25,Y+1
+ 249 0208 8E17      		cp r24,r30
+ 250 020a 9F07      		cpc r25,r31
+ 251 020c 01F4      		brne .L13
+ 252               	.L10:
+ 253 020e 6E5F      		subi r22,lo8(-(2))
+ 254 0210 7F4F      		sbci r23,hi8(-(2))
+ 255               	.L9:
+ 256 0212 EB01      		movw r28,r22
+ 257 0214 C00F      		add r28,r16
+ 258 0216 D11F      		adc r29,r17
+ 259 0218 FD01      		movw r30,r26
+ 260 021a E60F      		add r30,r22
+ 261 021c F71F      		adc r31,r23
+ 262 021e 6417      		cp r22,r20
+ 263 0220 7507      		cpc r23,r21
+ 264 0222 00F0      		brlo .L14
+ 265 0224 20E0      		ldi r18,lo8(0)
+ 266 0226 30E0      		ldi r19,hi8(0)
+ 267               	.L12:
+ 268 0228 C901      		movw r24,r18
+ 269               	/* epilogue start */
+ 270 022a DF91      		pop r29
+ 271 022c CF91      		pop r28
+ 272 022e 1F91      		pop r17
+ 273 0230 0F91      		pop r16
+ 274 0232 FF90      		pop r15
+ 275 0234 EF90      		pop r14
+ 276 0236 DF90      		pop r13
+ 277 0238 CF90      		pop r12
+ 278 023a BF90      		pop r11
+ 279 023c AF90      		pop r10
+ 280 023e 0895      		ret
+ 281               		.size	At49bvSectorWrite, .-At49bvSectorWrite
+ 282               	.global	At49bvSectorRead
+ 283               		.type	At49bvSectorRead, @function
+ 284               	At49bvSectorRead:
+ 285               	/* prologue: function */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s 			page 6
+
+
+ 286               	/* frame size = 0 */
+ 287 0240 9C01      		movw r18,r24
+ 288 0242 CB01      		movw r24,r22
+ 289 0244 B901      		movw r22,r18
+ 290 0246 0E94 0000 		call memcpy
+ 291 024a 80E0      		ldi r24,lo8(0)
+ 292 024c 90E0      		ldi r25,hi8(0)
+ 293               	/* epilogue start */
+ 294 024e 0895      		ret
+ 295               		.size	At49bvSectorRead, .-At49bvSectorRead
+ 296               	.global	At49bvParamRead
+ 297               		.type	At49bvParamRead, @function
+ 298               	At49bvParamRead:
+ 299               	/* prologue: function */
+ 300               	/* frame size = 0 */
+ 301 0250 9C01      		movw r18,r24
+ 302 0252 2050      		subi r18,lo8(-(24576))
+ 303 0254 304A      		sbci r19,hi8(-(24576))
+ 304 0256 CB01      		movw r24,r22
+ 305 0258 B901      		movw r22,r18
+ 306 025a 0E94 0000 		call memcpy
+ 307 025e 80E0      		ldi r24,lo8(0)
+ 308 0260 90E0      		ldi r25,hi8(0)
+ 309               	/* epilogue start */
+ 310 0262 0895      		ret
+ 311               		.size	At49bvParamRead, .-At49bvParamRead
+ 312               	.global	At49bvChipErase
+ 313               		.type	At49bvChipErase, @function
+ 314               	At49bvChipErase:
+ 315 0264 CF93      		push r28
+ 316 0266 DF93      		push r29
+ 317               	/* prologue: function */
+ 318               	/* frame size = 0 */
+ 319 0268 4AEA      		ldi r20,lo8(170)
+ 320 026a 50E0      		ldi r21,hi8(170)
+ 321 026c 5093 AB0A 		sts (2730)+1,r21
+ 322 0270 4093 AA0A 		sts 2730,r20
+ 323 0274 25E5      		ldi r18,lo8(85)
+ 324 0276 30E0      		ldi r19,hi8(85)
+ 325 0278 3093 5515 		sts (5460)+1,r19
+ 326 027c 2093 5415 		sts 5460,r18
+ 327 0280 80E8      		ldi r24,lo8(128)
+ 328 0282 90E0      		ldi r25,hi8(128)
+ 329 0284 9093 AB0A 		sts (2730)+1,r25
+ 330 0288 8093 AA0A 		sts 2730,r24
+ 331 028c 5093 AB0A 		sts (2730)+1,r21
+ 332 0290 4093 AA0A 		sts 2730,r20
+ 333 0294 3093 5515 		sts (5460)+1,r19
+ 334 0298 2093 5415 		sts 5460,r18
+ 335 029c 80E1      		ldi r24,lo8(16)
+ 336 029e 90E0      		ldi r25,hi8(16)
+ 337 02a0 9093 AB0A 		sts (2730)+1,r25
+ 338 02a4 8093 AA0A 		sts 2730,r24
+ 339 02a8 C0E0      		ldi r28,lo8(0)
+ 340 02aa D0E0      		ldi r29,hi8(0)
+ 341 02ac 00C0      		rjmp .L24
+ 342               	.L26:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s 			page 7
+
+
+ 343 02ae 61E0      		ldi r22,lo8(1)
+ 344 02b0 70E0      		ldi r23,hi8(1)
+ 345 02b2 80E0      		ldi r24,hlo8(1)
+ 346 02b4 90E0      		ldi r25,hhi8(1)
+ 347 02b6 0E94 0000 		call NutSleep
+ 348 02ba 2196      		adiw r28,1
+ 349 02bc 23EC      		ldi r18,hi8(-15535)
+ 350 02be C135      		cpi r28,lo8(-15535)
+ 351 02c0 D207      		cpc r29,r18
+ 352 02c2 01F4      		brne .L24
+ 353 02c4 2FEF      		ldi r18,lo8(-1)
+ 354 02c6 3FEF      		ldi r19,hi8(-1)
+ 355 02c8 00C0      		rjmp .L25
+ 356               	.L24:
+ 357 02ca 8091 0000 		lds r24,0
+ 358 02ce 9091 0100 		lds r25,(0)+1
+ 359 02d2 8F5F      		subi r24,lo8(-1)
+ 360 02d4 9F4F      		sbci r25,hi8(-1)
+ 361 02d6 01F4      		brne .L26
+ 362 02d8 20E0      		ldi r18,lo8(0)
+ 363 02da 30E0      		ldi r19,hi8(0)
+ 364               	.L25:
+ 365 02dc C901      		movw r24,r18
+ 366               	/* epilogue start */
+ 367 02de DF91      		pop r29
+ 368 02e0 CF91      		pop r28
+ 369 02e2 0895      		ret
+ 370               		.size	At49bvChipErase, .-At49bvChipErase
+ 371               	.global	At49bvSectorErase
+ 372               		.type	At49bvSectorErase, @function
+ 373               	At49bvSectorErase:
+ 374 02e4 0F93      		push r16
+ 375 02e6 1F93      		push r17
+ 376 02e8 CF93      		push r28
+ 377 02ea DF93      		push r29
+ 378               	/* prologue: function */
+ 379               	/* frame size = 0 */
+ 380 02ec 8C01      		movw r16,r24
+ 381 02ee 4AEA      		ldi r20,lo8(170)
+ 382 02f0 50E0      		ldi r21,hi8(170)
+ 383 02f2 5093 AB0A 		sts (2730)+1,r21
+ 384 02f6 4093 AA0A 		sts 2730,r20
+ 385 02fa 25E5      		ldi r18,lo8(85)
+ 386 02fc 30E0      		ldi r19,hi8(85)
+ 387 02fe 3093 5515 		sts (5460)+1,r19
+ 388 0302 2093 5415 		sts 5460,r18
+ 389 0306 80E8      		ldi r24,lo8(128)
+ 390 0308 90E0      		ldi r25,hi8(128)
+ 391 030a 9093 AB0A 		sts (2730)+1,r25
+ 392 030e 8093 AA0A 		sts 2730,r24
+ 393 0312 5093 AB0A 		sts (2730)+1,r21
+ 394 0316 4093 AA0A 		sts 2730,r20
+ 395 031a 3093 5515 		sts (5460)+1,r19
+ 396 031e 2093 5415 		sts 5460,r18
+ 397 0322 80E3      		ldi r24,lo8(48)
+ 398 0324 90E0      		ldi r25,hi8(48)
+ 399 0326 F801      		movw r30,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s 			page 8
+
+
+ 400 0328 9183      		std Z+1,r25
+ 401 032a 8083      		st Z,r24
+ 402 032c C0E0      		ldi r28,lo8(0)
+ 403 032e D0E0      		ldi r29,hi8(0)
+ 404 0330 00C0      		rjmp .L30
+ 405               	.L32:
+ 406 0332 61E0      		ldi r22,lo8(1)
+ 407 0334 70E0      		ldi r23,hi8(1)
+ 408 0336 80E0      		ldi r24,hlo8(1)
+ 409 0338 90E0      		ldi r25,hhi8(1)
+ 410 033a 0E94 0000 		call NutSleep
+ 411 033e 2196      		adiw r28,1
+ 412 0340 FBE0      		ldi r31,hi8(3001)
+ 413 0342 C93B      		cpi r28,lo8(3001)
+ 414 0344 DF07      		cpc r29,r31
+ 415 0346 01F4      		brne .L30
+ 416 0348 2FEF      		ldi r18,lo8(-1)
+ 417 034a 3FEF      		ldi r19,hi8(-1)
+ 418 034c 00C0      		rjmp .L31
+ 419               	.L30:
+ 420 034e F801      		movw r30,r16
+ 421 0350 8081      		ld r24,Z
+ 422 0352 9181      		ldd r25,Z+1
+ 423 0354 8F5F      		subi r24,lo8(-1)
+ 424 0356 9F4F      		sbci r25,hi8(-1)
+ 425 0358 01F4      		brne .L32
+ 426 035a 20E0      		ldi r18,lo8(0)
+ 427 035c 30E0      		ldi r19,hi8(0)
+ 428               	.L31:
+ 429 035e C901      		movw r24,r18
+ 430               	/* epilogue start */
+ 431 0360 DF91      		pop r29
+ 432 0362 CF91      		pop r28
+ 433 0364 1F91      		pop r17
+ 434 0366 0F91      		pop r16
+ 435 0368 0895      		ret
+ 436               		.size	At49bvSectorErase, .-At49bvSectorErase
+ 437               	.global	At49bvParamWrite
+ 438               		.type	At49bvParamWrite, @function
+ 439               	At49bvParamWrite:
+ 440 036a CF92      		push r12
+ 441 036c DF92      		push r13
+ 442 036e EF92      		push r14
+ 443 0370 FF92      		push r15
+ 444 0372 0F93      		push r16
+ 445 0374 1F93      		push r17
+ 446 0376 CF93      		push r28
+ 447 0378 DF93      		push r29
+ 448               	/* prologue: function */
+ 449               	/* frame size = 0 */
+ 450 037a EC01      		movw r28,r24
+ 451 037c F62E      		mov r15,r22
+ 452 037e E72E      		mov r14,r23
+ 453 0380 D42E      		mov r13,r20
+ 454 0382 C52E      		mov r12,r21
+ 455 0384 80E0      		ldi r24,lo8(512)
+ 456 0386 92E0      		ldi r25,hi8(512)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s 			page 9
+
+
+ 457 0388 0E94 0000 		call malloc
+ 458 038c 8C01      		movw r16,r24
+ 459 038e 0097      		sbiw r24,0
+ 460 0390 01F4      		brne .L36
+ 461 0392 CFEF      		ldi r28,lo8(-1)
+ 462 0394 DFEF      		ldi r29,hi8(-1)
+ 463 0396 00C0      		rjmp .L37
+ 464               	.L36:
+ 465 0398 DC01      		movw r26,r24
+ 466 039a E0E0      		ldi r30,lo8(24576)
+ 467 039c F0E6      		ldi r31,hi8(24576)
+ 468 039e 80E0      		ldi r24,lo8(512)
+ 469 03a0 92E0      		ldi r25,hi8(512)
+ 470               	.L38:
+ 471 03a2 0190      		ld r0,Z+
+ 472 03a4 0D92      		st X+,r0
+ 473 03a6 0197      		sbiw r24,1
+ 474 03a8 01F4      		brne .L38
+ 475 03aa C00F      		add r28,r16
+ 476 03ac D11F      		adc r29,r17
+ 477 03ae CE01      		movw r24,r28
+ 478 03b0 6F2D      		mov r22,r15
+ 479 03b2 7E2D      		mov r23,r14
+ 480 03b4 4D2D      		mov r20,r13
+ 481 03b6 5C2D      		mov r21,r12
+ 482 03b8 0E94 0000 		call memcmp
+ 483 03bc 0097      		sbiw r24,0
+ 484 03be 01F4      		brne .L39
+ 485 03c0 C0E0      		ldi r28,lo8(0)
+ 486 03c2 D0E0      		ldi r29,hi8(0)
+ 487 03c4 00C0      		rjmp .L40
+ 488               	.L39:
+ 489 03c6 CE01      		movw r24,r28
+ 490 03c8 6F2D      		mov r22,r15
+ 491 03ca 7E2D      		mov r23,r14
+ 492 03cc 4D2D      		mov r20,r13
+ 493 03ce 5C2D      		mov r21,r12
+ 494 03d0 0E94 0000 		call memcpy
+ 495 03d4 80E0      		ldi r24,lo8(24576)
+ 496 03d6 90E6      		ldi r25,hi8(24576)
+ 497 03d8 0E94 0000 		call At49bvSectorErase
+ 498 03dc EC01      		movw r28,r24
+ 499 03de 0097      		sbiw r24,0
+ 500 03e0 01F4      		brne .L40
+ 501 03e2 80E0      		ldi r24,lo8(24576)
+ 502 03e4 90E6      		ldi r25,hi8(24576)
+ 503 03e6 B801      		movw r22,r16
+ 504 03e8 40E0      		ldi r20,lo8(512)
+ 505 03ea 52E0      		ldi r21,hi8(512)
+ 506 03ec 0E94 0000 		call At49bvSectorWrite
+ 507 03f0 EC01      		movw r28,r24
+ 508               	.L40:
+ 509 03f2 C801      		movw r24,r16
+ 510 03f4 0E94 0000 		call free
+ 511               	.L37:
+ 512 03f8 CE01      		movw r24,r28
+ 513               	/* epilogue start */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s 			page 10
+
+
+ 514 03fa DF91      		pop r29
+ 515 03fc CF91      		pop r28
+ 516 03fe 1F91      		pop r17
+ 517 0400 0F91      		pop r16
+ 518 0402 FF90      		pop r15
+ 519 0404 EF90      		pop r14
+ 520 0406 DF90      		pop r13
+ 521 0408 CF90      		pop r12
+ 522 040a 0895      		ret
+ 523               		.size	At49bvParamWrite, .-At49bvParamWrite
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 at49bv.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:11     .text:00000000 At49bvInit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:72     .text:00000074 AT49bvReadProtectionRegister
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:187    .text:0000018c At49bvSectorWrite
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:284    .text:00000240 At49bvSectorRead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:298    .text:00000250 At49bvParamRead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:314    .text:00000264 At49bvChipErase
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:373    .text:000002e4 At49bvSectorErase
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZBHUlV.s:439    .text:0000036a At49bvParamWrite
+
+UNDEFINED SYMBOLS
+__ashldi3
+memcpy
+NutSleep
+malloc
+memcmp
+free

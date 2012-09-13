@@ -1,0 +1,119 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAsVkGl.s 			page 1
+
+
+   1               		.file	"confnet.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutNetSaveConfig
+  10               		.type	NutNetSaveConfig, @function
+  11               	NutNetSaveConfig:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 80E2      		ldi r24,lo8(32)
+  15 0002 8093 0000 		sts confnet,r24
+  16 0006 80E4      		ldi r24,lo8(64)
+  17 0008 90E0      		ldi r25,hi8(64)
+  18 000a 60E0      		ldi r22,lo8(confnet)
+  19 000c 70E0      		ldi r23,hi8(confnet)
+  20 000e 40E2      		ldi r20,lo8(32)
+  21 0010 50E0      		ldi r21,hi8(32)
+  22 0012 0E94 0000 		call NutNvMemSave
+  23 0016 892B      		or r24,r25
+  24 0018 01F4      		brne .L2
+  25 001a 20E0      		ldi r18,lo8(0)
+  26 001c 30E0      		ldi r19,hi8(0)
+  27 001e 00C0      		rjmp .L3
+  28               	.L2:
+  29 0020 2FEF      		ldi r18,lo8(-1)
+  30 0022 3FEF      		ldi r19,hi8(-1)
+  31               	.L3:
+  32 0024 C901      		movw r24,r18
+  33               	/* epilogue start */
+  34 0026 0895      		ret
+  35               		.size	NutNetSaveConfig, .-NutNetSaveConfig
+  36               	.global	NutNetLoadConfig
+  37               		.type	NutNetLoadConfig, @function
+  38               	NutNetLoadConfig:
+  39 0028 CF93      		push r28
+  40 002a DF93      		push r29
+  41               	/* prologue: function */
+  42               	/* frame size = 0 */
+  43 002c EC01      		movw r28,r24
+  44 002e 80E4      		ldi r24,lo8(64)
+  45 0030 90E0      		ldi r25,hi8(64)
+  46 0032 60E0      		ldi r22,lo8(confnet)
+  47 0034 70E0      		ldi r23,hi8(confnet)
+  48 0036 40E2      		ldi r20,lo8(32)
+  49 0038 50E0      		ldi r21,hi8(32)
+  50 003a 0E94 0000 		call NutNvMemLoad
+  51 003e 892B      		or r24,r25
+  52 0040 01F4      		brne .L10
+  53               	.L6:
+  54 0042 8091 0000 		lds r24,confnet
+  55 0046 8032      		cpi r24,lo8(32)
+  56 0048 01F4      		brne .L8
+  57 004a 80E0      		ldi r24,lo8(confnet+1)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAsVkGl.s 			page 2
+
+
+  58 004c 90E0      		ldi r25,hi8(confnet+1)
+  59 004e BE01      		movw r22,r28
+  60 0050 0E94 0000 		call strcmp
+  61 0054 0097      		sbiw r24,0
+  62 0056 01F4      		brne .L8
+  63 0058 20E0      		ldi r18,lo8(0)
+  64 005a 30E0      		ldi r19,hi8(0)
+  65 005c 00C0      		rjmp .L7
+  66               	.L8:
+  67 005e E0E0      		ldi r30,lo8(confnet)
+  68 0060 F0E0      		ldi r31,hi8(confnet)
+  69 0062 80E2      		ldi r24,lo8(32)
+  70 0064 DF01      		movw r26,r30
+  71 0066 1D92      		st X+,__zero_reg__
+  72 0068 8A95      	        dec r24
+  73 006a 01F4      		brne .-6
+  74 006c CF01      		movw r24,r30
+  75 006e 0A96      		adiw r24,10
+  76 0070 6FEF      		ldi r22,lo8(255)
+  77 0072 70E0      		ldi r23,hi8(255)
+  78 0074 46E0      		ldi r20,lo8(6)
+  79 0076 50E0      		ldi r21,hi8(6)
+  80 0078 0E94 0000 		call memset
+  81               	.L10:
+  82 007c 2FEF      		ldi r18,lo8(-1)
+  83 007e 3FEF      		ldi r19,hi8(-1)
+  84               	.L7:
+  85 0080 C901      		movw r24,r18
+  86               	/* epilogue start */
+  87 0082 DF91      		pop r29
+  88 0084 CF91      		pop r28
+  89 0086 0895      		ret
+  90               		.size	NutNetLoadConfig, .-NutNetLoadConfig
+  91               		.comm confnet,32,1
+  92               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAsVkGl.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 confnet.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAsVkGl.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAsVkGl.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAsVkGl.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAsVkGl.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAsVkGl.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAsVkGl.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAsVkGl.s:11     .text:00000000 NutNetSaveConfig
+                            *COM*:00000020 confnet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAsVkGl.s:38     .text:00000028 NutNetLoadConfig
+
+UNDEFINED SYMBOLS
+NutNvMemSave
+NutNvMemLoad
+strcmp
+memset
+__do_clear_bss

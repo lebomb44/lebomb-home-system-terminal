@@ -1,0 +1,55 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZASvOr.s 			page 1
+
+
+   1               		.file	"puts_p.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	puts_P
+  10               		.type	puts_P, @function
+  11               	puts_P:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 6091 0000 		lds r22,__iob+2
+  15 0004 7091 0000 		lds r23,(__iob+2)+1
+  16 0008 0E94 0000 		call fputs_P
+  17 000c 8F5F      		subi r24,lo8(-1)
+  18 000e 9F4F      		sbci r25,hi8(-1)
+  19 0010 01F4      		brne .L2
+  20 0012 2FEF      		ldi r18,lo8(-1)
+  21 0014 3FEF      		ldi r19,hi8(-1)
+  22 0016 00C0      		rjmp .L3
+  23               	.L2:
+  24 0018 6091 0000 		lds r22,__iob+2
+  25 001c 7091 0000 		lds r23,(__iob+2)+1
+  26 0020 8AE0      		ldi r24,lo8(10)
+  27 0022 90E0      		ldi r25,hi8(10)
+  28 0024 0E94 0000 		call fputc
+  29 0028 20E0      		ldi r18,lo8(0)
+  30 002a 30E0      		ldi r19,hi8(0)
+  31               	.L3:
+  32 002c C901      		movw r24,r18
+  33               	/* epilogue start */
+  34 002e 0895      		ret
+  35               		.size	puts_P, .-puts_P
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZASvOr.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 puts_p.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZASvOr.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZASvOr.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZASvOr.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZASvOr.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZASvOr.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZASvOr.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccZASvOr.s:11     .text:00000000 puts_P
+
+UNDEFINED SYMBOLS
+__iob
+fputs_P
+fputc

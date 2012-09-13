@@ -1,0 +1,419 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s 			page 1
+
+
+   1               		.file	"sbbif0.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	Sbbi0SetMode
+  10               		.type	Sbbi0SetMode, @function
+  11               	Sbbi0SetMode:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 8430      		cpi r24,lo8(4)
+  15 0002 00F4      		brsh .L2
+  16 0004 6430      		cpi r22,lo8(4)
+  17 0006 00F4      		brsh .L2
+  18 0008 E82F      		mov r30,r24
+  19 000a F0E0      		ldi r31,lo8(0)
+  20 000c E050      		subi r30,lo8(-(sbbi0_mode))
+  21 000e F040      		sbci r31,hi8(-(sbbi0_mode))
+  22 0010 6083      		st Z,r22
+  23 0012 20E0      		ldi r18,lo8(0)
+  24 0014 30E0      		ldi r19,hi8(0)
+  25 0016 00C0      		rjmp .L3
+  26               	.L2:
+  27 0018 2FEF      		ldi r18,lo8(-1)
+  28 001a 3FEF      		ldi r19,hi8(-1)
+  29               	.L3:
+  30 001c C901      		movw r24,r18
+  31               	/* epilogue start */
+  32 001e 0895      		ret
+  33               		.size	Sbbi0SetMode, .-Sbbi0SetMode
+  34               		.type	Sbbi0Delay, @function
+  35               	Sbbi0Delay:
+  36               	/* prologue: function */
+  37               	/* frame size = 0 */
+  38 0020 8091 0000 		lds r24,sel_delay
+  39               	.L11:
+  40 0024 8823      		tst r24
+  41 0026 01F0      		breq .L8
+  42               	/* #APP */
+  43               	 ;  125 "../../nut/dev/sbbif0.c" 1
+  44 0028 0000      		nop
+  45               	 ;  0 "" 2
+  46               	/* #NOAPP */
+  47 002a 8150      		subi r24,lo8(-(-1))
+  48 002c 00C0      		rjmp .L11
+  49               	.L8:
+  50 002e 0895      		ret
+  51               		.size	Sbbi0Delay, .-Sbbi0Delay
+  52               	.global	Sbbi0Enable
+  53               		.type	Sbbi0Enable, @function
+  54               	Sbbi0Enable:
+  55               	/* prologue: function */
+  56               	/* frame size = 0 */
+  57 0030 E82F      		mov r30,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s 			page 2
+
+
+  58 0032 F0E0      		ldi r31,lo8(0)
+  59 0034 DF01      		movw r26,r30
+  60 0036 A050      		subi r26,lo8(-(sbbi0_mode))
+  61 0038 B040      		sbci r27,hi8(-(sbbi0_mode))
+  62 003a 8C91      		ld r24,X
+  63 003c 8093 0000 		sts sel_mode,r24
+  64 0040 E050      		subi r30,lo8(-(sbbi0_delay))
+  65 0042 F040      		sbci r31,hi8(-(sbbi0_delay))
+  66 0044 8081      		ld r24,Z
+  67 0046 8093 0000 		sts sel_delay,r24
+  68               	/* epilogue start */
+  69 004a 0895      		ret
+  70               		.size	Sbbi0Enable, .-Sbbi0Enable
+  71               	.global	Sbbi0ChipReset
+  72               		.type	Sbbi0ChipReset, @function
+  73               	Sbbi0ChipReset:
+  74               	/* prologue: function */
+  75               	/* frame size = 0 */
+  76               	/* epilogue start */
+  77 004c 0895      		ret
+  78               		.size	Sbbi0ChipReset, .-Sbbi0ChipReset
+  79               	.global	Sbbi0ChipSelect
+  80               		.type	Sbbi0ChipSelect, @function
+  81               	Sbbi0ChipSelect:
+  82               	/* prologue: function */
+  83               	/* frame size = 0 */
+  84               	/* epilogue start */
+  85 004e 0895      		ret
+  86               		.size	Sbbi0ChipSelect, .-Sbbi0ChipSelect
+  87               	.global	Sbbi0SelectDevice
+  88               		.type	Sbbi0SelectDevice, @function
+  89               	Sbbi0SelectDevice:
+  90               	/* prologue: function */
+  91               	/* frame size = 0 */
+  92 0050 E82F      		mov r30,r24
+  93 0052 F0E0      		ldi r31,lo8(0)
+  94 0054 DF01      		movw r26,r30
+  95 0056 A050      		subi r26,lo8(-(sbbi0_mode))
+  96 0058 B040      		sbci r27,hi8(-(sbbi0_mode))
+  97 005a 8C91      		ld r24,X
+  98 005c 8093 0000 		sts sel_mode,r24
+  99 0060 E050      		subi r30,lo8(-(sbbi0_delay))
+ 100 0062 F040      		sbci r31,hi8(-(sbbi0_delay))
+ 101 0064 8081      		ld r24,Z
+ 102 0066 8093 0000 		sts sel_delay,r24
+ 103               	/* epilogue start */
+ 104 006a 0895      		ret
+ 105               		.size	Sbbi0SelectDevice, .-Sbbi0SelectDevice
+ 106               	.global	Sbbi0DeselectDevice
+ 107               		.type	Sbbi0DeselectDevice, @function
+ 108               	Sbbi0DeselectDevice:
+ 109               	/* prologue: function */
+ 110               	/* frame size = 0 */
+ 111               	/* epilogue start */
+ 112 006c 0895      		ret
+ 113               		.size	Sbbi0DeselectDevice, .-Sbbi0DeselectDevice
+ 114               	.global	Sbbi0NegSelectDevice
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s 			page 3
+
+
+ 115               		.type	Sbbi0NegSelectDevice, @function
+ 116               	Sbbi0NegSelectDevice:
+ 117               	/* prologue: function */
+ 118               	/* frame size = 0 */
+ 119 006e E82F      		mov r30,r24
+ 120 0070 F0E0      		ldi r31,lo8(0)
+ 121 0072 DF01      		movw r26,r30
+ 122 0074 A050      		subi r26,lo8(-(sbbi0_mode))
+ 123 0076 B040      		sbci r27,hi8(-(sbbi0_mode))
+ 124 0078 8C91      		ld r24,X
+ 125 007a 8093 0000 		sts sel_mode,r24
+ 126 007e E050      		subi r30,lo8(-(sbbi0_delay))
+ 127 0080 F040      		sbci r31,hi8(-(sbbi0_delay))
+ 128 0082 8081      		ld r24,Z
+ 129 0084 8093 0000 		sts sel_delay,r24
+ 130               	/* epilogue start */
+ 131 0088 0895      		ret
+ 132               		.size	Sbbi0NegSelectDevice, .-Sbbi0NegSelectDevice
+ 133               	.global	Sbbi0NegDeselectDevice
+ 134               		.type	Sbbi0NegDeselectDevice, @function
+ 135               	Sbbi0NegDeselectDevice:
+ 136               	/* prologue: function */
+ 137               	/* frame size = 0 */
+ 138               	/* epilogue start */
+ 139 008a 0895      		ret
+ 140               		.size	Sbbi0NegDeselectDevice, .-Sbbi0NegDeselectDevice
+ 141               	.global	Sbbi0Byte
+ 142               		.type	Sbbi0Byte, @function
+ 143               	Sbbi0Byte:
+ 144 008c 0F93      		push r16
+ 145 008e 1F93      		push r17
+ 146 0090 CF93      		push r28
+ 147 0092 DF93      		push r29
+ 148               	/* prologue: function */
+ 149               	/* frame size = 0 */
+ 150 0094 082F      		mov r16,r24
+ 151 0096 8091 0000 		lds r24,sel_mode
+ 152 009a 8330      		cpi r24,lo8(3)
+ 153 009c 01F4      		brne .L27
+ 154 009e 10E8      		ldi r17,lo8(-128)
+ 155 00a0 C0E0      		ldi r28,lo8(0)
+ 156 00a2 D0E0      		ldi r29,hi8(0)
+ 157               	.L28:
+ 158 00a4 0E94 0000 		call Sbbi0Delay
+ 159 00a8 812F      		mov r24,r17
+ 160 00aa 8095      		com r24
+ 161 00ac 0823      		and r16,r24
+ 162 00ae 0E94 0000 		call Sbbi0Delay
+ 163 00b2 1695      		lsr r17
+ 164 00b4 2196      		adiw r28,1
+ 165 00b6 C830      		cpi r28,8
+ 166 00b8 D105      		cpc r29,__zero_reg__
+ 167 00ba 01F4      		brne .L28
+ 168 00bc 00C0      		rjmp .L29
+ 169               	.L27:
+ 170 00be 8230      		cpi r24,lo8(2)
+ 171 00c0 01F4      		brne .L30
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s 			page 4
+
+
+ 172 00c2 10E8      		ldi r17,lo8(-128)
+ 173 00c4 C0E0      		ldi r28,lo8(0)
+ 174 00c6 D0E0      		ldi r29,hi8(0)
+ 175               	.L31:
+ 176 00c8 0E94 0000 		call Sbbi0Delay
+ 177 00cc 812F      		mov r24,r17
+ 178 00ce 8095      		com r24
+ 179 00d0 0823      		and r16,r24
+ 180 00d2 0E94 0000 		call Sbbi0Delay
+ 181 00d6 1695      		lsr r17
+ 182 00d8 2196      		adiw r28,1
+ 183 00da C830      		cpi r28,8
+ 184 00dc D105      		cpc r29,__zero_reg__
+ 185 00de 01F4      		brne .L31
+ 186 00e0 00C0      		rjmp .L29
+ 187               	.L30:
+ 188 00e2 8130      		cpi r24,lo8(1)
+ 189 00e4 01F4      		brne .L32
+ 190 00e6 10E8      		ldi r17,lo8(-128)
+ 191 00e8 C0E0      		ldi r28,lo8(0)
+ 192 00ea D0E0      		ldi r29,hi8(0)
+ 193               	.L33:
+ 194 00ec 0E94 0000 		call Sbbi0Delay
+ 195 00f0 812F      		mov r24,r17
+ 196 00f2 8095      		com r24
+ 197 00f4 0823      		and r16,r24
+ 198 00f6 0E94 0000 		call Sbbi0Delay
+ 199 00fa 1695      		lsr r17
+ 200 00fc 2196      		adiw r28,1
+ 201 00fe C830      		cpi r28,8
+ 202 0100 D105      		cpc r29,__zero_reg__
+ 203 0102 01F4      		brne .L33
+ 204 0104 00C0      		rjmp .L29
+ 205               	.L32:
+ 206 0106 10E8      		ldi r17,lo8(-128)
+ 207 0108 C0E0      		ldi r28,lo8(0)
+ 208 010a D0E0      		ldi r29,hi8(0)
+ 209               	.L34:
+ 210 010c 0E94 0000 		call Sbbi0Delay
+ 211 0110 812F      		mov r24,r17
+ 212 0112 8095      		com r24
+ 213 0114 0823      		and r16,r24
+ 214 0116 0E94 0000 		call Sbbi0Delay
+ 215 011a 1695      		lsr r17
+ 216 011c 2196      		adiw r28,1
+ 217 011e C830      		cpi r28,8
+ 218 0120 D105      		cpc r29,__zero_reg__
+ 219 0122 01F4      		brne .L34
+ 220               	.L29:
+ 221 0124 802F      		mov r24,r16
+ 222               	/* epilogue start */
+ 223 0126 DF91      		pop r29
+ 224 0128 CF91      		pop r28
+ 225 012a 1F91      		pop r17
+ 226 012c 0F91      		pop r16
+ 227 012e 0895      		ret
+ 228               		.size	Sbbi0Byte, .-Sbbi0Byte
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s 			page 5
+
+
+ 229               	.global	Sbbi0Transact
+ 230               		.type	Sbbi0Transact, @function
+ 231               	Sbbi0Transact:
+ 232 0130 CF92      		push r12
+ 233 0132 DF92      		push r13
+ 234 0134 EF92      		push r14
+ 235 0136 FF92      		push r15
+ 236 0138 0F93      		push r16
+ 237 013a 1F93      		push r17
+ 238 013c CF93      		push r28
+ 239 013e DF93      		push r29
+ 240               	/* prologue: function */
+ 241               	/* frame size = 0 */
+ 242 0140 6C01      		movw r12,r24
+ 243 0142 7B01      		movw r14,r22
+ 244 0144 8A01      		movw r16,r20
+ 245 0146 EC01      		movw r28,r24
+ 246 0148 6115      		cp r22,__zero_reg__
+ 247 014a 7105      		cpc r23,__zero_reg__
+ 248 014c 01F0      		breq .L47
+ 249 014e C0E0      		ldi r28,lo8(0)
+ 250 0150 D0E0      		ldi r29,hi8(0)
+ 251 0152 00C0      		rjmp .L42
+ 252               	.L43:
+ 253 0154 F601      		movw r30,r12
+ 254 0156 EC0F      		add r30,r28
+ 255 0158 FD1F      		adc r31,r29
+ 256 015a 8081      		ld r24,Z
+ 257 015c 0E94 0000 		call Sbbi0Byte
+ 258 0160 F701      		movw r30,r14
+ 259 0162 EC0F      		add r30,r28
+ 260 0164 FD1F      		adc r31,r29
+ 261 0166 8083      		st Z,r24
+ 262 0168 2196      		adiw r28,1
+ 263 016a 0150      		subi r16,lo8(-(-1))
+ 264 016c 1040      		sbci r17,hi8(-(-1))
+ 265               	.L42:
+ 266 016e 0115      		cp r16,__zero_reg__
+ 267 0170 1105      		cpc r17,__zero_reg__
+ 268 0172 01F4      		brne .L43
+ 269 0174 00C0      		rjmp .L46
+ 270               	.L45:
+ 271 0176 8991      		ld r24,Y+
+ 272 0178 0E94 0000 		call Sbbi0Byte
+ 273 017c 0150      		subi r16,lo8(-(-1))
+ 274 017e 1040      		sbci r17,hi8(-(-1))
+ 275               	.L47:
+ 276 0180 0115      		cp r16,__zero_reg__
+ 277 0182 1105      		cpc r17,__zero_reg__
+ 278 0184 01F4      		brne .L45
+ 279               	.L46:
+ 280               	/* epilogue start */
+ 281 0186 DF91      		pop r29
+ 282 0188 CF91      		pop r28
+ 283 018a 1F91      		pop r17
+ 284 018c 0F91      		pop r16
+ 285 018e FF90      		pop r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s 			page 6
+
+
+ 286 0190 EF90      		pop r14
+ 287 0192 DF90      		pop r13
+ 288 0194 CF90      		pop r12
+ 289 0196 0895      		ret
+ 290               		.size	Sbbi0Transact, .-Sbbi0Transact
+ 291               	.global	Sbbi0SetSpeed
+ 292               		.type	Sbbi0SetSpeed, @function
+ 293               	Sbbi0SetSpeed:
+ 294 0198 DF92      		push r13
+ 295 019a EF92      		push r14
+ 296 019c FF92      		push r15
+ 297 019e 0F93      		push r16
+ 298 01a0 1F93      		push r17
+ 299               	/* prologue: function */
+ 300               	/* frame size = 0 */
+ 301 01a2 D82E      		mov r13,r24
+ 302 01a4 7A01      		movw r14,r20
+ 303 01a6 8B01      		movw r16,r22
+ 304 01a8 0E94 0000 		call NutGetCpuClock
+ 305 01ac 24E0      		ldi r18,4
+ 306 01ae 9695      	1:	lsr r25
+ 307 01b0 8795      		ror r24
+ 308 01b2 7795      		ror r23
+ 309 01b4 6795      		ror r22
+ 310 01b6 2A95      		dec r18
+ 311 01b8 01F4      		brne 1b
+ 312 01ba E114      		cp r14,__zero_reg__
+ 313 01bc F104      		cpc r15,__zero_reg__
+ 314 01be 0105      		cpc r16,__zero_reg__
+ 315 01c0 1105      		cpc r17,__zero_reg__
+ 316 01c2 01F0      		breq .L49
+ 317 01c4 A801      		movw r20,r16
+ 318 01c6 9701      		movw r18,r14
+ 319 01c8 0E94 0000 		call __udivmodsi4
+ 320 01cc C901      		movw r24,r18
+ 321 01ce DA01      		movw r26,r20
+ 322 01d0 BC01      		movw r22,r24
+ 323 01d2 CD01      		movw r24,r26
+ 324               	.L49:
+ 325 01d4 6530      		cpi r22,lo8(5)
+ 326 01d6 7105      		cpc r23,__zero_reg__
+ 327 01d8 8105      		cpc r24,__zero_reg__
+ 328 01da 9105      		cpc r25,__zero_reg__
+ 329 01dc 00F4      		brsh .L50
+ 330 01de ED2D      		mov r30,r13
+ 331 01e0 F0E0      		ldi r31,lo8(0)
+ 332 01e2 E050      		subi r30,lo8(-(sbbi0_delay))
+ 333 01e4 F040      		sbci r31,hi8(-(sbbi0_delay))
+ 334 01e6 1082      		st Z,__zero_reg__
+ 335 01e8 00C0      		rjmp .L53
+ 336               	.L50:
+ 337 01ea ED2D      		mov r30,r13
+ 338 01ec F0E0      		ldi r31,lo8(0)
+ 339 01ee 6F3F      		cpi r22,lo8(255)
+ 340 01f0 7105      		cpc r23,__zero_reg__
+ 341 01f2 8105      		cpc r24,__zero_reg__
+ 342 01f4 9105      		cpc r25,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s 			page 7
+
+
+ 343 01f6 00F4      		brsh .L52
+ 344 01f8 E050      		subi r30,lo8(-(sbbi0_delay))
+ 345 01fa F040      		sbci r31,hi8(-(sbbi0_delay))
+ 346 01fc 6083      		st Z,r22
+ 347 01fe 00C0      		rjmp .L53
+ 348               	.L52:
+ 349 0200 E050      		subi r30,lo8(-(sbbi0_delay))
+ 350 0202 F040      		sbci r31,hi8(-(sbbi0_delay))
+ 351 0204 8FEF      		ldi r24,lo8(-1)
+ 352 0206 8083      		st Z,r24
+ 353               	.L53:
+ 354               	/* epilogue start */
+ 355 0208 1F91      		pop r17
+ 356 020a 0F91      		pop r16
+ 357 020c FF90      		pop r15
+ 358 020e EF90      		pop r14
+ 359 0210 DF90      		pop r13
+ 360 0212 0895      		ret
+ 361               		.size	Sbbi0SetSpeed, .-Sbbi0SetSpeed
+ 362               		.lcomm sbbi0_mode,4
+ 363               		.lcomm sel_mode,1
+ 364               		.lcomm sbbi0_delay,4
+ 365               		.lcomm sel_delay,1
+ 366               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 sbbif0.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:11     .text:00000000 Sbbi0SetMode
+                             .bss:00000000 sbbi0_mode
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:35     .text:00000020 Sbbi0Delay
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:364    .bss:00000009 sel_delay
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:54     .text:00000030 Sbbi0Enable
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:362    .bss:00000004 sel_mode
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:363    .bss:00000005 sbbi0_delay
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:73     .text:0000004c Sbbi0ChipReset
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:81     .text:0000004e Sbbi0ChipSelect
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:89     .text:00000050 Sbbi0SelectDevice
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:108    .text:0000006c Sbbi0DeselectDevice
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:116    .text:0000006e Sbbi0NegSelectDevice
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:135    .text:0000008a Sbbi0NegDeselectDevice
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:143    .text:0000008c Sbbi0Byte
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:231    .text:00000130 Sbbi0Transact
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc6zViDu.s:293    .text:00000198 Sbbi0SetSpeed
+
+UNDEFINED SYMBOLS
+NutGetCpuClock
+__udivmodsi4
+__do_clear_bss

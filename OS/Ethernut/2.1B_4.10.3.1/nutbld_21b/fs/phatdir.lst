@@ -1,0 +1,3034 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 1
+
+
+   1               		.file	"phatdir.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	PhatDirCreate
+  10               		.type	PhatDirCreate, @function
+  11               	PhatDirCreate:
+  12 0000 8F92      		push r8
+  13 0002 9F92      		push r9
+  14 0004 AF92      		push r10
+  15 0006 BF92      		push r11
+  16 0008 CF92      		push r12
+  17 000a DF92      		push r13
+  18 000c EF92      		push r14
+  19 000e FF92      		push r15
+  20 0010 0F93      		push r16
+  21 0012 1F93      		push r17
+  22 0014 CF93      		push r28
+  23 0016 DF93      		push r29
+  24               	/* prologue: function */
+  25               	/* frame size = 0 */
+  26 0018 FC01      		movw r30,r24
+  27 001a F188      		ldd r15,Z+17
+  28 001c E288      		ldd r14,Z+18
+  29 001e 42E0      		ldi r20,lo8(1282)
+  30 0020 55E0      		ldi r21,hi8(1282)
+  31 0022 20E1      		ldi r18,lo8(16)
+  32 0024 30E0      		ldi r19,hi8(16)
+  33 0026 0E94 0000 		call PhatFileOpen
+  34 002a 4C01      		movw r8,r24
+  35 002c 8FEF      		ldi r24,lo8(-1)
+  36 002e 8816      		cp r8,r24
+  37 0030 8FEF      		ldi r24,hi8(-1)
+  38 0032 9806      		cpc r9,r24
+  39 0034 01F0      		breq .L16
+  40               	.L2:
+  41 0036 F401      		movw r30,r8
+  42 0038 1481      		ldd r17,Z+4
+  43 003a 0581      		ldd r16,Z+5
+  44 003c C401      		movw r24,r8
+  45 003e 0E94 0000 		call AllocFirstCluster
+  46 0042 6230      		cpi r22,lo8(2)
+  47 0044 7105      		cpc r23,__zero_reg__
+  48 0046 8105      		cpc r24,__zero_reg__
+  49 0048 9105      		cpc r25,__zero_reg__
+  50 004a 00F4      		brsh .L4
+  51               	.L18:
+  52 004c C401      		movw r24,r8
+  53 004e 0E94 0000 		call PhatFileClose
+  54               	.L16:
+  55 0052 2FEF      		ldi r18,lo8(-1)
+  56 0054 3FEF      		ldi r19,hi8(-1)
+  57 0056 00C0      		rjmp .L3
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 2
+
+
+  58               	.L4:
+  59 0058 AF2C      		mov r10,r15
+  60 005a BE2C      		mov r11,r14
+  61 005c C12E      		mov r12,r17
+  62 005e D02E      		mov r13,r16
+  63 0060 F601      		movw r30,r12
+  64 0062 608B      		std Z+16,r22
+  65 0064 718B      		std Z+17,r23
+  66 0066 828B      		std Z+18,r24
+  67 0068 938B      		std Z+19,r25
+  68 006a 6483      		std Z+4,r22
+  69 006c 7583      		std Z+5,r23
+  70 006e 8683      		std Z+6,r24
+  71 0070 9783      		std Z+7,r25
+  72 0072 F501      		movw r30,r10
+  73 0074 8689      		ldd r24,Z+22
+  74 0076 9789      		ldd r25,Z+23
+  75 0078 0E94 0000 		call malloc
+  76 007c EC01      		movw r28,r24
+  77 007e 0097      		sbiw r24,0
+  78 0080 01F0      		breq .L18
+  79               	.L5:
+  80 0082 F501      		movw r30,r10
+  81 0084 4689      		ldd r20,Z+22
+  82 0086 5789      		ldd r21,Z+23
+  83 0088 60E0      		ldi r22,lo8(0)
+  84 008a 70E0      		ldi r23,hi8(0)
+  85 008c 0E94 0000 		call memset
+  86 0090 F501      		movw r30,r10
+  87 0092 808D      		ldd r24,Z+24
+  88 0094 918D      		ldd r25,Z+25
+  89 0096 7C01      		movw r14,r24
+  90 0098 00E0      		ldi r16,lo8(0)
+  91 009a 10E0      		ldi r17,hi8(0)
+  92 009c 00C0      		rjmp .L6
+  93               	.L8:
+  94 009e F501      		movw r30,r10
+  95 00a0 4689      		ldd r20,Z+22
+  96 00a2 5789      		ldd r21,Z+23
+  97 00a4 C401      		movw r24,r8
+  98 00a6 BE01      		movw r22,r28
+  99 00a8 0E94 0000 		call PhatFileWrite
+ 100 00ac 97FF      		sbrs r25,7
+ 101 00ae 00C0      		rjmp .L7
+ 102 00b0 CE01      		movw r24,r28
+ 103 00b2 0E94 0000 		call free
+ 104 00b6 00C0      		rjmp .L18
+ 105               	.L7:
+ 106 00b8 0894      		sec
+ 107 00ba E108      		sbc r14,__zero_reg__
+ 108 00bc F108      		sbc r15,__zero_reg__
+ 109 00be 0109      		sbc r16,__zero_reg__
+ 110 00c0 1109      		sbc r17,__zero_reg__
+ 111               	.L6:
+ 112 00c2 E114      		cp r14,__zero_reg__
+ 113 00c4 F104      		cpc r15,__zero_reg__
+ 114 00c6 0105      		cpc r16,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 3
+
+
+ 115 00c8 1105      		cpc r17,__zero_reg__
+ 116 00ca 01F4      		brne .L8
+ 117 00cc CE01      		movw r24,r28
+ 118 00ce 0E94 0000 		call free
+ 119 00d2 80E2      		ldi r24,lo8(32)
+ 120 00d4 90E0      		ldi r25,hi8(32)
+ 121 00d6 0E94 0000 		call malloc
+ 122 00da EC01      		movw r28,r24
+ 123 00dc DC01      		movw r26,r24
+ 124 00de F601      		movw r30,r12
+ 125 00e0 7896      		adiw r30,24
+ 126 00e2 80E2      		ldi r24,lo8(32)
+ 127               	.L9:
+ 128 00e4 0190      		ld r0,Z+
+ 129 00e6 0D92      		st X+,r0
+ 130 00e8 8150      		subi r24,lo8(-(-1))
+ 131 00ea 01F4      		brne .L9
+ 132 00ec CE01      		movw r24,r28
+ 133 00ee 60E2      		ldi r22,lo8(32)
+ 134 00f0 70E0      		ldi r23,hi8(32)
+ 135 00f2 4BE0      		ldi r20,lo8(11)
+ 136 00f4 50E0      		ldi r21,hi8(11)
+ 137 00f6 0E94 0000 		call memset
+ 138 00fa 8EE2      		ldi r24,lo8(46)
+ 139 00fc 8883      		st Y,r24
+ 140 00fe C601      		movw r24,r12
+ 141 0100 0E94 0000 		call PhatFilePosRewind
+ 142 0104 C401      		movw r24,r8
+ 143 0106 BE01      		movw r22,r28
+ 144 0108 40E2      		ldi r20,lo8(32)
+ 145 010a 50E0      		ldi r21,hi8(32)
+ 146 010c 0E94 0000 		call PhatFileWrite
+ 147 0110 8097      		sbiw r24,32
+ 148 0112 01F0      		breq .+2
+ 149 0114 00C0      		rjmp .L17
+ 150               	.L10:
+ 151 0116 F501      		movw r30,r10
+ 152 0118 24A5      		ldd r18,Z+44
+ 153 011a 35A5      		ldd r19,Z+45
+ 154 011c 46A5      		ldd r20,Z+46
+ 155 011e 57A5      		ldd r21,Z+47
+ 156 0120 82E4      		ldi r24,lo8(66)
+ 157 0122 90E0      		ldi r25,hi8(66)
+ 158 0124 C80E      		add r12,r24
+ 159 0126 D91E      		adc r13,r25
+ 160 0128 F601      		movw r30,r12
+ 161 012a 6081      		ld r22,Z
+ 162 012c 7181      		ldd r23,Z+1
+ 163 012e 8EEB      		ldi r24,lo8(-66)
+ 164 0130 9FEF      		ldi r25,hi8(-66)
+ 165 0132 C80E      		add r12,r24
+ 166 0134 D91E      		adc r13,r25
+ 167 0136 6217      		cp r22,r18
+ 168 0138 7307      		cpc r23,r19
+ 169 013a 01F4      		brne .L11
+ 170 013c 9A01      		movw r18,r20
+ 171 013e 4427      		clr r20
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 4
+
+
+ 172 0140 5527      		clr r21
+ 173 0142 E4E4      		ldi r30,lo8(68)
+ 174 0144 F0E0      		ldi r31,hi8(68)
+ 175 0146 CE0E      		add r12,r30
+ 176 0148 DF1E      		adc r13,r31
+ 177 014a F601      		movw r30,r12
+ 178 014c 8081      		ld r24,Z
+ 179 014e 9181      		ldd r25,Z+1
+ 180 0150 ECEB      		ldi r30,lo8(-68)
+ 181 0152 FFEF      		ldi r31,hi8(-68)
+ 182 0154 CE0E      		add r12,r30
+ 183 0156 DF1E      		adc r13,r31
+ 184 0158 A0E0      		ldi r26,lo8(0)
+ 185 015a B0E0      		ldi r27,hi8(0)
+ 186 015c 2817      		cp r18,r24
+ 187 015e 3907      		cpc r19,r25
+ 188 0160 4A07      		cpc r20,r26
+ 189 0162 5B07      		cpc r21,r27
+ 190 0164 01F4      		brne .L11
+ 191 0166 1B8E      		std Y+27,__zero_reg__
+ 192 0168 1A8E      		std Y+26,__zero_reg__
+ 193 016a 1D8A      		std Y+21,__zero_reg__
+ 194 016c 1C8A      		std Y+20,__zero_reg__
+ 195 016e 00C0      		rjmp .L12
+ 196               	.L11:
+ 197 0170 7B8F      		std Y+27,r23
+ 198 0172 6A8F      		std Y+26,r22
+ 199 0174 84E4      		ldi r24,lo8(68)
+ 200 0176 90E0      		ldi r25,hi8(68)
+ 201 0178 C80E      		add r12,r24
+ 202 017a D91E      		adc r13,r25
+ 203 017c F601      		movw r30,r12
+ 204 017e 8081      		ld r24,Z
+ 205 0180 9181      		ldd r25,Z+1
+ 206 0182 9D8B      		std Y+21,r25
+ 207 0184 8C8B      		std Y+20,r24
+ 208               	.L12:
+ 209 0186 8EE2      		ldi r24,lo8(46)
+ 210 0188 8983      		std Y+1,r24
+ 211 018a C401      		movw r24,r8
+ 212 018c BE01      		movw r22,r28
+ 213 018e 40E2      		ldi r20,lo8(32)
+ 214 0190 50E0      		ldi r21,hi8(32)
+ 215 0192 0E94 0000 		call PhatFileWrite
+ 216 0196 8097      		sbiw r24,32
+ 217 0198 01F0      		breq .L13
+ 218               	.L17:
+ 219 019a C401      		movw r24,r8
+ 220 019c 0E94 0000 		call PhatFileClose
+ 221 01a0 CE01      		movw r24,r28
+ 222 01a2 0E94 0000 		call free
+ 223 01a6 00C0      		rjmp .L16
+ 224               	.L13:
+ 225 01a8 CE01      		movw r24,r28
+ 226 01aa 0E94 0000 		call free
+ 227 01ae C401      		movw r24,r8
+ 228 01b0 0E94 0000 		call PhatFileClose
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 5
+
+
+ 229 01b4 9C01      		movw r18,r24
+ 230               	.L3:
+ 231 01b6 C901      		movw r24,r18
+ 232               	/* epilogue start */
+ 233 01b8 DF91      		pop r29
+ 234 01ba CF91      		pop r28
+ 235 01bc 1F91      		pop r17
+ 236 01be 0F91      		pop r16
+ 237 01c0 FF90      		pop r15
+ 238 01c2 EF90      		pop r14
+ 239 01c4 DF90      		pop r13
+ 240 01c6 CF90      		pop r12
+ 241 01c8 BF90      		pop r11
+ 242 01ca AF90      		pop r10
+ 243 01cc 9F90      		pop r9
+ 244 01ce 8F90      		pop r8
+ 245 01d0 0895      		ret
+ 246               		.size	PhatDirCreate, .-PhatDirCreate
+ 247               		.type	PhatDirEntryRead, @function
+ 248               	PhatDirEntryRead:
+ 249 01d2 2F92      		push r2
+ 250 01d4 3F92      		push r3
+ 251 01d6 4F92      		push r4
+ 252 01d8 5F92      		push r5
+ 253 01da 6F92      		push r6
+ 254 01dc 7F92      		push r7
+ 255 01de 8F92      		push r8
+ 256 01e0 9F92      		push r9
+ 257 01e2 AF92      		push r10
+ 258 01e4 BF92      		push r11
+ 259 01e6 CF92      		push r12
+ 260 01e8 DF92      		push r13
+ 261 01ea EF92      		push r14
+ 262 01ec FF92      		push r15
+ 263 01ee 0F93      		push r16
+ 264 01f0 1F93      		push r17
+ 265 01f2 DF93      		push r29
+ 266 01f4 CF93      		push r28
+ 267 01f6 00D0      		rcall .
+ 268 01f8 00D0      		rcall .
+ 269 01fa CDB7      		in r28,__SP_L__
+ 270 01fc DEB7      		in r29,__SP_H__
+ 271               	/* prologue: function */
+ 272               	/* frame size = 4 */
+ 273 01fe 3C01      		movw r6,r24
+ 274 0200 6B01      		movw r12,r22
+ 275 0202 1B01      		movw r2,r22
+ 276 0204 DC01      		movw r26,r24
+ 277 0206 1496      		adiw r26,4
+ 278 0208 4D90      		ld r4,X+
+ 279 020a 5C90      		ld r5,X
+ 280 020c 1597      		sbiw r26,4+1
+ 281 020e 1C82      		std Y+4,__zero_reg__
+ 282 0210 1B82      		std Y+3,__zero_reg__
+ 283 0212 EE24      		clr r14
+ 284 0214 FF24      		clr r15
+ 285               	.L43:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 6
+
+
+ 286 0216 AA24      		clr r10
+ 287 0218 BB24      		clr r11
+ 288 021a 8824      		clr r8
+ 289 021c 9924      		clr r9
+ 290               	.L42:
+ 291 021e C301      		movw r24,r6
+ 292 0220 B101      		movw r22,r2
+ 293 0222 40E2      		ldi r20,lo8(32)
+ 294 0224 50E0      		ldi r21,hi8(32)
+ 295 0226 0E94 0000 		call PhatFileRead
+ 296 022a 8097      		sbiw r24,32
+ 297 022c 01F0      		breq .+2
+ 298 022e 00C0      		rjmp .L20
+ 299 0230 F601      		movw r30,r12
+ 300 0232 9081      		ld r25,Z
+ 301 0234 953E      		cpi r25,lo8(-27)
+ 302 0236 01F4      		brne .L21
+ 303 0238 2B81      		ldd r18,Y+3
+ 304 023a 3C81      		ldd r19,Y+4
+ 305 023c 2115      		cp r18,__zero_reg__
+ 306 023e 3105      		cpc r19,__zero_reg__
+ 307 0240 01F0      		breq .L42
+ 308 0242 C901      		movw r24,r18
+ 309 0244 0E94 0000 		call free
+ 310 0248 1C82      		std Y+4,__zero_reg__
+ 311 024a 1B82      		std Y+3,__zero_reg__
+ 312 024c 00C0      		rjmp .L42
+ 313               	.L21:
+ 314 024e D601      		movw r26,r12
+ 315 0250 1B96      		adiw r26,11
+ 316 0252 8C91      		ld r24,X
+ 317 0254 8F30      		cpi r24,lo8(15)
+ 318 0256 01F0      		breq .+2
+ 319 0258 00C0      		rjmp .L23
+ 320 025a 8101      		movw r16,r2
+ 321 025c F101      		movw r30,r2
+ 322 025e 8081      		ld r24,Z
+ 323 0260 90E0      		ldi r25,lo8(0)
+ 324 0262 2FE3      		ldi r18,lo8(63)
+ 325 0264 E22E      		mov r14,r18
+ 326 0266 F12C      		mov r15,__zero_reg__
+ 327 0268 E822      		and r14,r24
+ 328 026a F922      		and r15,r25
+ 329 026c A114      		cp r10,__zero_reg__
+ 330 026e B104      		cpc r11,__zero_reg__
+ 331 0270 01F4      		brne .L24
+ 332 0272 86FD      		sbrc r24,6
+ 333 0274 00C0      		rjmp .L25
+ 334               	.L24:
+ 335 0276 AE14      		cp r10,r14
+ 336 0278 BF04      		cpc r11,r15
+ 337 027a 01F4      		brne .L42
+ 338               	.L25:
+ 339 027c 5701      		movw r10,r14
+ 340 027e 0894      		sec
+ 341 0280 A108      		sbc r10,__zero_reg__
+ 342 0282 B108      		sbc r11,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 7
+
+
+ 343 0284 2DE0      		ldi r18,lo8(13)
+ 344 0286 30E0      		ldi r19,hi8(13)
+ 345 0288 A29E      		mul r10,r18
+ 346 028a 7001      		movw r14,r0
+ 347 028c A39E      		mul r10,r19
+ 348 028e F00C      		add r15,r0
+ 349 0290 B29E      		mul r11,r18
+ 350 0292 F00C      		add r15,r0
+ 351 0294 1124      		clr r1
+ 352 0296 33EF      		ldi r19,lo8(243)
+ 353 0298 E316      		cp r14,r19
+ 354 029a F104      		cpc r15,__zero_reg__
+ 355 029c 04F0      		brlt .L26
+ 356 029e 86E1      		ldi r24,lo8(22)
+ 357 02a0 90E0      		ldi r25,hi8(22)
+ 358 02a2 9093 0000 		sts (errno)+1,r25
+ 359 02a6 8093 0000 		sts errno,r24
+ 360 02aa 00C0      		rjmp .L20
+ 361               	.L26:
+ 362 02ac 86FF      		sbrs r24,6
+ 363 02ae 00C0      		rjmp .L27
+ 364 02b0 8B81      		ldd r24,Y+3
+ 365 02b2 9C81      		ldd r25,Y+4
+ 366 02b4 892B      		or r24,r25
+ 367 02b6 01F4      		brne .L28
+ 368 02b8 80E0      		ldi r24,lo8(256)
+ 369 02ba 91E0      		ldi r25,hi8(256)
+ 370 02bc 0E94 0000 		call malloc
+ 371 02c0 9C83      		std Y+4,r25
+ 372 02c2 8B83      		std Y+3,r24
+ 373               	.L28:
+ 374 02c4 EB81      		ldd r30,Y+3
+ 375 02c6 FC81      		ldd r31,Y+4
+ 376 02c8 EE0D      		add r30,r14
+ 377 02ca FF1D      		adc r31,r15
+ 378 02cc 1586      		std Z+13,__zero_reg__
+ 379 02ce 8824      		clr r8
+ 380 02d0 9924      		clr r9
+ 381               	.L27:
+ 382 02d2 A801      		movw r20,r16
+ 383 02d4 AB81      		ldd r26,Y+3
+ 384 02d6 BC81      		ldd r27,Y+4
+ 385 02d8 AE0D      		add r26,r14
+ 386 02da BF1D      		adc r27,r15
+ 387 02dc 1A83      		std Y+2,r17
+ 388 02de 0983      		std Y+1,r16
+ 389 02e0 BD01      		movw r22,r26
+ 390 02e2 20E0      		ldi r18,lo8(0)
+ 391 02e4 30E0      		ldi r19,hi8(0)
+ 392               	.L29:
+ 393 02e6 E981      		ldd r30,Y+1
+ 394 02e8 FA81      		ldd r31,Y+2
+ 395 02ea 8181      		ldd r24,Z+1
+ 396 02ec FB01      		movw r30,r22
+ 397 02ee 8193      		st Z+,r24
+ 398 02f0 BF01      		movw r22,r30
+ 399 02f2 2F5F      		subi r18,lo8(-(1))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 8
+
+
+ 400 02f4 3F4F      		sbci r19,hi8(-(1))
+ 401 02f6 8981      		ldd r24,Y+1
+ 402 02f8 9A81      		ldd r25,Y+2
+ 403 02fa 0296      		adiw r24,2
+ 404 02fc 9A83      		std Y+2,r25
+ 405 02fe 8983      		std Y+1,r24
+ 406 0300 2530      		cpi r18,5
+ 407 0302 3105      		cpc r19,__zero_reg__
+ 408 0304 01F4      		brne .L29
+ 409 0306 20E0      		ldi r18,lo8(0)
+ 410 0308 30E0      		ldi r19,hi8(0)
+ 411               	.L30:
+ 412 030a FA01      		movw r30,r20
+ 413 030c 8685      		ldd r24,Z+14
+ 414 030e 1596      		adiw r26,5
+ 415 0310 8C93      		st X,r24
+ 416 0312 1597      		sbiw r26,5
+ 417 0314 2F5F      		subi r18,lo8(-(1))
+ 418 0316 3F4F      		sbci r19,hi8(-(1))
+ 419 0318 4E5F      		subi r20,lo8(-(2))
+ 420 031a 5F4F      		sbci r21,hi8(-(2))
+ 421 031c 1196      		adiw r26,1
+ 422 031e 2630      		cpi r18,6
+ 423 0320 3105      		cpc r19,__zero_reg__
+ 424 0322 01F4      		brne .L30
+ 425 0324 2BE0      		ldi r18,lo8(11)
+ 426 0326 30E0      		ldi r19,hi8(11)
+ 427 0328 E20E      		add r14,r18
+ 428 032a F31E      		adc r15,r19
+ 429 032c EB81      		ldd r30,Y+3
+ 430 032e FC81      		ldd r31,Y+4
+ 431 0330 EE0D      		add r30,r14
+ 432 0332 FF1D      		adc r31,r15
+ 433 0334 85EF      		ldi r24,lo8(-11)
+ 434 0336 9FEF      		ldi r25,hi8(-11)
+ 435 0338 E80E      		add r14,r24
+ 436 033a F91E      		adc r15,r25
+ 437 033c D801      		movw r26,r16
+ 438 033e 5C96      		adiw r26,28
+ 439 0340 8C91      		ld r24,X
+ 440 0342 5C97      		sbiw r26,28
+ 441 0344 8083      		st Z,r24
+ 442 0346 5E96      		adiw r26,30
+ 443 0348 8C91      		ld r24,X
+ 444 034a 8183      		std Z+1,r24
+ 445 034c 0894      		sec
+ 446 034e 811C      		adc r8,__zero_reg__
+ 447 0350 911C      		adc r9,__zero_reg__
+ 448 0352 00C0      		rjmp .L42
+ 449               	.L23:
+ 450 0354 83FD      		sbrc r24,3
+ 451 0356 00C0      		rjmp .L31
+ 452 0358 9923      		tst r25
+ 453 035a 01F0      		breq .L20
+ 454 035c F201      		movw r30,r4
+ 455 035e 8081      		ld r24,Z
+ 456 0360 9181      		ldd r25,Z+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 9
+
+
+ 457 0362 A281      		ldd r26,Z+2
+ 458 0364 B381      		ldd r27,Z+3
+ 459 0366 8097      		sbiw r24,32
+ 460 0368 A109      		sbc r26,__zero_reg__
+ 461 036a B109      		sbc r27,__zero_reg__
+ 462 036c F601      		movw r30,r12
+ 463 036e 80A3      		std Z+32,r24
+ 464 0370 91A3      		std Z+33,r25
+ 465 0372 A2A3      		std Z+34,r26
+ 466 0374 B3A3      		std Z+35,r27
+ 467 0376 2B81      		ldd r18,Y+3
+ 468 0378 3C81      		ldd r19,Y+4
+ 469 037a 2115      		cp r18,__zero_reg__
+ 470 037c 3105      		cpc r19,__zero_reg__
+ 471 037e 01F0      		breq .L32
+ 472 0380 EF28      		or r14,r15
+ 473 0382 01F4      		brne .L32
+ 474 0384 C601      		movw r24,r12
+ 475 0386 8696      		adiw r24,38
+ 476 0388 B901      		movw r22,r18
+ 477 038a 0E94 0000 		call strcpy
+ 478 038e D601      		movw r26,r12
+ 479 0390 9596      		adiw r26,36+1
+ 480 0392 9C92      		st X,r9
+ 481 0394 8E92      		st -X,r8
+ 482 0396 9497      		sbiw r26,36
+ 483 0398 00C0      		rjmp .L33
+ 484               	.L32:
+ 485 039a B601      		movw r22,r12
+ 486 039c 6A5D      		subi r22,lo8(-(38))
+ 487 039e 7F4F      		sbci r23,hi8(-(38))
+ 488 03a0 C601      		movw r24,r12
+ 489 03a2 0E94 0000 		call MakeVisibleName
+ 490 03a6 F601      		movw r30,r12
+ 491 03a8 15A2      		std Z+37,__zero_reg__
+ 492 03aa 14A2      		std Z+36,__zero_reg__
+ 493               	.L33:
+ 494 03ac 2B81      		ldd r18,Y+3
+ 495 03ae 3C81      		ldd r19,Y+4
+ 496 03b0 232B      		or r18,r19
+ 497 03b2 01F0      		breq .L44
+ 498               	.L34:
+ 499 03b4 8B81      		ldd r24,Y+3
+ 500 03b6 9C81      		ldd r25,Y+4
+ 501 03b8 0E94 0000 		call free
+ 502               	.L44:
+ 503 03bc 20E0      		ldi r18,lo8(0)
+ 504 03be 30E0      		ldi r19,hi8(0)
+ 505 03c0 00C0      		rjmp .L35
+ 506               	.L31:
+ 507 03c2 8B81      		ldd r24,Y+3
+ 508 03c4 9C81      		ldd r25,Y+4
+ 509 03c6 0097      		sbiw r24,0
+ 510 03c8 01F4      		brne .+2
+ 511 03ca 00C0      		rjmp .L42
+ 512 03cc 0E94 0000 		call free
+ 513 03d0 1C82      		std Y+4,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 10
+
+
+ 514 03d2 1B82      		std Y+3,__zero_reg__
+ 515 03d4 00C0      		rjmp .L43
+ 516               	.L20:
+ 517 03d6 AB81      		ldd r26,Y+3
+ 518 03d8 BC81      		ldd r27,Y+4
+ 519 03da AB2B      		or r26,r27
+ 520 03dc 01F0      		breq .L45
+ 521               	.L36:
+ 522 03de 8B81      		ldd r24,Y+3
+ 523 03e0 9C81      		ldd r25,Y+4
+ 524 03e2 0E94 0000 		call free
+ 525               	.L45:
+ 526 03e6 2FEF      		ldi r18,lo8(-1)
+ 527 03e8 3FEF      		ldi r19,hi8(-1)
+ 528               	.L35:
+ 529 03ea C901      		movw r24,r18
+ 530               	/* epilogue start */
+ 531 03ec 0F90      		pop __tmp_reg__
+ 532 03ee 0F90      		pop __tmp_reg__
+ 533 03f0 0F90      		pop __tmp_reg__
+ 534 03f2 0F90      		pop __tmp_reg__
+ 535 03f4 CF91      		pop r28
+ 536 03f6 DF91      		pop r29
+ 537 03f8 1F91      		pop r17
+ 538 03fa 0F91      		pop r16
+ 539 03fc FF90      		pop r15
+ 540 03fe EF90      		pop r14
+ 541 0400 DF90      		pop r13
+ 542 0402 CF90      		pop r12
+ 543 0404 BF90      		pop r11
+ 544 0406 AF90      		pop r10
+ 545 0408 9F90      		pop r9
+ 546 040a 8F90      		pop r8
+ 547 040c 7F90      		pop r7
+ 548 040e 6F90      		pop r6
+ 549 0410 5F90      		pop r5
+ 550 0412 4F90      		pop r4
+ 551 0414 3F90      		pop r3
+ 552 0416 2F90      		pop r2
+ 553 0418 0895      		ret
+ 554               		.size	PhatDirEntryRead, .-PhatDirEntryRead
+ 555               	.global	PhatDirRead
+ 556               		.type	PhatDirRead, @function
+ 557               	PhatDirRead:
+ 558 041a 0F93      		push r16
+ 559 041c 1F93      		push r17
+ 560 041e CF93      		push r28
+ 561 0420 DF93      		push r29
+ 562               	/* prologue: function */
+ 563               	/* frame size = 0 */
+ 564 0422 EC01      		movw r28,r24
+ 565 0424 85E2      		ldi r24,lo8(293)
+ 566 0426 91E0      		ldi r25,hi8(293)
+ 567 0428 0E94 0000 		call malloc
+ 568 042c 8C01      		movw r16,r24
+ 569 042e 0097      		sbiw r24,0
+ 570 0430 01F0      		breq .L52
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 11
+
+
+ 571               	.L47:
+ 572 0432 8881      		ld r24,Y
+ 573 0434 9981      		ldd r25,Y+1
+ 574 0436 B801      		movw r22,r16
+ 575 0438 0E94 0000 		call PhatDirEntryRead
+ 576 043c 892B      		or r24,r25
+ 577 043e 01F0      		breq .L49
+ 578 0440 C801      		movw r24,r16
+ 579 0442 0E94 0000 		call free
+ 580               	.L52:
+ 581 0446 2FEF      		ldi r18,lo8(-1)
+ 582 0448 3FEF      		ldi r19,hi8(-1)
+ 583 044a 00C0      		rjmp .L48
+ 584               	.L49:
+ 585 044c 8A81      		ldd r24,Y+2
+ 586 044e 9B81      		ldd r25,Y+3
+ 587 0450 EC01      		movw r28,r24
+ 588 0452 FC01      		movw r30,r24
+ 589 0454 88E0      		ldi r24,lo8(264)
+ 590 0456 91E0      		ldi r25,hi8(264)
+ 591 0458 DF01      		movw r26,r30
+ 592 045a 9C01      		movw r18,r24
+ 593 045c 1D92      		st X+,__zero_reg__
+ 594 045e 2150      		subi r18,1
+ 595 0460 3040      		sbci r19,0
+ 596 0462 01F4      		brne .-8
+ 597 0464 B801      		movw r22,r16
+ 598 0466 6A5D      		subi r22,lo8(-(38))
+ 599 0468 7F4F      		sbci r23,hi8(-(38))
+ 600 046a FB01      		movw r30,r22
+ 601 046c 0190      		ld __tmp_reg__,Z+
+ 602 046e 0020      		tst __tmp_reg__
+ 603 0470 01F4      		brne .-6
+ 604 0472 3197      		sbiw r30,1
+ 605 0474 E61B      		sub r30,r22
+ 606 0476 F70B      		sbc r31,r23
+ 607 0478 EF83      		std Y+7,r30
+ 608 047a CE01      		movw r24,r28
+ 609 047c 0896      		adiw r24,8
+ 610 047e 0E94 0000 		call strcpy
+ 611 0482 D801      		movw r26,r16
+ 612 0484 1B96      		adiw r26,11
+ 613 0486 8C91      		ld r24,X
+ 614 0488 84FF      		sbrs r24,4
+ 615 048a 00C0      		rjmp .L50
+ 616 048c 81E0      		ldi r24,lo8(1)
+ 617 048e 8E83      		std Y+6,r24
+ 618               	.L50:
+ 619 0490 C801      		movw r24,r16
+ 620 0492 0E94 0000 		call free
+ 621 0496 20E0      		ldi r18,lo8(0)
+ 622 0498 30E0      		ldi r19,hi8(0)
+ 623               	.L48:
+ 624 049a C901      		movw r24,r18
+ 625               	/* epilogue start */
+ 626 049c DF91      		pop r29
+ 627 049e CF91      		pop r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 12
+
+
+ 628 04a0 1F91      		pop r17
+ 629 04a2 0F91      		pop r16
+ 630 04a4 0895      		ret
+ 631               		.size	PhatDirRead, .-PhatDirRead
+ 632               		.type	PhatDirEntryRelease, @function
+ 633               	PhatDirEntryRelease:
+ 634 04a6 6F92      		push r6
+ 635 04a8 7F92      		push r7
+ 636 04aa 8F92      		push r8
+ 637 04ac 9F92      		push r9
+ 638 04ae AF92      		push r10
+ 639 04b0 BF92      		push r11
+ 640 04b2 CF92      		push r12
+ 641 04b4 DF92      		push r13
+ 642 04b6 EF92      		push r14
+ 643 04b8 FF92      		push r15
+ 644 04ba 0F93      		push r16
+ 645 04bc 1F93      		push r17
+ 646 04be DF93      		push r29
+ 647 04c0 CF93      		push r28
+ 648 04c2 0F92      		push __tmp_reg__
+ 649 04c4 CDB7      		in r28,__SP_L__
+ 650 04c6 DEB7      		in r29,__SP_H__
+ 651               	/* prologue: function */
+ 652               	/* frame size = 1 */
+ 653 04c8 6C01      		movw r12,r24
+ 654 04ca 4A01      		movw r8,r20
+ 655 04cc 5B01      		movw r10,r22
+ 656 04ce 85EE      		ldi r24,lo8(-27)
+ 657 04d0 8983      		std Y+1,r24
+ 658 04d2 7901      		movw r14,r18
+ 659 04d4 45E0      		ldi r20,5
+ 660 04d6 EE0C      	1:	lsl r14
+ 661 04d8 FF1C      		rol r15
+ 662 04da 4A95      		dec r20
+ 663 04dc 01F4      		brne 1b
+ 664 04de 8901      		movw r16,r18
+ 665 04e0 3E01      		movw r6,r28
+ 666 04e2 0894      		sec
+ 667 04e4 611C      		adc r6,__zero_reg__
+ 668 04e6 711C      		adc r7,__zero_reg__
+ 669 04e8 00C0      		rjmp .L54
+ 670               	.L56:
+ 671 04ea C701      		movw r24,r14
+ 672 04ec A0E0      		ldi r26,lo8(0)
+ 673 04ee B0E0      		ldi r27,hi8(0)
+ 674 04f0 B501      		movw r22,r10
+ 675 04f2 A401      		movw r20,r8
+ 676 04f4 481B      		sub r20,r24
+ 677 04f6 590B      		sbc r21,r25
+ 678 04f8 6A0B      		sbc r22,r26
+ 679 04fa 7B0B      		sbc r23,r27
+ 680 04fc C601      		movw r24,r12
+ 681 04fe 0E94 0000 		call PhatFilePosSet
+ 682 0502 C601      		movw r24,r12
+ 683 0504 B301      		movw r22,r6
+ 684 0506 41E0      		ldi r20,lo8(1)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 13
+
+
+ 685 0508 50E0      		ldi r21,hi8(1)
+ 686 050a 0E94 0000 		call PhatFileWrite
+ 687 050e 20EE      		ldi r18,lo8(-32)
+ 688 0510 3FEF      		ldi r19,hi8(-32)
+ 689 0512 E20E      		add r14,r18
+ 690 0514 F31E      		adc r15,r19
+ 691 0516 97FD      		sbrc r25,7
+ 692 0518 00C0      		rjmp .L55
+ 693 051a 0150      		subi r16,lo8(-(-1))
+ 694 051c 1040      		sbci r17,hi8(-(-1))
+ 695               	.L54:
+ 696 051e 0115      		cp r16,__zero_reg__
+ 697 0520 1105      		cpc r17,__zero_reg__
+ 698 0522 01F4      		brne .L56
+ 699 0524 C601      		movw r24,r12
+ 700 0526 B501      		movw r22,r10
+ 701 0528 A401      		movw r20,r8
+ 702 052a 0E94 0000 		call PhatFilePosSet
+ 703 052e C601      		movw r24,r12
+ 704 0530 B301      		movw r22,r6
+ 705 0532 41E0      		ldi r20,lo8(1)
+ 706 0534 50E0      		ldi r21,hi8(1)
+ 707 0536 0E94 0000 		call PhatFileWrite
+ 708 053a 97FD      		sbrc r25,7
+ 709 053c 00C0      		rjmp .L55
+ 710 053e 20E0      		ldi r18,lo8(0)
+ 711 0540 30E0      		ldi r19,hi8(0)
+ 712 0542 00C0      		rjmp .L57
+ 713               	.L55:
+ 714 0544 2FEF      		ldi r18,lo8(-1)
+ 715 0546 3FEF      		ldi r19,hi8(-1)
+ 716               	.L57:
+ 717 0548 C901      		movw r24,r18
+ 718               	/* epilogue start */
+ 719 054a 0F90      		pop __tmp_reg__
+ 720 054c CF91      		pop r28
+ 721 054e DF91      		pop r29
+ 722 0550 1F91      		pop r17
+ 723 0552 0F91      		pop r16
+ 724 0554 FF90      		pop r15
+ 725 0556 EF90      		pop r14
+ 726 0558 DF90      		pop r13
+ 727 055a CF90      		pop r12
+ 728 055c BF90      		pop r11
+ 729 055e AF90      		pop r10
+ 730 0560 9F90      		pop r9
+ 731 0562 8F90      		pop r8
+ 732 0564 7F90      		pop r7
+ 733 0566 6F90      		pop r6
+ 734 0568 0895      		ret
+ 735               		.size	PhatDirEntryRelease, .-PhatDirEntryRelease
+ 736               	.global	PhatDirReleaseChain
+ 737               		.type	PhatDirReleaseChain, @function
+ 738               	PhatDirReleaseChain:
+ 739 056a CF93      		push r28
+ 740 056c DF93      		push r29
+ 741               	/* prologue: function */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 14
+
+
+ 742               	/* frame size = 0 */
+ 743 056e EC01      		movw r28,r24
+ 744 0570 FB01      		movw r30,r22
+ 745 0572 2989      		ldd r18,Y+17
+ 746 0574 3A89      		ldd r19,Y+18
+ 747 0576 8385      		ldd r24,Z+11
+ 748 0578 80FF      		sbrs r24,0
+ 749 057a 00C0      		rjmp .L60
+ 750 057c 8DE0      		ldi r24,lo8(13)
+ 751 057e 90E0      		ldi r25,hi8(13)
+ 752 0580 9093 0000 		sts (errno)+1,r25
+ 753 0584 8093 0000 		sts errno,r24
+ 754 0588 2FEF      		ldi r18,lo8(-1)
+ 755 058a 3FEF      		ldi r19,hi8(-1)
+ 756 058c 00C0      		rjmp .L61
+ 757               	.L60:
+ 758 058e 8489      		ldd r24,Z+20
+ 759 0590 9589      		ldd r25,Z+21
+ 760 0592 A0E0      		ldi r26,lo8(0)
+ 761 0594 B0E0      		ldi r27,hi8(0)
+ 762 0596 BC01      		movw r22,r24
+ 763 0598 5527      		clr r21
+ 764 059a 4427      		clr r20
+ 765 059c 828D      		ldd r24,Z+26
+ 766 059e 938D      		ldd r25,Z+27
+ 767 05a0 A0E0      		ldi r26,lo8(0)
+ 768 05a2 B0E0      		ldi r27,hi8(0)
+ 769 05a4 482B      		or r20,r24
+ 770 05a6 592B      		or r21,r25
+ 771 05a8 6A2B      		or r22,r26
+ 772 05aa 7B2B      		or r23,r27
+ 773 05ac 4230      		cpi r20,lo8(2)
+ 774 05ae 5105      		cpc r21,__zero_reg__
+ 775 05b0 6105      		cpc r22,__zero_reg__
+ 776 05b2 7105      		cpc r23,__zero_reg__
+ 777 05b4 00F4      		brsh .L62
+ 778 05b6 20E0      		ldi r18,lo8(0)
+ 779 05b8 30E0      		ldi r19,hi8(0)
+ 780 05ba 00C0      		rjmp .L61
+ 781               	.L62:
+ 782 05bc F901      		movw r30,r18
+ 783 05be 8081      		ld r24,Z
+ 784 05c0 9181      		ldd r25,Z+1
+ 785 05c2 8032      		cpi r24,32
+ 786 05c4 9105      		cpc r25,__zero_reg__
+ 787 05c6 01F4      		brne .L63
+ 788 05c8 CE01      		movw r24,r28
+ 789 05ca 0E94 0000 		call Phat32ReleaseChain
+ 790 05ce 00C0      		rjmp .L66
+ 791               	.L63:
+ 792 05d0 4097      		sbiw r24,16
+ 793 05d2 01F4      		brne .L64
+ 794 05d4 CE01      		movw r24,r28
+ 795 05d6 0E94 0000 		call Phat16ReleaseChain
+ 796 05da 00C0      		rjmp .L66
+ 797               	.L64:
+ 798 05dc CE01      		movw r24,r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 15
+
+
+ 799 05de 0E94 0000 		call Phat12ReleaseChain
+ 800               	.L66:
+ 801 05e2 9C01      		movw r18,r24
+ 802               	.L61:
+ 803 05e4 C901      		movw r24,r18
+ 804               	/* epilogue start */
+ 805 05e6 DF91      		pop r29
+ 806 05e8 CF91      		pop r28
+ 807 05ea 0895      		ret
+ 808               		.size	PhatDirReleaseChain, .-PhatDirReleaseChain
+ 809               		.data
+ 810               	.LC0:
+ 811 0000 2B2C 3B3D 		.string	"+,;=[]"
+ 811      5B5D 00
+ 812               		.text
+ 813               		.type	PhatDirEntryAlloc, @function
+ 814               	PhatDirEntryAlloc:
+ 815 05ec 2F92      		push r2
+ 816 05ee 3F92      		push r3
+ 817 05f0 4F92      		push r4
+ 818 05f2 5F92      		push r5
+ 819 05f4 6F92      		push r6
+ 820 05f6 7F92      		push r7
+ 821 05f8 8F92      		push r8
+ 822 05fa 9F92      		push r9
+ 823 05fc AF92      		push r10
+ 824 05fe BF92      		push r11
+ 825 0600 CF92      		push r12
+ 826 0602 DF92      		push r13
+ 827 0604 EF92      		push r14
+ 828 0606 FF92      		push r15
+ 829 0608 0F93      		push r16
+ 830 060a 1F93      		push r17
+ 831 060c DF93      		push r29
+ 832 060e CF93      		push r28
+ 833 0610 CDB7      		in r28,__SP_L__
+ 834 0612 DEB7      		in r29,__SP_H__
+ 835 0614 6A97      		sbiw r28,26
+ 836 0616 0FB6      		in __tmp_reg__,__SREG__
+ 837 0618 F894      		cli
+ 838 061a DEBF      		out __SP_H__,r29
+ 839 061c 0FBE      		out __SREG__,__tmp_reg__
+ 840 061e CDBF      		out __SP_L__,r28
+ 841               	/* prologue: function */
+ 842               	/* frame size = 26 */
+ 843 0620 1C01      		movw r2,r24
+ 844 0622 7B8B      		std Y+19,r23
+ 845 0624 6A8B      		std Y+18,r22
+ 846 0626 498F      		std Y+25,r20
+ 847 0628 5A8F      		std Y+26,r21
+ 848 062a DC01      		movw r26,r24
+ 849 062c 1496      		adiw r26,4
+ 850 062e BC91      		ld r27,X
+ 851 0630 BF8B      		std Y+23,r27
+ 852 0632 FC01      		movw r30,r24
+ 853 0634 F581      		ldd r31,Z+5
+ 854 0636 F88F      		std Y+24,r31
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 16
+
+
+ 855 0638 DC01      		movw r26,r24
+ 856 063a 1296      		adiw r26,2
+ 857 063c ED91      		ld r30,X+
+ 858 063e FC91      		ld r31,X
+ 859 0640 1397      		sbiw r26,2+1
+ 860 0642 B189      		ldd r27,Z+17
+ 861 0644 BD8B      		std Y+21,r27
+ 862 0646 2289      		ldd r18,Z+18
+ 863 0648 2E8B      		std Y+22,r18
+ 864 064a CB01      		movw r24,r22
+ 865 064c BA01      		movw r22,r20
+ 866 064e 0E94 0000 		call MakePhatName
+ 867 0652 8130      		cpi r24,1
+ 868 0654 9105      		cpc r25,__zero_reg__
+ 869 0656 01F4      		brne .+2
+ 870 0658 00C0      		rjmp .L81
+ 871               	.L68:
+ 872 065a 892B      		or r24,r25
+ 873 065c 01F4      		brne .L70
+ 874 065e 898D      		ldd r24,Y+25
+ 875 0660 9A8D      		ldd r25,Y+26
+ 876 0662 8E01      		movw r16,r28
+ 877 0664 0F5F      		subi r16,lo8(-(1))
+ 878 0666 1F4F      		sbci r17,hi8(-(1))
+ 879 0668 B801      		movw r22,r16
+ 880 066a 0E94 0000 		call MakeVisibleName
+ 881 066e 8A89      		ldd r24,Y+18
+ 882 0670 9B89      		ldd r25,Y+19
+ 883 0672 B801      		movw r22,r16
+ 884 0674 0E94 0000 		call strcmp
+ 885 0678 0097      		sbiw r24,0
+ 886 067a 01F4      		brne .L70
+ 887 067c A1E0      		ldi r26,lo8(1)
+ 888 067e 8A2E      		mov r8,r26
+ 889 0680 912C      		mov r9,__zero_reg__
+ 890 0682 198A      		std Y+17,__zero_reg__
+ 891 0684 00C0      		rjmp .L71
+ 892               	.L70:
+ 893 0686 698C      		ldd r6,Y+25
+ 894 0688 7A8C      		ldd r7,Y+26
+ 895 068a C301      		movw r24,r6
+ 896 068c 60E2      		ldi r22,lo8(32)
+ 897 068e 70E0      		ldi r23,hi8(32)
+ 898 0690 4BE0      		ldi r20,lo8(11)
+ 899 0692 50E0      		ldi r21,hi8(11)
+ 900 0694 0E94 0000 		call memset
+ 901 0698 8A89      		ldd r24,Y+18
+ 902 069a 9B89      		ldd r25,Y+19
+ 903 069c 6EE2      		ldi r22,lo8(46)
+ 904 069e 70E0      		ldi r23,hi8(46)
+ 905 06a0 0E94 0000 		call strrchr
+ 906 06a4 6C01      		movw r12,r24
+ 907 06a6 EA88      		ldd r14,Y+18
+ 908 06a8 FB88      		ldd r15,Y+19
+ 909 06aa 00E0      		ldi r16,lo8(0)
+ 910 06ac 10E0      		ldi r17,hi8(0)
+ 911 06ae FFE5      		ldi r31,lo8(95)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 17
+
+
+ 912 06b0 8F2E      		mov r8,r31
+ 913 06b2 2C01      		movw r4,r24
+ 914 06b4 0894      		sec
+ 915 06b6 411C      		adc r4,__zero_reg__
+ 916 06b8 511C      		adc r5,__zero_reg__
+ 917 06ba 00C0      		rjmp .L72
+ 918               	.L80:
+ 919 06bc 3EE2      		ldi r19,lo8(46)
+ 920 06be 9316      		cp r9,r19
+ 921 06c0 01F4      		brne .L73
+ 922 06c2 EC14      		cp r14,r12
+ 923 06c4 FD04      		cpc r15,r13
+ 924 06c6 01F4      		brne .L74
+ 925 06c8 0894      		sec
+ 926 06ca E11C      		adc r14,__zero_reg__
+ 927 06cc F11C      		adc r15,__zero_reg__
+ 928 06ce D701      		movw r26,r14
+ 929 06d0 8C91      		ld r24,X
+ 930 06d2 8823      		tst r24
+ 931 06d4 01F0      		breq .L131
+ 932 06d6 90E0      		ldi r25,lo8(0)
+ 933 06d8 0E94 0000 		call toupper
+ 934 06dc 00C0      		rjmp .L130
+ 935               	.L73:
+ 936 06de 0830      		cpi r16,8
+ 937 06e0 1105      		cpc r17,__zero_reg__
+ 938 06e2 01F4      		brne .L77
+ 939 06e4 C114      		cp r12,__zero_reg__
+ 940 06e6 D104      		cpc r13,__zero_reg__
+ 941 06e8 01F0      		breq .L78
+ 942 06ea 7201      		movw r14,r4
+ 943 06ec D201      		movw r26,r4
+ 944 06ee 8C91      		ld r24,X
+ 945 06f0 8823      		tst r24
+ 946 06f2 01F0      		breq .L76
+ 947 06f4 90E0      		ldi r25,lo8(0)
+ 948 06f6 0E94 0000 		call toupper
+ 949               	.L130:
+ 950 06fa F301      		movw r30,r6
+ 951 06fc 8087      		std Z+8,r24
+ 952               	.L131:
+ 953 06fe 09E0      		ldi r16,lo8(9)
+ 954 0700 10E0      		ldi r17,hi8(9)
+ 955 0702 00C0      		rjmp .L76
+ 956               	.L77:
+ 957 0704 F0E2      		ldi r31,lo8(32)
+ 958 0706 9F16      		cp r9,r31
+ 959 0708 01F0      		breq .L74
+ 960 070a 692D      		mov r22,r9
+ 961 070c 7727      		clr r23
+ 962 070e 67FD      		sbrc r22,7
+ 963 0710 7095      		com r23
+ 964 0712 80E0      		ldi r24,lo8(.LC0)
+ 965 0714 90E0      		ldi r25,hi8(.LC0)
+ 966 0716 0E94 0000 		call strrchr
+ 967 071a 5301      		movw r10,r6
+ 968 071c A00E      		add r10,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 18
+
+
+ 969 071e B11E      		adc r11,r17
+ 970 0720 0F5F      		subi r16,lo8(-(1))
+ 971 0722 1F4F      		sbci r17,hi8(-(1))
+ 972 0724 0097      		sbiw r24,0
+ 973 0726 01F0      		breq .L79
+ 974 0728 D501      		movw r26,r10
+ 975 072a 8C92      		st X,r8
+ 976 072c 00C0      		rjmp .L74
+ 977               	.L79:
+ 978 072e 892D      		mov r24,r9
+ 979 0730 90E0      		ldi r25,lo8(0)
+ 980 0732 0E94 0000 		call toupper
+ 981 0736 F501      		movw r30,r10
+ 982 0738 8083      		st Z,r24
+ 983               	.L74:
+ 984 073a 0B30      		cpi r16,11
+ 985 073c 1105      		cpc r17,__zero_reg__
+ 986 073e 04F4      		brge .L78
+ 987               	.L76:
+ 988 0740 0894      		sec
+ 989 0742 E11C      		adc r14,__zero_reg__
+ 990 0744 F11C      		adc r15,__zero_reg__
+ 991               	.L72:
+ 992 0746 D701      		movw r26,r14
+ 993 0748 9C90      		ld r9,X
+ 994 074a 9920      		tst r9
+ 995 074c 01F0      		breq .+2
+ 996 074e 00C0      		rjmp .L80
+ 997               	.L78:
+ 998 0750 80E2      		ldi r24,lo8(32)
+ 999 0752 90E0      		ldi r25,hi8(32)
+ 1000 0754 0E94 0000 		call malloc
+ 1001 0758 6C01      		movw r12,r24
+ 1002 075a 0097      		sbiw r24,0
+ 1003 075c 01F4      		brne .+2
+ 1004 075e 00C0      		rjmp .L81
+ 1005 0760 5301      		movw r10,r6
+ 1006 0762 9301      		movw r18,r6
+ 1007 0764 2A5F      		subi r18,lo8(-(6))
+ 1008 0766 3F4F      		sbci r19,hi8(-(6))
+ 1009 0768 00C0      		rjmp .L82
+ 1010               	.L84:
+ 1011 076a 0894      		sec
+ 1012 076c A11C      		adc r10,__zero_reg__
+ 1013 076e B11C      		adc r11,__zero_reg__
+ 1014 0770 A216      		cp r10,r18
+ 1015 0772 B306      		cpc r11,r19
+ 1016 0774 01F0      		breq .L83
+ 1017               	.L82:
+ 1018 0776 F501      		movw r30,r10
+ 1019 0778 8081      		ld r24,Z
+ 1020 077a 8032      		cpi r24,lo8(32)
+ 1021 077c 01F4      		brne .L84
+ 1022               	.L83:
+ 1023 077e 4601      		movw r8,r12
+ 1024 0780 E1E0      		ldi r30,lo8(1)
+ 1025 0782 EE2E      		mov r14,r30
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 19
+
+
+ 1026 0784 F12C      		mov r15,__zero_reg__
+ 1027 0786 7EE7      		ldi r23,lo8(126)
+ 1028 0788 572E      		mov r5,r23
+ 1029 078a 00C0      		rjmp .L127
+ 1030               	.L93:
+ 1031 078c FAE0      		ldi r31,lo8(10)
+ 1032 078e EF16      		cp r14,r31
+ 1033 0790 F104      		cpc r15,__zero_reg__
+ 1034 0792 01F4      		brne .L127
+ 1035 0794 0894      		sec
+ 1036 0796 A108      		sbc r10,__zero_reg__
+ 1037 0798 B108      		sbc r11,__zero_reg__
+ 1038               	.L127:
+ 1039 079a D501      		movw r26,r10
+ 1040 079c 5C92      		st X,r5
+ 1041 079e BAE0      		ldi r27,lo8(10)
+ 1042 07a0 EB16      		cp r14,r27
+ 1043 07a2 F104      		cpc r15,__zero_reg__
+ 1044 07a4 04F0      		brlt .L86
+ 1045 07a6 C701      		movw r24,r14
+ 1046 07a8 6AE0      		ldi r22,lo8(10)
+ 1047 07aa 70E0      		ldi r23,hi8(10)
+ 1048 07ac 0E94 0000 		call __divmodhi4
+ 1049 07b0 605D      		subi r22,lo8(-(48))
+ 1050 07b2 F501      		movw r30,r10
+ 1051 07b4 6183      		std Z+1,r22
+ 1052 07b6 C701      		movw r24,r14
+ 1053 07b8 6AE0      		ldi r22,lo8(10)
+ 1054 07ba 70E0      		ldi r23,hi8(10)
+ 1055 07bc 0E94 0000 		call __divmodhi4
+ 1056 07c0 805D      		subi r24,lo8(-(48))
+ 1057 07c2 8283      		std Z+2,r24
+ 1058 07c4 00C0      		rjmp .L87
+ 1059               	.L86:
+ 1060 07c6 8E2D      		mov r24,r14
+ 1061 07c8 805D      		subi r24,lo8(-(48))
+ 1062 07ca D501      		movw r26,r10
+ 1063 07cc 1196      		adiw r26,1
+ 1064 07ce 8C93      		st X,r24
+ 1065               	.L87:
+ 1066 07d0 F101      		movw r30,r2
+ 1067 07d2 8481      		ldd r24,Z+4
+ 1068 07d4 9581      		ldd r25,Z+5
+ 1069 07d6 0E94 0000 		call PhatFilePosRewind
+ 1070               	.L128:
+ 1071 07da C101      		movw r24,r2
+ 1072 07dc B601      		movw r22,r12
+ 1073 07de 40E2      		ldi r20,lo8(32)
+ 1074 07e0 50E0      		ldi r21,hi8(32)
+ 1075 07e2 0E94 0000 		call PhatFileRead
+ 1076 07e6 8032      		cpi r24,32
+ 1077 07e8 9105      		cpc r25,__zero_reg__
+ 1078 07ea 01F0      		breq .L88
+ 1079 07ec 892B      		or r24,r25
+ 1080 07ee 01F0      		breq .L89
+ 1081 07f0 69E0      		ldi r22,lo8(9)
+ 1082 07f2 E62E      		mov r14,r22
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 20
+
+
+ 1083 07f4 F12C      		mov r15,__zero_reg__
+ 1084 07f6 00C0      		rjmp .L132
+ 1085               	.L88:
+ 1086 07f8 D601      		movw r26,r12
+ 1087 07fa 1B96      		adiw r26,11
+ 1088 07fc 8C91      		ld r24,X
+ 1089 07fe 1B97      		sbiw r26,11
+ 1090 0800 83FD      		sbrc r24,3
+ 1091 0802 00C0      		rjmp .L128
+ 1092 0804 8C91      		ld r24,X
+ 1093 0806 8823      		tst r24
+ 1094 0808 01F0      		breq .L89
+ 1095 080a C301      		movw r24,r6
+ 1096 080c B401      		movw r22,r8
+ 1097 080e 4BE0      		ldi r20,lo8(11)
+ 1098 0810 50E0      		ldi r21,hi8(11)
+ 1099 0812 0E94 0000 		call memcmp
+ 1100 0816 0097      		sbiw r24,0
+ 1101 0818 01F4      		brne .L128
+ 1102               	.L132:
+ 1103 081a 0FEF      		ldi r16,lo8(-1)
+ 1104 081c 1FEF      		ldi r17,hi8(-1)
+ 1105 081e 00C0      		rjmp .L90
+ 1106               	.L89:
+ 1107 0820 00E0      		ldi r16,lo8(0)
+ 1108 0822 10E0      		ldi r17,hi8(0)
+ 1109               	.L90:
+ 1110 0824 0894      		sec
+ 1111 0826 E11C      		adc r14,__zero_reg__
+ 1112 0828 F11C      		adc r15,__zero_reg__
+ 1113 082a B4E6      		ldi r27,lo8(100)
+ 1114 082c EB16      		cp r14,r27
+ 1115 082e F104      		cpc r15,__zero_reg__
+ 1116 0830 04F4      		brge .L92
+ 1117 0832 0115      		cp r16,__zero_reg__
+ 1118 0834 1105      		cpc r17,__zero_reg__
+ 1119 0836 01F0      		breq .+2
+ 1120 0838 00C0      		rjmp .L93
+ 1121               	.L92:
+ 1122 083a C601      		movw r24,r12
+ 1123 083c 0E94 0000 		call free
+ 1124 0840 012B      		or r16,r17
+ 1125 0842 01F0      		breq .L94
+ 1126               	.L81:
+ 1127 0844 86E1      		ldi r24,lo8(22)
+ 1128 0846 90E0      		ldi r25,hi8(22)
+ 1129 0848 9093 0000 		sts (errno)+1,r25
+ 1130 084c 8093 0000 		sts errno,r24
+ 1131 0850 00C0      		rjmp .L96
+ 1132               	.L94:
+ 1133 0852 EA89      		ldd r30,Y+18
+ 1134 0854 FB89      		ldd r31,Y+19
+ 1135 0856 DF01      		movw r26,r30
+ 1136 0858 0D90      		ld __tmp_reg__,X+
+ 1137 085a 0020      		tst __tmp_reg__
+ 1138 085c 01F4      		brne .-6
+ 1139 085e 1197      		sbiw r26,1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 21
+
+
+ 1140 0860 AE1B      		sub r26,r30
+ 1141 0862 BF0B      		sbc r27,r31
+ 1142 0864 F301      		movw r30,r6
+ 1143 0866 198A      		std Y+17,__zero_reg__
+ 1144 0868 9301      		movw r18,r6
+ 1145 086a 255F      		subi r18,lo8(-(11))
+ 1146 086c 3F4F      		sbci r19,hi8(-(11))
+ 1147               	.L95:
+ 1148 086e 8989      		ldd r24,Y+17
+ 1149 0870 8695      		lsr r24
+ 1150 0872 9989      		ldd r25,Y+17
+ 1151 0874 9795      		ror r25
+ 1152 0876 9927      		clr r25
+ 1153 0878 9795      		ror r25
+ 1154 087a 982B      		or r25,r24
+ 1155 087c 8191      		ld r24,Z+
+ 1156 087e 980F      		add r25,r24
+ 1157 0880 998B      		std Y+17,r25
+ 1158 0882 E217      		cp r30,r18
+ 1159 0884 F307      		cpc r31,r19
+ 1160 0886 01F4      		brne .L95
+ 1161 0888 CD01      		movw r24,r26
+ 1162 088a 0C96      		adiw r24,12
+ 1163 088c 6DE0      		ldi r22,lo8(13)
+ 1164 088e 70E0      		ldi r23,hi8(13)
+ 1165 0890 0E94 0000 		call __udivmodhi4
+ 1166 0894 4B01      		movw r8,r22
+ 1167 0896 0894      		sec
+ 1168 0898 811C      		adc r8,__zero_reg__
+ 1169 089a 911C      		adc r9,__zero_reg__
+ 1170               	.L71:
+ 1171 089c 80E2      		ldi r24,lo8(32)
+ 1172 089e 90E0      		ldi r25,hi8(32)
+ 1173 08a0 0E94 0000 		call malloc
+ 1174 08a4 5C01      		movw r10,r24
+ 1175 08a6 0097      		sbiw r24,0
+ 1176 08a8 01F4      		brne .+2
+ 1177 08aa 00C0      		rjmp .L96
+ 1178 08ac 0F89      		ldd r16,Y+23
+ 1179 08ae 188D      		ldd r17,Y+24
+ 1180 08b0 C801      		movw r24,r16
+ 1181 08b2 0E94 0000 		call PhatFilePosRewind
+ 1182 08b6 4424      		clr r4
+ 1183 08b8 5524      		clr r5
+ 1184               	.L108:
+ 1185 08ba 6624      		clr r6
+ 1186 08bc 7724      		clr r7
+ 1187               	.L129:
+ 1188 08be D801      		movw r26,r16
+ 1189 08c0 FC90      		ld r15,X
+ 1190 08c2 1196      		adiw r26,1
+ 1191 08c4 EC90      		ld r14,X
+ 1192 08c6 C101      		movw r24,r2
+ 1193 08c8 B501      		movw r22,r10
+ 1194 08ca 40E2      		ldi r20,lo8(32)
+ 1195 08cc 50E0      		ldi r21,hi8(32)
+ 1196 08ce 0E94 0000 		call PhatFileRead
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 22
+
+
+ 1197 08d2 97FD      		sbrc r25,7
+ 1198 08d4 00C0      		rjmp .L98
+ 1199 08d6 CF2C      		mov r12,r15
+ 1200 08d8 EC8A      		std Y+20,r14
+ 1201 08da 8097      		sbiw r24,32
+ 1202 08dc 01F4      		brne .+2
+ 1203 08de 00C0      		rjmp .L99
+ 1204 08e0 C101      		movw r24,r2
+ 1205 08e2 0E94 0000 		call IsFixedRootDir
+ 1206 08e6 892B      		or r24,r25
+ 1207 08e8 01F4      		brne .L100
+ 1208 08ea F801      		movw r30,r16
+ 1209 08ec 8081      		ld r24,Z
+ 1210 08ee 9181      		ldd r25,Z+1
+ 1211 08f0 A281      		ldd r26,Z+2
+ 1212 08f2 B381      		ldd r27,Z+3
+ 1213 08f4 8050      		subi r24,lo8(2097152)
+ 1214 08f6 9040      		sbci r25,hi8(2097152)
+ 1215 08f8 A042      		sbci r26,hlo8(2097152)
+ 1216 08fa B040      		sbci r27,hhi8(2097152)
+ 1217 08fc 00F0      		brlo .L101
+ 1218               	.L100:
+ 1219 08fe 8BE1      		ldi r24,lo8(27)
+ 1220 0900 90E0      		ldi r25,hi8(27)
+ 1221 0902 9093 0000 		sts (errno)+1,r25
+ 1222 0906 8093 0000 		sts errno,r24
+ 1223 090a 00C0      		rjmp .L98
+ 1224               	.L101:
+ 1225 090c ED88      		ldd r14,Y+21
+ 1226 090e FE88      		ldd r15,Y+22
+ 1227 0910 D701      		movw r26,r14
+ 1228 0912 5696      		adiw r26,22
+ 1229 0914 8D91      		ld r24,X+
+ 1230 0916 9C91      		ld r25,X
+ 1231 0918 5797      		sbiw r26,22+1
+ 1232 091a 0E94 0000 		call malloc
+ 1233 091e 8C01      		movw r16,r24
+ 1234 0920 0097      		sbiw r24,0
+ 1235 0922 01F0      		breq .L98
+ 1236 0924 F701      		movw r30,r14
+ 1237 0926 4689      		ldd r20,Z+22
+ 1238 0928 5789      		ldd r21,Z+23
+ 1239 092a 60E0      		ldi r22,lo8(0)
+ 1240 092c 70E0      		ldi r23,hi8(0)
+ 1241 092e 0E94 0000 		call memset
+ 1242 0932 D701      		movw r26,r14
+ 1243 0934 5896      		adiw r26,24
+ 1244 0936 DC90      		ld r13,X
+ 1245 0938 00C0      		rjmp .L103
+ 1246               	.L105:
+ 1247 093a F701      		movw r30,r14
+ 1248 093c 4689      		ldd r20,Z+22
+ 1249 093e 5789      		ldd r21,Z+23
+ 1250 0940 C101      		movw r24,r2
+ 1251 0942 B801      		movw r22,r16
+ 1252 0944 0E94 0000 		call PhatFileWrite
+ 1253 0948 97FD      		sbrc r25,7
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 23
+
+
+ 1254 094a 00C0      		rjmp .L104
+ 1255 094c DA94      		dec r13
+ 1256               	.L103:
+ 1257 094e DD20      		tst r13
+ 1258 0950 01F4      		brne .L105
+ 1259               	.L104:
+ 1260 0952 C801      		movw r24,r16
+ 1261 0954 0E94 0000 		call free
+ 1262 0958 DD20      		tst r13
+ 1263 095a 01F4      		brne .L98
+ 1264 095c 6728      		or r6,r7
+ 1265 095e 01F4      		brne .L106
+ 1266 0960 8C2D      		mov r24,r12
+ 1267 0962 9C89      		ldd r25,Y+20
+ 1268 0964 9C01      		movw r18,r24
+ 1269 0966 2901      		movw r4,r18
+ 1270 0968 00C0      		rjmp .L106
+ 1271               	.L99:
+ 1272 096a D501      		movw r26,r10
+ 1273 096c 8C91      		ld r24,X
+ 1274 096e 853E      		cpi r24,lo8(-27)
+ 1275 0970 01F0      		breq .L107
+ 1276 0972 8823      		tst r24
+ 1277 0974 01F0      		breq .+2
+ 1278 0976 00C0      		rjmp .L108
+ 1279               	.L107:
+ 1280 0978 6114      		cp r6,__zero_reg__
+ 1281 097a 7104      		cpc r7,__zero_reg__
+ 1282 097c 01F4      		brne .L109
+ 1283 097e 8C2D      		mov r24,r12
+ 1284 0980 9C89      		ldd r25,Y+20
+ 1285 0982 9C01      		movw r18,r24
+ 1286 0984 2901      		movw r4,r18
+ 1287               	.L109:
+ 1288 0986 0894      		sec
+ 1289 0988 611C      		adc r6,__zero_reg__
+ 1290 098a 711C      		adc r7,__zero_reg__
+ 1291 098c 6814      		cp r6,r8
+ 1292 098e 7904      		cpc r7,r9
+ 1293 0990 04F4      		brge .+2
+ 1294 0992 00C0      		rjmp .L129
+ 1295 0994 00C0      		rjmp .L106
+ 1296               	.L98:
+ 1297 0996 EE24      		clr r14
+ 1298 0998 EA94      		dec r14
+ 1299 099a FE2C      		mov r15,r14
+ 1300 099c 00C0      		rjmp .L102
+ 1301               	.L106:
+ 1302 099e EE24      		clr r14
+ 1303 09a0 FF24      		clr r15
+ 1304               	.L102:
+ 1305 09a2 C501      		movw r24,r10
+ 1306 09a4 0E94 0000 		call free
+ 1307 09a8 E114      		cp r14,__zero_reg__
+ 1308 09aa F104      		cpc r15,__zero_reg__
+ 1309 09ac 01F0      		breq .+2
+ 1310 09ae 00C0      		rjmp .L69
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 24
+
+
+ 1311 09b0 A201      		movw r20,r4
+ 1312 09b2 6627      		clr r22
+ 1313 09b4 57FD      		sbrc r21,7
+ 1314 09b6 6095      		com r22
+ 1315 09b8 762F      		mov r23,r22
+ 1316 09ba C101      		movw r24,r2
+ 1317 09bc 0E94 0000 		call PhatFilePosSet
+ 1318 09c0 80E2      		ldi r24,lo8(32)
+ 1319 09c2 90E0      		ldi r25,hi8(32)
+ 1320 09c4 0E94 0000 		call malloc
+ 1321 09c8 8C01      		movw r16,r24
+ 1322 09ca 0097      		sbiw r24,0
+ 1323 09cc 01F4      		brne .+2
+ 1324 09ce 00C0      		rjmp .L96
+ 1325 09d0 2401      		movw r4,r8
+ 1326 09d2 0894      		sec
+ 1327 09d4 4108      		sbc r4,__zero_reg__
+ 1328 09d6 5108      		sbc r5,__zero_reg__
+ 1329 09d8 8DE0      		ldi r24,lo8(13)
+ 1330 09da 90E0      		ldi r25,hi8(13)
+ 1331 09dc 889E      		mul r8,r24
+ 1332 09de 3001      		movw r6,r0
+ 1333 09e0 899E      		mul r8,r25
+ 1334 09e2 700C      		add r7,r0
+ 1335 09e4 989E      		mul r9,r24
+ 1336 09e6 700C      		add r7,r0
+ 1337 09e8 1124      		clr r1
+ 1338 09ea E6EE      		ldi r30,lo8(-26)
+ 1339 09ec FFEF      		ldi r31,hi8(-26)
+ 1340 09ee 6E0E      		add r6,r30
+ 1341 09f0 7F1E      		adc r7,r31
+ 1342 09f2 8A88      		ldd r8,Y+18
+ 1343 09f4 9B88      		ldd r9,Y+19
+ 1344 09f6 860C      		add r8,r6
+ 1345 09f8 971C      		adc r9,r7
+ 1346 09fa 5201      		movw r10,r4
+ 1347 09fc 00C0      		rjmp .L110
+ 1348               	.L118:
+ 1349 09fe C801      		movw r24,r16
+ 1350 0a00 6FEF      		ldi r22,lo8(255)
+ 1351 0a02 70E0      		ldi r23,hi8(255)
+ 1352 0a04 40E2      		ldi r20,lo8(32)
+ 1353 0a06 50E0      		ldi r21,hi8(32)
+ 1354 0a08 0E94 0000 		call memset
+ 1355 0a0c 8A2D      		mov r24,r10
+ 1356 0a0e D801      		movw r26,r16
+ 1357 0a10 AC92      		st X,r10
+ 1358 0a12 A414      		cp r10,r4
+ 1359 0a14 B504      		cpc r11,r5
+ 1360 0a16 01F4      		brne .L111
+ 1361 0a18 8064      		ori r24,lo8(64)
+ 1362 0a1a 8C93      		st X,r24
+ 1363               	.L111:
+ 1364 0a1c 2FE0      		ldi r18,lo8(15)
+ 1365 0a1e F801      		movw r30,r16
+ 1366 0a20 2387      		std Z+11,r18
+ 1367 0a22 3989      		ldd r19,Y+17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 25
+
+
+ 1368 0a24 3587      		std Z+13,r19
+ 1369 0a26 138E      		std Z+27,__zero_reg__
+ 1370 0a28 128E      		std Z+26,__zero_reg__
+ 1371 0a2a 1486      		std Z+12,__zero_reg__
+ 1372 0a2c A801      		movw r20,r16
+ 1373 0a2e 6301      		movw r12,r6
+ 1374 0a30 B401      		movw r22,r8
+ 1375 0a32 20E0      		ldi r18,lo8(0)
+ 1376 0a34 30E0      		ldi r19,hi8(0)
+ 1377               	.L115:
+ 1378 0a36 AA89      		ldd r26,Y+18
+ 1379 0a38 BB89      		ldd r27,Y+19
+ 1380 0a3a FD01      		movw r30,r26
+ 1381 0a3c 0190      		ld __tmp_reg__,Z+
+ 1382 0a3e 0020      		tst __tmp_reg__
+ 1383 0a40 01F4      		brne .-6
+ 1384 0a42 3197      		sbiw r30,1
+ 1385 0a44 EA1B      		sub r30,r26
+ 1386 0a46 FB0B      		sbc r31,r27
+ 1387 0a48 EC15      		cp r30,r12
+ 1388 0a4a FD05      		cpc r31,r13
+ 1389 0a4c 00F0      		brlo .L112
+ 1390 0a4e 2530      		cpi r18,5
+ 1391 0a50 3105      		cpc r19,__zero_reg__
+ 1392 0a52 04F4      		brge .L113
+ 1393 0a54 DB01      		movw r26,r22
+ 1394 0a56 8C91      		ld r24,X
+ 1395 0a58 9927      		clr r25
+ 1396 0a5a 87FD      		sbrc r24,7
+ 1397 0a5c 9095      		com r25
+ 1398 0a5e FA01      		movw r30,r20
+ 1399 0a60 9283      		std Z+2,r25
+ 1400 0a62 8183      		std Z+1,r24
+ 1401 0a64 00C0      		rjmp .L112
+ 1402               	.L113:
+ 1403 0a66 DB01      		movw r26,r22
+ 1404 0a68 8C91      		ld r24,X
+ 1405 0a6a 2B30      		cpi r18,11
+ 1406 0a6c 3105      		cpc r19,__zero_reg__
+ 1407 0a6e 04F4      		brge .L114
+ 1408 0a70 9927      		clr r25
+ 1409 0a72 87FD      		sbrc r24,7
+ 1410 0a74 9095      		com r25
+ 1411 0a76 FA01      		movw r30,r20
+ 1412 0a78 9583      		std Z+5,r25
+ 1413 0a7a 8483      		std Z+4,r24
+ 1414 0a7c 00C0      		rjmp .L112
+ 1415               	.L114:
+ 1416 0a7e 9927      		clr r25
+ 1417 0a80 87FD      		sbrc r24,7
+ 1418 0a82 9095      		com r25
+ 1419 0a84 DA01      		movw r26,r20
+ 1420 0a86 1796      		adiw r26,6+1
+ 1421 0a88 9C93      		st X,r25
+ 1422 0a8a 8E93      		st -X,r24
+ 1423 0a8c 1697      		sbiw r26,6
+ 1424               	.L112:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 26
+
+
+ 1425 0a8e 2F5F      		subi r18,lo8(-(1))
+ 1426 0a90 3F4F      		sbci r19,hi8(-(1))
+ 1427 0a92 0894      		sec
+ 1428 0a94 C11C      		adc r12,__zero_reg__
+ 1429 0a96 D11C      		adc r13,__zero_reg__
+ 1430 0a98 6F5F      		subi r22,lo8(-(1))
+ 1431 0a9a 7F4F      		sbci r23,hi8(-(1))
+ 1432 0a9c 4E5F      		subi r20,lo8(-(2))
+ 1433 0a9e 5F4F      		sbci r21,hi8(-(2))
+ 1434 0aa0 2D30      		cpi r18,13
+ 1435 0aa2 3105      		cpc r19,__zero_reg__
+ 1436 0aa4 01F4      		brne .L115
+ 1437 0aa6 C101      		movw r24,r2
+ 1438 0aa8 B801      		movw r22,r16
+ 1439 0aaa 40E2      		ldi r20,lo8(32)
+ 1440 0aac 50E0      		ldi r21,hi8(32)
+ 1441 0aae 0E94 0000 		call PhatFileWrite
+ 1442 0ab2 E3EF      		ldi r30,lo8(-13)
+ 1443 0ab4 FFEF      		ldi r31,hi8(-13)
+ 1444 0ab6 8E0E      		add r8,r30
+ 1445 0ab8 9F1E      		adc r9,r31
+ 1446 0aba 6E0E      		add r6,r30
+ 1447 0abc 7F1E      		adc r7,r31
+ 1448 0abe 97FF      		sbrs r25,7
+ 1449 0ac0 00C0      		rjmp .L116
+ 1450 0ac2 EE24      		clr r14
+ 1451 0ac4 EA94      		dec r14
+ 1452 0ac6 FE2C      		mov r15,r14
+ 1453 0ac8 00C0      		rjmp .L117
+ 1454               	.L116:
+ 1455 0aca 0894      		sec
+ 1456 0acc A108      		sbc r10,__zero_reg__
+ 1457 0ace B108      		sbc r11,__zero_reg__
+ 1458               	.L110:
+ 1459 0ad0 A114      		cp r10,__zero_reg__
+ 1460 0ad2 B104      		cpc r11,__zero_reg__
+ 1461 0ad4 01F0      		breq .+2
+ 1462 0ad6 00C0      		rjmp .L118
+ 1463               	.L117:
+ 1464 0ad8 C101      		movw r24,r2
+ 1465 0ada 698D      		ldd r22,Y+25
+ 1466 0adc 7A8D      		ldd r23,Y+26
+ 1467 0ade 40E2      		ldi r20,lo8(32)
+ 1468 0ae0 50E0      		ldi r21,hi8(32)
+ 1469 0ae2 0E94 0000 		call PhatFileWrite
+ 1470 0ae6 97FF      		sbrs r25,7
+ 1471 0ae8 00C0      		rjmp .L119
+ 1472 0aea EE24      		clr r14
+ 1473 0aec EA94      		dec r14
+ 1474 0aee FE2C      		mov r15,r14
+ 1475               	.L119:
+ 1476 0af0 C801      		movw r24,r16
+ 1477 0af2 0E94 0000 		call free
+ 1478 0af6 00C0      		rjmp .L69
+ 1479               	.L96:
+ 1480 0af8 EE24      		clr r14
+ 1481 0afa EA94      		dec r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 27
+
+
+ 1482 0afc FE2C      		mov r15,r14
+ 1483               	.L69:
+ 1484 0afe C701      		movw r24,r14
+ 1485               	/* epilogue start */
+ 1486 0b00 6A96      		adiw r28,26
+ 1487 0b02 0FB6      		in __tmp_reg__,__SREG__
+ 1488 0b04 F894      		cli
+ 1489 0b06 DEBF      		out __SP_H__,r29
+ 1490 0b08 0FBE      		out __SREG__,__tmp_reg__
+ 1491 0b0a CDBF      		out __SP_L__,r28
+ 1492 0b0c CF91      		pop r28
+ 1493 0b0e DF91      		pop r29
+ 1494 0b10 1F91      		pop r17
+ 1495 0b12 0F91      		pop r16
+ 1496 0b14 FF90      		pop r15
+ 1497 0b16 EF90      		pop r14
+ 1498 0b18 DF90      		pop r13
+ 1499 0b1a CF90      		pop r12
+ 1500 0b1c BF90      		pop r11
+ 1501 0b1e AF90      		pop r10
+ 1502 0b20 9F90      		pop r9
+ 1503 0b22 8F90      		pop r8
+ 1504 0b24 7F90      		pop r7
+ 1505 0b26 6F90      		pop r6
+ 1506 0b28 5F90      		pop r5
+ 1507 0b2a 4F90      		pop r4
+ 1508 0b2c 3F90      		pop r3
+ 1509 0b2e 2F90      		pop r2
+ 1510 0b30 0895      		ret
+ 1511               		.size	PhatDirEntryAlloc, .-PhatDirEntryAlloc
+ 1512               	.global	PhatDirEntryFind
+ 1513               		.type	PhatDirEntryFind, @function
+ 1514               	PhatDirEntryFind:
+ 1515 0b32 4F92      		push r4
+ 1516 0b34 5F92      		push r5
+ 1517 0b36 6F92      		push r6
+ 1518 0b38 7F92      		push r7
+ 1519 0b3a 8F92      		push r8
+ 1520 0b3c 9F92      		push r9
+ 1521 0b3e AF92      		push r10
+ 1522 0b40 BF92      		push r11
+ 1523 0b42 CF92      		push r12
+ 1524 0b44 DF92      		push r13
+ 1525 0b46 EF92      		push r14
+ 1526 0b48 FF92      		push r15
+ 1527 0b4a 0F93      		push r16
+ 1528 0b4c 1F93      		push r17
+ 1529 0b4e CF93      		push r28
+ 1530 0b50 DF93      		push r29
+ 1531               	/* prologue: function */
+ 1532               	/* frame size = 0 */
+ 1533 0b52 4C01      		movw r8,r24
+ 1534 0b54 2B01      		movw r4,r22
+ 1535 0b56 6901      		movw r12,r18
+ 1536 0b58 7A01      		movw r14,r20
+ 1537 0b5a 3801      		movw r6,r16
+ 1538 0b5c 85E2      		ldi r24,lo8(293)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 28
+
+
+ 1539 0b5e 91E0      		ldi r25,hi8(293)
+ 1540 0b60 0E94 0000 		call malloc
+ 1541 0b64 EC01      		movw r28,r24
+ 1542 0b66 0097      		sbiw r24,0
+ 1543 0b68 01F4      		brne .L134
+ 1544 0b6a 0FEF      		ldi r16,lo8(-1)
+ 1545 0b6c 1FEF      		ldi r17,hi8(-1)
+ 1546 0b6e 00C0      		rjmp .L135
+ 1547               	.L134:
+ 1548 0b70 F401      		movw r30,r8
+ 1549 0b72 8481      		ldd r24,Z+4
+ 1550 0b74 9581      		ldd r25,Z+5
+ 1551 0b76 0E94 0000 		call PhatFilePosRewind
+ 1552 0b7a B6E2      		ldi r27,lo8(38)
+ 1553 0b7c AB2E      		mov r10,r27
+ 1554 0b7e B12C      		mov r11,__zero_reg__
+ 1555 0b80 AC0E      		add r10,r28
+ 1556 0b82 BD1E      		adc r11,r29
+ 1557 0b84 00C0      		rjmp .L144
+ 1558               	.L139:
+ 1559 0b86 8B85      		ldd r24,Y+11
+ 1560 0b88 90E0      		ldi r25,lo8(0)
+ 1561 0b8a A0E0      		ldi r26,lo8(0)
+ 1562 0b8c B0E0      		ldi r27,hi8(0)
+ 1563 0b8e 8C29      		or r24,r12
+ 1564 0b90 9D29      		or r25,r13
+ 1565 0b92 AE29      		or r26,r14
+ 1566 0b94 BF29      		or r27,r15
+ 1567 0b96 8C15      		cp r24,r12
+ 1568 0b98 9D05      		cpc r25,r13
+ 1569 0b9a AE05      		cpc r26,r14
+ 1570 0b9c BF05      		cpc r27,r15
+ 1571 0b9e 01F4      		brne .L144
+ 1572 0ba0 C501      		movw r24,r10
+ 1573 0ba2 B201      		movw r22,r4
+ 1574 0ba4 0E94 0000 		call strcasecmp
+ 1575 0ba8 892B      		or r24,r25
+ 1576 0baa 01F4      		brne .L144
+ 1577 0bac 6114      		cp r6,__zero_reg__
+ 1578 0bae 7104      		cpc r7,__zero_reg__
+ 1579 0bb0 01F0      		breq .L137
+ 1580 0bb2 D301      		movw r26,r6
+ 1581 0bb4 FE01      		movw r30,r28
+ 1582 0bb6 85E2      		ldi r24,lo8(293)
+ 1583 0bb8 91E0      		ldi r25,hi8(293)
+ 1584               	.L138:
+ 1585 0bba 0190      		ld r0,Z+
+ 1586 0bbc 0D92      		st X+,r0
+ 1587 0bbe 0197      		sbiw r24,1
+ 1588 0bc0 01F4      		brne .L138
+ 1589 0bc2 00C0      		rjmp .L137
+ 1590               	.L144:
+ 1591 0bc4 C401      		movw r24,r8
+ 1592 0bc6 BE01      		movw r22,r28
+ 1593 0bc8 0E94 0000 		call PhatDirEntryRead
+ 1594 0bcc 8C01      		movw r16,r24
+ 1595 0bce 0097      		sbiw r24,0
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 29
+
+
+ 1596 0bd0 01F0      		breq .L139
+ 1597               	.L137:
+ 1598 0bd2 CE01      		movw r24,r28
+ 1599 0bd4 0E94 0000 		call free
+ 1600               	.L135:
+ 1601 0bd8 C801      		movw r24,r16
+ 1602               	/* epilogue start */
+ 1603 0bda DF91      		pop r29
+ 1604 0bdc CF91      		pop r28
+ 1605 0bde 1F91      		pop r17
+ 1606 0be0 0F91      		pop r16
+ 1607 0be2 FF90      		pop r15
+ 1608 0be4 EF90      		pop r14
+ 1609 0be6 DF90      		pop r13
+ 1610 0be8 CF90      		pop r12
+ 1611 0bea BF90      		pop r11
+ 1612 0bec AF90      		pop r10
+ 1613 0bee 9F90      		pop r9
+ 1614 0bf0 8F90      		pop r8
+ 1615 0bf2 7F90      		pop r7
+ 1616 0bf4 6F90      		pop r6
+ 1617 0bf6 5F90      		pop r5
+ 1618 0bf8 4F90      		pop r4
+ 1619 0bfa 0895      		ret
+ 1620               		.size	PhatDirEntryFind, .-PhatDirEntryFind
+ 1621               	.global	PhatDirOpen
+ 1622               		.type	PhatDirOpen, @function
+ 1623               	PhatDirOpen:
+ 1624 0bfc 2F92      		push r2
+ 1625 0bfe 3F92      		push r3
+ 1626 0c00 4F92      		push r4
+ 1627 0c02 5F92      		push r5
+ 1628 0c04 6F92      		push r6
+ 1629 0c06 7F92      		push r7
+ 1630 0c08 8F92      		push r8
+ 1631 0c0a 9F92      		push r9
+ 1632 0c0c AF92      		push r10
+ 1633 0c0e BF92      		push r11
+ 1634 0c10 CF92      		push r12
+ 1635 0c12 DF92      		push r13
+ 1636 0c14 EF92      		push r14
+ 1637 0c16 FF92      		push r15
+ 1638 0c18 0F93      		push r16
+ 1639 0c1a 1F93      		push r17
+ 1640 0c1c DF93      		push r29
+ 1641 0c1e CF93      		push r28
+ 1642 0c20 00D0      		rcall .
+ 1643 0c22 00D0      		rcall .
+ 1644 0c24 00D0      		rcall .
+ 1645 0c26 CDB7      		in r28,__SP_L__
+ 1646 0c28 DEB7      		in r29,__SP_H__
+ 1647               	/* prologue: function */
+ 1648               	/* frame size = 6 */
+ 1649 0c2a 8C01      		movw r16,r24
+ 1650 0c2c 4B01      		movw r8,r22
+ 1651 0c2e DC01      		movw r26,r24
+ 1652 0c30 5196      		adiw r26,17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 30
+
+
+ 1653 0c32 4D90      		ld r4,X+
+ 1654 0c34 5C90      		ld r5,X
+ 1655 0c36 5297      		sbiw r26,17+1
+ 1656 0c38 4114      		cp r4,__zero_reg__
+ 1657 0c3a 5104      		cpc r5,__zero_reg__
+ 1658 0c3c 01F4      		brne .L146
+ 1659 0c3e 83E1      		ldi r24,lo8(19)
+ 1660 0c40 90E0      		ldi r25,hi8(19)
+ 1661 0c42 9093 0000 		sts (errno)+1,r25
+ 1662 0c46 8093 0000 		sts errno,r24
+ 1663 0c4a 00C0      		rjmp .L167
+ 1664               	.L146:
+ 1665 0c4c 86E0      		ldi r24,lo8(6)
+ 1666 0c4e 90E0      		ldi r25,hi8(6)
+ 1667 0c50 0E94 0000 		call malloc
+ 1668 0c54 7C01      		movw r14,r24
+ 1669 0c56 3C01      		movw r6,r24
+ 1670 0c58 0097      		sbiw r24,0
+ 1671 0c5a 01F4      		brne .+2
+ 1672 0c5c 00C0      		rjmp .L167
+ 1673               	.L148:
+ 1674 0c5e 86E4      		ldi r24,lo8(70)
+ 1675 0c60 90E0      		ldi r25,hi8(70)
+ 1676 0c62 0E94 0000 		call malloc
+ 1677 0c66 FC01      		movw r30,r24
+ 1678 0c68 D701      		movw r26,r14
+ 1679 0c6a 1596      		adiw r26,4+1
+ 1680 0c6c 9C93      		st X,r25
+ 1681 0c6e 8E93      		st -X,r24
+ 1682 0c70 1497      		sbiw r26,4
+ 1683 0c72 0097      		sbiw r24,0
+ 1684 0c74 01F4      		brne .L149
+ 1685 0c76 C701      		movw r24,r14
+ 1686 0c78 00C0      		rjmp .L168
+ 1687               	.L149:
+ 1688 0c7a 86E4      		ldi r24,lo8(70)
+ 1689 0c7c DF01      		movw r26,r30
+ 1690 0c7e 1D92      		st X+,__zero_reg__
+ 1691 0c80 8A95      	        dec r24
+ 1692 0c82 01F4      		brne .-6
+ 1693 0c84 F701      		movw r30,r14
+ 1694 0c86 1182      		std Z+1,__zero_reg__
+ 1695 0c88 1082      		st Z,__zero_reg__
+ 1696 0c8a 1383      		std Z+3,r17
+ 1697 0c8c 0283      		std Z+2,r16
+ 1698 0c8e 8481      		ldd r24,Z+4
+ 1699 0c90 9581      		ldd r25,Z+5
+ 1700 0c92 9E83      		std Y+6,r25
+ 1701 0c94 8D83      		std Y+5,r24
+ 1702 0c96 80E1      		ldi r24,lo8(16)
+ 1703 0c98 AD81      		ldd r26,Y+5
+ 1704 0c9a BE81      		ldd r27,Y+6
+ 1705 0c9c 9396      		adiw r26,35
+ 1706 0c9e 8C93      		st X,r24
+ 1707 0ca0 ED81      		ldd r30,Y+5
+ 1708 0ca2 FE81      		ldd r31,Y+6
+ 1709 0ca4 148A      		std Z+20,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 31
+
+
+ 1710 0ca6 158A      		std Z+21,__zero_reg__
+ 1711 0ca8 168A      		std Z+22,__zero_reg__
+ 1712 0caa 178A      		std Z+23,__zero_reg__
+ 1713 0cac F201      		movw r30,r4
+ 1714 0cae 84A5      		ldd r24,Z+44
+ 1715 0cb0 95A5      		ldd r25,Z+45
+ 1716 0cb2 A6A5      		ldd r26,Z+46
+ 1717 0cb4 B7A5      		ldd r27,Z+47
+ 1718 0cb6 ED81      		ldd r30,Y+5
+ 1719 0cb8 FE81      		ldd r31,Y+6
+ 1720 0cba 8483      		std Z+4,r24
+ 1721 0cbc 9583      		std Z+5,r25
+ 1722 0cbe A683      		std Z+6,r26
+ 1723 0cc0 B783      		std Z+7,r27
+ 1724 0cc2 F201      		movw r30,r4
+ 1725 0cc4 84A5      		ldd r24,Z+44
+ 1726 0cc6 95A5      		ldd r25,Z+45
+ 1727 0cc8 A6A5      		ldd r26,Z+46
+ 1728 0cca B7A5      		ldd r27,Z+47
+ 1729 0ccc CD01      		movw r24,r26
+ 1730 0cce AA27      		clr r26
+ 1731 0cd0 BB27      		clr r27
+ 1732 0cd2 ED81      		ldd r30,Y+5
+ 1733 0cd4 FE81      		ldd r31,Y+6
+ 1734 0cd6 95A7      		std Z+45,r25
+ 1735 0cd8 84A7      		std Z+44,r24
+ 1736 0cda D201      		movw r26,r4
+ 1737 0cdc 9C96      		adiw r26,44
+ 1738 0cde 8D91      		ld r24,X+
+ 1739 0ce0 9C91      		ld r25,X
+ 1740 0ce2 9D97      		sbiw r26,44+1
+ 1741 0ce4 93AB      		std Z+51,r25
+ 1742 0ce6 82AB      		std Z+50,r24
+ 1743 0ce8 F401      		movw r30,r8
+ 1744 0cea 8081      		ld r24,Z
+ 1745 0cec 8F32      		cpi r24,lo8(47)
+ 1746 0cee 01F4      		brne .L150
+ 1747 0cf0 0894      		sec
+ 1748 0cf2 811C      		adc r8,__zero_reg__
+ 1749 0cf4 911C      		adc r9,__zero_reg__
+ 1750               	.L150:
+ 1751 0cf6 D401      		movw r26,r8
+ 1752 0cf8 8C91      		ld r24,X
+ 1753 0cfa 8823      		tst r24
+ 1754 0cfc 01F4      		brne .+2
+ 1755 0cfe 00C0      		rjmp .L147
+ 1756 0d00 80E0      		ldi r24,lo8(256)
+ 1757 0d02 91E0      		ldi r25,hi8(256)
+ 1758 0d04 0E94 0000 		call malloc
+ 1759 0d08 5C01      		movw r10,r24
+ 1760 0d0a 0097      		sbiw r24,0
+ 1761 0d0c 01F0      		breq .L169
+ 1762               	.L151:
+ 1763 0d0e 85E2      		ldi r24,lo8(293)
+ 1764 0d10 91E0      		ldi r25,hi8(293)
+ 1765 0d12 0E94 0000 		call malloc
+ 1766 0d16 6C01      		movw r12,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 32
+
+
+ 1767 0d18 0097      		sbiw r24,0
+ 1768 0d1a 01F0      		breq .+2
+ 1769 0d1c 00C0      		rjmp .L152
+ 1770 0d1e C501      		movw r24,r10
+ 1771 0d20 0E94 0000 		call free
+ 1772               	.L169:
+ 1773 0d24 8D81      		ldd r24,Y+5
+ 1774 0d26 9E81      		ldd r25,Y+6
+ 1775 0d28 0E94 0000 		call free
+ 1776 0d2c C701      		movw r24,r14
+ 1777               	.L168:
+ 1778 0d2e 0E94 0000 		call free
+ 1779               	.L167:
+ 1780 0d32 6624      		clr r6
+ 1781 0d34 6A94      		dec r6
+ 1782 0d36 762C      		mov r7,r6
+ 1783 0d38 00C0      		rjmp .L147
+ 1784               	.L155:
+ 1785 0d3a 2F32      		cpi r18,lo8(47)
+ 1786 0d3c 01F4      		brne .L153
+ 1787 0d3e 0894      		sec
+ 1788 0d40 811C      		adc r8,__zero_reg__
+ 1789 0d42 911C      		adc r9,__zero_reg__
+ 1790 0d44 00C0      		rjmp .L154
+ 1791               	.L153:
+ 1792 0d46 0196      		adiw r24,1
+ 1793 0d48 B1E0      		ldi r27,hi8(256)
+ 1794 0d4a 8030      		cpi r24,lo8(256)
+ 1795 0d4c 9B07      		cpc r25,r27
+ 1796 0d4e 01F0      		breq .L154
+ 1797 0d50 2193      		st Z+,r18
+ 1798 0d52 0894      		sec
+ 1799 0d54 811C      		adc r8,__zero_reg__
+ 1800 0d56 911C      		adc r9,__zero_reg__
+ 1801               	.L162:
+ 1802 0d58 D401      		movw r26,r8
+ 1803 0d5a 2C91      		ld r18,X
+ 1804 0d5c 2223      		tst r18
+ 1805 0d5e 01F4      		brne .L155
+ 1806               	.L154:
+ 1807 0d60 1082      		st Z,__zero_reg__
+ 1808 0d62 8F3F      		cpi r24,255
+ 1809 0d64 9105      		cpc r25,__zero_reg__
+ 1810 0d66 01F0      		breq .+2
+ 1811 0d68 04F4      		brge .L156
+ 1812 0d6a C701      		movw r24,r14
+ 1813 0d6c B501      		movw r22,r10
+ 1814 0d6e 27E3      		ldi r18,lo8(55)
+ 1815 0d70 30E0      		ldi r19,hi8(55)
+ 1816 0d72 40E0      		ldi r20,hlo8(55)
+ 1817 0d74 50E0      		ldi r21,hhi8(55)
+ 1818 0d76 8601      		movw r16,r12
+ 1819 0d78 0E94 0000 		call PhatDirEntryFind
+ 1820 0d7c 892B      		or r24,r25
+ 1821 0d7e 01F0      		breq .L157
+ 1822               	.L156:
+ 1823 0d80 82E0      		ldi r24,lo8(2)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 33
+
+
+ 1824 0d82 90E0      		ldi r25,hi8(2)
+ 1825 0d84 9093 0000 		sts (errno)+1,r25
+ 1826 0d88 8093 0000 		sts errno,r24
+ 1827 0d8c 8D81      		ldd r24,Y+5
+ 1828 0d8e 9E81      		ldd r25,Y+6
+ 1829 0d90 0E94 0000 		call free
+ 1830 0d94 C701      		movw r24,r14
+ 1831 0d96 0E94 0000 		call free
+ 1832 0d9a 6624      		clr r6
+ 1833 0d9c 6A94      		dec r6
+ 1834 0d9e 762C      		mov r7,r6
+ 1835 0da0 00C0      		rjmp .L158
+ 1836               	.L157:
+ 1837 0da2 ED81      		ldd r30,Y+5
+ 1838 0da4 FE81      		ldd r31,Y+6
+ 1839 0da6 4481      		ldd r20,Z+4
+ 1840 0da8 5581      		ldd r21,Z+5
+ 1841 0daa 6681      		ldd r22,Z+6
+ 1842 0dac 7781      		ldd r23,Z+7
+ 1843 0dae C701      		movw r24,r14
+ 1844 0db0 0E94 0000 		call PhatClusterSector
+ 1845 0db4 AD81      		ldd r26,Y+5
+ 1846 0db6 BE81      		ldd r27,Y+6
+ 1847 0db8 1896      		adiw r26,8
+ 1848 0dba 2D91      		ld r18,X+
+ 1849 0dbc 3D91      		ld r19,X+
+ 1850 0dbe 4D91      		ld r20,X+
+ 1851 0dc0 5C91      		ld r21,X
+ 1852 0dc2 1B97      		sbiw r26,8+3
+ 1853 0dc4 260F      		add r18,r22
+ 1854 0dc6 371F      		adc r19,r23
+ 1855 0dc8 481F      		adc r20,r24
+ 1856 0dca 591F      		adc r21,r25
+ 1857 0dcc FD01      		movw r30,r26
+ 1858 0dce 20AF      		std Z+56,r18
+ 1859 0dd0 31AF      		std Z+57,r19
+ 1860 0dd2 42AF      		std Z+58,r20
+ 1861 0dd4 53AF      		std Z+59,r21
+ 1862 0dd6 8485      		ldd r24,Z+12
+ 1863 0dd8 9585      		ldd r25,Z+13
+ 1864 0dda A685      		ldd r26,Z+14
+ 1865 0ddc B785      		ldd r27,Z+15
+ 1866 0dde 8097      		sbiw r24,32
+ 1867 0de0 A109      		sbc r26,__zero_reg__
+ 1868 0de2 B109      		sbc r27,__zero_reg__
+ 1869 0de4 84AF      		std Z+60,r24
+ 1870 0de6 95AF      		std Z+61,r25
+ 1871 0de8 A6AF      		std Z+62,r26
+ 1872 0dea B7AF      		std Z+63,r27
+ 1873 0dec 84A5      		ldd r24,Z+44
+ 1874 0dee 95A5      		ldd r25,Z+45
+ 1875 0df0 A981      		ldd r26,Y+1
+ 1876 0df2 BA81      		ldd r27,Y+2
+ 1877 0df4 8D93      		st X+,r24
+ 1878 0df6 9C93      		st X,r25
+ 1879 0df8 82A9      		ldd r24,Z+50
+ 1880 0dfa 93A9      		ldd r25,Z+51
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 34
+
+
+ 1881 0dfc EB81      		ldd r30,Y+3
+ 1882 0dfe FC81      		ldd r31,Y+4
+ 1883 0e00 9183      		std Z+1,r25
+ 1884 0e02 8083      		st Z,r24
+ 1885 0e04 D101      		movw r26,r2
+ 1886 0e06 F601      		movw r30,r12
+ 1887 0e08 80E2      		ldi r24,lo8(32)
+ 1888               	.L159:
+ 1889 0e0a 0190      		ld r0,Z+
+ 1890 0e0c 0D92      		st X+,r0
+ 1891 0e0e 8150      		subi r24,lo8(-(-1))
+ 1892 0e10 01F4      		brne .L159
+ 1893 0e12 AD81      		ldd r26,Y+5
+ 1894 0e14 BE81      		ldd r27,Y+6
+ 1895 0e16 9396      		adiw r26,35
+ 1896 0e18 8C91      		ld r24,X
+ 1897 0e1a 9397      		sbiw r26,35
+ 1898 0e1c 84FF      		sbrs r24,4
+ 1899 0e1e 00C0      		rjmp .L160
+ 1900 0e20 D296      		adiw r26,50
+ 1901 0e22 8D91      		ld r24,X+
+ 1902 0e24 9C91      		ld r25,X
+ 1903 0e26 D397      		sbiw r26,50+1
+ 1904 0e28 892B      		or r24,r25
+ 1905 0e2a 01F4      		brne .L160
+ 1906 0e2c 9C96      		adiw r26,44
+ 1907 0e2e 8D91      		ld r24,X+
+ 1908 0e30 9C91      		ld r25,X
+ 1909 0e32 9D97      		sbiw r26,44+1
+ 1910 0e34 892B      		or r24,r25
+ 1911 0e36 01F4      		brne .L160
+ 1912 0e38 F201      		movw r30,r4
+ 1913 0e3a 8081      		ld r24,Z
+ 1914 0e3c 9181      		ldd r25,Z+1
+ 1915 0e3e 8097      		sbiw r24,32
+ 1916 0e40 01F0      		breq .L161
+ 1917 0e42 D896      		adiw r26,56
+ 1918 0e44 1D92      		st X+,__zero_reg__
+ 1919 0e46 1D92      		st X+,__zero_reg__
+ 1920 0e48 1D92      		st X+,__zero_reg__
+ 1921 0e4a 1C92      		st X,__zero_reg__
+ 1922 0e4c DB97      		sbiw r26,56+3
+ 1923               	.L161:
+ 1924 0e4e F201      		movw r30,r4
+ 1925 0e50 84A5      		ldd r24,Z+44
+ 1926 0e52 95A5      		ldd r25,Z+45
+ 1927 0e54 A6A5      		ldd r26,Z+46
+ 1928 0e56 B7A5      		ldd r27,Z+47
+ 1929 0e58 CD01      		movw r24,r26
+ 1930 0e5a AA27      		clr r26
+ 1931 0e5c BB27      		clr r27
+ 1932 0e5e ED81      		ldd r30,Y+5
+ 1933 0e60 FE81      		ldd r31,Y+6
+ 1934 0e62 95A7      		std Z+45,r25
+ 1935 0e64 84A7      		std Z+44,r24
+ 1936 0e66 D201      		movw r26,r4
+ 1937 0e68 9C96      		adiw r26,44
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 35
+
+
+ 1938 0e6a 8D91      		ld r24,X+
+ 1939 0e6c 9C91      		ld r25,X
+ 1940 0e6e 9D97      		sbiw r26,44+1
+ 1941 0e70 93AB      		std Z+51,r25
+ 1942 0e72 82AB      		std Z+50,r24
+ 1943               	.L160:
+ 1944 0e74 8D81      		ldd r24,Y+5
+ 1945 0e76 9E81      		ldd r25,Y+6
+ 1946 0e78 0E94 0000 		call PhatFilePosRewind
+ 1947 0e7c ED81      		ldd r30,Y+5
+ 1948 0e7e FE81      		ldd r31,Y+6
+ 1949 0e80 108A      		std Z+16,__zero_reg__
+ 1950 0e82 118A      		std Z+17,__zero_reg__
+ 1951 0e84 128A      		std Z+18,__zero_reg__
+ 1952 0e86 138A      		std Z+19,__zero_reg__
+ 1953 0e88 148A      		std Z+20,__zero_reg__
+ 1954 0e8a 158A      		std Z+21,__zero_reg__
+ 1955 0e8c 168A      		std Z+22,__zero_reg__
+ 1956 0e8e 178A      		std Z+23,__zero_reg__
+ 1957 0e90 00C0      		rjmp .L165
+ 1958               	.L152:
+ 1959 0e92 ED81      		ldd r30,Y+5
+ 1960 0e94 FE81      		ldd r31,Y+6
+ 1961 0e96 EC5B      		subi r30,lo8(-(68))
+ 1962 0e98 FF4F      		sbci r31,hi8(-(68))
+ 1963 0e9a FA83      		std Y+2,r31
+ 1964 0e9c E983      		std Y+1,r30
+ 1965 0e9e 8D81      		ldd r24,Y+5
+ 1966 0ea0 9E81      		ldd r25,Y+6
+ 1967 0ea2 8E5B      		subi r24,lo8(-(66))
+ 1968 0ea4 9F4F      		sbci r25,hi8(-(66))
+ 1969 0ea6 9C83      		std Y+4,r25
+ 1970 0ea8 8B83      		std Y+3,r24
+ 1971 0eaa 18E1      		ldi r17,lo8(24)
+ 1972 0eac 212E      		mov r2,r17
+ 1973 0eae 312C      		mov r3,__zero_reg__
+ 1974 0eb0 AD81      		ldd r26,Y+5
+ 1975 0eb2 BE81      		ldd r27,Y+6
+ 1976 0eb4 2A0E      		add r2,r26
+ 1977 0eb6 3B1E      		adc r3,r27
+ 1978               	.L165:
+ 1979 0eb8 F401      		movw r30,r8
+ 1980 0eba 8081      		ld r24,Z
+ 1981 0ebc 8823      		tst r24
+ 1982 0ebe 01F0      		breq .L158
+ 1983 0ec0 F501      		movw r30,r10
+ 1984 0ec2 80E0      		ldi r24,lo8(0)
+ 1985 0ec4 90E0      		ldi r25,hi8(0)
+ 1986 0ec6 00C0      		rjmp .L162
+ 1987               	.L158:
+ 1988 0ec8 C601      		movw r24,r12
+ 1989 0eca 0E94 0000 		call free
+ 1990 0ece C501      		movw r24,r10
+ 1991 0ed0 0E94 0000 		call free
+ 1992               	.L147:
+ 1993 0ed4 C301      		movw r24,r6
+ 1994               	/* epilogue start */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 36
+
+
+ 1995 0ed6 2696      		adiw r28,6
+ 1996 0ed8 0FB6      		in __tmp_reg__,__SREG__
+ 1997 0eda F894      		cli
+ 1998 0edc DEBF      		out __SP_H__,r29
+ 1999 0ede 0FBE      		out __SREG__,__tmp_reg__
+ 2000 0ee0 CDBF      		out __SP_L__,r28
+ 2001 0ee2 CF91      		pop r28
+ 2002 0ee4 DF91      		pop r29
+ 2003 0ee6 1F91      		pop r17
+ 2004 0ee8 0F91      		pop r16
+ 2005 0eea FF90      		pop r15
+ 2006 0eec EF90      		pop r14
+ 2007 0eee DF90      		pop r13
+ 2008 0ef0 CF90      		pop r12
+ 2009 0ef2 BF90      		pop r11
+ 2010 0ef4 AF90      		pop r10
+ 2011 0ef6 9F90      		pop r9
+ 2012 0ef8 8F90      		pop r8
+ 2013 0efa 7F90      		pop r7
+ 2014 0efc 6F90      		pop r6
+ 2015 0efe 5F90      		pop r5
+ 2016 0f00 4F90      		pop r4
+ 2017 0f02 3F90      		pop r3
+ 2018 0f04 2F90      		pop r2
+ 2019 0f06 0895      		ret
+ 2020               		.size	PhatDirOpen, .-PhatDirOpen
+ 2021               	.global	PhatDirOpenParent
+ 2022               		.type	PhatDirOpenParent, @function
+ 2023               	PhatDirOpenParent:
+ 2024 0f08 0F93      		push r16
+ 2025 0f0a 1F93      		push r17
+ 2026 0f0c CF93      		push r28
+ 2027 0f0e DF93      		push r29
+ 2028               	/* prologue: function */
+ 2029               	/* frame size = 0 */
+ 2030 0f10 EC01      		movw r28,r24
+ 2031 0f12 CB01      		movw r24,r22
+ 2032 0f14 BA01      		movw r22,r20
+ 2033 0f16 0E94 0000 		call GetParentPath
+ 2034 0f1a 8C01      		movw r16,r24
+ 2035 0f1c 0097      		sbiw r24,0
+ 2036 0f1e 01F4      		brne .L171
+ 2037 0f20 CFEF      		ldi r28,lo8(-1)
+ 2038 0f22 DFEF      		ldi r29,hi8(-1)
+ 2039 0f24 00C0      		rjmp .L172
+ 2040               	.L171:
+ 2041 0f26 CE01      		movw r24,r28
+ 2042 0f28 B801      		movw r22,r16
+ 2043 0f2a 0E94 0000 		call PhatDirOpen
+ 2044 0f2e EC01      		movw r28,r24
+ 2045 0f30 C801      		movw r24,r16
+ 2046 0f32 0E94 0000 		call free
+ 2047               	.L172:
+ 2048 0f36 CE01      		movw r24,r28
+ 2049               	/* epilogue start */
+ 2050 0f38 DF91      		pop r29
+ 2051 0f3a CF91      		pop r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 37
+
+
+ 2052 0f3c 1F91      		pop r17
+ 2053 0f3e 0F91      		pop r16
+ 2054 0f40 0895      		ret
+ 2055               		.size	PhatDirOpenParent, .-PhatDirOpenParent
+ 2056               	.global	PhatDirEntryStatus
+ 2057               		.type	PhatDirEntryStatus, @function
+ 2058               	PhatDirEntryStatus:
+ 2059 0f42 AF92      		push r10
+ 2060 0f44 BF92      		push r11
+ 2061 0f46 CF92      		push r12
+ 2062 0f48 DF92      		push r13
+ 2063 0f4a EF92      		push r14
+ 2064 0f4c FF92      		push r15
+ 2065 0f4e 0F93      		push r16
+ 2066 0f50 1F93      		push r17
+ 2067 0f52 DF93      		push r29
+ 2068 0f54 CF93      		push r28
+ 2069 0f56 CDB7      		in r28,__SP_L__
+ 2070 0f58 DEB7      		in r29,__SP_H__
+ 2071 0f5a 6497      		sbiw r28,20
+ 2072 0f5c 0FB6      		in __tmp_reg__,__SREG__
+ 2073 0f5e F894      		cli
+ 2074 0f60 DEBF      		out __SP_H__,r29
+ 2075 0f62 0FBE      		out __SREG__,__tmp_reg__
+ 2076 0f64 CDBF      		out __SP_L__,r28
+ 2077               	/* prologue: function */
+ 2078               	/* frame size = 20 */
+ 2079 0f66 6A01      		movw r12,r20
+ 2080 0f68 AE01      		movw r20,r28
+ 2081 0f6a 4F5F      		subi r20,lo8(-(1))
+ 2082 0f6c 5F4F      		sbci r21,hi8(-(1))
+ 2083 0f6e 0E94 0000 		call PhatDirOpenParent
+ 2084 0f72 5C01      		movw r10,r24
+ 2085 0f74 8FEF      		ldi r24,lo8(-1)
+ 2086 0f76 A816      		cp r10,r24
+ 2087 0f78 8FEF      		ldi r24,hi8(-1)
+ 2088 0f7a B806      		cpc r11,r24
+ 2089 0f7c 01F0      		breq .L181
+ 2090               	.L175:
+ 2091 0f7e 85E2      		ldi r24,lo8(293)
+ 2092 0f80 91E0      		ldi r25,hi8(293)
+ 2093 0f82 0E94 0000 		call malloc
+ 2094 0f86 7C01      		movw r14,r24
+ 2095 0f88 0097      		sbiw r24,0
+ 2096 0f8a 01F4      		brne .L177
+ 2097 0f8c C501      		movw r24,r10
+ 2098 0f8e 0E94 0000 		call PhatFileClose
+ 2099               	.L181:
+ 2100 0f92 0FEF      		ldi r16,lo8(-1)
+ 2101 0f94 1FEF      		ldi r17,hi8(-1)
+ 2102 0f96 00C0      		rjmp .L176
+ 2103               	.L177:
+ 2104 0f98 6981      		ldd r22,Y+1
+ 2105 0f9a 7A81      		ldd r23,Y+2
+ 2106 0f9c C501      		movw r24,r10
+ 2107 0f9e 27E3      		ldi r18,lo8(55)
+ 2108 0fa0 30E0      		ldi r19,hi8(55)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 38
+
+
+ 2109 0fa2 40E0      		ldi r20,hlo8(55)
+ 2110 0fa4 50E0      		ldi r21,hhi8(55)
+ 2111 0fa6 8701      		movw r16,r14
+ 2112 0fa8 0E94 0000 		call PhatDirEntryFind
+ 2113 0fac 8C01      		movw r16,r24
+ 2114 0fae 0097      		sbiw r24,0
+ 2115 0fb0 01F0      		breq .+2
+ 2116 0fb2 00C0      		rjmp .L178
+ 2117 0fb4 82E1      		ldi r24,lo8(18)
+ 2118 0fb6 FE01      		movw r30,r28
+ 2119 0fb8 3396      		adiw r30,3
+ 2120 0fba DF01      		movw r26,r30
+ 2121 0fbc 1D92      		st X+,__zero_reg__
+ 2122 0fbe 8A95      	        dec r24
+ 2123 0fc0 01F4      		brne .-6
+ 2124 0fc2 F701      		movw r30,r14
+ 2125 0fc4 2689      		ldd r18,Z+22
+ 2126 0fc6 3789      		ldd r19,Z+23
+ 2127 0fc8 408D      		ldd r20,Z+24
+ 2128 0fca 518D      		ldd r21,Z+25
+ 2129 0fcc CA01      		movw r24,r20
+ 2130 0fce 75E0      		ldi r23,5
+ 2131 0fd0 9695      	1:	lsr r25
+ 2132 0fd2 8795      		ror r24
+ 2133 0fd4 7A95      		dec r23
+ 2134 0fd6 01F4      		brne 1b
+ 2135 0fd8 8F70      		andi r24,lo8(15)
+ 2136 0fda 9070      		andi r25,hi8(15)
+ 2137 0fdc 9C87      		std Y+12,r25
+ 2138 0fde 8B87      		std Y+11,r24
+ 2139 0fe0 0097      		sbiw r24,0
+ 2140 0fe2 01F0      		breq .L179
+ 2141 0fe4 0197      		sbiw r24,1
+ 2142 0fe6 9C87      		std Y+12,r25
+ 2143 0fe8 8B87      		std Y+11,r24
+ 2144               	.L179:
+ 2145 0fea CA01      		movw r24,r20
+ 2146 0fec 892F      		mov r24,r25
+ 2147 0fee 9927      		clr r25
+ 2148 0ff0 8695      		lsr r24
+ 2149 0ff2 805B      		subi r24,lo8(-(80))
+ 2150 0ff4 9F4F      		sbci r25,hi8(-(80))
+ 2151 0ff6 9E87      		std Y+14,r25
+ 2152 0ff8 8D87      		std Y+13,r24
+ 2153 0ffa 8091 0000 		lds r24,_daylight
+ 2154 0ffe 9091 0000 		lds r25,(_daylight)+1
+ 2155 1002 9C8B      		std Y+20,r25
+ 2156 1004 8B8B      		std Y+19,r24
+ 2157 1006 4F71      		andi r20,lo8(31)
+ 2158 1008 5070      		andi r21,hi8(31)
+ 2159 100a 5A87      		std Y+10,r21
+ 2160 100c 4987      		std Y+9,r20
+ 2161 100e 832F      		mov r24,r19
+ 2162 1010 8695      		lsr r24
+ 2163 1012 8695      		lsr r24
+ 2164 1014 8695      		lsr r24
+ 2165 1016 8F83      		std Y+7,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 39
+
+
+ 2166 1018 1886      		std Y+8,__zero_reg__
+ 2167 101a C901      		movw r24,r18
+ 2168 101c 55E0      		ldi r21,5
+ 2169 101e 9695      	1:	lsr r25
+ 2170 1020 8795      		ror r24
+ 2171 1022 5A95      		dec r21
+ 2172 1024 01F4      		brne 1b
+ 2173 1026 8F73      		andi r24,lo8(63)
+ 2174 1028 9070      		andi r25,hi8(63)
+ 2175 102a 9E83      		std Y+6,r25
+ 2176 102c 8D83      		std Y+5,r24
+ 2177 102e 2F71      		andi r18,lo8(31)
+ 2178 1030 3070      		andi r19,hi8(31)
+ 2179 1032 220F      		lsl r18
+ 2180 1034 331F      		rol r19
+ 2181 1036 3C83      		std Y+4,r19
+ 2182 1038 2B83      		std Y+3,r18
+ 2183 103a CE01      		movw r24,r28
+ 2184 103c 0396      		adiw r24,3
+ 2185 103e 0E94 0000 		call mktime
+ 2186 1042 D601      		movw r26,r12
+ 2187 1044 1996      		adiw r26,9
+ 2188 1046 6D93      		st X+,r22
+ 2189 1048 7D93      		st X+,r23
+ 2190 104a 8D93      		st X+,r24
+ 2191 104c 9C93      		st X,r25
+ 2192 104e 1C97      		sbiw r26,9+3
+ 2193 1050 1196      		adiw r26,1
+ 2194 1052 1C92      		st X,__zero_reg__
+ 2195 1054 1E92      		st -X,__zero_reg__
+ 2196 1056 F701      		movw r30,r14
+ 2197 1058 8385      		ldd r24,Z+11
+ 2198 105a 90E0      		ldi r25,lo8(0)
+ 2199 105c 34E0      		ldi r19,4
+ 2200 105e 9695      	1:	lsr r25
+ 2201 1060 8795      		ror r24
+ 2202 1062 3A95      		dec r19
+ 2203 1064 01F4      		brne 1b
+ 2204 1066 8170      		andi r24,lo8(1)
+ 2205 1068 1296      		adiw r26,2
+ 2206 106a 8C93      		st X,r24
+ 2207 106c 1297      		sbiw r26,2
+ 2208 106e 1496      		adiw r26,3+1
+ 2209 1070 1C92      		st X,__zero_reg__
+ 2210 1072 1E92      		st -X,__zero_reg__
+ 2211 1074 1397      		sbiw r26,3
+ 2212 1076 848D      		ldd r24,Z+28
+ 2213 1078 958D      		ldd r25,Z+29
+ 2214 107a A68D      		ldd r26,Z+30
+ 2215 107c B78D      		ldd r27,Z+31
+ 2216 107e F601      		movw r30,r12
+ 2217 1080 8583      		std Z+5,r24
+ 2218 1082 9683      		std Z+6,r25
+ 2219 1084 A783      		std Z+7,r26
+ 2220 1086 B087      		std Z+8,r27
+ 2221               	.L178:
+ 2222 1088 C701      		movw r24,r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 40
+
+
+ 2223 108a 0E94 0000 		call free
+ 2224 108e C501      		movw r24,r10
+ 2225 1090 0E94 0000 		call PhatFileClose
+ 2226               	.L176:
+ 2227 1094 C801      		movw r24,r16
+ 2228               	/* epilogue start */
+ 2229 1096 6496      		adiw r28,20
+ 2230 1098 0FB6      		in __tmp_reg__,__SREG__
+ 2231 109a F894      		cli
+ 2232 109c DEBF      		out __SP_H__,r29
+ 2233 109e 0FBE      		out __SREG__,__tmp_reg__
+ 2234 10a0 CDBF      		out __SP_L__,r28
+ 2235 10a2 CF91      		pop r28
+ 2236 10a4 DF91      		pop r29
+ 2237 10a6 1F91      		pop r17
+ 2238 10a8 0F91      		pop r16
+ 2239 10aa FF90      		pop r15
+ 2240 10ac EF90      		pop r14
+ 2241 10ae DF90      		pop r13
+ 2242 10b0 CF90      		pop r12
+ 2243 10b2 BF90      		pop r11
+ 2244 10b4 AF90      		pop r10
+ 2245 10b6 0895      		ret
+ 2246               		.size	PhatDirEntryStatus, .-PhatDirEntryStatus
+ 2247               	.global	PhatDirDelEntry
+ 2248               		.type	PhatDirDelEntry, @function
+ 2249               	PhatDirDelEntry:
+ 2250 10b8 6F92      		push r6
+ 2251 10ba 7F92      		push r7
+ 2252 10bc 8F92      		push r8
+ 2253 10be 9F92      		push r9
+ 2254 10c0 AF92      		push r10
+ 2255 10c2 BF92      		push r11
+ 2256 10c4 CF92      		push r12
+ 2257 10c6 DF92      		push r13
+ 2258 10c8 EF92      		push r14
+ 2259 10ca FF92      		push r15
+ 2260 10cc 0F93      		push r16
+ 2261 10ce 1F93      		push r17
+ 2262 10d0 DF93      		push r29
+ 2263 10d2 CF93      		push r28
+ 2264 10d4 00D0      		rcall .
+ 2265 10d6 CDB7      		in r28,__SP_L__
+ 2266 10d8 DEB7      		in r29,__SP_H__
+ 2267               	/* prologue: function */
+ 2268               	/* frame size = 2 */
+ 2269 10da 3C01      		movw r6,r24
+ 2270 10dc 4901      		movw r8,r18
+ 2271 10de 5A01      		movw r10,r20
+ 2272 10e0 AE01      		movw r20,r28
+ 2273 10e2 4F5F      		subi r20,lo8(-(1))
+ 2274 10e4 5F4F      		sbci r21,hi8(-(1))
+ 2275 10e6 0E94 0000 		call PhatDirOpenParent
+ 2276 10ea 6C01      		movw r12,r24
+ 2277 10ec 8FEF      		ldi r24,lo8(-1)
+ 2278 10ee C816      		cp r12,r24
+ 2279 10f0 8FEF      		ldi r24,hi8(-1)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 41
+
+
+ 2280 10f2 D806      		cpc r13,r24
+ 2281 10f4 01F4      		brne .L183
+ 2282 10f6 0FEF      		ldi r16,lo8(-1)
+ 2283 10f8 1FEF      		ldi r17,hi8(-1)
+ 2284 10fa 00C0      		rjmp .L184
+ 2285               	.L183:
+ 2286 10fc 85E2      		ldi r24,lo8(293)
+ 2287 10fe 91E0      		ldi r25,hi8(293)
+ 2288 1100 0E94 0000 		call malloc
+ 2289 1104 7C01      		movw r14,r24
+ 2290 1106 0097      		sbiw r24,0
+ 2291 1108 01F4      		brne .L185
+ 2292 110a 0FEF      		ldi r16,lo8(-1)
+ 2293 110c 1FEF      		ldi r17,hi8(-1)
+ 2294 110e 00C0      		rjmp .L186
+ 2295               	.L185:
+ 2296 1110 6981      		ldd r22,Y+1
+ 2297 1112 7A81      		ldd r23,Y+2
+ 2298 1114 C601      		movw r24,r12
+ 2299 1116 A501      		movw r20,r10
+ 2300 1118 9401      		movw r18,r8
+ 2301 111a 8701      		movw r16,r14
+ 2302 111c 0E94 0000 		call PhatDirEntryFind
+ 2303 1120 892B      		or r24,r25
+ 2304 1122 01F4      		brne .L187
+ 2305 1124 C301      		movw r24,r6
+ 2306 1126 B701      		movw r22,r14
+ 2307 1128 0E94 0000 		call PhatDirReleaseChain
+ 2308 112c 892B      		or r24,r25
+ 2309 112e 01F4      		brne .L191
+ 2310               	.L188:
+ 2311 1130 F701      		movw r30,r14
+ 2312 1132 40A1      		ldd r20,Z+32
+ 2313 1134 51A1      		ldd r21,Z+33
+ 2314 1136 62A1      		ldd r22,Z+34
+ 2315 1138 73A1      		ldd r23,Z+35
+ 2316 113a 24A1      		ldd r18,Z+36
+ 2317 113c 35A1      		ldd r19,Z+37
+ 2318 113e C601      		movw r24,r12
+ 2319 1140 0E94 0000 		call PhatDirEntryRelease
+ 2320 1144 8C01      		movw r16,r24
+ 2321 1146 00C0      		rjmp .L189
+ 2322               	.L187:
+ 2323 1148 82E0      		ldi r24,lo8(2)
+ 2324 114a 90E0      		ldi r25,hi8(2)
+ 2325 114c 9093 0000 		sts (errno)+1,r25
+ 2326 1150 8093 0000 		sts errno,r24
+ 2327               	.L191:
+ 2328 1154 0FEF      		ldi r16,lo8(-1)
+ 2329 1156 1FEF      		ldi r17,hi8(-1)
+ 2330               	.L189:
+ 2331 1158 C701      		movw r24,r14
+ 2332 115a 0E94 0000 		call free
+ 2333               	.L186:
+ 2334 115e C601      		movw r24,r12
+ 2335 1160 0E94 0000 		call PhatFileClose
+ 2336               	.L184:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 42
+
+
+ 2337 1164 C801      		movw r24,r16
+ 2338               	/* epilogue start */
+ 2339 1166 0F90      		pop __tmp_reg__
+ 2340 1168 0F90      		pop __tmp_reg__
+ 2341 116a CF91      		pop r28
+ 2342 116c DF91      		pop r29
+ 2343 116e 1F91      		pop r17
+ 2344 1170 0F91      		pop r16
+ 2345 1172 FF90      		pop r15
+ 2346 1174 EF90      		pop r14
+ 2347 1176 DF90      		pop r13
+ 2348 1178 CF90      		pop r12
+ 2349 117a BF90      		pop r11
+ 2350 117c AF90      		pop r10
+ 2351 117e 9F90      		pop r9
+ 2352 1180 8F90      		pop r8
+ 2353 1182 7F90      		pop r7
+ 2354 1184 6F90      		pop r6
+ 2355 1186 0895      		ret
+ 2356               		.size	PhatDirDelEntry, .-PhatDirDelEntry
+ 2357               		.data
+ 2358               	.LC1:
+ 2359 0007 2020 2020 		.string	"         "
+ 2359      2020 2020 
+ 2359      2000 
+ 2360               		.text
+ 2361               	.global	PhatDirRemove
+ 2362               		.type	PhatDirRemove, @function
+ 2363               	PhatDirRemove:
+ 2364 1188 8F92      		push r8
+ 2365 118a 9F92      		push r9
+ 2366 118c AF92      		push r10
+ 2367 118e BF92      		push r11
+ 2368 1190 CF92      		push r12
+ 2369 1192 DF92      		push r13
+ 2370 1194 EF92      		push r14
+ 2371 1196 FF92      		push r15
+ 2372 1198 0F93      		push r16
+ 2373 119a 1F93      		push r17
+ 2374 119c CF93      		push r28
+ 2375 119e DF93      		push r29
+ 2376               	/* prologue: function */
+ 2377               	/* frame size = 0 */
+ 2378 11a0 4C01      		movw r8,r24
+ 2379 11a2 6B01      		movw r12,r22
+ 2380 11a4 FB01      		movw r30,r22
+ 2381 11a6 8081      		ld r24,Z
+ 2382 11a8 8F32      		cpi r24,lo8(47)
+ 2383 11aa 01F4      		brne .L193
+ 2384 11ac 8181      		ldd r24,Z+1
+ 2385 11ae 8823      		tst r24
+ 2386 11b0 01F4      		brne .L193
+ 2387 11b2 80E1      		ldi r24,lo8(16)
+ 2388 11b4 90E0      		ldi r25,hi8(16)
+ 2389 11b6 9093 0000 		sts (errno)+1,r25
+ 2390 11ba 8093 0000 		sts errno,r24
+ 2391 11be 00C0      		rjmp .L207
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 43
+
+
+ 2392               	.L193:
+ 2393 11c0 80E2      		ldi r24,lo8(32)
+ 2394 11c2 90E0      		ldi r25,hi8(32)
+ 2395 11c4 0E94 0000 		call malloc
+ 2396 11c8 8C01      		movw r16,r24
+ 2397 11ca 0097      		sbiw r24,0
+ 2398 11cc 01F4      		brne .L195
+ 2399               	.L207:
+ 2400 11ce CFEF      		ldi r28,lo8(-1)
+ 2401 11d0 DFEF      		ldi r29,hi8(-1)
+ 2402 11d2 00C0      		rjmp .L194
+ 2403               	.L195:
+ 2404 11d4 C401      		movw r24,r8
+ 2405 11d6 B601      		movw r22,r12
+ 2406 11d8 40E0      		ldi r20,lo8(0)
+ 2407 11da 50E0      		ldi r21,hi8(0)
+ 2408 11dc 20E0      		ldi r18,lo8(0)
+ 2409 11de 30E0      		ldi r19,hi8(0)
+ 2410 11e0 0E94 0000 		call PhatFileOpen
+ 2411 11e4 7C01      		movw r14,r24
+ 2412 11e6 FFEF      		ldi r31,hi8(-1)
+ 2413 11e8 8F3F      		cpi r24,lo8(-1)
+ 2414 11ea 9F07      		cpc r25,r31
+ 2415 11ec 01F4      		brne .L196
+ 2416 11ee CFEF      		ldi r28,lo8(-1)
+ 2417 11f0 DFEF      		ldi r29,hi8(-1)
+ 2418 11f2 00C0      		rjmp .L197
+ 2419               	.L196:
+ 2420 11f4 E2E0      		ldi r30,lo8(2)
+ 2421 11f6 AE2E      		mov r10,r30
+ 2422 11f8 B12C      		mov r11,__zero_reg__
+ 2423 11fa A00E      		add r10,r16
+ 2424 11fc B11E      		adc r11,r17
+ 2425               	.L206:
+ 2426 11fe C701      		movw r24,r14
+ 2427 1200 B801      		movw r22,r16
+ 2428 1202 40E2      		ldi r20,lo8(32)
+ 2429 1204 50E0      		ldi r21,hi8(32)
+ 2430 1206 0E94 0000 		call PhatFileRead
+ 2431 120a EC01      		movw r28,r24
+ 2432 120c 97FD      		sbrc r25,7
+ 2433 120e 00C0      		rjmp .L198
+ 2434 1210 8032      		cpi r24,32
+ 2435 1212 9105      		cpc r25,__zero_reg__
+ 2436 1214 00F0      		brlo .L199
+ 2437 1216 F801      		movw r30,r16
+ 2438 1218 9081      		ld r25,Z
+ 2439 121a 9923      		tst r25
+ 2440 121c 01F0      		breq .L199
+ 2441 121e 953E      		cpi r25,lo8(-27)
+ 2442 1220 01F0      		breq .L206
+ 2443 1222 8385      		ldd r24,Z+11
+ 2444 1224 8763      		ori r24,lo8(55)
+ 2445 1226 8733      		cpi r24,lo8(55)
+ 2446 1228 01F4      		brne .L206
+ 2447 122a 9E32      		cpi r25,lo8(46)
+ 2448 122c 01F4      		brne .L201
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 44
+
+
+ 2449 122e 8181      		ldd r24,Z+1
+ 2450 1230 8E32      		cpi r24,lo8(46)
+ 2451 1232 01F0      		breq .L202
+ 2452 1234 8032      		cpi r24,lo8(32)
+ 2453 1236 01F4      		brne .L201
+ 2454               	.L202:
+ 2455 1238 80E0      		ldi r24,lo8(.LC1)
+ 2456 123a 90E0      		ldi r25,hi8(.LC1)
+ 2457 123c B501      		movw r22,r10
+ 2458 123e 49E0      		ldi r20,lo8(9)
+ 2459 1240 50E0      		ldi r21,hi8(9)
+ 2460 1242 0E94 0000 		call memcmp
+ 2461 1246 0097      		sbiw r24,0
+ 2462 1248 01F0      		breq .L206
+ 2463               	.L201:
+ 2464 124a 82E4      		ldi r24,lo8(66)
+ 2465 124c 90E0      		ldi r25,hi8(66)
+ 2466 124e 9093 0000 		sts (errno)+1,r25
+ 2467 1252 8093 0000 		sts errno,r24
+ 2468 1256 CFEF      		ldi r28,lo8(-1)
+ 2469 1258 DFEF      		ldi r29,hi8(-1)
+ 2470 125a 00C0      		rjmp .L198
+ 2471               	.L199:
+ 2472 125c C0E0      		ldi r28,lo8(0)
+ 2473 125e D0E0      		ldi r29,hi8(0)
+ 2474               	.L198:
+ 2475 1260 C701      		movw r24,r14
+ 2476 1262 0E94 0000 		call PhatFileClose
+ 2477               	.L197:
+ 2478 1266 C801      		movw r24,r16
+ 2479 1268 0E94 0000 		call free
+ 2480 126c 2097      		sbiw r28,0
+ 2481 126e 01F4      		brne .L194
+ 2482 1270 C401      		movw r24,r8
+ 2483 1272 B601      		movw r22,r12
+ 2484 1274 20E1      		ldi r18,lo8(16)
+ 2485 1276 30E0      		ldi r19,hi8(16)
+ 2486 1278 40E0      		ldi r20,hlo8(16)
+ 2487 127a 50E0      		ldi r21,hhi8(16)
+ 2488 127c 0E94 0000 		call PhatDirDelEntry
+ 2489 1280 EC01      		movw r28,r24
+ 2490               	.L194:
+ 2491 1282 CE01      		movw r24,r28
+ 2492               	/* epilogue start */
+ 2493 1284 DF91      		pop r29
+ 2494 1286 CF91      		pop r28
+ 2495 1288 1F91      		pop r17
+ 2496 128a 0F91      		pop r16
+ 2497 128c FF90      		pop r15
+ 2498 128e EF90      		pop r14
+ 2499 1290 DF90      		pop r13
+ 2500 1292 CF90      		pop r12
+ 2501 1294 BF90      		pop r11
+ 2502 1296 AF90      		pop r10
+ 2503 1298 9F90      		pop r9
+ 2504 129a 8F90      		pop r8
+ 2505 129c 0895      		ret
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 45
+
+
+ 2506               		.size	PhatDirRemove, .-PhatDirRemove
+ 2507               	.global	PhatDirRenameEntry
+ 2508               		.type	PhatDirRenameEntry, @function
+ 2509               	PhatDirRenameEntry:
+ 2510 129e 6F92      		push r6
+ 2511 12a0 7F92      		push r7
+ 2512 12a2 8F92      		push r8
+ 2513 12a4 9F92      		push r9
+ 2514 12a6 AF92      		push r10
+ 2515 12a8 BF92      		push r11
+ 2516 12aa CF92      		push r12
+ 2517 12ac DF92      		push r13
+ 2518 12ae EF92      		push r14
+ 2519 12b0 FF92      		push r15
+ 2520 12b2 0F93      		push r16
+ 2521 12b4 1F93      		push r17
+ 2522 12b6 DF93      		push r29
+ 2523 12b8 CF93      		push r28
+ 2524 12ba 00D0      		rcall .
+ 2525 12bc CDB7      		in r28,__SP_L__
+ 2526 12be DEB7      		in r29,__SP_H__
+ 2527               	/* prologue: function */
+ 2528               	/* frame size = 2 */
+ 2529 12c0 6C01      		movw r12,r24
+ 2530 12c2 4A01      		movw r8,r20
+ 2531 12c4 3E01      		movw r6,r28
+ 2532 12c6 0894      		sec
+ 2533 12c8 611C      		adc r6,__zero_reg__
+ 2534 12ca 711C      		adc r7,__zero_reg__
+ 2535 12cc A301      		movw r20,r6
+ 2536 12ce 0E94 0000 		call PhatDirOpenParent
+ 2537 12d2 5C01      		movw r10,r24
+ 2538 12d4 8FEF      		ldi r24,lo8(-1)
+ 2539 12d6 A816      		cp r10,r24
+ 2540 12d8 8FEF      		ldi r24,hi8(-1)
+ 2541 12da B806      		cpc r11,r24
+ 2542 12dc 01F4      		brne .L209
+ 2543 12de 0FEF      		ldi r16,lo8(-1)
+ 2544 12e0 1FEF      		ldi r17,hi8(-1)
+ 2545 12e2 00C0      		rjmp .L210
+ 2546               	.L209:
+ 2547 12e4 85E2      		ldi r24,lo8(293)
+ 2548 12e6 91E0      		ldi r25,hi8(293)
+ 2549 12e8 0E94 0000 		call malloc
+ 2550 12ec 7C01      		movw r14,r24
+ 2551 12ee 0097      		sbiw r24,0
+ 2552 12f0 01F4      		brne .L211
+ 2553 12f2 0FEF      		ldi r16,lo8(-1)
+ 2554 12f4 1FEF      		ldi r17,hi8(-1)
+ 2555 12f6 00C0      		rjmp .L212
+ 2556               	.L211:
+ 2557 12f8 6981      		ldd r22,Y+1
+ 2558 12fa 7A81      		ldd r23,Y+2
+ 2559 12fc C501      		movw r24,r10
+ 2560 12fe 27E3      		ldi r18,lo8(55)
+ 2561 1300 30E0      		ldi r19,hi8(55)
+ 2562 1302 40E0      		ldi r20,hlo8(55)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 46
+
+
+ 2563 1304 50E0      		ldi r21,hhi8(55)
+ 2564 1306 8701      		movw r16,r14
+ 2565 1308 0E94 0000 		call PhatDirEntryFind
+ 2566 130c 8C01      		movw r16,r24
+ 2567 130e 0097      		sbiw r24,0
+ 2568 1310 01F4      		brne .L213
+ 2569 1312 C601      		movw r24,r12
+ 2570 1314 B401      		movw r22,r8
+ 2571 1316 A301      		movw r20,r6
+ 2572 1318 0E94 0000 		call PhatDirOpenParent
+ 2573 131c 6C01      		movw r12,r24
+ 2574 131e EFEF      		ldi r30,hi8(-1)
+ 2575 1320 8F3F      		cpi r24,lo8(-1)
+ 2576 1322 9E07      		cpc r25,r30
+ 2577 1324 01F4      		brne .L214
+ 2578 1326 0FEF      		ldi r16,lo8(-1)
+ 2579 1328 1FEF      		ldi r17,hi8(-1)
+ 2580 132a 00C0      		rjmp .L215
+ 2581               	.L214:
+ 2582 132c 6981      		ldd r22,Y+1
+ 2583 132e 7A81      		ldd r23,Y+2
+ 2584 1330 27E3      		ldi r18,lo8(55)
+ 2585 1332 30E0      		ldi r19,hi8(55)
+ 2586 1334 40E0      		ldi r20,hlo8(55)
+ 2587 1336 50E0      		ldi r21,hhi8(55)
+ 2588 1338 00E0      		ldi r16,lo8(0)
+ 2589 133a 10E0      		ldi r17,hi8(0)
+ 2590 133c 0E94 0000 		call PhatDirEntryFind
+ 2591 1340 892B      		or r24,r25
+ 2592 1342 01F4      		brne .L216
+ 2593 1344 81E1      		ldi r24,lo8(17)
+ 2594 1346 90E0      		ldi r25,hi8(17)
+ 2595 1348 9093 0000 		sts (errno)+1,r25
+ 2596 134c 8093 0000 		sts errno,r24
+ 2597 1350 0FEF      		ldi r16,lo8(-1)
+ 2598 1352 1FEF      		ldi r17,hi8(-1)
+ 2599 1354 00C0      		rjmp .L217
+ 2600               	.L216:
+ 2601 1356 6981      		ldd r22,Y+1
+ 2602 1358 7A81      		ldd r23,Y+2
+ 2603 135a C601      		movw r24,r12
+ 2604 135c A701      		movw r20,r14
+ 2605 135e 0E94 0000 		call PhatDirEntryAlloc
+ 2606 1362 8C01      		movw r16,r24
+ 2607 1364 0097      		sbiw r24,0
+ 2608 1366 01F4      		brne .L217
+ 2609 1368 F701      		movw r30,r14
+ 2610 136a 40A1      		ldd r20,Z+32
+ 2611 136c 51A1      		ldd r21,Z+33
+ 2612 136e 62A1      		ldd r22,Z+34
+ 2613 1370 73A1      		ldd r23,Z+35
+ 2614 1372 24A1      		ldd r18,Z+36
+ 2615 1374 35A1      		ldd r19,Z+37
+ 2616 1376 C501      		movw r24,r10
+ 2617 1378 0E94 0000 		call PhatDirEntryRelease
+ 2618 137c 8C01      		movw r16,r24
+ 2619               	.L217:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 47
+
+
+ 2620 137e C601      		movw r24,r12
+ 2621 1380 0E94 0000 		call PhatFileClose
+ 2622 1384 00C0      		rjmp .L215
+ 2623               	.L213:
+ 2624 1386 82E0      		ldi r24,lo8(2)
+ 2625 1388 90E0      		ldi r25,hi8(2)
+ 2626 138a 9093 0000 		sts (errno)+1,r25
+ 2627 138e 8093 0000 		sts errno,r24
+ 2628               	.L215:
+ 2629 1392 C701      		movw r24,r14
+ 2630 1394 0E94 0000 		call free
+ 2631               	.L212:
+ 2632 1398 C501      		movw r24,r10
+ 2633 139a 0E94 0000 		call PhatFileClose
+ 2634               	.L210:
+ 2635 139e C801      		movw r24,r16
+ 2636               	/* epilogue start */
+ 2637 13a0 0F90      		pop __tmp_reg__
+ 2638 13a2 0F90      		pop __tmp_reg__
+ 2639 13a4 CF91      		pop r28
+ 2640 13a6 DF91      		pop r29
+ 2641 13a8 1F91      		pop r17
+ 2642 13aa 0F91      		pop r16
+ 2643 13ac FF90      		pop r15
+ 2644 13ae EF90      		pop r14
+ 2645 13b0 DF90      		pop r13
+ 2646 13b2 CF90      		pop r12
+ 2647 13b4 BF90      		pop r11
+ 2648 13b6 AF90      		pop r10
+ 2649 13b8 9F90      		pop r9
+ 2650 13ba 8F90      		pop r8
+ 2651 13bc 7F90      		pop r7
+ 2652 13be 6F90      		pop r6
+ 2653 13c0 0895      		ret
+ 2654               		.size	PhatDirRenameEntry, .-PhatDirRenameEntry
+ 2655               	.global	PhatDirEntryUpdate
+ 2656               		.type	PhatDirEntryUpdate, @function
+ 2657               	PhatDirEntryUpdate:
+ 2658 13c2 0F93      		push r16
+ 2659 13c4 1F93      		push r17
+ 2660 13c6 CF93      		push r28
+ 2661 13c8 DF93      		push r29
+ 2662               	/* prologue: function */
+ 2663               	/* frame size = 0 */
+ 2664 13ca FC01      		movw r30,r24
+ 2665 13cc A281      		ldd r26,Z+2
+ 2666 13ce B381      		ldd r27,Z+3
+ 2667 13d0 5196      		adiw r26,17
+ 2668 13d2 1C91      		ld r17,X
+ 2669 13d4 5197      		sbiw r26,17
+ 2670 13d6 5296      		adiw r26,18
+ 2671 13d8 0C91      		ld r16,X
+ 2672 13da 5297      		sbiw r26,18
+ 2673 13dc C481      		ldd r28,Z+4
+ 2674 13de D581      		ldd r29,Z+5
+ 2675 13e0 C05C      		subi r28,lo8(-(64))
+ 2676 13e2 DF4F      		sbci r29,hi8(-(64))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 48
+
+
+ 2677 13e4 8881      		ld r24,Y
+ 2678 13e6 9981      		ldd r25,Y+1
+ 2679 13e8 C054      		subi r28,lo8(-(-64))
+ 2680 13ea D040      		sbci r29,hi8(-(-64))
+ 2681 13ec 892B      		or r24,r25
+ 2682 13ee 01F4      		brne .+2
+ 2683 13f0 00C0      		rjmp .L227
+ 2684               	.L220:
+ 2685 13f2 48AD      		ldd r20,Y+56
+ 2686 13f4 59AD      		ldd r21,Y+57
+ 2687 13f6 6AAD      		ldd r22,Y+58
+ 2688 13f8 7BAD      		ldd r23,Y+59
+ 2689 13fa 4115      		cp r20,__zero_reg__
+ 2690 13fc 5105      		cpc r21,__zero_reg__
+ 2691 13fe 6105      		cpc r22,__zero_reg__
+ 2692 1400 7105      		cpc r23,__zero_reg__
+ 2693 1402 01F0      		breq .L222
+ 2694 1404 CD01      		movw r24,r26
+ 2695 1406 0E94 0000 		call PhatSectorLoad
+ 2696 140a 9C01      		movw r18,r24
+ 2697 140c 97FF      		sbrs r25,7
+ 2698 140e 00C0      		rjmp .L223
+ 2699 1410 2FEF      		ldi r18,lo8(-1)
+ 2700 1412 3FEF      		ldi r19,hi8(-1)
+ 2701 1414 00C0      		rjmp .L221
+ 2702               	.L223:
+ 2703 1416 A12F      		mov r26,r17
+ 2704 1418 B02F      		mov r27,r16
+ 2705 141a FC01      		movw r30,r24
+ 2706 141c 13E0      		ldi r17,3
+ 2707 141e EE0F      	1:	lsl r30
+ 2708 1420 FF1F      		rol r31
+ 2709 1422 1A95      		dec r17
+ 2710 1424 01F4      		brne 1b
+ 2711 1426 EA0F      		add r30,r26
+ 2712 1428 FB1F      		adc r31,r27
+ 2713 142a 6285      		ldd r22,Z+10
+ 2714 142c 7385      		ldd r23,Z+11
+ 2715 142e 8CAD      		ldd r24,Y+60
+ 2716 1430 9DAD      		ldd r25,Y+61
+ 2717 1432 680F      		add r22,r24
+ 2718 1434 791F      		adc r23,r25
+ 2719 1436 AE01      		movw r20,r28
+ 2720 1438 485E      		subi r20,lo8(-(24))
+ 2721 143a 5F4F      		sbci r21,hi8(-(24))
+ 2722 143c 80E2      		ldi r24,lo8(32)
+ 2723               	.L224:
+ 2724 143e FA01      		movw r30,r20
+ 2725 1440 0190      		ld r0,Z+
+ 2726 1442 AF01      		movw r20,r30
+ 2727 1444 FB01      		movw r30,r22
+ 2728 1446 0192      		st Z+,r0
+ 2729 1448 BF01      		movw r22,r30
+ 2730 144a 8150      		subi r24,lo8(-(-1))
+ 2731 144c 01F4      		brne .L224
+ 2732 144e 2E5F      		subi r18,lo8(-(2))
+ 2733 1450 3F4F      		sbci r19,hi8(-(2))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 49
+
+
+ 2734 1452 F3E0      		ldi r31,3
+ 2735 1454 220F      	1:	lsl r18
+ 2736 1456 331F      		rol r19
+ 2737 1458 FA95      		dec r31
+ 2738 145a 01F4      		brne 1b
+ 2739 145c A20F      		add r26,r18
+ 2740 145e B31F      		adc r27,r19
+ 2741 1460 81E0      		ldi r24,lo8(1)
+ 2742 1462 90E0      		ldi r25,hi8(1)
+ 2743 1464 8D93      		st X+,r24
+ 2744 1466 9C93      		st X,r25
+ 2745               	.L222:
+ 2746 1468 C05C      		subi r28,lo8(-(64))
+ 2747 146a DF4F      		sbci r29,hi8(-(64))
+ 2748 146c 1982      		std Y+1,__zero_reg__
+ 2749 146e 1882      		st Y,__zero_reg__
+ 2750               	.L227:
+ 2751 1470 20E0      		ldi r18,lo8(0)
+ 2752 1472 30E0      		ldi r19,hi8(0)
+ 2753               	.L221:
+ 2754 1474 C901      		movw r24,r18
+ 2755               	/* epilogue start */
+ 2756 1476 DF91      		pop r29
+ 2757 1478 CF91      		pop r28
+ 2758 147a 1F91      		pop r17
+ 2759 147c 0F91      		pop r16
+ 2760 147e 0895      		ret
+ 2761               		.size	PhatDirEntryUpdate, .-PhatDirEntryUpdate
+ 2762               	.global	PhatDirEntryCreate
+ 2763               		.type	PhatDirEntryCreate, @function
+ 2764               	PhatDirEntryCreate:
+ 2765 1480 CF92      		push r12
+ 2766 1482 DF92      		push r13
+ 2767 1484 EF92      		push r14
+ 2768 1486 FF92      		push r15
+ 2769 1488 0F93      		push r16
+ 2770 148a 1F93      		push r17
+ 2771               	/* prologue: function */
+ 2772               	/* frame size = 0 */
+ 2773 148c 7C01      		movw r14,r24
+ 2774 148e 6B01      		movw r12,r22
+ 2775 1490 8901      		movw r16,r18
+ 2776 1492 F901      		movw r30,r18
+ 2777 1494 4387      		std Z+11,r20
+ 2778 1496 B901      		movw r22,r18
+ 2779 1498 605F      		subi r22,lo8(-(16))
+ 2780 149a 7F4F      		sbci r23,hi8(-(16))
+ 2781 149c C901      		movw r24,r18
+ 2782 149e 0E96      		adiw r24,14
+ 2783 14a0 0E94 0000 		call GetDosTimeStamp
+ 2784 14a4 F801      		movw r30,r16
+ 2785 14a6 2089      		ldd r18,Z+16
+ 2786 14a8 3189      		ldd r19,Z+17
+ 2787 14aa 338B      		std Z+19,r19
+ 2788 14ac 228B      		std Z+18,r18
+ 2789 14ae 8685      		ldd r24,Z+14
+ 2790 14b0 9785      		ldd r25,Z+15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 50
+
+
+ 2791 14b2 978B      		std Z+23,r25
+ 2792 14b4 868B      		std Z+22,r24
+ 2793 14b6 318F      		std Z+25,r19
+ 2794 14b8 208F      		std Z+24,r18
+ 2795 14ba C701      		movw r24,r14
+ 2796 14bc B601      		movw r22,r12
+ 2797 14be A801      		movw r20,r16
+ 2798 14c0 0E94 0000 		call PhatDirEntryAlloc
+ 2799 14c4 892B      		or r24,r25
+ 2800 14c6 01F4      		brne .L229
+ 2801 14c8 20E0      		ldi r18,lo8(0)
+ 2802 14ca 30E0      		ldi r19,hi8(0)
+ 2803 14cc 00C0      		rjmp .L230
+ 2804               	.L229:
+ 2805 14ce 2FEF      		ldi r18,lo8(-1)
+ 2806 14d0 3FEF      		ldi r19,hi8(-1)
+ 2807               	.L230:
+ 2808 14d2 C901      		movw r24,r18
+ 2809               	/* epilogue start */
+ 2810 14d4 1F91      		pop r17
+ 2811 14d6 0F91      		pop r16
+ 2812 14d8 FF90      		pop r15
+ 2813 14da EF90      		pop r14
+ 2814 14dc DF90      		pop r13
+ 2815 14de CF90      		pop r12
+ 2816 14e0 0895      		ret
+ 2817               		.size	PhatDirEntryCreate, .-PhatDirEntryCreate
+ 2818               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 51
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 phatdir.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:11     .text:00000000 PhatDirCreate
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:248    .text:000001d2 PhatDirEntryRead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:557    .text:0000041a PhatDirRead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:633    .text:000004a6 PhatDirEntryRelease
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:738    .text:0000056a PhatDirReleaseChain
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:814    .text:000005ec PhatDirEntryAlloc
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:1514   .text:00000b32 PhatDirEntryFind
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:1623   .text:00000bfc PhatDirOpen
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:2023   .text:00000f08 PhatDirOpenParent
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:2058   .text:00000f42 PhatDirEntryStatus
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:2249   .text:000010b8 PhatDirDelEntry
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:2363   .text:00001188 PhatDirRemove
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:2509   .text:0000129e PhatDirRenameEntry
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:2657   .text:000013c2 PhatDirEntryUpdate
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s:2764   .text:00001480 PhatDirEntryCreate
+
+UNDEFINED SYMBOLS
+PhatFileOpen
+AllocFirstCluster
+PhatFileClose
+malloc
+memset
+PhatFileWrite
+free
+PhatFilePosRewind
+PhatFileRead
+errno
+strcpy
+MakeVisibleName
+PhatFilePosSet
+Phat32ReleaseChain
+Phat16ReleaseChain
+Phat12ReleaseChain
+MakePhatName
+strcmp
+strrchr
+toupper
+__divmodhi4
+memcmp
+__udivmodhi4
+IsFixedRootDir
+strcasecmp
+PhatClusterSector
+GetParentPath
+_daylight
+mktime
+PhatSectorLoad
+GetDosTimeStamp
+__do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSoiIHF.s 			page 52
+
+

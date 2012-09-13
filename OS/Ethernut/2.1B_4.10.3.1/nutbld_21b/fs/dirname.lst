@@ -1,0 +1,179 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccb8cblo.s 			page 1
+
+
+   1               		.file	"dirname.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.data
+   9               	.LC0:
+  10 0000 2E00      		.string	"."
+  11               	.LC1:
+  12 0002 2F00      		.string	"/"
+  13               		.text
+  14               	.global	dirname
+  15               		.type	dirname, @function
+  16               	dirname:
+  17 0000 0F93      		push r16
+  18 0002 1F93      		push r17
+  19 0004 CF93      		push r28
+  20 0006 DF93      		push r29
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23 0008 8C01      		movw r16,r24
+  24 000a 8091 0000 		lds r24,bname.1654
+  25 000e 9091 0000 		lds r25,(bname.1654)+1
+  26 0012 892B      		or r24,r25
+  27 0014 01F4      		brne .L2
+  28 0016 80E0      		ldi r24,lo8(256)
+  29 0018 91E0      		ldi r25,hi8(256)
+  30 001a 0E94 0000 		call malloc
+  31 001e 9093 0000 		sts (bname.1654)+1,r25
+  32 0022 8093 0000 		sts bname.1654,r24
+  33 0026 0097      		sbiw r24,0
+  34 0028 01F4      		brne .+2
+  35 002a 00C0      		rjmp .L20
+  36               	.L2:
+  37 002c 0115      		cp r16,__zero_reg__
+  38 002e 1105      		cpc r17,__zero_reg__
+  39 0030 01F0      		breq .L4
+  40 0032 F801      		movw r30,r16
+  41 0034 8081      		ld r24,Z
+  42 0036 8823      		tst r24
+  43 0038 01F4      		brne .L5
+  44               	.L4:
+  45 003a 8091 0000 		lds r24,bname.1654
+  46 003e 9091 0000 		lds r25,(bname.1654)+1
+  47 0042 60E0      		ldi r22,lo8(.LC0)
+  48 0044 70E0      		ldi r23,hi8(.LC0)
+  49 0046 00C0      		rjmp .L21
+  50               	.L5:
+  51 0048 D801      		movw r26,r16
+  52 004a 0D90      		ld __tmp_reg__,X+
+  53 004c 0020      		tst __tmp_reg__
+  54 004e 01F4      		brne .-6
+  55 0050 A01B      		sub r26,r16
+  56 0052 B10B      		sbc r27,r17
+  57 0054 1297      		sbiw r26,2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccb8cblo.s 			page 2
+
+
+  58 0056 A00F      		add r26,r16
+  59 0058 B11F      		adc r27,r17
+  60 005a 00C0      		rjmp .L6
+  61               	.L8:
+  62 005c 1197      		sbiw r26,1
+  63               	.L6:
+  64 005e 0A17      		cp r16,r26
+  65 0060 1B07      		cpc r17,r27
+  66 0062 00F4      		brsh .L7
+  67 0064 8C91      		ld r24,X
+  68 0066 8F32      		cpi r24,lo8(47)
+  69 0068 01F0      		breq .L8
+  70 006a 00C0      		rjmp .L19
+  71               	.L10:
+  72 006c 1197      		sbiw r26,1
+  73 006e 0A17      		cp r16,r26
+  74 0070 1B07      		cpc r17,r27
+  75 0072 00F4      		brsh .L7
+  76               	.L19:
+  77 0074 8C91      		ld r24,X
+  78 0076 8F32      		cpi r24,lo8(47)
+  79 0078 01F4      		brne .L10
+  80               	.L7:
+  81 007a FD01      		movw r30,r26
+  82 007c A017      		cp r26,r16
+  83 007e B107      		cpc r27,r17
+  84 0080 01F4      		brne .L17
+  85 0082 2091 0000 		lds r18,bname.1654
+  86 0086 3091 0000 		lds r19,(bname.1654)+1
+  87 008a 8C91      		ld r24,X
+  88 008c 8F32      		cpi r24,lo8(47)
+  89 008e 01F0      		breq .L12
+  90 0090 60E0      		ldi r22,lo8(.LC0)
+  91 0092 70E0      		ldi r23,hi8(.LC0)
+  92 0094 00C0      		rjmp .L13
+  93               	.L12:
+  94 0096 60E0      		ldi r22,lo8(.LC1)
+  95 0098 70E0      		ldi r23,hi8(.LC1)
+  96               	.L13:
+  97 009a C901      		movw r24,r18
+  98               	.L21:
+  99 009c 40E0      		ldi r20,lo8(256)
+ 100 009e 51E0      		ldi r21,hi8(256)
+ 101 00a0 0E94 0000 		call strncpy
+ 102 00a4 2091 0000 		lds r18,bname.1654
+ 103 00a8 3091 0000 		lds r19,(bname.1654)+1
+ 104 00ac 00C0      		rjmp .L3
+ 105               	.L17:
+ 106 00ae 3197      		sbiw r30,1
+ 107 00b0 0E17      		cp r16,r30
+ 108 00b2 1F07      		cpc r17,r31
+ 109 00b4 00F4      		brsh .L14
+ 110 00b6 8081      		ld r24,Z
+ 111 00b8 8F32      		cpi r24,lo8(47)
+ 112 00ba 01F0      		breq .L17
+ 113               	.L14:
+ 114 00bc EF01      		movw r28,r30
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccb8cblo.s 			page 3
+
+
+ 115 00be C01B      		sub r28,r16
+ 116 00c0 D10B      		sbc r29,r17
+ 117 00c2 CF3F      		cpi r28,255
+ 118 00c4 D105      		cpc r29,__zero_reg__
+ 119 00c6 04F0      		brlt .L15
+ 120 00c8 8FE3      		ldi r24,lo8(63)
+ 121 00ca 90E0      		ldi r25,hi8(63)
+ 122 00cc 9093 0000 		sts (errno)+1,r25
+ 123 00d0 8093 0000 		sts errno,r24
+ 124               	.L20:
+ 125 00d4 20E0      		ldi r18,lo8(0)
+ 126 00d6 30E0      		ldi r19,hi8(0)
+ 127 00d8 00C0      		rjmp .L3
+ 128               	.L15:
+ 129 00da 8091 0000 		lds r24,bname.1654
+ 130 00de 9091 0000 		lds r25,(bname.1654)+1
+ 131 00e2 B801      		movw r22,r16
+ 132 00e4 0E94 0000 		call strcpy
+ 133 00e8 2091 0000 		lds r18,bname.1654
+ 134 00ec 3091 0000 		lds r19,(bname.1654)+1
+ 135 00f0 C20F      		add r28,r18
+ 136 00f2 D31F      		adc r29,r19
+ 137 00f4 1982      		std Y+1,__zero_reg__
+ 138               	.L3:
+ 139 00f6 C901      		movw r24,r18
+ 140               	/* epilogue start */
+ 141 00f8 DF91      		pop r29
+ 142 00fa CF91      		pop r28
+ 143 00fc 1F91      		pop r17
+ 144 00fe 0F91      		pop r16
+ 145 0100 0895      		ret
+ 146               		.size	dirname, .-dirname
+ 147               		.lcomm bname.1654,2
+ 148               	.global __do_copy_data
+ 149               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccb8cblo.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 dirname.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccb8cblo.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccb8cblo.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccb8cblo.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccb8cblo.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccb8cblo.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccb8cblo.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccb8cblo.s:16     .text:00000000 dirname
+                             .bss:00000000 bname.1654
+
+UNDEFINED SYMBOLS
+malloc
+strncpy
+errno
+strcpy
+__do_copy_data
+__do_clear_bss

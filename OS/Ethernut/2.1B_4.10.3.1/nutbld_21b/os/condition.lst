@@ -1,0 +1,252 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s 			page 1
+
+
+   1               		.file	"condition.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutConditionFree
+  10               		.type	NutConditionFree, @function
+  11               	NutConditionFree:
+  12 0000 0F93      		push r16
+  13 0002 1F93      		push r17
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0004 8C01      		movw r16,r24
+  17 0006 0296      		adiw r24,2
+  18 0008 0E94 0000 		call NutMutexDestroy
+  19 000c 80E0      		ldi r24,lo8(heapFreeList)
+  20 000e 90E0      		ldi r25,hi8(heapFreeList)
+  21 0010 B801      		movw r22,r16
+  22 0012 0E94 0000 		call NutHeapRootFree
+  23               	/* epilogue start */
+  24 0016 1F91      		pop r17
+  25 0018 0F91      		pop r16
+  26 001a 0895      		ret
+  27               		.size	NutConditionFree, .-NutConditionFree
+  28               	.global	NutConditionBroadcast
+  29               		.type	NutConditionBroadcast, @function
+  30               	NutConditionBroadcast:
+  31               	/* prologue: function */
+  32               	/* frame size = 0 */
+  33 001c 0097      		sbiw r24,0
+  34 001e 01F4      		brne .L4
+  35 0020 2FEF      		ldi r18,lo8(-1)
+  36 0022 3FEF      		ldi r19,hi8(-1)
+  37 0024 00C0      		rjmp .L5
+  38               	.L4:
+  39 0026 0E94 0000 		call NutEventBroadcast
+  40 002a 9C01      		movw r18,r24
+  41               	.L5:
+  42 002c C901      		movw r24,r18
+  43               	/* epilogue start */
+  44 002e 0895      		ret
+  45               		.size	NutConditionBroadcast, .-NutConditionBroadcast
+  46               	.global	NutConditionSignal
+  47               		.type	NutConditionSignal, @function
+  48               	NutConditionSignal:
+  49               	/* prologue: function */
+  50               	/* frame size = 0 */
+  51 0030 0097      		sbiw r24,0
+  52 0032 01F4      		brne .L8
+  53 0034 2FEF      		ldi r18,lo8(-1)
+  54 0036 3FEF      		ldi r19,hi8(-1)
+  55 0038 00C0      		rjmp .L9
+  56               	.L8:
+  57 003a 0E94 0000 		call NutEventPost
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s 			page 2
+
+
+  58 003e 9C01      		movw r18,r24
+  59               	.L9:
+  60 0040 C901      		movw r24,r18
+  61               	/* epilogue start */
+  62 0042 0895      		ret
+  63               		.size	NutConditionSignal, .-NutConditionSignal
+  64               	.global	NutConditionUnlock
+  65               		.type	NutConditionUnlock, @function
+  66               	NutConditionUnlock:
+  67               	/* prologue: function */
+  68               	/* frame size = 0 */
+  69 0044 0097      		sbiw r24,0
+  70 0046 01F0      		breq .L13
+  71 0048 0296      		adiw r24,2
+  72 004a 0E94 0000 		call NutMutexUnlock
+  73               	.L13:
+  74 004e 0895      		ret
+  75               		.size	NutConditionUnlock, .-NutConditionUnlock
+  76               	.global	NutConditionTimedWait
+  77               		.type	NutConditionTimedWait, @function
+  78               	NutConditionTimedWait:
+  79 0050 CF92      		push r12
+  80 0052 DF92      		push r13
+  81 0054 EF92      		push r14
+  82 0056 FF92      		push r15
+  83 0058 0F93      		push r16
+  84 005a 1F93      		push r17
+  85 005c CF93      		push r28
+  86 005e DF93      		push r29
+  87               	/* prologue: function */
+  88               	/* frame size = 0 */
+  89 0060 EC01      		movw r28,r24
+  90 0062 6A01      		movw r12,r20
+  91 0064 7B01      		movw r14,r22
+  92 0066 0097      		sbiw r24,0
+  93 0068 01F0      		breq .L15
+  94 006a 0E94 0000 		call NutGetMillis
+  95 006e C61A      		sub r12,r22
+  96 0070 D70A      		sbc r13,r23
+  97 0072 E80A      		sbc r14,r24
+  98 0074 F90A      		sbc r15,r25
+  99 0076 F7FC      		sbrc r15,7
+ 100 0078 00C0      		rjmp .L15
+ 101 007a 8E01      		movw r16,r28
+ 102 007c 0E5F      		subi r16,lo8(-(2))
+ 103 007e 1F4F      		sbci r17,hi8(-(2))
+ 104 0080 C801      		movw r24,r16
+ 105 0082 0E94 0000 		call NutMutexUnlock
+ 106 0086 CE01      		movw r24,r28
+ 107 0088 B701      		movw r22,r14
+ 108 008a A601      		movw r20,r12
+ 109 008c 0E94 0000 		call NutEventWait
+ 110 0090 C801      		movw r24,r16
+ 111 0092 0E94 0000 		call NutMutexLock
+ 112 0096 20E0      		ldi r18,lo8(0)
+ 113 0098 30E0      		ldi r19,hi8(0)
+ 114 009a 00C0      		rjmp .L16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s 			page 3
+
+
+ 115               	.L15:
+ 116 009c 2FEF      		ldi r18,lo8(-1)
+ 117 009e 3FEF      		ldi r19,hi8(-1)
+ 118               	.L16:
+ 119 00a0 C901      		movw r24,r18
+ 120               	/* epilogue start */
+ 121 00a2 DF91      		pop r29
+ 122 00a4 CF91      		pop r28
+ 123 00a6 1F91      		pop r17
+ 124 00a8 0F91      		pop r16
+ 125 00aa FF90      		pop r15
+ 126 00ac EF90      		pop r14
+ 127 00ae DF90      		pop r13
+ 128 00b0 CF90      		pop r12
+ 129 00b2 0895      		ret
+ 130               		.size	NutConditionTimedWait, .-NutConditionTimedWait
+ 131               	.global	NutConditionWait
+ 132               		.type	NutConditionWait, @function
+ 133               	NutConditionWait:
+ 134 00b4 0F93      		push r16
+ 135 00b6 1F93      		push r17
+ 136 00b8 CF93      		push r28
+ 137 00ba DF93      		push r29
+ 138               	/* prologue: function */
+ 139               	/* frame size = 0 */
+ 140 00bc EC01      		movw r28,r24
+ 141 00be 0097      		sbiw r24,0
+ 142 00c0 01F4      		brne .L19
+ 143 00c2 2FEF      		ldi r18,lo8(-1)
+ 144 00c4 3FEF      		ldi r19,hi8(-1)
+ 145 00c6 00C0      		rjmp .L20
+ 146               	.L19:
+ 147 00c8 8C01      		movw r16,r24
+ 148 00ca 0E5F      		subi r16,lo8(-(2))
+ 149 00cc 1F4F      		sbci r17,hi8(-(2))
+ 150 00ce C801      		movw r24,r16
+ 151 00d0 0E94 0000 		call NutMutexUnlock
+ 152 00d4 8881      		ld r24,Y
+ 153 00d6 9981      		ldd r25,Y+1
+ 154 00d8 40E0      		ldi r20,lo8(0)
+ 155 00da 50E0      		ldi r21,hi8(0)
+ 156 00dc 60E0      		ldi r22,hlo8(0)
+ 157 00de 70E0      		ldi r23,hhi8(0)
+ 158 00e0 0E94 0000 		call NutEventWait
+ 159 00e4 C801      		movw r24,r16
+ 160 00e6 0E94 0000 		call NutMutexLock
+ 161 00ea 20E0      		ldi r18,lo8(0)
+ 162 00ec 30E0      		ldi r19,hi8(0)
+ 163               	.L20:
+ 164 00ee C901      		movw r24,r18
+ 165               	/* epilogue start */
+ 166 00f0 DF91      		pop r29
+ 167 00f2 CF91      		pop r28
+ 168 00f4 1F91      		pop r17
+ 169 00f6 0F91      		pop r16
+ 170 00f8 0895      		ret
+ 171               		.size	NutConditionWait, .-NutConditionWait
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s 			page 4
+
+
+ 172               	.global	NutConditionLock
+ 173               		.type	NutConditionLock, @function
+ 174               	NutConditionLock:
+ 175               	/* prologue: function */
+ 176               	/* frame size = 0 */
+ 177 00fa 0097      		sbiw r24,0
+ 178 00fc 01F0      		breq .L24
+ 179 00fe 0296      		adiw r24,2
+ 180 0100 0E94 0000 		call NutMutexLock
+ 181               	.L24:
+ 182 0104 0895      		ret
+ 183               		.size	NutConditionLock, .-NutConditionLock
+ 184               	.global	NutConditionInit
+ 185               		.type	NutConditionInit, @function
+ 186               	NutConditionInit:
+ 187               	/* prologue: function */
+ 188               	/* frame size = 0 */
+ 189 0106 80E0      		ldi r24,lo8(heapFreeList)
+ 190 0108 90E0      		ldi r25,hi8(heapFreeList)
+ 191 010a 68E0      		ldi r22,lo8(8)
+ 192 010c 70E0      		ldi r23,hi8(8)
+ 193 010e 0E94 0000 		call NutHeapRootAlloc
+ 194 0112 0097      		sbiw r24,0
+ 195 0114 01F4      		brne .L26
+ 196 0116 21E0      		ldi r18,lo8(1)
+ 197 0118 30E0      		ldi r19,hi8(1)
+ 198 011a 00C0      		rjmp .L27
+ 199               	.L26:
+ 200 011c 0296      		adiw r24,2
+ 201 011e 0E94 0000 		call NutMutexInit
+ 202 0122 20E0      		ldi r18,lo8(0)
+ 203 0124 30E0      		ldi r19,hi8(0)
+ 204               	.L27:
+ 205 0126 C901      		movw r24,r18
+ 206               	/* epilogue start */
+ 207 0128 0895      		ret
+ 208               		.size	NutConditionInit, .-NutConditionInit
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 condition.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:11     .text:00000000 NutConditionFree
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:30     .text:0000001c NutConditionBroadcast
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:48     .text:00000030 NutConditionSignal
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:66     .text:00000044 NutConditionUnlock
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:78     .text:00000050 NutConditionTimedWait
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:133    .text:000000b4 NutConditionWait
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:174    .text:000000fa NutConditionLock
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8eBlAq.s:186    .text:00000106 NutConditionInit
+
+UNDEFINED SYMBOLS
+NutMutexDestroy
+heapFreeList
+NutHeapRootFree
+NutEventBroadcast
+NutEventPost
+NutMutexUnlock
+NutGetMillis
+NutEventWait
+NutMutexLock
+NutHeapRootAlloc
+NutMutexInit

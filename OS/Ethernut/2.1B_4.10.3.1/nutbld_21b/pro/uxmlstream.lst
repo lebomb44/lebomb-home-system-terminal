@@ -1,0 +1,508 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s 			page 1
+
+
+   1               		.file	"uxmlstream.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	UxmlParseStream
+  10               		.type	UxmlParseStream, @function
+  11               	UxmlParseStream:
+  12 0000 2F92      		push r2
+  13 0002 3F92      		push r3
+  14 0004 4F92      		push r4
+  15 0006 5F92      		push r5
+  16 0008 6F92      		push r6
+  17 000a 7F92      		push r7
+  18 000c 8F92      		push r8
+  19 000e 9F92      		push r9
+  20 0010 AF92      		push r10
+  21 0012 BF92      		push r11
+  22 0014 CF92      		push r12
+  23 0016 DF92      		push r13
+  24 0018 EF92      		push r14
+  25 001a FF92      		push r15
+  26 001c 0F93      		push r16
+  27 001e 1F93      		push r17
+  28 0020 DF93      		push r29
+  29 0022 CF93      		push r28
+  30 0024 CDB7      		in r28,__SP_L__
+  31 0026 DEB7      		in r29,__SP_H__
+  32 0028 2C97      		sbiw r28,12
+  33 002a 0FB6      		in __tmp_reg__,__SREG__
+  34 002c F894      		cli
+  35 002e DEBF      		out __SP_H__,r29
+  36 0030 0FBE      		out __SREG__,__tmp_reg__
+  37 0032 CDBF      		out __SP_L__,r28
+  38               	/* prologue: function */
+  39               	/* frame size = 12 */
+  40 0034 9C83      		std Y+4,r25
+  41 0036 8B83      		std Y+3,r24
+  42 0038 7E83      		std Y+6,r23
+  43 003a 6D83      		std Y+5,r22
+  44 003c 5887      		std Y+8,r21
+  45 003e 4F83      		std Y+7,r20
+  46 0040 80E0      		ldi r24,lo8(512)
+  47 0042 92E0      		ldi r25,hi8(512)
+  48 0044 0E94 0000 		call malloc
+  49 0048 3C01      		movw r6,r24
+  50 004a 0097      		sbiw r24,0
+  51 004c 01F0      		breq .L44
+  52               	.L2:
+  53 004e 80E4      		ldi r24,lo8(64)
+  54 0050 90E0      		ldi r25,hi8(64)
+  55 0052 0E94 0000 		call malloc
+  56 0056 7C01      		movw r14,r24
+  57 0058 0097      		sbiw r24,0
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s 			page 2
+
+
+  58 005a 01F0      		breq .L4
+  59 005c 4424      		clr r4
+  60 005e 5524      		clr r5
+  61 0060 AA24      		clr r10
+  62 0062 BB24      		clr r11
+  63 0064 C301      		movw r24,r6
+  64 0066 0196      		adiw r24,1
+  65 0068 9A87      		std Y+10,r25
+  66 006a 8987      		std Y+9,r24
+  67 006c 00C0      		rjmp .L40
+  68               	.L4:
+  69 006e C301      		movw r24,r6
+  70 0070 0E94 0000 		call free
+  71               	.L44:
+  72 0074 4424      		clr r4
+  73 0076 5524      		clr r5
+  74 0078 00C0      		rjmp .L3
+  75               	.L40:
+  76 007a 80E0      		ldi r24,lo8(heapFreeList)
+  77 007c 90E0      		ldi r25,hi8(heapFreeList)
+  78 007e 0E94 0000 		call NutHeapRootAvailable
+  79 0082 8050      		subi r24,lo8(8192)
+  80 0084 9042      		sbci r25,hi8(8192)
+  81 0086 00F4      		brsh .+2
+  82 0088 00C0      		rjmp .L6
+  83 008a 01E0      		ldi r16,lo8(1)
+  84 008c 10E0      		ldi r17,hi8(1)
+  85 008e 8824      		clr r8
+  86 0090 9924      		clr r9
+  87 0092 212C      		mov r2,__zero_reg__
+  88 0094 82E0      		ldi r24,hi8(512)
+  89 0096 382E      		mov r3,r24
+  90 0098 CC24      		clr r12
+  91 009a DD24      		clr r13
+  92 009c 8FEF      		ldi r24,lo8(-1)
+  93 009e 9FEF      		ldi r25,hi8(-1)
+  94 00a0 9A83      		std Y+2,r25
+  95 00a2 8983      		std Y+1,r24
+  96               	.L23:
+  97 00a4 8B81      		ldd r24,Y+3
+  98 00a6 9C81      		ldd r25,Y+4
+  99 00a8 0E94 0000 		call fgetc
+ 100 00ac 9C87      		std Y+12,r25
+ 101 00ae 8B87      		std Y+11,r24
+ 102 00b0 0196      		adiw r24,1
+ 103 00b2 0297      		sbiw r24,2
+ 104 00b4 00F4      		brsh .+2
+ 105 00b6 00C0      		rjmp .L7
+ 106 00b8 0330      		cpi r16,3
+ 107 00ba 1105      		cpc r17,__zero_reg__
+ 108 00bc 01F0      		breq .L11
+ 109 00be 0430      		cpi r16,4
+ 110 00c0 1105      		cpc r17,__zero_reg__
+ 111 00c2 04F4      		brge .L13
+ 112 00c4 0130      		cpi r16,1
+ 113 00c6 1105      		cpc r17,__zero_reg__
+ 114 00c8 01F0      		breq .L9
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s 			page 3
+
+
+ 115 00ca 0230      		cpi r16,2
+ 116 00cc 1105      		cpc r17,__zero_reg__
+ 117 00ce 01F0      		breq .+2
+ 118 00d0 00C0      		rjmp .L8
+ 119 00d2 00C0      		rjmp .L10
+ 120               	.L13:
+ 121 00d4 0430      		cpi r16,4
+ 122 00d6 1105      		cpc r17,__zero_reg__
+ 123 00d8 01F0      		breq .L12
+ 124 00da 0530      		cpi r16,5
+ 125 00dc 1105      		cpc r17,__zero_reg__
+ 126 00de 01F0      		breq .+2
+ 127 00e0 00C0      		rjmp .L8
+ 128 00e2 00C0      		rjmp .L10
+ 129               	.L9:
+ 130 00e4 EB85      		ldd r30,Y+11
+ 131 00e6 FC85      		ldd r31,Y+12
+ 132 00e8 FC97      		sbiw r30,60
+ 133 00ea 01F4      		brne .L14
+ 134 00ec 6301      		movw r12,r6
+ 135 00ee 04E0      		ldi r16,lo8(4)
+ 136 00f0 10E0      		ldi r17,hi8(4)
+ 137 00f2 00C0      		rjmp .L15
+ 138               	.L14:
+ 139 00f4 8B85      		ldd r24,Y+11
+ 140 00f6 9C85      		ldd r25,Y+12
+ 141 00f8 8232      		cpi r24,34
+ 142 00fa 9105      		cpc r25,__zero_reg__
+ 143 00fc 01F0      		breq .L16
+ 144 00fe 8797      		sbiw r24,39
+ 145 0100 01F4      		brne .L8
+ 146 0102 00C0      		rjmp .L16
+ 147               	.L10:
+ 148 0104 EB85      		ldd r30,Y+11
+ 149 0106 FC85      		ldd r31,Y+12
+ 150 0108 E815      		cp r30,r8
+ 151 010a F905      		cpc r31,r9
+ 152 010c 01F4      		brne .L8
+ 153 010e 0150      		subi r16,lo8(-(-1))
+ 154 0110 1040      		sbci r17,hi8(-(-1))
+ 155 0112 4F01      		movw r8,r30
+ 156 0114 00C0      		rjmp .L8
+ 157               	.L11:
+ 158 0116 8B85      		ldd r24,Y+11
+ 159 0118 9C85      		ldd r25,Y+12
+ 160 011a 0E94 0000 		call isspace
+ 161 011e 892B      		or r24,r25
+ 162 0120 01F0      		breq .L17
+ 163 0122 1C86      		std Y+12,__zero_reg__
+ 164 0124 1B86      		std Y+11,__zero_reg__
+ 165 0126 00C0      		rjmp .L8
+ 166               	.L17:
+ 167 0128 04E0      		ldi r16,lo8(4)
+ 168 012a 10E0      		ldi r17,hi8(4)
+ 169               	.L12:
+ 170 012c 8B85      		ldd r24,Y+11
+ 171 012e 9C85      		ldd r25,Y+12
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s 			page 4
+
+
+ 172 0130 CE97      		sbiw r24,62
+ 173 0132 01F4      		brne .L18
+ 174 0134 00E0      		ldi r16,lo8(0)
+ 175 0136 10E0      		ldi r17,hi8(0)
+ 176 0138 1A82      		std Y+2,__zero_reg__
+ 177 013a 1982      		std Y+1,__zero_reg__
+ 178 013c 00C0      		rjmp .L8
+ 179               	.L18:
+ 180 013e EB85      		ldd r30,Y+11
+ 181 0140 FC85      		ldd r31,Y+12
+ 182 0142 E232      		cpi r30,34
+ 183 0144 F105      		cpc r31,__zero_reg__
+ 184 0146 01F0      		breq .L19
+ 185 0148 B797      		sbiw r30,39
+ 186 014a 01F4      		brne .L20
+ 187               	.L19:
+ 188 014c 0F5F      		subi r16,lo8(-(1))
+ 189 014e 1F4F      		sbci r17,hi8(-(1))
+ 190 0150 8B84      		ldd r8,Y+11
+ 191 0152 9C84      		ldd r9,Y+12
+ 192 0154 00C0      		rjmp .L8
+ 193               	.L20:
+ 194 0156 8B85      		ldd r24,Y+11
+ 195 0158 9C85      		ldd r25,Y+12
+ 196 015a 0E94 0000 		call isspace
+ 197 015e 892B      		or r24,r25
+ 198 0160 01F0      		breq .L8
+ 199 0162 03E0      		ldi r16,lo8(3)
+ 200 0164 10E0      		ldi r17,hi8(3)
+ 201 0166 80E2      		ldi r24,lo8(32)
+ 202 0168 90E0      		ldi r25,hi8(32)
+ 203 016a 9C87      		std Y+12,r25
+ 204 016c 8B87      		std Y+11,r24
+ 205 016e 00C0      		rjmp .L8
+ 206               	.L16:
+ 207 0170 8B84      		ldd r8,Y+11
+ 208 0172 9C84      		ldd r9,Y+12
+ 209 0174 02E0      		ldi r16,lo8(2)
+ 210 0176 10E0      		ldi r17,hi8(2)
+ 211               	.L8:
+ 212 0178 C114      		cp r12,__zero_reg__
+ 213 017a D104      		cpc r13,__zero_reg__
+ 214 017c 01F0      		breq .L21
+ 215 017e EB85      		ldd r30,Y+11
+ 216 0180 FC85      		ldd r31,Y+12
+ 217 0182 EF2B      		or r30,r31
+ 218 0184 01F0      		breq .L21
+ 219               	.L15:
+ 220 0186 F2E0      		ldi r31,lo8(2)
+ 221 0188 2F16      		cp r2,r31
+ 222 018a 3104      		cpc r3,__zero_reg__
+ 223 018c 00F0      		brlo .L22
+ 224 018e 0894      		sec
+ 225 0190 2108      		sbc r2,__zero_reg__
+ 226 0192 3108      		sbc r3,__zero_reg__
+ 227 0194 F601      		movw r30,r12
+ 228 0196 2B85      		ldd r18,Y+11
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s 			page 5
+
+
+ 229 0198 2193      		st Z+,r18
+ 230 019a 6F01      		movw r12,r30
+ 231               	.L21:
+ 232 019c 0115      		cp r16,__zero_reg__
+ 233 019e 1105      		cpc r17,__zero_reg__
+ 234 01a0 01F0      		breq .+2
+ 235 01a2 00C0      		rjmp .L23
+ 236               	.L7:
+ 237 01a4 C114      		cp r12,__zero_reg__
+ 238 01a6 D104      		cpc r13,__zero_reg__
+ 239 01a8 01F0      		breq .L24
+ 240               	.L22:
+ 241 01aa F601      		movw r30,r12
+ 242 01ac 1082      		st Z,__zero_reg__
+ 243               	.L24:
+ 244 01ae 8981      		ldd r24,Y+1
+ 245 01b0 9A81      		ldd r25,Y+2
+ 246 01b2 892B      		or r24,r25
+ 247 01b4 01F0      		breq .+2
+ 248 01b6 00C0      		rjmp .L6
+ 249 01b8 8985      		ldd r24,Y+9
+ 250 01ba 9A85      		ldd r25,Y+10
+ 251 01bc B701      		movw r22,r14
+ 252 01be 40E4      		ldi r20,lo8(64)
+ 253 01c0 50E0      		ldi r21,hi8(64)
+ 254 01c2 0E94 0000 		call UxmlParseTag
+ 255 01c6 8C01      		movw r16,r24
+ 256 01c8 0097      		sbiw r24,0
+ 257 01ca 01F4      		brne .+2
+ 258 01cc 00C0      		rjmp .L40
+ 259 01ce 6C01      		movw r12,r24
+ 260 01d0 F701      		movw r30,r14
+ 261 01d2 8081      		ld r24,Z
+ 262 01d4 90E0      		ldi r25,lo8(0)
+ 263 01d6 0E94 0000 		call isalpha
+ 264 01da 892B      		or r24,r25
+ 265 01dc 01F4      		brne .+2
+ 266 01de 00C0      		rjmp .L25
+ 267 01e0 C701      		movw r24,r14
+ 268 01e2 6D81      		ldd r22,Y+5
+ 269 01e4 7E81      		ldd r23,Y+6
+ 270 01e6 0E94 0000 		call UxmlFilterMatch
+ 271 01ea 892B      		or r24,r25
+ 272 01ec 01F4      		brne .+2
+ 273 01ee 00C0      		rjmp .L25
+ 274 01f0 C701      		movw r24,r14
+ 275 01f2 0E94 0000 		call UxmlNodeCreate
+ 276 01f6 BC01      		movw r22,r24
+ 277 01f8 0097      		sbiw r24,0
+ 278 01fa 01F4      		brne .+2
+ 279 01fc 00C0      		rjmp .L6
+ 280 01fe 4114      		cp r4,__zero_reg__
+ 281 0200 5104      		cpc r5,__zero_reg__
+ 282 0202 01F4      		brne .L26
+ 283 0204 2C01      		movw r4,r24
+ 284 0206 5C01      		movw r10,r24
+ 285 0208 00C0      		rjmp .L41
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s 			page 6
+
+
+ 286               	.L26:
+ 287 020a A114      		cp r10,__zero_reg__
+ 288 020c B104      		cpc r11,__zero_reg__
+ 289 020e 01F4      		brne .L28
+ 290 0210 C201      		movw r24,r4
+ 291 0212 0E94 0000 		call UxmlTreeAddSibling
+ 292 0216 00C0      		rjmp .L43
+ 293               	.L28:
+ 294 0218 C501      		movw r24,r10
+ 295 021a 0E94 0000 		call UxmlTreeAddChild
+ 296               	.L43:
+ 297 021e 5C01      		movw r10,r24
+ 298               	.L41:
+ 299 0220 C801      		movw r24,r16
+ 300 0222 B701      		movw r22,r14
+ 301 0224 40E4      		ldi r20,lo8(64)
+ 302 0226 50E0      		ldi r21,hi8(64)
+ 303 0228 0E94 0000 		call UxmlParseTag
+ 304 022c 8C01      		movw r16,r24
+ 305 022e 0097      		sbiw r24,0
+ 306 0230 01F0      		breq .L29
+ 307 0232 F701      		movw r30,r14
+ 308 0234 8081      		ld r24,Z
+ 309 0236 8E33      		cpi r24,lo8(62)
+ 310 0238 01F0      		breq .L29
+ 311 023a 90E0      		ldi r25,lo8(0)
+ 312 023c 0E94 0000 		call isalpha
+ 313 0240 892B      		or r24,r25
+ 314 0242 01F0      		breq .L41
+ 315 0244 C701      		movw r24,r14
+ 316 0246 6F81      		ldd r22,Y+7
+ 317 0248 7885      		ldd r23,Y+8
+ 318 024a 0E94 0000 		call UxmlFilterMatch
+ 319 024e 892B      		or r24,r25
+ 320 0250 01F0      		breq .L41
+ 321 0252 C701      		movw r24,r14
+ 322 0254 0E94 0000 		call strdup
+ 323 0258 4C01      		movw r8,r24
+ 324 025a 0097      		sbiw r24,0
+ 325 025c 01F0      		breq .L41
+ 326 025e C801      		movw r24,r16
+ 327 0260 B701      		movw r22,r14
+ 328 0262 40E4      		ldi r20,lo8(64)
+ 329 0264 50E0      		ldi r21,hi8(64)
+ 330 0266 0E94 0000 		call UxmlParseTag
+ 331 026a 9C01      		movw r18,r24
+ 332 026c 0097      		sbiw r24,0
+ 333 026e 01F0      		breq .L32
+ 334 0270 F701      		movw r30,r14
+ 335 0272 8081      		ld r24,Z
+ 336 0274 8D33      		cpi r24,lo8(61)
+ 337 0276 01F4      		brne .L32
+ 338               	.L31:
+ 339 0278 C901      		movw r24,r18
+ 340 027a B701      		movw r22,r14
+ 341 027c 40E4      		ldi r20,lo8(64)
+ 342 027e 50E0      		ldi r21,hi8(64)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s 			page 7
+
+
+ 343 0280 0E94 0000 		call UxmlParseTag
+ 344 0284 8C01      		movw r16,r24
+ 345 0286 0097      		sbiw r24,0
+ 346 0288 01F0      		breq .L32
+ 347 028a F701      		movw r30,r14
+ 348 028c 8081      		ld r24,Z
+ 349 028e 8E33      		cpi r24,lo8(62)
+ 350 0290 01F4      		brne .L33
+ 351               	.L32:
+ 352 0292 C401      		movw r24,r8
+ 353 0294 0E94 0000 		call free
+ 354 0298 00C0      		rjmp .L29
+ 355               	.L33:
+ 356 029a C501      		movw r24,r10
+ 357 029c B401      		movw r22,r8
+ 358 029e A701      		movw r20,r14
+ 359 02a0 0E94 0000 		call UxmlNodeAddAttrib
+ 360 02a4 C401      		movw r24,r8
+ 361 02a6 0E94 0000 		call free
+ 362 02aa 00C0      		rjmp .L41
+ 363               	.L29:
+ 364 02ac A114      		cp r10,__zero_reg__
+ 365 02ae B104      		cpc r11,__zero_reg__
+ 366 02b0 01F4      		brne .+2
+ 367 02b2 00C0      		rjmp .L40
+ 368 02b4 D601      		movw r26,r12
+ 369 02b6 0D90      		ld __tmp_reg__,X+
+ 370 02b8 0020      		tst __tmp_reg__
+ 371 02ba 01F4      		brne .-6
+ 372 02bc 1197      		sbiw r26,1
+ 373 02be AC19      		sub r26,r12
+ 374 02c0 BD09      		sbc r27,r13
+ 375 02c2 A230      		cpi r26,2
+ 376 02c4 B105      		cpc r27,__zero_reg__
+ 377 02c6 00F4      		brsh .+2
+ 378 02c8 00C0      		rjmp .L40
+ 379 02ca CA0E      		add r12,r26
+ 380 02cc DB1E      		adc r13,r27
+ 381 02ce 8EEF      		ldi r24,lo8(-2)
+ 382 02d0 9FEF      		ldi r25,hi8(-2)
+ 383 02d2 C80E      		add r12,r24
+ 384 02d4 D91E      		adc r13,r25
+ 385 02d6 F601      		movw r30,r12
+ 386 02d8 8081      		ld r24,Z
+ 387 02da 8F32      		cpi r24,lo8(47)
+ 388 02dc 01F0      		breq .+2
+ 389 02de 00C0      		rjmp .L40
+ 390 02e0 00C0      		rjmp .L42
+ 391               	.L25:
+ 392 02e2 F701      		movw r30,r14
+ 393 02e4 8081      		ld r24,Z
+ 394 02e6 8F32      		cpi r24,lo8(47)
+ 395 02e8 01F0      		breq .+2
+ 396 02ea 00C0      		rjmp .L40
+ 397 02ec C801      		movw r24,r16
+ 398 02ee B701      		movw r22,r14
+ 399 02f0 40E4      		ldi r20,lo8(64)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s 			page 8
+
+
+ 400 02f2 50E0      		ldi r21,hi8(64)
+ 401 02f4 0E94 0000 		call UxmlParseTag
+ 402 02f8 892B      		or r24,r25
+ 403 02fa 01F4      		brne .+2
+ 404 02fc 00C0      		rjmp .L40
+ 405 02fe A114      		cp r10,__zero_reg__
+ 406 0300 B104      		cpc r11,__zero_reg__
+ 407 0302 01F4      		brne .+2
+ 408 0304 00C0      		rjmp .L40
+ 409 0306 F501      		movw r30,r10
+ 410 0308 8681      		ldd r24,Z+6
+ 411 030a 9781      		ldd r25,Z+7
+ 412 030c B701      		movw r22,r14
+ 413 030e 0E94 0000 		call strcasecmp
+ 414 0312 892B      		or r24,r25
+ 415 0314 01F0      		breq .+2
+ 416 0316 00C0      		rjmp .L40
+ 417               	.L42:
+ 418 0318 F501      		movw r30,r10
+ 419 031a A480      		ldd r10,Z+4
+ 420 031c B580      		ldd r11,Z+5
+ 421 031e 00C0      		rjmp .L40
+ 422               	.L6:
+ 423 0320 C301      		movw r24,r6
+ 424 0322 0E94 0000 		call free
+ 425 0326 C701      		movw r24,r14
+ 426 0328 0E94 0000 		call free
+ 427               	.L3:
+ 428 032c C201      		movw r24,r4
+ 429               	/* epilogue start */
+ 430 032e 2C96      		adiw r28,12
+ 431 0330 0FB6      		in __tmp_reg__,__SREG__
+ 432 0332 F894      		cli
+ 433 0334 DEBF      		out __SP_H__,r29
+ 434 0336 0FBE      		out __SREG__,__tmp_reg__
+ 435 0338 CDBF      		out __SP_L__,r28
+ 436 033a CF91      		pop r28
+ 437 033c DF91      		pop r29
+ 438 033e 1F91      		pop r17
+ 439 0340 0F91      		pop r16
+ 440 0342 FF90      		pop r15
+ 441 0344 EF90      		pop r14
+ 442 0346 DF90      		pop r13
+ 443 0348 CF90      		pop r12
+ 444 034a BF90      		pop r11
+ 445 034c AF90      		pop r10
+ 446 034e 9F90      		pop r9
+ 447 0350 8F90      		pop r8
+ 448 0352 7F90      		pop r7
+ 449 0354 6F90      		pop r6
+ 450 0356 5F90      		pop r5
+ 451 0358 4F90      		pop r4
+ 452 035a 3F90      		pop r3
+ 453 035c 2F90      		pop r2
+ 454 035e 0895      		ret
+ 455               		.size	UxmlParseStream, .-UxmlParseStream
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 uxmlstream.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvpv62j.s:11     .text:00000000 UxmlParseStream
+
+UNDEFINED SYMBOLS
+malloc
+free
+heapFreeList
+NutHeapRootAvailable
+fgetc
+isspace
+UxmlParseTag
+isalpha
+UxmlFilterMatch
+UxmlNodeCreate
+UxmlTreeAddSibling
+UxmlTreeAddChild
+strdup
+UxmlNodeAddAttrib
+strcasecmp

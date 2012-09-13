@@ -1,0 +1,492 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s 			page 1
+
+
+   1               		.file	"localtim.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	localtime_r
+  10               		.type	localtime_r, @function
+  11               	localtime_r:
+  12 0000 CF92      		push r12
+  13 0002 DF92      		push r13
+  14 0004 EF92      		push r14
+  15 0006 FF92      		push r15
+  16 0008 0F93      		push r16
+  17 000a 1F93      		push r17
+  18 000c DF93      		push r29
+  19 000e CF93      		push r28
+  20 0010 00D0      		rcall .
+  21 0012 00D0      		rcall .
+  22 0014 CDB7      		in r28,__SP_L__
+  23 0016 DEB7      		in r29,__SP_H__
+  24               	/* prologue: function */
+  25               	/* frame size = 4 */
+  26 0018 FC01      		movw r30,r24
+  27 001a 6B01      		movw r12,r22
+  28 001c 2081      		ld r18,Z
+  29 001e 3181      		ldd r19,Z+1
+  30 0020 4281      		ldd r20,Z+2
+  31 0022 5381      		ldd r21,Z+3
+  32 0024 DA01      		movw r26,r20
+  33 0026 C901      		movw r24,r18
+  34 0028 8158      		subi r24,lo8(-(-259201))
+  35 002a 944F      		sbci r25,hi8(-(-259201))
+  36 002c A340      		sbci r26,hlo8(-(-259201))
+  37 002e B040      		sbci r27,hhi8(-(-259201))
+  38 0030 8E5F      		subi r24,lo8(2146965246)
+  39 0032 9641      		sbci r25,hi8(2146965246)
+  40 0034 A84F      		sbci r26,hlo8(2146965246)
+  41 0036 BF47      		sbci r27,hhi8(2146965246)
+  42 0038 00F0      		brlo .+2
+  43 003a 00C0      		rjmp .L2
+  44 003c 8091 0000 		lds r24,_timezone
+  45 0040 9091 0000 		lds r25,(_timezone)+1
+  46 0044 A091 0000 		lds r26,(_timezone)+2
+  47 0048 B091 0000 		lds r27,(_timezone)+3
+  48 004c 281B      		sub r18,r24
+  49 004e 390B      		sbc r19,r25
+  50 0050 4A0B      		sbc r20,r26
+  51 0052 5B0B      		sbc r21,r27
+  52 0054 2983      		std Y+1,r18
+  53 0056 3A83      		std Y+2,r19
+  54 0058 4B83      		std Y+3,r20
+  55 005a 5C83      		std Y+4,r21
+  56 005c 8E01      		movw r16,r28
+  57 005e 0F5F      		subi r16,lo8(-(1))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s 			page 2
+
+
+  58 0060 1F4F      		sbci r17,hi8(-(1))
+  59 0062 C801      		movw r24,r16
+  60 0064 B601      		movw r22,r12
+  61 0066 0E94 0000 		call gmtime_r
+  62 006a 8091 0000 		lds r24,_daylight
+  63 006e 9091 0000 		lds r25,(_daylight)+1
+  64 0072 892B      		or r24,r25
+  65 0074 01F4      		brne .+2
+  66 0076 00C0      		rjmp .L3
+  67 0078 C601      		movw r24,r12
+  68 007a 0E94 0000 		call _isindst
+  69 007e 892B      		or r24,r25
+  70 0080 01F4      		brne .+2
+  71 0082 00C0      		rjmp .L3
+  72 0084 8981      		ldd r24,Y+1
+  73 0086 9A81      		ldd r25,Y+2
+  74 0088 AB81      		ldd r26,Y+3
+  75 008a BC81      		ldd r27,Y+4
+  76 008c 2091 0000 		lds r18,_dstbias
+  77 0090 3091 0000 		lds r19,(_dstbias)+1
+  78 0094 4091 0000 		lds r20,(_dstbias)+2
+  79 0098 5091 0000 		lds r21,(_dstbias)+3
+  80 009c 821B      		sub r24,r18
+  81 009e 930B      		sbc r25,r19
+  82 00a0 A40B      		sbc r26,r20
+  83 00a2 B50B      		sbc r27,r21
+  84 00a4 8983      		std Y+1,r24
+  85 00a6 9A83      		std Y+2,r25
+  86 00a8 AB83      		std Y+3,r26
+  87 00aa BC83      		std Y+4,r27
+  88 00ac C801      		movw r24,r16
+  89 00ae B601      		movw r22,r12
+  90 00b0 0E94 0000 		call gmtime_r
+  91 00b4 81E0      		ldi r24,lo8(1)
+  92 00b6 90E0      		ldi r25,hi8(1)
+  93 00b8 D601      		movw r26,r12
+  94 00ba 5196      		adiw r26,16+1
+  95 00bc 9C93      		st X,r25
+  96 00be 8E93      		st -X,r24
+  97 00c0 5097      		sbiw r26,16
+  98 00c2 00C0      		rjmp .L3
+  99               	.L2:
+ 100 00c4 CF01      		movw r24,r30
+ 101 00c6 B601      		movw r22,r12
+ 102 00c8 0E94 0000 		call gmtime_r
+ 103 00cc C601      		movw r24,r12
+ 104 00ce 0E94 0000 		call _isindst
+ 105 00d2 E090 0000 		lds r14,_timezone
+ 106 00d6 F090 0000 		lds r15,(_timezone)+1
+ 107 00da 0091 0000 		lds r16,(_timezone)+2
+ 108 00de 1091 0000 		lds r17,(_timezone)+3
+ 109 00e2 F601      		movw r30,r12
+ 110 00e4 2081      		ld r18,Z
+ 111 00e6 3181      		ldd r19,Z+1
+ 112 00e8 892B      		or r24,r25
+ 113 00ea 01F0      		breq .L4
+ 114 00ec C901      		movw r24,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s 			page 3
+
+
+ 115 00ee AA27      		clr r26
+ 116 00f0 97FD      		sbrc r25,7
+ 117 00f2 A095      		com r26
+ 118 00f4 BA2F      		mov r27,r26
+ 119 00f6 2091 0000 		lds r18,_dstbias
+ 120 00fa 3091 0000 		lds r19,(_dstbias)+1
+ 121 00fe 4091 0000 		lds r20,(_dstbias)+2
+ 122 0102 5091 0000 		lds r21,(_dstbias)+3
+ 123 0106 821B      		sub r24,r18
+ 124 0108 930B      		sbc r25,r19
+ 125 010a A40B      		sbc r26,r20
+ 126 010c B50B      		sbc r27,r21
+ 127 010e 00C0      		rjmp .L12
+ 128               	.L4:
+ 129 0110 C901      		movw r24,r18
+ 130 0112 AA27      		clr r26
+ 131 0114 97FD      		sbrc r25,7
+ 132 0116 A095      		com r26
+ 133 0118 BA2F      		mov r27,r26
+ 134               	.L12:
+ 135 011a 8E19      		sub r24,r14
+ 136 011c 9F09      		sbc r25,r15
+ 137 011e A00B      		sbc r26,r16
+ 138 0120 B10B      		sbc r27,r17
+ 139 0122 8983      		std Y+1,r24
+ 140 0124 9A83      		std Y+2,r25
+ 141 0126 AB83      		std Y+3,r26
+ 142 0128 BC83      		std Y+4,r27
+ 143 012a E980      		ldd r14,Y+1
+ 144 012c FA80      		ldd r15,Y+2
+ 145 012e 0B81      		ldd r16,Y+3
+ 146 0130 1C81      		ldd r17,Y+4
+ 147 0132 C801      		movw r24,r16
+ 148 0134 B701      		movw r22,r14
+ 149 0136 2CE3      		ldi r18,lo8(60)
+ 150 0138 30E0      		ldi r19,hi8(60)
+ 151 013a 40E0      		ldi r20,hlo8(60)
+ 152 013c 50E0      		ldi r21,hhi8(60)
+ 153 013e 0E94 0000 		call __divmodsi4
+ 154 0142 CB01      		movw r24,r22
+ 155 0144 D601      		movw r26,r12
+ 156 0146 1196      		adiw r26,1
+ 157 0148 7C93      		st X,r23
+ 158 014a 6E93      		st -X,r22
+ 159 014c 77FF      		sbrs r23,7
+ 160 014e 00C0      		rjmp .L6
+ 161 0150 CC96      		adiw r24,60
+ 162 0152 8D93      		st X+,r24
+ 163 0154 9C93      		st X,r25
+ 164 0156 84EC      		ldi r24,lo8(-60)
+ 165 0158 9FEF      		ldi r25,hi8(-60)
+ 166 015a AFEF      		ldi r26,hlo8(-60)
+ 167 015c BFEF      		ldi r27,hhi8(-60)
+ 168 015e E80E      		add r14,r24
+ 169 0160 F91E      		adc r15,r25
+ 170 0162 0A1F      		adc r16,r26
+ 171 0164 1B1F      		adc r17,r27
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s 			page 4
+
+
+ 172 0166 E982      		std Y+1,r14
+ 173 0168 FA82      		std Y+2,r15
+ 174 016a 0B83      		std Y+3,r16
+ 175 016c 1C83      		std Y+4,r17
+ 176               	.L6:
+ 177 016e 6981      		ldd r22,Y+1
+ 178 0170 7A81      		ldd r23,Y+2
+ 179 0172 8B81      		ldd r24,Y+3
+ 180 0174 9C81      		ldd r25,Y+4
+ 181 0176 2CE3      		ldi r18,lo8(60)
+ 182 0178 30E0      		ldi r19,hi8(60)
+ 183 017a 40E0      		ldi r20,hlo8(60)
+ 184 017c 50E0      		ldi r21,hhi8(60)
+ 185 017e 0E94 0000 		call __divmodsi4
+ 186 0182 7901      		movw r14,r18
+ 187 0184 8A01      		movw r16,r20
+ 188 0186 D601      		movw r26,r12
+ 189 0188 1296      		adiw r26,2
+ 190 018a 8D91      		ld r24,X+
+ 191 018c 9C91      		ld r25,X
+ 192 018e 1397      		sbiw r26,2+1
+ 193 0190 AA27      		clr r26
+ 194 0192 97FD      		sbrc r25,7
+ 195 0194 A095      		com r26
+ 196 0196 BA2F      		mov r27,r26
+ 197 0198 E80E      		add r14,r24
+ 198 019a F91E      		adc r15,r25
+ 199 019c 0A1F      		adc r16,r26
+ 200 019e 1B1F      		adc r17,r27
+ 201 01a0 E982      		std Y+1,r14
+ 202 01a2 FA82      		std Y+2,r15
+ 203 01a4 0B83      		std Y+3,r16
+ 204 01a6 1C83      		std Y+4,r17
+ 205 01a8 C801      		movw r24,r16
+ 206 01aa B701      		movw r22,r14
+ 207 01ac 2CE3      		ldi r18,lo8(60)
+ 208 01ae 30E0      		ldi r19,hi8(60)
+ 209 01b0 40E0      		ldi r20,hlo8(60)
+ 210 01b2 50E0      		ldi r21,hhi8(60)
+ 211 01b4 0E94 0000 		call __divmodsi4
+ 212 01b8 CB01      		movw r24,r22
+ 213 01ba F601      		movw r30,r12
+ 214 01bc 7383      		std Z+3,r23
+ 215 01be 6283      		std Z+2,r22
+ 216 01c0 77FF      		sbrs r23,7
+ 217 01c2 00C0      		rjmp .L7
+ 218 01c4 CC96      		adiw r24,60
+ 219 01c6 9383      		std Z+3,r25
+ 220 01c8 8283      		std Z+2,r24
+ 221 01ca 84EC      		ldi r24,lo8(-60)
+ 222 01cc 9FEF      		ldi r25,hi8(-60)
+ 223 01ce AFEF      		ldi r26,hlo8(-60)
+ 224 01d0 BFEF      		ldi r27,hhi8(-60)
+ 225 01d2 E80E      		add r14,r24
+ 226 01d4 F91E      		adc r15,r25
+ 227 01d6 0A1F      		adc r16,r26
+ 228 01d8 1B1F      		adc r17,r27
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s 			page 5
+
+
+ 229 01da E982      		std Y+1,r14
+ 230 01dc FA82      		std Y+2,r15
+ 231 01de 0B83      		std Y+3,r16
+ 232 01e0 1C83      		std Y+4,r17
+ 233               	.L7:
+ 234 01e2 6981      		ldd r22,Y+1
+ 235 01e4 7A81      		ldd r23,Y+2
+ 236 01e6 8B81      		ldd r24,Y+3
+ 237 01e8 9C81      		ldd r25,Y+4
+ 238 01ea 2CE3      		ldi r18,lo8(60)
+ 239 01ec 30E0      		ldi r19,hi8(60)
+ 240 01ee 40E0      		ldi r20,hlo8(60)
+ 241 01f0 50E0      		ldi r21,hhi8(60)
+ 242 01f2 0E94 0000 		call __divmodsi4
+ 243 01f6 7901      		movw r14,r18
+ 244 01f8 8A01      		movw r16,r20
+ 245 01fa D601      		movw r26,r12
+ 246 01fc 1496      		adiw r26,4
+ 247 01fe 8D91      		ld r24,X+
+ 248 0200 9C91      		ld r25,X
+ 249 0202 1597      		sbiw r26,4+1
+ 250 0204 AA27      		clr r26
+ 251 0206 97FD      		sbrc r25,7
+ 252 0208 A095      		com r26
+ 253 020a BA2F      		mov r27,r26
+ 254 020c E80E      		add r14,r24
+ 255 020e F91E      		adc r15,r25
+ 256 0210 0A1F      		adc r16,r26
+ 257 0212 1B1F      		adc r17,r27
+ 258 0214 E982      		std Y+1,r14
+ 259 0216 FA82      		std Y+2,r15
+ 260 0218 0B83      		std Y+3,r16
+ 261 021a 1C83      		std Y+4,r17
+ 262 021c C801      		movw r24,r16
+ 263 021e B701      		movw r22,r14
+ 264 0220 28E1      		ldi r18,lo8(24)
+ 265 0222 30E0      		ldi r19,hi8(24)
+ 266 0224 40E0      		ldi r20,hlo8(24)
+ 267 0226 50E0      		ldi r21,hhi8(24)
+ 268 0228 0E94 0000 		call __divmodsi4
+ 269 022c CB01      		movw r24,r22
+ 270 022e F601      		movw r30,r12
+ 271 0230 7583      		std Z+5,r23
+ 272 0232 6483      		std Z+4,r22
+ 273 0234 77FF      		sbrs r23,7
+ 274 0236 00C0      		rjmp .L8
+ 275 0238 4896      		adiw r24,24
+ 276 023a 9583      		std Z+5,r25
+ 277 023c 8483      		std Z+4,r24
+ 278 023e 88EE      		ldi r24,lo8(-24)
+ 279 0240 9FEF      		ldi r25,hi8(-24)
+ 280 0242 AFEF      		ldi r26,hlo8(-24)
+ 281 0244 BFEF      		ldi r27,hhi8(-24)
+ 282 0246 E80E      		add r14,r24
+ 283 0248 F91E      		adc r15,r25
+ 284 024a 0A1F      		adc r16,r26
+ 285 024c 1B1F      		adc r17,r27
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s 			page 6
+
+
+ 286 024e E982      		std Y+1,r14
+ 287 0250 FA82      		std Y+2,r15
+ 288 0252 0B83      		std Y+3,r16
+ 289 0254 1C83      		std Y+4,r17
+ 290               	.L8:
+ 291 0256 6981      		ldd r22,Y+1
+ 292 0258 7A81      		ldd r23,Y+2
+ 293 025a 8B81      		ldd r24,Y+3
+ 294 025c 9C81      		ldd r25,Y+4
+ 295 025e 28E1      		ldi r18,lo8(24)
+ 296 0260 30E0      		ldi r19,hi8(24)
+ 297 0262 40E0      		ldi r20,hlo8(24)
+ 298 0264 50E0      		ldi r21,hhi8(24)
+ 299 0266 0E94 0000 		call __divmodsi4
+ 300 026a 7901      		movw r14,r18
+ 301 026c 8A01      		movw r16,r20
+ 302 026e 1E14      		cp __zero_reg__,r14
+ 303 0270 1F04      		cpc __zero_reg__,r15
+ 304 0272 1006      		cpc __zero_reg__,r16
+ 305 0274 1106      		cpc __zero_reg__,r17
+ 306 0276 04F4      		brge .L9
+ 307 0278 D601      		movw r26,r12
+ 308 027a 1C96      		adiw r26,12
+ 309 027c 6D91      		ld r22,X+
+ 310 027e 7C91      		ld r23,X
+ 311 0280 1D97      		sbiw r26,12+1
+ 312 0282 8827      		clr r24
+ 313 0284 77FD      		sbrc r23,7
+ 314 0286 8095      		com r24
+ 315 0288 982F      		mov r25,r24
+ 316 028a 6E0D      		add r22,r14
+ 317 028c 7F1D      		adc r23,r15
+ 318 028e 801F      		adc r24,r16
+ 319 0290 911F      		adc r25,r17
+ 320 0292 27E0      		ldi r18,lo8(7)
+ 321 0294 30E0      		ldi r19,hi8(7)
+ 322 0296 40E0      		ldi r20,hlo8(7)
+ 323 0298 50E0      		ldi r21,hhi8(7)
+ 324 029a 0E94 0000 		call __divmodsi4
+ 325 029e F601      		movw r30,r12
+ 326 02a0 7587      		std Z+13,r23
+ 327 02a2 6487      		std Z+12,r22
+ 328 02a4 8681      		ldd r24,Z+6
+ 329 02a6 9781      		ldd r25,Z+7
+ 330 02a8 8E0D      		add r24,r14
+ 331 02aa 9F1D      		adc r25,r15
+ 332 02ac 9783      		std Z+7,r25
+ 333 02ae 8683      		std Z+6,r24
+ 334 02b0 8685      		ldd r24,Z+14
+ 335 02b2 9785      		ldd r25,Z+15
+ 336 02b4 8E0D      		add r24,r14
+ 337 02b6 9F1D      		adc r25,r15
+ 338 02b8 9787      		std Z+15,r25
+ 339 02ba 8687      		std Z+14,r24
+ 340 02bc 00C0      		rjmp .L3
+ 341               	.L9:
+ 342 02be E114      		cp r14,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s 			page 7
+
+
+ 343 02c0 F104      		cpc r15,__zero_reg__
+ 344 02c2 0105      		cpc r16,__zero_reg__
+ 345 02c4 1105      		cpc r17,__zero_reg__
+ 346 02c6 01F0      		breq .L3
+ 347 02c8 D601      		movw r26,r12
+ 348 02ca 1C96      		adiw r26,12
+ 349 02cc 6D91      		ld r22,X+
+ 350 02ce 7C91      		ld r23,X
+ 351 02d0 1D97      		sbiw r26,12+1
+ 352 02d2 695F      		subi r22,lo8(-(7))
+ 353 02d4 7F4F      		sbci r23,hi8(-(7))
+ 354 02d6 8827      		clr r24
+ 355 02d8 77FD      		sbrc r23,7
+ 356 02da 8095      		com r24
+ 357 02dc 982F      		mov r25,r24
+ 358 02de 6E0D      		add r22,r14
+ 359 02e0 7F1D      		adc r23,r15
+ 360 02e2 801F      		adc r24,r16
+ 361 02e4 911F      		adc r25,r17
+ 362 02e6 27E0      		ldi r18,lo8(7)
+ 363 02e8 30E0      		ldi r19,hi8(7)
+ 364 02ea 40E0      		ldi r20,hlo8(7)
+ 365 02ec 50E0      		ldi r21,hhi8(7)
+ 366 02ee 0E94 0000 		call __divmodsi4
+ 367 02f2 F601      		movw r30,r12
+ 368 02f4 7587      		std Z+13,r23
+ 369 02f6 6487      		std Z+12,r22
+ 370 02f8 8681      		ldd r24,Z+6
+ 371 02fa 9781      		ldd r25,Z+7
+ 372 02fc 8E0D      		add r24,r14
+ 373 02fe 9F1D      		adc r25,r15
+ 374 0300 9783      		std Z+7,r25
+ 375 0302 8683      		std Z+6,r24
+ 376 0304 1816      		cp __zero_reg__,r24
+ 377 0306 1906      		cpc __zero_reg__,r25
+ 378 0308 04F0      		brlt .L10
+ 379 030a 4F96      		adiw r24,31
+ 380 030c 9783      		std Z+7,r25
+ 381 030e 8683      		std Z+6,r24
+ 382 0310 8CE6      		ldi r24,lo8(364)
+ 383 0312 91E0      		ldi r25,hi8(364)
+ 384 0314 9787      		std Z+15,r25
+ 385 0316 8687      		std Z+14,r24
+ 386 0318 8BE0      		ldi r24,lo8(11)
+ 387 031a 90E0      		ldi r25,hi8(11)
+ 388 031c 9187      		std Z+9,r25
+ 389 031e 8087      		std Z+8,r24
+ 390 0320 8285      		ldd r24,Z+10
+ 391 0322 9385      		ldd r25,Z+11
+ 392 0324 0197      		sbiw r24,1
+ 393 0326 9387      		std Z+11,r25
+ 394 0328 8287      		std Z+10,r24
+ 395 032a 00C0      		rjmp .L3
+ 396               	.L10:
+ 397 032c D601      		movw r26,r12
+ 398 032e 1E96      		adiw r26,14
+ 399 0330 8D91      		ld r24,X+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s 			page 8
+
+
+ 400 0332 9C91      		ld r25,X
+ 401 0334 1F97      		sbiw r26,14+1
+ 402 0336 8E0D      		add r24,r14
+ 403 0338 9F1D      		adc r25,r15
+ 404 033a 1F96      		adiw r26,14+1
+ 405 033c 9C93      		st X,r25
+ 406 033e 8E93      		st -X,r24
+ 407 0340 1E97      		sbiw r26,14
+ 408               	.L3:
+ 409 0342 80E0      		ldi r24,lo8(0)
+ 410 0344 90E0      		ldi r25,hi8(0)
+ 411               	/* epilogue start */
+ 412 0346 0F90      		pop __tmp_reg__
+ 413 0348 0F90      		pop __tmp_reg__
+ 414 034a 0F90      		pop __tmp_reg__
+ 415 034c 0F90      		pop __tmp_reg__
+ 416 034e CF91      		pop r28
+ 417 0350 DF91      		pop r29
+ 418 0352 1F91      		pop r17
+ 419 0354 0F91      		pop r16
+ 420 0356 FF90      		pop r15
+ 421 0358 EF90      		pop r14
+ 422 035a DF90      		pop r13
+ 423 035c CF90      		pop r12
+ 424 035e 0895      		ret
+ 425               		.size	localtime_r, .-localtime_r
+ 426               	.global	localtime
+ 427               		.type	localtime, @function
+ 428               	localtime:
+ 429               	/* prologue: function */
+ 430               	/* frame size = 0 */
+ 431 0360 60E0      		ldi r22,lo8(_tb)
+ 432 0362 70E0      		ldi r23,hi8(_tb)
+ 433 0364 0E94 0000 		call localtime_r
+ 434 0368 892B      		or r24,r25
+ 435 036a 01F0      		breq .L14
+ 436 036c 20E0      		ldi r18,lo8(0)
+ 437 036e 30E0      		ldi r19,hi8(0)
+ 438 0370 00C0      		rjmp .L15
+ 439               	.L14:
+ 440 0372 20E0      		ldi r18,lo8(_tb)
+ 441 0374 30E0      		ldi r19,hi8(_tb)
+ 442               	.L15:
+ 443 0376 C901      		movw r24,r18
+ 444               	/* epilogue start */
+ 445 0378 0895      		ret
+ 446               		.size	localtime, .-localtime
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 localtim.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s:11     .text:00000000 localtime_r
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccmu36z1.s:428    .text:00000360 localtime
+
+UNDEFINED SYMBOLS
+_timezone
+gmtime_r
+_daylight
+_isindst
+_dstbias
+__divmodsi4
+_tb

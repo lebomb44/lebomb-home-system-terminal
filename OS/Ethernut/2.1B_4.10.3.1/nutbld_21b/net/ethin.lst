@@ -1,0 +1,116 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc15Q0oy.s 			page 1
+
+
+   1               		.file	"ethin.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutEtherInput
+  10               		.type	NutEtherInput, @function
+  11               	NutEtherInput:
+  12 0000 EF92      		push r14
+  13 0002 FF92      		push r15
+  14 0004 0F93      		push r16
+  15 0006 1F93      		push r17
+  16 0008 CF93      		push r28
+  17 000a DF93      		push r29
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 000c 7C01      		movw r14,r24
+  21 000e EB01      		movw r28,r22
+  22 0010 0B81      		ldd r16,Y+3
+  23 0012 1C81      		ldd r17,Y+4
+  24 0014 025F      		subi r16,lo8(-(14))
+  25 0016 1F4F      		sbci r17,hi8(-(14))
+  26 0018 1887      		std Y+8,r17
+  27 001a 0F83      		std Y+7,r16
+  28 001c 0E50      		subi r16,lo8(-(-14))
+  29 001e 1040      		sbci r17,hi8(-(-14))
+  30 0020 8D81      		ldd r24,Y+5
+  31 0022 9E81      		ldd r25,Y+6
+  32 0024 0E97      		sbiw r24,14
+  33 0026 9A87      		std Y+10,r25
+  34 0028 8987      		std Y+9,r24
+  35 002a 8EE0      		ldi r24,lo8(14)
+  36 002c 90E0      		ldi r25,hi8(14)
+  37 002e 9E83      		std Y+6,r25
+  38 0030 8D83      		std Y+5,r24
+  39 0032 E091 0000 		lds r30,ether_demux
+  40 0036 F091 0000 		lds r31,(ether_demux)+1
+  41 003a 3097      		sbiw r30,0
+  42 003c 01F0      		breq .L2
+  43 003e C701      		movw r24,r14
+  44 0040 0995      		icall
+  45 0042 892B      		or r24,r25
+  46 0044 01F0      		breq .L7
+  47               	.L2:
+  48 0046 F801      		movw r30,r16
+  49 0048 8485      		ldd r24,Z+12
+  50 004a 9585      		ldd r25,Z+13
+  51               	/* #APP */
+  52               	 ;  305 "../../nut/include/sys/types.h" 1
+  53 004c 082E      		mov __tmp_reg__, r24
+  54 004e 892F      		mov r24, r25
+  55 0050 902D      		mov r25, __tmp_reg__
+  56               		
+  57               	 ;  0 "" 2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc15Q0oy.s 			page 2
+
+
+  58               	/* #NOAPP */
+  59 0052 F8E0      		ldi r31,hi8(2048)
+  60 0054 8030      		cpi r24,lo8(2048)
+  61 0056 9F07      		cpc r25,r31
+  62 0058 01F0      		breq .L5
+  63 005a 8650      		subi r24,lo8(2054)
+  64 005c 9840      		sbci r25,hi8(2054)
+  65 005e 01F4      		brne .L8
+  66 0060 00C0      		rjmp .L9
+  67               	.L5:
+  68 0062 C701      		movw r24,r14
+  69 0064 BE01      		movw r22,r28
+  70 0066 0E94 0000 		call NutIpInput
+  71 006a 00C0      		rjmp .L7
+  72               	.L9:
+  73 006c C701      		movw r24,r14
+  74 006e BE01      		movw r22,r28
+  75 0070 0E94 0000 		call NutArpInput
+  76 0074 00C0      		rjmp .L7
+  77               	.L8:
+  78 0076 CE01      		movw r24,r28
+  79 0078 0E94 0000 		call NutNetBufFree
+  80               	.L7:
+  81               	/* epilogue start */
+  82 007c DF91      		pop r29
+  83 007e CF91      		pop r28
+  84 0080 1F91      		pop r17
+  85 0082 0F91      		pop r16
+  86 0084 FF90      		pop r15
+  87 0086 EF90      		pop r14
+  88 0088 0895      		ret
+  89               		.size	NutEtherInput, .-NutEtherInput
+  90               		.comm ether_demux,2,1
+  91               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc15Q0oy.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ethin.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc15Q0oy.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc15Q0oy.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc15Q0oy.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc15Q0oy.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc15Q0oy.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc15Q0oy.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc15Q0oy.s:11     .text:00000000 NutEtherInput
+                            *COM*:00000002 ether_demux
+
+UNDEFINED SYMBOLS
+NutIpInput
+NutArpInput
+NutNetBufFree
+__do_clear_bss

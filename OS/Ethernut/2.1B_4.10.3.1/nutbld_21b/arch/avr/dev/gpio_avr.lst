@@ -1,0 +1,1421 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 1
+
+
+   1               		.file	"gpio_avr.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	GpioPinGet
+  10               		.type	GpioPinGet, @function
+  11               	GpioPinGet:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 8430      		cpi r24,4
+  15 0002 9105      		cpc r25,__zero_reg__
+  16 0004 01F0      		breq .L6
+  17 0006 8530      		cpi r24,5
+  18 0008 9105      		cpc r25,__zero_reg__
+  19 000a 04F4      		brge .L10
+  20 000c 8230      		cpi r24,2
+  21 000e 9105      		cpc r25,__zero_reg__
+  22 0010 01F0      		breq .L4
+  23 0012 8330      		cpi r24,3
+  24 0014 9105      		cpc r25,__zero_reg__
+  25 0016 04F4      		brge .L5
+  26 0018 0197      		sbiw r24,1
+  27 001a 01F4      		brne .L2
+  28 001c 00C0      		rjmp .L14
+  29               	.L10:
+  30 001e 8630      		cpi r24,6
+  31 0020 9105      		cpc r25,__zero_reg__
+  32 0022 01F0      		breq .L8
+  33 0024 8630      		cpi r24,6
+  34 0026 9105      		cpc r25,__zero_reg__
+  35 0028 04F0      		brlt .L7
+  36 002a 0797      		sbiw r24,7
+  37 002c 01F0      		breq .L9
+  38               	.L2:
+  39 002e 20E0      		ldi r18,lo8(0)
+  40 0030 30E0      		ldi r19,hi8(0)
+  41 0032 00C0      		rjmp .L11
+  42               	.L14:
+  43 0034 89B3      		in r24,57-32
+  44 0036 00C0      		rjmp .L13
+  45               	.L4:
+  46 0038 86B3      		in r24,54-32
+  47 003a 00C0      		rjmp .L13
+  48               	.L5:
+  49 003c 83B3      		in r24,51-32
+  50 003e 00C0      		rjmp .L13
+  51               	.L6:
+  52 0040 80B3      		in r24,48-32
+  53 0042 00C0      		rjmp .L13
+  54               	.L7:
+  55 0044 81B1      		in r24,33-32
+  56 0046 00C0      		rjmp .L13
+  57               	.L8:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 2
+
+
+  58 0048 80B1      		in r24,32-32
+  59 004a 00C0      		rjmp .L13
+  60               	.L9:
+  61 004c 8091 6300 		lds r24,99
+  62               	.L13:
+  63 0050 282F      		mov r18,r24
+  64 0052 30E0      		ldi r19,lo8(0)
+  65 0054 00C0      		rjmp 2f
+  66 0056 3595      	1:	asr r19
+  67 0058 2795      		ror r18
+  68 005a 6A95      	2:	dec r22
+  69 005c 02F4      		brpl 1b
+  70 005e 2170      		andi r18,lo8(1)
+  71 0060 3070      		andi r19,hi8(1)
+  72               	.L11:
+  73 0062 C901      		movw r24,r18
+  74               	/* epilogue start */
+  75 0064 0895      		ret
+  76               		.size	GpioPinGet, .-GpioPinGet
+  77               	.global	GpioPinSetLow
+  78               		.type	GpioPinSetLow, @function
+  79               	GpioPinSetLow:
+  80               	/* prologue: function */
+  81               	/* frame size = 0 */
+  82 0066 9C01      		movw r18,r24
+  83 0068 8430      		cpi r24,4
+  84 006a 9105      		cpc r25,__zero_reg__
+  85 006c 01F4      		brne .+2
+  86 006e 00C0      		rjmp .L20
+  87 0070 8530      		cpi r24,5
+  88 0072 9105      		cpc r25,__zero_reg__
+  89 0074 04F4      		brge .L24
+  90 0076 8230      		cpi r24,2
+  91 0078 9105      		cpc r25,__zero_reg__
+  92 007a 01F0      		breq .L18
+  93 007c 8330      		cpi r24,3
+  94 007e 9105      		cpc r25,__zero_reg__
+  95 0080 04F4      		brge .L19
+  96 0082 8130      		cpi r24,1
+  97 0084 9105      		cpc r25,__zero_reg__
+  98 0086 01F0      		breq .+2
+  99 0088 00C0      		rjmp .L25
+ 100 008a 00C0      		rjmp .L26
+ 101               	.L24:
+ 102 008c 8630      		cpi r24,6
+ 103 008e 9105      		cpc r25,__zero_reg__
+ 104 0090 01F4      		brne .+2
+ 105 0092 00C0      		rjmp .L22
+ 106 0094 8630      		cpi r24,6
+ 107 0096 9105      		cpc r25,__zero_reg__
+ 108 0098 04F0      		brlt .L21
+ 109 009a 8730      		cpi r24,7
+ 110 009c 9105      		cpc r25,__zero_reg__
+ 111 009e 01F0      		breq .+2
+ 112 00a0 00C0      		rjmp .L25
+ 113 00a2 00C0      		rjmp .L27
+ 114               	.L26:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 3
+
+
+ 115 00a4 9BB3      		in r25,59-32
+ 116 00a6 00C0      		rjmp 2f
+ 117 00a8 220F      	1:	lsl r18
+ 118 00aa 331F      		rol r19
+ 119 00ac 6A95      	2:	dec r22
+ 120 00ae 02F4      		brpl 1b
+ 121 00b0 822F      		mov r24,r18
+ 122 00b2 8095      		com r24
+ 123 00b4 8923      		and r24,r25
+ 124 00b6 8BBB      		out 59-32,r24
+ 125 00b8 0895      		ret
+ 126               	.L18:
+ 127 00ba 28B3      		in r18,56-32
+ 128 00bc 81E0      		ldi r24,lo8(1)
+ 129 00be 90E0      		ldi r25,hi8(1)
+ 130 00c0 00C0      		rjmp 2f
+ 131 00c2 880F      	1:	lsl r24
+ 132 00c4 991F      		rol r25
+ 133 00c6 6A95      	2:	dec r22
+ 134 00c8 02F4      		brpl 1b
+ 135 00ca 8095      		com r24
+ 136 00cc 8223      		and r24,r18
+ 137 00ce 88BB      		out 56-32,r24
+ 138 00d0 0895      		ret
+ 139               	.L19:
+ 140 00d2 25B3      		in r18,53-32
+ 141 00d4 81E0      		ldi r24,lo8(1)
+ 142 00d6 90E0      		ldi r25,hi8(1)
+ 143 00d8 00C0      		rjmp 2f
+ 144 00da 880F      	1:	lsl r24
+ 145 00dc 991F      		rol r25
+ 146 00de 6A95      	2:	dec r22
+ 147 00e0 02F4      		brpl 1b
+ 148 00e2 8095      		com r24
+ 149 00e4 8223      		and r24,r18
+ 150 00e6 85BB      		out 53-32,r24
+ 151 00e8 0895      		ret
+ 152               	.L20:
+ 153 00ea 22B3      		in r18,50-32
+ 154 00ec 81E0      		ldi r24,lo8(1)
+ 155 00ee 90E0      		ldi r25,hi8(1)
+ 156 00f0 00C0      		rjmp 2f
+ 157 00f2 880F      	1:	lsl r24
+ 158 00f4 991F      		rol r25
+ 159 00f6 6A95      	2:	dec r22
+ 160 00f8 02F4      		brpl 1b
+ 161 00fa 8095      		com r24
+ 162 00fc 8223      		and r24,r18
+ 163 00fe 82BB      		out 50-32,r24
+ 164 0100 0895      		ret
+ 165               	.L21:
+ 166 0102 23B1      		in r18,35-32
+ 167 0104 81E0      		ldi r24,lo8(1)
+ 168 0106 90E0      		ldi r25,hi8(1)
+ 169 0108 00C0      		rjmp 2f
+ 170 010a 880F      	1:	lsl r24
+ 171 010c 991F      		rol r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 4
+
+
+ 172 010e 6A95      	2:	dec r22
+ 173 0110 02F4      		brpl 1b
+ 174 0112 8095      		com r24
+ 175 0114 8223      		and r24,r18
+ 176 0116 83B9      		out 35-32,r24
+ 177 0118 0895      		ret
+ 178               	.L22:
+ 179 011a 2091 6200 		lds r18,98
+ 180 011e 81E0      		ldi r24,lo8(1)
+ 181 0120 90E0      		ldi r25,hi8(1)
+ 182 0122 00C0      		rjmp 2f
+ 183 0124 880F      	1:	lsl r24
+ 184 0126 991F      		rol r25
+ 185 0128 6A95      	2:	dec r22
+ 186 012a 02F4      		brpl 1b
+ 187 012c 8095      		com r24
+ 188 012e 8223      		and r24,r18
+ 189 0130 8093 6200 		sts 98,r24
+ 190 0134 0895      		ret
+ 191               	.L27:
+ 192 0136 2091 6500 		lds r18,101
+ 193 013a 81E0      		ldi r24,lo8(1)
+ 194 013c 90E0      		ldi r25,hi8(1)
+ 195 013e 00C0      		rjmp 2f
+ 196 0140 880F      	1:	lsl r24
+ 197 0142 991F      		rol r25
+ 198 0144 6A95      	2:	dec r22
+ 199 0146 02F4      		brpl 1b
+ 200 0148 8095      		com r24
+ 201 014a 8223      		and r24,r18
+ 202 014c 8093 6500 		sts 101,r24
+ 203               	.L25:
+ 204 0150 0895      		ret
+ 205               		.size	GpioPinSetLow, .-GpioPinSetLow
+ 206               	.global	GpioPinSetHigh
+ 207               		.type	GpioPinSetHigh, @function
+ 208               	GpioPinSetHigh:
+ 209               	/* prologue: function */
+ 210               	/* frame size = 0 */
+ 211 0152 9C01      		movw r18,r24
+ 212 0154 8430      		cpi r24,4
+ 213 0156 9105      		cpc r25,__zero_reg__
+ 214 0158 01F0      		breq .L33
+ 215 015a 8530      		cpi r24,5
+ 216 015c 9105      		cpc r25,__zero_reg__
+ 217 015e 04F4      		brge .L37
+ 218 0160 8230      		cpi r24,2
+ 219 0162 9105      		cpc r25,__zero_reg__
+ 220 0164 01F0      		breq .L31
+ 221 0166 8330      		cpi r24,3
+ 222 0168 9105      		cpc r25,__zero_reg__
+ 223 016a 04F4      		brge .L32
+ 224 016c 8130      		cpi r24,1
+ 225 016e 9105      		cpc r25,__zero_reg__
+ 226 0170 01F0      		breq .+2
+ 227 0172 00C0      		rjmp .L38
+ 228 0174 00C0      		rjmp .L39
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 5
+
+
+ 229               	.L37:
+ 230 0176 8630      		cpi r24,6
+ 231 0178 9105      		cpc r25,__zero_reg__
+ 232 017a 01F4      		brne .+2
+ 233 017c 00C0      		rjmp .L35
+ 234 017e 8630      		cpi r24,6
+ 235 0180 9105      		cpc r25,__zero_reg__
+ 236 0182 04F0      		brlt .L34
+ 237 0184 8730      		cpi r24,7
+ 238 0186 9105      		cpc r25,__zero_reg__
+ 239 0188 01F0      		breq .+2
+ 240 018a 00C0      		rjmp .L38
+ 241 018c 00C0      		rjmp .L40
+ 242               	.L39:
+ 243 018e 8BB3      		in r24,59-32
+ 244 0190 00C0      		rjmp 2f
+ 245 0192 220F      	1:	lsl r18
+ 246 0194 331F      		rol r19
+ 247 0196 6A95      	2:	dec r22
+ 248 0198 02F4      		brpl 1b
+ 249 019a 822B      		or r24,r18
+ 250 019c 8BBB      		out 59-32,r24
+ 251 019e 0895      		ret
+ 252               	.L31:
+ 253 01a0 28B3      		in r18,56-32
+ 254 01a2 81E0      		ldi r24,lo8(1)
+ 255 01a4 90E0      		ldi r25,hi8(1)
+ 256 01a6 00C0      		rjmp 2f
+ 257 01a8 880F      	1:	lsl r24
+ 258 01aa 991F      		rol r25
+ 259 01ac 6A95      	2:	dec r22
+ 260 01ae 02F4      		brpl 1b
+ 261 01b0 282B      		or r18,r24
+ 262 01b2 28BB      		out 56-32,r18
+ 263 01b4 0895      		ret
+ 264               	.L32:
+ 265 01b6 25B3      		in r18,53-32
+ 266 01b8 81E0      		ldi r24,lo8(1)
+ 267 01ba 90E0      		ldi r25,hi8(1)
+ 268 01bc 00C0      		rjmp 2f
+ 269 01be 880F      	1:	lsl r24
+ 270 01c0 991F      		rol r25
+ 271 01c2 6A95      	2:	dec r22
+ 272 01c4 02F4      		brpl 1b
+ 273 01c6 282B      		or r18,r24
+ 274 01c8 25BB      		out 53-32,r18
+ 275 01ca 0895      		ret
+ 276               	.L33:
+ 277 01cc 22B3      		in r18,50-32
+ 278 01ce 81E0      		ldi r24,lo8(1)
+ 279 01d0 90E0      		ldi r25,hi8(1)
+ 280 01d2 00C0      		rjmp 2f
+ 281 01d4 880F      	1:	lsl r24
+ 282 01d6 991F      		rol r25
+ 283 01d8 6A95      	2:	dec r22
+ 284 01da 02F4      		brpl 1b
+ 285 01dc 282B      		or r18,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 6
+
+
+ 286 01de 22BB      		out 50-32,r18
+ 287 01e0 0895      		ret
+ 288               	.L34:
+ 289 01e2 23B1      		in r18,35-32
+ 290 01e4 81E0      		ldi r24,lo8(1)
+ 291 01e6 90E0      		ldi r25,hi8(1)
+ 292 01e8 00C0      		rjmp 2f
+ 293 01ea 880F      	1:	lsl r24
+ 294 01ec 991F      		rol r25
+ 295 01ee 6A95      	2:	dec r22
+ 296 01f0 02F4      		brpl 1b
+ 297 01f2 282B      		or r18,r24
+ 298 01f4 23B9      		out 35-32,r18
+ 299 01f6 0895      		ret
+ 300               	.L35:
+ 301 01f8 2091 6200 		lds r18,98
+ 302 01fc 81E0      		ldi r24,lo8(1)
+ 303 01fe 90E0      		ldi r25,hi8(1)
+ 304 0200 00C0      		rjmp 2f
+ 305 0202 880F      	1:	lsl r24
+ 306 0204 991F      		rol r25
+ 307 0206 6A95      	2:	dec r22
+ 308 0208 02F4      		brpl 1b
+ 309 020a 282B      		or r18,r24
+ 310 020c 2093 6200 		sts 98,r18
+ 311 0210 0895      		ret
+ 312               	.L40:
+ 313 0212 2091 6500 		lds r18,101
+ 314 0216 81E0      		ldi r24,lo8(1)
+ 315 0218 90E0      		ldi r25,hi8(1)
+ 316 021a 00C0      		rjmp 2f
+ 317 021c 880F      	1:	lsl r24
+ 318 021e 991F      		rol r25
+ 319 0220 6A95      	2:	dec r22
+ 320 0222 02F4      		brpl 1b
+ 321 0224 282B      		or r18,r24
+ 322 0226 2093 6500 		sts 101,r18
+ 323               	.L38:
+ 324 022a 0895      		ret
+ 325               		.size	GpioPinSetHigh, .-GpioPinSetHigh
+ 326               	.global	GpioPinSet
+ 327               		.type	GpioPinSet, @function
+ 328               	GpioPinSet:
+ 329               	/* prologue: function */
+ 330               	/* frame size = 0 */
+ 331 022c 452B      		or r20,r21
+ 332 022e 01F0      		breq .L42
+ 333 0230 0E94 0000 		call GpioPinSetHigh
+ 334 0234 0895      		ret
+ 335               	.L42:
+ 336 0236 0E94 0000 		call GpioPinSetLow
+ 337 023a 0895      		ret
+ 338               		.size	GpioPinSet, .-GpioPinSet
+ 339               	.global	GpioPortGet
+ 340               		.type	GpioPortGet, @function
+ 341               	GpioPortGet:
+ 342               	/* prologue: function */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 7
+
+
+ 343               	/* frame size = 0 */
+ 344 023c 8430      		cpi r24,4
+ 345 023e 9105      		cpc r25,__zero_reg__
+ 346 0240 01F0      		breq .L50
+ 347 0242 8530      		cpi r24,5
+ 348 0244 9105      		cpc r25,__zero_reg__
+ 349 0246 04F4      		brge .L54
+ 350 0248 8230      		cpi r24,2
+ 351 024a 9105      		cpc r25,__zero_reg__
+ 352 024c 01F0      		breq .L48
+ 353 024e 8330      		cpi r24,3
+ 354 0250 9105      		cpc r25,__zero_reg__
+ 355 0252 04F4      		brge .L49
+ 356 0254 0197      		sbiw r24,1
+ 357 0256 01F4      		brne .L46
+ 358 0258 00C0      		rjmp .L58
+ 359               	.L54:
+ 360 025a 8630      		cpi r24,6
+ 361 025c 9105      		cpc r25,__zero_reg__
+ 362 025e 01F0      		breq .L52
+ 363 0260 8630      		cpi r24,6
+ 364 0262 9105      		cpc r25,__zero_reg__
+ 365 0264 04F0      		brlt .L51
+ 366 0266 0797      		sbiw r24,7
+ 367 0268 01F0      		breq .L53
+ 368               	.L46:
+ 369 026a 20E0      		ldi r18,lo8(0)
+ 370 026c 30E0      		ldi r19,hi8(0)
+ 371 026e 00C0      		rjmp .L55
+ 372               	.L58:
+ 373 0270 89B3      		in r24,57-32
+ 374 0272 00C0      		rjmp .L57
+ 375               	.L48:
+ 376 0274 86B3      		in r24,54-32
+ 377 0276 00C0      		rjmp .L57
+ 378               	.L49:
+ 379 0278 83B3      		in r24,51-32
+ 380 027a 00C0      		rjmp .L57
+ 381               	.L50:
+ 382 027c 80B3      		in r24,48-32
+ 383 027e 00C0      		rjmp .L57
+ 384               	.L51:
+ 385 0280 81B1      		in r24,33-32
+ 386 0282 00C0      		rjmp .L57
+ 387               	.L52:
+ 388 0284 80B1      		in r24,32-32
+ 389 0286 00C0      		rjmp .L57
+ 390               	.L53:
+ 391 0288 8091 6300 		lds r24,99
+ 392               	.L57:
+ 393 028c 282F      		mov r18,r24
+ 394 028e 30E0      		ldi r19,lo8(0)
+ 395               	.L55:
+ 396 0290 C901      		movw r24,r18
+ 397               	/* epilogue start */
+ 398 0292 0895      		ret
+ 399               		.size	GpioPortGet, .-GpioPortGet
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 8
+
+
+ 400               	.global	GpioPortSet
+ 401               		.type	GpioPortSet, @function
+ 402               	GpioPortSet:
+ 403               	/* prologue: function */
+ 404               	/* frame size = 0 */
+ 405 0294 8430      		cpi r24,4
+ 406 0296 9105      		cpc r25,__zero_reg__
+ 407 0298 01F0      		breq .L64
+ 408 029a 8530      		cpi r24,5
+ 409 029c 9105      		cpc r25,__zero_reg__
+ 410 029e 04F4      		brge .L68
+ 411 02a0 8230      		cpi r24,2
+ 412 02a2 9105      		cpc r25,__zero_reg__
+ 413 02a4 01F0      		breq .L62
+ 414 02a6 8330      		cpi r24,3
+ 415 02a8 9105      		cpc r25,__zero_reg__
+ 416 02aa 04F4      		brge .L63
+ 417 02ac 0197      		sbiw r24,1
+ 418 02ae 01F4      		brne .L69
+ 419 02b0 00C0      		rjmp .L70
+ 420               	.L68:
+ 421 02b2 8630      		cpi r24,6
+ 422 02b4 9105      		cpc r25,__zero_reg__
+ 423 02b6 01F0      		breq .L66
+ 424 02b8 8630      		cpi r24,6
+ 425 02ba 9105      		cpc r25,__zero_reg__
+ 426 02bc 04F0      		brlt .L65
+ 427 02be 0797      		sbiw r24,7
+ 428 02c0 01F4      		brne .L69
+ 429 02c2 00C0      		rjmp .L71
+ 430               	.L70:
+ 431 02c4 6BBB      		out 59-32,r22
+ 432 02c6 0895      		ret
+ 433               	.L62:
+ 434 02c8 68BB      		out 56-32,r22
+ 435 02ca 0895      		ret
+ 436               	.L63:
+ 437 02cc 65BB      		out 53-32,r22
+ 438 02ce 0895      		ret
+ 439               	.L64:
+ 440 02d0 62BB      		out 50-32,r22
+ 441 02d2 0895      		ret
+ 442               	.L65:
+ 443 02d4 63B9      		out 35-32,r22
+ 444 02d6 0895      		ret
+ 445               	.L66:
+ 446 02d8 6093 6200 		sts 98,r22
+ 447 02dc 0895      		ret
+ 448               	.L71:
+ 449 02de 6093 6500 		sts 101,r22
+ 450               	.L69:
+ 451 02e2 0895      		ret
+ 452               		.size	GpioPortSet, .-GpioPortSet
+ 453               	.global	GpioPortSetLow
+ 454               		.type	GpioPortSetLow, @function
+ 455               	GpioPortSetLow:
+ 456 02e4 EF92      		push r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 9
+
+
+ 457 02e6 FF92      		push r15
+ 458 02e8 0F93      		push r16
+ 459 02ea 1F93      		push r17
+ 460               	/* prologue: function */
+ 461               	/* frame size = 0 */
+ 462 02ec 7C01      		movw r14,r24
+ 463 02ee 8B01      		movw r16,r22
+ 464 02f0 0E94 0000 		call GpioPortGet
+ 465 02f4 0095      		com r16
+ 466 02f6 1095      		com r17
+ 467 02f8 0823      		and r16,r24
+ 468 02fa 1923      		and r17,r25
+ 469 02fc C701      		movw r24,r14
+ 470 02fe B801      		movw r22,r16
+ 471 0300 0E94 0000 		call GpioPortSet
+ 472               	/* epilogue start */
+ 473 0304 1F91      		pop r17
+ 474 0306 0F91      		pop r16
+ 475 0308 FF90      		pop r15
+ 476 030a EF90      		pop r14
+ 477 030c 0895      		ret
+ 478               		.size	GpioPortSetLow, .-GpioPortSetLow
+ 479               	.global	GpioPortSetHigh
+ 480               		.type	GpioPortSetHigh, @function
+ 481               	GpioPortSetHigh:
+ 482 030e EF92      		push r14
+ 483 0310 FF92      		push r15
+ 484 0312 0F93      		push r16
+ 485 0314 1F93      		push r17
+ 486               	/* prologue: function */
+ 487               	/* frame size = 0 */
+ 488 0316 7C01      		movw r14,r24
+ 489 0318 8B01      		movw r16,r22
+ 490 031a 0E94 0000 		call GpioPortGet
+ 491 031e 082B      		or r16,r24
+ 492 0320 192B      		or r17,r25
+ 493 0322 C701      		movw r24,r14
+ 494 0324 B801      		movw r22,r16
+ 495 0326 0E94 0000 		call GpioPortSet
+ 496               	/* epilogue start */
+ 497 032a 1F91      		pop r17
+ 498 032c 0F91      		pop r16
+ 499 032e FF90      		pop r15
+ 500 0330 EF90      		pop r14
+ 501 0332 0895      		ret
+ 502               		.size	GpioPortSetHigh, .-GpioPortSetHigh
+ 503               	.global	GpioPinConfigGet
+ 504               		.type	GpioPinConfigGet, @function
+ 505               	GpioPinConfigGet:
+ 506               	/* prologue: function */
+ 507               	/* frame size = 0 */
+ 508 0334 8430      		cpi r24,4
+ 509 0336 9105      		cpc r25,__zero_reg__
+ 510 0338 01F0      		breq .L81
+ 511 033a 8530      		cpi r24,5
+ 512 033c 9105      		cpc r25,__zero_reg__
+ 513 033e 04F4      		brge .L85
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 10
+
+
+ 514 0340 8230      		cpi r24,2
+ 515 0342 9105      		cpc r25,__zero_reg__
+ 516 0344 01F0      		breq .L79
+ 517 0346 8330      		cpi r24,3
+ 518 0348 9105      		cpc r25,__zero_reg__
+ 519 034a 04F4      		brge .L80
+ 520 034c 0197      		sbiw r24,1
+ 521 034e 01F0      		breq .+2
+ 522 0350 00C0      		rjmp .L77
+ 523 0352 00C0      		rjmp .L97
+ 524               	.L85:
+ 525 0354 8630      		cpi r24,6
+ 526 0356 9105      		cpc r25,__zero_reg__
+ 527 0358 01F4      		brne .+2
+ 528 035a 00C0      		rjmp .L83
+ 529 035c 8630      		cpi r24,6
+ 530 035e 9105      		cpc r25,__zero_reg__
+ 531 0360 04F0      		brlt .L82
+ 532 0362 0797      		sbiw r24,7
+ 533 0364 01F0      		breq .+2
+ 534 0366 00C0      		rjmp .L77
+ 535 0368 00C0      		rjmp .L98
+ 536               	.L97:
+ 537 036a 8AB3      		in r24,58-32
+ 538 036c 90E0      		ldi r25,lo8(0)
+ 539 036e 062E      		mov r0,r22
+ 540 0370 00C0      		rjmp 2f
+ 541 0372 9595      	1:	asr r25
+ 542 0374 8795      		ror r24
+ 543 0376 0A94      	2:	dec r0
+ 544 0378 02F4      		brpl 1b
+ 545 037a 80FD      		sbrc r24,0
+ 546 037c 00C0      		rjmp .L86
+ 547 037e 8BB3      		in r24,59-32
+ 548 0380 00C0      		rjmp .L91
+ 549               	.L79:
+ 550 0382 87B3      		in r24,55-32
+ 551 0384 90E0      		ldi r25,lo8(0)
+ 552 0386 062E      		mov r0,r22
+ 553 0388 00C0      		rjmp 2f
+ 554 038a 9595      	1:	asr r25
+ 555 038c 8795      		ror r24
+ 556 038e 0A94      	2:	dec r0
+ 557 0390 02F4      		brpl 1b
+ 558 0392 80FD      		sbrc r24,0
+ 559 0394 00C0      		rjmp .L86
+ 560 0396 88B3      		in r24,56-32
+ 561 0398 00C0      		rjmp .L91
+ 562               	.L80:
+ 563 039a 84B3      		in r24,52-32
+ 564 039c 90E0      		ldi r25,lo8(0)
+ 565 039e 062E      		mov r0,r22
+ 566 03a0 00C0      		rjmp 2f
+ 567 03a2 9595      	1:	asr r25
+ 568 03a4 8795      		ror r24
+ 569 03a6 0A94      	2:	dec r0
+ 570 03a8 02F4      		brpl 1b
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 11
+
+
+ 571 03aa 80FD      		sbrc r24,0
+ 572 03ac 00C0      		rjmp .L86
+ 573 03ae 85B3      		in r24,53-32
+ 574 03b0 00C0      		rjmp .L91
+ 575               	.L81:
+ 576 03b2 81B3      		in r24,49-32
+ 577 03b4 90E0      		ldi r25,lo8(0)
+ 578 03b6 062E      		mov r0,r22
+ 579 03b8 00C0      		rjmp 2f
+ 580 03ba 9595      	1:	asr r25
+ 581 03bc 8795      		ror r24
+ 582 03be 0A94      	2:	dec r0
+ 583 03c0 02F4      		brpl 1b
+ 584 03c2 80FD      		sbrc r24,0
+ 585 03c4 00C0      		rjmp .L86
+ 586 03c6 82B3      		in r24,50-32
+ 587 03c8 00C0      		rjmp .L91
+ 588               	.L82:
+ 589 03ca 82B1      		in r24,34-32
+ 590 03cc 90E0      		ldi r25,lo8(0)
+ 591 03ce 062E      		mov r0,r22
+ 592 03d0 00C0      		rjmp 2f
+ 593 03d2 9595      	1:	asr r25
+ 594 03d4 8795      		ror r24
+ 595 03d6 0A94      	2:	dec r0
+ 596 03d8 02F4      		brpl 1b
+ 597 03da 80FD      		sbrc r24,0
+ 598 03dc 00C0      		rjmp .L86
+ 599 03de 83B1      		in r24,35-32
+ 600 03e0 00C0      		rjmp .L91
+ 601               	.L83:
+ 602 03e2 8091 6100 		lds r24,97
+ 603 03e6 90E0      		ldi r25,lo8(0)
+ 604 03e8 062E      		mov r0,r22
+ 605 03ea 00C0      		rjmp 2f
+ 606 03ec 9595      	1:	asr r25
+ 607 03ee 8795      		ror r24
+ 608 03f0 0A94      	2:	dec r0
+ 609 03f2 02F4      		brpl 1b
+ 610 03f4 80FD      		sbrc r24,0
+ 611 03f6 00C0      		rjmp .L86
+ 612 03f8 8091 6200 		lds r24,98
+ 613 03fc 00C0      		rjmp .L91
+ 614               	.L98:
+ 615 03fe 8091 6400 		lds r24,100
+ 616 0402 90E0      		ldi r25,lo8(0)
+ 617 0404 062E      		mov r0,r22
+ 618 0406 00C0      		rjmp 2f
+ 619 0408 9595      	1:	asr r25
+ 620 040a 8795      		ror r24
+ 621 040c 0A94      	2:	dec r0
+ 622 040e 02F4      		brpl 1b
+ 623 0410 80FD      		sbrc r24,0
+ 624 0412 00C0      		rjmp .L86
+ 625 0414 8091 6500 		lds r24,101
+ 626               	.L91:
+ 627 0418 90E0      		ldi r25,lo8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 12
+
+
+ 628 041a 00C0      		rjmp 2f
+ 629 041c 9595      	1:	asr r25
+ 630 041e 8795      		ror r24
+ 631 0420 6A95      	2:	dec r22
+ 632 0422 02F4      		brpl 1b
+ 633 0424 80FD      		sbrc r24,0
+ 634 0426 00C0      		rjmp .L87
+ 635               	.L77:
+ 636 0428 20E0      		ldi r18,lo8(0)
+ 637 042a 30E0      		ldi r19,hi8(0)
+ 638 042c 40E0      		ldi r20,hlo8(0)
+ 639 042e 50E0      		ldi r21,hhi8(0)
+ 640 0430 00C0      		rjmp .L88
+ 641               	.L86:
+ 642 0432 22E0      		ldi r18,lo8(2)
+ 643 0434 30E0      		ldi r19,hi8(2)
+ 644 0436 40E0      		ldi r20,hlo8(2)
+ 645 0438 50E0      		ldi r21,hhi8(2)
+ 646 043a 00C0      		rjmp .L88
+ 647               	.L87:
+ 648 043c 24E0      		ldi r18,lo8(4)
+ 649 043e 30E0      		ldi r19,hi8(4)
+ 650 0440 40E0      		ldi r20,hlo8(4)
+ 651 0442 50E0      		ldi r21,hhi8(4)
+ 652               	.L88:
+ 653 0444 B901      		movw r22,r18
+ 654 0446 CA01      		movw r24,r20
+ 655               	/* epilogue start */
+ 656 0448 0895      		ret
+ 657               		.size	GpioPinConfigGet, .-GpioPinConfigGet
+ 658               	.global	GpioPortConfigSet
+ 659               		.type	GpioPortConfigSet, @function
+ 660               	GpioPortConfigSet:
+ 661               	/* prologue: function */
+ 662               	/* frame size = 0 */
+ 663 044a 8430      		cpi r24,4
+ 664 044c 9105      		cpc r25,__zero_reg__
+ 665 044e 01F4      		brne .+2
+ 666 0450 00C0      		rjmp .L104
+ 667 0452 8530      		cpi r24,5
+ 668 0454 9105      		cpc r25,__zero_reg__
+ 669 0456 04F4      		brge .L108
+ 670 0458 8230      		cpi r24,2
+ 671 045a 9105      		cpc r25,__zero_reg__
+ 672 045c 01F0      		breq .L102
+ 673 045e 8330      		cpi r24,3
+ 674 0460 9105      		cpc r25,__zero_reg__
+ 675 0462 04F4      		brge .L103
+ 676 0464 0197      		sbiw r24,1
+ 677 0466 01F0      		breq .+2
+ 678 0468 00C0      		rjmp .L100
+ 679 046a 00C0      		rjmp .L145
+ 680               	.L108:
+ 681 046c 8630      		cpi r24,6
+ 682 046e 9105      		cpc r25,__zero_reg__
+ 683 0470 01F4      		brne .+2
+ 684 0472 00C0      		rjmp .L106
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 13
+
+
+ 685 0474 8630      		cpi r24,6
+ 686 0476 9105      		cpc r25,__zero_reg__
+ 687 0478 04F4      		brge .+2
+ 688 047a 00C0      		rjmp .L105
+ 689 047c 0797      		sbiw r24,7
+ 690 047e 01F0      		breq .+2
+ 691 0480 00C0      		rjmp .L100
+ 692 0482 00C0      		rjmp .L146
+ 693               	.L145:
+ 694 0484 22FF      		sbrs r18,2
+ 695 0486 00C0      		rjmp .L109
+ 696 0488 8BB3      		in r24,59-32
+ 697 048a 862B      		or r24,r22
+ 698 048c 00C0      		rjmp .L131
+ 699               	.L109:
+ 700 048e 9BB3      		in r25,59-32
+ 701 0490 862F      		mov r24,r22
+ 702 0492 8095      		com r24
+ 703 0494 8923      		and r24,r25
+ 704               	.L131:
+ 705 0496 8BBB      		out 59-32,r24
+ 706 0498 21FF      		sbrs r18,1
+ 707 049a 00C0      		rjmp .L111
+ 708 049c 8AB3      		in r24,58-32
+ 709 049e 862B      		or r24,r22
+ 710 04a0 00C0      		rjmp .L138
+ 711               	.L111:
+ 712 04a2 8AB3      		in r24,58-32
+ 713 04a4 6095      		com r22
+ 714 04a6 8623      		and r24,r22
+ 715               	.L138:
+ 716 04a8 8ABB      		out 58-32,r24
+ 717 04aa 00C0      		rjmp .L100
+ 718               	.L102:
+ 719 04ac 22FF      		sbrs r18,2
+ 720 04ae 00C0      		rjmp .L112
+ 721 04b0 88B3      		in r24,56-32
+ 722 04b2 862B      		or r24,r22
+ 723 04b4 00C0      		rjmp .L132
+ 724               	.L112:
+ 725 04b6 98B3      		in r25,56-32
+ 726 04b8 862F      		mov r24,r22
+ 727 04ba 8095      		com r24
+ 728 04bc 8923      		and r24,r25
+ 729               	.L132:
+ 730 04be 88BB      		out 56-32,r24
+ 731 04c0 21FF      		sbrs r18,1
+ 732 04c2 00C0      		rjmp .L114
+ 733 04c4 87B3      		in r24,55-32
+ 734 04c6 862B      		or r24,r22
+ 735 04c8 00C0      		rjmp .L140
+ 736               	.L114:
+ 737 04ca 87B3      		in r24,55-32
+ 738 04cc 6095      		com r22
+ 739 04ce 8623      		and r24,r22
+ 740               	.L140:
+ 741 04d0 87BB      		out 55-32,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 14
+
+
+ 742 04d2 00C0      		rjmp .L100
+ 743               	.L103:
+ 744 04d4 22FF      		sbrs r18,2
+ 745 04d6 00C0      		rjmp .L115
+ 746 04d8 85B3      		in r24,53-32
+ 747 04da 862B      		or r24,r22
+ 748 04dc 00C0      		rjmp .L133
+ 749               	.L115:
+ 750 04de 95B3      		in r25,53-32
+ 751 04e0 862F      		mov r24,r22
+ 752 04e2 8095      		com r24
+ 753 04e4 8923      		and r24,r25
+ 754               	.L133:
+ 755 04e6 85BB      		out 53-32,r24
+ 756 04e8 21FF      		sbrs r18,1
+ 757 04ea 00C0      		rjmp .L117
+ 758 04ec 84B3      		in r24,52-32
+ 759 04ee 862B      		or r24,r22
+ 760 04f0 00C0      		rjmp .L141
+ 761               	.L117:
+ 762 04f2 84B3      		in r24,52-32
+ 763 04f4 6095      		com r22
+ 764 04f6 8623      		and r24,r22
+ 765               	.L141:
+ 766 04f8 84BB      		out 52-32,r24
+ 767 04fa 00C0      		rjmp .L100
+ 768               	.L104:
+ 769 04fc 22FF      		sbrs r18,2
+ 770 04fe 00C0      		rjmp .L118
+ 771 0500 82B3      		in r24,50-32
+ 772 0502 862B      		or r24,r22
+ 773 0504 00C0      		rjmp .L134
+ 774               	.L118:
+ 775 0506 92B3      		in r25,50-32
+ 776 0508 862F      		mov r24,r22
+ 777 050a 8095      		com r24
+ 778 050c 8923      		and r24,r25
+ 779               	.L134:
+ 780 050e 82BB      		out 50-32,r24
+ 781 0510 21FF      		sbrs r18,1
+ 782 0512 00C0      		rjmp .L120
+ 783 0514 81B3      		in r24,49-32
+ 784 0516 862B      		or r24,r22
+ 785 0518 00C0      		rjmp .L142
+ 786               	.L120:
+ 787 051a 81B3      		in r24,49-32
+ 788 051c 6095      		com r22
+ 789 051e 8623      		and r24,r22
+ 790               	.L142:
+ 791 0520 81BB      		out 49-32,r24
+ 792 0522 00C0      		rjmp .L100
+ 793               	.L105:
+ 794 0524 22FF      		sbrs r18,2
+ 795 0526 00C0      		rjmp .L121
+ 796 0528 83B1      		in r24,35-32
+ 797 052a 862B      		or r24,r22
+ 798 052c 00C0      		rjmp .L135
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 15
+
+
+ 799               	.L121:
+ 800 052e 93B1      		in r25,35-32
+ 801 0530 862F      		mov r24,r22
+ 802 0532 8095      		com r24
+ 803 0534 8923      		and r24,r25
+ 804               	.L135:
+ 805 0536 83B9      		out 35-32,r24
+ 806 0538 21FF      		sbrs r18,1
+ 807 053a 00C0      		rjmp .L123
+ 808 053c 82B1      		in r24,34-32
+ 809 053e 862B      		or r24,r22
+ 810 0540 00C0      		rjmp .L143
+ 811               	.L123:
+ 812 0542 82B1      		in r24,34-32
+ 813 0544 6095      		com r22
+ 814 0546 8623      		and r24,r22
+ 815               	.L143:
+ 816 0548 82B9      		out 34-32,r24
+ 817 054a 00C0      		rjmp .L100
+ 818               	.L106:
+ 819 054c 22FF      		sbrs r18,2
+ 820 054e 00C0      		rjmp .L124
+ 821 0550 8091 6200 		lds r24,98
+ 822 0554 862B      		or r24,r22
+ 823 0556 00C0      		rjmp .L136
+ 824               	.L124:
+ 825 0558 9091 6200 		lds r25,98
+ 826 055c 862F      		mov r24,r22
+ 827 055e 8095      		com r24
+ 828 0560 8923      		and r24,r25
+ 829               	.L136:
+ 830 0562 8093 6200 		sts 98,r24
+ 831 0566 21FF      		sbrs r18,1
+ 832 0568 00C0      		rjmp .L126
+ 833 056a 8091 6100 		lds r24,97
+ 834 056e 862B      		or r24,r22
+ 835 0570 00C0      		rjmp .L144
+ 836               	.L126:
+ 837 0572 8091 6100 		lds r24,97
+ 838 0576 6095      		com r22
+ 839 0578 8623      		and r24,r22
+ 840               	.L144:
+ 841 057a 8093 6100 		sts 97,r24
+ 842 057e 00C0      		rjmp .L100
+ 843               	.L146:
+ 844 0580 22FF      		sbrs r18,2
+ 845 0582 00C0      		rjmp .L127
+ 846 0584 8091 6500 		lds r24,101
+ 847 0588 862B      		or r24,r22
+ 848 058a 00C0      		rjmp .L137
+ 849               	.L127:
+ 850 058c 9091 6500 		lds r25,101
+ 851 0590 862F      		mov r24,r22
+ 852 0592 8095      		com r24
+ 853 0594 8923      		and r24,r25
+ 854               	.L137:
+ 855 0596 8093 6500 		sts 101,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 16
+
+
+ 856 059a 21FF      		sbrs r18,1
+ 857 059c 00C0      		rjmp .L129
+ 858 059e 8091 6400 		lds r24,100
+ 859 05a2 862B      		or r24,r22
+ 860 05a4 00C0      		rjmp .L139
+ 861               	.L129:
+ 862 05a6 8091 6400 		lds r24,100
+ 863 05aa 6095      		com r22
+ 864 05ac 8623      		and r24,r22
+ 865               	.L139:
+ 866 05ae 8093 6400 		sts 100,r24
+ 867               	.L100:
+ 868 05b2 80E0      		ldi r24,lo8(0)
+ 869 05b4 90E0      		ldi r25,hi8(0)
+ 870               	/* epilogue start */
+ 871 05b6 0895      		ret
+ 872               		.size	GpioPortConfigSet, .-GpioPortConfigSet
+ 873               	.global	GpioPinConfigSet
+ 874               		.type	GpioPinConfigSet, @function
+ 875               	GpioPinConfigSet:
+ 876 05b8 CF92      		push r12
+ 877 05ba DF92      		push r13
+ 878 05bc EF92      		push r14
+ 879 05be FF92      		push r15
+ 880 05c0 0F93      		push r16
+ 881 05c2 1F93      		push r17
+ 882 05c4 CF93      		push r28
+ 883 05c6 DF93      		push r29
+ 884               	/* prologue: function */
+ 885               	/* frame size = 0 */
+ 886 05c8 EC01      		movw r28,r24
+ 887 05ca D62E      		mov r13,r22
+ 888 05cc C72E      		mov r12,r23
+ 889 05ce 7901      		movw r14,r18
+ 890 05d0 8A01      		movw r16,r20
+ 891 05d2 8330      		cpi r24,3
+ 892 05d4 9105      		cpc r25,__zero_reg__
+ 893 05d6 01F4      		brne .+2
+ 894 05d8 00C0      		rjmp .L151
+ 895 05da 8430      		cpi r24,4
+ 896 05dc 9105      		cpc r25,__zero_reg__
+ 897 05de 04F4      		brge .L155
+ 898 05e0 8130      		cpi r24,1
+ 899 05e2 9105      		cpc r25,__zero_reg__
+ 900 05e4 01F0      		breq .L149
+ 901 05e6 8230      		cpi r24,2
+ 902 05e8 9105      		cpc r25,__zero_reg__
+ 903 05ea 01F0      		breq .+2
+ 904 05ec 00C0      		rjmp .L148
+ 905 05ee 00C0      		rjmp .L179
+ 906               	.L155:
+ 907 05f0 8530      		cpi r24,5
+ 908 05f2 9105      		cpc r25,__zero_reg__
+ 909 05f4 01F4      		brne .+2
+ 910 05f6 00C0      		rjmp .L153
+ 911 05f8 8530      		cpi r24,5
+ 912 05fa 9105      		cpc r25,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 17
+
+
+ 913 05fc 04F4      		brge .+2
+ 914 05fe 00C0      		rjmp .L152
+ 915 0600 8630      		cpi r24,6
+ 916 0602 9105      		cpc r25,__zero_reg__
+ 917 0604 01F0      		breq .+2
+ 918 0606 00C0      		rjmp .L148
+ 919 0608 00C0      		rjmp .L180
+ 920               	.L149:
+ 921 060a 21FF      		sbrs r18,1
+ 922 060c 00C0      		rjmp .L156
+ 923 060e 2AB3      		in r18,58-32
+ 924 0610 062E      		mov r0,r22
+ 925 0612 00C0      		rjmp 2f
+ 926 0614 880F      	1:	lsl r24
+ 927 0616 991F      		rol r25
+ 928 0618 0A94      	2:	dec r0
+ 929 061a 02F4      		brpl 1b
+ 930 061c 282B      		or r18,r24
+ 931 061e 2ABB      		out 58-32,r18
+ 932 0620 00C0      		rjmp .L157
+ 933               	.L156:
+ 934 0622 9C01      		movw r18,r24
+ 935 0624 062E      		mov r0,r22
+ 936 0626 00C0      		rjmp 2f
+ 937 0628 220F      	1:	lsl r18
+ 938 062a 331F      		rol r19
+ 939 062c 0A94      	2:	dec r0
+ 940 062e 02F4      		brpl 1b
+ 941 0630 E2FE      		sbrs r14,2
+ 942 0632 00C0      		rjmp .L158
+ 943 0634 8BB3      		in r24,59-32
+ 944 0636 822B      		or r24,r18
+ 945 0638 00C0      		rjmp .L178
+ 946               	.L158:
+ 947 063a 9BB3      		in r25,59-32
+ 948 063c 822F      		mov r24,r18
+ 949 063e 8095      		com r24
+ 950 0640 8923      		and r24,r25
+ 951               	.L178:
+ 952 0642 8BBB      		out 59-32,r24
+ 953 0644 2AB3      		in r18,58-32
+ 954 0646 81E0      		ldi r24,lo8(1)
+ 955 0648 90E0      		ldi r25,hi8(1)
+ 956 064a 0D2C      		mov r0,r13
+ 957 064c 00C0      		rjmp 2f
+ 958 064e 880F      	1:	lsl r24
+ 959 0650 991F      		rol r25
+ 960 0652 0A94      	2:	dec r0
+ 961 0654 02F4      		brpl 1b
+ 962 0656 8095      		com r24
+ 963 0658 8223      		and r24,r18
+ 964 065a 8ABB      		out 58-32,r24
+ 965 065c 00C0      		rjmp .L157
+ 966               	.L179:
+ 967 065e 21FF      		sbrs r18,1
+ 968 0660 00C0      		rjmp .L160
+ 969 0662 27B3      		in r18,55-32
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 18
+
+
+ 970 0664 81E0      		ldi r24,lo8(1)
+ 971 0666 90E0      		ldi r25,hi8(1)
+ 972 0668 062E      		mov r0,r22
+ 973 066a 00C0      		rjmp 2f
+ 974 066c 880F      	1:	lsl r24
+ 975 066e 991F      		rol r25
+ 976 0670 0A94      	2:	dec r0
+ 977 0672 02F4      		brpl 1b
+ 978 0674 282B      		or r18,r24
+ 979 0676 27BB      		out 55-32,r18
+ 980 0678 00C0      		rjmp .L157
+ 981               	.L160:
+ 982 067a 22FF      		sbrs r18,2
+ 983 067c 00C0      		rjmp .L161
+ 984 067e 28B3      		in r18,56-32
+ 985 0680 81E0      		ldi r24,lo8(1)
+ 986 0682 90E0      		ldi r25,hi8(1)
+ 987 0684 062E      		mov r0,r22
+ 988 0686 00C0      		rjmp 2f
+ 989 0688 880F      	1:	lsl r24
+ 990 068a 991F      		rol r25
+ 991 068c 0A94      	2:	dec r0
+ 992 068e 02F4      		brpl 1b
+ 993 0690 282B      		or r18,r24
+ 994 0692 28BB      		out 56-32,r18
+ 995 0694 00C0      		rjmp .L162
+ 996               	.L161:
+ 997 0696 28B3      		in r18,56-32
+ 998 0698 81E0      		ldi r24,lo8(1)
+ 999 069a 90E0      		ldi r25,hi8(1)
+ 1000 069c 062E      		mov r0,r22
+ 1001 069e 00C0      		rjmp 2f
+ 1002 06a0 880F      	1:	lsl r24
+ 1003 06a2 991F      		rol r25
+ 1004 06a4 0A94      	2:	dec r0
+ 1005 06a6 02F4      		brpl 1b
+ 1006 06a8 8095      		com r24
+ 1007 06aa 8223      		and r24,r18
+ 1008 06ac 88BB      		out 56-32,r24
+ 1009               	.L162:
+ 1010 06ae 27B3      		in r18,55-32
+ 1011 06b0 81E0      		ldi r24,lo8(1)
+ 1012 06b2 90E0      		ldi r25,hi8(1)
+ 1013 06b4 0D2C      		mov r0,r13
+ 1014 06b6 00C0      		rjmp 2f
+ 1015 06b8 880F      	1:	lsl r24
+ 1016 06ba 991F      		rol r25
+ 1017 06bc 0A94      	2:	dec r0
+ 1018 06be 02F4      		brpl 1b
+ 1019 06c0 8095      		com r24
+ 1020 06c2 8223      		and r24,r18
+ 1021 06c4 87BB      		out 55-32,r24
+ 1022 06c6 00C0      		rjmp .L157
+ 1023               	.L151:
+ 1024 06c8 21FF      		sbrs r18,1
+ 1025 06ca 00C0      		rjmp .L163
+ 1026 06cc 24B3      		in r18,52-32
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 19
+
+
+ 1027 06ce 81E0      		ldi r24,lo8(1)
+ 1028 06d0 90E0      		ldi r25,hi8(1)
+ 1029 06d2 062E      		mov r0,r22
+ 1030 06d4 00C0      		rjmp 2f
+ 1031 06d6 880F      	1:	lsl r24
+ 1032 06d8 991F      		rol r25
+ 1033 06da 0A94      	2:	dec r0
+ 1034 06dc 02F4      		brpl 1b
+ 1035 06de 282B      		or r18,r24
+ 1036 06e0 24BB      		out 52-32,r18
+ 1037 06e2 00C0      		rjmp .L157
+ 1038               	.L163:
+ 1039 06e4 22FF      		sbrs r18,2
+ 1040 06e6 00C0      		rjmp .L164
+ 1041 06e8 25B3      		in r18,53-32
+ 1042 06ea 81E0      		ldi r24,lo8(1)
+ 1043 06ec 90E0      		ldi r25,hi8(1)
+ 1044 06ee 062E      		mov r0,r22
+ 1045 06f0 00C0      		rjmp 2f
+ 1046 06f2 880F      	1:	lsl r24
+ 1047 06f4 991F      		rol r25
+ 1048 06f6 0A94      	2:	dec r0
+ 1049 06f8 02F4      		brpl 1b
+ 1050 06fa 282B      		or r18,r24
+ 1051 06fc 25BB      		out 53-32,r18
+ 1052 06fe 00C0      		rjmp .L165
+ 1053               	.L164:
+ 1054 0700 25B3      		in r18,53-32
+ 1055 0702 81E0      		ldi r24,lo8(1)
+ 1056 0704 90E0      		ldi r25,hi8(1)
+ 1057 0706 062E      		mov r0,r22
+ 1058 0708 00C0      		rjmp 2f
+ 1059 070a 880F      	1:	lsl r24
+ 1060 070c 991F      		rol r25
+ 1061 070e 0A94      	2:	dec r0
+ 1062 0710 02F4      		brpl 1b
+ 1063 0712 8095      		com r24
+ 1064 0714 8223      		and r24,r18
+ 1065 0716 85BB      		out 53-32,r24
+ 1066               	.L165:
+ 1067 0718 24B3      		in r18,52-32
+ 1068 071a 81E0      		ldi r24,lo8(1)
+ 1069 071c 90E0      		ldi r25,hi8(1)
+ 1070 071e 0D2C      		mov r0,r13
+ 1071 0720 00C0      		rjmp 2f
+ 1072 0722 880F      	1:	lsl r24
+ 1073 0724 991F      		rol r25
+ 1074 0726 0A94      	2:	dec r0
+ 1075 0728 02F4      		brpl 1b
+ 1076 072a 8095      		com r24
+ 1077 072c 8223      		and r24,r18
+ 1078 072e 84BB      		out 52-32,r24
+ 1079 0730 00C0      		rjmp .L157
+ 1080               	.L152:
+ 1081 0732 21FF      		sbrs r18,1
+ 1082 0734 00C0      		rjmp .L166
+ 1083 0736 21B3      		in r18,49-32
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 20
+
+
+ 1084 0738 81E0      		ldi r24,lo8(1)
+ 1085 073a 90E0      		ldi r25,hi8(1)
+ 1086 073c 062E      		mov r0,r22
+ 1087 073e 00C0      		rjmp 2f
+ 1088 0740 880F      	1:	lsl r24
+ 1089 0742 991F      		rol r25
+ 1090 0744 0A94      	2:	dec r0
+ 1091 0746 02F4      		brpl 1b
+ 1092 0748 282B      		or r18,r24
+ 1093 074a 21BB      		out 49-32,r18
+ 1094 074c 00C0      		rjmp .L157
+ 1095               	.L166:
+ 1096 074e 22FF      		sbrs r18,2
+ 1097 0750 00C0      		rjmp .L167
+ 1098 0752 22B3      		in r18,50-32
+ 1099 0754 81E0      		ldi r24,lo8(1)
+ 1100 0756 90E0      		ldi r25,hi8(1)
+ 1101 0758 062E      		mov r0,r22
+ 1102 075a 00C0      		rjmp 2f
+ 1103 075c 880F      	1:	lsl r24
+ 1104 075e 991F      		rol r25
+ 1105 0760 0A94      	2:	dec r0
+ 1106 0762 02F4      		brpl 1b
+ 1107 0764 282B      		or r18,r24
+ 1108 0766 22BB      		out 50-32,r18
+ 1109 0768 00C0      		rjmp .L168
+ 1110               	.L167:
+ 1111 076a 22B3      		in r18,50-32
+ 1112 076c 81E0      		ldi r24,lo8(1)
+ 1113 076e 90E0      		ldi r25,hi8(1)
+ 1114 0770 062E      		mov r0,r22
+ 1115 0772 00C0      		rjmp 2f
+ 1116 0774 880F      	1:	lsl r24
+ 1117 0776 991F      		rol r25
+ 1118 0778 0A94      	2:	dec r0
+ 1119 077a 02F4      		brpl 1b
+ 1120 077c 8095      		com r24
+ 1121 077e 8223      		and r24,r18
+ 1122 0780 82BB      		out 50-32,r24
+ 1123               	.L168:
+ 1124 0782 21B3      		in r18,49-32
+ 1125 0784 81E0      		ldi r24,lo8(1)
+ 1126 0786 90E0      		ldi r25,hi8(1)
+ 1127 0788 0D2C      		mov r0,r13
+ 1128 078a 00C0      		rjmp 2f
+ 1129 078c 880F      	1:	lsl r24
+ 1130 078e 991F      		rol r25
+ 1131 0790 0A94      	2:	dec r0
+ 1132 0792 02F4      		brpl 1b
+ 1133 0794 8095      		com r24
+ 1134 0796 8223      		and r24,r18
+ 1135 0798 81BB      		out 49-32,r24
+ 1136 079a 00C0      		rjmp .L157
+ 1137               	.L153:
+ 1138 079c 21FF      		sbrs r18,1
+ 1139 079e 00C0      		rjmp .L169
+ 1140 07a0 22B1      		in r18,34-32
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 21
+
+
+ 1141 07a2 81E0      		ldi r24,lo8(1)
+ 1142 07a4 90E0      		ldi r25,hi8(1)
+ 1143 07a6 062E      		mov r0,r22
+ 1144 07a8 00C0      		rjmp 2f
+ 1145 07aa 880F      	1:	lsl r24
+ 1146 07ac 991F      		rol r25
+ 1147 07ae 0A94      	2:	dec r0
+ 1148 07b0 02F4      		brpl 1b
+ 1149 07b2 282B      		or r18,r24
+ 1150 07b4 22B9      		out 34-32,r18
+ 1151 07b6 00C0      		rjmp .L157
+ 1152               	.L169:
+ 1153 07b8 22FF      		sbrs r18,2
+ 1154 07ba 00C0      		rjmp .L170
+ 1155 07bc 23B1      		in r18,35-32
+ 1156 07be 81E0      		ldi r24,lo8(1)
+ 1157 07c0 90E0      		ldi r25,hi8(1)
+ 1158 07c2 062E      		mov r0,r22
+ 1159 07c4 00C0      		rjmp 2f
+ 1160 07c6 880F      	1:	lsl r24
+ 1161 07c8 991F      		rol r25
+ 1162 07ca 0A94      	2:	dec r0
+ 1163 07cc 02F4      		brpl 1b
+ 1164 07ce 282B      		or r18,r24
+ 1165 07d0 23B9      		out 35-32,r18
+ 1166 07d2 00C0      		rjmp .L171
+ 1167               	.L170:
+ 1168 07d4 23B1      		in r18,35-32
+ 1169 07d6 81E0      		ldi r24,lo8(1)
+ 1170 07d8 90E0      		ldi r25,hi8(1)
+ 1171 07da 062E      		mov r0,r22
+ 1172 07dc 00C0      		rjmp 2f
+ 1173 07de 880F      	1:	lsl r24
+ 1174 07e0 991F      		rol r25
+ 1175 07e2 0A94      	2:	dec r0
+ 1176 07e4 02F4      		brpl 1b
+ 1177 07e6 8095      		com r24
+ 1178 07e8 8223      		and r24,r18
+ 1179 07ea 83B9      		out 35-32,r24
+ 1180               	.L171:
+ 1181 07ec 22B1      		in r18,34-32
+ 1182 07ee 81E0      		ldi r24,lo8(1)
+ 1183 07f0 90E0      		ldi r25,hi8(1)
+ 1184 07f2 0D2C      		mov r0,r13
+ 1185 07f4 00C0      		rjmp 2f
+ 1186 07f6 880F      	1:	lsl r24
+ 1187 07f8 991F      		rol r25
+ 1188 07fa 0A94      	2:	dec r0
+ 1189 07fc 02F4      		brpl 1b
+ 1190 07fe 8095      		com r24
+ 1191 0800 8223      		and r24,r18
+ 1192 0802 82B9      		out 34-32,r24
+ 1193 0804 00C0      		rjmp .L157
+ 1194               	.L180:
+ 1195 0806 21FF      		sbrs r18,1
+ 1196 0808 00C0      		rjmp .L172
+ 1197 080a 2091 6100 		lds r18,97
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 22
+
+
+ 1198 080e 81E0      		ldi r24,lo8(1)
+ 1199 0810 90E0      		ldi r25,hi8(1)
+ 1200 0812 062E      		mov r0,r22
+ 1201 0814 00C0      		rjmp 2f
+ 1202 0816 880F      	1:	lsl r24
+ 1203 0818 991F      		rol r25
+ 1204 081a 0A94      	2:	dec r0
+ 1205 081c 02F4      		brpl 1b
+ 1206 081e 282B      		or r18,r24
+ 1207 0820 2093 6100 		sts 97,r18
+ 1208 0824 00C0      		rjmp .L157
+ 1209               	.L172:
+ 1210 0826 22FF      		sbrs r18,2
+ 1211 0828 00C0      		rjmp .L173
+ 1212 082a 2091 6200 		lds r18,98
+ 1213 082e 81E0      		ldi r24,lo8(1)
+ 1214 0830 90E0      		ldi r25,hi8(1)
+ 1215 0832 062E      		mov r0,r22
+ 1216 0834 00C0      		rjmp 2f
+ 1217 0836 880F      	1:	lsl r24
+ 1218 0838 991F      		rol r25
+ 1219 083a 0A94      	2:	dec r0
+ 1220 083c 02F4      		brpl 1b
+ 1221 083e 282B      		or r18,r24
+ 1222 0840 2093 6200 		sts 98,r18
+ 1223 0844 00C0      		rjmp .L174
+ 1224               	.L173:
+ 1225 0846 2091 6200 		lds r18,98
+ 1226 084a 81E0      		ldi r24,lo8(1)
+ 1227 084c 90E0      		ldi r25,hi8(1)
+ 1228 084e 062E      		mov r0,r22
+ 1229 0850 00C0      		rjmp 2f
+ 1230 0852 880F      	1:	lsl r24
+ 1231 0854 991F      		rol r25
+ 1232 0856 0A94      	2:	dec r0
+ 1233 0858 02F4      		brpl 1b
+ 1234 085a 8095      		com r24
+ 1235 085c 8223      		and r24,r18
+ 1236 085e 8093 6200 		sts 98,r24
+ 1237               	.L174:
+ 1238 0862 2091 6100 		lds r18,97
+ 1239 0866 81E0      		ldi r24,lo8(1)
+ 1240 0868 90E0      		ldi r25,hi8(1)
+ 1241 086a 0D2C      		mov r0,r13
+ 1242 086c 00C0      		rjmp 2f
+ 1243 086e 880F      	1:	lsl r24
+ 1244 0870 991F      		rol r25
+ 1245 0872 0A94      	2:	dec r0
+ 1246 0874 02F4      		brpl 1b
+ 1247 0876 8095      		com r24
+ 1248 0878 8223      		and r24,r18
+ 1249 087a 8093 6100 		sts 97,r24
+ 1250 087e 00C0      		rjmp .L157
+ 1251               	.L148:
+ 1252 0880 61E0      		ldi r22,lo8(1)
+ 1253 0882 70E0      		ldi r23,hi8(1)
+ 1254 0884 0D2C      		mov r0,r13
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 23
+
+
+ 1255 0886 00C0      		rjmp 2f
+ 1256 0888 660F      	1:	lsl r22
+ 1257 088a 771F      		rol r23
+ 1258 088c 0A94      	2:	dec r0
+ 1259 088e 02F4      		brpl 1b
+ 1260 0890 CE01      		movw r24,r28
+ 1261 0892 A801      		movw r20,r16
+ 1262 0894 9701      		movw r18,r14
+ 1263 0896 0E94 0000 		call GpioPortConfigSet
+ 1264               	.L157:
+ 1265 089a CE01      		movw r24,r28
+ 1266 089c 6D2D      		mov r22,r13
+ 1267 089e 7C2D      		mov r23,r12
+ 1268 08a0 0E94 0000 		call GpioPinConfigGet
+ 1269 08a4 6E15      		cp r22,r14
+ 1270 08a6 7F05      		cpc r23,r15
+ 1271 08a8 8007      		cpc r24,r16
+ 1272 08aa 9107      		cpc r25,r17
+ 1273 08ac 01F4      		brne .L175
+ 1274 08ae 20E0      		ldi r18,lo8(0)
+ 1275 08b0 30E0      		ldi r19,hi8(0)
+ 1276 08b2 00C0      		rjmp .L176
+ 1277               	.L175:
+ 1278 08b4 2FEF      		ldi r18,lo8(-1)
+ 1279 08b6 3FEF      		ldi r19,hi8(-1)
+ 1280               	.L176:
+ 1281 08b8 C901      		movw r24,r18
+ 1282               	/* epilogue start */
+ 1283 08ba DF91      		pop r29
+ 1284 08bc CF91      		pop r28
+ 1285 08be 1F91      		pop r17
+ 1286 08c0 0F91      		pop r16
+ 1287 08c2 FF90      		pop r15
+ 1288 08c4 EF90      		pop r14
+ 1289 08c6 DF90      		pop r13
+ 1290 08c8 CF90      		pop r12
+ 1291 08ca 0895      		ret
+ 1292               		.size	GpioPinConfigSet, .-GpioPinConfigSet
+ 1293               	.global	GpioRegisterIrqHandler
+ 1294               		.type	GpioRegisterIrqHandler, @function
+ 1295               	GpioRegisterIrqHandler:
+ 1296               	/* prologue: function */
+ 1297               	/* frame size = 0 */
+ 1298 08cc 8FEF      		ldi r24,lo8(-1)
+ 1299 08ce 9FEF      		ldi r25,hi8(-1)
+ 1300               	/* epilogue start */
+ 1301 08d0 0895      		ret
+ 1302               		.size	GpioRegisterIrqHandler, .-GpioRegisterIrqHandler
+ 1303               	.global	GpioIrqEnable
+ 1304               		.type	GpioIrqEnable, @function
+ 1305               	GpioIrqEnable:
+ 1306               	/* prologue: function */
+ 1307               	/* frame size = 0 */
+ 1308 08d2 8FEF      		ldi r24,lo8(-1)
+ 1309 08d4 9FEF      		ldi r25,hi8(-1)
+ 1310               	/* epilogue start */
+ 1311 08d6 0895      		ret
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 24
+
+
+ 1312               		.size	GpioIrqEnable, .-GpioIrqEnable
+ 1313               	.global	GpioIrqDisable
+ 1314               		.type	GpioIrqDisable, @function
+ 1315               	GpioIrqDisable:
+ 1316               	/* prologue: function */
+ 1317               	/* frame size = 0 */
+ 1318 08d8 8FEF      		ldi r24,lo8(-1)
+ 1319 08da 9FEF      		ldi r25,hi8(-1)
+ 1320               	/* epilogue start */
+ 1321 08dc 0895      		ret
+ 1322               		.size	GpioIrqDisable, .-GpioIrqDisable
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s 			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 gpio_avr.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:11     .text:00000000 GpioPinGet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:79     .text:00000066 GpioPinSetLow
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:208    .text:00000152 GpioPinSetHigh
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:328    .text:0000022c GpioPinSet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:341    .text:0000023c GpioPortGet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:402    .text:00000294 GpioPortSet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:455    .text:000002e4 GpioPortSetLow
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:481    .text:0000030e GpioPortSetHigh
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:505    .text:00000334 GpioPinConfigGet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:660    .text:0000044a GpioPortConfigSet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:875    .text:000005b8 GpioPinConfigSet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:1295   .text:000008cc GpioRegisterIrqHandler
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:1305   .text:000008d2 GpioIrqEnable
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccdhhXoL.s:1315   .text:000008d8 GpioIrqDisable
+
+NO UNDEFINED SYMBOLS

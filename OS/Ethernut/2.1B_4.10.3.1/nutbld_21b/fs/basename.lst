@@ -1,0 +1,156 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccozEWva.s 			page 1
+
+
+   1               		.file	"basename.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.data
+   9               	.LC0:
+  10 0000 2E00      		.string	"."
+  11               	.LC1:
+  12 0002 2F00      		.string	"/"
+  13               		.text
+  14               	.global	basename
+  15               		.type	basename, @function
+  16               	basename:
+  17 0000 CF93      		push r28
+  18 0002 DF93      		push r29
+  19               	/* prologue: function */
+  20               	/* frame size = 0 */
+  21 0004 EC01      		movw r28,r24
+  22 0006 8091 0000 		lds r24,bname.1654
+  23 000a 9091 0000 		lds r25,(bname.1654)+1
+  24 000e 892B      		or r24,r25
+  25 0010 01F4      		brne .L2
+  26 0012 80E0      		ldi r24,lo8(256)
+  27 0014 91E0      		ldi r25,hi8(256)
+  28 0016 0E94 0000 		call malloc
+  29 001a 9093 0000 		sts (bname.1654)+1,r25
+  30 001e 8093 0000 		sts bname.1654,r24
+  31 0022 0097      		sbiw r24,0
+  32 0024 01F4      		brne .+2
+  33 0026 00C0      		rjmp .L14
+  34               	.L2:
+  35 0028 2097      		sbiw r28,0
+  36 002a 01F0      		breq .L4
+  37 002c 8881      		ld r24,Y
+  38 002e 8823      		tst r24
+  39 0030 01F4      		brne .L5
+  40               	.L4:
+  41 0032 8091 0000 		lds r24,bname.1654
+  42 0036 9091 0000 		lds r25,(bname.1654)+1
+  43 003a 60E0      		ldi r22,lo8(.LC0)
+  44 003c 70E0      		ldi r23,hi8(.LC0)
+  45 003e 00C0      		rjmp .L15
+  46               	.L5:
+  47 0040 DE01      		movw r26,r28
+  48 0042 0D90      		ld __tmp_reg__,X+
+  49 0044 0020      		tst __tmp_reg__
+  50 0046 01F4      		brne .-6
+  51 0048 AC1B      		sub r26,r28
+  52 004a BD0B      		sbc r27,r29
+  53 004c 1297      		sbiw r26,2
+  54 004e AC0F      		add r26,r28
+  55 0050 BD1F      		adc r27,r29
+  56 0052 00C0      		rjmp .L6
+  57               	.L8:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccozEWva.s 			page 2
+
+
+  58 0054 1197      		sbiw r26,1
+  59               	.L6:
+  60 0056 CA17      		cp r28,r26
+  61 0058 DB07      		cpc r29,r27
+  62 005a 00F4      		brsh .L7
+  63 005c 8C91      		ld r24,X
+  64 005e 8F32      		cpi r24,lo8(47)
+  65 0060 01F0      		breq .L8
+  66               	.L7:
+  67 0062 9D01      		movw r18,r26
+  68 0064 AC17      		cp r26,r28
+  69 0066 BD07      		cpc r27,r29
+  70 0068 01F4      		brne .L11
+  71 006a 8C91      		ld r24,X
+  72 006c 8F32      		cpi r24,lo8(47)
+  73 006e 01F4      		brne .L11
+  74 0070 8091 0000 		lds r24,bname.1654
+  75 0074 9091 0000 		lds r25,(bname.1654)+1
+  76 0078 60E0      		ldi r22,lo8(.LC1)
+  77 007a 70E0      		ldi r23,hi8(.LC1)
+  78               	.L15:
+  79 007c 0E94 0000 		call strcpy
+  80 0080 2091 0000 		lds r18,bname.1654
+  81 0084 3091 0000 		lds r19,(bname.1654)+1
+  82 0088 00C0      		rjmp .L3
+  83               	.L11:
+  84 008a C217      		cp r28,r18
+  85 008c D307      		cpc r29,r19
+  86 008e 00F4      		brsh .L10
+  87 0090 F901      		movw r30,r18
+  88 0092 8291      		ld r24,-Z
+  89 0094 8F32      		cpi r24,lo8(47)
+  90 0096 01F0      		breq .L10
+  91 0098 9F01      		movw r18,r30
+  92 009a 00C0      		rjmp .L11
+  93               	.L10:
+  94 009c ED01      		movw r28,r26
+  95 009e C21B      		sub r28,r18
+  96 00a0 D30B      		sbc r29,r19
+  97 00a2 CE3F      		cpi r28,254
+  98 00a4 D105      		cpc r29,__zero_reg__
+  99 00a6 04F0      		brlt .L12
+ 100 00a8 8FE3      		ldi r24,lo8(63)
+ 101 00aa 90E0      		ldi r25,hi8(63)
+ 102 00ac 9093 0000 		sts (errno)+1,r25
+ 103 00b0 8093 0000 		sts errno,r24
+ 104               	.L14:
+ 105 00b4 20E0      		ldi r18,lo8(0)
+ 106 00b6 30E0      		ldi r19,hi8(0)
+ 107 00b8 00C0      		rjmp .L3
+ 108               	.L12:
+ 109 00ba 8091 0000 		lds r24,bname.1654
+ 110 00be 9091 0000 		lds r25,(bname.1654)+1
+ 111 00c2 B901      		movw r22,r18
+ 112 00c4 0E94 0000 		call strcpy
+ 113 00c8 2091 0000 		lds r18,bname.1654
+ 114 00cc 3091 0000 		lds r19,(bname.1654)+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccozEWva.s 			page 3
+
+
+ 115 00d0 C20F      		add r28,r18
+ 116 00d2 D31F      		adc r29,r19
+ 117 00d4 1982      		std Y+1,__zero_reg__
+ 118               	.L3:
+ 119 00d6 C901      		movw r24,r18
+ 120               	/* epilogue start */
+ 121 00d8 DF91      		pop r29
+ 122 00da CF91      		pop r28
+ 123 00dc 0895      		ret
+ 124               		.size	basename, .-basename
+ 125               		.lcomm bname.1654,2
+ 126               	.global __do_copy_data
+ 127               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccozEWva.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 basename.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccozEWva.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccozEWva.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccozEWva.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccozEWva.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccozEWva.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccozEWva.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccozEWva.s:16     .text:00000000 basename
+                             .bss:00000000 bname.1654
+
+UNDEFINED SYMBOLS
+malloc
+strcpy
+errno
+__do_copy_data
+__do_clear_bss

@@ -1,0 +1,644 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s 			page 1
+
+
+   1               		.file	"phat32.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	PhatTableLoc, @function
+  10               	PhatTableLoc:
+  11 0000 2F92      		push r2
+  12 0002 3F92      		push r3
+  13 0004 4F92      		push r4
+  14 0006 5F92      		push r5
+  15 0008 6F92      		push r6
+  16 000a 7F92      		push r7
+  17 000c 8F92      		push r8
+  18 000e 9F92      		push r9
+  19 0010 AF92      		push r10
+  20 0012 BF92      		push r11
+  21 0014 CF92      		push r12
+  22 0016 DF92      		push r13
+  23 0018 EF92      		push r14
+  24 001a FF92      		push r15
+  25 001c 0F93      		push r16
+  26 001e 1F93      		push r17
+  27               	/* prologue: function */
+  28               	/* frame size = 0 */
+  29 0020 3C01      		movw r6,r24
+  30 0022 5A01      		movw r10,r20
+  31 0024 6B01      		movw r12,r22
+  32 0026 4901      		movw r8,r18
+  33 0028 2801      		movw r4,r16
+  34 002a 1701      		movw r2,r14
+  35 002c 92E0      		ldi r25,2
+  36 002e AA0C      	1:	lsl r10
+  37 0030 BB1C      		rol r11
+  38 0032 CC1C      		rol r12
+  39 0034 DD1C      		rol r13
+  40 0036 9A95      		dec r25
+  41 0038 01F4      		brne 1b
+  42 003a F301      		movw r30,r6
+  43 003c E688      		ldd r14,Z+22
+  44 003e F788      		ldd r15,Z+23
+  45 0040 00E0      		ldi r16,lo8(0)
+  46 0042 10E0      		ldi r17,hi8(0)
+  47 0044 C601      		movw r24,r12
+  48 0046 B501      		movw r22,r10
+  49 0048 A801      		movw r20,r16
+  50 004a 9701      		movw r18,r14
+  51 004c 0E94 0000 		call __udivmodsi4
+  52 0050 880C      		lsl r8
+  53 0052 991C      		rol r9
+  54 0054 880C      		lsl r8
+  55 0056 991C      		rol r9
+  56 0058 680C      		add r6,r8
+  57 005a 791C      		adc r7,r9
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s 			page 2
+
+
+  58 005c F301      		movw r30,r6
+  59 005e 868D      		ldd r24,Z+30
+  60 0060 978D      		ldd r25,Z+31
+  61 0062 A0A1      		ldd r26,Z+32
+  62 0064 B1A1      		ldd r27,Z+33
+  63 0066 820F      		add r24,r18
+  64 0068 931F      		adc r25,r19
+  65 006a A41F      		adc r26,r20
+  66 006c B51F      		adc r27,r21
+  67 006e F201      		movw r30,r4
+  68 0070 8083      		st Z,r24
+  69 0072 9183      		std Z+1,r25
+  70 0074 A283      		std Z+2,r26
+  71 0076 B383      		std Z+3,r27
+  72 0078 C601      		movw r24,r12
+  73 007a B501      		movw r22,r10
+  74 007c A801      		movw r20,r16
+  75 007e 9701      		movw r18,r14
+  76 0080 0E94 0000 		call __udivmodsi4
+  77 0084 F101      		movw r30,r2
+  78 0086 6083      		st Z,r22
+  79 0088 7183      		std Z+1,r23
+  80 008a 8283      		std Z+2,r24
+  81 008c 9383      		std Z+3,r25
+  82               	/* epilogue start */
+  83 008e 1F91      		pop r17
+  84 0090 0F91      		pop r16
+  85 0092 FF90      		pop r15
+  86 0094 EF90      		pop r14
+  87 0096 DF90      		pop r13
+  88 0098 CF90      		pop r12
+  89 009a BF90      		pop r11
+  90 009c AF90      		pop r10
+  91 009e 9F90      		pop r9
+  92 00a0 8F90      		pop r8
+  93 00a2 7F90      		pop r7
+  94 00a4 6F90      		pop r6
+  95 00a6 5F90      		pop r5
+  96 00a8 4F90      		pop r4
+  97 00aa 3F90      		pop r3
+  98 00ac 2F90      		pop r2
+  99 00ae 0895      		ret
+ 100               		.size	PhatTableLoc, .-PhatTableLoc
+ 101               	.global	Phat32SetClusterLink
+ 102               		.type	Phat32SetClusterLink, @function
+ 103               	Phat32SetClusterLink:
+ 104 00b0 2F92      		push r2
+ 105 00b2 3F92      		push r3
+ 106 00b4 4F92      		push r4
+ 107 00b6 5F92      		push r5
+ 108 00b8 6F92      		push r6
+ 109 00ba 7F92      		push r7
+ 110 00bc 8F92      		push r8
+ 111 00be 9F92      		push r9
+ 112 00c0 AF92      		push r10
+ 113 00c2 BF92      		push r11
+ 114 00c4 CF92      		push r12
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s 			page 3
+
+
+ 115 00c6 DF92      		push r13
+ 116 00c8 EF92      		push r14
+ 117 00ca FF92      		push r15
+ 118 00cc 0F93      		push r16
+ 119 00ce 1F93      		push r17
+ 120 00d0 DF93      		push r29
+ 121 00d2 CF93      		push r28
+ 122 00d4 CDB7      		in r28,__SP_L__
+ 123 00d6 DEB7      		in r29,__SP_H__
+ 124 00d8 2C97      		sbiw r28,12
+ 125 00da 0FB6      		in __tmp_reg__,__SREG__
+ 126 00dc F894      		cli
+ 127 00de DEBF      		out __SP_H__,r29
+ 128 00e0 0FBE      		out __SREG__,__tmp_reg__
+ 129 00e2 CDBF      		out __SP_L__,r28
+ 130               	/* prologue: function */
+ 131               	/* frame size = 12 */
+ 132 00e4 1C01      		movw r2,r24
+ 133 00e6 4987      		std Y+9,r20
+ 134 00e8 5A87      		std Y+10,r21
+ 135 00ea 6B87      		std Y+11,r22
+ 136 00ec 7C87      		std Y+12,r23
+ 137 00ee 5801      		movw r10,r16
+ 138 00f0 6901      		movw r12,r18
+ 139 00f2 DC01      		movw r26,r24
+ 140 00f4 5196      		adiw r26,17
+ 141 00f6 6D90      		ld r6,X+
+ 142 00f8 7C90      		ld r7,X
+ 143 00fa 5297      		sbiw r26,17+1
+ 144 00fc 2301      		movw r4,r6
+ 145 00fe 8824      		clr r8
+ 146 0100 9924      		clr r9
+ 147 0102 00C0      		rjmp .L4
+ 148               	.L8:
+ 149 0104 C301      		movw r24,r6
+ 150 0106 4985      		ldd r20,Y+9
+ 151 0108 5A85      		ldd r21,Y+10
+ 152 010a 6B85      		ldd r22,Y+11
+ 153 010c 7C85      		ldd r23,Y+12
+ 154 010e 9401      		movw r18,r8
+ 155 0110 8E01      		movw r16,r28
+ 156 0112 0F5F      		subi r16,lo8(-(1))
+ 157 0114 1F4F      		sbci r17,hi8(-(1))
+ 158 0116 F5E0      		ldi r31,lo8(5)
+ 159 0118 EF2E      		mov r14,r31
+ 160 011a F12C      		mov r15,__zero_reg__
+ 161 011c EC0E      		add r14,r28
+ 162 011e FD1E      		adc r15,r29
+ 163 0120 0E94 0000 		call PhatTableLoc
+ 164 0124 4981      		ldd r20,Y+1
+ 165 0126 5A81      		ldd r21,Y+2
+ 166 0128 6B81      		ldd r22,Y+3
+ 167 012a 7C81      		ldd r23,Y+4
+ 168 012c C101      		movw r24,r2
+ 169 012e 0E94 0000 		call PhatSectorLoad
+ 170 0132 AC01      		movw r20,r24
+ 171 0134 97FF      		sbrs r25,7
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s 			page 4
+
+
+ 172 0136 00C0      		rjmp .L5
+ 173 0138 2FEF      		ldi r18,lo8(-1)
+ 174 013a 3FEF      		ldi r19,hi8(-1)
+ 175 013c 00C0      		rjmp .L6
+ 176               	.L5:
+ 177 013e 8FEF      		ldi r24,lo8(268435455)
+ 178 0140 9FEF      		ldi r25,hi8(268435455)
+ 179 0142 AFEF      		ldi r26,hlo8(268435455)
+ 180 0144 BFE0      		ldi r27,hhi8(268435455)
+ 181 0146 A822      		and r10,r24
+ 182 0148 B922      		and r11,r25
+ 183 014a CA22      		and r12,r26
+ 184 014c DB22      		and r13,r27
+ 185 014e 9A01      		movw r18,r20
+ 186 0150 E3E0      		ldi r30,3
+ 187 0152 220F      	1:	lsl r18
+ 188 0154 331F      		rol r19
+ 189 0156 EA95      		dec r30
+ 190 0158 01F4      		brne 1b
+ 191 015a 260D      		add r18,r6
+ 192 015c 371D      		adc r19,r7
+ 193 015e D901      		movw r26,r18
+ 194 0160 1A96      		adiw r26,10
+ 195 0162 ED91      		ld r30,X+
+ 196 0164 FC91      		ld r31,X
+ 197 0166 1B97      		sbiw r26,10+1
+ 198 0168 8D81      		ldd r24,Y+5
+ 199 016a 9E81      		ldd r25,Y+6
+ 200 016c E80F      		add r30,r24
+ 201 016e F91F      		adc r31,r25
+ 202 0170 A082      		st Z,r10
+ 203 0172 1A96      		adiw r26,10
+ 204 0174 ED91      		ld r30,X+
+ 205 0176 FC91      		ld r31,X
+ 206 0178 1B97      		sbiw r26,10+1
+ 207 017a 8D81      		ldd r24,Y+5
+ 208 017c 9E81      		ldd r25,Y+6
+ 209 017e E80F      		add r30,r24
+ 210 0180 F91F      		adc r31,r25
+ 211 0182 BB27      		clr r27
+ 212 0184 AD2D      		mov r26,r13
+ 213 0186 9C2D      		mov r25,r12
+ 214 0188 8B2D      		mov r24,r11
+ 215 018a 8183      		std Z+1,r24
+ 216 018c D901      		movw r26,r18
+ 217 018e 1A96      		adiw r26,10
+ 218 0190 ED91      		ld r30,X+
+ 219 0192 FC91      		ld r31,X
+ 220 0194 1B97      		sbiw r26,10+1
+ 221 0196 8D81      		ldd r24,Y+5
+ 222 0198 9E81      		ldd r25,Y+6
+ 223 019a E80F      		add r30,r24
+ 224 019c F91F      		adc r31,r25
+ 225 019e C601      		movw r24,r12
+ 226 01a0 AA27      		clr r26
+ 227 01a2 BB27      		clr r27
+ 228 01a4 8283      		std Z+2,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s 			page 5
+
+
+ 229 01a6 D901      		movw r26,r18
+ 230 01a8 1A96      		adiw r26,10
+ 231 01aa ED91      		ld r30,X+
+ 232 01ac FC91      		ld r31,X
+ 233 01ae 1B97      		sbiw r26,10+1
+ 234 01b0 8D81      		ldd r24,Y+5
+ 235 01b2 9E81      		ldd r25,Y+6
+ 236 01b4 E80F      		add r30,r24
+ 237 01b6 F91F      		adc r31,r25
+ 238 01b8 8D2D      		mov r24,r13
+ 239 01ba 9927      		clr r25
+ 240 01bc AA27      		clr r26
+ 241 01be BB27      		clr r27
+ 242 01c0 8383      		std Z+3,r24
+ 243 01c2 4E5F      		subi r20,lo8(-(2))
+ 244 01c4 5F4F      		sbci r21,hi8(-(2))
+ 245 01c6 23E0      		ldi r18,3
+ 246 01c8 440F      	1:	lsl r20
+ 247 01ca 551F      		rol r21
+ 248 01cc 2A95      		dec r18
+ 249 01ce 01F4      		brne 1b
+ 250 01d0 460D      		add r20,r6
+ 251 01d2 571D      		adc r21,r7
+ 252 01d4 81E0      		ldi r24,lo8(1)
+ 253 01d6 90E0      		ldi r25,hi8(1)
+ 254 01d8 FA01      		movw r30,r20
+ 255 01da 9183      		std Z+1,r25
+ 256 01dc 8083      		st Z,r24
+ 257 01de 0894      		sec
+ 258 01e0 811C      		adc r8,__zero_reg__
+ 259 01e2 911C      		adc r9,__zero_reg__
+ 260 01e4 A4E0      		ldi r26,lo8(4)
+ 261 01e6 B0E0      		ldi r27,hi8(4)
+ 262 01e8 4A0E      		add r4,r26
+ 263 01ea 5B1E      		adc r5,r27
+ 264 01ec B2E0      		ldi r27,lo8(2)
+ 265 01ee 8B16      		cp r8,r27
+ 266 01f0 9104      		cpc r9,__zero_reg__
+ 267 01f2 01F0      		breq .L7
+ 268               	.L4:
+ 269 01f4 F201      		movw r30,r4
+ 270 01f6 868D      		ldd r24,Z+30
+ 271 01f8 978D      		ldd r25,Z+31
+ 272 01fa A0A1      		ldd r26,Z+32
+ 273 01fc B1A1      		ldd r27,Z+33
+ 274 01fe 0097      		sbiw r24,0
+ 275 0200 A105      		cpc r26,__zero_reg__
+ 276 0202 B105      		cpc r27,__zero_reg__
+ 277 0204 01F0      		breq .+2
+ 278 0206 00C0      		rjmp .L8
+ 279               	.L7:
+ 280 0208 20E0      		ldi r18,lo8(0)
+ 281 020a 30E0      		ldi r19,hi8(0)
+ 282               	.L6:
+ 283 020c C901      		movw r24,r18
+ 284               	/* epilogue start */
+ 285 020e 2C96      		adiw r28,12
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s 			page 6
+
+
+ 286 0210 0FB6      		in __tmp_reg__,__SREG__
+ 287 0212 F894      		cli
+ 288 0214 DEBF      		out __SP_H__,r29
+ 289 0216 0FBE      		out __SREG__,__tmp_reg__
+ 290 0218 CDBF      		out __SP_L__,r28
+ 291 021a CF91      		pop r28
+ 292 021c DF91      		pop r29
+ 293 021e 1F91      		pop r17
+ 294 0220 0F91      		pop r16
+ 295 0222 FF90      		pop r15
+ 296 0224 EF90      		pop r14
+ 297 0226 DF90      		pop r13
+ 298 0228 CF90      		pop r12
+ 299 022a BF90      		pop r11
+ 300 022c AF90      		pop r10
+ 301 022e 9F90      		pop r9
+ 302 0230 8F90      		pop r8
+ 303 0232 7F90      		pop r7
+ 304 0234 6F90      		pop r6
+ 305 0236 5F90      		pop r5
+ 306 0238 4F90      		pop r4
+ 307 023a 3F90      		pop r3
+ 308 023c 2F90      		pop r2
+ 309 023e 0895      		ret
+ 310               		.size	Phat32SetClusterLink, .-Phat32SetClusterLink
+ 311               	.global	Phat32GetClusterLink
+ 312               		.type	Phat32GetClusterLink, @function
+ 313               	Phat32GetClusterLink:
+ 314 0240 8F92      		push r8
+ 315 0242 9F92      		push r9
+ 316 0244 AF92      		push r10
+ 317 0246 BF92      		push r11
+ 318 0248 CF92      		push r12
+ 319 024a DF92      		push r13
+ 320 024c EF92      		push r14
+ 321 024e FF92      		push r15
+ 322 0250 0F93      		push r16
+ 323 0252 1F93      		push r17
+ 324 0254 DF93      		push r29
+ 325 0256 CF93      		push r28
+ 326 0258 CDB7      		in r28,__SP_L__
+ 327 025a DEB7      		in r29,__SP_H__
+ 328 025c 2897      		sbiw r28,8
+ 329 025e 0FB6      		in __tmp_reg__,__SREG__
+ 330 0260 F894      		cli
+ 331 0262 DEBF      		out __SP_H__,r29
+ 332 0264 0FBE      		out __SREG__,__tmp_reg__
+ 333 0266 CDBF      		out __SP_L__,r28
+ 334               	/* prologue: function */
+ 335               	/* frame size = 8 */
+ 336 0268 5C01      		movw r10,r24
+ 337 026a 4901      		movw r8,r18
+ 338 026c DC01      		movw r26,r24
+ 339 026e 5196      		adiw r26,17
+ 340 0270 8C91      		ld r24,X
+ 341 0272 5197      		sbiw r26,17
+ 342 0274 5296      		adiw r26,18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s 			page 7
+
+
+ 343 0276 9C91      		ld r25,X
+ 344 0278 483F      		cpi r20,lo8(268435448)
+ 345 027a BFEF      		ldi r27,hi8(268435448)
+ 346 027c 5B07      		cpc r21,r27
+ 347 027e BFEF      		ldi r27,hlo8(268435448)
+ 348 0280 6B07      		cpc r22,r27
+ 349 0282 BFE0      		ldi r27,hhi8(268435448)
+ 350 0284 7B07      		cpc r23,r27
+ 351 0286 00F0      		brlo .+2
+ 352 0288 00C0      		rjmp .L11
+ 353 028a 6C01      		movw r12,r24
+ 354 028c C601      		movw r24,r12
+ 355 028e 20E0      		ldi r18,lo8(0)
+ 356 0290 30E0      		ldi r19,hi8(0)
+ 357 0292 8E01      		movw r16,r28
+ 358 0294 0F5F      		subi r16,lo8(-(1))
+ 359 0296 1F4F      		sbci r17,hi8(-(1))
+ 360 0298 E5E0      		ldi r30,lo8(5)
+ 361 029a EE2E      		mov r14,r30
+ 362 029c F12C      		mov r15,__zero_reg__
+ 363 029e EC0E      		add r14,r28
+ 364 02a0 FD1E      		adc r15,r29
+ 365 02a2 0E94 0000 		call PhatTableLoc
+ 366 02a6 4981      		ldd r20,Y+1
+ 367 02a8 5A81      		ldd r21,Y+2
+ 368 02aa 6B81      		ldd r22,Y+3
+ 369 02ac 7C81      		ldd r23,Y+4
+ 370 02ae C501      		movw r24,r10
+ 371 02b0 0E94 0000 		call PhatSectorLoad
+ 372 02b4 97FD      		sbrc r25,7
+ 373 02b6 00C0      		rjmp .L11
+ 374 02b8 73E0      		ldi r23,3
+ 375 02ba 880F      	1:	lsl r24
+ 376 02bc 991F      		rol r25
+ 377 02be 7A95      		dec r23
+ 378 02c0 01F4      		brne 1b
+ 379 02c2 C80E      		add r12,r24
+ 380 02c4 D91E      		adc r13,r25
+ 381 02c6 D601      		movw r26,r12
+ 382 02c8 1A96      		adiw r26,10
+ 383 02ca ED91      		ld r30,X+
+ 384 02cc FC91      		ld r31,X
+ 385 02ce 1B97      		sbiw r26,10+1
+ 386 02d0 8D81      		ldd r24,Y+5
+ 387 02d2 9E81      		ldd r25,Y+6
+ 388 02d4 E80F      		add r30,r24
+ 389 02d6 F91F      		adc r31,r25
+ 390 02d8 2081      		ld r18,Z
+ 391 02da 30E0      		ldi r19,lo8(0)
+ 392 02dc 40E0      		ldi r20,lo8(0)
+ 393 02de 50E0      		ldi r21,hi8(0)
+ 394 02e0 D401      		movw r26,r8
+ 395 02e2 2D93      		st X+,r18
+ 396 02e4 3D93      		st X+,r19
+ 397 02e6 4D93      		st X+,r20
+ 398 02e8 5C93      		st X,r21
+ 399 02ea 1397      		sbiw r26,3
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s 			page 8
+
+
+ 400 02ec 8181      		ldd r24,Z+1
+ 401 02ee 90E0      		ldi r25,lo8(0)
+ 402 02f0 A0E0      		ldi r26,lo8(0)
+ 403 02f2 B0E0      		ldi r27,hi8(0)
+ 404 02f4 EE24      		clr r14
+ 405 02f6 F82E      		mov r15,r24
+ 406 02f8 092F      		mov r16,r25
+ 407 02fa 1A2F      		mov r17,r26
+ 408 02fc E20E      		add r14,r18
+ 409 02fe F31E      		adc r15,r19
+ 410 0300 041F      		adc r16,r20
+ 411 0302 151F      		adc r17,r21
+ 412 0304 D401      		movw r26,r8
+ 413 0306 ED92      		st X+,r14
+ 414 0308 FD92      		st X+,r15
+ 415 030a 0D93      		st X+,r16
+ 416 030c 1C93      		st X,r17
+ 417 030e 1397      		sbiw r26,3
+ 418 0310 2281      		ldd r18,Z+2
+ 419 0312 30E0      		ldi r19,lo8(0)
+ 420 0314 40E0      		ldi r20,lo8(0)
+ 421 0316 50E0      		ldi r21,hi8(0)
+ 422 0318 A901      		movw r20,r18
+ 423 031a 3327      		clr r19
+ 424 031c 2227      		clr r18
+ 425 031e 2E0D      		add r18,r14
+ 426 0320 3F1D      		adc r19,r15
+ 427 0322 401F      		adc r20,r16
+ 428 0324 511F      		adc r21,r17
+ 429 0326 2D93      		st X+,r18
+ 430 0328 3D93      		st X+,r19
+ 431 032a 4D93      		st X+,r20
+ 432 032c 5C93      		st X,r21
+ 433 032e 1397      		sbiw r26,3
+ 434 0330 8381      		ldd r24,Z+3
+ 435 0332 90E0      		ldi r25,lo8(0)
+ 436 0334 A0E0      		ldi r26,lo8(0)
+ 437 0336 B0E0      		ldi r27,hi8(0)
+ 438 0338 B82F      		mov r27,r24
+ 439 033a AA27      		clr r26
+ 440 033c 9927      		clr r25
+ 441 033e 8827      		clr r24
+ 442 0340 280F      		add r18,r24
+ 443 0342 391F      		adc r19,r25
+ 444 0344 4A1F      		adc r20,r26
+ 445 0346 5B1F      		adc r21,r27
+ 446 0348 F401      		movw r30,r8
+ 447 034a 2083      		st Z,r18
+ 448 034c 3183      		std Z+1,r19
+ 449 034e 4283      		std Z+2,r20
+ 450 0350 5383      		std Z+3,r21
+ 451 0352 20E0      		ldi r18,lo8(0)
+ 452 0354 30E0      		ldi r19,hi8(0)
+ 453 0356 00C0      		rjmp .L12
+ 454               	.L11:
+ 455 0358 2FEF      		ldi r18,lo8(-1)
+ 456 035a 3FEF      		ldi r19,hi8(-1)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s 			page 9
+
+
+ 457               	.L12:
+ 458 035c C901      		movw r24,r18
+ 459               	/* epilogue start */
+ 460 035e 2896      		adiw r28,8
+ 461 0360 0FB6      		in __tmp_reg__,__SREG__
+ 462 0362 F894      		cli
+ 463 0364 DEBF      		out __SP_H__,r29
+ 464 0366 0FBE      		out __SREG__,__tmp_reg__
+ 465 0368 CDBF      		out __SP_L__,r28
+ 466 036a CF91      		pop r28
+ 467 036c DF91      		pop r29
+ 468 036e 1F91      		pop r17
+ 469 0370 0F91      		pop r16
+ 470 0372 FF90      		pop r15
+ 471 0374 EF90      		pop r14
+ 472 0376 DF90      		pop r13
+ 473 0378 CF90      		pop r12
+ 474 037a BF90      		pop r11
+ 475 037c AF90      		pop r10
+ 476 037e 9F90      		pop r9
+ 477 0380 8F90      		pop r8
+ 478 0382 0895      		ret
+ 479               		.size	Phat32GetClusterLink, .-Phat32GetClusterLink
+ 480               	.global	Phat32ReleaseChain
+ 481               		.type	Phat32ReleaseChain, @function
+ 482               	Phat32ReleaseChain:
+ 483 0384 8F92      		push r8
+ 484 0386 9F92      		push r9
+ 485 0388 AF92      		push r10
+ 486 038a BF92      		push r11
+ 487 038c CF92      		push r12
+ 488 038e DF92      		push r13
+ 489 0390 EF92      		push r14
+ 490 0392 FF92      		push r15
+ 491 0394 0F93      		push r16
+ 492 0396 1F93      		push r17
+ 493 0398 DF93      		push r29
+ 494 039a CF93      		push r28
+ 495 039c 00D0      		rcall .
+ 496 039e 00D0      		rcall .
+ 497 03a0 CDB7      		in r28,__SP_L__
+ 498 03a2 DEB7      		in r29,__SP_H__
+ 499               	/* prologue: function */
+ 500               	/* frame size = 4 */
+ 501 03a4 6C01      		movw r12,r24
+ 502 03a6 7A01      		movw r14,r20
+ 503 03a8 8B01      		movw r16,r22
+ 504 03aa FC01      		movw r30,r24
+ 505 03ac A188      		ldd r10,Z+17
+ 506 03ae B288      		ldd r11,Z+18
+ 507 03b0 4E01      		movw r8,r28
+ 508 03b2 0894      		sec
+ 509 03b4 811C      		adc r8,__zero_reg__
+ 510 03b6 911C      		adc r9,__zero_reg__
+ 511 03b8 00C0      		rjmp .L15
+ 512               	.L18:
+ 513 03ba C601      		movw r24,r12
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s 			page 10
+
+
+ 514 03bc B801      		movw r22,r16
+ 515 03be A701      		movw r20,r14
+ 516 03c0 9401      		movw r18,r8
+ 517 03c2 0E94 0000 		call Phat32GetClusterLink
+ 518 03c6 892B      		or r24,r25
+ 519 03c8 01F4      		brne .L16
+ 520 03ca 8981      		ldd r24,Y+1
+ 521 03cc 9A81      		ldd r25,Y+2
+ 522 03ce AB81      		ldd r26,Y+3
+ 523 03d0 BC81      		ldd r27,Y+4
+ 524 03d2 0297      		sbiw r24,2
+ 525 03d4 A105      		cpc r26,__zero_reg__
+ 526 03d6 B105      		cpc r27,__zero_reg__
+ 527 03d8 00F0      		brlo .L17
+ 528 03da C601      		movw r24,r12
+ 529 03dc B801      		movw r22,r16
+ 530 03de A701      		movw r20,r14
+ 531 03e0 00E0      		ldi r16,lo8(0)
+ 532 03e2 10E0      		ldi r17,hi8(0)
+ 533 03e4 20E0      		ldi r18,hlo8(0)
+ 534 03e6 30E0      		ldi r19,hhi8(0)
+ 535 03e8 0E94 0000 		call Phat32SetClusterLink
+ 536 03ec 892B      		or r24,r25
+ 537 03ee 01F4      		brne .L16
+ 538 03f0 F501      		movw r30,r10
+ 539 03f2 8281      		ldd r24,Z+2
+ 540 03f4 9381      		ldd r25,Z+3
+ 541 03f6 A481      		ldd r26,Z+4
+ 542 03f8 B581      		ldd r27,Z+5
+ 543 03fa 0196      		adiw r24,1
+ 544 03fc A11D      		adc r26,__zero_reg__
+ 545 03fe B11D      		adc r27,__zero_reg__
+ 546 0400 8283      		std Z+2,r24
+ 547 0402 9383      		std Z+3,r25
+ 548 0404 A483      		std Z+4,r26
+ 549 0406 B583      		std Z+5,r27
+ 550 0408 E980      		ldd r14,Y+1
+ 551 040a FA80      		ldd r15,Y+2
+ 552 040c 0B81      		ldd r16,Y+3
+ 553 040e 1C81      		ldd r17,Y+4
+ 554               	.L15:
+ 555 0410 F8EF      		ldi r31,lo8(268435448)
+ 556 0412 EF16      		cp r14,r31
+ 557 0414 FFEF      		ldi r31,hi8(268435448)
+ 558 0416 FF06      		cpc r15,r31
+ 559 0418 FFEF      		ldi r31,hlo8(268435448)
+ 560 041a 0F07      		cpc r16,r31
+ 561 041c FFE0      		ldi r31,hhi8(268435448)
+ 562 041e 1F07      		cpc r17,r31
+ 563 0420 00F0      		brlo .L18
+ 564 0422 00C0      		rjmp .L17
+ 565               	.L16:
+ 566 0424 2FEF      		ldi r18,lo8(-1)
+ 567 0426 3FEF      		ldi r19,hi8(-1)
+ 568 0428 00C0      		rjmp .L19
+ 569               	.L17:
+ 570 042a 20E0      		ldi r18,lo8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s 			page 11
+
+
+ 571 042c 30E0      		ldi r19,hi8(0)
+ 572               	.L19:
+ 573 042e C901      		movw r24,r18
+ 574               	/* epilogue start */
+ 575 0430 0F90      		pop __tmp_reg__
+ 576 0432 0F90      		pop __tmp_reg__
+ 577 0434 0F90      		pop __tmp_reg__
+ 578 0436 0F90      		pop __tmp_reg__
+ 579 0438 CF91      		pop r28
+ 580 043a DF91      		pop r29
+ 581 043c 1F91      		pop r17
+ 582 043e 0F91      		pop r16
+ 583 0440 FF90      		pop r15
+ 584 0442 EF90      		pop r14
+ 585 0444 DF90      		pop r13
+ 586 0446 CF90      		pop r12
+ 587 0448 BF90      		pop r11
+ 588 044a AF90      		pop r10
+ 589 044c 9F90      		pop r9
+ 590 044e 8F90      		pop r8
+ 591 0450 0895      		ret
+ 592               		.size	Phat32ReleaseChain, .-Phat32ReleaseChain
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 phat32.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s:10     .text:00000000 PhatTableLoc
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s:103    .text:000000b0 Phat32SetClusterLink
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s:313    .text:00000240 Phat32GetClusterLink
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3z7To4.s:482    .text:00000384 Phat32ReleaseChain
+
+UNDEFINED SYMBOLS
+__udivmodsi4
+PhatSectorLoad

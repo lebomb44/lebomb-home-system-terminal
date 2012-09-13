@@ -1,0 +1,102 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc534laJ.s 			page 1
+
+
+   1               		.file	"seek.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	_seek
+  10               		.type	_seek, @function
+  11               	_seek:
+  12 0000 0F93      		push r16
+  13 0002 1F93      		push r17
+  14 0004 DF93      		push r29
+  15 0006 CF93      		push r28
+  16 0008 CDB7      		in r28,__SP_L__
+  17 000a DEB7      		in r29,__SP_H__
+  18 000c 2A97      		sbiw r28,10
+  19 000e 0FB6      		in __tmp_reg__,__SREG__
+  20 0010 F894      		cli
+  21 0012 DEBF      		out __SP_H__,r29
+  22 0014 0FBE      		out __SREG__,__tmp_reg__
+  23 0016 CDBF      		out __SP_L__,r28
+  24               	/* prologue: function */
+  25               	/* frame size = 10 */
+  26 0018 4F83      		std Y+7,r20
+  27 001a 5887      		std Y+8,r21
+  28 001c 6987      		std Y+9,r22
+  29 001e 7A87      		std Y+10,r23
+  30 0020 DC01      		movw r26,r24
+  31 0022 CE01      		movw r24,r28
+  32 0024 0796      		adiw r24,7
+  33 0026 9C83      		std Y+4,r25
+  34 0028 8B83      		std Y+3,r24
+  35 002a 1296      		adiw r26,2
+  36 002c 8D91      		ld r24,X+
+  37 002e 9C91      		ld r25,X
+  38 0030 1397      		sbiw r26,2+1
+  39 0032 0097      		sbiw r24,0
+  40 0034 01F0      		breq .L2
+  41 0036 FC01      		movw r30,r24
+  42 0038 0589      		ldd r16,Z+21
+  43 003a 1689      		ldd r17,Z+22
+  44 003c 3E83      		std Y+6,r19
+  45 003e 2D83      		std Y+5,r18
+  46 0040 BA83      		std Y+2,r27
+  47 0042 A983      		std Y+1,r26
+  48 0044 63E2      		ldi r22,lo8(4387)
+  49 0046 71E1      		ldi r23,hi8(4387)
+  50 0048 AE01      		movw r20,r28
+  51 004a 4F5F      		subi r20,lo8(-(1))
+  52 004c 5F4F      		sbci r21,hi8(-(1))
+  53 004e F801      		movw r30,r16
+  54 0050 0995      		icall
+  55 0052 892B      		or r24,r25
+  56 0054 01F0      		breq .L2
+  57 0056 20E0      		ldi r18,lo8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc534laJ.s 			page 2
+
+
+  58 0058 30E0      		ldi r19,hi8(0)
+  59 005a 00C0      		rjmp .L4
+  60               	.L2:
+  61 005c 86E1      		ldi r24,lo8(22)
+  62 005e 90E0      		ldi r25,hi8(22)
+  63 0060 9093 0000 		sts (errno)+1,r25
+  64 0064 8093 0000 		sts errno,r24
+  65 0068 2FEF      		ldi r18,lo8(-1)
+  66 006a 3FEF      		ldi r19,hi8(-1)
+  67               	.L4:
+  68 006c C901      		movw r24,r18
+  69               	/* epilogue start */
+  70 006e 2A96      		adiw r28,10
+  71 0070 0FB6      		in __tmp_reg__,__SREG__
+  72 0072 F894      		cli
+  73 0074 DEBF      		out __SP_H__,r29
+  74 0076 0FBE      		out __SREG__,__tmp_reg__
+  75 0078 CDBF      		out __SP_L__,r28
+  76 007a CF91      		pop r28
+  77 007c DF91      		pop r29
+  78 007e 1F91      		pop r17
+  79 0080 0F91      		pop r16
+  80 0082 0895      		ret
+  81               		.size	_seek, .-_seek
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc534laJ.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 seek.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc534laJ.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc534laJ.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc534laJ.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc534laJ.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc534laJ.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc534laJ.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc534laJ.s:11     .text:00000000 _seek
+
+UNDEFINED SYMBOLS
+errno

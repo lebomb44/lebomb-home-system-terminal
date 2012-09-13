@@ -1,0 +1,1621 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 1
+
+
+   1               		.file	"usart.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	UsartInit
+  10               		.type	UsartInit, @function
+  11               	UsartInit:
+  12 0000 0F93      		push r16
+  13 0002 1F93      		push r17
+  14 0004 CF93      		push r28
+  15 0006 DF93      		push r29
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0008 FC01      		movw r30,r24
+  19 000a C189      		ldd r28,Z+17
+  20 000c D289      		ldd r29,Z+18
+  21 000e EDA9      		ldd r30,Y+53
+  22 0010 FEA9      		ldd r31,Y+54
+  23 0012 0995      		icall
+  24 0014 8C01      		movw r16,r24
+  25 0016 0097      		sbiw r24,0
+  26 0018 01F4      		brne .L2
+  27 001a CF5B      		subi r28,lo8(-(65))
+  28 001c DF4F      		sbci r29,hi8(-(65))
+  29 001e E881      		ld r30,Y
+  30 0020 F981      		ldd r31,Y+1
+  31 0022 60E0      		ldi r22,lo8(115200)
+  32 0024 72EC      		ldi r23,hi8(115200)
+  33 0026 81E0      		ldi r24,hlo8(115200)
+  34 0028 90E0      		ldi r25,hhi8(115200)
+  35 002a 0995      		icall
+  36               	.L2:
+  37 002c C801      		movw r24,r16
+  38               	/* epilogue start */
+  39 002e DF91      		pop r29
+  40 0030 CF91      		pop r28
+  41 0032 1F91      		pop r17
+  42 0034 0F91      		pop r16
+  43 0036 0895      		ret
+  44               		.size	UsartInit, .-UsartInit
+  45               	.global	UsartSize
+  46               		.type	UsartSize, @function
+  47               	UsartSize:
+  48               	/* prologue: function */
+  49               	/* frame size = 0 */
+  50 0038 DC01      		movw r26,r24
+  51 003a 1296      		adiw r26,2
+  52 003c ED91      		ld r30,X+
+  53 003e FC91      		ld r31,X
+  54 0040 1397      		sbiw r26,2+1
+  55 0042 0188      		ldd __tmp_reg__,Z+17
+  56 0044 F289      		ldd r31,Z+18
+  57 0046 E02D      		mov r30,__tmp_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 2
+
+
+  58               	/* #APP */
+  59               	 ;  896 "../../nut/dev/usart.c" 1
+  60 0048 0FB6      		in  __tmp_reg__, __SREG__
+  61 004a F894      		cli
+  62 004c 0F92      		push __tmp_reg__
+  63               		
+  64               	 ;  0 "" 2
+  65               	/* #NOAPP */
+  66 004e 84A5      		ldd r24,Z+44
+  67 0050 95A5      		ldd r25,Z+45
+  68               	/* #APP */
+  69               	 ;  898 "../../nut/dev/usart.c" 1
+  70 0052 0F90      		pop __tmp_reg__
+  71 0054 0FBE      		out __SREG__, __tmp_reg__
+  72               		
+  73               	 ;  0 "" 2
+  74               	/* #NOAPP */
+  75 0056 BC01      		movw r22,r24
+  76 0058 80E0      		ldi r24,lo8(0)
+  77 005a 90E0      		ldi r25,lo8(0)
+  78               	/* epilogue start */
+  79 005c 0895      		ret
+  80               		.size	UsartSize, .-UsartSize
+  81               		.type	UsartResetBuffer, @function
+  82               	UsartResetBuffer:
+  83 005e CF92      		push r12
+  84 0060 DF92      		push r13
+  85 0062 EF92      		push r14
+  86 0064 FF92      		push r15
+  87 0066 0F93      		push r16
+  88 0068 1F93      		push r17
+  89 006a CF93      		push r28
+  90 006c DF93      		push r29
+  91               	/* prologue: function */
+  92               	/* frame size = 0 */
+  93 006e EC01      		movw r28,r24
+  94 0070 8B01      		movw r16,r22
+  95 0072 7A01      		movw r14,r20
+  96 0074 6901      		movw r12,r18
+  97 0076 8C81      		ldd r24,Y+4
+  98 0078 9D81      		ldd r25,Y+5
+  99 007a 2885      		ldd r18,Y+8
+ 100 007c 3985      		ldd r19,Y+9
+ 101               	/* #APP */
+ 102               	 ;  140 "../../nut/dev/usart.c" 1
+ 103 007e 0FB6      		in  __tmp_reg__, __SREG__
+ 104 0080 F894      		cli
+ 105 0082 0F92      		push __tmp_reg__
+ 106               		
+ 107               	 ;  0 "" 2
+ 108               	/* #NOAPP */
+ 109 0084 1986      		std Y+9,__zero_reg__
+ 110 0086 1886      		std Y+8,__zero_reg__
+ 111               	/* #APP */
+ 112               	 ;  142 "../../nut/dev/usart.c" 1
+ 113 0088 0F90      		pop __tmp_reg__
+ 114 008a 0FBE      		out __SREG__, __tmp_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 3
+
+
+ 115               		
+ 116               	 ;  0 "" 2
+ 117               	/* #NOAPP */
+ 118 008c 2617      		cp r18,r22
+ 119 008e 3707      		cpc r19,r23
+ 120 0090 01F0      		breq .L7
+ 121 0092 232B      		or r18,r19
+ 122 0094 01F0      		breq .L8
+ 123 0096 0097      		sbiw r24,0
+ 124 0098 01F0      		breq .L8
+ 125 009a 0E94 0000 		call free
+ 126               	.L8:
+ 127 009e 0115      		cp r16,__zero_reg__
+ 128 00a0 1105      		cpc r17,__zero_reg__
+ 129 00a2 01F0      		breq .L9
+ 130 00a4 C801      		movw r24,r16
+ 131 00a6 0E94 0000 		call malloc
+ 132 00aa 0097      		sbiw r24,0
+ 133 00ac 01F4      		brne .L10
+ 134 00ae 2FEF      		ldi r18,lo8(-1)
+ 135 00b0 3FEF      		ldi r19,hi8(-1)
+ 136 00b2 00C0      		rjmp .L11
+ 137               	.L7:
+ 138 00b4 6115      		cp r22,__zero_reg__
+ 139 00b6 7105      		cpc r23,__zero_reg__
+ 140 00b8 01F0      		breq .L9
+ 141               	.L10:
+ 142 00ba 9D83      		std Y+5,r25
+ 143 00bc 8C83      		std Y+4,r24
+ 144 00be 9983      		std Y+1,r25
+ 145 00c0 8883      		st Y,r24
+ 146 00c2 9B83      		std Y+3,r25
+ 147 00c4 8A83      		std Y+2,r24
+ 148 00c6 800F      		add r24,r16
+ 149 00c8 911F      		adc r25,r17
+ 150 00ca 9F83      		std Y+7,r25
+ 151 00cc 8E83      		std Y+6,r24
+ 152 00ce FD86      		std Y+13,r15
+ 153 00d0 EC86      		std Y+12,r14
+ 154 00d2 DF86      		std Y+15,r13
+ 155 00d4 CE86      		std Y+14,r12
+ 156 00d6 1B86      		std Y+11,__zero_reg__
+ 157 00d8 1A86      		std Y+10,__zero_reg__
+ 158               	/* #APP */
+ 159               	 ;  165 "../../nut/dev/usart.c" 1
+ 160 00da 0FB6      		in  __tmp_reg__, __SREG__
+ 161 00dc F894      		cli
+ 162 00de 0F92      		push __tmp_reg__
+ 163               		
+ 164               	 ;  0 "" 2
+ 165               	/* #NOAPP */
+ 166 00e0 1987      		std Y+9,r17
+ 167 00e2 0887      		std Y+8,r16
+ 168               	/* #APP */
+ 169               	 ;  167 "../../nut/dev/usart.c" 1
+ 170 00e4 0F90      		pop __tmp_reg__
+ 171 00e6 0FBE      		out __SREG__, __tmp_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 4
+
+
+ 172               		
+ 173               	 ;  0 "" 2
+ 174               	/* #NOAPP */
+ 175               	.L9:
+ 176 00e8 20E0      		ldi r18,lo8(0)
+ 177 00ea 30E0      		ldi r19,hi8(0)
+ 178               	.L11:
+ 179 00ec C901      		movw r24,r18
+ 180               	/* epilogue start */
+ 181 00ee DF91      		pop r29
+ 182 00f0 CF91      		pop r28
+ 183 00f2 1F91      		pop r17
+ 184 00f4 0F91      		pop r16
+ 185 00f6 FF90      		pop r15
+ 186 00f8 EF90      		pop r14
+ 187 00fa DF90      		pop r13
+ 188 00fc CF90      		pop r12
+ 189 00fe 0895      		ret
+ 190               		.size	UsartResetBuffer, .-UsartResetBuffer
+ 191               	.global	UsartIOCtl
+ 192               		.type	UsartIOCtl, @function
+ 193               	UsartIOCtl:
+ 194 0100 CF92      		push r12
+ 195 0102 DF92      		push r13
+ 196 0104 EF92      		push r14
+ 197 0106 FF92      		push r15
+ 198 0108 0F93      		push r16
+ 199 010a 1F93      		push r17
+ 200 010c CF93      		push r28
+ 201 010e DF93      		push r29
+ 202               	/* prologue: function */
+ 203               	/* frame size = 0 */
+ 204 0110 FB01      		movw r30,r22
+ 205 0112 6A01      		movw r12,r20
+ 206 0114 DA01      		movw r26,r20
+ 207 0116 ED90      		ld r14,X+
+ 208 0118 FD90      		ld r15,X+
+ 209 011a 0D91      		ld r16,X+
+ 210 011c 1C91      		ld r17,X
+ 211 011e 2E2D      		mov r18,r14
+ 212 0120 DC01      		movw r26,r24
+ 213 0122 5196      		adiw r26,17
+ 214 0124 CD91      		ld r28,X+
+ 215 0126 DC91      		ld r29,X
+ 216 0128 5297      		sbiw r26,17+1
+ 217 012a E150      		subi r30,lo8(-(-257))
+ 218 012c F140      		sbci r31,hi8(-(-257))
+ 219 012e ED32      		cpi r30,45
+ 220 0130 F105      		cpc r31,__zero_reg__
+ 221 0132 00F4      		brsh .L14
+ 222 0134 E050      		subi r30,lo8(-(gs(.L51)))
+ 223 0136 F040      		sbci r31,hi8(-(gs(.L51)))
+ 224 0138 EE0F      		lsl r30
+ 225 013a FF1F      		rol r31
+ 226 013c 0590      		lpm __tmp_reg__,Z+
+ 227 013e F491      		lpm r31,Z
+ 228 0140 E02D      		mov r30,__tmp_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 5
+
+
+ 229 0142 0994      		ijmp
+ 230               		.data
+ 231               		.section .progmem.gcc_sw_table, "a", @progbits
+ 232               		.p2align 1
+ 233               	.L51:
+ 234               		.data
+ 235               		.section .progmem.gcc_sw_table, "a", @progbits
+ 236               		.p2align 1
+ 237 0000 0000      		.word gs(.L15)
+ 238 0002 0000      		.word gs(.L16)
+ 239 0004 0000      		.word gs(.L17)
+ 240 0006 0000      		.word gs(.L18)
+ 241 0008 0000      		.word gs(.L19)
+ 242 000a 0000      		.word gs(.L20)
+ 243 000c 0000      		.word gs(.L21)
+ 244 000e 0000      		.word gs(.L22)
+ 245 0010 0000      		.word gs(.L23)
+ 246 0012 0000      		.word gs(.L24)
+ 247 0014 0000      		.word gs(.L25)
+ 248 0016 0000      		.word gs(.L26)
+ 249 0018 0000      		.word gs(.L27)
+ 250 001a 0000      		.word gs(.L28)
+ 251 001c 0000      		.word gs(.L29)
+ 252 001e 0000      		.word gs(.L30)
+ 253 0020 0000      		.word gs(.L31)
+ 254 0022 0000      		.word gs(.L32)
+ 255 0024 0000      		.word gs(.L33)
+ 256 0026 0000      		.word gs(.L34)
+ 257 0028 0000      		.word gs(.L14)
+ 258 002a 0000      		.word gs(.L14)
+ 259 002c 0000      		.word gs(.L14)
+ 260 002e 0000      		.word gs(.L14)
+ 261 0030 0000      		.word gs(.L35)
+ 262 0032 0000      		.word gs(.L36)
+ 263 0034 0000      		.word gs(.L37)
+ 264 0036 0000      		.word gs(.L38)
+ 265 0038 0000      		.word gs(.L39)
+ 266 003a 0000      		.word gs(.L40)
+ 267 003c 0000      		.word gs(.L14)
+ 268 003e 0000      		.word gs(.L41)
+ 269 0040 0000      		.word gs(.L42)
+ 270 0042 0000      		.word gs(.L43)
+ 271 0044 0000      		.word gs(.L44)
+ 272 0046 0000      		.word gs(.L45)
+ 273 0048 0000      		.word gs(.L46)
+ 274 004a 0000      		.word gs(.L47)
+ 275 004c 0000      		.word gs(.L48)
+ 276 004e 0000      		.word gs(.L14)
+ 277 0050 0000      		.word gs(.L14)
+ 278 0052 0000      		.word gs(.L14)
+ 279 0054 0000      		.word gs(.L14)
+ 280 0056 0000      		.word gs(.L49)
+ 281 0058 0000      		.word gs(.L50)
+ 282               		.text
+ 283               	.L14:
+ 284 0144 0FEF      		ldi r16,lo8(-1)
+ 285 0146 1FEF      		ldi r17,hi8(-1)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 6
+
+
+ 286 0148 00C0      		rjmp .L52
+ 287               	.L15:
+ 288 014a CF5B      		subi r28,lo8(-(65))
+ 289 014c DF4F      		sbci r29,hi8(-(65))
+ 290 014e 00C0      		rjmp .L66
+ 291               	.L16:
+ 292 0150 CD5B      		subi r28,lo8(-(67))
+ 293 0152 DF4F      		sbci r29,hi8(-(67))
+ 294 0154 00C0      		rjmp .L72
+ 295               	.L17:
+ 296 0156 CB5B      		subi r28,lo8(-(69))
+ 297 0158 DF4F      		sbci r29,hi8(-(69))
+ 298               	.L67:
+ 299 015a E881      		ld r30,Y
+ 300 015c F981      		ldd r31,Y+1
+ 301 015e 822F      		mov r24,r18
+ 302 0160 0995      		icall
+ 303               	.L64:
+ 304 0162 8C01      		movw r16,r24
+ 305 0164 00C0      		rjmp .L52
+ 306               	.L18:
+ 307 0166 C95B      		subi r28,lo8(-(71))
+ 308 0168 DF4F      		sbci r29,hi8(-(71))
+ 309 016a 00C0      		rjmp .L73
+ 310               	.L19:
+ 311 016c C75B      		subi r28,lo8(-(73))
+ 312 016e DF4F      		sbci r29,hi8(-(73))
+ 313 0170 00C0      		rjmp .L67
+ 314               	.L20:
+ 315 0172 C55B      		subi r28,lo8(-(75))
+ 316 0174 DF4F      		sbci r29,hi8(-(75))
+ 317 0176 00C0      		rjmp .L73
+ 318               	.L21:
+ 319 0178 C35B      		subi r28,lo8(-(77))
+ 320 017a DF4F      		sbci r29,hi8(-(77))
+ 321 017c 00C0      		rjmp .L67
+ 322               	.L22:
+ 323 017e C15B      		subi r28,lo8(-(79))
+ 324 0180 DF4F      		sbci r29,hi8(-(79))
+ 325               	.L73:
+ 326 0182 E881      		ld r30,Y
+ 327 0184 F981      		ldd r31,Y+1
+ 328 0186 0995      		icall
+ 329 0188 90E0      		ldi r25,lo8(0)
+ 330 018a 00C0      		rjmp .L69
+ 331               	.L23:
+ 332 018c E6FE      		sbrs r14,6
+ 333 018e 00C0      		rjmp .L53
+ 334 0190 6AA5      		ldd r22,Y+42
+ 335 0192 7BA5      		ldd r23,Y+43
+ 336 0194 4EA5      		ldd r20,Y+46
+ 337 0196 5FA5      		ldd r21,Y+47
+ 338 0198 28A9      		ldd r18,Y+48
+ 339 019a 39A9      		ldd r19,Y+49
+ 340 019c CE01      		movw r24,r28
+ 341 019e 8296      		adiw r24,34
+ 342 01a0 0E94 0000 		call UsartResetBuffer
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 7
+
+
+ 343 01a4 EBAD      		ldd r30,Y+59
+ 344 01a6 FCAD      		ldd r31,Y+60
+ 345 01a8 0995      		icall
+ 346               	.L53:
+ 347 01aa E7FE      		sbrs r14,7
+ 348 01ac 00C0      		rjmp .L54
+ 349 01ae 688D      		ldd r22,Y+24
+ 350 01b0 798D      		ldd r23,Y+25
+ 351 01b2 4C8D      		ldd r20,Y+28
+ 352 01b4 5D8D      		ldd r21,Y+29
+ 353 01b6 2E8D      		ldd r18,Y+30
+ 354 01b8 3F8D      		ldd r19,Y+31
+ 355 01ba CE01      		movw r24,r28
+ 356 01bc 4096      		adiw r24,16
+ 357 01be 0E94 0000 		call UsartResetBuffer
+ 358               	.L54:
+ 359 01c2 CF5A      		subi r28,lo8(-(81))
+ 360 01c4 DF4F      		sbci r29,hi8(-(81))
+ 361 01c6 8FE3      		ldi r24,lo8(-193)
+ 362 01c8 9FEF      		ldi r25,hi8(-193)
+ 363 01ca AFEF      		ldi r26,hlo8(-193)
+ 364 01cc BFEF      		ldi r27,hhi8(-193)
+ 365 01ce E822      		and r14,r24
+ 366 01d0 F922      		and r15,r25
+ 367 01d2 0A23      		and r16,r26
+ 368 01d4 1B23      		and r17,r27
+ 369               	.L66:
+ 370 01d6 E881      		ld r30,Y
+ 371 01d8 F981      		ldd r31,Y+1
+ 372               	.L68:
+ 373 01da C801      		movw r24,r16
+ 374 01dc B701      		movw r22,r14
+ 375 01de 0995      		icall
+ 376 01e0 00C0      		rjmp .L64
+ 377               	.L24:
+ 378 01e2 CD5A      		subi r28,lo8(-(83))
+ 379 01e4 DF4F      		sbci r29,hi8(-(83))
+ 380 01e6 E881      		ld r30,Y
+ 381 01e8 F981      		ldd r31,Y+1
+ 382 01ea C355      		subi r28,lo8(-(-83))
+ 383 01ec D040      		sbci r29,hi8(-(-83))
+ 384 01ee 0995      		icall
+ 385 01f0 9B01      		movw r18,r22
+ 386 01f2 AC01      		movw r20,r24
+ 387 01f4 D601      		movw r26,r12
+ 388 01f6 6D93      		st X+,r22
+ 389 01f8 7D93      		st X+,r23
+ 390 01fa 8D93      		st X+,r24
+ 391 01fc 9C93      		st X,r25
+ 392 01fe 1397      		sbiw r26,3
+ 393 0200 8CA5      		ldd r24,Y+44
+ 394 0202 9DA5      		ldd r25,Y+45
+ 395 0204 892B      		or r24,r25
+ 396 0206 01F4      		brne .L55
+ 397 0208 2064      		ori r18,lo8(64)
+ 398 020a F601      		movw r30,r12
+ 399 020c 2083      		st Z,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 8
+
+
+ 400 020e 3183      		std Z+1,r19
+ 401 0210 4283      		std Z+2,r20
+ 402 0212 5383      		std Z+3,r21
+ 403               	.L55:
+ 404 0214 8A8D      		ldd r24,Y+26
+ 405 0216 9B8D      		ldd r25,Y+27
+ 406 0218 892B      		or r24,r25
+ 407 021a 01F0      		breq .+2
+ 408 021c 00C0      		rjmp .L65
+ 409               	.L56:
+ 410 021e F601      		movw r30,r12
+ 411 0220 8081      		ld r24,Z
+ 412 0222 9181      		ldd r25,Z+1
+ 413 0224 A281      		ldd r26,Z+2
+ 414 0226 B381      		ldd r27,Z+3
+ 415 0228 8068      		ori r24,lo8(128)
+ 416 022a 00C0      		rjmp .L71
+ 417               	.L25:
+ 418 022c E886      		std Y+8,r14
+ 419 022e F986      		std Y+9,r15
+ 420 0230 0A87      		std Y+10,r16
+ 421 0232 1B87      		std Y+11,r17
+ 422 0234 00C0      		rjmp .L65
+ 423               	.L26:
+ 424 0236 8885      		ldd r24,Y+8
+ 425 0238 9985      		ldd r25,Y+9
+ 426 023a AA85      		ldd r26,Y+10
+ 427 023c BB85      		ldd r27,Y+11
+ 428 023e 00C0      		rjmp .L74
+ 429               	.L27:
+ 430 0240 EC86      		std Y+12,r14
+ 431 0242 FD86      		std Y+13,r15
+ 432 0244 0E87      		std Y+14,r16
+ 433 0246 1F87      		std Y+15,r17
+ 434 0248 00C0      		rjmp .L65
+ 435               	.L28:
+ 436 024a 8C85      		ldd r24,Y+12
+ 437 024c 9D85      		ldd r25,Y+13
+ 438 024e AE85      		ldd r26,Y+14
+ 439 0250 BF85      		ldd r27,Y+15
+ 440 0252 00C0      		rjmp .L74
+ 441               	.L29:
+ 442 0254 8881      		ld r24,Y
+ 443 0256 9981      		ldd r25,Y+1
+ 444 0258 AA81      		ldd r26,Y+2
+ 445 025a BB81      		ldd r27,Y+3
+ 446 025c EE20      		tst r14
+ 447 025e 01F0      		breq .L57
+ 448 0260 8064      		ori r24,lo8(64)
+ 449 0262 00C0      		rjmp .L70
+ 450               	.L57:
+ 451 0264 8F7B      		andi r24,lo8(-65)
+ 452 0266 00C0      		rjmp .L70
+ 453               	.L30:
+ 454 0268 8881      		ld r24,Y
+ 455 026a 86FF      		sbrs r24,6
+ 456 026c 00C0      		rjmp .L62
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 9
+
+
+ 457 026e 00C0      		rjmp .L75
+ 458               	.L31:
+ 459 0270 EDAD      		ldd r30,Y+61
+ 460 0272 FEAD      		ldd r31,Y+62
+ 461 0274 00C0      		rjmp .L68
+ 462               	.L32:
+ 463 0276 EF96      		adiw r28,63
+ 464               	.L72:
+ 465 0278 E881      		ld r30,Y
+ 466 027a F981      		ldd r31,Y+1
+ 467 027c 0995      		icall
+ 468 027e F601      		movw r30,r12
+ 469 0280 6083      		st Z,r22
+ 470 0282 7183      		std Z+1,r23
+ 471 0284 8283      		std Z+2,r24
+ 472 0286 9383      		std Z+3,r25
+ 473 0288 00C0      		rjmp .L65
+ 474               	.L33:
+ 475 028a 8881      		ld r24,Y
+ 476 028c 9981      		ldd r25,Y+1
+ 477 028e AA81      		ldd r26,Y+2
+ 478 0290 BB81      		ldd r27,Y+3
+ 479 0292 EE20      		tst r14
+ 480 0294 01F0      		breq .L59
+ 481 0296 8068      		ori r24,lo8(128)
+ 482 0298 00C0      		rjmp .L70
+ 483               	.L59:
+ 484 029a 8F77      		andi r24,lo8(-129)
+ 485 029c 00C0      		rjmp .L70
+ 486               	.L34:
+ 487 029e 8881      		ld r24,Y
+ 488 02a0 87FF      		sbrs r24,7
+ 489 02a2 00C0      		rjmp .L62
+ 490 02a4 00C0      		rjmp .L75
+ 491               	.L49:
+ 492 02a6 8881      		ld r24,Y
+ 493 02a8 9981      		ldd r25,Y+1
+ 494 02aa AA81      		ldd r26,Y+2
+ 495 02ac BB81      		ldd r27,Y+3
+ 496 02ae EE20      		tst r14
+ 497 02b0 01F0      		breq .L61
+ 498 02b2 9460      		ori r25,hi8(1024)
+ 499 02b4 00C0      		rjmp .L70
+ 500               	.L61:
+ 501 02b6 9B7F      		andi r25,hi8(-1025)
+ 502               	.L70:
+ 503 02b8 8883      		st Y,r24
+ 504 02ba 9983      		std Y+1,r25
+ 505 02bc AA83      		std Y+2,r26
+ 506 02be BB83      		std Y+3,r27
+ 507 02c0 00C0      		rjmp .L65
+ 508               	.L50:
+ 509 02c2 8881      		ld r24,Y
+ 510 02c4 9981      		ldd r25,Y+1
+ 511 02c6 AA81      		ldd r26,Y+2
+ 512 02c8 BB81      		ldd r27,Y+3
+ 513 02ca 92FF      		sbrs r25,2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 10
+
+
+ 514 02cc 00C0      		rjmp .L62
+ 515               	.L75:
+ 516 02ce 81E0      		ldi r24,lo8(1)
+ 517 02d0 90E0      		ldi r25,hi8(1)
+ 518 02d2 A0E0      		ldi r26,hlo8(1)
+ 519 02d4 B0E0      		ldi r27,hhi8(1)
+ 520 02d6 00C0      		rjmp .L74
+ 521               	.L62:
+ 522 02d8 D601      		movw r26,r12
+ 523 02da 1D92      		st X+,__zero_reg__
+ 524 02dc 1D92      		st X+,__zero_reg__
+ 525 02de 1D92      		st X+,__zero_reg__
+ 526 02e0 1C92      		st X,__zero_reg__
+ 527 02e2 1397      		sbiw r26,3
+ 528 02e4 00C0      		rjmp .L65
+ 529               	.L35:
+ 530 02e6 CB5A      		subi r28,lo8(-(85))
+ 531 02e8 DF4F      		sbci r29,hi8(-(85))
+ 532 02ea 00C0      		rjmp .L67
+ 533               	.L36:
+ 534 02ec C95A      		subi r28,lo8(-(87))
+ 535 02ee DF4F      		sbci r29,hi8(-(87))
+ 536 02f0 00C0      		rjmp .L73
+ 537               	.L37:
+ 538 02f2 4C8D      		ldd r20,Y+28
+ 539 02f4 5D8D      		ldd r21,Y+29
+ 540 02f6 2E8D      		ldd r18,Y+30
+ 541 02f8 3F8D      		ldd r19,Y+31
+ 542 02fa CE01      		movw r24,r28
+ 543 02fc 4096      		adiw r24,16
+ 544 02fe B701      		movw r22,r14
+ 545 0300 0E94 0000 		call UsartResetBuffer
+ 546 0304 8C01      		movw r16,r24
+ 547 0306 0097      		sbiw r24,0
+ 548 0308 01F0      		breq .+2
+ 549 030a 00C0      		rjmp .L52
+ 550 030c EBAD      		ldd r30,Y+59
+ 551 030e FCAD      		ldd r31,Y+60
+ 552 0310 0995      		icall
+ 553 0312 00C0      		rjmp .L52
+ 554               	.L38:
+ 555 0314 888D      		ldd r24,Y+24
+ 556 0316 998D      		ldd r25,Y+25
+ 557 0318 00C0      		rjmp .L69
+ 558               	.L39:
+ 559 031a 4EA5      		ldd r20,Y+46
+ 560 031c 5FA5      		ldd r21,Y+47
+ 561 031e 28A9      		ldd r18,Y+48
+ 562 0320 39A9      		ldd r19,Y+49
+ 563 0322 CE01      		movw r24,r28
+ 564 0324 8296      		adiw r24,34
+ 565 0326 B701      		movw r22,r14
+ 566 0328 0E94 0000 		call UsartResetBuffer
+ 567 032c 00C0      		rjmp .L64
+ 568               	.L40:
+ 569 032e 8AA5      		ldd r24,Y+42
+ 570 0330 9BA5      		ldd r25,Y+43
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 11
+
+
+ 571 0332 00C0      		rjmp .L69
+ 572               	.L41:
+ 573               	/* #APP */
+ 574               	 ;  835 "../../nut/dev/usart.c" 1
+ 575 0334 0FB6      		in  __tmp_reg__, __SREG__
+ 576 0336 F894      		cli
+ 577 0338 0F92      		push __tmp_reg__
+ 578               		
+ 579               	 ;  0 "" 2
+ 580               	/* #NOAPP */
+ 581 033a FD8E      		std Y+29,r15
+ 582 033c EC8E      		std Y+28,r14
+ 583               	/* #APP */
+ 584               	 ;  837 "../../nut/dev/usart.c" 1
+ 585 033e 0F90      		pop __tmp_reg__
+ 586 0340 0FBE      		out __SREG__, __tmp_reg__
+ 587               		
+ 588               	 ;  0 "" 2
+ 589               	/* #NOAPP */
+ 590 0342 00C0      		rjmp .L65
+ 591               	.L42:
+ 592 0344 8C8D      		ldd r24,Y+28
+ 593 0346 9D8D      		ldd r25,Y+29
+ 594 0348 00C0      		rjmp .L69
+ 595               	.L43:
+ 596               	/* #APP */
+ 597               	 ;  844 "../../nut/dev/usart.c" 1
+ 598 034a 0FB6      		in  __tmp_reg__, __SREG__
+ 599 034c F894      		cli
+ 600 034e 0F92      		push __tmp_reg__
+ 601               		
+ 602               	 ;  0 "" 2
+ 603               	/* #NOAPP */
+ 604 0350 FF8E      		std Y+31,r15
+ 605 0352 EE8E      		std Y+30,r14
+ 606               	/* #APP */
+ 607               	 ;  846 "../../nut/dev/usart.c" 1
+ 608 0354 0F90      		pop __tmp_reg__
+ 609 0356 0FBE      		out __SREG__, __tmp_reg__
+ 610               		
+ 611               	 ;  0 "" 2
+ 612               	/* #NOAPP */
+ 613 0358 00C0      		rjmp .L65
+ 614               	.L44:
+ 615 035a 8E8D      		ldd r24,Y+30
+ 616 035c 9F8D      		ldd r25,Y+31
+ 617 035e 00C0      		rjmp .L69
+ 618               	.L45:
+ 619               	/* #APP */
+ 620               	 ;  853 "../../nut/dev/usart.c" 1
+ 621 0360 0FB6      		in  __tmp_reg__, __SREG__
+ 622 0362 F894      		cli
+ 623 0364 0F92      		push __tmp_reg__
+ 624               		
+ 625               	 ;  0 "" 2
+ 626               	/* #NOAPP */
+ 627 0366 FFA6      		std Y+47,r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 12
+
+
+ 628 0368 EEA6      		std Y+46,r14
+ 629               	/* #APP */
+ 630               	 ;  855 "../../nut/dev/usart.c" 1
+ 631 036a 0F90      		pop __tmp_reg__
+ 632 036c 0FBE      		out __SREG__, __tmp_reg__
+ 633               		
+ 634               	 ;  0 "" 2
+ 635               	/* #NOAPP */
+ 636 036e 00C0      		rjmp .L65
+ 637               	.L46:
+ 638 0370 8EA5      		ldd r24,Y+46
+ 639 0372 9FA5      		ldd r25,Y+47
+ 640 0374 00C0      		rjmp .L69
+ 641               	.L47:
+ 642               	/* #APP */
+ 643               	 ;  862 "../../nut/dev/usart.c" 1
+ 644 0376 0FB6      		in  __tmp_reg__, __SREG__
+ 645 0378 F894      		cli
+ 646 037a 0F92      		push __tmp_reg__
+ 647               		
+ 648               	 ;  0 "" 2
+ 649               	/* #NOAPP */
+ 650 037c F9AA      		std Y+49,r15
+ 651 037e E8AA      		std Y+48,r14
+ 652               	/* #APP */
+ 653               	 ;  864 "../../nut/dev/usart.c" 1
+ 654 0380 0F90      		pop __tmp_reg__
+ 655 0382 0FBE      		out __SREG__, __tmp_reg__
+ 656               		
+ 657               	 ;  0 "" 2
+ 658               	/* #NOAPP */
+ 659 0384 00C0      		rjmp .L65
+ 660               	.L48:
+ 661 0386 88A9      		ldd r24,Y+48
+ 662 0388 99A9      		ldd r25,Y+49
+ 663               	.L69:
+ 664 038a A0E0      		ldi r26,lo8(0)
+ 665 038c B0E0      		ldi r27,hi8(0)
+ 666               	.L74:
+ 667 038e F601      		movw r30,r12
+ 668               	.L71:
+ 669 0390 8083      		st Z,r24
+ 670 0392 9183      		std Z+1,r25
+ 671 0394 A283      		std Z+2,r26
+ 672 0396 B383      		std Z+3,r27
+ 673               	.L65:
+ 674 0398 00E0      		ldi r16,lo8(0)
+ 675 039a 10E0      		ldi r17,hi8(0)
+ 676               	.L52:
+ 677 039c C801      		movw r24,r16
+ 678               	/* epilogue start */
+ 679 039e DF91      		pop r29
+ 680 03a0 CF91      		pop r28
+ 681 03a2 1F91      		pop r17
+ 682 03a4 0F91      		pop r16
+ 683 03a6 FF90      		pop r15
+ 684 03a8 EF90      		pop r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 13
+
+
+ 685 03aa DF90      		pop r13
+ 686 03ac CF90      		pop r12
+ 687 03ae 0895      		ret
+ 688               		.size	UsartIOCtl, .-UsartIOCtl
+ 689               	.global	UsartOpen
+ 690               		.type	UsartOpen, @function
+ 691               	UsartOpen:
+ 692 03b0 AF92      		push r10
+ 693 03b2 BF92      		push r11
+ 694 03b4 CF92      		push r12
+ 695 03b6 DF92      		push r13
+ 696 03b8 EF92      		push r14
+ 697 03ba FF92      		push r15
+ 698 03bc 0F93      		push r16
+ 699 03be 1F93      		push r17
+ 700 03c0 CF93      		push r28
+ 701 03c2 DF93      		push r29
+ 702               	/* prologue: function */
+ 703               	/* frame size = 0 */
+ 704 03c4 5C01      		movw r10,r24
+ 705 03c6 7A01      		movw r14,r20
+ 706 03c8 FC01      		movw r30,r24
+ 707 03ca C189      		ldd r28,Z+17
+ 708 03cc D289      		ldd r29,Z+18
+ 709 03ce 83E0      		ldi r24,lo8(3)
+ 710 03d0 C82E      		mov r12,r24
+ 711 03d2 D12C      		mov r13,__zero_reg__
+ 712 03d4 C422      		and r12,r20
+ 713 03d6 D522      		and r13,r21
+ 714 03d8 C114      		cp r12,__zero_reg__
+ 715 03da D104      		cpc r13,__zero_reg__
+ 716 03dc 01F0      		breq .L78
+ 717 03de CE01      		movw r24,r28
+ 718 03e0 4096      		adiw r24,16
+ 719 03e2 60E4      		ldi r22,lo8(64)
+ 720 03e4 70E0      		ldi r23,hi8(64)
+ 721 03e6 48E2      		ldi r20,lo8(40)
+ 722 03e8 50E0      		ldi r21,hi8(40)
+ 723 03ea 28E3      		ldi r18,lo8(56)
+ 724 03ec 30E0      		ldi r19,hi8(56)
+ 725 03ee 0E94 0000 		call UsartResetBuffer
+ 726 03f2 892B      		or r24,r25
+ 727 03f4 01F4      		brne .L87
+ 728               	.L79:
+ 729 03f6 F1E0      		ldi r31,lo8(1)
+ 730 03f8 CF16      		cp r12,r31
+ 731 03fa D104      		cpc r13,__zero_reg__
+ 732 03fc 01F0      		breq .L81
+ 733               	.L78:
+ 734 03fe CE01      		movw r24,r28
+ 735 0400 8296      		adiw r24,34
+ 736 0402 60E0      		ldi r22,lo8(256)
+ 737 0404 71E0      		ldi r23,hi8(256)
+ 738 0406 40ED      		ldi r20,lo8(208)
+ 739 0408 50E0      		ldi r21,hi8(208)
+ 740 040a 20EF      		ldi r18,lo8(240)
+ 741 040c 30E0      		ldi r19,hi8(240)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 14
+
+
+ 742 040e 0E94 0000 		call UsartResetBuffer
+ 743 0412 892B      		or r24,r25
+ 744 0414 01F0      		breq .L81
+ 745 0416 8C89      		ldd r24,Y+20
+ 746 0418 9D89      		ldd r25,Y+21
+ 747               	.L88:
+ 748 041a 0E94 0000 		call free
+ 749               	.L87:
+ 750 041e 0FEF      		ldi r16,lo8(-1)
+ 751 0420 1FEF      		ldi r17,hi8(-1)
+ 752 0422 00C0      		rjmp .L80
+ 753               	.L81:
+ 754 0424 86E0      		ldi r24,lo8(6)
+ 755 0426 90E0      		ldi r25,hi8(6)
+ 756 0428 0E94 0000 		call malloc
+ 757 042c FC01      		movw r30,r24
+ 758 042e 8C01      		movw r16,r24
+ 759 0430 0097      		sbiw r24,0
+ 760 0432 01F4      		brne .L82
+ 761 0434 8C89      		ldd r24,Y+20
+ 762 0436 9D89      		ldd r25,Y+21
+ 763 0438 0E94 0000 		call free
+ 764 043c 8EA1      		ldd r24,Y+38
+ 765 043e 9FA1      		ldd r25,Y+39
+ 766 0440 00C0      		rjmp .L88
+ 767               	.L82:
+ 768 0442 80E0      		ldi r24,lo8(-16384)
+ 769 0444 90EC      		ldi r25,hi8(-16384)
+ 770 0446 E822      		and r14,r24
+ 771 0448 F922      		and r15,r25
+ 772 044a 8881      		ld r24,Y
+ 773 044c 9981      		ldd r25,Y+1
+ 774 044e AA81      		ldd r26,Y+2
+ 775 0450 BB81      		ldd r27,Y+3
+ 776 0452 20E0      		ldi r18,lo8(-32768)
+ 777 0454 E216      		cp r14,r18
+ 778 0456 20E8      		ldi r18,hi8(-32768)
+ 779 0458 F206      		cpc r15,r18
+ 780 045a 01F4      		brne .L83
+ 781 045c 8F77      		andi r24,lo8(-129)
+ 782 045e 00C0      		rjmp .L86
+ 783               	.L83:
+ 784 0460 8068      		ori r24,lo8(128)
+ 785               	.L86:
+ 786 0462 8883      		st Y,r24
+ 787 0464 9983      		std Y+1,r25
+ 788 0466 AA83      		std Y+2,r26
+ 789 0468 BB83      		std Y+3,r27
+ 790 046a 1182      		std Z+1,__zero_reg__
+ 791 046c 1082      		st Z,__zero_reg__
+ 792 046e B382      		std Z+3,r11
+ 793 0470 A282      		std Z+2,r10
+ 794 0472 1582      		std Z+5,__zero_reg__
+ 795 0474 1482      		std Z+4,__zero_reg__
+ 796 0476 81E0      		ldi r24,lo8(1)
+ 797 0478 C816      		cp r12,r24
+ 798 047a D104      		cpc r13,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 15
+
+
+ 799 047c 01F0      		breq .L80
+ 800 047e EBAD      		ldd r30,Y+59
+ 801 0480 FCAD      		ldd r31,Y+60
+ 802 0482 0995      		icall
+ 803               	.L80:
+ 804 0484 C801      		movw r24,r16
+ 805               	/* epilogue start */
+ 806 0486 DF91      		pop r29
+ 807 0488 CF91      		pop r28
+ 808 048a 1F91      		pop r17
+ 809 048c 0F91      		pop r16
+ 810 048e FF90      		pop r15
+ 811 0490 EF90      		pop r14
+ 812 0492 DF90      		pop r13
+ 813 0494 CF90      		pop r12
+ 814 0496 BF90      		pop r11
+ 815 0498 AF90      		pop r10
+ 816 049a 0895      		ret
+ 817               		.size	UsartOpen, .-UsartOpen
+ 818               	.global	UsartClose
+ 819               		.type	UsartClose, @function
+ 820               	UsartClose:
+ 821 049c 0F93      		push r16
+ 822 049e 1F93      		push r17
+ 823 04a0 CF93      		push r28
+ 824 04a2 DF93      		push r29
+ 825               	/* prologue: function */
+ 826               	/* frame size = 0 */
+ 827 04a4 EC01      		movw r28,r24
+ 828 04a6 EA81      		ldd r30,Y+2
+ 829 04a8 FB81      		ldd r31,Y+3
+ 830 04aa 2189      		ldd r18,Z+17
+ 831 04ac 3289      		ldd r19,Z+18
+ 832 04ae 0197      		sbiw r24,1
+ 833 04b0 8E5F      		subi r24,lo8(-2)
+ 834 04b2 9F4F      		sbci r25,hi8(-2)
+ 835 04b4 00F0      		brlo .L90
+ 836 04b6 2FEF      		ldi r18,lo8(-1)
+ 837 04b8 3FEF      		ldi r19,hi8(-1)
+ 838 04ba 00C0      		rjmp .L91
+ 839               	.L90:
+ 840 04bc 8901      		movw r16,r18
+ 841 04be 0F5A      		subi r16,lo8(-(81))
+ 842 04c0 1F4F      		sbci r17,hi8(-(81))
+ 843 04c2 D801      		movw r26,r16
+ 844 04c4 ED91      		ld r30,X+
+ 845 04c6 FC91      		ld r31,X
+ 846 04c8 0155      		subi r16,lo8(-(-81))
+ 847 04ca 1040      		sbci r17,hi8(-(-81))
+ 848 04cc 60E0      		ldi r22,lo8(512)
+ 849 04ce 72E0      		ldi r23,hi8(512)
+ 850 04d0 80E0      		ldi r24,hlo8(512)
+ 851 04d2 90E0      		ldi r25,hhi8(512)
+ 852 04d4 0995      		icall
+ 853 04d6 CE01      		movw r24,r28
+ 854 04d8 0E94 0000 		call free
+ 855 04dc C801      		movw r24,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 16
+
+
+ 856 04de 4096      		adiw r24,16
+ 857 04e0 60E0      		ldi r22,lo8(0)
+ 858 04e2 70E0      		ldi r23,hi8(0)
+ 859 04e4 40E0      		ldi r20,lo8(0)
+ 860 04e6 50E0      		ldi r21,hi8(0)
+ 861 04e8 20E0      		ldi r18,lo8(0)
+ 862 04ea 30E0      		ldi r19,hi8(0)
+ 863 04ec 0E94 0000 		call UsartResetBuffer
+ 864 04f0 C801      		movw r24,r16
+ 865 04f2 8296      		adiw r24,34
+ 866 04f4 60E0      		ldi r22,lo8(0)
+ 867 04f6 70E0      		ldi r23,hi8(0)
+ 868 04f8 40E0      		ldi r20,lo8(0)
+ 869 04fa 50E0      		ldi r21,hi8(0)
+ 870 04fc 20E0      		ldi r18,lo8(0)
+ 871 04fe 30E0      		ldi r19,hi8(0)
+ 872 0500 0E94 0000 		call UsartResetBuffer
+ 873 0504 C801      		movw r24,r16
+ 874 0506 C296      		adiw r24,50
+ 875 0508 0E94 0000 		call NutEventBroadcast
+ 876 050c 20E0      		ldi r18,lo8(0)
+ 877 050e 30E0      		ldi r19,hi8(0)
+ 878               	.L91:
+ 879 0510 C901      		movw r24,r18
+ 880               	/* epilogue start */
+ 881 0512 DF91      		pop r29
+ 882 0514 CF91      		pop r28
+ 883 0516 1F91      		pop r17
+ 884 0518 0F91      		pop r16
+ 885 051a 0895      		ret
+ 886               		.size	UsartClose, .-UsartClose
+ 887               		.type	UsartFlushOutput, @function
+ 888               	UsartFlushOutput:
+ 889 051c CF92      		push r12
+ 890 051e DF92      		push r13
+ 891 0520 EF92      		push r14
+ 892 0522 FF92      		push r15
+ 893 0524 0F93      		push r16
+ 894 0526 1F93      		push r17
+ 895 0528 CF93      		push r28
+ 896 052a DF93      		push r29
+ 897               	/* prologue: function */
+ 898               	/* frame size = 0 */
+ 899 052c EC01      		movw r28,r24
+ 900 052e 6A01      		movw r12,r20
+ 901               	/* #APP */
+ 902               	 ;  329 "../../nut/dev/usart.c" 1
+ 903 0530 0FB6      		in  __tmp_reg__, __SREG__
+ 904 0532 F894      		cli
+ 905 0534 0F92      		push __tmp_reg__
+ 906               		
+ 907               	 ;  0 "" 2
+ 908               	/* #NOAPP */
+ 909 0536 8A8D      		ldd r24,Y+26
+ 910 0538 9B8D      		ldd r25,Y+27
+ 911 053a 860F      		add r24,r22
+ 912 053c 971F      		adc r25,r23
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 17
+
+
+ 913 053e 9B8F      		std Y+27,r25
+ 914 0540 8A8F      		std Y+26,r24
+ 915 0542 0A8D      		ldd r16,Y+26
+ 916 0544 1B8D      		ldd r17,Y+27
+ 917               	/* #APP */
+ 918               	 ;  332 "../../nut/dev/usart.c" 1
+ 919 0546 0F90      		pop __tmp_reg__
+ 920 0548 0FBE      		out __SREG__, __tmp_reg__
+ 921               		
+ 922               	 ;  0 "" 2
+ 923               	/* #NOAPP */
+ 924 054a 90E2      		ldi r25,lo8(32)
+ 925 054c E92E      		mov r14,r25
+ 926 054e F12C      		mov r15,__zero_reg__
+ 927 0550 EC0E      		add r14,r28
+ 928 0552 FD1E      		adc r15,r29
+ 929 0554 00C0      		rjmp .L94
+ 930               	.L96:
+ 931 0556 E9AD      		ldd r30,Y+57
+ 932 0558 FAAD      		ldd r31,Y+58
+ 933 055a 0995      		icall
+ 934 055c 4C85      		ldd r20,Y+12
+ 935 055e 5D85      		ldd r21,Y+13
+ 936 0560 6E85      		ldd r22,Y+14
+ 937 0562 7F85      		ldd r23,Y+15
+ 938 0564 C701      		movw r24,r14
+ 939 0566 0E94 0000 		call NutEventWait
+ 940 056a 892B      		or r24,r25
+ 941 056c 01F4      		brne .L95
+ 942               	/* #APP */
+ 943               	 ;  341 "../../nut/dev/usart.c" 1
+ 944 056e 0FB6      		in  __tmp_reg__, __SREG__
+ 945 0570 F894      		cli
+ 946 0572 0F92      		push __tmp_reg__
+ 947               		
+ 948               	 ;  0 "" 2
+ 949               	/* #NOAPP */
+ 950 0574 0A8D      		ldd r16,Y+26
+ 951 0576 1B8D      		ldd r17,Y+27
+ 952               	/* #APP */
+ 953               	 ;  343 "../../nut/dev/usart.c" 1
+ 954 0578 0F90      		pop __tmp_reg__
+ 955 057a 0FBE      		out __SREG__, __tmp_reg__
+ 956               		
+ 957               	 ;  0 "" 2
+ 958               	/* #NOAPP */
+ 959               	.L94:
+ 960 057c C016      		cp r12,r16
+ 961 057e D106      		cpc r13,r17
+ 962 0580 00F0      		brlo .L96
+ 963               	.L95:
+ 964 0582 C801      		movw r24,r16
+ 965               	/* epilogue start */
+ 966 0584 DF91      		pop r29
+ 967 0586 CF91      		pop r28
+ 968 0588 1F91      		pop r17
+ 969 058a 0F91      		pop r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 18
+
+
+ 970 058c FF90      		pop r15
+ 971 058e EF90      		pop r14
+ 972 0590 DF90      		pop r13
+ 973 0592 CF90      		pop r12
+ 974 0594 0895      		ret
+ 975               		.size	UsartFlushOutput, .-UsartFlushOutput
+ 976               		.type	UsartPut, @function
+ 977               	UsartPut:
+ 978 0596 8F92      		push r8
+ 979 0598 9F92      		push r9
+ 980 059a AF92      		push r10
+ 981 059c BF92      		push r11
+ 982 059e CF92      		push r12
+ 983 05a0 DF92      		push r13
+ 984 05a2 EF92      		push r14
+ 985 05a4 FF92      		push r15
+ 986 05a6 0F93      		push r16
+ 987 05a8 1F93      		push r17
+ 988 05aa DF93      		push r29
+ 989 05ac CF93      		push r28
+ 990 05ae 00D0      		rcall .
+ 991 05b0 CDB7      		in r28,__SP_L__
+ 992 05b2 DEB7      		in r29,__SP_H__
+ 993               	/* prologue: function */
+ 994               	/* frame size = 2 */
+ 995 05b4 8B01      		movw r16,r22
+ 996 05b6 5A01      		movw r10,r20
+ 997 05b8 6901      		movw r12,r18
+ 998 05ba DC01      		movw r26,r24
+ 999 05bc 5196      		adiw r26,17
+ 1000 05be 8D90      		ld r8,X+
+ 1001 05c0 9C90      		ld r9,X
+ 1002 05c2 5297      		sbiw r26,17+1
+ 1003 05c4 F401      		movw r30,r8
+ 1004 05c6 808D      		ldd r24,Z+24
+ 1005 05c8 918D      		ldd r25,Z+25
+ 1006 05ca 892B      		or r24,r25
+ 1007 05cc 01F4      		brne .L99
+ 1008 05ce 0FEF      		ldi r16,lo8(-1)
+ 1009 05d0 1FEF      		ldi r17,hi8(-1)
+ 1010 05d2 00C0      		rjmp .L100
+ 1011               	.L99:
+ 1012 05d4 6115      		cp r22,__zero_reg__
+ 1013 05d6 7105      		cpc r23,__zero_reg__
+ 1014 05d8 01F4      		brne .L101
+ 1015 05da C401      		movw r24,r8
+ 1016 05dc 60E0      		ldi r22,lo8(0)
+ 1017 05de 70E0      		ldi r23,hi8(0)
+ 1018 05e0 40E0      		ldi r20,lo8(0)
+ 1019 05e2 50E0      		ldi r21,hi8(0)
+ 1020 05e4 0E94 0000 		call UsartFlushOutput
+ 1021 05e8 8C01      		movw r16,r24
+ 1022 05ea 00C0      		rjmp .L100
+ 1023               	.L101:
+ 1024 05ec F401      		movw r30,r8
+ 1025 05ee 8081      		ld r24,Z
+ 1026 05f0 9181      		ldd r25,Z+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 19
+
+
+ 1027 05f2 A281      		ldd r26,Z+2
+ 1028 05f4 B381      		ldd r27,Z+3
+ 1029 05f6 9C01      		movw r18,r24
+ 1030 05f8 AD01      		movw r20,r26
+ 1031 05fa 69E0      		ldi r22,9
+ 1032 05fc 5695      	1:	lsr r21
+ 1033 05fe 4795      		ror r20
+ 1034 0600 3795      		ror r19
+ 1035 0602 2795      		ror r18
+ 1036 0604 6A95      		dec r22
+ 1037 0606 01F4      		brne 1b
+ 1038 0608 F22F      		mov r31,r18
+ 1039 060a F170      		andi r31,lo8(1)
+ 1040 060c FA83      		std Y+2,r31
+ 1041 060e 27E0      		ldi r18,7
+ 1042 0610 B695      	1:	lsr r27
+ 1043 0612 A795      		ror r26
+ 1044 0614 9795      		ror r25
+ 1045 0616 8795      		ror r24
+ 1046 0618 2A95      		dec r18
+ 1047 061a 01F4      		brne 1b
+ 1048 061c 282F      		mov r18,r24
+ 1049 061e 2170      		andi r18,lo8(1)
+ 1050 0620 2983      		std Y+1,r18
+ 1051               	/* #APP */
+ 1052               	 ;  401 "../../nut/dev/usart.c" 1
+ 1053 0622 0FB6      		in  __tmp_reg__, __SREG__
+ 1054 0624 F894      		cli
+ 1055 0626 0F92      		push __tmp_reg__
+ 1056               		
+ 1057               	 ;  0 "" 2
+ 1058               	/* #NOAPP */
+ 1059 0628 D401      		movw r26,r8
+ 1060 062a 5A96      		adiw r26,26
+ 1061 062c 4D91      		ld r20,X+
+ 1062 062e 5C91      		ld r21,X
+ 1063 0630 5B97      		sbiw r26,26+1
+ 1064               	/* #APP */
+ 1065               	 ;  403 "../../nut/dev/usart.c" 1
+ 1066 0632 0F90      		pop __tmp_reg__
+ 1067 0634 0FBE      		out __SREG__, __tmp_reg__
+ 1068               		
+ 1069               	 ;  0 "" 2
+ 1070               	/* #NOAPP */
+ 1071 0636 7801      		movw r14,r16
+ 1072 0638 00E0      		ldi r16,lo8(0)
+ 1073 063a 10E0      		ldi r17,hi8(0)
+ 1074 063c 60E0      		ldi r22,lo8(0)
+ 1075 063e 70E0      		ldi r23,hi8(0)
+ 1076 0640 00C0      		rjmp .L102
+ 1077               	.L111:
+ 1078 0642 9B01      		movw r18,r22
+ 1079 0644 240F      		add r18,r20
+ 1080 0646 351F      		adc r19,r21
+ 1081 0648 F401      		movw r30,r8
+ 1082 064a 868D      		ldd r24,Z+30
+ 1083 064c 978D      		ldd r25,Z+31
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 20
+
+
+ 1084 064e 2817      		cp r18,r24
+ 1085 0650 3907      		cpc r19,r25
+ 1086 0652 00F0      		brlo .L103
+ 1087 0654 448D      		ldd r20,Z+28
+ 1088 0656 558D      		ldd r21,Z+29
+ 1089 0658 C401      		movw r24,r8
+ 1090 065a 0E94 0000 		call UsartFlushOutput
+ 1091 065e AC01      		movw r20,r24
+ 1092 0660 D401      		movw r26,r8
+ 1093 0662 5C96      		adiw r26,28
+ 1094 0664 8D91      		ld r24,X+
+ 1095 0666 9C91      		ld r25,X
+ 1096 0668 5D97      		sbiw r26,28+1
+ 1097 066a 8417      		cp r24,r20
+ 1098 066c 9507      		cpc r25,r21
+ 1099 066e 00F4      		brsh .+2
+ 1100 0670 00C0      		rjmp .L100
+ 1101 0672 60E0      		ldi r22,lo8(0)
+ 1102 0674 70E0      		ldi r23,hi8(0)
+ 1103               	.L103:
+ 1104 0676 C114      		cp r12,__zero_reg__
+ 1105 0678 D104      		cpc r13,__zero_reg__
+ 1106 067a 01F0      		breq .L104
+ 1107 067c F701      		movw r30,r14
+ 1108               	/* #APP */
+ 1109               	 ;  428 "../../nut/dev/usart.c" 1
+ 1110 067e 8491      		lpm r24, Z
+ 1111               		
+ 1112               	 ;  0 "" 2
+ 1113               	/* #NOAPP */
+ 1114 0680 00C0      		rjmp .L105
+ 1115               	.L104:
+ 1116 0682 D701      		movw r26,r14
+ 1117 0684 8C91      		ld r24,X
+ 1118               	.L105:
+ 1119 0686 B981      		ldd r27,Y+1
+ 1120 0688 B130      		cpi r27,lo8(1)
+ 1121 068a 01F4      		brne .L106
+ 1122 068c 8A30      		cpi r24,lo8(10)
+ 1123 068e 01F4      		brne .L109
+ 1124 0690 EA81      		ldd r30,Y+2
+ 1125 0692 E130      		cpi r30,lo8(1)
+ 1126 0694 01F4      		brne .L107
+ 1127 0696 F2E0      		ldi r31,lo8(2)
+ 1128 0698 FA83      		std Y+2,r31
+ 1129 069a F983      		std Y+1,r31
+ 1130 069c 00C0      		rjmp .L113
+ 1131               	.L107:
+ 1132 069e 22E0      		ldi r18,lo8(2)
+ 1133 06a0 2983      		std Y+1,r18
+ 1134               	.L113:
+ 1135 06a2 8DE0      		ldi r24,lo8(13)
+ 1136 06a4 00C0      		rjmp .L108
+ 1137               	.L106:
+ 1138 06a6 9981      		ldd r25,Y+1
+ 1139 06a8 9230      		cpi r25,lo8(2)
+ 1140 06aa 01F4      		brne .L109
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 21
+
+
+ 1141 06ac A1E0      		ldi r26,lo8(1)
+ 1142 06ae A983      		std Y+1,r26
+ 1143               	.L109:
+ 1144 06b0 0894      		sec
+ 1145 06b2 E11C      		adc r14,__zero_reg__
+ 1146 06b4 F11C      		adc r15,__zero_reg__
+ 1147 06b6 0F5F      		subi r16,lo8(-(1))
+ 1148 06b8 1F4F      		sbci r17,hi8(-(1))
+ 1149               	.L108:
+ 1150 06ba D401      		movw r26,r8
+ 1151 06bc 5096      		adiw r26,16
+ 1152 06be ED91      		ld r30,X+
+ 1153 06c0 FC91      		ld r31,X
+ 1154 06c2 5197      		sbiw r26,16+1
+ 1155 06c4 8193      		st Z+,r24
+ 1156 06c6 5196      		adiw r26,16+1
+ 1157 06c8 FC93      		st X,r31
+ 1158 06ca EE93      		st -X,r30
+ 1159 06cc 5097      		sbiw r26,16
+ 1160 06ce 5096      		adiw r26,16
+ 1161 06d0 2D91      		ld r18,X+
+ 1162 06d2 3C91      		ld r19,X
+ 1163 06d4 5197      		sbiw r26,16+1
+ 1164 06d6 5696      		adiw r26,22
+ 1165 06d8 8D91      		ld r24,X+
+ 1166 06da 9C91      		ld r25,X
+ 1167 06dc 5797      		sbiw r26,22+1
+ 1168 06de 2817      		cp r18,r24
+ 1169 06e0 3907      		cpc r19,r25
+ 1170 06e2 01F4      		brne .L110
+ 1171 06e4 5496      		adiw r26,20
+ 1172 06e6 8D91      		ld r24,X+
+ 1173 06e8 9C91      		ld r25,X
+ 1174 06ea 5597      		sbiw r26,20+1
+ 1175 06ec 5196      		adiw r26,16+1
+ 1176 06ee 9C93      		st X,r25
+ 1177 06f0 8E93      		st -X,r24
+ 1178 06f2 5097      		sbiw r26,16
+ 1179               	.L110:
+ 1180 06f4 6F5F      		subi r22,lo8(-(1))
+ 1181 06f6 7F4F      		sbci r23,hi8(-(1))
+ 1182               	.L102:
+ 1183 06f8 0A15      		cp r16,r10
+ 1184 06fa 1B05      		cpc r17,r11
+ 1185 06fc 04F4      		brge .+2
+ 1186 06fe 00C0      		rjmp .L111
+ 1187 0700 6115      		cp r22,__zero_reg__
+ 1188 0702 7105      		cpc r23,__zero_reg__
+ 1189 0704 01F0      		breq .L100
+ 1190               	/* #APP */
+ 1191               	 ;  453 "../../nut/dev/usart.c" 1
+ 1192 0706 0FB6      		in  __tmp_reg__, __SREG__
+ 1193 0708 F894      		cli
+ 1194 070a 0F92      		push __tmp_reg__
+ 1195               		
+ 1196               	 ;  0 "" 2
+ 1197               	/* #NOAPP */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 22
+
+
+ 1198 070c F401      		movw r30,r8
+ 1199 070e 828D      		ldd r24,Z+26
+ 1200 0710 938D      		ldd r25,Z+27
+ 1201 0712 680F      		add r22,r24
+ 1202 0714 791F      		adc r23,r25
+ 1203 0716 738F      		std Z+27,r23
+ 1204 0718 628F      		std Z+26,r22
+ 1205               	/* #APP */
+ 1206               	 ;  455 "../../nut/dev/usart.c" 1
+ 1207 071a 0F90      		pop __tmp_reg__
+ 1208 071c 0FBE      		out __SREG__, __tmp_reg__
+ 1209               		
+ 1210               	 ;  0 "" 2
+ 1211               	/* #NOAPP */
+ 1212 071e D401      		movw r26,r8
+ 1213 0720 D996      		adiw r26,57
+ 1214 0722 ED91      		ld r30,X+
+ 1215 0724 FC91      		ld r31,X
+ 1216 0726 DA97      		sbiw r26,57+1
+ 1217 0728 0995      		icall
+ 1218               	.L100:
+ 1219 072a C801      		movw r24,r16
+ 1220               	/* epilogue start */
+ 1221 072c 0F90      		pop __tmp_reg__
+ 1222 072e 0F90      		pop __tmp_reg__
+ 1223 0730 CF91      		pop r28
+ 1224 0732 DF91      		pop r29
+ 1225 0734 1F91      		pop r17
+ 1226 0736 0F91      		pop r16
+ 1227 0738 FF90      		pop r15
+ 1228 073a EF90      		pop r14
+ 1229 073c DF90      		pop r13
+ 1230 073e CF90      		pop r12
+ 1231 0740 BF90      		pop r11
+ 1232 0742 AF90      		pop r10
+ 1233 0744 9F90      		pop r9
+ 1234 0746 8F90      		pop r8
+ 1235 0748 0895      		ret
+ 1236               		.size	UsartPut, .-UsartPut
+ 1237               	.global	UsartWrite_P
+ 1238               		.type	UsartWrite_P, @function
+ 1239               	UsartWrite_P:
+ 1240               	/* prologue: function */
+ 1241               	/* frame size = 0 */
+ 1242 074a FC01      		movw r30,r24
+ 1243 074c 8281      		ldd r24,Z+2
+ 1244 074e 9381      		ldd r25,Z+3
+ 1245 0750 21E0      		ldi r18,lo8(1)
+ 1246 0752 30E0      		ldi r19,hi8(1)
+ 1247 0754 0E94 0000 		call UsartPut
+ 1248               	/* epilogue start */
+ 1249 0758 0895      		ret
+ 1250               		.size	UsartWrite_P, .-UsartWrite_P
+ 1251               	.global	UsartWrite
+ 1252               		.type	UsartWrite, @function
+ 1253               	UsartWrite:
+ 1254               	/* prologue: function */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 23
+
+
+ 1255               	/* frame size = 0 */
+ 1256 075a FC01      		movw r30,r24
+ 1257 075c 8281      		ldd r24,Z+2
+ 1258 075e 9381      		ldd r25,Z+3
+ 1259 0760 20E0      		ldi r18,lo8(0)
+ 1260 0762 30E0      		ldi r19,hi8(0)
+ 1261 0764 0E94 0000 		call UsartPut
+ 1262               	/* epilogue start */
+ 1263 0768 0895      		ret
+ 1264               		.size	UsartWrite, .-UsartWrite
+ 1265               	.global	UsartRead
+ 1266               		.type	UsartRead, @function
+ 1267               	UsartRead:
+ 1268 076a AF92      		push r10
+ 1269 076c BF92      		push r11
+ 1270 076e CF92      		push r12
+ 1271 0770 DF92      		push r13
+ 1272 0772 EF92      		push r14
+ 1273 0774 FF92      		push r15
+ 1274 0776 0F93      		push r16
+ 1275 0778 1F93      		push r17
+ 1276 077a CF93      		push r28
+ 1277 077c DF93      		push r29
+ 1278               	/* prologue: function */
+ 1279               	/* frame size = 0 */
+ 1280 077e 6B01      		movw r12,r22
+ 1281 0780 5A01      		movw r10,r20
+ 1282 0782 DC01      		movw r26,r24
+ 1283 0784 1296      		adiw r26,2
+ 1284 0786 ED91      		ld r30,X+
+ 1285 0788 FC91      		ld r31,X
+ 1286 078a 1397      		sbiw r26,2+1
+ 1287 078c C189      		ldd r28,Z+17
+ 1288 078e D289      		ldd r29,Z+18
+ 1289 0790 6AA5      		ldd r22,Y+42
+ 1290 0792 7BA5      		ldd r23,Y+43
+ 1291 0794 6115      		cp r22,__zero_reg__
+ 1292 0796 7105      		cpc r23,__zero_reg__
+ 1293 0798 01F4      		brne .+2
+ 1294 079a 00C0      		rjmp .L119
+ 1295 079c C114      		cp r12,__zero_reg__
+ 1296 079e D104      		cpc r13,__zero_reg__
+ 1297 07a0 01F4      		brne .L120
+ 1298 07a2 4EA5      		ldd r20,Y+46
+ 1299 07a4 5FA5      		ldd r21,Y+47
+ 1300 07a6 28A9      		ldd r18,Y+48
+ 1301 07a8 39A9      		ldd r19,Y+49
+ 1302 07aa CE01      		movw r24,r28
+ 1303 07ac 8296      		adiw r24,34
+ 1304 07ae 0E94 0000 		call UsartResetBuffer
+ 1305 07b2 EBAD      		ldd r30,Y+59
+ 1306 07b4 FCAD      		ldd r31,Y+60
+ 1307 07b6 0995      		icall
+ 1308 07b8 00C0      		rjmp .L141
+ 1309               	.L120:
+ 1310 07ba 8E01      		movw r16,r28
+ 1311 07bc 0E5C      		subi r16,lo8(-(50))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 24
+
+
+ 1312 07be 1F4F      		sbci r17,hi8(-(50))
+ 1313               	.L124:
+ 1314               	/* #APP */
+ 1315               	 ;  231 "../../nut/dev/usart.c" 1
+ 1316 07c0 0FB6      		in  __tmp_reg__, __SREG__
+ 1317 07c2 F894      		cli
+ 1318 07c4 0F92      		push __tmp_reg__
+ 1319               		
+ 1320               	 ;  0 "" 2
+ 1321               	/* #NOAPP */
+ 1322 07c6 ECA4      		ldd r14,Y+44
+ 1323 07c8 FDA4      		ldd r15,Y+45
+ 1324               	/* #APP */
+ 1325               	 ;  233 "../../nut/dev/usart.c" 1
+ 1326 07ca 0F90      		pop __tmp_reg__
+ 1327 07cc 0FBE      		out __SREG__, __tmp_reg__
+ 1328               		
+ 1329               	 ;  0 "" 2
+ 1330               	/* #NOAPP */
+ 1331 07ce E114      		cp r14,__zero_reg__
+ 1332 07d0 F104      		cpc r15,__zero_reg__
+ 1333 07d2 01F4      		brne .L122
+ 1334 07d4 EBAD      		ldd r30,Y+59
+ 1335 07d6 FCAD      		ldd r31,Y+60
+ 1336 07d8 0995      		icall
+ 1337 07da 4885      		ldd r20,Y+8
+ 1338 07dc 5985      		ldd r21,Y+9
+ 1339 07de 6A85      		ldd r22,Y+10
+ 1340 07e0 7B85      		ldd r23,Y+11
+ 1341 07e2 C801      		movw r24,r16
+ 1342 07e4 0E94 0000 		call NutEventWait
+ 1343 07e8 892B      		or r24,r25
+ 1344 07ea 01F0      		breq .L123
+ 1345               	.L141:
+ 1346 07ec 20E0      		ldi r18,lo8(0)
+ 1347 07ee 30E0      		ldi r19,hi8(0)
+ 1348 07f0 00C0      		rjmp .L121
+ 1349               	.L123:
+ 1350 07f2 8AA5      		ldd r24,Y+42
+ 1351 07f4 9BA5      		ldd r25,Y+43
+ 1352 07f6 892B      		or r24,r25
+ 1353 07f8 01F4      		brne .L124
+ 1354 07fa 00C0      		rjmp .L119
+ 1355               	.L122:
+ 1356 07fc D601      		movw r26,r12
+ 1357 07fe 8881      		ld r24,Y
+ 1358 0800 87FF      		sbrs r24,7
+ 1359 0802 00C0      		rjmp .L125
+ 1360 0804 00E0      		ldi r16,lo8(0)
+ 1361 0806 10E0      		ldi r17,hi8(0)
+ 1362 0808 40E0      		ldi r20,lo8(0)
+ 1363 080a 50E0      		ldi r21,hi8(0)
+ 1364 080c 7AE0      		ldi r23,lo8(10)
+ 1365 080e 00C0      		rjmp .L126
+ 1366               	.L133:
+ 1367 0810 4E15      		cp r20,r14
+ 1368 0812 5F05      		cpc r21,r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 25
+
+
+ 1369 0814 00F0      		brlo .+2
+ 1370 0816 00C0      		rjmp .L127
+ 1371 0818 ECA1      		ldd r30,Y+36
+ 1372 081a FDA1      		ldd r31,Y+37
+ 1373 081c 6191      		ld r22,Z+
+ 1374 081e FDA3      		std Y+37,r31
+ 1375 0820 ECA3      		std Y+36,r30
+ 1376 0822 2CA1      		ldd r18,Y+36
+ 1377 0824 3DA1      		ldd r19,Y+37
+ 1378 0826 88A5      		ldd r24,Y+40
+ 1379 0828 99A5      		ldd r25,Y+41
+ 1380 082a 2817      		cp r18,r24
+ 1381 082c 3907      		cpc r19,r25
+ 1382 082e 01F4      		brne .L128
+ 1383 0830 8EA1      		ldd r24,Y+38
+ 1384 0832 9FA1      		ldd r25,Y+39
+ 1385 0834 9DA3      		std Y+37,r25
+ 1386 0836 8CA3      		std Y+36,r24
+ 1387               	.L128:
+ 1388 0838 6D30      		cpi r22,lo8(13)
+ 1389 083a 01F0      		breq .L129
+ 1390 083c 6A30      		cpi r22,lo8(10)
+ 1391 083e 01F4      		brne .L130
+ 1392               	.L129:
+ 1393 0840 8CA9      		ldd r24,Y+52
+ 1394 0842 8823      		tst r24
+ 1395 0844 01F0      		breq .L131
+ 1396 0846 8617      		cp r24,r22
+ 1397 0848 01F4      		brne .L132
+ 1398               	.L131:
+ 1399 084a 6CAB      		std Y+52,r22
+ 1400 084c 7D93      		st X+,r23
+ 1401 084e 00C0      		rjmp .L140
+ 1402               	.L130:
+ 1403 0850 1CAA      		std Y+52,__zero_reg__
+ 1404 0852 6D93      		st X+,r22
+ 1405               	.L140:
+ 1406 0854 0F5F      		subi r16,lo8(-(1))
+ 1407 0856 1F4F      		sbci r17,hi8(-(1))
+ 1408               	.L132:
+ 1409 0858 4F5F      		subi r20,lo8(-(1))
+ 1410 085a 5F4F      		sbci r21,hi8(-(1))
+ 1411               	.L126:
+ 1412 085c 0A15      		cp r16,r10
+ 1413 085e 1B05      		cpc r17,r11
+ 1414 0860 00F0      		brlo .L133
+ 1415 0862 00C0      		rjmp .L127
+ 1416               	.L125:
+ 1417 0864 8501      		movw r16,r10
+ 1418 0866 EA14      		cp r14,r10
+ 1419 0868 FB04      		cpc r15,r11
+ 1420 086a 00F4      		brsh .L134
+ 1421 086c 8701      		movw r16,r14
+ 1422               	.L134:
+ 1423 086e 40E0      		ldi r20,lo8(0)
+ 1424 0870 50E0      		ldi r21,hi8(0)
+ 1425 0872 00C0      		rjmp .L135
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 26
+
+
+ 1426               	.L137:
+ 1427 0874 ECA1      		ldd r30,Y+36
+ 1428 0876 FDA1      		ldd r31,Y+37
+ 1429 0878 D601      		movw r26,r12
+ 1430 087a A40F      		add r26,r20
+ 1431 087c B51F      		adc r27,r21
+ 1432 087e 8191      		ld r24,Z+
+ 1433 0880 8C93      		st X,r24
+ 1434 0882 FDA3      		std Y+37,r31
+ 1435 0884 ECA3      		std Y+36,r30
+ 1436 0886 2CA1      		ldd r18,Y+36
+ 1437 0888 3DA1      		ldd r19,Y+37
+ 1438 088a 88A5      		ldd r24,Y+40
+ 1439 088c 99A5      		ldd r25,Y+41
+ 1440 088e 2817      		cp r18,r24
+ 1441 0890 3907      		cpc r19,r25
+ 1442 0892 01F4      		brne .L136
+ 1443 0894 8EA1      		ldd r24,Y+38
+ 1444 0896 9FA1      		ldd r25,Y+39
+ 1445 0898 9DA3      		std Y+37,r25
+ 1446 089a 8CA3      		std Y+36,r24
+ 1447               	.L136:
+ 1448 089c 4F5F      		subi r20,lo8(-(1))
+ 1449 089e 5F4F      		sbci r21,hi8(-(1))
+ 1450               	.L135:
+ 1451 08a0 4017      		cp r20,r16
+ 1452 08a2 5107      		cpc r21,r17
+ 1453 08a4 00F0      		brlo .L137
+ 1454 08a6 A801      		movw r20,r16
+ 1455               	.L127:
+ 1456 08a8 4115      		cp r20,__zero_reg__
+ 1457 08aa 5105      		cpc r21,__zero_reg__
+ 1458 08ac 01F0      		breq .L138
+ 1459               	/* #APP */
+ 1460               	 ;  293 "../../nut/dev/usart.c" 1
+ 1461 08ae 0FB6      		in  __tmp_reg__, __SREG__
+ 1462 08b0 F894      		cli
+ 1463 08b2 0F92      		push __tmp_reg__
+ 1464               		
+ 1465               	 ;  0 "" 2
+ 1466               	/* #NOAPP */
+ 1467 08b4 8CA5      		ldd r24,Y+44
+ 1468 08b6 9DA5      		ldd r25,Y+45
+ 1469 08b8 841B      		sub r24,r20
+ 1470 08ba 950B      		sbc r25,r21
+ 1471 08bc 9DA7      		std Y+45,r25
+ 1472 08be 8CA7      		std Y+44,r24
+ 1473               	/* #APP */
+ 1474               	 ;  295 "../../nut/dev/usart.c" 1
+ 1475 08c0 0F90      		pop __tmp_reg__
+ 1476 08c2 0FBE      		out __SREG__, __tmp_reg__
+ 1477               		
+ 1478               	 ;  0 "" 2
+ 1479               	/* #NOAPP */
+ 1480 08c4 2CA5      		ldd r18,Y+44
+ 1481 08c6 3DA5      		ldd r19,Y+45
+ 1482 08c8 8EA5      		ldd r24,Y+46
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 27
+
+
+ 1483 08ca 9FA5      		ldd r25,Y+47
+ 1484 08cc 2817      		cp r18,r24
+ 1485 08ce 3907      		cpc r19,r25
+ 1486 08d0 00F4      		brsh .L138
+ 1487 08d2 EBAD      		ldd r30,Y+59
+ 1488 08d4 FCAD      		ldd r31,Y+60
+ 1489 08d6 0995      		icall
+ 1490               	.L138:
+ 1491 08d8 9801      		movw r18,r16
+ 1492 08da 00C0      		rjmp .L121
+ 1493               	.L119:
+ 1494 08dc 2FEF      		ldi r18,lo8(-1)
+ 1495 08de 3FEF      		ldi r19,hi8(-1)
+ 1496               	.L121:
+ 1497 08e0 C901      		movw r24,r18
+ 1498               	/* epilogue start */
+ 1499 08e2 DF91      		pop r29
+ 1500 08e4 CF91      		pop r28
+ 1501 08e6 1F91      		pop r17
+ 1502 08e8 0F91      		pop r16
+ 1503 08ea FF90      		pop r15
+ 1504 08ec EF90      		pop r14
+ 1505 08ee DF90      		pop r13
+ 1506 08f0 CF90      		pop r12
+ 1507 08f2 BF90      		pop r11
+ 1508 08f4 AF90      		pop r10
+ 1509 08f6 0895      		ret
+ 1510               		.size	UsartRead, .-UsartRead
+ 1511               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 usart.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:11     .text:00000000 UsartInit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:47     .text:00000038 UsartSize
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:82     .text:0000005e UsartResetBuffer
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:193    .text:00000100 UsartIOCtl
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:691    .text:000003b0 UsartOpen
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:820    .text:0000049c UsartClose
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:888    .text:0000051c UsartFlushOutput
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:977    .text:00000596 UsartPut
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:1239   .text:0000074a UsartWrite_P
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:1253   .text:0000075a UsartWrite
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0zcTad.s:1267   .text:0000076a UsartRead
+
+UNDEFINED SYMBOLS
+free
+malloc
+NutEventBroadcast
+NutEventWait
+__do_copy_data

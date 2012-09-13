@@ -1,0 +1,56 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYq4laJ.s 			page 1
+
+
+   1               		.file	"puts.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	puts
+  10               		.type	puts, @function
+  11               	puts:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 6091 0000 		lds r22,__iob+2
+  15 0004 7091 0000 		lds r23,(__iob+2)+1
+  16 0008 0E94 0000 		call fputs
+  17 000c 9C01      		movw r18,r24
+  18 000e 2F5F      		subi r18,lo8(-1)
+  19 0010 3F4F      		sbci r19,hi8(-1)
+  20 0012 01F4      		brne .L2
+  21 0014 2FEF      		ldi r18,lo8(-1)
+  22 0016 3FEF      		ldi r19,hi8(-1)
+  23 0018 00C0      		rjmp .L3
+  24               	.L2:
+  25 001a 6091 0000 		lds r22,__iob+2
+  26 001e 7091 0000 		lds r23,(__iob+2)+1
+  27 0022 8AE0      		ldi r24,lo8(10)
+  28 0024 90E0      		ldi r25,hi8(10)
+  29 0026 0E94 0000 		call fputc
+  30 002a 20E0      		ldi r18,lo8(0)
+  31 002c 30E0      		ldi r19,hi8(0)
+  32               	.L3:
+  33 002e C901      		movw r24,r18
+  34               	/* epilogue start */
+  35 0030 0895      		ret
+  36               		.size	puts, .-puts
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYq4laJ.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 puts.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYq4laJ.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYq4laJ.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYq4laJ.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYq4laJ.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYq4laJ.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYq4laJ.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYq4laJ.s:11     .text:00000000 puts
+
+UNDEFINED SYMBOLS
+__iob
+fputs
+fputc

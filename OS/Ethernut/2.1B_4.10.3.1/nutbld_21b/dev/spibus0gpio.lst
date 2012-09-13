@@ -1,0 +1,184 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s 			page 1
+
+
+   1               		.file	"spibus0gpio.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	GpioSpiBus0Transfer
+  10               		.type	GpioSpiBus0Transfer, @function
+  11               	GpioSpiBus0Transfer:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 80E0      		ldi r24,lo8(0)
+  15 0002 90E0      		ldi r25,hi8(0)
+  16               	/* epilogue start */
+  17 0004 0895      		ret
+  18               		.size	GpioSpiBus0Transfer, .-GpioSpiBus0Transfer
+  19               	.global	GpioSpiBus0Deselect
+  20               		.type	GpioSpiBus0Deselect, @function
+  21               	GpioSpiBus0Deselect:
+  22               	/* prologue: function */
+  23               	/* frame size = 0 */
+  24 0006 FC01      		movw r30,r24
+  25 0008 8385      		ldd r24,Z+11
+  26 000a 8823      		tst r24
+  27 000c 01F0      		breq .L5
+  28 000e 85E0      		ldi r24,lo8(5)
+  29 0010 90E0      		ldi r25,hi8(5)
+  30 0012 9093 0000 		sts (errno)+1,r25
+  31 0016 8093 0000 		sts errno,r24
+  32               	.L5:
+  33 001a 8081      		ld r24,Z
+  34 001c 9181      		ldd r25,Z+1
+  35 001e 0E94 0000 		call NutEventPost
+  36 0022 80E0      		ldi r24,lo8(0)
+  37 0024 90E0      		ldi r25,hi8(0)
+  38               	/* epilogue start */
+  39 0026 0895      		ret
+  40               		.size	GpioSpiBus0Deselect, .-GpioSpiBus0Deselect
+  41               	.global	GpioSpiBus0Select
+  42               		.type	GpioSpiBus0Select, @function
+  43               	GpioSpiBus0Select:
+  44 0028 0F93      		push r16
+  45 002a 1F93      		push r17
+  46 002c CF93      		push r28
+  47 002e DF93      		push r29
+  48               	/* prologue: function */
+  49               	/* frame size = 0 */
+  50 0030 EC01      		movw r28,r24
+  51 0032 8881      		ld r24,Y
+  52 0034 9981      		ldd r25,Y+1
+  53 0036 0E94 0000 		call NutEventWait
+  54 003a 8C01      		movw r16,r24
+  55 003c 0097      		sbiw r24,0
+  56 003e 01F0      		breq .L8
+  57 0040 85E0      		ldi r24,lo8(5)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s 			page 2
+
+
+  58 0042 90E0      		ldi r25,hi8(5)
+  59 0044 9093 0000 		sts (errno)+1,r25
+  60 0048 8093 0000 		sts errno,r24
+  61 004c 00C0      		rjmp .L9
+  62               	.L8:
+  63 004e 8885      		ldd r24,Y+8
+  64 0050 9985      		ldd r25,Y+9
+  65 0052 97FF      		sbrs r25,7
+  66 0054 00C0      		rjmp .L10
+  67 0056 CE01      		movw r24,r28
+  68 0058 0E94 0000 		call GpioSpiSetup
+  69               	.L10:
+  70 005c 8B85      		ldd r24,Y+11
+  71 005e 8823      		tst r24
+  72 0060 01F0      		breq .L9
+  73 0062 85E0      		ldi r24,lo8(5)
+  74 0064 90E0      		ldi r25,hi8(5)
+  75 0066 9093 0000 		sts (errno)+1,r25
+  76 006a 8093 0000 		sts errno,r24
+  77 006e 8881      		ld r24,Y
+  78 0070 9981      		ldd r25,Y+1
+  79 0072 0E94 0000 		call NutEventPost
+  80 0076 0FEF      		ldi r16,lo8(-1)
+  81 0078 1FEF      		ldi r17,hi8(-1)
+  82               	.L9:
+  83 007a C801      		movw r24,r16
+  84               	/* epilogue start */
+  85 007c DF91      		pop r29
+  86 007e CF91      		pop r28
+  87 0080 1F91      		pop r17
+  88 0082 0F91      		pop r16
+  89 0084 0895      		ret
+  90               		.size	GpioSpiBus0Select, .-GpioSpiBus0Select
+  91               	.global	GpioSpiBus0NodeInit
+  92               		.type	GpioSpiBus0NodeInit, @function
+  93               	GpioSpiBus0NodeInit:
+  94               	/* prologue: function */
+  95               	/* frame size = 0 */
+  96 0086 FC01      		movw r30,r24
+  97 0088 8385      		ldd r24,Z+11
+  98 008a 8823      		tst r24
+  99 008c 01F4      		brne .L20
+ 100 008e 80E0      		ldi r24,lo8(gspi_reg0)
+ 101 0090 90E0      		ldi r25,hi8(gspi_reg0)
+ 102 0092 00C0      		rjmp .L16
+ 103               	.L20:
+ 104 0094 85E0      		ldi r24,lo8(5)
+ 105 0096 90E0      		ldi r25,hi8(5)
+ 106 0098 9093 0000 		sts (errno)+1,r25
+ 107 009c 8093 0000 		sts errno,r24
+ 108 00a0 80E0      		ldi r24,lo8(0)
+ 109 00a2 90E0      		ldi r25,hi8(0)
+ 110               	.L16:
+ 111 00a4 9383      		std Z+3,r25
+ 112 00a6 8283      		std Z+2,r24
+ 113 00a8 892B      		or r24,r25
+ 114 00aa 01F4      		brne .L17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s 			page 3
+
+
+ 115 00ac 2FEF      		ldi r18,lo8(-1)
+ 116 00ae 3FEF      		ldi r19,hi8(-1)
+ 117 00b0 00C0      		rjmp .L18
+ 118               	.L17:
+ 119 00b2 CF01      		movw r24,r30
+ 120 00b4 0E94 0000 		call GpioSpiSetup
+ 121 00b8 9C01      		movw r18,r24
+ 122               	.L18:
+ 123 00ba C901      		movw r24,r18
+ 124               	/* epilogue start */
+ 125 00bc 0895      		ret
+ 126               		.size	GpioSpiBus0NodeInit, .-GpioSpiBus0NodeInit
+ 127               	.global	spiBus0Gpio
+ 128               		.data
+ 129               		.type	spiBus0Gpio, @object
+ 130               		.size	spiBus0Gpio, 24
+ 131               	spiBus0Gpio:
+ 132 0000 0000      		.word	0
+ 133 0002 0000      		.word	0
+ 134 0004 0000      		.word	0
+ 135 0006 0000      		.word	0
+ 136 0008 0000      		.word	gs(GpioSpiBus0NodeInit)
+ 137 000a 0000      		.word	gs(GpioSpiBus0Select)
+ 138 000c 0000      		.word	gs(GpioSpiBus0Deselect)
+ 139 000e 0000      		.word	gs(GpioSpiBus0Transfer)
+ 140 0010 0000      		.word	gs(NutSpiBusWait)
+ 141 0012 0000      		.word	gs(NutSpiBusSetMode)
+ 142 0014 0000      		.word	gs(NutSpiBusSetRate)
+ 143 0016 0000      		.word	gs(NutSpiBusSetBits)
+ 144               		.lcomm gspi_reg0,4
+ 145               	.global __do_copy_data
+ 146               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 spibus0gpio.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s:11     .text:00000000 GpioSpiBus0Transfer
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s:21     .text:00000006 GpioSpiBus0Deselect
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s:43     .text:00000028 GpioSpiBus0Select
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s:93     .text:00000086 GpioSpiBus0NodeInit
+                             .bss:00000000 gspi_reg0
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfhfzW.s:131    .data:00000000 spiBus0Gpio
+
+UNDEFINED SYMBOLS
+errno
+NutEventPost
+NutEventWait
+GpioSpiSetup
+NutSpiBusWait
+NutSpiBusSetMode
+NutSpiBusSetRate
+NutSpiBusSetBits
+__do_copy_data
+__do_clear_bss

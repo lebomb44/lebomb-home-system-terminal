@@ -1,0 +1,197 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s 			page 1
+
+
+   1               		.file	"ether_addr.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	ether_ntoa
+  10               		.type	ether_ntoa, @function
+  11               	ether_ntoa:
+  12 0000 CF93      		push r28
+  13 0002 DF93      		push r29
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0004 EC01      		movw r28,r24
+  17 0006 A0E0      		ldi r26,lo8(str.1880)
+  18 0008 B0E0      		ldi r27,hi8(str.1880)
+  19 000a 9AE3      		ldi r25,lo8(58)
+  20               	.L2:
+  21 000c E881      		ld r30,Y
+  22 000e E295      		swap r30
+  23 0010 EF70      		andi r30,lo8(15)
+  24 0012 F0E0      		ldi r31,lo8(0)
+  25 0014 E050      		subi r30,lo8(-(hexdigit))
+  26 0016 F040      		sbci r31,hi8(-(hexdigit))
+  27 0018 8081      		ld r24,Z
+  28 001a 8C93      		st X,r24
+  29 001c E991      		ld r30,Y+
+  30 001e F0E0      		ldi r31,lo8(0)
+  31 0020 EF70      		andi r30,lo8(15)
+  32 0022 F070      		andi r31,hi8(15)
+  33 0024 E050      		subi r30,lo8(-(hexdigit))
+  34 0026 F040      		sbci r31,hi8(-(hexdigit))
+  35 0028 8081      		ld r24,Z
+  36 002a 1196      		adiw r26,1
+  37 002c 8C93      		st X,r24
+  38 002e 1197      		sbiw r26,1
+  39 0030 1296      		adiw r26,2
+  40 0032 9C93      		st X,r25
+  41 0034 1297      		sbiw r26,2
+  42 0036 1396      		adiw r26,3
+  43 0038 80E0      		ldi r24,hi8(str.1880+18)
+  44 003a A030      		cpi r26,lo8(str.1880+18)
+  45 003c B807      		cpc r27,r24
+  46 003e 01F4      		brne .L2
+  47 0040 1092 0000 		sts str.1880+17,__zero_reg__
+  48 0044 CD01      		movw r24,r26
+  49 0046 4297      		sbiw r24,18
+  50               	/* epilogue start */
+  51 0048 DF91      		pop r29
+  52 004a CF91      		pop r28
+  53 004c 0895      		ret
+  54               		.size	ether_ntoa, .-ether_ntoa
+  55               	.global	ether_aton
+  56               		.type	ether_aton, @function
+  57               	ether_aton:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s 			page 2
+
+
+  58               	/* prologue: function */
+  59               	/* frame size = 0 */
+  60 004e E0E0      		ldi r30,lo8(mac.1856)
+  61 0050 F0E0      		ldi r31,hi8(mac.1856)
+  62 0052 26E0      		ldi r18,lo8(6)
+  63 0054 DF01      		movw r26,r30
+  64 0056 1D92      		st X+,__zero_reg__
+  65 0058 2A95      	        dec r18
+  66 005a 01F4      		brne .-6
+  67 005c DC01      		movw r26,r24
+  68 005e 00C0      		rjmp .L17
+  69               	.L12:
+  70 0060 9033      		cpi r25,lo8(48)
+  71 0062 04F4      		brge .+2
+  72 0064 00C0      		rjmp .L7
+  73 0066 892F      		mov r24,r25
+  74 0068 8A53      		subi r24,lo8(-(-58))
+  75 006a 8730      		cpi r24,lo8(7)
+  76 006c 00F4      		brsh .+2
+  77 006e 00C0      		rjmp .L7
+  78 0070 8D50      		subi r24,lo8(-(-13))
+  79 0072 8A31      		cpi r24,lo8(26)
+  80 0074 00F0      		brlo .L7
+  81 0076 9736      		cpi r25,lo8(103)
+  82 0078 04F4      		brge .L7
+  83 007a 8081      		ld r24,Z
+  84 007c 8031      		cpi r24,lo8(16)
+  85 007e 00F4      		brsh .L7
+  86 0080 282F      		mov r18,r24
+  87 0082 2295      		swap r18
+  88 0084 207F      		andi r18,lo8(-16)
+  89 0086 2083      		st Z,r18
+  90 0088 9C91      		ld r25,X
+  91 008a 892F      		mov r24,r25
+  92 008c 8053      		subi r24,lo8(-(-48))
+  93 008e 8A30      		cpi r24,lo8(10)
+  94 0090 00F4      		brsh .L8
+  95 0092 892F      		mov r24,r25
+  96 0094 9927      		clr r25
+  97 0096 87FD      		sbrc r24,7
+  98 0098 9095      		com r25
+  99 009a C097      		sbiw r24,48
+ 100 009c 00C0      		rjmp .L9
+ 101               	.L8:
+ 102 009e 892F      		mov r24,r25
+ 103 00a0 8156      		subi r24,lo8(-(-97))
+ 104 00a2 8630      		cpi r24,lo8(6)
+ 105 00a4 00F4      		brsh .L10
+ 106 00a6 892F      		mov r24,r25
+ 107 00a8 9927      		clr r25
+ 108 00aa 87FD      		sbrc r24,7
+ 109 00ac 9095      		com r25
+ 110 00ae 8755      		subi r24,lo8(-(-87))
+ 111 00b0 9040      		sbci r25,hi8(-(-87))
+ 112 00b2 00C0      		rjmp .L9
+ 113               	.L10:
+ 114 00b4 892F      		mov r24,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s 			page 3
+
+
+ 115 00b6 8154      		subi r24,lo8(-(-65))
+ 116 00b8 8630      		cpi r24,lo8(6)
+ 117 00ba 00F0      		brlo .L11
+ 118 00bc 80E0      		ldi r24,lo8(0)
+ 119 00be 90E0      		ldi r25,hi8(0)
+ 120 00c0 00C0      		rjmp .L9
+ 121               	.L11:
+ 122 00c2 892F      		mov r24,r25
+ 123 00c4 9927      		clr r25
+ 124 00c6 87FD      		sbrc r24,7
+ 125 00c8 9095      		com r25
+ 126 00ca C797      		sbiw r24,55
+ 127               	.L9:
+ 128 00cc 282B      		or r18,r24
+ 129 00ce 2083      		st Z,r18
+ 130 00d0 1196      		adiw r26,1
+ 131 00d2 8C91      		ld r24,X
+ 132 00d4 8A33      		cpi r24,lo8(58)
+ 133 00d6 01F4      		brne .L17
+ 134 00d8 3196      		adiw r30,1
+ 135 00da 80E0      		ldi r24,hi8(mac.1856+6)
+ 136 00dc E030      		cpi r30,lo8(mac.1856+6)
+ 137 00de F807      		cpc r31,r24
+ 138 00e0 01F0      		breq .L7
+ 139 00e2 1196      		adiw r26,1
+ 140               	.L17:
+ 141 00e4 9C91      		ld r25,X
+ 142 00e6 9923      		tst r25
+ 143 00e8 01F0      		breq .+2
+ 144 00ea 00C0      		rjmp .L12
+ 145 00ec 20E0      		ldi r18,lo8(mac.1856)
+ 146 00ee 30E0      		ldi r19,hi8(mac.1856)
+ 147 00f0 00C0      		rjmp .L13
+ 148               	.L7:
+ 149 00f2 20E0      		ldi r18,lo8(0)
+ 150 00f4 30E0      		ldi r19,hi8(0)
+ 151               	.L13:
+ 152 00f6 C901      		movw r24,r18
+ 153               	/* epilogue start */
+ 154 00f8 0895      		ret
+ 155               		.size	ether_aton, .-ether_aton
+ 156               		.data
+ 157               		.type	hexdigit, @object
+ 158               		.size	hexdigit, 17
+ 159               	hexdigit:
+ 160 0000 3031 3233 		.string	"0123456789ABCDEF"
+ 160      3435 3637 
+ 160      3839 4142 
+ 160      4344 4546 
+ 160      00
+ 161               		.lcomm str.1880,18
+ 162               		.lcomm mac.1856,6
+ 163               	.global __do_copy_data
+ 164               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ether_addr.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s:11     .text:00000000 ether_ntoa
+                             .bss:00000000 str.1880
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s:159    .data:00000000 hexdigit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s:57     .text:0000004e ether_aton
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccrVYj36.s:161    .bss:00000012 mac.1856
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

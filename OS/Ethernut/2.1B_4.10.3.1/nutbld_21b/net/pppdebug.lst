@@ -1,0 +1,1832 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 1
+
+
+   1               		.file	"pppdebug.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutTracePPP
+  10               		.type	NutTracePPP, @function
+  11               	NutTracePPP:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 0097      		sbiw r24,0
+  15 0002 01F0      		breq .L2
+  16 0004 9093 0000 		sts (__ppp_trs)+1,r25
+  17 0008 8093 0000 		sts __ppp_trs,r24
+  18               	.L2:
+  19 000c 8091 0000 		lds r24,__ppp_trs
+  20 0010 9091 0000 		lds r25,(__ppp_trs)+1
+  21 0014 892B      		or r24,r25
+  22 0016 01F0      		breq .L3
+  23 0018 6093 0000 		sts __ppp_trf,r22
+  24 001c 0895      		ret
+  25               	.L3:
+  26 001e 1092 0000 		sts __ppp_trf,__zero_reg__
+  27 0022 0895      		ret
+  28               		.size	NutTracePPP, .-NutTracePPP
+  29               		.data
+  30               	.LC0:
+  31 0000 5B4F 5054 		.string	"[OPT(%u)]"
+  31      2825 7529 
+  31      5D00 
+  32               	.LC1:
+  33 000a 5B4D 5255 		.string	"[MRU=%u]"
+  33      3D25 755D 
+  33      00
+  34               	.LC2:
+  35 0013 5B41 4343 		.string	"[ACCM=0x%08lX]"
+  35      4D3D 3078 
+  35      2530 386C 
+  35      585D 00
+  36               	.LC3:
+  37 0022 5B41 5554 		.string	"[AUTH=0x%04X]"
+  37      483D 3078 
+  37      2530 3458 
+  37      5D00 
+  38               	.LC4:
+  39 0030 5B4D 4147 		.string	"[MAGIC=0x%08lX]"
+  39      4943 3D30 
+  39      7825 3038 
+  39      6C58 5D00 
+  40               	.LC5:
+  41 0040 5B50 434F 		.string	"[PCOMP]"
+  41      4D50 5D00 
+  42               	.LC6:
+  43 0048 5B41 434F 		.string	"[ACOMP]"
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 2
+
+
+  43      4D50 5D00 
+  44               	.LC7:
+  45 0050 5B4F 5054 		.string	"[OPT%u?]"
+  45      2575 3F5D 
+  45      00
+  46               	.LC8:
+  47 0059 5B4C 454E 		.string	"[LEN?]"
+  47      3F5D 00
+  48               		.text
+  49               	.global	NutDumpLcpOption
+  50               		.type	NutDumpLcpOption, @function
+  51               	NutDumpLcpOption:
+  52 0024 4F92      		push r4
+  53 0026 5F92      		push r5
+  54 0028 6F92      		push r6
+  55 002a 7F92      		push r7
+  56 002c 8F92      		push r8
+  57 002e 9F92      		push r9
+  58 0030 AF92      		push r10
+  59 0032 BF92      		push r11
+  60 0034 CF92      		push r12
+  61 0036 DF92      		push r13
+  62 0038 EF92      		push r14
+  63 003a FF92      		push r15
+  64 003c 0F93      		push r16
+  65 003e 1F93      		push r17
+  66 0040 CF93      		push r28
+  67 0042 DF93      		push r29
+  68               	/* prologue: function */
+  69               	/* frame size = 0 */
+  70 0044 7C01      		movw r14,r24
+  71 0046 FB01      		movw r30,r22
+  72 0048 0189      		ldd r16,Z+17
+  73 004a 1289      		ldd r17,Z+18
+  74 004c 0115      		cp r16,__zero_reg__
+  75 004e 1105      		cpc r17,__zero_reg__
+  76 0050 01F0      		breq .L7
+  77 0052 C785      		ldd r28,Z+15
+  78 0054 D089      		ldd r29,Z+16
+  79 0056 00C0      		rjmp .L8
+  80               	.L7:
+  81 0058 8091 0000 		lds r24,ppp_header_sz
+  82 005c 90E0      		ldi r25,lo8(0)
+  83 005e 0581      		ldd r16,Z+5
+  84 0060 1681      		ldd r17,Z+6
+  85 0062 081B      		sub r16,r24
+  86 0064 190B      		sbc r17,r25
+  87 0066 0450      		subi r16,lo8(-(-4))
+  88 0068 1040      		sbci r17,hi8(-(-4))
+  89 006a 0496      		adiw r24,4
+  90 006c C381      		ldd r28,Z+3
+  91 006e D481      		ldd r29,Z+4
+  92 0070 C80F      		add r28,r24
+  93 0072 D91F      		adc r29,r25
+  94               	.L8:
+  95 0074 00D0      		rcall .
+  96 0076 00D0      		rcall .
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 3
+
+
+  97 0078 00D0      		rcall .
+  98 007a EDB7      		in r30,__SP_L__
+  99 007c FEB7      		in r31,__SP_H__
+ 100 007e 3196      		adiw r30,1
+ 101 0080 ADB7      		in r26,__SP_L__
+ 102 0082 BEB7      		in r27,__SP_H__
+ 103 0084 1296      		adiw r26,1+1
+ 104 0086 FC92      		st X,r15
+ 105 0088 EE92      		st -X,r14
+ 106 008a 1197      		sbiw r26,1
+ 107 008c 80E0      		ldi r24,lo8(.LC0)
+ 108 008e 90E0      		ldi r25,hi8(.LC0)
+ 109 0090 9383      		std Z+3,r25
+ 110 0092 8283      		std Z+2,r24
+ 111 0094 1583      		std Z+5,r17
+ 112 0096 0483      		std Z+4,r16
+ 113 0098 0E94 0000 		call fprintf
+ 114 009c EDB7      		in r30,__SP_L__
+ 115 009e FEB7      		in r31,__SP_H__
+ 116 00a0 3696      		adiw r30,6
+ 117 00a2 0FB6      		in __tmp_reg__,__SREG__
+ 118 00a4 F894      		cli
+ 119 00a6 FEBF      		out __SP_H__,r31
+ 120 00a8 0FBE      		out __SREG__,__tmp_reg__
+ 121 00aa EDBF      		out __SP_L__,r30
+ 122 00ac 40E0      		ldi r20,lo8(.LC3)
+ 123 00ae 442E      		mov r4,r20
+ 124 00b0 40E0      		ldi r20,hi8(.LC3)
+ 125 00b2 542E      		mov r5,r20
+ 126 00b4 30E0      		ldi r19,lo8(.LC7)
+ 127 00b6 632E      		mov r6,r19
+ 128 00b8 30E0      		ldi r19,hi8(.LC7)
+ 129 00ba 732E      		mov r7,r19
+ 130 00bc 20E0      		ldi r18,lo8(.LC4)
+ 131 00be 822E      		mov r8,r18
+ 132 00c0 20E0      		ldi r18,hi8(.LC4)
+ 133 00c2 922E      		mov r9,r18
+ 134 00c4 90E0      		ldi r25,lo8(.LC1)
+ 135 00c6 A92E      		mov r10,r25
+ 136 00c8 90E0      		ldi r25,hi8(.LC1)
+ 137 00ca B92E      		mov r11,r25
+ 138 00cc 80E0      		ldi r24,lo8(.LC2)
+ 139 00ce C82E      		mov r12,r24
+ 140 00d0 80E0      		ldi r24,hi8(.LC2)
+ 141 00d2 D82E      		mov r13,r24
+ 142 00d4 00C0      		rjmp .L9
+ 143               	.L21:
+ 144 00d6 8881      		ld r24,Y
+ 145 00d8 8330      		cpi r24,lo8(3)
+ 146 00da 01F4      		brne .+2
+ 147 00dc 00C0      		rjmp .L13
+ 148 00de 8430      		cpi r24,lo8(4)
+ 149 00e0 00F4      		brsh .L17
+ 150 00e2 8130      		cpi r24,lo8(1)
+ 151 00e4 01F0      		breq .L11
+ 152 00e6 8230      		cpi r24,lo8(2)
+ 153 00e8 01F0      		breq .+2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 4
+
+
+ 154 00ea 00C0      		rjmp .L10
+ 155 00ec 00C0      		rjmp .L27
+ 156               	.L17:
+ 157 00ee 8730      		cpi r24,lo8(7)
+ 158 00f0 01F4      		brne .+2
+ 159 00f2 00C0      		rjmp .L15
+ 160 00f4 8830      		cpi r24,lo8(8)
+ 161 00f6 01F4      		brne .+2
+ 162 00f8 00C0      		rjmp .L16
+ 163 00fa 8530      		cpi r24,lo8(5)
+ 164 00fc 01F0      		breq .+2
+ 165 00fe 00C0      		rjmp .L10
+ 166 0100 00C0      		rjmp .L28
+ 167               	.L11:
+ 168 0102 8A81      		ldd r24,Y+2
+ 169 0104 9B81      		ldd r25,Y+3
+ 170               	/* #APP */
+ 171               	 ;  305 "../../nut/include/sys/types.h" 1
+ 172 0106 082E      		mov __tmp_reg__, r24
+ 173 0108 892F      		mov r24, r25
+ 174 010a 902D      		mov r25, __tmp_reg__
+ 175               		
+ 176               	 ;  0 "" 2
+ 177               	/* #NOAPP */
+ 178 010c 00D0      		rcall .
+ 179 010e 00D0      		rcall .
+ 180 0110 00D0      		rcall .
+ 181 0112 EDB7      		in r30,__SP_L__
+ 182 0114 FEB7      		in r31,__SP_H__
+ 183 0116 3196      		adiw r30,1
+ 184 0118 ADB7      		in r26,__SP_L__
+ 185 011a BEB7      		in r27,__SP_H__
+ 186 011c 1296      		adiw r26,1+1
+ 187 011e FC92      		st X,r15
+ 188 0120 EE92      		st -X,r14
+ 189 0122 1197      		sbiw r26,1
+ 190 0124 B382      		std Z+3,r11
+ 191 0126 A282      		std Z+2,r10
+ 192 0128 00C0      		rjmp .L26
+ 193               	.L27:
+ 194 012a 8A81      		ldd r24,Y+2
+ 195 012c 9B81      		ldd r25,Y+3
+ 196 012e AC81      		ldd r26,Y+4
+ 197 0130 BD81      		ldd r27,Y+5
+ 198               	/* #APP */
+ 199               	 ;  315 "../../nut/include/sys/types.h" 1
+ 200 0132 082E      		mov __tmp_reg__, r24
+ 201 0134 8B2F      		mov r24, r27
+ 202 0136 B02D      		mov r27, __tmp_reg__
+ 203 0138 092E      		mov __tmp_reg__, r25
+ 204 013a 9A2F      		mov r25, r26
+ 205 013c A02D      		mov r26, __tmp_reg__
+ 206               		
+ 207               	 ;  0 "" 2
+ 208               	/* #NOAPP */
+ 209 013e 2DB7      		in r18,__SP_L__
+ 210 0140 3EB7      		in r19,__SP_H__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 5
+
+
+ 211 0142 2850      		subi r18,lo8(-(-8))
+ 212 0144 3040      		sbci r19,hi8(-(-8))
+ 213 0146 0FB6      		in __tmp_reg__,__SREG__
+ 214 0148 F894      		cli
+ 215 014a 3EBF      		out __SP_H__,r19
+ 216 014c 0FBE      		out __SREG__,__tmp_reg__
+ 217 014e 2DBF      		out __SP_L__,r18
+ 218 0150 2F5F      		subi r18,lo8(-(1))
+ 219 0152 3F4F      		sbci r19,hi8(-(1))
+ 220 0154 EDB7      		in r30,__SP_L__
+ 221 0156 FEB7      		in r31,__SP_H__
+ 222 0158 F282      		std Z+2,r15
+ 223 015a E182      		std Z+1,r14
+ 224 015c F901      		movw r30,r18
+ 225 015e D382      		std Z+3,r13
+ 226 0160 C282      		std Z+2,r12
+ 227 0162 00C0      		rjmp .L24
+ 228               	.L13:
+ 229 0164 8A81      		ldd r24,Y+2
+ 230 0166 9B81      		ldd r25,Y+3
+ 231               	/* #APP */
+ 232               	 ;  305 "../../nut/include/sys/types.h" 1
+ 233 0168 082E      		mov __tmp_reg__, r24
+ 234 016a 892F      		mov r24, r25
+ 235 016c 902D      		mov r25, __tmp_reg__
+ 236               		
+ 237               	 ;  0 "" 2
+ 238               	/* #NOAPP */
+ 239 016e 00D0      		rcall .
+ 240 0170 00D0      		rcall .
+ 241 0172 00D0      		rcall .
+ 242 0174 EDB7      		in r30,__SP_L__
+ 243 0176 FEB7      		in r31,__SP_H__
+ 244 0178 3196      		adiw r30,1
+ 245 017a ADB7      		in r26,__SP_L__
+ 246 017c BEB7      		in r27,__SP_H__
+ 247 017e 1296      		adiw r26,1+1
+ 248 0180 FC92      		st X,r15
+ 249 0182 EE92      		st -X,r14
+ 250 0184 1197      		sbiw r26,1
+ 251 0186 5382      		std Z+3,r5
+ 252 0188 4282      		std Z+2,r4
+ 253               	.L26:
+ 254 018a 9583      		std Z+5,r25
+ 255 018c 8483      		std Z+4,r24
+ 256 018e 00C0      		rjmp .L23
+ 257               	.L28:
+ 258 0190 8A81      		ldd r24,Y+2
+ 259 0192 9B81      		ldd r25,Y+3
+ 260 0194 AC81      		ldd r26,Y+4
+ 261 0196 BD81      		ldd r27,Y+5
+ 262               	/* #APP */
+ 263               	 ;  315 "../../nut/include/sys/types.h" 1
+ 264 0198 082E      		mov __tmp_reg__, r24
+ 265 019a 8B2F      		mov r24, r27
+ 266 019c B02D      		mov r27, __tmp_reg__
+ 267 019e 092E      		mov __tmp_reg__, r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 6
+
+
+ 268 01a0 9A2F      		mov r25, r26
+ 269 01a2 A02D      		mov r26, __tmp_reg__
+ 270               		
+ 271               	 ;  0 "" 2
+ 272               	/* #NOAPP */
+ 273 01a4 2DB7      		in r18,__SP_L__
+ 274 01a6 3EB7      		in r19,__SP_H__
+ 275 01a8 2850      		subi r18,lo8(-(-8))
+ 276 01aa 3040      		sbci r19,hi8(-(-8))
+ 277 01ac 0FB6      		in __tmp_reg__,__SREG__
+ 278 01ae F894      		cli
+ 279 01b0 3EBF      		out __SP_H__,r19
+ 280 01b2 0FBE      		out __SREG__,__tmp_reg__
+ 281 01b4 2DBF      		out __SP_L__,r18
+ 282 01b6 2F5F      		subi r18,lo8(-(1))
+ 283 01b8 3F4F      		sbci r19,hi8(-(1))
+ 284 01ba EDB7      		in r30,__SP_L__
+ 285 01bc FEB7      		in r31,__SP_H__
+ 286 01be F282      		std Z+2,r15
+ 287 01c0 E182      		std Z+1,r14
+ 288 01c2 F901      		movw r30,r18
+ 289 01c4 9382      		std Z+3,r9
+ 290 01c6 8282      		std Z+2,r8
+ 291               	.L24:
+ 292 01c8 8483      		std Z+4,r24
+ 293 01ca 9583      		std Z+5,r25
+ 294 01cc A683      		std Z+6,r26
+ 295 01ce B783      		std Z+7,r27
+ 296 01d0 0E94 0000 		call fprintf
+ 297 01d4 2DB7      		in r18,__SP_L__
+ 298 01d6 3EB7      		in r19,__SP_H__
+ 299 01d8 285F      		subi r18,lo8(-(8))
+ 300 01da 3F4F      		sbci r19,hi8(-(8))
+ 301 01dc 0FB6      		in __tmp_reg__,__SREG__
+ 302 01de F894      		cli
+ 303 01e0 3EBF      		out __SP_H__,r19
+ 304 01e2 0FBE      		out __SREG__,__tmp_reg__
+ 305 01e4 2DBF      		out __SP_L__,r18
+ 306 01e6 00C0      		rjmp .L18
+ 307               	.L15:
+ 308 01e8 80E0      		ldi r24,lo8(.LC5)
+ 309 01ea 90E0      		ldi r25,hi8(.LC5)
+ 310 01ec 00C0      		rjmp .L25
+ 311               	.L16:
+ 312 01ee 80E0      		ldi r24,lo8(.LC6)
+ 313 01f0 90E0      		ldi r25,hi8(.LC6)
+ 314               	.L25:
+ 315 01f2 B701      		movw r22,r14
+ 316 01f4 0E94 0000 		call fputs
+ 317 01f8 00C0      		rjmp .L18
+ 318               	.L10:
+ 319 01fa 00D0      		rcall .
+ 320 01fc 00D0      		rcall .
+ 321 01fe 00D0      		rcall .
+ 322 0200 EDB7      		in r30,__SP_L__
+ 323 0202 FEB7      		in r31,__SP_H__
+ 324 0204 3196      		adiw r30,1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 7
+
+
+ 325 0206 ADB7      		in r26,__SP_L__
+ 326 0208 BEB7      		in r27,__SP_H__
+ 327 020a 1296      		adiw r26,1+1
+ 328 020c FC92      		st X,r15
+ 329 020e EE92      		st -X,r14
+ 330 0210 1197      		sbiw r26,1
+ 331 0212 7382      		std Z+3,r7
+ 332 0214 6282      		std Z+2,r6
+ 333 0216 8483      		std Z+4,r24
+ 334 0218 1582      		std Z+5,__zero_reg__
+ 335               	.L23:
+ 336 021a 0E94 0000 		call fprintf
+ 337 021e EDB7      		in r30,__SP_L__
+ 338 0220 FEB7      		in r31,__SP_H__
+ 339 0222 3696      		adiw r30,6
+ 340 0224 0FB6      		in __tmp_reg__,__SREG__
+ 341 0226 F894      		cli
+ 342 0228 FEBF      		out __SP_H__,r31
+ 343 022a 0FBE      		out __SREG__,__tmp_reg__
+ 344 022c EDBF      		out __SP_L__,r30
+ 345               	.L18:
+ 346 022e 8981      		ldd r24,Y+1
+ 347 0230 90E0      		ldi r25,lo8(0)
+ 348 0232 0817      		cp r16,r24
+ 349 0234 1907      		cpc r17,r25
+ 350 0236 00F4      		brsh .L19
+ 351 0238 80E0      		ldi r24,lo8(.LC8)
+ 352 023a 90E0      		ldi r25,hi8(.LC8)
+ 353 023c B701      		movw r22,r14
+ 354 023e 0E94 0000 		call fputs
+ 355 0242 00C0      		rjmp .L22
+ 356               	.L19:
+ 357 0244 081B      		sub r16,r24
+ 358 0246 190B      		sbc r17,r25
+ 359 0248 C80F      		add r28,r24
+ 360 024a D91F      		adc r29,r25
+ 361               	.L9:
+ 362 024c 0115      		cp r16,__zero_reg__
+ 363 024e 1105      		cpc r17,__zero_reg__
+ 364 0250 01F0      		breq .+2
+ 365 0252 00C0      		rjmp .L21
+ 366               	.L22:
+ 367               	/* epilogue start */
+ 368 0254 DF91      		pop r29
+ 369 0256 CF91      		pop r28
+ 370 0258 1F91      		pop r17
+ 371 025a 0F91      		pop r16
+ 372 025c FF90      		pop r15
+ 373 025e EF90      		pop r14
+ 374 0260 DF90      		pop r13
+ 375 0262 CF90      		pop r12
+ 376 0264 BF90      		pop r11
+ 377 0266 AF90      		pop r10
+ 378 0268 9F90      		pop r9
+ 379 026a 8F90      		pop r8
+ 380 026c 7F90      		pop r7
+ 381 026e 6F90      		pop r6
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 8
+
+
+ 382 0270 5F90      		pop r5
+ 383 0272 4F90      		pop r4
+ 384 0274 0895      		ret
+ 385               		.size	NutDumpLcpOption, .-NutDumpLcpOption
+ 386               		.data
+ 387               	.LC9:
+ 388 0060 5B4C 4350 		.string	"[LCP-%03u(%u)]"
+ 388      2D25 3033 
+ 388      7528 2575 
+ 388      295D 00
+ 389               	.LC10:
+ 390 006f 5B43 4F44 		.string	"[CODE%u?]"
+ 390      4525 753F 
+ 390      5D00 
+ 391               		.text
+ 392               	.global	NutDumpLcp
+ 393               		.type	NutDumpLcp, @function
+ 394               	NutDumpLcp:
+ 395 0276 CF92      		push r12
+ 396 0278 DF92      		push r13
+ 397 027a EF92      		push r14
+ 398 027c FF92      		push r15
+ 399 027e 0F93      		push r16
+ 400 0280 1F93      		push r17
+ 401 0282 CF93      		push r28
+ 402 0284 DF93      		push r29
+ 403               	/* prologue: function */
+ 404               	/* frame size = 0 */
+ 405 0286 EC01      		movw r28,r24
+ 406 0288 6B01      		movw r12,r22
+ 407 028a DB01      		movw r26,r22
+ 408 028c 1996      		adiw r26,9
+ 409 028e 8D91      		ld r24,X+
+ 410 0290 9C91      		ld r25,X
+ 411 0292 1A97      		sbiw r26,9+1
+ 412 0294 0097      		sbiw r24,0
+ 413 0296 01F0      		breq .L30
+ 414 0298 5196      		adiw r26,17
+ 415 029a ED90      		ld r14,X+
+ 416 029c FC90      		ld r15,X
+ 417 029e 5297      		sbiw r26,17+1
+ 418 02a0 E80E      		add r14,r24
+ 419 02a2 F91E      		adc r15,r25
+ 420 02a4 1796      		adiw r26,7
+ 421 02a6 0D91      		ld r16,X+
+ 422 02a8 1C91      		ld r17,X
+ 423 02aa 1897      		sbiw r26,7+1
+ 424 02ac 00C0      		rjmp .L31
+ 425               	.L30:
+ 426 02ae 8091 0000 		lds r24,ppp_header_sz
+ 427 02b2 90E0      		ldi r25,lo8(0)
+ 428 02b4 FB01      		movw r30,r22
+ 429 02b6 E580      		ldd r14,Z+5
+ 430 02b8 F680      		ldd r15,Z+6
+ 431 02ba E81A      		sub r14,r24
+ 432 02bc F90A      		sbc r15,r25
+ 433 02be 0381      		ldd r16,Z+3
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 9
+
+
+ 434 02c0 1481      		ldd r17,Z+4
+ 435 02c2 080F      		add r16,r24
+ 436 02c4 191F      		adc r17,r25
+ 437               	.L31:
+ 438 02c6 D801      		movw r26,r16
+ 439 02c8 1296      		adiw r26,2
+ 440 02ca 2D91      		ld r18,X+
+ 441 02cc 3C91      		ld r19,X
+ 442 02ce 1397      		sbiw r26,2+1
+ 443               	/* #APP */
+ 444               	 ;  305 "../../nut/include/sys/types.h" 1
+ 445 02d0 022E      		mov __tmp_reg__, r18
+ 446 02d2 232F      		mov r18, r19
+ 447 02d4 302D      		mov r19, __tmp_reg__
+ 448               		
+ 449               	 ;  0 "" 2
+ 450               	/* #NOAPP */
+ 451 02d6 EDB7      		in r30,__SP_L__
+ 452 02d8 FEB7      		in r31,__SP_H__
+ 453 02da 3897      		sbiw r30,8
+ 454 02dc 0FB6      		in __tmp_reg__,__SREG__
+ 455 02de F894      		cli
+ 456 02e0 FEBF      		out __SP_H__,r31
+ 457 02e2 0FBE      		out __SREG__,__tmp_reg__
+ 458 02e4 EDBF      		out __SP_L__,r30
+ 459 02e6 3196      		adiw r30,1
+ 460 02e8 ADB7      		in r26,__SP_L__
+ 461 02ea BEB7      		in r27,__SP_H__
+ 462 02ec 1296      		adiw r26,1+1
+ 463 02ee DC93      		st X,r29
+ 464 02f0 CE93      		st -X,r28
+ 465 02f2 1197      		sbiw r26,1
+ 466 02f4 80E0      		ldi r24,lo8(.LC9)
+ 467 02f6 90E0      		ldi r25,hi8(.LC9)
+ 468 02f8 9383      		std Z+3,r25
+ 469 02fa 8283      		std Z+2,r24
+ 470 02fc D801      		movw r26,r16
+ 471 02fe 1196      		adiw r26,1
+ 472 0300 8C91      		ld r24,X
+ 473 0302 8483      		std Z+4,r24
+ 474 0304 1582      		std Z+5,__zero_reg__
+ 475 0306 3783      		std Z+7,r19
+ 476 0308 2683      		std Z+6,r18
+ 477 030a 0E94 0000 		call fprintf
+ 478 030e EDB7      		in r30,__SP_L__
+ 479 0310 FEB7      		in r31,__SP_H__
+ 480 0312 3896      		adiw r30,8
+ 481 0314 0FB6      		in __tmp_reg__,__SREG__
+ 482 0316 F894      		cli
+ 483 0318 FEBF      		out __SP_H__,r31
+ 484 031a 0FBE      		out __SREG__,__tmp_reg__
+ 485 031c EDBF      		out __SP_L__,r30
+ 486 031e F4E0      		ldi r31,lo8(4)
+ 487 0320 EF16      		cp r14,r31
+ 488 0322 F104      		cpc r15,__zero_reg__
+ 489 0324 00F4      		brsh .L32
+ 490 0326 80E0      		ldi r24,lo8(.LC8)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 10
+
+
+ 491 0328 90E0      		ldi r25,hi8(.LC8)
+ 492 032a BE01      		movw r22,r28
+ 493 032c 0E94 0000 		call fputs
+ 494 0330 00C0      		rjmp .L49
+ 495               	.L32:
+ 496 0332 D801      		movw r26,r16
+ 497 0334 2C91      		ld r18,X
+ 498 0336 2630      		cpi r18,lo8(6)
+ 499 0338 01F0      		breq .L40
+ 500 033a 2730      		cpi r18,lo8(7)
+ 501 033c 00F4      		brsh .L46
+ 502 033e 2330      		cpi r18,lo8(3)
+ 503 0340 01F0      		breq .L37
+ 504 0342 2430      		cpi r18,lo8(4)
+ 505 0344 00F4      		brsh .L47
+ 506 0346 2130      		cpi r18,lo8(1)
+ 507 0348 01F0      		breq .L35
+ 508 034a 2230      		cpi r18,lo8(2)
+ 509 034c 01F0      		breq .+2
+ 510 034e 00C0      		rjmp .L34
+ 511 0350 00C0      		rjmp .L52
+ 512               	.L47:
+ 513 0352 2430      		cpi r18,lo8(4)
+ 514 0354 01F0      		breq .L38
+ 515 0356 2530      		cpi r18,lo8(5)
+ 516 0358 01F4      		brne .L34
+ 517 035a 00C0      		rjmp .L53
+ 518               	.L46:
+ 519 035c 2930      		cpi r18,lo8(9)
+ 520 035e 01F0      		breq .L43
+ 521 0360 2A30      		cpi r18,lo8(10)
+ 522 0362 00F4      		brsh .L48
+ 523 0364 2730      		cpi r18,lo8(7)
+ 524 0366 01F0      		breq .L41
+ 525 0368 2830      		cpi r18,lo8(8)
+ 526 036a 01F4      		brne .L34
+ 527 036c 00C0      		rjmp .L54
+ 528               	.L48:
+ 529 036e 2A30      		cpi r18,lo8(10)
+ 530 0370 01F0      		breq .L44
+ 531 0372 2B30      		cpi r18,lo8(11)
+ 532 0374 01F4      		brne .L34
+ 533 0376 00C0      		rjmp .L55
+ 534               	.L35:
+ 535 0378 80E0      		ldi r24,lo8(dbg_confreq)
+ 536 037a 90E0      		ldi r25,hi8(dbg_confreq)
+ 537 037c 00C0      		rjmp .L51
+ 538               	.L52:
+ 539 037e 80E0      		ldi r24,lo8(dbg_confack)
+ 540 0380 90E0      		ldi r25,hi8(dbg_confack)
+ 541               	.L51:
+ 542 0382 BE01      		movw r22,r28
+ 543 0384 0E94 0000 		call fputs_P
+ 544 0388 CE01      		movw r24,r28
+ 545 038a B601      		movw r22,r12
+ 546 038c 0E94 0000 		call NutDumpLcpOption
+ 547 0390 00C0      		rjmp .L49
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 11
+
+
+ 548               	.L37:
+ 549 0392 80E0      		ldi r24,lo8(dbg_confnak)
+ 550 0394 90E0      		ldi r25,hi8(dbg_confnak)
+ 551 0396 00C0      		rjmp .L51
+ 552               	.L38:
+ 553 0398 80E0      		ldi r24,lo8(dbg_confrej)
+ 554 039a 90E0      		ldi r25,hi8(dbg_confrej)
+ 555 039c 00C0      		rjmp .L51
+ 556               	.L53:
+ 557 039e 80E0      		ldi r24,lo8(dbg_termreq)
+ 558 03a0 90E0      		ldi r25,hi8(dbg_termreq)
+ 559 03a2 00C0      		rjmp .L50
+ 560               	.L40:
+ 561 03a4 80E0      		ldi r24,lo8(dbg_termack)
+ 562 03a6 90E0      		ldi r25,hi8(dbg_termack)
+ 563 03a8 00C0      		rjmp .L50
+ 564               	.L41:
+ 565 03aa 80E0      		ldi r24,lo8(dbg_coderej)
+ 566 03ac 90E0      		ldi r25,hi8(dbg_coderej)
+ 567 03ae 00C0      		rjmp .L50
+ 568               	.L54:
+ 569 03b0 80E0      		ldi r24,lo8(dbg_protrej)
+ 570 03b2 90E0      		ldi r25,hi8(dbg_protrej)
+ 571 03b4 00C0      		rjmp .L50
+ 572               	.L43:
+ 573 03b6 80E0      		ldi r24,lo8(dbg_echoreq)
+ 574 03b8 90E0      		ldi r25,hi8(dbg_echoreq)
+ 575 03ba 00C0      		rjmp .L50
+ 576               	.L44:
+ 577 03bc 80E0      		ldi r24,lo8(dbg_echorsp)
+ 578 03be 90E0      		ldi r25,hi8(dbg_echorsp)
+ 579 03c0 00C0      		rjmp .L50
+ 580               	.L55:
+ 581 03c2 80E0      		ldi r24,lo8(dbg_discreq)
+ 582 03c4 90E0      		ldi r25,hi8(dbg_discreq)
+ 583               	.L50:
+ 584 03c6 BE01      		movw r22,r28
+ 585 03c8 0E94 0000 		call fputs_P
+ 586 03cc 00C0      		rjmp .L49
+ 587               	.L34:
+ 588 03ce 00D0      		rcall .
+ 589 03d0 00D0      		rcall .
+ 590 03d2 00D0      		rcall .
+ 591 03d4 EDB7      		in r30,__SP_L__
+ 592 03d6 FEB7      		in r31,__SP_H__
+ 593 03d8 3196      		adiw r30,1
+ 594 03da ADB7      		in r26,__SP_L__
+ 595 03dc BEB7      		in r27,__SP_H__
+ 596 03de 1296      		adiw r26,1+1
+ 597 03e0 DC93      		st X,r29
+ 598 03e2 CE93      		st -X,r28
+ 599 03e4 1197      		sbiw r26,1
+ 600 03e6 80E0      		ldi r24,lo8(.LC10)
+ 601 03e8 90E0      		ldi r25,hi8(.LC10)
+ 602 03ea 9383      		std Z+3,r25
+ 603 03ec 8283      		std Z+2,r24
+ 604 03ee 2483      		std Z+4,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 12
+
+
+ 605 03f0 1582      		std Z+5,__zero_reg__
+ 606 03f2 0E94 0000 		call fprintf
+ 607 03f6 EDB7      		in r30,__SP_L__
+ 608 03f8 FEB7      		in r31,__SP_H__
+ 609 03fa 3696      		adiw r30,6
+ 610 03fc 0FB6      		in __tmp_reg__,__SREG__
+ 611 03fe F894      		cli
+ 612 0400 FEBF      		out __SP_H__,r31
+ 613 0402 0FBE      		out __SREG__,__tmp_reg__
+ 614 0404 EDBF      		out __SP_L__,r30
+ 615               	.L49:
+ 616               	/* epilogue start */
+ 617 0406 DF91      		pop r29
+ 618 0408 CF91      		pop r28
+ 619 040a 1F91      		pop r17
+ 620 040c 0F91      		pop r16
+ 621 040e FF90      		pop r15
+ 622 0410 EF90      		pop r14
+ 623 0412 DF90      		pop r13
+ 624 0414 CF90      		pop r12
+ 625 0416 0895      		ret
+ 626               		.size	NutDumpLcp, .-NutDumpLcp
+ 627               		.data
+ 628               	.LC11:
+ 629 0079 5B41 4444 		.string	"[ADDR=%s]"
+ 629      523D 2573 
+ 629      5D00 
+ 630               	.LC12:
+ 631 0083 5B43 4F4D 		.string	"[COMP]"
+ 631      505D 00
+ 632               	.LC13:
+ 633 008a 5B44 4E53 		.string	"[DNS1=%s]"
+ 633      313D 2573 
+ 633      5D00 
+ 634               	.LC14:
+ 635 0094 5B44 4E53 		.string	"[DNS2=%s]"
+ 635      323D 2573 
+ 635      5D00 
+ 636               		.text
+ 637               	.global	NutDumpIpcpOption
+ 638               		.type	NutDumpIpcpOption, @function
+ 639               	NutDumpIpcpOption:
+ 640 0418 6F92      		push r6
+ 641 041a 7F92      		push r7
+ 642 041c 8F92      		push r8
+ 643 041e 9F92      		push r9
+ 644 0420 AF92      		push r10
+ 645 0422 BF92      		push r11
+ 646 0424 CF92      		push r12
+ 647 0426 DF92      		push r13
+ 648 0428 EF92      		push r14
+ 649 042a FF92      		push r15
+ 650 042c 0F93      		push r16
+ 651 042e 1F93      		push r17
+ 652 0430 CF93      		push r28
+ 653 0432 DF93      		push r29
+ 654               	/* prologue: function */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 13
+
+
+ 655               	/* frame size = 0 */
+ 656 0434 7C01      		movw r14,r24
+ 657 0436 FB01      		movw r30,r22
+ 658 0438 0189      		ldd r16,Z+17
+ 659 043a 1289      		ldd r17,Z+18
+ 660 043c 0115      		cp r16,__zero_reg__
+ 661 043e 1105      		cpc r17,__zero_reg__
+ 662 0440 01F0      		breq .L57
+ 663 0442 C785      		ldd r28,Z+15
+ 664 0444 D089      		ldd r29,Z+16
+ 665 0446 00C0      		rjmp .L58
+ 666               	.L57:
+ 667 0448 8091 0000 		lds r24,ppp_header_sz
+ 668 044c 90E0      		ldi r25,lo8(0)
+ 669 044e 0581      		ldd r16,Z+5
+ 670 0450 1681      		ldd r17,Z+6
+ 671 0452 081B      		sub r16,r24
+ 672 0454 190B      		sbc r17,r25
+ 673 0456 0450      		subi r16,lo8(-(-4))
+ 674 0458 1040      		sbci r17,hi8(-(-4))
+ 675 045a 0496      		adiw r24,4
+ 676 045c C381      		ldd r28,Z+3
+ 677 045e D481      		ldd r29,Z+4
+ 678 0460 C80F      		add r28,r24
+ 679 0462 D91F      		adc r29,r25
+ 680               	.L58:
+ 681 0464 00D0      		rcall .
+ 682 0466 00D0      		rcall .
+ 683 0468 00D0      		rcall .
+ 684 046a EDB7      		in r30,__SP_L__
+ 685 046c FEB7      		in r31,__SP_H__
+ 686 046e 3196      		adiw r30,1
+ 687 0470 ADB7      		in r26,__SP_L__
+ 688 0472 BEB7      		in r27,__SP_H__
+ 689 0474 1296      		adiw r26,1+1
+ 690 0476 FC92      		st X,r15
+ 691 0478 EE92      		st -X,r14
+ 692 047a 1197      		sbiw r26,1
+ 693 047c 80E0      		ldi r24,lo8(.LC0)
+ 694 047e 90E0      		ldi r25,hi8(.LC0)
+ 695 0480 9383      		std Z+3,r25
+ 696 0482 8283      		std Z+2,r24
+ 697 0484 1583      		std Z+5,r17
+ 698 0486 0483      		std Z+4,r16
+ 699 0488 0E94 0000 		call fprintf
+ 700 048c 8DB7      		in r24,__SP_L__
+ 701 048e 9EB7      		in r25,__SP_H__
+ 702 0490 0696      		adiw r24,6
+ 703 0492 0FB6      		in __tmp_reg__,__SREG__
+ 704 0494 F894      		cli
+ 705 0496 9EBF      		out __SP_H__,r25
+ 706 0498 0FBE      		out __SREG__,__tmp_reg__
+ 707 049a 8DBF      		out __SP_L__,r24
+ 708 049c E0E0      		ldi r30,lo8(.LC11)
+ 709 049e 6E2E      		mov r6,r30
+ 710 04a0 E0E0      		ldi r30,hi8(.LC11)
+ 711 04a2 7E2E      		mov r7,r30
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 14
+
+
+ 712 04a4 70E0      		ldi r23,lo8(.LC7)
+ 713 04a6 872E      		mov r8,r23
+ 714 04a8 70E0      		ldi r23,hi8(.LC7)
+ 715 04aa 972E      		mov r9,r23
+ 716 04ac 60E0      		ldi r22,lo8(.LC13)
+ 717 04ae A62E      		mov r10,r22
+ 718 04b0 60E0      		ldi r22,hi8(.LC13)
+ 719 04b2 B62E      		mov r11,r22
+ 720 04b4 50E0      		ldi r21,lo8(.LC14)
+ 721 04b6 C52E      		mov r12,r21
+ 722 04b8 50E0      		ldi r21,hi8(.LC14)
+ 723 04ba D52E      		mov r13,r21
+ 724 04bc 00C0      		rjmp .L59
+ 725               	.L69:
+ 726 04be 8881      		ld r24,Y
+ 727 04c0 8330      		cpi r24,lo8(3)
+ 728 04c2 01F0      		breq .L62
+ 729 04c4 8430      		cpi r24,lo8(4)
+ 730 04c6 00F4      		brsh .L65
+ 731 04c8 8230      		cpi r24,lo8(2)
+ 732 04ca 01F0      		breq .+2
+ 733 04cc 00C0      		rjmp .L60
+ 734 04ce 00C0      		rjmp .L73
+ 735               	.L65:
+ 736 04d0 8138      		cpi r24,lo8(-127)
+ 737 04d2 01F0      		breq .L63
+ 738 04d4 8338      		cpi r24,lo8(-125)
+ 739 04d6 01F0      		breq .+2
+ 740 04d8 00C0      		rjmp .L60
+ 741 04da 00C0      		rjmp .L74
+ 742               	.L62:
+ 743 04dc 6A81      		ldd r22,Y+2
+ 744 04de 7B81      		ldd r23,Y+3
+ 745 04e0 8C81      		ldd r24,Y+4
+ 746 04e2 9D81      		ldd r25,Y+5
+ 747 04e4 0E94 0000 		call inet_ntoa
+ 748 04e8 00D0      		rcall .
+ 749 04ea 00D0      		rcall .
+ 750 04ec 00D0      		rcall .
+ 751 04ee EDB7      		in r30,__SP_L__
+ 752 04f0 FEB7      		in r31,__SP_H__
+ 753 04f2 3196      		adiw r30,1
+ 754 04f4 ADB7      		in r26,__SP_L__
+ 755 04f6 BEB7      		in r27,__SP_H__
+ 756 04f8 1296      		adiw r26,1+1
+ 757 04fa FC92      		st X,r15
+ 758 04fc EE92      		st -X,r14
+ 759 04fe 1197      		sbiw r26,1
+ 760 0500 7382      		std Z+3,r7
+ 761 0502 6282      		std Z+2,r6
+ 762 0504 00C0      		rjmp .L72
+ 763               	.L73:
+ 764 0506 80E0      		ldi r24,lo8(.LC12)
+ 765 0508 90E0      		ldi r25,hi8(.LC12)
+ 766 050a B701      		movw r22,r14
+ 767 050c 0E94 0000 		call fputs
+ 768 0510 00C0      		rjmp .L66
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 15
+
+
+ 769               	.L63:
+ 770 0512 6A81      		ldd r22,Y+2
+ 771 0514 7B81      		ldd r23,Y+3
+ 772 0516 8C81      		ldd r24,Y+4
+ 773 0518 9D81      		ldd r25,Y+5
+ 774 051a 0E94 0000 		call inet_ntoa
+ 775 051e 00D0      		rcall .
+ 776 0520 00D0      		rcall .
+ 777 0522 00D0      		rcall .
+ 778 0524 EDB7      		in r30,__SP_L__
+ 779 0526 FEB7      		in r31,__SP_H__
+ 780 0528 3196      		adiw r30,1
+ 781 052a ADB7      		in r26,__SP_L__
+ 782 052c BEB7      		in r27,__SP_H__
+ 783 052e 1296      		adiw r26,1+1
+ 784 0530 FC92      		st X,r15
+ 785 0532 EE92      		st -X,r14
+ 786 0534 1197      		sbiw r26,1
+ 787 0536 B382      		std Z+3,r11
+ 788 0538 A282      		std Z+2,r10
+ 789 053a 00C0      		rjmp .L72
+ 790               	.L74:
+ 791 053c 6A81      		ldd r22,Y+2
+ 792 053e 7B81      		ldd r23,Y+3
+ 793 0540 8C81      		ldd r24,Y+4
+ 794 0542 9D81      		ldd r25,Y+5
+ 795 0544 0E94 0000 		call inet_ntoa
+ 796 0548 00D0      		rcall .
+ 797 054a 00D0      		rcall .
+ 798 054c 00D0      		rcall .
+ 799 054e EDB7      		in r30,__SP_L__
+ 800 0550 FEB7      		in r31,__SP_H__
+ 801 0552 3196      		adiw r30,1
+ 802 0554 ADB7      		in r26,__SP_L__
+ 803 0556 BEB7      		in r27,__SP_H__
+ 804 0558 1296      		adiw r26,1+1
+ 805 055a FC92      		st X,r15
+ 806 055c EE92      		st -X,r14
+ 807 055e 1197      		sbiw r26,1
+ 808 0560 D382      		std Z+3,r13
+ 809 0562 C282      		std Z+2,r12
+ 810               	.L72:
+ 811 0564 9583      		std Z+5,r25
+ 812 0566 8483      		std Z+4,r24
+ 813 0568 00C0      		rjmp .L71
+ 814               	.L60:
+ 815 056a 00D0      		rcall .
+ 816 056c 00D0      		rcall .
+ 817 056e 00D0      		rcall .
+ 818 0570 EDB7      		in r30,__SP_L__
+ 819 0572 FEB7      		in r31,__SP_H__
+ 820 0574 3196      		adiw r30,1
+ 821 0576 ADB7      		in r26,__SP_L__
+ 822 0578 BEB7      		in r27,__SP_H__
+ 823 057a 1296      		adiw r26,1+1
+ 824 057c FC92      		st X,r15
+ 825 057e EE92      		st -X,r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 16
+
+
+ 826 0580 1197      		sbiw r26,1
+ 827 0582 9382      		std Z+3,r9
+ 828 0584 8282      		std Z+2,r8
+ 829 0586 8483      		std Z+4,r24
+ 830 0588 1582      		std Z+5,__zero_reg__
+ 831               	.L71:
+ 832 058a 0E94 0000 		call fprintf
+ 833 058e 8DB7      		in r24,__SP_L__
+ 834 0590 9EB7      		in r25,__SP_H__
+ 835 0592 0696      		adiw r24,6
+ 836 0594 0FB6      		in __tmp_reg__,__SREG__
+ 837 0596 F894      		cli
+ 838 0598 9EBF      		out __SP_H__,r25
+ 839 059a 0FBE      		out __SREG__,__tmp_reg__
+ 840 059c 8DBF      		out __SP_L__,r24
+ 841               	.L66:
+ 842 059e 8981      		ldd r24,Y+1
+ 843 05a0 90E0      		ldi r25,lo8(0)
+ 844 05a2 0817      		cp r16,r24
+ 845 05a4 1907      		cpc r17,r25
+ 846 05a6 00F4      		brsh .L67
+ 847 05a8 80E0      		ldi r24,lo8(.LC8)
+ 848 05aa 90E0      		ldi r25,hi8(.LC8)
+ 849 05ac B701      		movw r22,r14
+ 850 05ae 0E94 0000 		call fputs
+ 851 05b2 00C0      		rjmp .L70
+ 852               	.L67:
+ 853 05b4 081B      		sub r16,r24
+ 854 05b6 190B      		sbc r17,r25
+ 855 05b8 C80F      		add r28,r24
+ 856 05ba D91F      		adc r29,r25
+ 857               	.L59:
+ 858 05bc 0115      		cp r16,__zero_reg__
+ 859 05be 1105      		cpc r17,__zero_reg__
+ 860 05c0 01F0      		breq .+2
+ 861 05c2 00C0      		rjmp .L69
+ 862               	.L70:
+ 863               	/* epilogue start */
+ 864 05c4 DF91      		pop r29
+ 865 05c6 CF91      		pop r28
+ 866 05c8 1F91      		pop r17
+ 867 05ca 0F91      		pop r16
+ 868 05cc FF90      		pop r15
+ 869 05ce EF90      		pop r14
+ 870 05d0 DF90      		pop r13
+ 871 05d2 CF90      		pop r12
+ 872 05d4 BF90      		pop r11
+ 873 05d6 AF90      		pop r10
+ 874 05d8 9F90      		pop r9
+ 875 05da 8F90      		pop r8
+ 876 05dc 7F90      		pop r7
+ 877 05de 6F90      		pop r6
+ 878 05e0 0895      		ret
+ 879               		.size	NutDumpIpcpOption, .-NutDumpIpcpOption
+ 880               		.data
+ 881               	.LC15:
+ 882 009e 5B49 5043 		.string	"[IPCP-%03u(%u)]"
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 17
+
+
+ 882      502D 2530 
+ 882      3375 2825 
+ 882      7529 5D00 
+ 883               		.text
+ 884               	.global	NutDumpIpcp
+ 885               		.type	NutDumpIpcp, @function
+ 886               	NutDumpIpcp:
+ 887 05e2 CF92      		push r12
+ 888 05e4 DF92      		push r13
+ 889 05e6 EF92      		push r14
+ 890 05e8 FF92      		push r15
+ 891 05ea 0F93      		push r16
+ 892 05ec 1F93      		push r17
+ 893 05ee CF93      		push r28
+ 894 05f0 DF93      		push r29
+ 895               	/* prologue: function */
+ 896               	/* frame size = 0 */
+ 897 05f2 8C01      		movw r16,r24
+ 898 05f4 6B01      		movw r12,r22
+ 899 05f6 DB01      		movw r26,r22
+ 900 05f8 1996      		adiw r26,9
+ 901 05fa ED90      		ld r14,X+
+ 902 05fc FC90      		ld r15,X
+ 903 05fe 1A97      		sbiw r26,9+1
+ 904 0600 E114      		cp r14,__zero_reg__
+ 905 0602 F104      		cpc r15,__zero_reg__
+ 906 0604 01F0      		breq .L76
+ 907 0606 1796      		adiw r26,7
+ 908 0608 CD91      		ld r28,X+
+ 909 060a DC91      		ld r29,X
+ 910 060c 1897      		sbiw r26,7+1
+ 911 060e 00C0      		rjmp .L77
+ 912               	.L76:
+ 913 0610 8091 0000 		lds r24,ppp_header_sz
+ 914 0614 90E0      		ldi r25,lo8(0)
+ 915 0616 FB01      		movw r30,r22
+ 916 0618 E580      		ldd r14,Z+5
+ 917 061a F680      		ldd r15,Z+6
+ 918 061c E81A      		sub r14,r24
+ 919 061e F90A      		sbc r15,r25
+ 920 0620 C381      		ldd r28,Z+3
+ 921 0622 D481      		ldd r29,Z+4
+ 922 0624 C80F      		add r28,r24
+ 923 0626 D91F      		adc r29,r25
+ 924               	.L77:
+ 925 0628 2A81      		ldd r18,Y+2
+ 926 062a 3B81      		ldd r19,Y+3
+ 927               	/* #APP */
+ 928               	 ;  305 "../../nut/include/sys/types.h" 1
+ 929 062c 022E      		mov __tmp_reg__, r18
+ 930 062e 232F      		mov r18, r19
+ 931 0630 302D      		mov r19, __tmp_reg__
+ 932               		
+ 933               	 ;  0 "" 2
+ 934               	/* #NOAPP */
+ 935 0632 8DB7      		in r24,__SP_L__
+ 936 0634 9EB7      		in r25,__SP_H__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 18
+
+
+ 937 0636 0897      		sbiw r24,8
+ 938 0638 0FB6      		in __tmp_reg__,__SREG__
+ 939 063a F894      		cli
+ 940 063c 9EBF      		out __SP_H__,r25
+ 941 063e 0FBE      		out __SREG__,__tmp_reg__
+ 942 0640 8DBF      		out __SP_L__,r24
+ 943 0642 EDB7      		in r30,__SP_L__
+ 944 0644 FEB7      		in r31,__SP_H__
+ 945 0646 3196      		adiw r30,1
+ 946 0648 ADB7      		in r26,__SP_L__
+ 947 064a BEB7      		in r27,__SP_H__
+ 948 064c 1296      		adiw r26,1+1
+ 949 064e 1C93      		st X,r17
+ 950 0650 0E93      		st -X,r16
+ 951 0652 1197      		sbiw r26,1
+ 952 0654 80E0      		ldi r24,lo8(.LC15)
+ 953 0656 90E0      		ldi r25,hi8(.LC15)
+ 954 0658 9383      		std Z+3,r25
+ 955 065a 8283      		std Z+2,r24
+ 956 065c 8981      		ldd r24,Y+1
+ 957 065e 8483      		std Z+4,r24
+ 958 0660 1582      		std Z+5,__zero_reg__
+ 959 0662 3783      		std Z+7,r19
+ 960 0664 2683      		std Z+6,r18
+ 961 0666 0E94 0000 		call fprintf
+ 962 066a EDB7      		in r30,__SP_L__
+ 963 066c FEB7      		in r31,__SP_H__
+ 964 066e 3896      		adiw r30,8
+ 965 0670 0FB6      		in __tmp_reg__,__SREG__
+ 966 0672 F894      		cli
+ 967 0674 FEBF      		out __SP_H__,r31
+ 968 0676 0FBE      		out __SREG__,__tmp_reg__
+ 969 0678 EDBF      		out __SP_L__,r30
+ 970 067a F4E0      		ldi r31,lo8(4)
+ 971 067c EF16      		cp r14,r31
+ 972 067e F104      		cpc r15,__zero_reg__
+ 973 0680 00F4      		brsh .L78
+ 974 0682 80E0      		ldi r24,lo8(.LC8)
+ 975 0684 90E0      		ldi r25,hi8(.LC8)
+ 976 0686 B801      		movw r22,r16
+ 977 0688 0E94 0000 		call fputs
+ 978 068c 00C0      		rjmp .L89
+ 979               	.L78:
+ 980 068e 2881      		ld r18,Y
+ 981 0690 2430      		cpi r18,lo8(4)
+ 982 0692 01F0      		breq .L84
+ 983 0694 2530      		cpi r18,lo8(5)
+ 984 0696 00F4      		brsh .L88
+ 985 0698 2230      		cpi r18,lo8(2)
+ 986 069a 01F0      		breq .L82
+ 987 069c 2330      		cpi r18,lo8(3)
+ 988 069e 00F4      		brsh .L83
+ 989 06a0 2130      		cpi r18,lo8(1)
+ 990 06a2 01F4      		brne .L80
+ 991 06a4 00C0      		rjmp .L92
+ 992               	.L88:
+ 993 06a6 2630      		cpi r18,lo8(6)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 19
+
+
+ 994 06a8 01F0      		breq .L86
+ 995 06aa 2630      		cpi r18,lo8(6)
+ 996 06ac 00F0      		brlo .L85
+ 997 06ae 2730      		cpi r18,lo8(7)
+ 998 06b0 01F4      		brne .L80
+ 999 06b2 00C0      		rjmp .L93
+ 1000               	.L92:
+ 1001 06b4 80E0      		ldi r24,lo8(dbg_confreq)
+ 1002 06b6 90E0      		ldi r25,hi8(dbg_confreq)
+ 1003 06b8 00C0      		rjmp .L91
+ 1004               	.L82:
+ 1005 06ba 80E0      		ldi r24,lo8(dbg_confack)
+ 1006 06bc 90E0      		ldi r25,hi8(dbg_confack)
+ 1007               	.L91:
+ 1008 06be B801      		movw r22,r16
+ 1009 06c0 0E94 0000 		call fputs_P
+ 1010 06c4 C801      		movw r24,r16
+ 1011 06c6 B601      		movw r22,r12
+ 1012 06c8 0E94 0000 		call NutDumpIpcpOption
+ 1013 06cc 00C0      		rjmp .L89
+ 1014               	.L83:
+ 1015 06ce 80E0      		ldi r24,lo8(dbg_confnak)
+ 1016 06d0 90E0      		ldi r25,hi8(dbg_confnak)
+ 1017 06d2 00C0      		rjmp .L91
+ 1018               	.L84:
+ 1019 06d4 80E0      		ldi r24,lo8(dbg_confrej)
+ 1020 06d6 90E0      		ldi r25,hi8(dbg_confrej)
+ 1021 06d8 00C0      		rjmp .L91
+ 1022               	.L85:
+ 1023 06da 80E0      		ldi r24,lo8(dbg_termreq)
+ 1024 06dc 90E0      		ldi r25,hi8(dbg_termreq)
+ 1025 06de 00C0      		rjmp .L90
+ 1026               	.L86:
+ 1027 06e0 80E0      		ldi r24,lo8(dbg_termack)
+ 1028 06e2 90E0      		ldi r25,hi8(dbg_termack)
+ 1029 06e4 00C0      		rjmp .L90
+ 1030               	.L93:
+ 1031 06e6 80E0      		ldi r24,lo8(dbg_coderej)
+ 1032 06e8 90E0      		ldi r25,hi8(dbg_coderej)
+ 1033               	.L90:
+ 1034 06ea B801      		movw r22,r16
+ 1035 06ec 0E94 0000 		call fputs_P
+ 1036 06f0 00C0      		rjmp .L89
+ 1037               	.L80:
+ 1038 06f2 00D0      		rcall .
+ 1039 06f4 00D0      		rcall .
+ 1040 06f6 00D0      		rcall .
+ 1041 06f8 EDB7      		in r30,__SP_L__
+ 1042 06fa FEB7      		in r31,__SP_H__
+ 1043 06fc 3196      		adiw r30,1
+ 1044 06fe ADB7      		in r26,__SP_L__
+ 1045 0700 BEB7      		in r27,__SP_H__
+ 1046 0702 1296      		adiw r26,1+1
+ 1047 0704 1C93      		st X,r17
+ 1048 0706 0E93      		st -X,r16
+ 1049 0708 1197      		sbiw r26,1
+ 1050 070a 80E0      		ldi r24,lo8(.LC10)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 20
+
+
+ 1051 070c 90E0      		ldi r25,hi8(.LC10)
+ 1052 070e 9383      		std Z+3,r25
+ 1053 0710 8283      		std Z+2,r24
+ 1054 0712 2483      		std Z+4,r18
+ 1055 0714 1582      		std Z+5,__zero_reg__
+ 1056 0716 0E94 0000 		call fprintf
+ 1057 071a EDB7      		in r30,__SP_L__
+ 1058 071c FEB7      		in r31,__SP_H__
+ 1059 071e 3696      		adiw r30,6
+ 1060 0720 0FB6      		in __tmp_reg__,__SREG__
+ 1061 0722 F894      		cli
+ 1062 0724 FEBF      		out __SP_H__,r31
+ 1063 0726 0FBE      		out __SREG__,__tmp_reg__
+ 1064 0728 EDBF      		out __SP_L__,r30
+ 1065               	.L89:
+ 1066               	/* epilogue start */
+ 1067 072a DF91      		pop r29
+ 1068 072c CF91      		pop r28
+ 1069 072e 1F91      		pop r17
+ 1070 0730 0F91      		pop r16
+ 1071 0732 FF90      		pop r15
+ 1072 0734 EF90      		pop r14
+ 1073 0736 DF90      		pop r13
+ 1074 0738 CF90      		pop r12
+ 1075 073a 0895      		ret
+ 1076               		.size	NutDumpIpcp, .-NutDumpIpcp
+ 1077               	.global	NutDumpPapOption
+ 1078               		.type	NutDumpPapOption, @function
+ 1079               	NutDumpPapOption:
+ 1080 073c CF92      		push r12
+ 1081 073e DF92      		push r13
+ 1082 0740 FF92      		push r15
+ 1083 0742 0F93      		push r16
+ 1084 0744 1F93      		push r17
+ 1085 0746 CF93      		push r28
+ 1086 0748 DF93      		push r29
+ 1087               	/* prologue: function */
+ 1088               	/* frame size = 0 */
+ 1089 074a 6C01      		movw r12,r24
+ 1090 074c FB01      		movw r30,r22
+ 1091 074e C189      		ldd r28,Z+17
+ 1092 0750 D289      		ldd r29,Z+18
+ 1093 0752 2097      		sbiw r28,0
+ 1094 0754 01F0      		breq .L95
+ 1095 0756 0785      		ldd r16,Z+15
+ 1096 0758 1089      		ldd r17,Z+16
+ 1097 075a 00C0      		rjmp .L96
+ 1098               	.L95:
+ 1099 075c 8091 0000 		lds r24,ppp_header_sz
+ 1100 0760 90E0      		ldi r25,lo8(0)
+ 1101 0762 C581      		ldd r28,Z+5
+ 1102 0764 D681      		ldd r29,Z+6
+ 1103 0766 C81B      		sub r28,r24
+ 1104 0768 D90B      		sbc r29,r25
+ 1105 076a 2497      		sbiw r28,4
+ 1106 076c 0496      		adiw r24,4
+ 1107 076e 0381      		ldd r16,Z+3
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 21
+
+
+ 1108 0770 1481      		ldd r17,Z+4
+ 1109 0772 080F      		add r16,r24
+ 1110 0774 191F      		adc r17,r25
+ 1111               	.L96:
+ 1112 0776 00D0      		rcall .
+ 1113 0778 00D0      		rcall .
+ 1114 077a 00D0      		rcall .
+ 1115 077c EDB7      		in r30,__SP_L__
+ 1116 077e FEB7      		in r31,__SP_H__
+ 1117 0780 3196      		adiw r30,1
+ 1118 0782 ADB7      		in r26,__SP_L__
+ 1119 0784 BEB7      		in r27,__SP_H__
+ 1120 0786 1296      		adiw r26,1+1
+ 1121 0788 DC92      		st X,r13
+ 1122 078a CE92      		st -X,r12
+ 1123 078c 1197      		sbiw r26,1
+ 1124 078e 80E0      		ldi r24,lo8(.LC0)
+ 1125 0790 90E0      		ldi r25,hi8(.LC0)
+ 1126 0792 9383      		std Z+3,r25
+ 1127 0794 8283      		std Z+2,r24
+ 1128 0796 D583      		std Z+5,r29
+ 1129 0798 C483      		std Z+4,r28
+ 1130 079a 0E94 0000 		call fprintf
+ 1131 079e EDB7      		in r30,__SP_L__
+ 1132 07a0 FEB7      		in r31,__SP_H__
+ 1133 07a2 3696      		adiw r30,6
+ 1134 07a4 0FB6      		in __tmp_reg__,__SREG__
+ 1135 07a6 F894      		cli
+ 1136 07a8 FEBF      		out __SP_H__,r31
+ 1137 07aa 0FBE      		out __SREG__,__tmp_reg__
+ 1138 07ac EDBF      		out __SP_L__,r30
+ 1139 07ae 00C0      		rjmp .L97
+ 1140               	.L103:
+ 1141 07b0 D801      		movw r26,r16
+ 1142 07b2 8C91      		ld r24,X
+ 1143 07b4 8823      		tst r24
+ 1144 07b6 01F0      		breq .L98
+ 1145 07b8 8BE5      		ldi r24,lo8(91)
+ 1146 07ba 90E0      		ldi r25,hi8(91)
+ 1147 07bc B601      		movw r22,r12
+ 1148 07be 0E94 0000 		call fputc
+ 1149 07c2 FF24      		clr r15
+ 1150 07c4 F394      		inc r15
+ 1151 07c6 00C0      		rjmp .L99
+ 1152               	.L100:
+ 1153 07c8 E00F      		add r30,r16
+ 1154 07ca F11F      		adc r31,r17
+ 1155 07cc 8081      		ld r24,Z
+ 1156 07ce 9927      		clr r25
+ 1157 07d0 87FD      		sbrc r24,7
+ 1158 07d2 9095      		com r25
+ 1159 07d4 B601      		movw r22,r12
+ 1160 07d6 0E94 0000 		call fputc
+ 1161 07da F394      		inc r15
+ 1162               	.L99:
+ 1163 07dc EF2D      		mov r30,r15
+ 1164 07de F0E0      		ldi r31,lo8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 22
+
+
+ 1165 07e0 D801      		movw r26,r16
+ 1166 07e2 8C91      		ld r24,X
+ 1167 07e4 9927      		clr r25
+ 1168 07e6 87FD      		sbrc r24,7
+ 1169 07e8 9095      		com r25
+ 1170 07ea 8E17      		cp r24,r30
+ 1171 07ec 9F07      		cpc r25,r31
+ 1172 07ee 04F4      		brge .L100
+ 1173 07f0 8DE5      		ldi r24,lo8(93)
+ 1174 07f2 90E0      		ldi r25,hi8(93)
+ 1175 07f4 B601      		movw r22,r12
+ 1176 07f6 0E94 0000 		call fputc
+ 1177               	.L98:
+ 1178 07fa F801      		movw r30,r16
+ 1179 07fc 8081      		ld r24,Z
+ 1180 07fe 9927      		clr r25
+ 1181 0800 87FD      		sbrc r24,7
+ 1182 0802 9095      		com r25
+ 1183 0804 9C01      		movw r18,r24
+ 1184 0806 2F5F      		subi r18,lo8(-(1))
+ 1185 0808 3F4F      		sbci r19,hi8(-(1))
+ 1186 080a C217      		cp r28,r18
+ 1187 080c D307      		cpc r29,r19
+ 1188 080e 00F4      		brsh .L101
+ 1189 0810 80E0      		ldi r24,lo8(.LC8)
+ 1190 0812 90E0      		ldi r25,hi8(.LC8)
+ 1191 0814 B601      		movw r22,r12
+ 1192 0816 0E94 0000 		call fputs
+ 1193 081a 00C0      		rjmp .L104
+ 1194               	.L101:
+ 1195 081c 8095      		com r24
+ 1196 081e 9095      		com r25
+ 1197 0820 C80F      		add r28,r24
+ 1198 0822 D91F      		adc r29,r25
+ 1199 0824 020F      		add r16,r18
+ 1200 0826 131F      		adc r17,r19
+ 1201               	.L97:
+ 1202 0828 2097      		sbiw r28,0
+ 1203 082a 01F4      		brne .L103
+ 1204               	.L104:
+ 1205               	/* epilogue start */
+ 1206 082c DF91      		pop r29
+ 1207 082e CF91      		pop r28
+ 1208 0830 1F91      		pop r17
+ 1209 0832 0F91      		pop r16
+ 1210 0834 FF90      		pop r15
+ 1211 0836 DF90      		pop r13
+ 1212 0838 CF90      		pop r12
+ 1213 083a 0895      		ret
+ 1214               		.size	NutDumpPapOption, .-NutDumpPapOption
+ 1215               		.data
+ 1216               	.LC16:
+ 1217 00ae 5B50 4150 		.string	"[PAP-%03u(%u)]"
+ 1217      2D25 3033 
+ 1217      7528 2575 
+ 1217      295D 00
+ 1218               		.text
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 23
+
+
+ 1219               	.global	NutDumpPap
+ 1220               		.type	NutDumpPap, @function
+ 1221               	NutDumpPap:
+ 1222 083c CF92      		push r12
+ 1223 083e DF92      		push r13
+ 1224 0840 EF92      		push r14
+ 1225 0842 FF92      		push r15
+ 1226 0844 0F93      		push r16
+ 1227 0846 1F93      		push r17
+ 1228 0848 CF93      		push r28
+ 1229 084a DF93      		push r29
+ 1230               	/* prologue: function */
+ 1231               	/* frame size = 0 */
+ 1232 084c 7C01      		movw r14,r24
+ 1233 084e 6B01      		movw r12,r22
+ 1234 0850 DB01      		movw r26,r22
+ 1235 0852 1996      		adiw r26,9
+ 1236 0854 0D91      		ld r16,X+
+ 1237 0856 1C91      		ld r17,X
+ 1238 0858 1A97      		sbiw r26,9+1
+ 1239 085a 0115      		cp r16,__zero_reg__
+ 1240 085c 1105      		cpc r17,__zero_reg__
+ 1241 085e 01F0      		breq .L106
+ 1242 0860 1796      		adiw r26,7
+ 1243 0862 CD91      		ld r28,X+
+ 1244 0864 DC91      		ld r29,X
+ 1245 0866 1897      		sbiw r26,7+1
+ 1246 0868 00C0      		rjmp .L107
+ 1247               	.L106:
+ 1248 086a 8091 0000 		lds r24,ppp_header_sz
+ 1249 086e 90E0      		ldi r25,lo8(0)
+ 1250 0870 FB01      		movw r30,r22
+ 1251 0872 0581      		ldd r16,Z+5
+ 1252 0874 1681      		ldd r17,Z+6
+ 1253 0876 081B      		sub r16,r24
+ 1254 0878 190B      		sbc r17,r25
+ 1255 087a C381      		ldd r28,Z+3
+ 1256 087c D481      		ldd r29,Z+4
+ 1257 087e C80F      		add r28,r24
+ 1258 0880 D91F      		adc r29,r25
+ 1259               	.L107:
+ 1260 0882 2A81      		ldd r18,Y+2
+ 1261 0884 3B81      		ldd r19,Y+3
+ 1262               	/* #APP */
+ 1263               	 ;  305 "../../nut/include/sys/types.h" 1
+ 1264 0886 022E      		mov __tmp_reg__, r18
+ 1265 0888 232F      		mov r18, r19
+ 1266 088a 302D      		mov r19, __tmp_reg__
+ 1267               		
+ 1268               	 ;  0 "" 2
+ 1269               	/* #NOAPP */
+ 1270 088c 8DB7      		in r24,__SP_L__
+ 1271 088e 9EB7      		in r25,__SP_H__
+ 1272 0890 0897      		sbiw r24,8
+ 1273 0892 0FB6      		in __tmp_reg__,__SREG__
+ 1274 0894 F894      		cli
+ 1275 0896 9EBF      		out __SP_H__,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 24
+
+
+ 1276 0898 0FBE      		out __SREG__,__tmp_reg__
+ 1277 089a 8DBF      		out __SP_L__,r24
+ 1278 089c EDB7      		in r30,__SP_L__
+ 1279 089e FEB7      		in r31,__SP_H__
+ 1280 08a0 3196      		adiw r30,1
+ 1281 08a2 ADB7      		in r26,__SP_L__
+ 1282 08a4 BEB7      		in r27,__SP_H__
+ 1283 08a6 1296      		adiw r26,1+1
+ 1284 08a8 FC92      		st X,r15
+ 1285 08aa EE92      		st -X,r14
+ 1286 08ac 1197      		sbiw r26,1
+ 1287 08ae 80E0      		ldi r24,lo8(.LC16)
+ 1288 08b0 90E0      		ldi r25,hi8(.LC16)
+ 1289 08b2 9383      		std Z+3,r25
+ 1290 08b4 8283      		std Z+2,r24
+ 1291 08b6 8981      		ldd r24,Y+1
+ 1292 08b8 8483      		std Z+4,r24
+ 1293 08ba 1582      		std Z+5,__zero_reg__
+ 1294 08bc 3783      		std Z+7,r19
+ 1295 08be 2683      		std Z+6,r18
+ 1296 08c0 0E94 0000 		call fprintf
+ 1297 08c4 EDB7      		in r30,__SP_L__
+ 1298 08c6 FEB7      		in r31,__SP_H__
+ 1299 08c8 3896      		adiw r30,8
+ 1300 08ca 0FB6      		in __tmp_reg__,__SREG__
+ 1301 08cc F894      		cli
+ 1302 08ce FEBF      		out __SP_H__,r31
+ 1303 08d0 0FBE      		out __SREG__,__tmp_reg__
+ 1304 08d2 EDBF      		out __SP_L__,r30
+ 1305 08d4 0430      		cpi r16,4
+ 1306 08d6 1105      		cpc r17,__zero_reg__
+ 1307 08d8 00F4      		brsh .L108
+ 1308 08da 80E0      		ldi r24,lo8(.LC8)
+ 1309 08dc 90E0      		ldi r25,hi8(.LC8)
+ 1310 08de B701      		movw r22,r14
+ 1311 08e0 0E94 0000 		call fputs
+ 1312 08e4 00C0      		rjmp .L114
+ 1313               	.L108:
+ 1314 08e6 2881      		ld r18,Y
+ 1315 08e8 2230      		cpi r18,lo8(2)
+ 1316 08ea 01F0      		breq .L112
+ 1317 08ec 2330      		cpi r18,lo8(3)
+ 1318 08ee 01F0      		breq .L113
+ 1319 08f0 2130      		cpi r18,lo8(1)
+ 1320 08f2 01F4      		brne .L115
+ 1321 08f4 80E0      		ldi r24,lo8(dbg_confreq)
+ 1322 08f6 90E0      		ldi r25,hi8(dbg_confreq)
+ 1323 08f8 B701      		movw r22,r14
+ 1324 08fa 0E94 0000 		call fputs_P
+ 1325 08fe C701      		movw r24,r14
+ 1326 0900 B601      		movw r22,r12
+ 1327 0902 0E94 0000 		call NutDumpPapOption
+ 1328 0906 00C0      		rjmp .L114
+ 1329               	.L112:
+ 1330 0908 80E0      		ldi r24,lo8(dbg_confack)
+ 1331 090a 90E0      		ldi r25,hi8(dbg_confack)
+ 1332 090c 00C0      		rjmp .L116
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 25
+
+
+ 1333               	.L113:
+ 1334 090e 80E0      		ldi r24,lo8(dbg_confnak)
+ 1335 0910 90E0      		ldi r25,hi8(dbg_confnak)
+ 1336               	.L116:
+ 1337 0912 B701      		movw r22,r14
+ 1338 0914 0E94 0000 		call fputs_P
+ 1339 0918 00C0      		rjmp .L114
+ 1340               	.L115:
+ 1341 091a 00D0      		rcall .
+ 1342 091c 00D0      		rcall .
+ 1343 091e 00D0      		rcall .
+ 1344 0920 EDB7      		in r30,__SP_L__
+ 1345 0922 FEB7      		in r31,__SP_H__
+ 1346 0924 3196      		adiw r30,1
+ 1347 0926 ADB7      		in r26,__SP_L__
+ 1348 0928 BEB7      		in r27,__SP_H__
+ 1349 092a 1296      		adiw r26,1+1
+ 1350 092c FC92      		st X,r15
+ 1351 092e EE92      		st -X,r14
+ 1352 0930 1197      		sbiw r26,1
+ 1353 0932 80E0      		ldi r24,lo8(.LC10)
+ 1354 0934 90E0      		ldi r25,hi8(.LC10)
+ 1355 0936 9383      		std Z+3,r25
+ 1356 0938 8283      		std Z+2,r24
+ 1357 093a 2483      		std Z+4,r18
+ 1358 093c 1582      		std Z+5,__zero_reg__
+ 1359 093e 0E94 0000 		call fprintf
+ 1360 0942 EDB7      		in r30,__SP_L__
+ 1361 0944 FEB7      		in r31,__SP_H__
+ 1362 0946 3696      		adiw r30,6
+ 1363 0948 0FB6      		in __tmp_reg__,__SREG__
+ 1364 094a F894      		cli
+ 1365 094c FEBF      		out __SP_H__,r31
+ 1366 094e 0FBE      		out __SREG__,__tmp_reg__
+ 1367 0950 EDBF      		out __SP_L__,r30
+ 1368               	.L114:
+ 1369               	/* epilogue start */
+ 1370 0952 DF91      		pop r29
+ 1371 0954 CF91      		pop r28
+ 1372 0956 1F91      		pop r17
+ 1373 0958 0F91      		pop r16
+ 1374 095a FF90      		pop r15
+ 1375 095c EF90      		pop r14
+ 1376 095e DF90      		pop r13
+ 1377 0960 CF90      		pop r12
+ 1378 0962 0895      		ret
+ 1379               		.size	NutDumpPap, .-NutDumpPap
+ 1380               		.data
+ 1381               	.LC17:
+ 1382 00bd 2825 7529 		.string	"(%u)"
+ 1382      00
+ 1383               	.LC18:
+ 1384 00c2 5B54 5950 		.string	"[TYPE 0x%04X?]"
+ 1384      4520 3078 
+ 1384      2530 3458 
+ 1384      3F5D 00
+ 1385               		.text
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 26
+
+
+ 1386               	.global	NutDumpPpp
+ 1387               		.type	NutDumpPpp, @function
+ 1388               	NutDumpPpp:
+ 1389 0964 EF92      		push r14
+ 1390 0966 FF92      		push r15
+ 1391 0968 0F93      		push r16
+ 1392 096a 1F93      		push r17
+ 1393 096c CF93      		push r28
+ 1394 096e DF93      		push r29
+ 1395               	/* prologue: function */
+ 1396               	/* frame size = 0 */
+ 1397 0970 8C01      		movw r16,r24
+ 1398 0972 EB01      		movw r28,r22
+ 1399 0974 EB80      		ldd r14,Y+3
+ 1400 0976 FC80      		ldd r15,Y+4
+ 1401 0978 00D0      		rcall .
+ 1402 097a 00D0      		rcall .
+ 1403 097c 00D0      		rcall .
+ 1404 097e EDB7      		in r30,__SP_L__
+ 1405 0980 FEB7      		in r31,__SP_H__
+ 1406 0982 3196      		adiw r30,1
+ 1407 0984 ADB7      		in r26,__SP_L__
+ 1408 0986 BEB7      		in r27,__SP_H__
+ 1409 0988 1296      		adiw r26,1+1
+ 1410 098a 9C93      		st X,r25
+ 1411 098c 8E93      		st -X,r24
+ 1412 098e 1197      		sbiw r26,1
+ 1413 0990 80E0      		ldi r24,lo8(.LC17)
+ 1414 0992 90E0      		ldi r25,hi8(.LC17)
+ 1415 0994 9383      		std Z+3,r25
+ 1416 0996 8283      		std Z+2,r24
+ 1417 0998 8985      		ldd r24,Y+9
+ 1418 099a 9A85      		ldd r25,Y+10
+ 1419 099c 2D81      		ldd r18,Y+5
+ 1420 099e 3E81      		ldd r19,Y+6
+ 1421 09a0 820F      		add r24,r18
+ 1422 09a2 931F      		adc r25,r19
+ 1423 09a4 2D85      		ldd r18,Y+13
+ 1424 09a6 3E85      		ldd r19,Y+14
+ 1425 09a8 820F      		add r24,r18
+ 1426 09aa 931F      		adc r25,r19
+ 1427 09ac 2989      		ldd r18,Y+17
+ 1428 09ae 3A89      		ldd r19,Y+18
+ 1429 09b0 820F      		add r24,r18
+ 1430 09b2 931F      		adc r25,r19
+ 1431 09b4 9583      		std Z+5,r25
+ 1432 09b6 8483      		std Z+4,r24
+ 1433 09b8 0E94 0000 		call fprintf
+ 1434 09bc EDB7      		in r30,__SP_L__
+ 1435 09be FEB7      		in r31,__SP_H__
+ 1436 09c0 3696      		adiw r30,6
+ 1437 09c2 0FB6      		in __tmp_reg__,__SREG__
+ 1438 09c4 F894      		cli
+ 1439 09c6 FEBF      		out __SP_H__,r31
+ 1440 09c8 0FBE      		out __SREG__,__tmp_reg__
+ 1441 09ca EDBF      		out __SP_L__,r30
+ 1442 09cc D701      		movw r26,r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 27
+
+
+ 1443 09ce 8C91      		ld r24,X
+ 1444 09d0 8F3F      		cpi r24,lo8(-1)
+ 1445 09d2 01F0      		breq .L118
+ 1446 09d4 EB81      		ldd r30,Y+3
+ 1447 09d6 FC81      		ldd r31,Y+4
+ 1448 09d8 8081      		ld r24,Z
+ 1449 09da 282F      		mov r18,r24
+ 1450 09dc 80FF      		sbrs r24,0
+ 1451 09de 00C0      		rjmp .L119
+ 1452 09e0 81E0      		ldi r24,lo8(1)
+ 1453 09e2 8093 0000 		sts ppp_header_sz,r24
+ 1454 09e6 822F      		mov r24,r18
+ 1455 09e8 90E0      		ldi r25,lo8(0)
+ 1456 09ea AC01      		movw r20,r24
+ 1457 09ec 00C0      		rjmp .L120
+ 1458               	.L119:
+ 1459 09ee 82E0      		ldi r24,lo8(2)
+ 1460 09f0 8093 0000 		sts ppp_header_sz,r24
+ 1461 09f4 8181      		ldd r24,Z+1
+ 1462 09f6 482F      		mov r20,r24
+ 1463 09f8 5527      		clr r21
+ 1464 09fa 47FD      		sbrc r20,7
+ 1465 09fc 5095      		com r21
+ 1466 09fe 8081      		ld r24,Z
+ 1467 0a00 9927      		clr r25
+ 1468 0a02 87FD      		sbrc r24,7
+ 1469 0a04 9095      		com r25
+ 1470 0a06 982F      		mov r25,r24
+ 1471 0a08 8827      		clr r24
+ 1472 0a0a 482B      		or r20,r24
+ 1473 0a0c 592B      		or r21,r25
+ 1474 0a0e 00C0      		rjmp .L129
+ 1475               	.L118:
+ 1476 0a10 84E0      		ldi r24,lo8(4)
+ 1477 0a12 8093 0000 		sts ppp_header_sz,r24
+ 1478 0a16 F701      		movw r30,r14
+ 1479 0a18 4281      		ldd r20,Z+2
+ 1480 0a1a 5381      		ldd r21,Z+3
+ 1481               	.L129:
+ 1482               	/* #APP */
+ 1483               	 ;  305 "../../nut/include/sys/types.h" 1
+ 1484 0a1c 042E      		mov __tmp_reg__, r20
+ 1485 0a1e 452F      		mov r20, r21
+ 1486 0a20 502D      		mov r21, __tmp_reg__
+ 1487               		
+ 1488               	 ;  0 "" 2
+ 1489               	/* #NOAPP */
+ 1490               	.L120:
+ 1491 0a22 8091 0000 		lds r24,ppp_header_sz
+ 1492 0a26 90E0      		ldi r25,lo8(0)
+ 1493 0a28 2D81      		ldd r18,Y+5
+ 1494 0a2a 3E81      		ldd r19,Y+6
+ 1495 0a2c 2817      		cp r18,r24
+ 1496 0a2e 3907      		cpc r19,r25
+ 1497 0a30 04F4      		brge .L121
+ 1498 0a32 80E0      		ldi r24,lo8(.LC8)
+ 1499 0a34 90E0      		ldi r25,hi8(.LC8)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 28
+
+
+ 1500 0a36 B801      		movw r22,r16
+ 1501 0a38 0E94 0000 		call fputs
+ 1502 0a3c 00C0      		rjmp .L128
+ 1503               	.L121:
+ 1504 0a3e F0E8      		ldi r31,hi8(-32735)
+ 1505 0a40 4132      		cpi r20,lo8(-32735)
+ 1506 0a42 5F07      		cpc r21,r31
+ 1507 0a44 01F0      		breq .L124
+ 1508 0a46 80E8      		ldi r24,hi8(-32734)
+ 1509 0a48 4232      		cpi r20,lo8(-32734)
+ 1510 0a4a 5807      		cpc r21,r24
+ 1511 0a4c 00F4      		brsh .L127
+ 1512 0a4e 4132      		cpi r20,33
+ 1513 0a50 5105      		cpc r21,__zero_reg__
+ 1514 0a52 01F4      		brne .L123
+ 1515 0a54 00C0      		rjmp .L128
+ 1516               	.L127:
+ 1517 0a56 90EC      		ldi r25,hi8(-16351)
+ 1518 0a58 4132      		cpi r20,lo8(-16351)
+ 1519 0a5a 5907      		cpc r21,r25
+ 1520 0a5c 01F0      		breq .L125
+ 1521 0a5e 4352      		subi r20,lo8(-16349)
+ 1522 0a60 504C      		sbci r21,hi8(-16349)
+ 1523 0a62 01F4      		brne .L123
+ 1524 0a64 00C0      		rjmp .L130
+ 1525               	.L125:
+ 1526 0a66 C801      		movw r24,r16
+ 1527 0a68 BE01      		movw r22,r28
+ 1528 0a6a 0E94 0000 		call NutDumpLcp
+ 1529 0a6e 00C0      		rjmp .L128
+ 1530               	.L124:
+ 1531 0a70 C801      		movw r24,r16
+ 1532 0a72 BE01      		movw r22,r28
+ 1533 0a74 0E94 0000 		call NutDumpIpcp
+ 1534 0a78 00C0      		rjmp .L128
+ 1535               	.L130:
+ 1536 0a7a C801      		movw r24,r16
+ 1537 0a7c BE01      		movw r22,r28
+ 1538 0a7e 0E94 0000 		call NutDumpPap
+ 1539 0a82 00C0      		rjmp .L128
+ 1540               	.L123:
+ 1541 0a84 F701      		movw r30,r14
+ 1542 0a86 8281      		ldd r24,Z+2
+ 1543 0a88 9381      		ldd r25,Z+3
+ 1544               	/* #APP */
+ 1545               	 ;  305 "../../nut/include/sys/types.h" 1
+ 1546 0a8a 082E      		mov __tmp_reg__, r24
+ 1547 0a8c 892F      		mov r24, r25
+ 1548 0a8e 902D      		mov r25, __tmp_reg__
+ 1549               		
+ 1550               	 ;  0 "" 2
+ 1551               	/* #NOAPP */
+ 1552 0a90 00D0      		rcall .
+ 1553 0a92 00D0      		rcall .
+ 1554 0a94 00D0      		rcall .
+ 1555 0a96 EDB7      		in r30,__SP_L__
+ 1556 0a98 FEB7      		in r31,__SP_H__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 29
+
+
+ 1557 0a9a 3196      		adiw r30,1
+ 1558 0a9c ADB7      		in r26,__SP_L__
+ 1559 0a9e BEB7      		in r27,__SP_H__
+ 1560 0aa0 1296      		adiw r26,1+1
+ 1561 0aa2 1C93      		st X,r17
+ 1562 0aa4 0E93      		st -X,r16
+ 1563 0aa6 1197      		sbiw r26,1
+ 1564 0aa8 20E0      		ldi r18,lo8(.LC18)
+ 1565 0aaa 30E0      		ldi r19,hi8(.LC18)
+ 1566 0aac 3383      		std Z+3,r19
+ 1567 0aae 2283      		std Z+2,r18
+ 1568 0ab0 9583      		std Z+5,r25
+ 1569 0ab2 8483      		std Z+4,r24
+ 1570 0ab4 0E94 0000 		call fprintf
+ 1571 0ab8 EDB7      		in r30,__SP_L__
+ 1572 0aba FEB7      		in r31,__SP_H__
+ 1573 0abc 3696      		adiw r30,6
+ 1574 0abe 0FB6      		in __tmp_reg__,__SREG__
+ 1575 0ac0 F894      		cli
+ 1576 0ac2 FEBF      		out __SP_H__,r31
+ 1577 0ac4 0FBE      		out __SREG__,__tmp_reg__
+ 1578 0ac6 EDBF      		out __SP_L__,r30
+ 1579               	.L128:
+ 1580               	/* epilogue start */
+ 1581 0ac8 DF91      		pop r29
+ 1582 0aca CF91      		pop r28
+ 1583 0acc 1F91      		pop r17
+ 1584 0ace 0F91      		pop r16
+ 1585 0ad0 FF90      		pop r15
+ 1586 0ad2 EF90      		pop r14
+ 1587 0ad4 0895      		ret
+ 1588               		.size	NutDumpPpp, .-NutDumpPpp
+ 1589               		.section	.progmem.data,"a",@progbits
+ 1590               		.type	dbg_confreq, @object
+ 1591               		.size	dbg_confreq, 10
+ 1592               	dbg_confreq:
+ 1593 0000 5B43 4F4E 		.string	"[CONFREQ]"
+ 1593      4652 4551 
+ 1593      5D00 
+ 1594               		.type	dbg_confack, @object
+ 1595               		.size	dbg_confack, 10
+ 1596               	dbg_confack:
+ 1597 000a 5B43 4F4E 		.string	"[CONFACK]"
+ 1597      4641 434B 
+ 1597      5D00 
+ 1598               		.type	dbg_confnak, @object
+ 1599               		.size	dbg_confnak, 10
+ 1600               	dbg_confnak:
+ 1601 0014 5B43 4F4E 		.string	"[CONFNAK]"
+ 1601      464E 414B 
+ 1601      5D00 
+ 1602               		.type	dbg_confrej, @object
+ 1603               		.size	dbg_confrej, 10
+ 1604               	dbg_confrej:
+ 1605 001e 5B43 4F4E 		.string	"[CONFREJ]"
+ 1605      4652 454A 
+ 1605      5D00 
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 30
+
+
+ 1606               		.type	dbg_termreq, @object
+ 1607               		.size	dbg_termreq, 10
+ 1608               	dbg_termreq:
+ 1609 0028 5B54 4552 		.string	"[TERMREQ]"
+ 1609      4D52 4551 
+ 1609      5D00 
+ 1610               		.type	dbg_termack, @object
+ 1611               		.size	dbg_termack, 10
+ 1612               	dbg_termack:
+ 1613 0032 5B54 4552 		.string	"[TERMACK]"
+ 1613      4D41 434B 
+ 1613      5D00 
+ 1614               		.type	dbg_coderej, @object
+ 1615               		.size	dbg_coderej, 10
+ 1616               	dbg_coderej:
+ 1617 003c 5B43 4F44 		.string	"[CODEREJ]"
+ 1617      4552 454A 
+ 1617      5D00 
+ 1618               		.type	dbg_protrej, @object
+ 1619               		.size	dbg_protrej, 10
+ 1620               	dbg_protrej:
+ 1621 0046 5B50 524F 		.string	"[PROTREJ]"
+ 1621      5452 454A 
+ 1621      5D00 
+ 1622               		.type	dbg_echoreq, @object
+ 1623               		.size	dbg_echoreq, 10
+ 1624               	dbg_echoreq:
+ 1625 0050 5B45 4348 		.string	"[ECHOREQ]"
+ 1625      4F52 4551 
+ 1625      5D00 
+ 1626               		.type	dbg_echorsp, @object
+ 1627               		.size	dbg_echorsp, 10
+ 1628               	dbg_echorsp:
+ 1629 005a 5B45 4348 		.string	"[ECHORSP]"
+ 1629      4F52 5350 
+ 1629      5D00 
+ 1630               		.type	dbg_discreq, @object
+ 1631               		.size	dbg_discreq, 10
+ 1632               	dbg_discreq:
+ 1633 0064 5B44 4953 		.string	"[DISCREQ]"
+ 1633      4352 4551 
+ 1633      5D00 
+ 1634               		.lcomm ppp_header_sz,1
+ 1635               		.comm __ppp_trs,2,1
+ 1636               		.comm __ppp_trf,1,1
+ 1637               	.global __do_copy_data
+ 1638               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s 			page 31
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pppdebug.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:11     .text:00000000 NutTracePPP
+                            *COM*:00000002 __ppp_trs
+                            *COM*:00000001 __ppp_trf
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:51     .text:00000024 NutDumpLcpOption
+                             .bss:00000000 ppp_header_sz
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:394    .text:00000276 NutDumpLcp
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1592   .progmem.data:00000000 dbg_confreq
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1596   .progmem.data:0000000a dbg_confack
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1600   .progmem.data:00000014 dbg_confnak
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1604   .progmem.data:0000001e dbg_confrej
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1608   .progmem.data:00000028 dbg_termreq
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1612   .progmem.data:00000032 dbg_termack
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1616   .progmem.data:0000003c dbg_coderej
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1620   .progmem.data:00000046 dbg_protrej
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1624   .progmem.data:00000050 dbg_echoreq
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1628   .progmem.data:0000005a dbg_echorsp
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1632   .progmem.data:00000064 dbg_discreq
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:639    .text:00000418 NutDumpIpcpOption
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:886    .text:000005e2 NutDumpIpcp
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1079   .text:0000073c NutDumpPapOption
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1221   .text:0000083c NutDumpPap
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccGLgXoL.s:1388   .text:00000964 NutDumpPpp
+
+UNDEFINED SYMBOLS
+fprintf
+fputs
+fputs_P
+inet_ntoa
+fputc
+__do_copy_data
+__do_clear_bss

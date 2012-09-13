@@ -1,0 +1,539 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s 			page 1
+
+
+   1               		.file	"ppp.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	NutPppClose, @function
+  10               	NutPppClose:
+  11 0000 0F93      		push r16
+  12 0002 1F93      		push r17
+  13 0004 CF93      		push r28
+  14 0006 DF93      		push r29
+  15               	/* prologue: function */
+  16               	/* frame size = 0 */
+  17 0008 8C01      		movw r16,r24
+  18 000a DC01      		movw r26,r24
+  19 000c 1296      		adiw r26,2
+  20 000e ED91      		ld r30,X+
+  21 0010 FC91      		ld r31,X
+  22 0012 1397      		sbiw r26,2+1
+  23 0014 C189      		ldd r28,Z+17
+  24 0016 D289      		ldd r29,Z+18
+  25 0018 CF01      		movw r24,r30
+  26 001a 0E94 0000 		call IpcpClose
+  27 001e FE01      		movw r30,r28
+  28 0020 FF96      		adiw r30,63
+  29 0022 8081      		ld r24,Z
+  30 0024 9181      		ldd r25,Z+1
+  31 0026 0E94 0000 		call _close
+  32 002a 6D8D      		ldd r22,Y+29
+  33 002c 7E8D      		ldd r23,Y+30
+  34 002e 6115      		cp r22,__zero_reg__
+  35 0030 7105      		cpc r23,__zero_reg__
+  36 0032 01F0      		breq .L2
+  37 0034 80E0      		ldi r24,lo8(heapFreeList)
+  38 0036 90E0      		ldi r25,hi8(heapFreeList)
+  39 0038 0E94 0000 		call NutHeapRootFree
+  40               	.L2:
+  41 003c 6F8D      		ldd r22,Y+31
+  42 003e 78A1      		ldd r23,Y+32
+  43 0040 6115      		cp r22,__zero_reg__
+  44 0042 7105      		cpc r23,__zero_reg__
+  45 0044 01F0      		breq .L3
+  46 0046 80E0      		ldi r24,lo8(heapFreeList)
+  47 0048 90E0      		ldi r25,hi8(heapFreeList)
+  48 004a 0E94 0000 		call NutHeapRootFree
+  49               	.L3:
+  50 004e 80E0      		ldi r24,lo8(heapFreeList)
+  51 0050 90E0      		ldi r25,hi8(heapFreeList)
+  52 0052 B801      		movw r22,r16
+  53 0054 0E94 0000 		call NutHeapRootFree
+  54 0058 80E0      		ldi r24,lo8(0)
+  55 005a 90E0      		ldi r25,hi8(0)
+  56               	/* epilogue start */
+  57 005c DF91      		pop r29
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s 			page 2
+
+
+  58 005e CF91      		pop r28
+  59 0060 1F91      		pop r17
+  60 0062 0F91      		pop r16
+  61 0064 0895      		ret
+  62               		.size	NutPppClose, .-NutPppClose
+  63               		.type	NutPppOpen, @function
+  64               	NutPppOpen:
+  65 0066 8F92      		push r8
+  66 0068 9F92      		push r9
+  67 006a AF92      		push r10
+  68 006c BF92      		push r11
+  69 006e CF92      		push r12
+  70 0070 DF92      		push r13
+  71 0072 EF92      		push r14
+  72 0074 FF92      		push r15
+  73 0076 0F93      		push r16
+  74 0078 1F93      		push r17
+  75 007a DF93      		push r29
+  76 007c CF93      		push r28
+  77 007e CDB7      		in r28,__SP_L__
+  78 0080 DEB7      		in r29,__SP_H__
+  79 0082 2997      		sbiw r28,9
+  80 0084 0FB6      		in __tmp_reg__,__SREG__
+  81 0086 F894      		cli
+  82 0088 DEBF      		out __SP_H__,r29
+  83 008a 0FBE      		out __SREG__,__tmp_reg__
+  84 008c CDBF      		out __SP_L__,r28
+  85               	/* prologue: function */
+  86               	/* frame size = 9 */
+  87 008e 4C01      		movw r8,r24
+  88 0090 DC01      		movw r26,r24
+  89 0092 5196      		adiw r26,17
+  90 0094 CD90      		ld r12,X+
+  91 0096 DC90      		ld r13,X
+  92 0098 5297      		sbiw r26,17+1
+  93 009a 81E4      		ldi r24,lo8(65)
+  94 009c F601      		movw r30,r12
+  95 009e 1192      		st Z+,__zero_reg__
+  96 00a0 8A95      	        dec r24
+  97 00a2 01F4      		brne .-6
+  98 00a4 8B01      		movw r16,r22
+  99 00a6 FE01      		movw r30,r28
+ 100 00a8 3196      		adiw r30,1
+ 101 00aa AE01      		movw r20,r28
+ 102 00ac 475F      		subi r20,lo8(-(9))
+ 103 00ae 5F4F      		sbci r21,hi8(-(9))
+ 104 00b0 00C0      		rjmp .L6
+ 105               	.L8:
+ 106 00b2 8193      		st Z+,r24
+ 107 00b4 0F5F      		subi r16,lo8(-(1))
+ 108 00b6 1F4F      		sbci r17,hi8(-(1))
+ 109               	.L6:
+ 110 00b8 202F      		mov r18,r16
+ 111 00ba 261B      		sub r18,r22
+ 112 00bc D801      		movw r26,r16
+ 113 00be 8C91      		ld r24,X
+ 114 00c0 8823      		tst r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s 			page 3
+
+
+ 115 00c2 01F0      		breq .L7
+ 116 00c4 8F32      		cpi r24,lo8(47)
+ 117 00c6 01F0      		breq .L7
+ 118 00c8 E417      		cp r30,r20
+ 119 00ca F507      		cpc r31,r21
+ 120 00cc 01F4      		brne .L8
+ 121               	.L7:
+ 122 00ce CE01      		movw r24,r28
+ 123 00d0 0196      		adiw r24,1
+ 124 00d2 FC01      		movw r30,r24
+ 125 00d4 E20F      		add r30,r18
+ 126 00d6 F11D      		adc r31,__zero_reg__
+ 127 00d8 1082      		st Z,__zero_reg__
+ 128 00da 62E0      		ldi r22,lo8(-32766)
+ 129 00dc 70E8      		ldi r23,hi8(-32766)
+ 130 00de 0E94 0000 		call _open
+ 131 00e2 EFE3      		ldi r30,lo8(63)
+ 132 00e4 F0E0      		ldi r31,hi8(63)
+ 133 00e6 CE0E      		add r12,r30
+ 134 00e8 DF1E      		adc r13,r31
+ 135 00ea D601      		movw r26,r12
+ 136 00ec 8D93      		st X+,r24
+ 137 00ee 9C93      		st X,r25
+ 138 00f0 E1EC      		ldi r30,lo8(-63)
+ 139 00f2 FFEF      		ldi r31,hi8(-63)
+ 140 00f4 CE0E      		add r12,r30
+ 141 00f6 DF1E      		adc r13,r31
+ 142 00f8 8F5F      		subi r24,lo8(-1)
+ 143 00fa 9F4F      		sbci r25,hi8(-1)
+ 144 00fc 01F4      		brne .+2
+ 145 00fe 00C0      		rjmp .L9
+ 146 0100 80E0      		ldi r24,lo8(heapFreeList)
+ 147 0102 90E0      		ldi r25,hi8(heapFreeList)
+ 148 0104 66E0      		ldi r22,lo8(6)
+ 149 0106 70E0      		ldi r23,hi8(6)
+ 150 0108 0E94 0000 		call NutHeapRootAlloc
+ 151 010c FC01      		movw r30,r24
+ 152 010e 5C01      		movw r10,r24
+ 153 0110 0097      		sbiw r24,0
+ 154 0112 01F4      		brne .+2
+ 155 0114 00C0      		rjmp .L9
+ 156 0116 1182      		std Z+1,__zero_reg__
+ 157 0118 1082      		st Z,__zero_reg__
+ 158 011a 9382      		std Z+3,r9
+ 159 011c 8282      		std Z+2,r8
+ 160 011e 1582      		std Z+5,__zero_reg__
+ 161 0120 1482      		std Z+4,__zero_reg__
+ 162 0122 D801      		movw r26,r16
+ 163 0124 8C91      		ld r24,X
+ 164 0126 8F32      		cpi r24,lo8(47)
+ 165 0128 01F0      		breq .+2
+ 166 012a 00C0      		rjmp .L10
+ 167 012c 7801      		movw r14,r16
+ 168 012e 0894      		sec
+ 169 0130 E11C      		adc r14,__zero_reg__
+ 170 0132 F11C      		adc r15,__zero_reg__
+ 171 0134 402F      		mov r20,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s 			page 4
+
+
+ 172 0136 F801      		movw r30,r16
+ 173               	.L12:
+ 174 0138 6E2F      		mov r22,r30
+ 175 013a 641B      		sub r22,r20
+ 176 013c 8181      		ldd r24,Z+1
+ 177 013e 8823      		tst r24
+ 178 0140 01F0      		breq .L11
+ 179 0142 3196      		adiw r30,1
+ 180 0144 8F32      		cpi r24,lo8(47)
+ 181 0146 01F4      		brne .L12
+ 182               	.L11:
+ 183 0148 6623      		tst r22
+ 184 014a 01F0      		breq .L13
+ 185 014c 70E0      		ldi r23,lo8(0)
+ 186 014e 6F5F      		subi r22,lo8(-(1))
+ 187 0150 7F4F      		sbci r23,hi8(-(1))
+ 188 0152 80E0      		ldi r24,lo8(heapFreeList)
+ 189 0154 90E0      		ldi r25,hi8(heapFreeList)
+ 190 0156 0E94 0000 		call NutHeapRootAlloc
+ 191 015a F601      		movw r30,r12
+ 192 015c 858F      		std Z+29,r24
+ 193 015e 968F      		std Z+30,r25
+ 194 0160 FC01      		movw r30,r24
+ 195 0162 00C0      		rjmp .L14
+ 196               	.L16:
+ 197 0164 8193      		st Z+,r24
+ 198 0166 0894      		sec
+ 199 0168 E11C      		adc r14,__zero_reg__
+ 200 016a F11C      		adc r15,__zero_reg__
+ 201               	.L14:
+ 202 016c D701      		movw r26,r14
+ 203 016e 8C91      		ld r24,X
+ 204 0170 8823      		tst r24
+ 205 0172 01F0      		breq .L15
+ 206 0174 8F32      		cpi r24,lo8(47)
+ 207 0176 01F4      		brne .L16
+ 208               	.L15:
+ 209 0178 1082      		st Z,__zero_reg__
+ 210               	.L13:
+ 211 017a F701      		movw r30,r14
+ 212 017c 8081      		ld r24,Z
+ 213 017e 8F32      		cpi r24,lo8(47)
+ 214 0180 01F4      		brne .L10
+ 215 0182 8701      		movw r16,r14
+ 216               	.L18:
+ 217 0184 6E2F      		mov r22,r30
+ 218 0186 6E19      		sub r22,r14
+ 219 0188 8181      		ldd r24,Z+1
+ 220 018a 8823      		tst r24
+ 221 018c 01F0      		breq .L17
+ 222 018e 3196      		adiw r30,1
+ 223 0190 8F32      		cpi r24,lo8(47)
+ 224 0192 01F4      		brne .L18
+ 225               	.L17:
+ 226 0194 6623      		tst r22
+ 227 0196 01F0      		breq .L10
+ 228 0198 70E0      		ldi r23,lo8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s 			page 5
+
+
+ 229 019a 6F5F      		subi r22,lo8(-(1))
+ 230 019c 7F4F      		sbci r23,hi8(-(1))
+ 231 019e 80E0      		ldi r24,lo8(heapFreeList)
+ 232 01a0 90E0      		ldi r25,hi8(heapFreeList)
+ 233 01a2 0E94 0000 		call NutHeapRootAlloc
+ 234 01a6 D601      		movw r26,r12
+ 235 01a8 5F96      		adiw r26,31
+ 236 01aa 8C93      		st X,r24
+ 237 01ac 5F97      		sbiw r26,31
+ 238 01ae 9096      		adiw r26,32
+ 239 01b0 9C93      		st X,r25
+ 240 01b2 FC01      		movw r30,r24
+ 241 01b4 00C0      		rjmp .L19
+ 242               	.L21:
+ 243 01b6 8193      		st Z+,r24
+ 244               	.L19:
+ 245 01b8 D801      		movw r26,r16
+ 246 01ba 1196      		adiw r26,1
+ 247 01bc 8C91      		ld r24,X
+ 248 01be 8823      		tst r24
+ 249 01c0 01F0      		breq .L20
+ 250 01c2 0F5F      		subi r16,lo8(-(1))
+ 251 01c4 1F4F      		sbci r17,hi8(-(1))
+ 252 01c6 8F32      		cpi r24,lo8(47)
+ 253 01c8 01F4      		brne .L21
+ 254               	.L20:
+ 255 01ca 1082      		st Z,__zero_reg__
+ 256               	.L10:
+ 257 01cc C401      		movw r24,r8
+ 258 01ce 0E94 0000 		call IpcpOpen
+ 259 01d2 00C0      		rjmp .L22
+ 260               	.L9:
+ 261 01d4 AA24      		clr r10
+ 262 01d6 AA94      		dec r10
+ 263 01d8 BA2C      		mov r11,r10
+ 264               	.L22:
+ 265 01da C501      		movw r24,r10
+ 266               	/* epilogue start */
+ 267 01dc 2996      		adiw r28,9
+ 268 01de 0FB6      		in __tmp_reg__,__SREG__
+ 269 01e0 F894      		cli
+ 270 01e2 DEBF      		out __SP_H__,r29
+ 271 01e4 0FBE      		out __SREG__,__tmp_reg__
+ 272 01e6 CDBF      		out __SP_L__,r28
+ 273 01e8 CF91      		pop r28
+ 274 01ea DF91      		pop r29
+ 275 01ec 1F91      		pop r17
+ 276 01ee 0F91      		pop r16
+ 277 01f0 FF90      		pop r15
+ 278 01f2 EF90      		pop r14
+ 279 01f4 DF90      		pop r13
+ 280 01f6 CF90      		pop r12
+ 281 01f8 BF90      		pop r11
+ 282 01fa AF90      		pop r10
+ 283 01fc 9F90      		pop r9
+ 284 01fe 8F90      		pop r8
+ 285 0200 0895      		ret
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s 			page 6
+
+
+ 286               		.size	NutPppOpen, .-NutPppOpen
+ 287               		.type	NutPppWrite_P, @function
+ 288               	NutPppWrite_P:
+ 289               	/* prologue: function */
+ 290               	/* frame size = 0 */
+ 291 0202 DC01      		movw r26,r24
+ 292 0204 1296      		adiw r26,2
+ 293 0206 ED91      		ld r30,X+
+ 294 0208 FC91      		ld r31,X
+ 295 020a 1397      		sbiw r26,2+1
+ 296 020c 0188      		ldd __tmp_reg__,Z+17
+ 297 020e F289      		ldd r31,Z+18
+ 298 0210 E02D      		mov r30,__tmp_reg__
+ 299 0212 FF96      		adiw r30,63
+ 300 0214 8081      		ld r24,Z
+ 301 0216 9181      		ldd r25,Z+1
+ 302 0218 0E94 0000 		call _write_P
+ 303               	/* epilogue start */
+ 304 021c 0895      		ret
+ 305               		.size	NutPppWrite_P, .-NutPppWrite_P
+ 306               		.type	NutPppWrite, @function
+ 307               	NutPppWrite:
+ 308               	/* prologue: function */
+ 309               	/* frame size = 0 */
+ 310 021e DC01      		movw r26,r24
+ 311 0220 1296      		adiw r26,2
+ 312 0222 ED91      		ld r30,X+
+ 313 0224 FC91      		ld r31,X
+ 314 0226 1397      		sbiw r26,2+1
+ 315 0228 0188      		ldd __tmp_reg__,Z+17
+ 316 022a F289      		ldd r31,Z+18
+ 317 022c E02D      		mov r30,__tmp_reg__
+ 318 022e FF96      		adiw r30,63
+ 319 0230 8081      		ld r24,Z
+ 320 0232 9181      		ldd r25,Z+1
+ 321 0234 0E94 0000 		call _write
+ 322               	/* epilogue start */
+ 323 0238 0895      		ret
+ 324               		.size	NutPppWrite, .-NutPppWrite
+ 325               		.type	NutPppRead, @function
+ 326               	NutPppRead:
+ 327               	/* prologue: function */
+ 328               	/* frame size = 0 */
+ 329 023a DC01      		movw r26,r24
+ 330 023c 1296      		adiw r26,2
+ 331 023e ED91      		ld r30,X+
+ 332 0240 FC91      		ld r31,X
+ 333 0242 1397      		sbiw r26,2+1
+ 334 0244 0188      		ldd __tmp_reg__,Z+17
+ 335 0246 F289      		ldd r31,Z+18
+ 336 0248 E02D      		mov r30,__tmp_reg__
+ 337 024a FF96      		adiw r30,63
+ 338 024c 8081      		ld r24,Z
+ 339 024e 9181      		ldd r25,Z+1
+ 340 0250 0E94 0000 		call _read
+ 341               	/* epilogue start */
+ 342 0254 0895      		ret
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s 			page 7
+
+
+ 343               		.size	NutPppRead, .-NutPppRead
+ 344               		.type	NutPppIOCtl, @function
+ 345               	NutPppIOCtl:
+ 346               	/* prologue: function */
+ 347               	/* frame size = 0 */
+ 348 0256 FC01      		movw r30,r24
+ 349 0258 6230      		cpi r22,2
+ 350 025a 7105      		cpc r23,__zero_reg__
+ 351 025c 01F0      		breq .L35
+ 352 025e 6330      		cpi r22,3
+ 353 0260 7105      		cpc r23,__zero_reg__
+ 354 0262 04F4      		brge .L38
+ 355 0264 6130      		cpi r22,1
+ 356 0266 7105      		cpc r23,__zero_reg__
+ 357 0268 01F4      		brne .L33
+ 358 026a 00C0      		rjmp .L42
+ 359               	.L38:
+ 360 026c 6330      		cpi r22,3
+ 361 026e 7105      		cpc r23,__zero_reg__
+ 362 0270 01F0      		breq .L36
+ 363 0272 6430      		cpi r22,4
+ 364 0274 7105      		cpc r23,__zero_reg__
+ 365 0276 01F4      		brne .L33
+ 366 0278 00C0      		rjmp .L43
+ 367               	.L42:
+ 368 027a 0E94 0000 		call LcpOpen
+ 369 027e 00C0      		rjmp .L41
+ 370               	.L35:
+ 371 0280 0E94 0000 		call LcpClose
+ 372               	.L41:
+ 373 0284 20E0      		ldi r18,lo8(0)
+ 374 0286 30E0      		ldi r19,hi8(0)
+ 375 0288 00C0      		rjmp .L39
+ 376               	.L36:
+ 377 028a 0E94 0000 		call LcpLowerUp
+ 378 028e 00C0      		rjmp .L41
+ 379               	.L43:
+ 380 0290 0E94 0000 		call LcpLowerDown
+ 381 0294 00C0      		rjmp .L41
+ 382               	.L33:
+ 383 0296 0188      		ldd __tmp_reg__,Z+17
+ 384 0298 F289      		ldd r31,Z+18
+ 385 029a E02D      		mov r30,__tmp_reg__
+ 386 029c FF96      		adiw r30,63
+ 387 029e 8081      		ld r24,Z
+ 388 02a0 9181      		ldd r25,Z+1
+ 389 02a2 0E94 0000 		call _ioctl
+ 390 02a6 9C01      		movw r18,r24
+ 391               	.L39:
+ 392 02a8 C901      		movw r24,r18
+ 393               	/* epilogue start */
+ 394 02aa 0895      		ret
+ 395               		.size	NutPppIOCtl, .-NutPppIOCtl
+ 396               		.type	NutPppInit, @function
+ 397               	NutPppInit:
+ 398               	/* prologue: function */
+ 399               	/* frame size = 0 */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s 			page 8
+
+
+ 400 02ac 0E94 0000 		call NutPppInitStateMachine
+ 401               	/* epilogue start */
+ 402 02b0 0895      		ret
+ 403               		.size	NutPppInit, .-NutPppInit
+ 404               	.global	ifn_ppp
+ 405               		.data
+ 406               		.type	ifn_ppp, @object
+ 407               		.size	ifn_ppp, 39
+ 408               	ifn_ppp:
+ 409 0000 17        		.byte	23
+ 410 0001 00        		.byte	0
+ 411 0002 00        		.byte	0
+ 412 0003 00        		.byte	0
+ 413 0004 00        		.byte	0
+ 414 0005 00        		.byte	0
+ 415 0006 00        		.byte	0
+ 416 0007 00        		.byte	0
+ 417 0008 00        		.byte	0
+ 418 0009 00        		.byte	0
+ 419 000a 00        		.byte	0
+ 420 000b 00        		.byte	0
+ 421 000c 00        		.byte	0
+ 422 000d 00        		.byte	0
+ 423 000e 00        		.byte	0
+ 424 000f 00        		.byte	0
+ 425 0010 00        		.byte	0
+ 426 0011 00        		.byte	0
+ 427 0012 00        		.byte	0
+ 428 0013 00        		.byte	0
+ 429 0014 00        		.byte	0
+ 430 0015 00        		.byte	0
+ 431 0016 00        		.byte	0
+ 432 0017 DC05      		.word	1500
+ 433 0019 0000      		.word	0
+ 434 001b 0000      		.word	0
+ 435 001d 0000      		.word	0
+ 436 001f 0000      		.word	gs(NutPppInput)
+ 437 0021 0000      		.word	0
+ 438 0023 0000      		.word	gs(NutPppOutput)
+ 439 0025 0000      		.skip 2,0
+ 440               	.global	devPpp
+ 441               		.type	devPpp, @object
+ 442               		.size	devPpp, 35
+ 443               	devPpp:
+ 444 0027 0000      		.word	0
+ 445 0029 70        		.byte	112
+ 446 002a 70        		.byte	112
+ 447 002b 70        		.byte	112
+ 448 002c 00        		.byte	0
+ 449 002d 00        		.byte	0
+ 450 002e 00        		.byte	0
+ 451 002f 00        		.byte	0
+ 452 0030 00        		.byte	0
+ 453 0031 00        		.byte	0
+ 454 0032 03        		.byte	3
+ 455 0033 0000      		.word	0
+ 456 0035 00        		.byte	0
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s 			page 9
+
+
+ 457 0036 0000      		.word	ifn_ppp
+ 458 0038 0000      		.word	dcb_ppp
+ 459 003a 0000      		.word	gs(NutPppInit)
+ 460 003c 0000      		.word	gs(NutPppIOCtl)
+ 461 003e 0000      		.word	gs(NutPppRead)
+ 462 0040 0000      		.word	gs(NutPppWrite)
+ 463 0042 0000      		.word	gs(NutPppWrite_P)
+ 464 0044 0000      		.word	gs(NutPppOpen)
+ 465 0046 0000      		.word	gs(NutPppClose)
+ 466 0048 0000      		.word	0
+ 467               		.lcomm dcb_ppp,65
+ 468               	.global __do_copy_data
+ 469               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ppp.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:10     .text:00000000 NutPppClose
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:64     .text:00000066 NutPppOpen
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:288    .text:00000202 NutPppWrite_P
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:307    .text:0000021e NutPppWrite
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:326    .text:0000023a NutPppRead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:345    .text:00000256 NutPppIOCtl
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:397    .text:000002ac NutPppInit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:408    .data:00000000 ifn_ppp
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccWHMWl0.s:443    .data:00000027 devPpp
+                             .bss:00000000 dcb_ppp
+
+UNDEFINED SYMBOLS
+IpcpClose
+_close
+heapFreeList
+NutHeapRootFree
+_open
+NutHeapRootAlloc
+IpcpOpen
+_write_P
+_write
+_read
+LcpOpen
+LcpClose
+LcpLowerUp
+LcpLowerDown
+_ioctl
+NutPppInitStateMachine
+NutPppInput
+NutPppOutput
+__do_copy_data
+__do_clear_bss

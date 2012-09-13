@@ -1,0 +1,358 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s 			page 1
+
+
+   1               		.file	"usart3sc16is752.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	Sc16is752UsartGetClockMode_, @function
+  10               	Sc16is752UsartGetClockMode_:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 81E0      		ldi r24,lo8(1)
+  14 0002 61E0      		ldi r22,lo8(1)
+  15 0004 0E94 0000 		call Sc16is752UsartGetClockMode
+  16               	/* epilogue start */
+  17 0008 0895      		ret
+  18               		.size	Sc16is752UsartGetClockMode_, .-Sc16is752UsartGetClockMode_
+  19               		.type	Sc16is752UsartSetClockMode_, @function
+  20               	Sc16is752UsartSetClockMode_:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23 000a 61E0      		ldi r22,lo8(1)
+  24 000c 41E0      		ldi r20,lo8(1)
+  25 000e 0E94 0000 		call Sc16is752UsartSetClockMode
+  26               	/* epilogue start */
+  27 0012 0895      		ret
+  28               		.size	Sc16is752UsartSetClockMode_, .-Sc16is752UsartSetClockMode_
+  29               		.type	Sc16is752UsartGetStatus_, @function
+  30               	Sc16is752UsartGetStatus_:
+  31               	/* prologue: function */
+  32               	/* frame size = 0 */
+  33 0014 81E0      		ldi r24,lo8(1)
+  34 0016 61E0      		ldi r22,lo8(1)
+  35 0018 0E94 0000 		call Sc16is752UsartGetStatus
+  36               	/* epilogue start */
+  37 001c 0895      		ret
+  38               		.size	Sc16is752UsartGetStatus_, .-Sc16is752UsartGetStatus_
+  39               		.type	Sc16is752UsartSetStatus_, @function
+  40               	Sc16is752UsartSetStatus_:
+  41               	/* prologue: function */
+  42               	/* frame size = 0 */
+  43 001e 41E0      		ldi r20,lo8(1)
+  44 0020 21E0      		ldi r18,lo8(1)
+  45 0022 0E94 0000 		call Sc16is752UsartSetStatus
+  46               	/* epilogue start */
+  47 0026 0895      		ret
+  48               		.size	Sc16is752UsartSetStatus_, .-Sc16is752UsartSetStatus_
+  49               		.type	Sc16is752UsartGetStopBits_, @function
+  50               	Sc16is752UsartGetStopBits_:
+  51               	/* prologue: function */
+  52               	/* frame size = 0 */
+  53 0028 81E0      		ldi r24,lo8(1)
+  54 002a 61E0      		ldi r22,lo8(1)
+  55 002c 0E94 0000 		call Sc16is752UsartGetStopBits
+  56               	/* epilogue start */
+  57 0030 0895      		ret
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s 			page 2
+
+
+  58               		.size	Sc16is752UsartGetStopBits_, .-Sc16is752UsartGetStopBits_
+  59               		.type	Sc16is752UsartSetStopBits_, @function
+  60               	Sc16is752UsartSetStopBits_:
+  61               	/* prologue: function */
+  62               	/* frame size = 0 */
+  63 0032 61E0      		ldi r22,lo8(1)
+  64 0034 41E0      		ldi r20,lo8(1)
+  65 0036 0E94 0000 		call Sc16is752UsartSetStopBits
+  66               	/* epilogue start */
+  67 003a 0895      		ret
+  68               		.size	Sc16is752UsartSetStopBits_, .-Sc16is752UsartSetStopBits_
+  69               		.type	Sc16is752UsartGetParity_, @function
+  70               	Sc16is752UsartGetParity_:
+  71               	/* prologue: function */
+  72               	/* frame size = 0 */
+  73 003c 81E0      		ldi r24,lo8(1)
+  74 003e 61E0      		ldi r22,lo8(1)
+  75 0040 0E94 0000 		call Sc16is752UsartGetParity
+  76               	/* epilogue start */
+  77 0044 0895      		ret
+  78               		.size	Sc16is752UsartGetParity_, .-Sc16is752UsartGetParity_
+  79               		.type	Sc16is752UsartSetParity_, @function
+  80               	Sc16is752UsartSetParity_:
+  81               	/* prologue: function */
+  82               	/* frame size = 0 */
+  83 0046 61E0      		ldi r22,lo8(1)
+  84 0048 41E0      		ldi r20,lo8(1)
+  85 004a 0E94 0000 		call Sc16is752UsartSetParity
+  86               	/* epilogue start */
+  87 004e 0895      		ret
+  88               		.size	Sc16is752UsartSetParity_, .-Sc16is752UsartSetParity_
+  89               		.type	Sc16is752UsartGetDataBits_, @function
+  90               	Sc16is752UsartGetDataBits_:
+  91               	/* prologue: function */
+  92               	/* frame size = 0 */
+  93 0050 81E0      		ldi r24,lo8(1)
+  94 0052 61E0      		ldi r22,lo8(1)
+  95 0054 0E94 0000 		call Sc16is752UsartGetDataBits
+  96               	/* epilogue start */
+  97 0058 0895      		ret
+  98               		.size	Sc16is752UsartGetDataBits_, .-Sc16is752UsartGetDataBits_
+  99               		.type	Sc16is752UsartSetDataBits_, @function
+ 100               	Sc16is752UsartSetDataBits_:
+ 101               	/* prologue: function */
+ 102               	/* frame size = 0 */
+ 103 005a 61E0      		ldi r22,lo8(1)
+ 104 005c 41E0      		ldi r20,lo8(1)
+ 105 005e 0E94 0000 		call Sc16is752UsartSetDataBits
+ 106               	/* epilogue start */
+ 107 0062 0895      		ret
+ 108               		.size	Sc16is752UsartSetDataBits_, .-Sc16is752UsartSetDataBits_
+ 109               		.type	Sc16is752UsartGetSpeed_, @function
+ 110               	Sc16is752UsartGetSpeed_:
+ 111               	/* prologue: function */
+ 112               	/* frame size = 0 */
+ 113 0064 81E0      		ldi r24,lo8(1)
+ 114 0066 61E0      		ldi r22,lo8(1)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s 			page 3
+
+
+ 115 0068 0E94 0000 		call Sc16is752UsartGetSpeed
+ 116               	/* epilogue start */
+ 117 006c 0895      		ret
+ 118               		.size	Sc16is752UsartGetSpeed_, .-Sc16is752UsartGetSpeed_
+ 119               		.type	Sc16is752UsartSetSpeed_, @function
+ 120               	Sc16is752UsartSetSpeed_:
+ 121               	/* prologue: function */
+ 122               	/* frame size = 0 */
+ 123 006e 41E0      		ldi r20,lo8(1)
+ 124 0070 21E0      		ldi r18,lo8(1)
+ 125 0072 0E94 0000 		call Sc16is752UsartSetSpeed
+ 126               	/* epilogue start */
+ 127 0076 0895      		ret
+ 128               		.size	Sc16is752UsartSetSpeed_, .-Sc16is752UsartSetSpeed_
+ 129               		.type	Sc16is752UsartGetFlowControl_, @function
+ 130               	Sc16is752UsartGetFlowControl_:
+ 131               	/* prologue: function */
+ 132               	/* frame size = 0 */
+ 133 0078 81E0      		ldi r24,lo8(1)
+ 134 007a 61E0      		ldi r22,lo8(1)
+ 135 007c 0E94 0000 		call Sc16is752UsartGetFlowControl
+ 136               	/* epilogue start */
+ 137 0080 0895      		ret
+ 138               		.size	Sc16is752UsartGetFlowControl_, .-Sc16is752UsartGetFlowControl_
+ 139               		.type	Sc16is752UsartSetFlowControl_, @function
+ 140               	Sc16is752UsartSetFlowControl_:
+ 141               	/* prologue: function */
+ 142               	/* frame size = 0 */
+ 143 0082 41E0      		ldi r20,lo8(1)
+ 144 0084 21E0      		ldi r18,lo8(1)
+ 145 0086 0E94 0000 		call Sc16is752UsartSetFlowControl
+ 146               	/* epilogue start */
+ 147 008a 0895      		ret
+ 148               		.size	Sc16is752UsartSetFlowControl_, .-Sc16is752UsartSetFlowControl_
+ 149               		.type	Sc16is752UsartRxStart_, @function
+ 150               	Sc16is752UsartRxStart_:
+ 151               	/* prologue: function */
+ 152               	/* frame size = 0 */
+ 153 008c 81E0      		ldi r24,lo8(1)
+ 154 008e 61E0      		ldi r22,lo8(1)
+ 155 0090 0E94 0000 		call Sc16is752UsartRxStart
+ 156               	/* epilogue start */
+ 157 0094 0895      		ret
+ 158               		.size	Sc16is752UsartRxStart_, .-Sc16is752UsartRxStart_
+ 159               		.type	Sc16is752UsartTxStart_, @function
+ 160               	Sc16is752UsartTxStart_:
+ 161               	/* prologue: function */
+ 162               	/* frame size = 0 */
+ 163 0096 81E0      		ldi r24,lo8(1)
+ 164 0098 61E0      		ldi r22,lo8(1)
+ 165 009a 0E94 0000 		call Sc16is752UsartTxStart
+ 166               	/* epilogue start */
+ 167 009e 0895      		ret
+ 168               		.size	Sc16is752UsartTxStart_, .-Sc16is752UsartTxStart_
+ 169               		.type	Sc16is752UsartDeinit_, @function
+ 170               	Sc16is752UsartDeinit_:
+ 171               	/* prologue: function */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s 			page 4
+
+
+ 172               	/* frame size = 0 */
+ 173 00a0 81E0      		ldi r24,lo8(1)
+ 174 00a2 61E0      		ldi r22,lo8(1)
+ 175 00a4 40E0      		ldi r20,lo8(sig_INTERRUPT0)
+ 176 00a6 50E0      		ldi r21,hi8(sig_INTERRUPT0)
+ 177 00a8 0E94 0000 		call Sc16is752UsartDeinit
+ 178               	/* epilogue start */
+ 179 00ac 0895      		ret
+ 180               		.size	Sc16is752UsartDeinit_, .-Sc16is752UsartDeinit_
+ 181               		.type	Sc16is752UsartInit_, @function
+ 182               	Sc16is752UsartInit_:
+ 183               	/* prologue: function */
+ 184               	/* frame size = 0 */
+ 185 00ae 81E0      		ldi r24,lo8(1)
+ 186 00b0 61E0      		ldi r22,lo8(1)
+ 187 00b2 40E0      		ldi r20,lo8(devUsartsc16is752d)
+ 188 00b4 50E0      		ldi r21,hi8(devUsartsc16is752d)
+ 189 00b6 20E0      		ldi r18,lo8(sig_INTERRUPT0)
+ 190 00b8 30E0      		ldi r19,hi8(sig_INTERRUPT0)
+ 191 00ba 0E94 0000 		call Sc16is752UsartInit
+ 192               	/* epilogue start */
+ 193 00be 0895      		ret
+ 194               		.size	Sc16is752UsartInit_, .-Sc16is752UsartInit_
+ 195               	.global	devUsartsc16is752d
+ 196               		.data
+ 197               		.type	devUsartsc16is752d, @object
+ 198               		.size	devUsartsc16is752d, 35
+ 199               	devUsartsc16is752d:
+ 200 0000 0000      		.word	0
+ 201 0002 75        		.byte	117
+ 202 0003 61        		.byte	97
+ 203 0004 72        		.byte	114
+ 204 0005 74        		.byte	116
+ 205 0006 5F        		.byte	95
+ 206 0007 64        		.byte	100
+ 207 0008 00        		.byte	0
+ 208 0009 00        		.byte	0
+ 209 000a 00        		.byte	0
+ 210 000b 05        		.byte	5
+ 211 000c 0101      		.word	257
+ 212 000e 00        		.byte	0
+ 213 000f 0000      		.word	0
+ 214 0011 0000      		.word	dcb_usartd
+ 215 0013 0000      		.word	gs(UsartInit)
+ 216 0015 0000      		.word	gs(UsartIOCtl)
+ 217 0017 0000      		.word	gs(UsartRead)
+ 218 0019 0000      		.word	gs(UsartWrite)
+ 219 001b 0000      		.word	gs(UsartWrite_P)
+ 220 001d 0000      		.word	gs(UsartOpen)
+ 221 001f 0000      		.word	gs(UsartClose)
+ 222 0021 0000      		.word	gs(UsartSize)
+ 223               		.type	dcb_usartd, @object
+ 224               		.size	dcb_usartd, 89
+ 225               	dcb_usartd:
+ 226 0023 00        		.byte	0
+ 227 0024 00        		.byte	0
+ 228 0025 00        		.byte	0
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s 			page 5
+
+
+ 229 0026 00        		.byte	0
+ 230 0027 00        		.byte	0
+ 231 0028 00        		.byte	0
+ 232 0029 00        		.byte	0
+ 233 002a 00        		.byte	0
+ 234 002b 00        		.byte	0
+ 235 002c 00        		.byte	0
+ 236 002d 00        		.byte	0
+ 237 002e 00        		.byte	0
+ 238 002f 00        		.byte	0
+ 239 0030 00        		.byte	0
+ 240 0031 00        		.byte	0
+ 241 0032 00        		.byte	0
+ 242 0033 0000      		.word	0
+ 243 0035 0000      		.word	0
+ 244 0037 0000      		.word	0
+ 245 0039 0000      		.word	0
+ 246 003b 0000      		.word	0
+ 247 003d 0000      		.word	0
+ 248 003f 0000      		.word	0
+ 249 0041 0000      		.word	0
+ 250 0043 0000      		.skip 2,0
+ 251 0045 0000      		.word	0
+ 252 0047 0000      		.word	0
+ 253 0049 0000      		.word	0
+ 254 004b 0000      		.word	0
+ 255 004d 0000      		.word	0
+ 256 004f 0000      		.word	0
+ 257 0051 0000      		.word	0
+ 258 0053 0000      		.word	0
+ 259 0055 0000      		.skip 2,0
+ 260 0057 00        		.byte	0
+ 261 0058 0000      		.word	gs(Sc16is752UsartInit_)
+ 262 005a 0000      		.word	gs(Sc16is752UsartDeinit_)
+ 263 005c 0000      		.word	gs(Sc16is752UsartTxStart_)
+ 264 005e 0000      		.word	gs(Sc16is752UsartRxStart_)
+ 265 0060 0000      		.word	gs(Sc16is752UsartSetFlowControl_)
+ 266 0062 0000      		.word	gs(Sc16is752UsartGetFlowControl_)
+ 267 0064 0000      		.word	gs(Sc16is752UsartSetSpeed_)
+ 268 0066 0000      		.word	gs(Sc16is752UsartGetSpeed_)
+ 269 0068 0000      		.word	gs(Sc16is752UsartSetDataBits_)
+ 270 006a 0000      		.word	gs(Sc16is752UsartGetDataBits_)
+ 271 006c 0000      		.word	gs(Sc16is752UsartSetParity_)
+ 272 006e 0000      		.word	gs(Sc16is752UsartGetParity_)
+ 273 0070 0000      		.word	gs(Sc16is752UsartSetStopBits_)
+ 274 0072 0000      		.word	gs(Sc16is752UsartGetStopBits_)
+ 275 0074 0000      		.word	gs(Sc16is752UsartSetStatus_)
+ 276 0076 0000      		.word	gs(Sc16is752UsartGetStatus_)
+ 277 0078 0000      		.word	gs(Sc16is752UsartSetClockMode_)
+ 278 007a 0000      		.word	gs(Sc16is752UsartGetClockMode_)
+ 279               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 usart3sc16is752.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:10     .text:00000000 Sc16is752UsartGetClockMode_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:20     .text:0000000a Sc16is752UsartSetClockMode_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:30     .text:00000014 Sc16is752UsartGetStatus_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:40     .text:0000001e Sc16is752UsartSetStatus_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:50     .text:00000028 Sc16is752UsartGetStopBits_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:60     .text:00000032 Sc16is752UsartSetStopBits_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:70     .text:0000003c Sc16is752UsartGetParity_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:80     .text:00000046 Sc16is752UsartSetParity_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:90     .text:00000050 Sc16is752UsartGetDataBits_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:100    .text:0000005a Sc16is752UsartSetDataBits_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:110    .text:00000064 Sc16is752UsartGetSpeed_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:120    .text:0000006e Sc16is752UsartSetSpeed_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:130    .text:00000078 Sc16is752UsartGetFlowControl_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:140    .text:00000082 Sc16is752UsartSetFlowControl_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:150    .text:0000008c Sc16is752UsartRxStart_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:160    .text:00000096 Sc16is752UsartTxStart_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:170    .text:000000a0 Sc16is752UsartDeinit_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:182    .text:000000ae Sc16is752UsartInit_
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:199    .data:00000000 devUsartsc16is752d
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s:225    .data:00000023 dcb_usartd
+
+UNDEFINED SYMBOLS
+Sc16is752UsartGetClockMode
+Sc16is752UsartSetClockMode
+Sc16is752UsartGetStatus
+Sc16is752UsartSetStatus
+Sc16is752UsartGetStopBits
+Sc16is752UsartSetStopBits
+Sc16is752UsartGetParity
+Sc16is752UsartSetParity
+Sc16is752UsartGetDataBits
+Sc16is752UsartSetDataBits
+Sc16is752UsartGetSpeed
+Sc16is752UsartSetSpeed
+Sc16is752UsartGetFlowControl
+Sc16is752UsartSetFlowControl
+Sc16is752UsartRxStart
+Sc16is752UsartTxStart
+sig_INTERRUPT0
+Sc16is752UsartDeinit
+Sc16is752UsartInit
+UsartInit
+UsartIOCtl
+UsartRead
+UsartWrite
+UsartWrite_P
+UsartOpen
+UsartClose
+UsartSize
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccvmHaWH.s 			page 7
+
+
+__do_copy_data

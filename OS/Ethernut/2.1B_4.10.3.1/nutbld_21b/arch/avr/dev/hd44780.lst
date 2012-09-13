@@ -1,0 +1,376 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s 			page 1
+
+
+   1               		.file	"hd44780.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	LcdSendNibble, @function
+  10               	LcdSendNibble:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 91B3      		in r25,49-32
+  14 0002 906F      		ori r25,lo8(-16)
+  15 0004 91BB      		out 49-32,r25
+  16 0006 92B3      		in r25,50-32
+  17 0008 807F      		andi r24,lo8(-16)
+  18 000a 9F70      		andi r25,lo8(15)
+  19 000c 892B      		or r24,r25
+  20 000e 82BB      		out 50-32,r24
+  21 0010 1B9A      		sbi 35-32,3
+  22               	/* #APP */
+  23               	 ;  387 "../../nut/arch/avr/dev/hd44780.c" 1
+  24 0012 0000      		nop
+  25               	 ;  0 "" 2
+  26               	 ;  387 "../../nut/arch/avr/dev/hd44780.c" 1
+  27 0014 0000      		nop
+  28               	 ;  0 "" 2
+  29               	 ;  387 "../../nut/arch/avr/dev/hd44780.c" 1
+  30 0016 0000      		nop
+  31               	 ;  0 "" 2
+  32               	 ;  387 "../../nut/arch/avr/dev/hd44780.c" 1
+  33 0018 0000      		nop
+  34               	 ;  0 "" 2
+  35               	/* #NOAPP */
+  36 001a 1B98      		cbi 35-32,3
+  37               	/* #APP */
+  38               	 ;  389 "../../nut/arch/avr/dev/hd44780.c" 1
+  39 001c 0000      		nop
+  40               	 ;  0 "" 2
+  41               	 ;  389 "../../nut/arch/avr/dev/hd44780.c" 1
+  42 001e 0000      		nop
+  43               	 ;  0 "" 2
+  44               	 ;  389 "../../nut/arch/avr/dev/hd44780.c" 1
+  45 0020 0000      		nop
+  46               	 ;  0 "" 2
+  47               	 ;  389 "../../nut/arch/avr/dev/hd44780.c" 1
+  48 0022 0000      		nop
+  49               	 ;  0 "" 2
+  50               	/* epilogue start */
+  51               	/* #NOAPP */
+  52 0024 0895      		ret
+  53               		.size	LcdSendNibble, .-LcdSendNibble
+  54               		.type	LcdDelay, @function
+  55               	LcdDelay:
+  56               	/* prologue: function */
+  57               	/* frame size = 0 */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s 			page 2
+
+
+  58 0026 0E94 0000 		call NutDelay
+  59 002a 0895      		ret
+  60               		.size	LcdDelay, .-LcdDelay
+  61               		.type	LcdSendByte, @function
+  62               	LcdSendByte:
+  63 002c 0F93      		push r16
+  64 002e 1F93      		push r17
+  65               	/* prologue: function */
+  66               	/* frame size = 0 */
+  67 0030 082F      		mov r16,r24
+  68 0032 162F      		mov r17,r22
+  69 0034 0E94 0000 		call LcdSendNibble
+  70 0038 1123      		tst r17
+  71 003a 01F0      		breq .L8
+  72 003c 812F      		mov r24,r17
+  73 003e 0E94 0000 		call LcdDelay
+  74               	.L8:
+  75 0042 802F      		mov r24,r16
+  76 0044 8295      		swap r24
+  77 0046 807F      		andi r24,lo8(-16)
+  78 0048 0E94 0000 		call LcdSendNibble
+  79 004c 1123      		tst r17
+  80 004e 01F0      		breq .L10
+  81 0050 812F      		mov r24,r17
+  82 0052 0E94 0000 		call LcdDelay
+  83               	.L10:
+  84               	/* epilogue start */
+  85 0056 1F91      		pop r17
+  86 0058 0F91      		pop r16
+  87 005a 0895      		ret
+  88               		.size	LcdSendByte, .-LcdSendByte
+  89               		.type	LcdWriteCmd, @function
+  90               	LcdWriteCmd:
+  91               	/* prologue: function */
+  92               	/* frame size = 0 */
+  93 005c 129A      		sbi 34-32,2
+  94 005e 1A98      		cbi 35-32,2
+  95 0060 0E94 0000 		call LcdSendByte
+  96               	/* epilogue start */
+  97 0064 0895      		ret
+  98               		.size	LcdWriteCmd, .-LcdWriteCmd
+  99               		.type	LcdCursorMode, @function
+ 100               	LcdCursorMode:
+ 101               	/* prologue: function */
+ 102               	/* frame size = 0 */
+ 103 0066 82E0      		ldi r24,lo8(2)
+ 104 0068 62E0      		ldi r22,lo8(2)
+ 105 006a 0E94 0000 		call LcdWriteCmd
+ 106               	/* epilogue start */
+ 107 006e 0895      		ret
+ 108               		.size	LcdCursorMode, .-LcdCursorMode
+ 109               		.type	LcdCursorRight, @function
+ 110               	LcdCursorRight:
+ 111               	/* prologue: function */
+ 112               	/* frame size = 0 */
+ 113 0070 84E1      		ldi r24,lo8(20)
+ 114 0072 61E0      		ldi r22,lo8(1)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s 			page 3
+
+
+ 115 0074 0E94 0000 		call LcdWriteCmd
+ 116               	/* epilogue start */
+ 117 0078 0895      		ret
+ 118               		.size	LcdCursorRight, .-LcdCursorRight
+ 119               		.type	LcdCursorLeft, @function
+ 120               	LcdCursorLeft:
+ 121               	/* prologue: function */
+ 122               	/* frame size = 0 */
+ 123 007a 80E1      		ldi r24,lo8(16)
+ 124 007c 61E0      		ldi r22,lo8(1)
+ 125 007e 0E94 0000 		call LcdWriteCmd
+ 126               	/* epilogue start */
+ 127 0082 0895      		ret
+ 128               		.size	LcdCursorLeft, .-LcdCursorLeft
+ 129               		.type	LcdCursorHome, @function
+ 130               	LcdCursorHome:
+ 131               	/* prologue: function */
+ 132               	/* frame size = 0 */
+ 133 0084 82E0      		ldi r24,lo8(2)
+ 134 0086 62E0      		ldi r22,lo8(2)
+ 135 0088 0E94 0000 		call LcdWriteCmd
+ 136               	/* epilogue start */
+ 137 008c 0895      		ret
+ 138               		.size	LcdCursorHome, .-LcdCursorHome
+ 139               		.type	LcdSetCursor, @function
+ 140               	LcdSetCursor:
+ 141 008e DF93      		push r29
+ 142 0090 CF93      		push r28
+ 143 0092 00D0      		rcall .
+ 144 0094 00D0      		rcall .
+ 145 0096 CDB7      		in r28,__SP_L__
+ 146 0098 DEB7      		in r29,__SP_H__
+ 147               	/* prologue: function */
+ 148               	/* frame size = 4 */
+ 149 009a 982F      		mov r25,r24
+ 150 009c 1982      		std Y+1,__zero_reg__
+ 151 009e 80E4      		ldi r24,lo8(64)
+ 152 00a0 8A83      		std Y+2,r24
+ 153 00a2 80E1      		ldi r24,lo8(16)
+ 154 00a4 8B83      		std Y+3,r24
+ 155 00a6 80E5      		ldi r24,lo8(80)
+ 156 00a8 8C83      		std Y+4,r24
+ 157 00aa E92F      		mov r30,r25
+ 158 00ac E295      		swap r30
+ 159 00ae EF70      		andi r30,lo8(15)
+ 160 00b0 F0E0      		ldi r31,lo8(0)
+ 161 00b2 E170      		andi r30,lo8(1)
+ 162 00b4 F070      		andi r31,hi8(1)
+ 163 00b6 EC0F      		add r30,r28
+ 164 00b8 FD1F      		adc r31,r29
+ 165 00ba 8181      		ldd r24,Z+1
+ 166 00bc 9F70      		andi r25,lo8(15)
+ 167 00be 890F      		add r24,r25
+ 168 00c0 8068      		ori r24,lo8(-128)
+ 169 00c2 61E0      		ldi r22,lo8(1)
+ 170 00c4 0E94 0000 		call LcdWriteCmd
+ 171               	/* epilogue start */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s 			page 4
+
+
+ 172 00c8 0F90      		pop __tmp_reg__
+ 173 00ca 0F90      		pop __tmp_reg__
+ 174 00cc 0F90      		pop __tmp_reg__
+ 175 00ce 0F90      		pop __tmp_reg__
+ 176 00d0 CF91      		pop r28
+ 177 00d2 DF91      		pop r29
+ 178 00d4 0895      		ret
+ 179               		.size	LcdSetCursor, .-LcdSetCursor
+ 180               		.type	LcdClear, @function
+ 181               	LcdClear:
+ 182               	/* prologue: function */
+ 183               	/* frame size = 0 */
+ 184 00d6 81E0      		ldi r24,lo8(1)
+ 185 00d8 62E0      		ldi r22,lo8(2)
+ 186 00da 0E94 0000 		call LcdWriteCmd
+ 187               	/* epilogue start */
+ 188 00de 0895      		ret
+ 189               		.size	LcdClear, .-LcdClear
+ 190               		.type	LcdWriteData, @function
+ 191               	LcdWriteData:
+ 192               	/* prologue: function */
+ 193               	/* frame size = 0 */
+ 194 00e0 129A      		sbi 34-32,2
+ 195 00e2 1A9A      		sbi 35-32,2
+ 196 00e4 61E0      		ldi r22,lo8(1)
+ 197 00e6 0E94 0000 		call LcdSendByte
+ 198               	/* epilogue start */
+ 199 00ea 0895      		ret
+ 200               		.size	LcdWriteData, .-LcdWriteData
+ 201               		.type	LcdInit, @function
+ 202               	LcdInit:
+ 203 00ec 0F93      		push r16
+ 204 00ee 1F93      		push r17
+ 205               	/* prologue: function */
+ 206               	/* frame size = 0 */
+ 207 00f0 8C01      		movw r16,r24
+ 208 00f2 129A      		sbi 34-32,2
+ 209 00f4 139A      		sbi 34-32,3
+ 210 00f6 1A98      		cbi 35-32,2
+ 211 00f8 83E3      		ldi r24,lo8(51)
+ 212 00fa 0E94 0000 		call LcdSendNibble
+ 213 00fe 82E3      		ldi r24,lo8(50)
+ 214 0100 0E94 0000 		call LcdDelay
+ 215 0104 83E3      		ldi r24,lo8(51)
+ 216 0106 0E94 0000 		call LcdSendNibble
+ 217 010a 82E3      		ldi r24,lo8(50)
+ 218 010c 0E94 0000 		call LcdDelay
+ 219 0110 83E3      		ldi r24,lo8(51)
+ 220 0112 0E94 0000 		call LcdSendNibble
+ 221 0116 82E3      		ldi r24,lo8(50)
+ 222 0118 0E94 0000 		call LcdDelay
+ 223 011c 82E2      		ldi r24,lo8(34)
+ 224 011e 0E94 0000 		call LcdSendNibble
+ 225 0122 82E3      		ldi r24,lo8(50)
+ 226 0124 0E94 0000 		call LcdDelay
+ 227 0128 D801      		movw r26,r16
+ 228 012a 5196      		adiw r26,17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s 			page 5
+
+
+ 229 012c ED91      		ld r30,X+
+ 230 012e FC91      		ld r31,X
+ 231 0130 5297      		sbiw r26,17+1
+ 232 0132 8789      		ldd r24,Z+23
+ 233 0134 8230      		cpi r24,lo8(2)
+ 234 0136 00F4      		brsh .L28
+ 235 0138 80E2      		ldi r24,lo8(32)
+ 236 013a 00C0      		rjmp .L29
+ 237               	.L28:
+ 238 013c 88E2      		ldi r24,lo8(40)
+ 239               	.L29:
+ 240 013e 61E0      		ldi r22,lo8(1)
+ 241 0140 0E94 0000 		call LcdWriteCmd
+ 242 0144 81E0      		ldi r24,lo8(1)
+ 243 0146 62E0      		ldi r22,lo8(2)
+ 244 0148 0E94 0000 		call LcdWriteCmd
+ 245 014c 86E0      		ldi r24,lo8(6)
+ 246 014e 62E0      		ldi r22,lo8(2)
+ 247 0150 0E94 0000 		call LcdWriteCmd
+ 248 0154 8CE0      		ldi r24,lo8(12)
+ 249 0156 62E0      		ldi r22,lo8(2)
+ 250 0158 0E94 0000 		call LcdWriteCmd
+ 251 015c 82E0      		ldi r24,lo8(2)
+ 252 015e 62E0      		ldi r22,lo8(2)
+ 253 0160 0E94 0000 		call LcdWriteCmd
+ 254 0164 80E8      		ldi r24,lo8(-128)
+ 255 0166 62E0      		ldi r22,lo8(2)
+ 256 0168 0E94 0000 		call LcdWriteCmd
+ 257 016c 1092 0000 		sts during_init,__zero_reg__
+ 258 0170 80E0      		ldi r24,lo8(0)
+ 259 0172 90E0      		ldi r25,hi8(0)
+ 260               	/* epilogue start */
+ 261 0174 1F91      		pop r17
+ 262 0176 0F91      		pop r16
+ 263 0178 0895      		ret
+ 264               		.size	LcdInit, .-LcdInit
+ 265               	.global	dcb_term
+ 266               		.data
+ 267               		.type	dcb_term, @object
+ 268               		.size	dcb_term, 32
+ 269               	dcb_term:
+ 270 0000 0000      		.word	gs(LcdInit)
+ 271 0002 0000      		.word	gs(LcdWriteData)
+ 272 0004 0000      		.word	gs(LcdWriteCmd)
+ 273 0006 0000      		.word	gs(LcdClear)
+ 274 0008 0000      		.word	gs(LcdSetCursor)
+ 275 000a 0000      		.word	gs(LcdCursorHome)
+ 276 000c 0000      		.word	gs(LcdCursorLeft)
+ 277 000e 0000      		.word	gs(LcdCursorRight)
+ 278 0010 0000      		.word	gs(LcdCursorMode)
+ 279 0012 00        		.byte	0
+ 280 0013 00        		.byte	0
+ 281 0014 00        		.byte	0
+ 282 0015 00        		.byte	0
+ 283 0016 00        		.byte	0
+ 284 0017 02        		.byte	2
+ 285 0018 10        		.byte	16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s 			page 6
+
+
+ 286 0019 10        		.byte	16
+ 287 001a 00        		.byte	0
+ 288 001b 00        		.byte	0
+ 289 001c 0000      		.word	0
+ 290 001e 0000      		.skip 2,0
+ 291               	.global	devLcd
+ 292               		.type	devLcd, @object
+ 293               		.size	devLcd, 35
+ 294               	devLcd:
+ 295 0020 0000      		.word	0
+ 296 0022 6C        		.byte	108
+ 297 0023 63        		.byte	99
+ 298 0024 64        		.byte	100
+ 299 0025 00        		.byte	0
+ 300 0026 00        		.byte	0
+ 301 0027 00        		.byte	0
+ 302 0028 00        		.byte	0
+ 303 0029 00        		.byte	0
+ 304 002a 00        		.byte	0
+ 305 002b 02        		.byte	2
+ 306 002c 0000      		.word	0
+ 307 002e 00        		.byte	0
+ 308 002f 0000      		.word	0
+ 309 0031 0000      		.word	dcb_term
+ 310 0033 0000      		.word	gs(TermInit)
+ 311 0035 0000      		.word	gs(TermIOCtl)
+ 312 0037 0000      		.word	0
+ 313 0039 0000      		.word	gs(TermWrite)
+ 314 003b 0000      		.word	gs(TermWrite_P)
+ 315 003d 0000      		.word	gs(TermOpen)
+ 316 003f 0000      		.word	gs(TermClose)
+ 317 0041 0000      		.word	0
+ 318               		.type	during_init, @object
+ 319               		.size	during_init, 1
+ 320               	during_init:
+ 321 0043 01        		.byte	1
+ 322               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 hd44780.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:10     .text:00000000 LcdSendNibble
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:55     .text:00000026 LcdDelay
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:62     .text:0000002c LcdSendByte
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:90     .text:0000005c LcdWriteCmd
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:100    .text:00000066 LcdCursorMode
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:110    .text:00000070 LcdCursorRight
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:120    .text:0000007a LcdCursorLeft
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:130    .text:00000084 LcdCursorHome
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:140    .text:0000008e LcdSetCursor
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:181    .text:000000d6 LcdClear
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:191    .text:000000e0 LcdWriteData
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:202    .text:000000ec LcdInit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:320    .data:00000043 during_init
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:269    .data:00000000 dcb_term
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccipS2UG.s:294    .data:00000020 devLcd
+
+UNDEFINED SYMBOLS
+NutDelay
+TermInit
+TermIOCtl
+TermWrite
+TermWrite_P
+TermOpen
+TermClose
+__do_copy_data

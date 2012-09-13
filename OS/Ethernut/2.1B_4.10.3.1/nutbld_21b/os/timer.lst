@@ -1,0 +1,1068 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 1
+
+
+   1               		.file	"timer.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	NutTimerIntr, @function
+  10               	NutTimerIntr:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 8091 0000 		lds r24,nut_ticks
+  14 0004 9091 0000 		lds r25,(nut_ticks)+1
+  15 0008 A091 0000 		lds r26,(nut_ticks)+2
+  16 000c B091 0000 		lds r27,(nut_ticks)+3
+  17 0010 0196      		adiw r24,1
+  18 0012 A11D      		adc r26,__zero_reg__
+  19 0014 B11D      		adc r27,__zero_reg__
+  20 0016 8093 0000 		sts nut_ticks,r24
+  21 001a 9093 0000 		sts (nut_ticks)+1,r25
+  22 001e A093 0000 		sts (nut_ticks)+2,r26
+  23 0022 B093 0000 		sts (nut_ticks)+3,r27
+  24               	/* epilogue start */
+  25 0026 0895      		ret
+  26               		.size	NutTimerIntr, .-NutTimerIntr
+  27               	.global	NutMicroDelay
+  28               		.type	NutMicroDelay, @function
+  29               	NutMicroDelay:
+  30               	/* prologue: function */
+  31               	/* frame size = 0 */
+  32 0028 2091 0000 		lds r18,nut_delay_loops
+  33 002c 3091 0000 		lds r19,(nut_delay_loops)+1
+  34 0030 4091 0000 		lds r20,(nut_delay_loops)+2
+  35 0034 5091 0000 		lds r21,(nut_delay_loops)+3
+  36 0038 0E94 0000 		call __mulsi3
+  37 003c 28EE      		ldi r18,lo8(1000)
+  38 003e 33E0      		ldi r19,hi8(1000)
+  39 0040 40E0      		ldi r20,hlo8(1000)
+  40 0042 50E0      		ldi r21,hhi8(1000)
+  41 0044 0E94 0000 		call __udivmodsi4
+  42 0048 C901      		movw r24,r18
+  43 004a DA01      		movw r26,r20
+  44 004c 00C0      		rjmp .L4
+  45               	.L5:
+  46               	/* #APP */
+  47               	 ;  381 "../../nut/os/timer.c" 1
+  48 004e 0000      		nop
+  49               	 ;  0 "" 2
+  50               	/* #NOAPP */
+  51 0050 0197      		sbiw r24,1
+  52 0052 A109      		sbc r26,__zero_reg__
+  53 0054 B109      		sbc r27,__zero_reg__
+  54               	.L4:
+  55 0056 0097      		sbiw r24,0
+  56 0058 A105      		cpc r26,__zero_reg__
+  57 005a B105      		cpc r27,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 2
+
+
+  58 005c 01F4      		brne .L5
+  59               	/* epilogue start */
+  60 005e 0895      		ret
+  61               		.size	NutMicroDelay, .-NutMicroDelay
+  62               	.global	NutDelay
+  63               		.type	NutDelay, @function
+  64               	NutDelay:
+  65               	/* prologue: function */
+  66               	/* frame size = 0 */
+  67 0060 90E0      		ldi r25,lo8(0)
+  68 0062 A0E0      		ldi r26,lo8(0)
+  69 0064 B0E0      		ldi r27,hi8(0)
+  70 0066 BC01      		movw r22,r24
+  71 0068 CD01      		movw r24,r26
+  72 006a 28EE      		ldi r18,lo8(1000)
+  73 006c 33E0      		ldi r19,hi8(1000)
+  74 006e 40E0      		ldi r20,hlo8(1000)
+  75 0070 50E0      		ldi r21,hhi8(1000)
+  76 0072 0E94 0000 		call __mulsi3
+  77 0076 0E94 0000 		call NutMicroDelay
+  78               	/* epilogue start */
+  79 007a 0895      		ret
+  80               		.size	NutDelay, .-NutDelay
+  81               	.global	NutTimerInsert
+  82               		.type	NutTimerInsert, @function
+  83               	NutTimerInsert:
+  84 007c CF93      		push r28
+  85 007e DF93      		push r29
+  86               	/* prologue: function */
+  87               	/* frame size = 0 */
+  88 0080 EC01      		movw r28,r24
+  89 0082 1B82      		std Y+3,__zero_reg__
+  90 0084 1A82      		std Y+2,__zero_reg__
+  91 0086 E091 0000 		lds r30,nutTimerList
+  92 008a F091 0000 		lds r31,(nutTimerList)+1
+  93 008e 00C0      		rjmp .L10
+  94               	.L13:
+  95 0090 2885      		ldd r18,Y+8
+  96 0092 3985      		ldd r19,Y+9
+  97 0094 4A85      		ldd r20,Y+10
+  98 0096 5B85      		ldd r21,Y+11
+  99 0098 8085      		ldd r24,Z+8
+ 100 009a 9185      		ldd r25,Z+9
+ 101 009c A285      		ldd r26,Z+10
+ 102 009e B385      		ldd r27,Z+11
+ 103 00a0 2817      		cp r18,r24
+ 104 00a2 3907      		cpc r19,r25
+ 105 00a4 4A07      		cpc r20,r26
+ 106 00a6 5B07      		cpc r21,r27
+ 107 00a8 00F4      		brsh .L11
+ 108 00aa 821B      		sub r24,r18
+ 109 00ac 930B      		sbc r25,r19
+ 110 00ae A40B      		sbc r26,r20
+ 111 00b0 B50B      		sbc r27,r21
+ 112 00b2 8087      		std Z+8,r24
+ 113 00b4 9187      		std Z+9,r25
+ 114 00b6 A287      		std Z+10,r26
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 3
+
+
+ 115 00b8 B387      		std Z+11,r27
+ 116 00ba 00C0      		rjmp .L12
+ 117               	.L11:
+ 118 00bc 281B      		sub r18,r24
+ 119 00be 390B      		sbc r19,r25
+ 120 00c0 4A0B      		sbc r20,r26
+ 121 00c2 5B0B      		sbc r21,r27
+ 122 00c4 2887      		std Y+8,r18
+ 123 00c6 3987      		std Y+9,r19
+ 124 00c8 4A87      		std Y+10,r20
+ 125 00ca 5B87      		std Y+11,r21
+ 126 00cc FB83      		std Y+3,r31
+ 127 00ce EA83      		std Y+2,r30
+ 128 00d0 0190      		ld __tmp_reg__,Z+
+ 129 00d2 F081      		ld r31,Z
+ 130 00d4 E02D      		mov r30,__tmp_reg__
+ 131               	.L10:
+ 132 00d6 3097      		sbiw r30,0
+ 133 00d8 01F4      		brne .L13
+ 134               	.L12:
+ 135 00da F983      		std Y+1,r31
+ 136 00dc E883      		st Y,r30
+ 137 00de 3097      		sbiw r30,0
+ 138 00e0 01F0      		breq .L14
+ 139 00e2 D383      		std Z+3,r29
+ 140 00e4 C283      		std Z+2,r28
+ 141               	.L14:
+ 142 00e6 EA81      		ldd r30,Y+2
+ 143 00e8 FB81      		ldd r31,Y+3
+ 144 00ea 3097      		sbiw r30,0
+ 145 00ec 01F0      		breq .L15
+ 146 00ee D183      		std Z+1,r29
+ 147 00f0 C083      		st Z,r28
+ 148 00f2 00C0      		rjmp .L17
+ 149               	.L15:
+ 150 00f4 D093 0000 		sts (nutTimerList)+1,r29
+ 151 00f8 C093 0000 		sts nutTimerList,r28
+ 152               	.L17:
+ 153               	/* epilogue start */
+ 154 00fc DF91      		pop r29
+ 155 00fe CF91      		pop r28
+ 156 0100 0895      		ret
+ 157               		.size	NutTimerInsert, .-NutTimerInsert
+ 158               	.global	NutTimerStop
+ 159               		.type	NutTimerStop, @function
+ 160               	NutTimerStop:
+ 161 0102 CF93      		push r28
+ 162 0104 DF93      		push r29
+ 163               	/* prologue: function */
+ 164               	/* frame size = 0 */
+ 165 0106 FC01      		movw r30,r24
+ 166 0108 1482      		std Z+4,__zero_reg__
+ 167 010a 1582      		std Z+5,__zero_reg__
+ 168 010c 1682      		std Z+6,__zero_reg__
+ 169 010e 1782      		std Z+7,__zero_reg__
+ 170 0110 1586      		std Z+13,__zero_reg__
+ 171 0112 1486      		std Z+12,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 4
+
+
+ 172 0114 8085      		ldd r24,Z+8
+ 173 0116 9185      		ldd r25,Z+9
+ 174 0118 A285      		ldd r26,Z+10
+ 175 011a B385      		ldd r27,Z+11
+ 176 011c 0097      		sbiw r24,0
+ 177 011e A105      		cpc r26,__zero_reg__
+ 178 0120 B105      		cpc r27,__zero_reg__
+ 179 0122 01F0      		breq .L23
+ 180 0124 A281      		ldd r26,Z+2
+ 181 0126 B381      		ldd r27,Z+3
+ 182 0128 8081      		ld r24,Z
+ 183 012a 9181      		ldd r25,Z+1
+ 184 012c 1097      		sbiw r26,0
+ 185 012e 01F0      		breq .L20
+ 186 0130 8D93      		st X+,r24
+ 187 0132 9C93      		st X,r25
+ 188 0134 00C0      		rjmp .L21
+ 189               	.L20:
+ 190 0136 9093 0000 		sts (nutTimerList)+1,r25
+ 191 013a 8093 0000 		sts nutTimerList,r24
+ 192               	.L21:
+ 193 013e C081      		ld r28,Z
+ 194 0140 D181      		ldd r29,Z+1
+ 195 0142 2097      		sbiw r28,0
+ 196 0144 01F0      		breq .L22
+ 197 0146 8281      		ldd r24,Z+2
+ 198 0148 9381      		ldd r25,Z+3
+ 199 014a 9B83      		std Y+3,r25
+ 200 014c 8A83      		std Y+2,r24
+ 201 014e 8885      		ldd r24,Y+8
+ 202 0150 9985      		ldd r25,Y+9
+ 203 0152 AA85      		ldd r26,Y+10
+ 204 0154 BB85      		ldd r27,Y+11
+ 205 0156 2085      		ldd r18,Z+8
+ 206 0158 3185      		ldd r19,Z+9
+ 207 015a 4285      		ldd r20,Z+10
+ 208 015c 5385      		ldd r21,Z+11
+ 209 015e 820F      		add r24,r18
+ 210 0160 931F      		adc r25,r19
+ 211 0162 A41F      		adc r26,r20
+ 212 0164 B51F      		adc r27,r21
+ 213 0166 8887      		std Y+8,r24
+ 214 0168 9987      		std Y+9,r25
+ 215 016a AA87      		std Y+10,r26
+ 216 016c BB87      		std Y+11,r27
+ 217               	.L22:
+ 218 016e 1086      		std Z+8,__zero_reg__
+ 219 0170 1186      		std Z+9,__zero_reg__
+ 220 0172 1286      		std Z+10,__zero_reg__
+ 221 0174 1386      		std Z+11,__zero_reg__
+ 222 0176 CF01      		movw r24,r30
+ 223 0178 0E94 0000 		call NutTimerInsert
+ 224               	.L23:
+ 225               	/* epilogue start */
+ 226 017c DF91      		pop r29
+ 227 017e CF91      		pop r28
+ 228 0180 0895      		ret
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 5
+
+
+ 229               		.size	NutTimerStop, .-NutTimerStop
+ 230               	.global	NutGetTickCount
+ 231               		.type	NutGetTickCount, @function
+ 232               	NutGetTickCount:
+ 233               	/* prologue: function */
+ 234               	/* frame size = 0 */
+ 235               	/* #APP */
+ 236               	 ;  709 "../../nut/os/timer.c" 1
+ 237 0182 0FB6      		in  __tmp_reg__, __SREG__
+ 238 0184 F894      		cli
+ 239 0186 0F92      		push __tmp_reg__
+ 240               		
+ 241               	 ;  0 "" 2
+ 242               	/* #NOAPP */
+ 243 0188 2091 0000 		lds r18,nut_ticks
+ 244 018c 3091 0000 		lds r19,(nut_ticks)+1
+ 245 0190 4091 0000 		lds r20,(nut_ticks)+2
+ 246 0194 5091 0000 		lds r21,(nut_ticks)+3
+ 247               	/* #APP */
+ 248               	 ;  711 "../../nut/os/timer.c" 1
+ 249 0198 0F90      		pop __tmp_reg__
+ 250 019a 0FBE      		out __SREG__, __tmp_reg__
+ 251               		
+ 252               	 ;  0 "" 2
+ 253               	/* #NOAPP */
+ 254 019c B901      		movw r22,r18
+ 255 019e CA01      		movw r24,r20
+ 256               	/* epilogue start */
+ 257 01a0 0895      		ret
+ 258               		.size	NutGetTickCount, .-NutGetTickCount
+ 259               	.global	NutGetCpuClock
+ 260               		.type	NutGetCpuClock, @function
+ 261               	NutGetCpuClock:
+ 262               	/* prologue: function */
+ 263               	/* frame size = 0 */
+ 264 01a2 6091 0000 		lds r22,clock_cache
+ 265 01a6 7091 0000 		lds r23,(clock_cache)+1
+ 266 01aa 8091 0000 		lds r24,(clock_cache)+2
+ 267 01ae 9091 0000 		lds r25,(clock_cache)+3
+ 268 01b2 6115      		cp r22,__zero_reg__
+ 269 01b4 7105      		cpc r23,__zero_reg__
+ 270 01b6 8105      		cpc r24,__zero_reg__
+ 271 01b8 9105      		cpc r25,__zero_reg__
+ 272 01ba 01F4      		brne .L30
+ 273               	.L27:
+ 274 01bc 80E0      		ldi r24,lo8(0)
+ 275 01be 90E0      		ldi r25,hi8(0)
+ 276 01c0 0E94 0000 		call NutArchClockGet
+ 277 01c4 9068      		ori r25,hhi8(-2147483648)
+ 278 01c6 6093 0000 		sts clock_cache,r22
+ 279 01ca 7093 0000 		sts (clock_cache)+1,r23
+ 280 01ce 8093 0000 		sts (clock_cache)+2,r24
+ 281 01d2 9093 0000 		sts (clock_cache)+3,r25
+ 282               	.L30:
+ 283 01d6 9B01      		movw r18,r22
+ 284 01d8 AC01      		movw r20,r24
+ 285 01da 5F77      		andi r21,hhi8(2147483647)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 6
+
+
+ 286 01dc B901      		movw r22,r18
+ 287 01de CA01      		movw r24,r20
+ 288               	/* epilogue start */
+ 289 01e0 0895      		ret
+ 290               		.size	NutGetCpuClock, .-NutGetCpuClock
+ 291               	.global	NutClockSet
+ 292               		.type	NutClockSet, @function
+ 293               	NutClockSet:
+ 294               	/* prologue: function */
+ 295               	/* frame size = 0 */
+ 296 01e2 1092 0000 		sts clock_cache,__zero_reg__
+ 297 01e6 1092 0000 		sts (clock_cache)+1,__zero_reg__
+ 298 01ea 1092 0000 		sts (clock_cache)+2,__zero_reg__
+ 299 01ee 1092 0000 		sts (clock_cache)+3,__zero_reg__
+ 300 01f2 80E0      		ldi r24,lo8(0)
+ 301 01f4 90E0      		ldi r25,hi8(0)
+ 302               	/* epilogue start */
+ 303 01f6 0895      		ret
+ 304               		.size	NutClockSet, .-NutClockSet
+ 305               	.global	NutGetMillis
+ 306               		.type	NutGetMillis, @function
+ 307               	NutGetMillis:
+ 308 01f8 2F92      		push r2
+ 309 01fa 3F92      		push r3
+ 310 01fc 4F92      		push r4
+ 311 01fe 5F92      		push r5
+ 312 0200 6F92      		push r6
+ 313 0202 7F92      		push r7
+ 314 0204 8F92      		push r8
+ 315 0206 9F92      		push r9
+ 316 0208 AF92      		push r10
+ 317 020a BF92      		push r11
+ 318 020c CF92      		push r12
+ 319 020e DF92      		push r13
+ 320 0210 EF92      		push r14
+ 321 0212 FF92      		push r15
+ 322 0214 0F93      		push r16
+ 323 0216 1F93      		push r17
+ 324               	/* prologue: function */
+ 325               	/* frame size = 0 */
+ 326               	/* #APP */
+ 327               	 ;  709 "../../nut/os/timer.c" 1
+ 328 0218 0FB6      		in  __tmp_reg__, __SREG__
+ 329 021a F894      		cli
+ 330 021c 0F92      		push __tmp_reg__
+ 331               		
+ 332               	 ;  0 "" 2
+ 333               	/* #NOAPP */
+ 334 021e E090 0000 		lds r14,nut_ticks
+ 335 0222 F090 0000 		lds r15,(nut_ticks)+1
+ 336 0226 0091 0000 		lds r16,(nut_ticks)+2
+ 337 022a 1091 0000 		lds r17,(nut_ticks)+3
+ 338               	/* #APP */
+ 339               	 ;  711 "../../nut/os/timer.c" 1
+ 340 022e 0F90      		pop __tmp_reg__
+ 341 0230 0FBE      		out __SREG__, __tmp_reg__
+ 342               		
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 7
+
+
+ 343               	 ;  0 "" 2
+ 344               	/* #NOAPP */
+ 345 0232 0E94 0000 		call NutGetTickClock
+ 346 0236 9B01      		movw r18,r22
+ 347 0238 AC01      		movw r20,r24
+ 348 023a C801      		movw r24,r16
+ 349 023c B701      		movw r22,r14
+ 350 023e 0E94 0000 		call __udivmodsi4
+ 351 0242 522E      		mov r5,r18
+ 352 0244 432E      		mov r4,r19
+ 353 0246 342E      		mov r3,r20
+ 354 0248 252E      		mov r2,r21
+ 355 024a 0E94 0000 		call NutGetTickClock
+ 356 024e 5B01      		movw r10,r22
+ 357 0250 6C01      		movw r12,r24
+ 358 0252 0E94 0000 		call NutGetTickClock
+ 359 0256 3B01      		movw r6,r22
+ 360 0258 4C01      		movw r8,r24
+ 361 025a 652D      		mov r22,r5
+ 362 025c 742D      		mov r23,r4
+ 363 025e 832D      		mov r24,r3
+ 364 0260 922D      		mov r25,r2
+ 365 0262 A601      		movw r20,r12
+ 366 0264 9501      		movw r18,r10
+ 367 0266 0E94 0000 		call __mulsi3
+ 368 026a E61A      		sub r14,r22
+ 369 026c F70A      		sbc r15,r23
+ 370 026e 080B      		sbc r16,r24
+ 371 0270 190B      		sbc r17,r25
+ 372 0272 C801      		movw r24,r16
+ 373 0274 B701      		movw r22,r14
+ 374 0276 28EE      		ldi r18,lo8(1000)
+ 375 0278 33E0      		ldi r19,hi8(1000)
+ 376 027a 40E0      		ldi r20,hlo8(1000)
+ 377 027c 50E0      		ldi r21,hhi8(1000)
+ 378 027e 0E94 0000 		call __mulsi3
+ 379 0282 A401      		movw r20,r8
+ 380 0284 9301      		movw r18,r6
+ 381 0286 0E94 0000 		call __udivmodsi4
+ 382 028a 7901      		movw r14,r18
+ 383 028c 8A01      		movw r16,r20
+ 384 028e 652D      		mov r22,r5
+ 385 0290 742D      		mov r23,r4
+ 386 0292 832D      		mov r24,r3
+ 387 0294 922D      		mov r25,r2
+ 388 0296 28EE      		ldi r18,lo8(1000)
+ 389 0298 33E0      		ldi r19,hi8(1000)
+ 390 029a 40E0      		ldi r20,hlo8(1000)
+ 391 029c 50E0      		ldi r21,hhi8(1000)
+ 392 029e 0E94 0000 		call __mulsi3
+ 393 02a2 E60E      		add r14,r22
+ 394 02a4 F71E      		adc r15,r23
+ 395 02a6 081F      		adc r16,r24
+ 396 02a8 191F      		adc r17,r25
+ 397 02aa B701      		movw r22,r14
+ 398 02ac C801      		movw r24,r16
+ 399               	/* epilogue start */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 8
+
+
+ 400 02ae 1F91      		pop r17
+ 401 02b0 0F91      		pop r16
+ 402 02b2 FF90      		pop r15
+ 403 02b4 EF90      		pop r14
+ 404 02b6 DF90      		pop r13
+ 405 02b8 CF90      		pop r12
+ 406 02ba BF90      		pop r11
+ 407 02bc AF90      		pop r10
+ 408 02be 9F90      		pop r9
+ 409 02c0 8F90      		pop r8
+ 410 02c2 7F90      		pop r7
+ 411 02c4 6F90      		pop r6
+ 412 02c6 5F90      		pop r5
+ 413 02c8 4F90      		pop r4
+ 414 02ca 3F90      		pop r3
+ 415 02cc 2F90      		pop r2
+ 416 02ce 0895      		ret
+ 417               		.size	NutGetMillis, .-NutGetMillis
+ 418               	.global	NutGetSeconds
+ 419               		.type	NutGetSeconds, @function
+ 420               	NutGetSeconds:
+ 421 02d0 EF92      		push r14
+ 422 02d2 FF92      		push r15
+ 423 02d4 0F93      		push r16
+ 424 02d6 1F93      		push r17
+ 425               	/* prologue: function */
+ 426               	/* frame size = 0 */
+ 427               	/* #APP */
+ 428               	 ;  709 "../../nut/os/timer.c" 1
+ 429 02d8 0FB6      		in  __tmp_reg__, __SREG__
+ 430 02da F894      		cli
+ 431 02dc 0F92      		push __tmp_reg__
+ 432               		
+ 433               	 ;  0 "" 2
+ 434               	/* #NOAPP */
+ 435 02de E090 0000 		lds r14,nut_ticks
+ 436 02e2 F090 0000 		lds r15,(nut_ticks)+1
+ 437 02e6 0091 0000 		lds r16,(nut_ticks)+2
+ 438 02ea 1091 0000 		lds r17,(nut_ticks)+3
+ 439               	/* #APP */
+ 440               	 ;  711 "../../nut/os/timer.c" 1
+ 441 02ee 0F90      		pop __tmp_reg__
+ 442 02f0 0FBE      		out __SREG__, __tmp_reg__
+ 443               		
+ 444               	 ;  0 "" 2
+ 445               	/* #NOAPP */
+ 446 02f2 0E94 0000 		call NutGetTickClock
+ 447 02f6 9B01      		movw r18,r22
+ 448 02f8 AC01      		movw r20,r24
+ 449 02fa C801      		movw r24,r16
+ 450 02fc B701      		movw r22,r14
+ 451 02fe 0E94 0000 		call __udivmodsi4
+ 452 0302 CA01      		movw r24,r20
+ 453 0304 B901      		movw r22,r18
+ 454               	/* epilogue start */
+ 455 0306 1F91      		pop r17
+ 456 0308 0F91      		pop r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 9
+
+
+ 457 030a FF90      		pop r15
+ 458 030c EF90      		pop r14
+ 459 030e 0895      		ret
+ 460               		.size	NutGetSeconds, .-NutGetSeconds
+ 461               	.global	NutTimerCreate
+ 462               		.type	NutTimerCreate, @function
+ 463               	NutTimerCreate:
+ 464 0310 AF92      		push r10
+ 465 0312 BF92      		push r11
+ 466 0314 CF92      		push r12
+ 467 0316 DF92      		push r13
+ 468 0318 EF92      		push r14
+ 469 031a FF92      		push r15
+ 470 031c 0F93      		push r16
+ 471 031e CF93      		push r28
+ 472 0320 DF93      		push r29
+ 473               	/* prologue: function */
+ 474               	/* frame size = 0 */
+ 475 0322 6B01      		movw r12,r22
+ 476 0324 7C01      		movw r14,r24
+ 477 0326 EA01      		movw r28,r20
+ 478 0328 5901      		movw r10,r18
+ 479 032a 80E0      		ldi r24,lo8(heapFreeList)
+ 480 032c 90E0      		ldi r25,hi8(heapFreeList)
+ 481 032e 60E1      		ldi r22,lo8(16)
+ 482 0330 70E0      		ldi r23,hi8(16)
+ 483 0332 0E94 0000 		call NutHeapRootAlloc
+ 484 0336 FC01      		movw r30,r24
+ 485 0338 0097      		sbiw r24,0
+ 486 033a 01F0      		breq .L38
+ 487               	/* #APP */
+ 488               	 ;  709 "../../nut/os/timer.c" 1
+ 489 033c 0FB6      		in  __tmp_reg__, __SREG__
+ 490 033e F894      		cli
+ 491 0340 0F92      		push __tmp_reg__
+ 492               		
+ 493               	 ;  0 "" 2
+ 494               	/* #NOAPP */
+ 495 0342 8091 0000 		lds r24,nut_ticks
+ 496 0346 9091 0000 		lds r25,(nut_ticks)+1
+ 497 034a A091 0000 		lds r26,(nut_ticks)+2
+ 498 034e B091 0000 		lds r27,(nut_ticks)+3
+ 499               	/* #APP */
+ 500               	 ;  711 "../../nut/os/timer.c" 1
+ 501 0352 0F90      		pop __tmp_reg__
+ 502 0354 0FBE      		out __SREG__, __tmp_reg__
+ 503               		
+ 504               	 ;  0 "" 2
+ 505               	/* #NOAPP */
+ 506 0356 2091 0000 		lds r18,nut_ticks_resume
+ 507 035a 3091 0000 		lds r19,(nut_ticks_resume)+1
+ 508 035e 4091 0000 		lds r20,(nut_ticks_resume)+2
+ 509 0362 5091 0000 		lds r21,(nut_ticks_resume)+3
+ 510 0366 821B      		sub r24,r18
+ 511 0368 930B      		sbc r25,r19
+ 512 036a A40B      		sbc r26,r20
+ 513 036c B50B      		sbc r27,r21
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 10
+
+
+ 514 036e 8C0D      		add r24,r12
+ 515 0370 9D1D      		adc r25,r13
+ 516 0372 AE1D      		adc r26,r14
+ 517 0374 BF1D      		adc r27,r15
+ 518 0376 8087      		std Z+8,r24
+ 519 0378 9187      		std Z+9,r25
+ 520 037a A287      		std Z+10,r26
+ 521 037c B387      		std Z+11,r27
+ 522 037e 00FF      		sbrs r16,0
+ 523 0380 00C0      		rjmp .L39
+ 524 0382 1482      		std Z+4,__zero_reg__
+ 525 0384 1582      		std Z+5,__zero_reg__
+ 526 0386 1682      		std Z+6,__zero_reg__
+ 527 0388 1782      		std Z+7,__zero_reg__
+ 528 038a 00C0      		rjmp .L40
+ 529               	.L39:
+ 530 038c C482      		std Z+4,r12
+ 531 038e D582      		std Z+5,r13
+ 532 0390 E682      		std Z+6,r14
+ 533 0392 F782      		std Z+7,r15
+ 534               	.L40:
+ 535 0394 D587      		std Z+13,r29
+ 536 0396 C487      		std Z+12,r28
+ 537 0398 B786      		std Z+15,r11
+ 538 039a A686      		std Z+14,r10
+ 539               	.L38:
+ 540 039c CF01      		movw r24,r30
+ 541               	/* epilogue start */
+ 542 039e DF91      		pop r29
+ 543 03a0 CF91      		pop r28
+ 544 03a2 0F91      		pop r16
+ 545 03a4 FF90      		pop r15
+ 546 03a6 EF90      		pop r14
+ 547 03a8 DF90      		pop r13
+ 548 03aa CF90      		pop r12
+ 549 03ac BF90      		pop r11
+ 550 03ae AF90      		pop r10
+ 551 03b0 0895      		ret
+ 552               		.size	NutTimerCreate, .-NutTimerCreate
+ 553               	.global	NutTimerStartTicks
+ 554               		.type	NutTimerStartTicks, @function
+ 555               	NutTimerStartTicks:
+ 556 03b2 0F93      		push r16
+ 557 03b4 CF93      		push r28
+ 558 03b6 DF93      		push r29
+ 559               	/* prologue: function */
+ 560               	/* frame size = 0 */
+ 561 03b8 0E94 0000 		call NutTimerCreate
+ 562 03bc EC01      		movw r28,r24
+ 563 03be 0097      		sbiw r24,0
+ 564 03c0 01F0      		breq .L43
+ 565 03c2 0E94 0000 		call NutTimerInsert
+ 566               	.L43:
+ 567 03c6 CE01      		movw r24,r28
+ 568               	/* epilogue start */
+ 569 03c8 DF91      		pop r29
+ 570 03ca CF91      		pop r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 11
+
+
+ 571 03cc 0F91      		pop r16
+ 572 03ce 0895      		ret
+ 573               		.size	NutTimerStartTicks, .-NutTimerStartTicks
+ 574               	.global	NutTimerStart
+ 575               		.type	NutTimerStart, @function
+ 576               	NutTimerStart:
+ 577 03d0 CF92      		push r12
+ 578 03d2 DF92      		push r13
+ 579 03d4 EF92      		push r14
+ 580 03d6 FF92      		push r15
+ 581 03d8 0F93      		push r16
+ 582               	/* prologue: function */
+ 583               	/* frame size = 0 */
+ 584 03da 7A01      		movw r14,r20
+ 585 03dc 6901      		movw r12,r18
+ 586 03de 0E94 0000 		call NutTimerMillisToTicks
+ 587 03e2 A701      		movw r20,r14
+ 588 03e4 9601      		movw r18,r12
+ 589 03e6 0E94 0000 		call NutTimerStartTicks
+ 590               	/* epilogue start */
+ 591 03ea 0F91      		pop r16
+ 592 03ec FF90      		pop r15
+ 593 03ee EF90      		pop r14
+ 594 03f0 DF90      		pop r13
+ 595 03f2 CF90      		pop r12
+ 596 03f4 0895      		ret
+ 597               		.size	NutTimerStart, .-NutTimerStart
+ 598               	.global	NutSleep
+ 599               		.type	NutSleep, @function
+ 600               	NutSleep:
+ 601 03f6 AF92      		push r10
+ 602 03f8 BF92      		push r11
+ 603 03fa CF92      		push r12
+ 604 03fc DF92      		push r13
+ 605 03fe EF92      		push r14
+ 606 0400 FF92      		push r15
+ 607 0402 0F93      		push r16
+ 608 0404 CF93      		push r28
+ 609 0406 DF93      		push r29
+ 610               	/* prologue: function */
+ 611               	/* frame size = 0 */
+ 612 0408 5B01      		movw r10,r22
+ 613 040a 6C01      		movw r12,r24
+ 614 040c 6115      		cp r22,__zero_reg__
+ 615 040e 7105      		cpc r23,__zero_reg__
+ 616 0410 8105      		cpc r24,__zero_reg__
+ 617 0412 9105      		cpc r25,__zero_reg__
+ 618 0414 01F0      		breq .L48
+ 619 0416 C0E0      		ldi r28,lo8(runQueue)
+ 620 0418 D0E0      		ldi r29,hi8(runQueue)
+ 621 041a 8091 0000 		lds r24,runningThread
+ 622 041e 9091 0000 		lds r25,(runningThread)+1
+ 623 0422 BE01      		movw r22,r28
+ 624 0424 0E94 0000 		call NutThreadRemoveQueue
+ 625 0428 E090 0000 		lds r14,runningThread
+ 626 042c F090 0000 		lds r15,(runningThread)+1
+ 627 0430 83E0      		ldi r24,lo8(3)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 12
+
+
+ 628 0432 F701      		movw r30,r14
+ 629 0434 8787      		std Z+15,r24
+ 630 0436 C601      		movw r24,r12
+ 631 0438 B501      		movw r22,r10
+ 632 043a 40E0      		ldi r20,lo8(gs(NutThreadWake))
+ 633 043c 50E0      		ldi r21,hi8(gs(NutThreadWake))
+ 634 043e 9701      		movw r18,r14
+ 635 0440 01E0      		ldi r16,lo8(1)
+ 636 0442 0E94 0000 		call NutTimerStart
+ 637 0446 F701      		movw r30,r14
+ 638 0448 968B      		std Z+22,r25
+ 639 044a 858B      		std Z+21,r24
+ 640 044c 892B      		or r24,r25
+ 641 044e 01F0      		breq .L49
+ 642 0450 0E94 0000 		call NutThreadResume
+ 643 0454 00C0      		rjmp .L51
+ 644               	.L49:
+ 645 0456 E091 0000 		lds r30,runningThread
+ 646 045a F091 0000 		lds r31,(runningThread)+1
+ 647 045e D08F      		std Z+24,r29
+ 648 0460 C78B      		std Z+23,r28
+ 649 0462 8091 0000 		lds r24,runQueue
+ 650 0466 9091 0000 		lds r25,(runQueue)+1
+ 651 046a 9383      		std Z+3,r25
+ 652 046c 8283      		std Z+2,r24
+ 653 046e 81E0      		ldi r24,lo8(1)
+ 654 0470 8787      		std Z+15,r24
+ 655 0472 F093 0000 		sts (runQueue)+1,r31
+ 656 0476 E093 0000 		sts runQueue,r30
+ 657 047a 00C0      		rjmp .L51
+ 658               	.L48:
+ 659 047c 0E94 0000 		call NutThreadYield
+ 660               	.L51:
+ 661               	/* epilogue start */
+ 662 0480 DF91      		pop r29
+ 663 0482 CF91      		pop r28
+ 664 0484 0F91      		pop r16
+ 665 0486 FF90      		pop r15
+ 666 0488 EF90      		pop r14
+ 667 048a DF90      		pop r13
+ 668 048c CF90      		pop r12
+ 669 048e BF90      		pop r11
+ 670 0490 AF90      		pop r10
+ 671 0492 0895      		ret
+ 672               		.size	NutSleep, .-NutSleep
+ 673               	.global	NutTimerProcessElapsed
+ 674               		.type	NutTimerProcessElapsed, @function
+ 675               	NutTimerProcessElapsed:
+ 676 0494 EF92      		push r14
+ 677 0496 FF92      		push r15
+ 678 0498 0F93      		push r16
+ 679 049a 1F93      		push r17
+ 680 049c CF93      		push r28
+ 681 049e DF93      		push r29
+ 682               	/* prologue: function */
+ 683               	/* frame size = 0 */
+ 684               	/* #APP */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 13
+
+
+ 685               	 ;  709 "../../nut/os/timer.c" 1
+ 686 04a0 0FB6      		in  __tmp_reg__, __SREG__
+ 687 04a2 F894      		cli
+ 688 04a4 0F92      		push __tmp_reg__
+ 689               		
+ 690               	 ;  0 "" 2
+ 691               	/* #NOAPP */
+ 692 04a6 2091 0000 		lds r18,nut_ticks
+ 693 04aa 3091 0000 		lds r19,(nut_ticks)+1
+ 694 04ae 4091 0000 		lds r20,(nut_ticks)+2
+ 695 04b2 5091 0000 		lds r21,(nut_ticks)+3
+ 696               	/* #APP */
+ 697               	 ;  711 "../../nut/os/timer.c" 1
+ 698 04b6 0F90      		pop __tmp_reg__
+ 699 04b8 0FBE      		out __SREG__, __tmp_reg__
+ 700               		
+ 701               	 ;  0 "" 2
+ 702               	/* #NOAPP */
+ 703 04ba 8091 0000 		lds r24,nut_ticks_resume
+ 704 04be 9091 0000 		lds r25,(nut_ticks_resume)+1
+ 705 04c2 A091 0000 		lds r26,(nut_ticks_resume)+2
+ 706 04c6 B091 0000 		lds r27,(nut_ticks_resume)+3
+ 707 04ca 7901      		movw r14,r18
+ 708 04cc 8A01      		movw r16,r20
+ 709 04ce E81A      		sub r14,r24
+ 710 04d0 F90A      		sbc r15,r25
+ 711 04d2 0A0B      		sbc r16,r26
+ 712 04d4 1B0B      		sbc r17,r27
+ 713 04d6 2093 0000 		sts nut_ticks_resume,r18
+ 714 04da 3093 0000 		sts (nut_ticks_resume)+1,r19
+ 715 04de 4093 0000 		sts (nut_ticks_resume)+2,r20
+ 716 04e2 5093 0000 		sts (nut_ticks_resume)+3,r21
+ 717 04e6 00C0      		rjmp .L64
+ 718               	.L60:
+ 719 04e8 8885      		ldd r24,Y+8
+ 720 04ea 9985      		ldd r25,Y+9
+ 721 04ec AA85      		ldd r26,Y+10
+ 722 04ee BB85      		ldd r27,Y+11
+ 723 04f0 E816      		cp r14,r24
+ 724 04f2 F906      		cpc r15,r25
+ 725 04f4 0A07      		cpc r16,r26
+ 726 04f6 1B07      		cpc r17,r27
+ 727 04f8 00F4      		brsh .L54
+ 728 04fa 8E19      		sub r24,r14
+ 729 04fc 9F09      		sbc r25,r15
+ 730 04fe A00B      		sbc r26,r16
+ 731 0500 B10B      		sbc r27,r17
+ 732 0502 8887      		std Y+8,r24
+ 733 0504 9987      		std Y+9,r25
+ 734 0506 AA87      		std Y+10,r26
+ 735 0508 BB87      		std Y+11,r27
+ 736 050a EE24      		clr r14
+ 737 050c FF24      		clr r15
+ 738 050e 8701      		movw r16,r14
+ 739 0510 00C0      		rjmp .L55
+ 740               	.L54:
+ 741 0512 E81A      		sub r14,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 14
+
+
+ 742 0514 F90A      		sbc r15,r25
+ 743 0516 0A0B      		sbc r16,r26
+ 744 0518 1B0B      		sbc r17,r27
+ 745 051a 1886      		std Y+8,__zero_reg__
+ 746 051c 1986      		std Y+9,__zero_reg__
+ 747 051e 1A86      		std Y+10,__zero_reg__
+ 748 0520 1B86      		std Y+11,__zero_reg__
+ 749               	.L55:
+ 750 0522 8885      		ldd r24,Y+8
+ 751 0524 9985      		ldd r25,Y+9
+ 752 0526 AA85      		ldd r26,Y+10
+ 753 0528 BB85      		ldd r27,Y+11
+ 754 052a 0097      		sbiw r24,0
+ 755 052c A105      		cpc r26,__zero_reg__
+ 756 052e B105      		cpc r27,__zero_reg__
+ 757 0530 01F4      		brne .L64
+ 758 0532 EC85      		ldd r30,Y+12
+ 759 0534 FD85      		ldd r31,Y+13
+ 760 0536 3097      		sbiw r30,0
+ 761 0538 01F0      		breq .L56
+ 762 053a 6E85      		ldd r22,Y+14
+ 763 053c 7F85      		ldd r23,Y+15
+ 764 053e CE01      		movw r24,r28
+ 765 0540 0995      		icall
+ 766               	.L56:
+ 767 0542 E091 0000 		lds r30,nutTimerList
+ 768 0546 F091 0000 		lds r31,(nutTimerList)+1
+ 769 054a 0190      		ld __tmp_reg__,Z+
+ 770 054c F081      		ld r31,Z
+ 771 054e E02D      		mov r30,__tmp_reg__
+ 772 0550 F093 0000 		sts (nutTimerList)+1,r31
+ 773 0554 E093 0000 		sts nutTimerList,r30
+ 774 0558 3097      		sbiw r30,0
+ 775 055a 01F0      		breq .L57
+ 776 055c 1382      		std Z+3,__zero_reg__
+ 777 055e 1282      		std Z+2,__zero_reg__
+ 778               	.L57:
+ 779 0560 8C81      		ldd r24,Y+4
+ 780 0562 9D81      		ldd r25,Y+5
+ 781 0564 AE81      		ldd r26,Y+6
+ 782 0566 BF81      		ldd r27,Y+7
+ 783 0568 8887      		std Y+8,r24
+ 784 056a 9987      		std Y+9,r25
+ 785 056c AA87      		std Y+10,r26
+ 786 056e BB87      		std Y+11,r27
+ 787 0570 0097      		sbiw r24,0
+ 788 0572 A105      		cpc r26,__zero_reg__
+ 789 0574 B105      		cpc r27,__zero_reg__
+ 790 0576 01F4      		brne .L58
+ 791 0578 80E0      		ldi r24,lo8(heapFreeList)
+ 792 057a 90E0      		ldi r25,hi8(heapFreeList)
+ 793 057c BE01      		movw r22,r28
+ 794 057e 0E94 0000 		call NutHeapRootFree
+ 795 0582 00C0      		rjmp .L64
+ 796               	.L58:
+ 797 0584 CE01      		movw r24,r28
+ 798 0586 0E94 0000 		call NutTimerInsert
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 15
+
+
+ 799               	.L64:
+ 800 058a C091 0000 		lds r28,nutTimerList
+ 801 058e D091 0000 		lds r29,(nutTimerList)+1
+ 802 0592 2097      		sbiw r28,0
+ 803 0594 01F0      		breq .L61
+ 804 0596 E114      		cp r14,__zero_reg__
+ 805 0598 F104      		cpc r15,__zero_reg__
+ 806 059a 0105      		cpc r16,__zero_reg__
+ 807 059c 1105      		cpc r17,__zero_reg__
+ 808 059e 01F0      		breq .+2
+ 809 05a0 00C0      		rjmp .L60
+ 810               	.L61:
+ 811               	/* epilogue start */
+ 812 05a2 DF91      		pop r29
+ 813 05a4 CF91      		pop r28
+ 814 05a6 1F91      		pop r17
+ 815 05a8 0F91      		pop r16
+ 816 05aa FF90      		pop r15
+ 817 05ac EF90      		pop r14
+ 818 05ae 0895      		ret
+ 819               		.size	NutTimerProcessElapsed, .-NutTimerProcessElapsed
+ 820               	.global	NutTimerInit
+ 821               		.type	NutTimerInit, @function
+ 822               	NutTimerInit:
+ 823 05b0 CF92      		push r12
+ 824 05b2 DF92      		push r13
+ 825 05b4 EF92      		push r14
+ 826 05b6 FF92      		push r15
+ 827 05b8 0F93      		push r16
+ 828 05ba 1F93      		push r17
+ 829               	/* prologue: function */
+ 830               	/* frame size = 0 */
+ 831 05bc 80E0      		ldi r24,lo8(gs(NutTimerIntr))
+ 832 05be 90E0      		ldi r25,hi8(gs(NutTimerIntr))
+ 833 05c0 0E94 0000 		call NutRegisterTimer
+ 834 05c4 87B7      		in r24,87-32
+ 835 05c6 8260      		ori r24,lo8(2)
+ 836 05c8 87BF      		out 87-32,r24
+ 837               	/* #APP */
+ 838               	 ;  709 "../../nut/os/timer.c" 1
+ 839 05ca 0FB6      		in  __tmp_reg__, __SREG__
+ 840 05cc F894      		cli
+ 841 05ce 0F92      		push __tmp_reg__
+ 842               		
+ 843               	 ;  0 "" 2
+ 844               	/* #NOAPP */
+ 845 05d0 2091 0000 		lds r18,nut_ticks
+ 846 05d4 3091 0000 		lds r19,(nut_ticks)+1
+ 847 05d8 4091 0000 		lds r20,(nut_ticks)+2
+ 848 05dc 5091 0000 		lds r21,(nut_ticks)+3
+ 849               	/* #APP */
+ 850               	 ;  711 "../../nut/os/timer.c" 1
+ 851 05e0 0F90      		pop __tmp_reg__
+ 852 05e2 0FBE      		out __SREG__, __tmp_reg__
+ 853               		
+ 854               	 ;  0 "" 2
+ 855               	/* #NOAPP */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 16
+
+
+ 856               	.L66:
+ 857               	/* #APP */
+ 858               	 ;  709 "../../nut/os/timer.c" 1
+ 859 05e4 0FB6      		in  __tmp_reg__, __SREG__
+ 860 05e6 F894      		cli
+ 861 05e8 0F92      		push __tmp_reg__
+ 862               		
+ 863               	 ;  0 "" 2
+ 864               	/* #NOAPP */
+ 865 05ea 8091 0000 		lds r24,nut_ticks
+ 866 05ee 9091 0000 		lds r25,(nut_ticks)+1
+ 867 05f2 A091 0000 		lds r26,(nut_ticks)+2
+ 868 05f6 B091 0000 		lds r27,(nut_ticks)+3
+ 869               	/* #APP */
+ 870               	 ;  711 "../../nut/os/timer.c" 1
+ 871 05fa 0F90      		pop __tmp_reg__
+ 872 05fc 0FBE      		out __SREG__, __tmp_reg__
+ 873               		
+ 874               	 ;  0 "" 2
+ 875               	/* #NOAPP */
+ 876 05fe 2817      		cp r18,r24
+ 877 0600 3907      		cpc r19,r25
+ 878 0602 4A07      		cpc r20,r26
+ 879 0604 5B07      		cpc r21,r27
+ 880 0606 01F0      		breq .L66
+ 881               	/* #APP */
+ 882               	 ;  709 "../../nut/os/timer.c" 1
+ 883 0608 0FB6      		in  __tmp_reg__, __SREG__
+ 884 060a F894      		cli
+ 885 060c 0F92      		push __tmp_reg__
+ 886               		
+ 887               	 ;  0 "" 2
+ 888               	/* #NOAPP */
+ 889 060e E090 0000 		lds r14,nut_ticks
+ 890 0612 F090 0000 		lds r15,(nut_ticks)+1
+ 891 0616 0091 0000 		lds r16,(nut_ticks)+2
+ 892 061a 1091 0000 		lds r17,(nut_ticks)+3
+ 893               	/* #APP */
+ 894               	 ;  711 "../../nut/os/timer.c" 1
+ 895 061e 0F90      		pop __tmp_reg__
+ 896 0620 0FBE      		out __SREG__, __tmp_reg__
+ 897               		
+ 898               	 ;  0 "" 2
+ 899               	/* #NOAPP */
+ 900 0622 2091 0000 		lds r18,nut_delay_loops
+ 901 0626 3091 0000 		lds r19,(nut_delay_loops)+1
+ 902 062a 4091 0000 		lds r20,(nut_delay_loops)+2
+ 903 062e 5091 0000 		lds r21,(nut_delay_loops)+3
+ 904               	.L67:
+ 905               	/* #APP */
+ 906               	 ;  709 "../../nut/os/timer.c" 1
+ 907 0632 0FB6      		in  __tmp_reg__, __SREG__
+ 908 0634 F894      		cli
+ 909 0636 0F92      		push __tmp_reg__
+ 910               		
+ 911               	 ;  0 "" 2
+ 912               	/* #NOAPP */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 17
+
+
+ 913 0638 8091 0000 		lds r24,nut_ticks
+ 914 063c 9091 0000 		lds r25,(nut_ticks)+1
+ 915 0640 A091 0000 		lds r26,(nut_ticks)+2
+ 916 0644 B091 0000 		lds r27,(nut_ticks)+3
+ 917               	/* #APP */
+ 918               	 ;  711 "../../nut/os/timer.c" 1
+ 919 0648 0F90      		pop __tmp_reg__
+ 920 064a 0FBE      		out __SREG__, __tmp_reg__
+ 921               		
+ 922               	 ;  0 "" 2
+ 923               	/* #NOAPP */
+ 924 064c F901      		movw r30,r18
+ 925 064e D42E      		mov r13,r20
+ 926 0650 C52E      		mov r12,r21
+ 927 0652 2F5F      		subi r18,lo8(-(1))
+ 928 0654 3F4F      		sbci r19,hi8(-(1))
+ 929 0656 4F4F      		sbci r20,hlo8(-(1))
+ 930 0658 5F4F      		sbci r21,hhi8(-(1))
+ 931 065a E816      		cp r14,r24
+ 932 065c F906      		cpc r15,r25
+ 933 065e 0A07      		cpc r16,r26
+ 934 0660 1B07      		cpc r17,r27
+ 935 0662 01F0      		breq .L67
+ 936 0664 BF01      		movw r22,r30
+ 937 0666 8D2D      		mov r24,r13
+ 938 0668 9C2D      		mov r25,r12
+ 939 066a 27E6      		ldi r18,lo8(103)
+ 940 066c 30E0      		ldi r19,hi8(103)
+ 941 066e 40E0      		ldi r20,hlo8(103)
+ 942 0670 50E0      		ldi r21,hhi8(103)
+ 943 0672 0E94 0000 		call __mulsi3
+ 944 0676 2AE1      		ldi r18,lo8(26)
+ 945 0678 30E0      		ldi r19,hi8(26)
+ 946 067a 40E0      		ldi r20,hlo8(26)
+ 947 067c 50E0      		ldi r21,hhi8(26)
+ 948 067e 0E94 0000 		call __udivmodsi4
+ 949 0682 2093 0000 		sts nut_delay_loops,r18
+ 950 0686 3093 0000 		sts (nut_delay_loops)+1,r19
+ 951 068a 4093 0000 		sts (nut_delay_loops)+2,r20
+ 952 068e 5093 0000 		sts (nut_delay_loops)+3,r21
+ 953               	/* epilogue start */
+ 954 0692 1F91      		pop r17
+ 955 0694 0F91      		pop r16
+ 956 0696 FF90      		pop r15
+ 957 0698 EF90      		pop r14
+ 958 069a DF90      		pop r13
+ 959 069c CF90      		pop r12
+ 960 069e 0895      		ret
+ 961               		.size	NutTimerInit, .-NutTimerInit
+ 962               		.lcomm nut_ticks_resume,4
+ 963               		.lcomm clock_cache,4
+ 964               		.comm nutTimerList,2,1
+ 965               		.comm nut_ticks,4,1
+ 966               		.comm nut_delay_loops,4,1
+ 967               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s 			page 18
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 timer.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:10     .text:00000000 NutTimerIntr
+                            *COM*:00000004 nut_ticks
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:29     .text:00000028 NutMicroDelay
+                            *COM*:00000004 nut_delay_loops
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:64     .text:00000060 NutDelay
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:83     .text:0000007c NutTimerInsert
+                            *COM*:00000002 nutTimerList
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:160    .text:00000102 NutTimerStop
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:232    .text:00000182 NutGetTickCount
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:261    .text:000001a2 NutGetCpuClock
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:962    .bss:00000004 clock_cache
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:293    .text:000001e2 NutClockSet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:307    .text:000001f8 NutGetMillis
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:420    .text:000002d0 NutGetSeconds
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:463    .text:00000310 NutTimerCreate
+                             .bss:00000000 nut_ticks_resume
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:555    .text:000003b2 NutTimerStartTicks
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:576    .text:000003d0 NutTimerStart
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:600    .text:000003f6 NutSleep
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:675    .text:00000494 NutTimerProcessElapsed
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccF03Qdi.s:822    .text:000005b0 NutTimerInit
+
+UNDEFINED SYMBOLS
+__mulsi3
+__udivmodsi4
+NutArchClockGet
+NutGetTickClock
+heapFreeList
+NutHeapRootAlloc
+NutTimerMillisToTicks
+runQueue
+runningThread
+NutThreadRemoveQueue
+NutThreadWake
+NutThreadResume
+NutThreadYield
+NutHeapRootFree
+NutRegisterTimer
+__do_clear_bss

@@ -1,0 +1,35 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc24cblo.s 			page 1
+
+
+   1               		.file	"putc.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	putc
+  10               		.type	putc, @function
+  11               	putc:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 0E94 0000 		call fputc
+  15               	/* epilogue start */
+  16 0004 0895      		ret
+  17               		.size	putc, .-putc
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc24cblo.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 putc.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc24cblo.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc24cblo.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc24cblo.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc24cblo.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc24cblo.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc24cblo.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc24cblo.s:11     .text:00000000 putc
+
+UNDEFINED SYMBOLS
+fputc

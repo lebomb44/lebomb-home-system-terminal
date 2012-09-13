@@ -1,0 +1,1478 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 1
+
+
+   1               		.file	"ssi.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	NutSsiSkipWhitespace, @function
+  10               	NutSsiSkipWhitespace:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 DB01      		movw r26,r22
+  14 0002 00C0      		rjmp .L2
+  15               	.L4:
+  16 0004 2F5F      		subi r18,lo8(-(1))
+  17 0006 3F4F      		sbci r19,hi8(-(1))
+  18 0008 1196      		adiw r26,1
+  19 000a 3C93      		st X,r19
+  20 000c 2E93      		st -X,r18
+  21               	.L2:
+  22 000e 2D91      		ld r18,X+
+  23 0010 3C91      		ld r19,X
+  24 0012 1197      		sbiw r26,1
+  25 0014 2417      		cp r18,r20
+  26 0016 3507      		cpc r19,r21
+  27 0018 00F4      		brsh .L5
+  28 001a FC01      		movw r30,r24
+  29 001c E20F      		add r30,r18
+  30 001e F31F      		adc r31,r19
+  31 0020 E081      		ld r30,Z
+  32 0022 EA30      		cpi r30,lo8(10)
+  33 0024 01F0      		breq .L4
+  34 0026 ED30      		cpi r30,lo8(13)
+  35 0028 01F0      		breq .L4
+  36 002a E930      		cpi r30,lo8(9)
+  37 002c 01F0      		breq .L4
+  38 002e E032      		cpi r30,lo8(32)
+  39 0030 01F0      		breq .L4
+  40               	.L5:
+  41 0032 0895      		ret
+  42               		.size	NutSsiSkipWhitespace, .-NutSsiSkipWhitespace
+  43               	.global	NutRegisterSsiVarHandler
+  44               		.type	NutRegisterSsiVarHandler, @function
+  45               	NutRegisterSsiVarHandler:
+  46               	/* prologue: function */
+  47               	/* frame size = 0 */
+  48 0034 9093 0000 		sts (ssivar_handler)+1,r25
+  49 0038 8093 0000 		sts ssivar_handler,r24
+  50 003c 80E0      		ldi r24,lo8(0)
+  51 003e 90E0      		ldi r25,hi8(0)
+  52               	/* epilogue start */
+  53 0040 0895      		ret
+  54               		.size	NutRegisterSsiVarHandler, .-NutRegisterSsiVarHandler
+  55               		.data
+  56               	.LC0:
+  57 0000 2E73 6874 		.string	".shtml"
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 2
+
+
+  57      6D6C 00
+  58               		.text
+  59               	.global	NutRegisterSsi
+  60               		.type	NutRegisterSsi, @function
+  61               	NutRegisterSsi:
+  62               	/* prologue: function */
+  63               	/* frame size = 0 */
+  64 0042 80E0      		ldi r24,lo8(.LC0)
+  65 0044 90E0      		ldi r25,hi8(.LC0)
+  66 0046 60E0      		ldi r22,lo8(gs(NutHttpProcessSHTML))
+  67 0048 70E0      		ldi r23,hi8(gs(NutHttpProcessSHTML))
+  68 004a 0E94 0000 		call NutSetMimeHandler
+  69               	/* epilogue start */
+  70 004e 0895      		ret
+  71               		.size	NutRegisterSsi, .-NutRegisterSsi
+  72               		.data
+  73               	.LC1:
+  74 0007 6367 692D 		.string	"cgi-bin/"
+  74      6269 6E2F 
+  74      00
+  75               	.LC2:
+  76 0010 2451 5545 		.string	"$QUERY_STRING"
+  76      5259 5F53 
+  76      5452 494E 
+  76      4700 
+  77               	.LC3:
+  78 001e 2600      		.string	"&"
+  79               	.LC4:
+  80 0020 3D00      		.string	"="
+  81               		.text
+  82               		.type	NutSsiProcessVirtual, @function
+  83               	NutSsiProcessVirtual:
+  84 0050 2F92      		push r2
+  85 0052 3F92      		push r3
+  86 0054 4F92      		push r4
+  87 0056 5F92      		push r5
+  88 0058 6F92      		push r6
+  89 005a 7F92      		push r7
+  90 005c 8F92      		push r8
+  91 005e 9F92      		push r9
+  92 0060 AF92      		push r10
+  93 0062 BF92      		push r11
+  94 0064 CF92      		push r12
+  95 0066 DF92      		push r13
+  96 0068 EF92      		push r14
+  97 006a FF92      		push r15
+  98 006c 0F93      		push r16
+  99 006e 1F93      		push r17
+ 100 0070 CF93      		push r28
+ 101 0072 DF93      		push r29
+ 102               	/* prologue: function */
+ 103               	/* frame size = 0 */
+ 104 0074 3C01      		movw r6,r24
+ 105 0076 2B01      		movw r4,r22
+ 106 0078 1A01      		movw r2,r20
+ 107 007a 4901      		movw r8,r18
+ 108 007c C091 0000 		lds r28,cgiBinPath
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 3
+
+
+ 109 0080 D091 0000 		lds r29,(cgiBinPath)+1
+ 110 0084 2097      		sbiw r28,0
+ 111 0086 01F4      		brne .L11
+ 112 0088 C0E0      		ldi r28,lo8(.LC1)
+ 113 008a D0E0      		ldi r29,hi8(.LC1)
+ 114               	.L11:
+ 115 008c C201      		movw r24,r4
+ 116 008e 0E94 0000 		call NutDecodePath
+ 117 0092 892B      		or r24,r25
+ 118 0094 01F0      		breq .+2
+ 119 0096 00C0      		rjmp .L12
+ 120 0098 00D0      		rcall .
+ 121 009a 00D0      		rcall .
+ 122 009c ADB7      		in r26,__SP_L__
+ 123 009e BEB7      		in r27,__SP_H__
+ 124 00a0 1296      		adiw r26,1+1
+ 125 00a2 7C92      		st X,r7
+ 126 00a4 6E92      		st -X,r6
+ 127 00a6 1197      		sbiw r26,1
+ 128 00a8 80E0      		ldi r24,lo8(rsp_bad_req_P)
+ 129 00aa 90E0      		ldi r25,hi8(rsp_bad_req_P)
+ 130 00ac 1496      		adiw r26,3+1
+ 131 00ae 9C93      		st X,r25
+ 132 00b0 8E93      		st -X,r24
+ 133 00b2 1397      		sbiw r26,3
+ 134 00b4 00C0      		rjmp .L48
+ 135               	.L14:
+ 136 00b6 2196      		adiw r28,1
+ 137               	.L47:
+ 138 00b8 8881      		ld r24,Y
+ 139 00ba 8B33      		cpi r24,lo8(59)
+ 140 00bc 01F0      		breq .L14
+ 141 00be CC24      		clr r12
+ 142 00c0 DD24      		clr r13
+ 143 00c2 00C0      		rjmp .L15
+ 144               	.L17:
+ 145 00c4 0894      		sec
+ 146 00c6 C11C      		adc r12,__zero_reg__
+ 147 00c8 D11C      		adc r13,__zero_reg__
+ 148               	.L15:
+ 149 00ca FE01      		movw r30,r28
+ 150 00cc EC0D      		add r30,r12
+ 151 00ce FD1D      		adc r31,r13
+ 152 00d0 E081      		ld r30,Z
+ 153 00d2 EE23      		tst r30
+ 154 00d4 01F0      		breq .L16
+ 155 00d6 EB33      		cpi r30,lo8(59)
+ 156 00d8 01F4      		brne .L17
+ 157               	.L16:
+ 158 00da C114      		cp r12,__zero_reg__
+ 159 00dc D104      		cpc r13,__zero_reg__
+ 160 00de 01F4      		brne .+2
+ 161 00e0 00C0      		rjmp .L18
+ 162 00e2 C201      		movw r24,r4
+ 163 00e4 BE01      		movw r22,r28
+ 164 00e6 A601      		movw r20,r12
+ 165 00e8 0E94 0000 		call strncasecmp
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 4
+
+
+ 166 00ec 892B      		or r24,r25
+ 167 00ee 01F0      		breq .+2
+ 168 00f0 00C0      		rjmp .L18
+ 169 00f2 81E0      		ldi r24,lo8(1)
+ 170 00f4 90E0      		ldi r25,hi8(1)
+ 171 00f6 64E2      		ldi r22,lo8(36)
+ 172 00f8 70E0      		ldi r23,hi8(36)
+ 173 00fa 0E94 0000 		call calloc
+ 174 00fe 8C01      		movw r16,r24
+ 175 0100 0097      		sbiw r24,0
+ 176 0102 01F4      		brne .+2
+ 177 0104 00C0      		rjmp .L52
+ 178               	.L19:
+ 179 0106 81E0      		ldi r24,lo8(1)
+ 180 0108 90E0      		ldi r25,hi8(1)
+ 181 010a D801      		movw r26,r16
+ 182 010c 1196      		adiw r26,1
+ 183 010e 9C93      		st X,r25
+ 184 0110 8E93      		st -X,r24
+ 185 0112 F401      		movw r30,r8
+ 186 0114 8281      		ldd r24,Z+2
+ 187 0116 9381      		ldd r25,Z+3
+ 188 0118 1396      		adiw r26,2+1
+ 189 011a 9C93      		st X,r25
+ 190 011c 8E93      		st -X,r24
+ 191 011e 1297      		sbiw r26,2
+ 192 0120 1496      		adiw r26,4
+ 193 0122 1D92      		st X+,__zero_reg__
+ 194 0124 1D92      		st X+,__zero_reg__
+ 195 0126 1D92      		st X+,__zero_reg__
+ 196 0128 1C92      		st X,__zero_reg__
+ 197 012a 1797      		sbiw r26,4+3
+ 198 012c 8289      		ldd r24,Z+18
+ 199 012e 9389      		ldd r25,Z+19
+ 200 0130 0097      		sbiw r24,0
+ 201 0132 01F0      		breq .L20
+ 202 0134 0E94 0000 		call strdup
+ 203 0138 F801      		movw r30,r16
+ 204 013a 938B      		std Z+19,r25
+ 205 013c 828B      		std Z+18,r24
+ 206 013e 0097      		sbiw r24,0
+ 207 0140 01F4      		brne .+2
+ 208 0142 00C0      		rjmp .L50
+ 209               	.L20:
+ 210 0144 F401      		movw r30,r8
+ 211 0146 8685      		ldd r24,Z+14
+ 212 0148 9785      		ldd r25,Z+15
+ 213 014a 0097      		sbiw r24,0
+ 214 014c 01F0      		breq .L21
+ 215 014e 0E94 0000 		call strdup
+ 216 0152 D801      		movw r26,r16
+ 217 0154 1F96      		adiw r26,14+1
+ 218 0156 9C93      		st X,r25
+ 219 0158 8E93      		st -X,r24
+ 220 015a 1E97      		sbiw r26,14
+ 221 015c 0097      		sbiw r24,0
+ 222 015e 01F4      		brne .+2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 5
+
+
+ 223 0160 00C0      		rjmp .L53
+ 224               	.L21:
+ 225 0162 C201      		movw r24,r4
+ 226 0164 6FE3      		ldi r22,lo8(63)
+ 227 0166 70E0      		ldi r23,hi8(63)
+ 228 0168 0E94 0000 		call strchr
+ 229 016c 0097      		sbiw r24,0
+ 230 016e 01F4      		brne .+2
+ 231 0170 00C0      		rjmp .L22
+ 232 0172 EC01      		movw r28,r24
+ 233 0174 1992      		st Y+,__zero_reg__
+ 234 0176 CE01      		movw r24,r28
+ 235 0178 60E0      		ldi r22,lo8(.LC2)
+ 236 017a 70E0      		ldi r23,hi8(.LC2)
+ 237 017c 0E94 0000 		call strcmp
+ 238 0180 0097      		sbiw r24,0
+ 239 0182 01F0      		breq .+2
+ 240 0184 00C0      		rjmp .L23
+ 241 0186 D401      		movw r26,r8
+ 242 0188 5696      		adiw r26,22
+ 243 018a 6D91      		ld r22,X+
+ 244 018c 7C91      		ld r23,X
+ 245 018e 5797      		sbiw r26,22+1
+ 246 0190 660F      		lsl r22
+ 247 0192 771F      		rol r23
+ 248 0194 20E0      		ldi r18,lo8(0)
+ 249 0196 30E0      		ldi r19,hi8(0)
+ 250 0198 41E0      		ldi r20,lo8(1)
+ 251 019a 50E0      		ldi r21,hi8(1)
+ 252 019c 00C0      		rjmp .L24
+ 253               	.L25:
+ 254 019e C901      		movw r24,r18
+ 255 01a0 880F      		lsl r24
+ 256 01a2 991F      		rol r25
+ 257 01a4 D401      		movw r26,r8
+ 258 01a6 5496      		adiw r26,20
+ 259 01a8 ED91      		ld r30,X+
+ 260 01aa FC91      		ld r31,X
+ 261 01ac 5597      		sbiw r26,20+1
+ 262 01ae E80F      		add r30,r24
+ 263 01b0 F91F      		adc r31,r25
+ 264 01b2 A081      		ld r26,Z
+ 265 01b4 B181      		ldd r27,Z+1
+ 266 01b6 FD01      		movw r30,r26
+ 267 01b8 0190      		ld __tmp_reg__,Z+
+ 268 01ba 0020      		tst __tmp_reg__
+ 269 01bc 01F4      		brne .-6
+ 270 01be EA1B      		sub r30,r26
+ 271 01c0 FB0B      		sbc r31,r27
+ 272 01c2 4E0F      		add r20,r30
+ 273 01c4 5F1F      		adc r21,r31
+ 274 01c6 2F5F      		subi r18,lo8(-(1))
+ 275 01c8 3F4F      		sbci r19,hi8(-(1))
+ 276               	.L24:
+ 277 01ca 2617      		cp r18,r22
+ 278 01cc 3707      		cpc r19,r23
+ 279 01ce 04F0      		brlt .L25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 6
+
+
+ 280 01d0 CA01      		movw r24,r20
+ 281 01d2 0E94 0000 		call malloc
+ 282 01d6 FC01      		movw r30,r24
+ 283 01d8 D801      		movw r26,r16
+ 284 01da 1B96      		adiw r26,10+1
+ 285 01dc 9C93      		st X,r25
+ 286 01de 8E93      		st -X,r24
+ 287 01e0 1A97      		sbiw r26,10
+ 288 01e2 0097      		sbiw r24,0
+ 289 01e4 01F4      		brne .L26
+ 290               	.L53:
+ 291 01e6 00D0      		rcall .
+ 292 01e8 00D0      		rcall .
+ 293 01ea EDB7      		in r30,__SP_L__
+ 294 01ec FEB7      		in r31,__SP_H__
+ 295 01ee 7282      		std Z+2,r7
+ 296 01f0 6182      		std Z+1,r6
+ 297 01f2 80E0      		ldi r24,lo8(rsp_intern_err_P)
+ 298 01f4 90E0      		ldi r25,hi8(rsp_intern_err_P)
+ 299 01f6 9483      		std Z+4,r25
+ 300 01f8 8383      		std Z+3,r24
+ 301 01fa 00C0      		rjmp .L51
+ 302               	.L26:
+ 303 01fc 1082      		st Z,__zero_reg__
+ 304 01fe C0E0      		ldi r28,lo8(0)
+ 305 0200 D0E0      		ldi r29,hi8(0)
+ 306 0202 42E0      		ldi r20,lo8(2)
+ 307 0204 E42E      		mov r14,r20
+ 308 0206 F12C      		mov r15,__zero_reg__
+ 309 0208 00C0      		rjmp .L27
+ 310               	.L29:
+ 311 020a 2097      		sbiw r28,0
+ 312 020c 01F0      		breq .L28
+ 313 020e D801      		movw r26,r16
+ 314 0210 1A96      		adiw r26,10
+ 315 0212 8D91      		ld r24,X+
+ 316 0214 9C91      		ld r25,X
+ 317 0216 1B97      		sbiw r26,10+1
+ 318 0218 60E0      		ldi r22,lo8(.LC3)
+ 319 021a 70E0      		ldi r23,hi8(.LC3)
+ 320 021c 0E94 0000 		call strcat
+ 321               	.L28:
+ 322 0220 CE01      		movw r24,r28
+ 323 0222 880F      		lsl r24
+ 324 0224 991F      		rol r25
+ 325 0226 D401      		movw r26,r8
+ 326 0228 5496      		adiw r26,20
+ 327 022a ED91      		ld r30,X+
+ 328 022c FC91      		ld r31,X
+ 329 022e 5597      		sbiw r26,20+1
+ 330 0230 E80F      		add r30,r24
+ 331 0232 F91F      		adc r31,r25
+ 332 0234 6081      		ld r22,Z
+ 333 0236 7181      		ldd r23,Z+1
+ 334 0238 F801      		movw r30,r16
+ 335 023a 8285      		ldd r24,Z+10
+ 336 023c 9385      		ldd r25,Z+11
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 7
+
+
+ 337 023e 0E94 0000 		call strcat
+ 338 0242 D801      		movw r26,r16
+ 339 0244 1A96      		adiw r26,10
+ 340 0246 8D91      		ld r24,X+
+ 341 0248 9C91      		ld r25,X
+ 342 024a 1B97      		sbiw r26,10+1
+ 343 024c 60E0      		ldi r22,lo8(.LC4)
+ 344 024e 70E0      		ldi r23,hi8(.LC4)
+ 345 0250 0E94 0000 		call strcat
+ 346 0254 D401      		movw r26,r8
+ 347 0256 5496      		adiw r26,20
+ 348 0258 ED91      		ld r30,X+
+ 349 025a FC91      		ld r31,X
+ 350 025c 5597      		sbiw r26,20+1
+ 351 025e EE0D      		add r30,r14
+ 352 0260 FF1D      		adc r31,r15
+ 353 0262 6081      		ld r22,Z
+ 354 0264 7181      		ldd r23,Z+1
+ 355 0266 F801      		movw r30,r16
+ 356 0268 8285      		ldd r24,Z+10
+ 357 026a 9385      		ldd r25,Z+11
+ 358 026c 0E94 0000 		call strcat
+ 359 0270 2296      		adiw r28,2
+ 360 0272 84E0      		ldi r24,lo8(4)
+ 361 0274 90E0      		ldi r25,hi8(4)
+ 362 0276 E80E      		add r14,r24
+ 363 0278 F91E      		adc r15,r25
+ 364               	.L27:
+ 365 027a D401      		movw r26,r8
+ 366 027c 5696      		adiw r26,22
+ 367 027e 8D91      		ld r24,X+
+ 368 0280 9C91      		ld r25,X
+ 369 0282 5797      		sbiw r26,22+1
+ 370 0284 880F      		lsl r24
+ 371 0286 991F      		rol r25
+ 372 0288 C817      		cp r28,r24
+ 373 028a D907      		cpc r29,r25
+ 374 028c 04F4      		brge .+2
+ 375 028e 00C0      		rjmp .L29
+ 376 0290 00C0      		rjmp .L30
+ 377               	.L23:
+ 378 0292 CE01      		movw r24,r28
+ 379 0294 0E94 0000 		call strdup
+ 380 0298 F801      		movw r30,r16
+ 381 029a 9387      		std Z+11,r25
+ 382 029c 8287      		std Z+10,r24
+ 383 029e 0097      		sbiw r24,0
+ 384 02a0 01F0      		breq .L50
+ 385               	.L30:
+ 386 02a2 C801      		movw r24,r16
+ 387 02a4 0E94 0000 		call NutHttpProcessQueryString
+ 388               	.L22:
+ 389 02a8 C201      		movw r24,r4
+ 390 02aa 0E94 0000 		call strdup
+ 391 02ae F801      		movw r30,r16
+ 392 02b0 9187      		std Z+9,r25
+ 393 02b2 8087      		std Z+8,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 8
+
+
+ 394 02b4 0097      		sbiw r24,0
+ 395 02b6 01F4      		brne .L31
+ 396               	.L50:
+ 397 02b8 00D0      		rcall .
+ 398 02ba 00D0      		rcall .
+ 399 02bc ADB7      		in r26,__SP_L__
+ 400 02be BEB7      		in r27,__SP_H__
+ 401 02c0 1296      		adiw r26,1+1
+ 402 02c2 7C92      		st X,r7
+ 403 02c4 6E92      		st -X,r6
+ 404 02c6 1197      		sbiw r26,1
+ 405 02c8 80E0      		ldi r24,lo8(rsp_intern_err_P)
+ 406 02ca 90E0      		ldi r25,hi8(rsp_intern_err_P)
+ 407 02cc 1496      		adiw r26,3+1
+ 408 02ce 9C93      		st X,r25
+ 409 02d0 8E93      		st -X,r24
+ 410 02d2 1397      		sbiw r26,3
+ 411               	.L51:
+ 412 02d4 0E94 0000 		call fprintf_P
+ 413 02d8 0F90      		pop __tmp_reg__
+ 414 02da 0F90      		pop __tmp_reg__
+ 415 02dc 0F90      		pop __tmp_reg__
+ 416 02de 0F90      		pop __tmp_reg__
+ 417 02e0 00C0      		rjmp .L49
+ 418               	.L31:
+ 419 02e2 C301      		movw r24,r6
+ 420 02e4 B801      		movw r22,r16
+ 421 02e6 A601      		movw r20,r12
+ 422 02e8 0E94 0000 		call NutCgiProcessRequest
+ 423               	.L49:
+ 424 02ec C801      		movw r24,r16
+ 425 02ee 0E94 0000 		call DestroyRequestInfo
+ 426 02f2 00C0      		rjmp .L46
+ 427               	.L18:
+ 428 02f4 FE01      		movw r30,r28
+ 429 02f6 EC0D      		add r30,r12
+ 430 02f8 FD1D      		adc r31,r13
+ 431 02fa 9E01      		movw r18,r28
+ 432 02fc 8081      		ld r24,Z
+ 433 02fe 8823      		tst r24
+ 434 0300 01F0      		breq .L32
+ 435 0302 EF01      		movw r28,r30
+ 436 0304 00C0      		rjmp .L33
+ 437               	.L32:
+ 438 0306 C0E0      		ldi r28,lo8(default_files)
+ 439 0308 D0E0      		ldi r29,hi8(default_files)
+ 440 030a CC24      		clr r12
+ 441 030c CA94      		dec r12
+ 442 030e DC2C      		mov r13,r12
+ 443 0310 AA24      		clr r10
+ 444 0312 BB24      		clr r11
+ 445 0314 00C0      		rjmp .L34
+ 446               	.L12:
+ 447 0316 9E01      		movw r18,r28
+ 448               	.L33:
+ 449 0318 232B      		or r18,r19
+ 450 031a 01F0      		breq .+2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 9
+
+
+ 451 031c 00C0      		rjmp .L47
+ 452 031e 00C0      		rjmp .L32
+ 453               	.L39:
+ 454 0320 C201      		movw r24,r4
+ 455 0322 0E94 0000 		call CreateFilePath
+ 456 0326 5C01      		movw r10,r24
+ 457 0328 0097      		sbiw r24,0
+ 458 032a 01F4      		brne .L36
+ 459               	.L52:
+ 460 032c 00D0      		rcall .
+ 461 032e 00D0      		rcall .
+ 462 0330 EDB7      		in r30,__SP_L__
+ 463 0332 FEB7      		in r31,__SP_H__
+ 464 0334 7282      		std Z+2,r7
+ 465 0336 6182      		std Z+1,r6
+ 466 0338 80E0      		ldi r24,lo8(rsp_intern_err_P)
+ 467 033a 90E0      		ldi r25,hi8(rsp_intern_err_P)
+ 468 033c 9483      		std Z+4,r25
+ 469 033e 8383      		std Z+3,r24
+ 470               	.L48:
+ 471 0340 0E94 0000 		call fprintf_P
+ 472 0344 0F90      		pop __tmp_reg__
+ 473 0346 0F90      		pop __tmp_reg__
+ 474 0348 0F90      		pop __tmp_reg__
+ 475 034a 0F90      		pop __tmp_reg__
+ 476 034c 00C0      		rjmp .L46
+ 477               	.L36:
+ 478 034e 60E0      		ldi r22,lo8(-32768)
+ 479 0350 70E8      		ldi r23,hi8(-32768)
+ 480 0352 0E94 0000 		call _open
+ 481 0356 6C01      		movw r12,r24
+ 482 0358 FFEF      		ldi r31,hi8(-1)
+ 483 035a 8F3F      		cpi r24,lo8(-1)
+ 484 035c 9F07      		cpc r25,r31
+ 485 035e 01F0      		breq .L37
+ 486 0360 0E94 0000 		call _filelength
+ 487 0364 6115      		cp r22,__zero_reg__
+ 488 0366 7105      		cpc r23,__zero_reg__
+ 489 0368 8105      		cpc r24,__zero_reg__
+ 490 036a 9105      		cpc r25,__zero_reg__
+ 491 036c 01F4      		brne .L38
+ 492 036e C601      		movw r24,r12
+ 493 0370 0E94 0000 		call _close
+ 494               	.L37:
+ 495 0374 C501      		movw r24,r10
+ 496 0376 0E94 0000 		call free
+ 497 037a 2296      		adiw r28,2
+ 498               	.L34:
+ 499 037c 6881      		ld r22,Y
+ 500 037e 7981      		ldd r23,Y+1
+ 501 0380 6115      		cp r22,__zero_reg__
+ 502 0382 7105      		cpc r23,__zero_reg__
+ 503 0384 01F4      		brne .L39
+ 504 0386 8FEF      		ldi r24,lo8(-1)
+ 505 0388 C816      		cp r12,r24
+ 506 038a 8FEF      		ldi r24,hi8(-1)
+ 507 038c D806      		cpc r13,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 10
+
+
+ 508 038e 01F4      		brne .L38
+ 509 0390 00D0      		rcall .
+ 510 0392 00D0      		rcall .
+ 511 0394 00D0      		rcall .
+ 512 0396 EDB7      		in r30,__SP_L__
+ 513 0398 FEB7      		in r31,__SP_H__
+ 514 039a 3196      		adiw r30,1
+ 515 039c ADB7      		in r26,__SP_L__
+ 516 039e BEB7      		in r27,__SP_H__
+ 517 03a0 1296      		adiw r26,1+1
+ 518 03a2 7C92      		st X,r7
+ 519 03a4 6E92      		st -X,r6
+ 520 03a6 1197      		sbiw r26,1
+ 521 03a8 80E0      		ldi r24,lo8(rsp_not_found_P)
+ 522 03aa 90E0      		ldi r25,hi8(rsp_not_found_P)
+ 523 03ac 9383      		std Z+3,r25
+ 524 03ae 8283      		std Z+2,r24
+ 525 03b0 5582      		std Z+5,r5
+ 526 03b2 4482      		std Z+4,r4
+ 527 03b4 0E94 0000 		call fprintf_P
+ 528 03b8 EDB7      		in r30,__SP_L__
+ 529 03ba FEB7      		in r31,__SP_H__
+ 530 03bc 3696      		adiw r30,6
+ 531 03be 0FB6      		in __tmp_reg__,__SREG__
+ 532 03c0 F894      		cli
+ 533 03c2 FEBF      		out __SP_H__,r31
+ 534 03c4 0FBE      		out __SREG__,__tmp_reg__
+ 535 03c6 EDBF      		out __SP_L__,r30
+ 536 03c8 00C0      		rjmp .L46
+ 537               	.L38:
+ 538 03ca C601      		movw r24,r12
+ 539 03cc 0E94 0000 		call _filelength
+ 540 03d0 7B01      		movw r14,r22
+ 541 03d2 8C01      		movw r16,r24
+ 542 03d4 C501      		movw r24,r10
+ 543 03d6 0E94 0000 		call NutGetMimeHandler
+ 544 03da EC01      		movw r28,r24
+ 545 03dc C501      		movw r24,r10
+ 546 03de 0E94 0000 		call free
+ 547 03e2 2097      		sbiw r28,0
+ 548 03e4 01F4      		brne .L40
+ 549 03e6 80E0      		ldi r24,lo8(512)
+ 550 03e8 92E0      		ldi r25,hi8(512)
+ 551 03ea 0E94 0000 		call malloc
+ 552 03ee EC01      		movw r28,r24
+ 553 03f0 0097      		sbiw r24,0
+ 554 03f2 01F0      		breq .L41
+ 555 03f4 812C      		mov r8,__zero_reg__
+ 556 03f6 82E0      		ldi r24,hi8(512)
+ 557 03f8 982E      		mov r9,r24
+ 558 03fa 00C0      		rjmp .L42
+ 559               	.L45:
+ 560 03fc F0E0      		ldi r31,lo8(512)
+ 561 03fe EF16      		cp r14,r31
+ 562 0400 F2E0      		ldi r31,hi8(512)
+ 563 0402 FF06      		cpc r15,r31
+ 564 0404 F0E0      		ldi r31,hlo8(512)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 11
+
+
+ 565 0406 0F07      		cpc r16,r31
+ 566 0408 F0E0      		ldi r31,hhi8(512)
+ 567 040a 1F07      		cpc r17,r31
+ 568 040c 04F4      		brge .L43
+ 569 040e 4701      		movw r8,r14
+ 570               	.L43:
+ 571 0410 C601      		movw r24,r12
+ 572 0412 BE01      		movw r22,r28
+ 573 0414 A401      		movw r20,r8
+ 574 0416 0E94 0000 		call _read
+ 575 041a 5C01      		movw r10,r24
+ 576 041c CE01      		movw r24,r28
+ 577 041e 61E0      		ldi r22,lo8(1)
+ 578 0420 70E0      		ldi r23,hi8(1)
+ 579 0422 A501      		movw r20,r10
+ 580 0424 9301      		movw r18,r6
+ 581 0426 0E94 0000 		call fwrite
+ 582 042a 892B      		or r24,r25
+ 583 042c 01F0      		breq .L44
+ 584 042e C501      		movw r24,r10
+ 585 0430 AA27      		clr r26
+ 586 0432 97FD      		sbrc r25,7
+ 587 0434 A095      		com r26
+ 588 0436 BA2F      		mov r27,r26
+ 589 0438 E81A      		sub r14,r24
+ 590 043a F90A      		sbc r15,r25
+ 591 043c 0A0B      		sbc r16,r26
+ 592 043e 1B0B      		sbc r17,r27
+ 593               	.L42:
+ 594 0440 E114      		cp r14,__zero_reg__
+ 595 0442 F104      		cpc r15,__zero_reg__
+ 596 0444 0105      		cpc r16,__zero_reg__
+ 597 0446 1105      		cpc r17,__zero_reg__
+ 598 0448 01F4      		brne .L45
+ 599               	.L44:
+ 600 044a CE01      		movw r24,r28
+ 601 044c 0E94 0000 		call free
+ 602 0450 00C0      		rjmp .L41
+ 603               	.L40:
+ 604 0452 C301      		movw r24,r6
+ 605 0454 B601      		movw r22,r12
+ 606 0456 A701      		movw r20,r14
+ 607 0458 9101      		movw r18,r2
+ 608 045a 8401      		movw r16,r8
+ 609 045c FE01      		movw r30,r28
+ 610 045e 0995      		icall
+ 611               	.L41:
+ 612 0460 C601      		movw r24,r12
+ 613 0462 0E94 0000 		call _close
+ 614               	.L46:
+ 615               	/* epilogue start */
+ 616 0466 DF91      		pop r29
+ 617 0468 CF91      		pop r28
+ 618 046a 1F91      		pop r17
+ 619 046c 0F91      		pop r16
+ 620 046e FF90      		pop r15
+ 621 0470 EF90      		pop r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 12
+
+
+ 622 0472 DF90      		pop r13
+ 623 0474 CF90      		pop r12
+ 624 0476 BF90      		pop r11
+ 625 0478 AF90      		pop r10
+ 626 047a 9F90      		pop r9
+ 627 047c 8F90      		pop r8
+ 628 047e 7F90      		pop r7
+ 629 0480 6F90      		pop r6
+ 630 0482 5F90      		pop r5
+ 631 0484 4F90      		pop r4
+ 632 0486 3F90      		pop r3
+ 633 0488 2F90      		pop r2
+ 634 048a 0895      		ret
+ 635               		.size	NutSsiProcessVirtual, .-NutSsiProcessVirtual
+ 636               		.data
+ 637               	.LC5:
+ 638 0022 3C21 2D2D 		.string	"<!--"
+ 638      00
+ 639               	.LC6:
+ 640 0027 2D2D 3E00 		.string	"-->"
+ 641               	.LC7:
+ 642 002b 2369 6E63 		.string	"#include"
+ 642      6C75 6465 
+ 642      00
+ 643               	.LC8:
+ 644 0034 2365 7865 		.string	"#exec"
+ 644      6300 
+ 645               	.LC9:
+ 646 003a 2365 6368 		.string	"#echo"
+ 646      6F00 
+ 647               	.LC10:
+ 648 0040 7669 7274 		.string	"virtual"
+ 648      7561 6C00 
+ 649               	.LC11:
+ 650 0048 6669 6C65 		.string	"file"
+ 650      00
+ 651               	.LC12:
+ 652 004d 7661 7200 		.string	"var"
+ 653               	.LC13:
+ 654 0051 6367 6900 		.string	"cgi"
+ 655               		.text
+ 656               		.type	NutHttpProcessSHTML, @function
+ 657               	NutHttpProcessSHTML:
+ 658 048c 2F92      		push r2
+ 659 048e 3F92      		push r3
+ 660 0490 4F92      		push r4
+ 661 0492 5F92      		push r5
+ 662 0494 6F92      		push r6
+ 663 0496 7F92      		push r7
+ 664 0498 8F92      		push r8
+ 665 049a 9F92      		push r9
+ 666 049c AF92      		push r10
+ 667 049e BF92      		push r11
+ 668 04a0 CF92      		push r12
+ 669 04a2 DF92      		push r13
+ 670 04a4 EF92      		push r14
+ 671 04a6 FF92      		push r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 13
+
+
+ 672 04a8 0F93      		push r16
+ 673 04aa 1F93      		push r17
+ 674 04ac DF93      		push r29
+ 675 04ae CF93      		push r28
+ 676 04b0 CDB7      		in r28,__SP_L__
+ 677 04b2 DEB7      		in r29,__SP_H__
+ 678 04b4 6697      		sbiw r28,22
+ 679 04b6 0FB6      		in __tmp_reg__,__SREG__
+ 680 04b8 F894      		cli
+ 681 04ba DEBF      		out __SP_H__,r29
+ 682 04bc 0FBE      		out __SREG__,__tmp_reg__
+ 683 04be CDBF      		out __SP_L__,r28
+ 684               	/* prologue: function */
+ 685               	/* frame size = 22 */
+ 686 04c0 9A87      		std Y+10,r25
+ 687 04c2 8987      		std Y+9,r24
+ 688 04c4 7C87      		std Y+12,r23
+ 689 04c6 6B87      		std Y+11,r22
+ 690 04c8 5E87      		std Y+14,r21
+ 691 04ca 4D87      		std Y+13,r20
+ 692 04cc 388B      		std Y+16,r19
+ 693 04ce 2F87      		std Y+15,r18
+ 694 04d0 1A8B      		std Y+18,r17
+ 695 04d2 098B      		std Y+17,r16
+ 696 04d4 5E83      		std Y+6,r21
+ 697 04d6 4D83      		std Y+5,r20
+ 698 04d8 4150      		subi r20,lo8(513)
+ 699 04da 5240      		sbci r21,hi8(513)
+ 700 04dc 04F0      		brlt .L55
+ 701 04de 80E0      		ldi r24,lo8(512)
+ 702 04e0 92E0      		ldi r25,hi8(512)
+ 703 04e2 9E83      		std Y+6,r25
+ 704 04e4 8D83      		std Y+5,r24
+ 705               	.L55:
+ 706 04e6 AD81      		ldd r26,Y+5
+ 707 04e8 BE81      		ldd r27,Y+6
+ 708 04ea 1196      		adiw r26,1
+ 709 04ec B887      		std Y+8,r27
+ 710 04ee AF83      		std Y+7,r26
+ 711 04f0 CD01      		movw r24,r26
+ 712 04f2 0E94 0000 		call malloc
+ 713 04f6 5C01      		movw r10,r24
+ 714 04f8 10E0      		ldi r17,lo8(0)
+ 715 04fa 4424      		clr r4
+ 716 04fc 5524      		clr r5
+ 717 04fe 2D81      		ldd r18,Y+5
+ 718 0500 3E81      		ldd r19,Y+6
+ 719 0502 2356      		subi r18,lo8(-(-99))
+ 720 0504 3040      		sbci r19,hi8(-(-99))
+ 721 0506 3C8B      		std Y+20,r19
+ 722 0508 2B8B      		std Y+19,r18
+ 723 050a 8D81      		ldd r24,Y+5
+ 724 050c 9E81      		ldd r25,Y+6
+ 725 050e 8456      		subi r24,lo8(-(-100))
+ 726 0510 9040      		sbci r25,hi8(-(-100))
+ 727 0512 9E8B      		std Y+22,r25
+ 728 0514 8D8B      		std Y+21,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 14
+
+
+ 729 0516 00C0      		rjmp .L90
+ 730               	.L88:
+ 731 0518 C501      		movw r24,r10
+ 732 051a 60E0      		ldi r22,lo8(0)
+ 733 051c 70E0      		ldi r23,hi8(0)
+ 734 051e 4F81      		ldd r20,Y+7
+ 735 0520 5885      		ldd r21,Y+8
+ 736 0522 0E94 0000 		call memset
+ 737 0526 4D85      		ldd r20,Y+13
+ 738 0528 5E85      		ldd r21,Y+14
+ 739 052a 4419      		sub r20,r4
+ 740 052c 5509      		sbc r21,r5
+ 741 052e AD81      		ldd r26,Y+5
+ 742 0530 BE81      		ldd r27,Y+6
+ 743 0532 A417      		cp r26,r20
+ 744 0534 B507      		cpc r27,r21
+ 745 0536 04F4      		brge .L57
+ 746 0538 AD01      		movw r20,r26
+ 747               	.L57:
+ 748 053a 8B85      		ldd r24,Y+11
+ 749 053c 9C85      		ldd r25,Y+12
+ 750 053e B501      		movw r22,r10
+ 751 0540 0E94 0000 		call _read
+ 752 0544 7C01      		movw r14,r24
+ 753 0546 1123      		tst r17
+ 754 0548 01F0      		breq .+2
+ 755 054a 00C0      		rjmp .L58
+ 756 054c C501      		movw r24,r10
+ 757 054e 60E0      		ldi r22,lo8(.LC5)
+ 758 0550 70E0      		ldi r23,hi8(.LC5)
+ 759 0552 0E94 0000 		call strstr
+ 760 0556 0097      		sbiw r24,0
+ 761 0558 01F4      		brne .L59
+ 762 055a 2D85      		ldd r18,Y+13
+ 763 055c 3E85      		ldd r19,Y+14
+ 764 055e 8D81      		ldd r24,Y+5
+ 765 0560 9E81      		ldd r25,Y+6
+ 766 0562 8217      		cp r24,r18
+ 767 0564 9307      		cpc r25,r19
+ 768 0566 04F4      		brge .L60
+ 769 0568 AB89      		ldd r26,Y+19
+ 770 056a BC89      		ldd r27,Y+20
+ 771 056c EA16      		cp r14,r26
+ 772 056e FB06      		cpc r15,r27
+ 773 0570 04F4      		brge .L61
+ 774 0572 C701      		movw r24,r14
+ 775 0574 00C0      		rjmp .L92
+ 776               	.L61:
+ 777 0576 8D89      		ldd r24,Y+21
+ 778 0578 9E89      		ldd r25,Y+22
+ 779               	.L92:
+ 780 057a AC01      		movw r20,r24
+ 781 057c C501      		movw r24,r10
+ 782 057e 61E0      		ldi r22,lo8(1)
+ 783 0580 70E0      		ldi r23,hi8(1)
+ 784 0582 2985      		ldd r18,Y+9
+ 785 0584 3A85      		ldd r19,Y+10
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 15
+
+
+ 786 0586 0E94 0000 		call fwrite
+ 787 058a 2B89      		ldd r18,Y+19
+ 788 058c 3C89      		ldd r19,Y+20
+ 789 058e E216      		cp r14,r18
+ 790 0590 F306      		cpc r15,r19
+ 791 0592 04F0      		brlt .L63
+ 792 0594 ED88      		ldd r14,Y+21
+ 793 0596 FE88      		ldd r15,Y+22
+ 794               	.L63:
+ 795 0598 4E0C      		add r4,r14
+ 796 059a 5F1C      		adc r5,r15
+ 797 059c A201      		movw r20,r4
+ 798 059e 6627      		clr r22
+ 799 05a0 57FD      		sbrc r21,7
+ 800 05a2 6095      		com r22
+ 801 05a4 762F      		mov r23,r22
+ 802 05a6 8B85      		ldd r24,Y+11
+ 803 05a8 9C85      		ldd r25,Y+12
+ 804 05aa 20E0      		ldi r18,lo8(0)
+ 805 05ac 30E0      		ldi r19,hi8(0)
+ 806 05ae 0E94 0000 		call _seek
+ 807 05b2 00C0      		rjmp .L90
+ 808               	.L60:
+ 809 05b4 C501      		movw r24,r10
+ 810 05b6 61E0      		ldi r22,lo8(1)
+ 811 05b8 70E0      		ldi r23,hi8(1)
+ 812 05ba A701      		movw r20,r14
+ 813 05bc 2985      		ldd r18,Y+9
+ 814 05be 3A85      		ldd r19,Y+10
+ 815 05c0 0E94 0000 		call fwrite
+ 816 05c4 4E0C      		add r4,r14
+ 817 05c6 5F1C      		adc r5,r15
+ 818 05c8 00C0      		rjmp .L90
+ 819               	.L59:
+ 820 05ca 182F      		mov r17,r24
+ 821 05cc 1A19      		sub r17,r10
+ 822 05ce C501      		movw r24,r10
+ 823 05d0 61E0      		ldi r22,lo8(1)
+ 824 05d2 70E0      		ldi r23,hi8(1)
+ 825 05d4 412F      		mov r20,r17
+ 826 05d6 50E0      		ldi r21,lo8(0)
+ 827 05d8 2985      		ldd r18,Y+9
+ 828 05da 3A85      		ldd r19,Y+10
+ 829 05dc 0E94 0000 		call fwrite
+ 830 05e0 410E      		add r4,r17
+ 831 05e2 511C      		adc r5,__zero_reg__
+ 832 05e4 A201      		movw r20,r4
+ 833 05e6 6627      		clr r22
+ 834 05e8 57FD      		sbrc r21,7
+ 835 05ea 6095      		com r22
+ 836 05ec 762F      		mov r23,r22
+ 837 05ee 8B85      		ldd r24,Y+11
+ 838 05f0 9C85      		ldd r25,Y+12
+ 839 05f2 20E0      		ldi r18,lo8(0)
+ 840 05f4 30E0      		ldi r19,hi8(0)
+ 841 05f6 0E94 0000 		call _seek
+ 842 05fa 11E0      		ldi r17,lo8(1)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 16
+
+
+ 843 05fc 00C0      		rjmp .L90
+ 844               	.L58:
+ 845 05fe C501      		movw r24,r10
+ 846 0600 60E0      		ldi r22,lo8(.LC6)
+ 847 0602 70E0      		ldi r23,hi8(.LC6)
+ 848 0604 0E94 0000 		call strstr
+ 849 0608 0097      		sbiw r24,0
+ 850 060a 01F4      		brne .L64
+ 851 060c 8701      		movw r16,r14
+ 852 060e 8D81      		ldd r24,Y+5
+ 853 0610 9E81      		ldd r25,Y+6
+ 854 0612 8E15      		cp r24,r14
+ 855 0614 9F05      		cpc r25,r15
+ 856 0616 04F4      		brge .L65
+ 857 0618 8C01      		movw r16,r24
+ 858               	.L65:
+ 859 061a C501      		movw r24,r10
+ 860 061c 61E0      		ldi r22,lo8(1)
+ 861 061e 70E0      		ldi r23,hi8(1)
+ 862 0620 A801      		movw r20,r16
+ 863 0622 2985      		ldd r18,Y+9
+ 864 0624 3A85      		ldd r19,Y+10
+ 865 0626 0E94 0000 		call fwrite
+ 866 062a 400E      		add r4,r16
+ 867 062c 511E      		adc r5,r17
+ 868 062e 00C0      		rjmp .L94
+ 869               	.L64:
+ 870 0630 982F      		mov r25,r24
+ 871 0632 9A19      		sub r25,r10
+ 872 0634 9B83      		std Y+3,r25
+ 873 0636 C92E      		mov r12,r25
+ 874 0638 DD24      		clr r13
+ 875 063a A4E0      		ldi r26,lo8(4)
+ 876 063c B0E0      		ldi r27,hi8(4)
+ 877 063e BA83      		std Y+2,r27
+ 878 0640 A983      		std Y+1,r26
+ 879 0642 C501      		movw r24,r10
+ 880 0644 BE01      		movw r22,r28
+ 881 0646 6F5F      		subi r22,lo8(-(1))
+ 882 0648 7F4F      		sbci r23,hi8(-(1))
+ 883 064a A601      		movw r20,r12
+ 884 064c 0E94 0000 		call NutSsiSkipWhitespace
+ 885 0650 0981      		ldd r16,Y+1
+ 886 0652 1A81      		ldd r17,Y+2
+ 887 0654 0C15      		cp r16,r12
+ 888 0656 1D05      		cpc r17,r13
+ 889 0658 01F4      		brne .+2
+ 890 065a 00C0      		rjmp .L66
+ 891 065c 7501      		movw r14,r10
+ 892 065e E00E      		add r14,r16
+ 893 0660 F11E      		adc r15,r17
+ 894 0662 C701      		movw r24,r14
+ 895 0664 60E0      		ldi r22,lo8(.LC7)
+ 896 0666 70E0      		ldi r23,hi8(.LC7)
+ 897 0668 48E0      		ldi r20,lo8(8)
+ 898 066a 50E0      		ldi r21,hi8(8)
+ 899 066c 0E94 0000 		call strncasecmp
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 17
+
+
+ 900 0670 892B      		or r24,r25
+ 901 0672 01F4      		brne .L67
+ 902 0674 085F      		subi r16,lo8(-(8))
+ 903 0676 1F4F      		sbci r17,hi8(-(8))
+ 904 0678 1A83      		std Y+2,r17
+ 905 067a 0983      		std Y+1,r16
+ 906 067c B2E0      		ldi r27,lo8(2)
+ 907 067e BC83      		std Y+4,r27
+ 908 0680 00C0      		rjmp .L68
+ 909               	.L67:
+ 910 0682 C701      		movw r24,r14
+ 911 0684 60E0      		ldi r22,lo8(.LC8)
+ 912 0686 70E0      		ldi r23,hi8(.LC8)
+ 913 0688 45E0      		ldi r20,lo8(5)
+ 914 068a 50E0      		ldi r21,hi8(5)
+ 915 068c 0E94 0000 		call strncasecmp
+ 916 0690 892B      		or r24,r25
+ 917 0692 01F4      		brne .L69
+ 918 0694 0B5F      		subi r16,lo8(-(5))
+ 919 0696 1F4F      		sbci r17,hi8(-(5))
+ 920 0698 1A83      		std Y+2,r17
+ 921 069a 0983      		std Y+1,r16
+ 922 069c 23E0      		ldi r18,lo8(3)
+ 923 069e 2C83      		std Y+4,r18
+ 924 06a0 00C0      		rjmp .L68
+ 925               	.L69:
+ 926 06a2 C701      		movw r24,r14
+ 927 06a4 60E0      		ldi r22,lo8(.LC9)
+ 928 06a6 70E0      		ldi r23,hi8(.LC9)
+ 929 06a8 45E0      		ldi r20,lo8(5)
+ 930 06aa 50E0      		ldi r21,hi8(5)
+ 931 06ac 0E94 0000 		call strncasecmp
+ 932 06b0 892B      		or r24,r25
+ 933 06b2 01F0      		breq .+2
+ 934 06b4 00C0      		rjmp .L66
+ 935 06b6 0B5F      		subi r16,lo8(-(5))
+ 936 06b8 1F4F      		sbci r17,hi8(-(5))
+ 937 06ba 1A83      		std Y+2,r17
+ 938 06bc 0983      		std Y+1,r16
+ 939 06be 34E0      		ldi r19,lo8(4)
+ 940 06c0 3C83      		std Y+4,r19
+ 941               	.L68:
+ 942 06c2 8981      		ldd r24,Y+1
+ 943 06c4 9A81      		ldd r25,Y+2
+ 944 06c6 8C15      		cp r24,r12
+ 945 06c8 9D05      		cpc r25,r13
+ 946 06ca 00F0      		brlo .+2
+ 947 06cc 00C0      		rjmp .L66
+ 948 06ce C501      		movw r24,r10
+ 949 06d0 BE01      		movw r22,r28
+ 950 06d2 6F5F      		subi r22,lo8(-(1))
+ 951 06d4 7F4F      		sbci r23,hi8(-(1))
+ 952 06d6 A601      		movw r20,r12
+ 953 06d8 0E94 0000 		call NutSsiSkipWhitespace
+ 954 06dc 0981      		ldd r16,Y+1
+ 955 06de 1A81      		ldd r17,Y+2
+ 956 06e0 0C15      		cp r16,r12
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 18
+
+
+ 957 06e2 1D05      		cpc r17,r13
+ 958 06e4 01F4      		brne .+2
+ 959 06e6 00C0      		rjmp .L66
+ 960 06e8 8C81      		ldd r24,Y+4
+ 961 06ea 8230      		cpi r24,lo8(2)
+ 962 06ec 01F4      		brne .L70
+ 963 06ee 7501      		movw r14,r10
+ 964 06f0 E00E      		add r14,r16
+ 965 06f2 F11E      		adc r15,r17
+ 966 06f4 C701      		movw r24,r14
+ 967 06f6 60E0      		ldi r22,lo8(.LC10)
+ 968 06f8 70E0      		ldi r23,hi8(.LC10)
+ 969 06fa 47E0      		ldi r20,lo8(7)
+ 970 06fc 50E0      		ldi r21,hi8(7)
+ 971 06fe 0E94 0000 		call strncasecmp
+ 972 0702 892B      		or r24,r25
+ 973 0704 01F4      		brne .L71
+ 974 0706 095F      		subi r16,lo8(-(7))
+ 975 0708 1F4F      		sbci r17,hi8(-(7))
+ 976 070a 00C0      		rjmp .L93
+ 977               	.L71:
+ 978 070c C701      		movw r24,r14
+ 979 070e 60E0      		ldi r22,lo8(.LC11)
+ 980 0710 70E0      		ldi r23,hi8(.LC11)
+ 981 0712 44E0      		ldi r20,lo8(4)
+ 982 0714 50E0      		ldi r21,hi8(4)
+ 983 0716 0E94 0000 		call strncasecmp
+ 984 071a 892B      		or r24,r25
+ 985 071c 01F0      		breq .+2
+ 986 071e 00C0      		rjmp .L66
+ 987 0720 0C5F      		subi r16,lo8(-(4))
+ 988 0722 1F4F      		sbci r17,hi8(-(4))
+ 989 0724 1A83      		std Y+2,r17
+ 990 0726 0983      		std Y+1,r16
+ 991 0728 91E0      		ldi r25,lo8(1)
+ 992 072a 9C83      		std Y+4,r25
+ 993 072c 00C0      		rjmp .L72
+ 994               	.L70:
+ 995 072e C501      		movw r24,r10
+ 996 0730 800F      		add r24,r16
+ 997 0732 911F      		adc r25,r17
+ 998 0734 AC81      		ldd r26,Y+4
+ 999 0736 A430      		cpi r26,lo8(4)
+ 1000 0738 01F4      		brne .L73
+ 1001 073a 60E0      		ldi r22,lo8(.LC12)
+ 1002 073c 70E0      		ldi r23,hi8(.LC12)
+ 1003 073e 43E0      		ldi r20,lo8(3)
+ 1004 0740 50E0      		ldi r21,hi8(3)
+ 1005 0742 0E94 0000 		call strncasecmp
+ 1006 0746 00C0      		rjmp .L97
+ 1007               	.L73:
+ 1008 0748 60E0      		ldi r22,lo8(.LC13)
+ 1009 074a 70E0      		ldi r23,hi8(.LC13)
+ 1010 074c 43E0      		ldi r20,lo8(3)
+ 1011 074e 50E0      		ldi r21,hi8(3)
+ 1012 0750 0E94 0000 		call strncasecmp
+ 1013               	.L97:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 19
+
+
+ 1014 0754 892B      		or r24,r25
+ 1015 0756 01F0      		breq .+2
+ 1016 0758 00C0      		rjmp .L66
+ 1017 075a 0D5F      		subi r16,lo8(-(3))
+ 1018 075c 1F4F      		sbci r17,hi8(-(3))
+ 1019               	.L93:
+ 1020 075e 1A83      		std Y+2,r17
+ 1021 0760 0983      		std Y+1,r16
+ 1022               	.L72:
+ 1023 0762 8981      		ldd r24,Y+1
+ 1024 0764 9A81      		ldd r25,Y+2
+ 1025 0766 8C15      		cp r24,r12
+ 1026 0768 9D05      		cpc r25,r13
+ 1027 076a 00F0      		brlo .+2
+ 1028 076c 00C0      		rjmp .L66
+ 1029 076e C501      		movw r24,r10
+ 1030 0770 BE01      		movw r22,r28
+ 1031 0772 6F5F      		subi r22,lo8(-(1))
+ 1032 0774 7F4F      		sbci r23,hi8(-(1))
+ 1033 0776 A601      		movw r20,r12
+ 1034 0778 0E94 0000 		call NutSsiSkipWhitespace
+ 1035 077c 2981      		ldd r18,Y+1
+ 1036 077e 3A81      		ldd r19,Y+2
+ 1037 0780 2C15      		cp r18,r12
+ 1038 0782 3D05      		cpc r19,r13
+ 1039 0784 01F4      		brne .+2
+ 1040 0786 00C0      		rjmp .L66
+ 1041 0788 F501      		movw r30,r10
+ 1042 078a E20F      		add r30,r18
+ 1043 078c F31F      		adc r31,r19
+ 1044 078e 8081      		ld r24,Z
+ 1045 0790 8D33      		cpi r24,lo8(61)
+ 1046 0792 01F0      		breq .+2
+ 1047 0794 00C0      		rjmp .L66
+ 1048 0796 2F5F      		subi r18,lo8(-(1))
+ 1049 0798 3F4F      		sbci r19,hi8(-(1))
+ 1050 079a 3A83      		std Y+2,r19
+ 1051 079c 2983      		std Y+1,r18
+ 1052 079e C501      		movw r24,r10
+ 1053 07a0 BE01      		movw r22,r28
+ 1054 07a2 6F5F      		subi r22,lo8(-(1))
+ 1055 07a4 7F4F      		sbci r23,hi8(-(1))
+ 1056 07a6 A601      		movw r20,r12
+ 1057 07a8 0E94 0000 		call NutSsiSkipWhitespace
+ 1058 07ac 2981      		ldd r18,Y+1
+ 1059 07ae 3A81      		ldd r19,Y+2
+ 1060 07b0 2C15      		cp r18,r12
+ 1061 07b2 3D05      		cpc r19,r13
+ 1062 07b4 01F4      		brne .+2
+ 1063 07b6 00C0      		rjmp .L66
+ 1064 07b8 F501      		movw r30,r10
+ 1065 07ba E20F      		add r30,r18
+ 1066 07bc F31F      		adc r31,r19
+ 1067 07be 8081      		ld r24,Z
+ 1068 07c0 8232      		cpi r24,lo8(34)
+ 1069 07c2 01F0      		breq .+2
+ 1070 07c4 00C0      		rjmp .L74
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 20
+
+
+ 1071 07c6 B901      		movw r22,r18
+ 1072 07c8 6F5F      		subi r22,lo8(-(1))
+ 1073 07ca 7F4F      		sbci r23,hi8(-(1))
+ 1074 07cc 7A83      		std Y+2,r23
+ 1075 07ce 6983      		std Y+1,r22
+ 1076 07d0 6C15      		cp r22,r12
+ 1077 07d2 7D05      		cpc r23,r13
+ 1078 07d4 01F4      		brne .L91
+ 1079 07d6 00C0      		rjmp .L66
+ 1080               	.L76:
+ 1081 07d8 C901      		movw r24,r18
+ 1082 07da 0196      		adiw r24,1
+ 1083 07dc 9A83      		std Y+2,r25
+ 1084 07de 8983      		std Y+1,r24
+ 1085 07e0 8C15      		cp r24,r12
+ 1086 07e2 9D05      		cpc r25,r13
+ 1087 07e4 01F4      		brne .+2
+ 1088 07e6 00C0      		rjmp .L66
+ 1089               	.L91:
+ 1090 07e8 2981      		ldd r18,Y+1
+ 1091 07ea 3A81      		ldd r19,Y+2
+ 1092 07ec F501      		movw r30,r10
+ 1093 07ee E20F      		add r30,r18
+ 1094 07f0 F31F      		adc r31,r19
+ 1095 07f2 8081      		ld r24,Z
+ 1096 07f4 8232      		cpi r24,lo8(34)
+ 1097 07f6 01F4      		brne .L76
+ 1098 07f8 7501      		movw r14,r10
+ 1099 07fa E60E      		add r14,r22
+ 1100 07fc F71E      		adc r15,r23
+ 1101 07fe 1082      		st Z,__zero_reg__
+ 1102 0800 BC81      		ldd r27,Y+4
+ 1103 0802 B230      		cpi r27,lo8(2)
+ 1104 0804 01F4      		brne .+2
+ 1105 0806 00C0      		rjmp .L79
+ 1106 0808 B330      		cpi r27,lo8(3)
+ 1107 080a 00F4      		brsh .L81
+ 1108 080c B130      		cpi r27,lo8(1)
+ 1109 080e 01F0      		breq .+2
+ 1110 0810 00C0      		rjmp .L74
+ 1111 0812 00C0      		rjmp .L98
+ 1112               	.L81:
+ 1113 0814 2C81      		ldd r18,Y+4
+ 1114 0816 2330      		cpi r18,lo8(3)
+ 1115 0818 01F4      		brne .+2
+ 1116 081a 00C0      		rjmp .L79
+ 1117 081c 2430      		cpi r18,lo8(4)
+ 1118 081e 01F0      		breq .+2
+ 1119 0820 00C0      		rjmp .L74
+ 1120 0822 00C0      		rjmp .L99
+ 1121               	.L98:
+ 1122 0824 C701      		movw r24,r14
+ 1123 0826 60E0      		ldi r22,lo8(-32768)
+ 1124 0828 70E8      		ldi r23,hi8(-32768)
+ 1125 082a 0E94 0000 		call _open
+ 1126 082e 3C01      		movw r6,r24
+ 1127 0830 3FEF      		ldi r19,hi8(-1)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 21
+
+
+ 1128 0832 8F3F      		cpi r24,lo8(-1)
+ 1129 0834 9307      		cpc r25,r19
+ 1130 0836 01F4      		brne .L82
+ 1131 0838 00D0      		rcall .
+ 1132 083a 00D0      		rcall .
+ 1133 083c 00D0      		rcall .
+ 1134 083e EDB7      		in r30,__SP_L__
+ 1135 0840 FEB7      		in r31,__SP_H__
+ 1136 0842 3196      		adiw r30,1
+ 1137 0844 2985      		ldd r18,Y+9
+ 1138 0846 3A85      		ldd r19,Y+10
+ 1139 0848 ADB7      		in r26,__SP_L__
+ 1140 084a BEB7      		in r27,__SP_H__
+ 1141 084c 1296      		adiw r26,1+1
+ 1142 084e 3C93      		st X,r19
+ 1143 0850 2E93      		st -X,r18
+ 1144 0852 1197      		sbiw r26,1
+ 1145 0854 80E0      		ldi r24,lo8(rsp_not_found_P)
+ 1146 0856 90E0      		ldi r25,hi8(rsp_not_found_P)
+ 1147 0858 9383      		std Z+3,r25
+ 1148 085a 8283      		std Z+2,r24
+ 1149 085c F582      		std Z+5,r15
+ 1150 085e E482      		std Z+4,r14
+ 1151 0860 0E94 0000 		call fprintf_P
+ 1152 0864 ADB7      		in r26,__SP_L__
+ 1153 0866 BEB7      		in r27,__SP_H__
+ 1154 0868 1696      		adiw r26,6
+ 1155 086a 0FB6      		in __tmp_reg__,__SREG__
+ 1156 086c F894      		cli
+ 1157 086e BEBF      		out __SP_H__,r27
+ 1158 0870 0FBE      		out __SREG__,__tmp_reg__
+ 1159 0872 ADBF      		out __SP_L__,r26
+ 1160 0874 00C0      		rjmp .L74
+ 1161               	.L82:
+ 1162 0876 0E94 0000 		call _filelength
+ 1163 087a 6B01      		movw r12,r22
+ 1164 087c 7C01      		movw r14,r24
+ 1165 087e 80E0      		ldi r24,lo8(512)
+ 1166 0880 92E0      		ldi r25,hi8(512)
+ 1167 0882 0E94 0000 		call malloc
+ 1168 0886 8C01      		movw r16,r24
+ 1169 0888 0097      		sbiw r24,0
+ 1170 088a 01F0      		breq .L83
+ 1171 088c 212C      		mov r2,__zero_reg__
+ 1172 088e A2E0      		ldi r26,hi8(512)
+ 1173 0890 3A2E      		mov r3,r26
+ 1174 0892 00C0      		rjmp .L84
+ 1175               	.L87:
+ 1176 0894 B0E0      		ldi r27,lo8(512)
+ 1177 0896 CB16      		cp r12,r27
+ 1178 0898 B2E0      		ldi r27,hi8(512)
+ 1179 089a DB06      		cpc r13,r27
+ 1180 089c B0E0      		ldi r27,hlo8(512)
+ 1181 089e EB06      		cpc r14,r27
+ 1182 08a0 B0E0      		ldi r27,hhi8(512)
+ 1183 08a2 FB06      		cpc r15,r27
+ 1184 08a4 04F4      		brge .L85
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 22
+
+
+ 1185 08a6 1601      		movw r2,r12
+ 1186               	.L85:
+ 1187 08a8 C301      		movw r24,r6
+ 1188 08aa B801      		movw r22,r16
+ 1189 08ac A101      		movw r20,r2
+ 1190 08ae 0E94 0000 		call _read
+ 1191 08b2 4C01      		movw r8,r24
+ 1192 08b4 C801      		movw r24,r16
+ 1193 08b6 61E0      		ldi r22,lo8(1)
+ 1194 08b8 70E0      		ldi r23,hi8(1)
+ 1195 08ba A401      		movw r20,r8
+ 1196 08bc 2985      		ldd r18,Y+9
+ 1197 08be 3A85      		ldd r19,Y+10
+ 1198 08c0 0E94 0000 		call fwrite
+ 1199 08c4 892B      		or r24,r25
+ 1200 08c6 01F0      		breq .L86
+ 1201 08c8 C401      		movw r24,r8
+ 1202 08ca AA27      		clr r26
+ 1203 08cc 97FD      		sbrc r25,7
+ 1204 08ce A095      		com r26
+ 1205 08d0 BA2F      		mov r27,r26
+ 1206 08d2 C81A      		sub r12,r24
+ 1207 08d4 D90A      		sbc r13,r25
+ 1208 08d6 EA0A      		sbc r14,r26
+ 1209 08d8 FB0A      		sbc r15,r27
+ 1210               	.L84:
+ 1211 08da C114      		cp r12,__zero_reg__
+ 1212 08dc D104      		cpc r13,__zero_reg__
+ 1213 08de E104      		cpc r14,__zero_reg__
+ 1214 08e0 F104      		cpc r15,__zero_reg__
+ 1215 08e2 01F4      		brne .L87
+ 1216               	.L86:
+ 1217 08e4 C801      		movw r24,r16
+ 1218 08e6 0E94 0000 		call free
+ 1219               	.L83:
+ 1220 08ea C301      		movw r24,r6
+ 1221 08ec 0E94 0000 		call _close
+ 1222 08f0 00C0      		rjmp .L74
+ 1223               	.L79:
+ 1224 08f2 8985      		ldd r24,Y+9
+ 1225 08f4 9A85      		ldd r25,Y+10
+ 1226 08f6 B701      		movw r22,r14
+ 1227 08f8 4F85      		ldd r20,Y+15
+ 1228 08fa 5889      		ldd r21,Y+16
+ 1229 08fc 2989      		ldd r18,Y+17
+ 1230 08fe 3A89      		ldd r19,Y+18
+ 1231 0900 0E94 0000 		call NutSsiProcessVirtual
+ 1232 0904 00C0      		rjmp .L74
+ 1233               	.L99:
+ 1234 0906 E091 0000 		lds r30,ssivar_handler
+ 1235 090a F091 0000 		lds r31,(ssivar_handler)+1
+ 1236 090e 3097      		sbiw r30,0
+ 1237 0910 01F0      		breq .L74
+ 1238 0912 C701      		movw r24,r14
+ 1239 0914 6989      		ldd r22,Y+17
+ 1240 0916 7A89      		ldd r23,Y+18
+ 1241 0918 0995      		icall
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 23
+
+
+ 1242 091a 0097      		sbiw r24,0
+ 1243 091c 01F0      		breq .L74
+ 1244 091e 6985      		ldd r22,Y+9
+ 1245 0920 7A85      		ldd r23,Y+10
+ 1246 0922 0E94 0000 		call fputs
+ 1247               	.L74:
+ 1248 0926 2B81      		ldd r18,Y+3
+ 1249 0928 822F      		mov r24,r18
+ 1250 092a 90E0      		ldi r25,lo8(0)
+ 1251 092c 0396      		adiw r24,3
+ 1252 092e 480E      		add r4,r24
+ 1253 0930 591E      		adc r5,r25
+ 1254 0932 A201      		movw r20,r4
+ 1255 0934 6627      		clr r22
+ 1256 0936 57FD      		sbrc r21,7
+ 1257 0938 6095      		com r22
+ 1258 093a 762F      		mov r23,r22
+ 1259 093c 8B85      		ldd r24,Y+11
+ 1260 093e 9C85      		ldd r25,Y+12
+ 1261 0940 20E0      		ldi r18,lo8(0)
+ 1262 0942 30E0      		ldi r19,hi8(0)
+ 1263 0944 0E94 0000 		call _seek
+ 1264               	.L94:
+ 1265 0948 10E0      		ldi r17,lo8(0)
+ 1266               	.L90:
+ 1267 094a 8D85      		ldd r24,Y+13
+ 1268 094c 9E85      		ldd r25,Y+14
+ 1269 094e 8415      		cp r24,r4
+ 1270 0950 9505      		cpc r25,r5
+ 1271 0952 01F0      		breq .+2
+ 1272 0954 00C0      		rjmp .L88
+ 1273 0956 C501      		movw r24,r10
+ 1274 0958 0E94 0000 		call free
+ 1275               	/* epilogue start */
+ 1276 095c 6696      		adiw r28,22
+ 1277 095e 0FB6      		in __tmp_reg__,__SREG__
+ 1278 0960 F894      		cli
+ 1279 0962 DEBF      		out __SP_H__,r29
+ 1280 0964 0FBE      		out __SREG__,__tmp_reg__
+ 1281 0966 CDBF      		out __SP_L__,r28
+ 1282 0968 CF91      		pop r28
+ 1283 096a DF91      		pop r29
+ 1284 096c 1F91      		pop r17
+ 1285 096e 0F91      		pop r16
+ 1286 0970 FF90      		pop r15
+ 1287 0972 EF90      		pop r14
+ 1288 0974 DF90      		pop r13
+ 1289 0976 CF90      		pop r12
+ 1290 0978 BF90      		pop r11
+ 1291 097a AF90      		pop r10
+ 1292 097c 9F90      		pop r9
+ 1293 097e 8F90      		pop r8
+ 1294 0980 7F90      		pop r7
+ 1295 0982 6F90      		pop r6
+ 1296 0984 5F90      		pop r5
+ 1297 0986 4F90      		pop r4
+ 1298 0988 3F90      		pop r3
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 24
+
+
+ 1299 098a 2F90      		pop r2
+ 1300 098c 0895      		ret
+ 1301               	.L66:
+ 1302 098e 9B81      		ldd r25,Y+3
+ 1303 0990 492F      		mov r20,r25
+ 1304 0992 50E0      		ldi r21,lo8(0)
+ 1305 0994 4D5F      		subi r20,lo8(-(3))
+ 1306 0996 5F4F      		sbci r21,hi8(-(3))
+ 1307 0998 C501      		movw r24,r10
+ 1308 099a 61E0      		ldi r22,lo8(1)
+ 1309 099c 70E0      		ldi r23,hi8(1)
+ 1310 099e 2985      		ldd r18,Y+9
+ 1311 09a0 3A85      		ldd r19,Y+10
+ 1312 09a2 0E94 0000 		call fwrite
+ 1313 09a6 00C0      		rjmp .L74
+ 1314               		.size	NutHttpProcessSHTML, .-NutHttpProcessSHTML
+ 1315               		.section	.progmem.data,"a",@progbits
+ 1316               		.type	rsp_not_found_P, @object
+ 1317               		.size	rsp_not_found_P, 20
+ 1318               	rsp_not_found_P:
+ 1319 0000 3430 3420 		.string	"404 Not found: %s\r\n"
+ 1319      4E6F 7420 
+ 1319      666F 756E 
+ 1319      643A 2025 
+ 1319      730D 0A00 
+ 1320               		.type	rsp_bad_req_P, @object
+ 1321               		.size	rsp_bad_req_P, 18
+ 1322               	rsp_bad_req_P:
+ 1323 0014 3430 3020 		.string	"400 Bad request\r\n"
+ 1323      4261 6420 
+ 1323      7265 7175 
+ 1323      6573 740D 
+ 1323      0A00 
+ 1324               		.type	rsp_intern_err_P, @object
+ 1325               		.size	rsp_intern_err_P, 21
+ 1326               	rsp_intern_err_P:
+ 1327 0026 3530 3020 		.string	"500 Internal error\r\n"
+ 1327      496E 7465 
+ 1327      726E 616C 
+ 1327      2065 7272 
+ 1327      6F72 0D0A 
+ 1328               		.lcomm ssivar_handler,2
+ 1329               	.global __do_copy_data
+ 1330               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s 			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ssi.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:10     .text:00000000 NutSsiSkipWhitespace
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:45     .text:00000034 NutRegisterSsiVarHandler
+                             .bss:00000000 ssivar_handler
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:61     .text:00000042 NutRegisterSsi
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:657    .text:0000048c NutHttpProcessSHTML
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:83     .text:00000050 NutSsiProcessVirtual
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:1322   .progmem.data:00000014 rsp_bad_req_P
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:1326   .progmem.data:00000026 rsp_intern_err_P
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccP1DUo5.s:1318   .progmem.data:00000000 rsp_not_found_P
+
+UNDEFINED SYMBOLS
+NutSetMimeHandler
+cgiBinPath
+NutDecodePath
+strncasecmp
+calloc
+strdup
+strchr
+strcmp
+malloc
+strcat
+NutHttpProcessQueryString
+fprintf_P
+NutCgiProcessRequest
+DestroyRequestInfo
+default_files
+CreateFilePath
+_open
+_filelength
+_close
+free
+NutGetMimeHandler
+_read
+fwrite
+memset
+strstr
+_seek
+fputs
+__do_copy_data
+__do_clear_bss

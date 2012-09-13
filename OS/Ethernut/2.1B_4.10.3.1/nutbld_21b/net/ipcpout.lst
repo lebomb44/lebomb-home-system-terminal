@@ -1,0 +1,232 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s 			page 1
+
+
+   1               		.file	"ipcpout.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutIpcpOutput
+  10               		.type	NutIpcpOutput, @function
+  11               	NutIpcpOutput:
+  12 0000 EF92      		push r14
+  13 0002 FF92      		push r15
+  14 0004 0F93      		push r16
+  15 0006 1F93      		push r17
+  16 0008 CF93      		push r28
+  17 000a DF93      		push r29
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 000c 8C01      		movw r16,r24
+  21 000e F62E      		mov r15,r22
+  22 0010 E42E      		mov r14,r20
+  23 0012 C901      		movw r24,r18
+  24 0014 60E2      		ldi r22,lo8(32)
+  25 0016 44E0      		ldi r20,lo8(4)
+  26 0018 50E0      		ldi r21,hi8(4)
+  27 001a 0E94 0000 		call NutNetBufAlloc
+  28 001e EC01      		movw r28,r24
+  29 0020 0097      		sbiw r24,0
+  30 0022 01F0      		breq .L2
+  31 0024 EF81      		ldd r30,Y+7
+  32 0026 F885      		ldd r31,Y+8
+  33 0028 F082      		st Z,r15
+  34 002a E182      		std Z+1,r14
+  35 002c 8D85      		ldd r24,Y+13
+  36 002e 9E85      		ldd r25,Y+14
+  37 0030 2985      		ldd r18,Y+9
+  38 0032 3A85      		ldd r19,Y+10
+  39 0034 820F      		add r24,r18
+  40 0036 931F      		adc r25,r19
+  41 0038 2989      		ldd r18,Y+17
+  42 003a 3A89      		ldd r19,Y+18
+  43 003c 820F      		add r24,r18
+  44 003e 931F      		adc r25,r19
+  45               	/* #APP */
+  46               	 ;  305 "../../nut/include/sys/types.h" 1
+  47 0040 082E      		mov __tmp_reg__, r24
+  48 0042 892F      		mov r24, r25
+  49 0044 902D      		mov r25, __tmp_reg__
+  50               		
+  51               	 ;  0 "" 2
+  52               	/* #NOAPP */
+  53 0046 9383      		std Z+3,r25
+  54 0048 8283      		std Z+2,r24
+  55 004a C801      		movw r24,r16
+  56 004c 61E2      		ldi r22,lo8(-32735)
+  57 004e 70E8      		ldi r23,hi8(-32735)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s 			page 2
+
+
+  58 0050 40E0      		ldi r20,lo8(0)
+  59 0052 50E0      		ldi r21,hi8(0)
+  60 0054 9E01      		movw r18,r28
+  61 0056 0E94 0000 		call NutPppOutput
+  62 005a 892B      		or r24,r25
+  63 005c 01F4      		brne .L2
+  64 005e CE01      		movw r24,r28
+  65 0060 0E94 0000 		call NutNetBufFree
+  66 0064 20E0      		ldi r18,lo8(0)
+  67 0066 30E0      		ldi r19,hi8(0)
+  68 0068 00C0      		rjmp .L3
+  69               	.L2:
+  70 006a 2FEF      		ldi r18,lo8(-1)
+  71 006c 3FEF      		ldi r19,hi8(-1)
+  72               	.L3:
+  73 006e C901      		movw r24,r18
+  74               	/* epilogue start */
+  75 0070 DF91      		pop r29
+  76 0072 CF91      		pop r28
+  77 0074 1F91      		pop r17
+  78 0076 0F91      		pop r16
+  79 0078 FF90      		pop r15
+  80 007a EF90      		pop r14
+  81 007c 0895      		ret
+  82               		.size	NutIpcpOutput, .-NutIpcpOutput
+  83               	.global	IpcpTxConfReq
+  84               		.type	IpcpTxConfReq, @function
+  85               	IpcpTxConfReq:
+  86 007e FF92      		push r15
+  87 0080 0F93      		push r16
+  88 0082 1F93      		push r17
+  89 0084 CF93      		push r28
+  90 0086 DF93      		push r29
+  91               	/* prologue: function */
+  92               	/* frame size = 0 */
+  93 0088 8C01      		movw r16,r24
+  94 008a F62E      		mov r15,r22
+  95 008c DC01      		movw r26,r24
+  96 008e 5196      		adiw r26,17
+  97 0090 CD91      		ld r28,X+
+  98 0092 DC91      		ld r29,X
+  99 0094 5297      		sbiw r26,17+1
+ 100 0096 8CAD      		ldd r24,Y+60
+ 101 0098 8650      		subi r24,lo8(-(-6))
+ 102 009a 8330      		cpi r24,lo8(3)
+ 103 009c 00F0      		brlo .L6
+ 104 009e 1DAE      		std Y+61,__zero_reg__
+ 105               	.L6:
+ 106 00a0 1D82      		std Y+5,__zero_reg__
+ 107 00a2 8DA9      		ldd r24,Y+53
+ 108 00a4 9EA9      		ldd r25,Y+54
+ 109 00a6 AFA9      		ldd r26,Y+55
+ 110 00a8 B8AD      		ldd r27,Y+56
+ 111 00aa 90FD      		sbrc r25,0
+ 112 00ac 00C0      		rjmp .L7
+ 113 00ae 4CE0      		ldi r20,lo8(12)
+ 114 00b0 50E0      		ldi r21,hi8(12)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s 			page 3
+
+
+ 115 00b2 00C0      		rjmp .L8
+ 116               	.L7:
+ 117 00b4 46E0      		ldi r20,lo8(6)
+ 118 00b6 50E0      		ldi r21,hi8(6)
+ 119               	.L8:
+ 120 00b8 91FD      		sbrc r25,1
+ 121 00ba 00C0      		rjmp .L9
+ 122 00bc 4A5F      		subi r20,lo8(-(6))
+ 123 00be 5F4F      		sbci r21,hi8(-(6))
+ 124               	.L9:
+ 125 00c0 80E0      		ldi r24,lo8(0)
+ 126 00c2 90E0      		ldi r25,hi8(0)
+ 127 00c4 60E8      		ldi r22,lo8(-128)
+ 128 00c6 0E94 0000 		call NutNetBufAlloc
+ 129 00ca 9C01      		movw r18,r24
+ 130 00cc 0097      		sbiw r24,0
+ 131 00ce 01F0      		breq .L13
+ 132 00d0 DC01      		movw r26,r24
+ 133 00d2 1F96      		adiw r26,15
+ 134 00d4 ED91      		ld r30,X+
+ 135 00d6 FC91      		ld r31,X
+ 136 00d8 5097      		sbiw r26,15+1
+ 137 00da 83E0      		ldi r24,lo8(3)
+ 138 00dc 8083      		st Z,r24
+ 139 00de 46E0      		ldi r20,lo8(6)
+ 140 00e0 4183      		std Z+1,r20
+ 141 00e2 89A1      		ldd r24,Y+33
+ 142 00e4 9AA1      		ldd r25,Y+34
+ 143 00e6 ABA1      		ldd r26,Y+35
+ 144 00e8 BCA1      		ldd r27,Y+36
+ 145 00ea 8283      		std Z+2,r24
+ 146 00ec 9383      		std Z+3,r25
+ 147 00ee A483      		std Z+4,r26
+ 148 00f0 B583      		std Z+5,r27
+ 149 00f2 8DA9      		ldd r24,Y+53
+ 150 00f4 9EA9      		ldd r25,Y+54
+ 151 00f6 AFA9      		ldd r26,Y+55
+ 152 00f8 B8AD      		ldd r27,Y+56
+ 153 00fa 90FD      		sbrc r25,0
+ 154 00fc 00C0      		rjmp .L11
+ 155 00fe 3696      		adiw r30,6
+ 156 0100 81E8      		ldi r24,lo8(-127)
+ 157 0102 8083      		st Z,r24
+ 158 0104 4183      		std Z+1,r20
+ 159 0106 8DA5      		ldd r24,Y+45
+ 160 0108 9EA5      		ldd r25,Y+46
+ 161 010a AFA5      		ldd r26,Y+47
+ 162 010c B8A9      		ldd r27,Y+48
+ 163 010e 8283      		std Z+2,r24
+ 164 0110 9383      		std Z+3,r25
+ 165 0112 A483      		std Z+4,r26
+ 166 0114 B583      		std Z+5,r27
+ 167               	.L11:
+ 168 0116 8DA9      		ldd r24,Y+53
+ 169 0118 9EA9      		ldd r25,Y+54
+ 170 011a AFA9      		ldd r26,Y+55
+ 171 011c B8AD      		ldd r27,Y+56
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s 			page 4
+
+
+ 172 011e 91FD      		sbrc r25,1
+ 173 0120 00C0      		rjmp .L12
+ 174 0122 8181      		ldd r24,Z+1
+ 175 0124 E80F      		add r30,r24
+ 176 0126 F11D      		adc r31,__zero_reg__
+ 177 0128 83E8      		ldi r24,lo8(-125)
+ 178 012a 8083      		st Z,r24
+ 179 012c 86E0      		ldi r24,lo8(6)
+ 180 012e 8183      		std Z+1,r24
+ 181 0130 89A9      		ldd r24,Y+49
+ 182 0132 9AA9      		ldd r25,Y+50
+ 183 0134 ABA9      		ldd r26,Y+51
+ 184 0136 BCA9      		ldd r27,Y+52
+ 185 0138 8283      		std Z+2,r24
+ 186 013a 9383      		std Z+3,r25
+ 187 013c A483      		std Z+4,r26
+ 188 013e B583      		std Z+5,r27
+ 189               	.L12:
+ 190 0140 C801      		movw r24,r16
+ 191 0142 61E0      		ldi r22,lo8(1)
+ 192 0144 4F2D      		mov r20,r15
+ 193 0146 0E94 0000 		call NutIpcpOutput
+ 194               	.L13:
+ 195               	/* epilogue start */
+ 196 014a DF91      		pop r29
+ 197 014c CF91      		pop r28
+ 198 014e 1F91      		pop r17
+ 199 0150 0F91      		pop r16
+ 200 0152 FF90      		pop r15
+ 201 0154 0895      		ret
+ 202               		.size	IpcpTxConfReq, .-IpcpTxConfReq
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ipcpout.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s:11     .text:00000000 NutIpcpOutput
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLE5lDb.s:85     .text:0000007e IpcpTxConfReq
+
+UNDEFINED SYMBOLS
+NutNetBufAlloc
+NutPppOutput
+NutNetBufFree

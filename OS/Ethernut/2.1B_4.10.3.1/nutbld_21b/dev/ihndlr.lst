@@ -1,0 +1,292 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s 			page 1
+
+
+   1               		.file	"ihndlr.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	CallHandler
+  10               		.type	CallHandler, @function
+  11               	CallHandler:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 DC01      		movw r26,r24
+  15 0002 1296      		adiw r26,2
+  16 0004 ED91      		ld r30,X+
+  17 0006 FC91      		ld r31,X
+  18 0008 1397      		sbiw r26,2+1
+  19 000a 3097      		sbiw r30,0
+  20 000c 01F0      		breq .L3
+  21 000e 8D91      		ld r24,X+
+  22 0010 9C91      		ld r25,X
+  23 0012 0995      		icall
+  24               	.L3:
+  25 0014 0895      		ret
+  26               		.size	CallHandler, .-CallHandler
+  27               	.global	NutRegisterIrqHandler
+  28               		.type	NutRegisterIrqHandler, @function
+  29               	NutRegisterIrqHandler:
+  30 0016 EF92      		push r14
+  31 0018 FF92      		push r15
+  32 001a 0F93      		push r16
+  33 001c 1F93      		push r17
+  34 001e CF93      		push r28
+  35 0020 DF93      		push r29
+  36               	/* prologue: function */
+  37               	/* frame size = 0 */
+  38 0022 EC01      		movw r28,r24
+  39 0024 7B01      		movw r14,r22
+  40 0026 8A01      		movw r16,r20
+  41 0028 EC81      		ldd r30,Y+4
+  42 002a FD81      		ldd r31,Y+5
+  43 002c 3097      		sbiw r30,0
+  44 002e 01F4      		brne .L5
+  45 0030 20E0      		ldi r18,lo8(0)
+  46 0032 30E0      		ldi r19,hi8(0)
+  47 0034 00C0      		rjmp .L6
+  48               	.L5:
+  49 0036 80E0      		ldi r24,lo8(0)
+  50 0038 90E0      		ldi r25,hi8(0)
+  51 003a 60E0      		ldi r22,lo8(0)
+  52 003c 70E0      		ldi r23,hi8(0)
+  53 003e 0995      		icall
+  54 0040 9C01      		movw r18,r24
+  55               	.L6:
+  56 0042 1983      		std Y+1,r17
+  57 0044 0883      		st Y,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s 			page 2
+
+
+  58 0046 FB82      		std Y+3,r15
+  59 0048 EA82      		std Y+2,r14
+  60 004a C901      		movw r24,r18
+  61               	/* epilogue start */
+  62 004c DF91      		pop r29
+  63 004e CF91      		pop r28
+  64 0050 1F91      		pop r17
+  65 0052 0F91      		pop r16
+  66 0054 FF90      		pop r15
+  67 0056 EF90      		pop r14
+  68 0058 0895      		ret
+  69               		.size	NutRegisterIrqHandler, .-NutRegisterIrqHandler
+  70               	.global	NutIrqEnable
+  71               		.type	NutIrqEnable, @function
+  72               	NutIrqEnable:
+  73               	/* prologue: function */
+  74               	/* frame size = 0 */
+  75 005a DC01      		movw r26,r24
+  76 005c 1496      		adiw r26,4
+  77 005e ED91      		ld r30,X+
+  78 0060 FC91      		ld r31,X
+  79 0062 1597      		sbiw r26,4+1
+  80 0064 3097      		sbiw r30,0
+  81 0066 01F4      		brne .L9
+  82 0068 2FEF      		ldi r18,lo8(-1)
+  83 006a 3FEF      		ldi r19,hi8(-1)
+  84 006c 00C0      		rjmp .L10
+  85               	.L9:
+  86 006e 81E1      		ldi r24,lo8(17)
+  87 0070 90E0      		ldi r25,hi8(17)
+  88 0072 60E0      		ldi r22,lo8(0)
+  89 0074 70E0      		ldi r23,hi8(0)
+  90 0076 0995      		icall
+  91 0078 9C01      		movw r18,r24
+  92               	.L10:
+  93 007a C901      		movw r24,r18
+  94               	/* epilogue start */
+  95 007c 0895      		ret
+  96               		.size	NutIrqEnable, .-NutIrqEnable
+  97               	.global	NutIrqDisable
+  98               		.type	NutIrqDisable, @function
+  99               	NutIrqDisable:
+ 100               	/* prologue: function */
+ 101               	/* frame size = 0 */
+ 102 007e DC01      		movw r26,r24
+ 103 0080 1496      		adiw r26,4
+ 104 0082 ED91      		ld r30,X+
+ 105 0084 FC91      		ld r31,X
+ 106 0086 1597      		sbiw r26,4+1
+ 107 0088 3097      		sbiw r30,0
+ 108 008a 01F4      		brne .L13
+ 109 008c 2FEF      		ldi r18,lo8(-1)
+ 110 008e 3FEF      		ldi r19,hi8(-1)
+ 111 0090 00C0      		rjmp .L14
+ 112               	.L13:
+ 113 0092 82E1      		ldi r24,lo8(18)
+ 114 0094 90E0      		ldi r25,hi8(18)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s 			page 3
+
+
+ 115 0096 60E0      		ldi r22,lo8(0)
+ 116 0098 70E0      		ldi r23,hi8(0)
+ 117 009a 0995      		icall
+ 118 009c 9C01      		movw r18,r24
+ 119               	.L14:
+ 120 009e C901      		movw r24,r18
+ 121               	/* epilogue start */
+ 122 00a0 0895      		ret
+ 123               		.size	NutIrqDisable, .-NutIrqDisable
+ 124               	.global	NutIrqSetPriority
+ 125               		.type	NutIrqSetPriority, @function
+ 126               	NutIrqSetPriority:
+ 127 00a2 0F93      		push r16
+ 128 00a4 1F93      		push r17
+ 129 00a6 DF93      		push r29
+ 130 00a8 CF93      		push r28
+ 131 00aa 00D0      		rcall .
+ 132 00ac 00D0      		rcall .
+ 133 00ae CDB7      		in r28,__SP_L__
+ 134 00b0 DEB7      		in r29,__SP_H__
+ 135               	/* prologue: function */
+ 136               	/* frame size = 4 */
+ 137 00b2 8C01      		movw r16,r24
+ 138 00b4 7C83      		std Y+4,r23
+ 139 00b6 6B83      		std Y+3,r22
+ 140 00b8 DC01      		movw r26,r24
+ 141 00ba 1496      		adiw r26,4
+ 142 00bc ED91      		ld r30,X+
+ 143 00be FC91      		ld r31,X
+ 144 00c0 1597      		sbiw r26,4+1
+ 145 00c2 3097      		sbiw r30,0
+ 146 00c4 01F4      		brne .L17
+ 147 00c6 2FEF      		ldi r18,lo8(-1)
+ 148 00c8 3FEF      		ldi r19,hi8(-1)
+ 149 00ca 00C0      		rjmp .L18
+ 150               	.L17:
+ 151 00cc 80E2      		ldi r24,lo8(32)
+ 152 00ce 90E0      		ldi r25,hi8(32)
+ 153 00d0 BE01      		movw r22,r28
+ 154 00d2 6F5F      		subi r22,lo8(-(1))
+ 155 00d4 7F4F      		sbci r23,hi8(-(1))
+ 156 00d6 0995      		icall
+ 157 00d8 9C01      		movw r18,r24
+ 158 00da 0097      		sbiw r24,0
+ 159 00dc 01F4      		brne .L18
+ 160 00de D801      		movw r26,r16
+ 161 00e0 1496      		adiw r26,4
+ 162 00e2 ED91      		ld r30,X+
+ 163 00e4 FC91      		ld r31,X
+ 164 00e6 1597      		sbiw r26,4+1
+ 165 00e8 81E2      		ldi r24,lo8(33)
+ 166 00ea 90E0      		ldi r25,hi8(33)
+ 167 00ec BE01      		movw r22,r28
+ 168 00ee 6D5F      		subi r22,lo8(-(3))
+ 169 00f0 7F4F      		sbci r23,hi8(-(3))
+ 170 00f2 0995      		icall
+ 171 00f4 9C01      		movw r18,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s 			page 4
+
+
+ 172 00f6 0097      		sbiw r24,0
+ 173 00f8 01F4      		brne .L18
+ 174 00fa 2981      		ldd r18,Y+1
+ 175 00fc 3A81      		ldd r19,Y+2
+ 176               	.L18:
+ 177 00fe C901      		movw r24,r18
+ 178               	/* epilogue start */
+ 179 0100 0F90      		pop __tmp_reg__
+ 180 0102 0F90      		pop __tmp_reg__
+ 181 0104 0F90      		pop __tmp_reg__
+ 182 0106 0F90      		pop __tmp_reg__
+ 183 0108 CF91      		pop r28
+ 184 010a DF91      		pop r29
+ 185 010c 1F91      		pop r17
+ 186 010e 0F91      		pop r16
+ 187 0110 0895      		ret
+ 188               		.size	NutIrqSetPriority, .-NutIrqSetPriority
+ 189               	.global	NutIrqSetMode
+ 190               		.type	NutIrqSetMode, @function
+ 191               	NutIrqSetMode:
+ 192 0112 0F93      		push r16
+ 193 0114 1F93      		push r17
+ 194 0116 DF93      		push r29
+ 195 0118 CF93      		push r28
+ 196 011a 00D0      		rcall .
+ 197 011c 00D0      		rcall .
+ 198 011e CDB7      		in r28,__SP_L__
+ 199 0120 DEB7      		in r29,__SP_H__
+ 200               	/* prologue: function */
+ 201               	/* frame size = 4 */
+ 202 0122 8C01      		movw r16,r24
+ 203 0124 7C83      		std Y+4,r23
+ 204 0126 6B83      		std Y+3,r22
+ 205 0128 DC01      		movw r26,r24
+ 206 012a 1496      		adiw r26,4
+ 207 012c ED91      		ld r30,X+
+ 208 012e FC91      		ld r31,X
+ 209 0130 1597      		sbiw r26,4+1
+ 210 0132 3097      		sbiw r30,0
+ 211 0134 01F4      		brne .L21
+ 212 0136 2FEF      		ldi r18,lo8(-1)
+ 213 0138 3FEF      		ldi r19,hi8(-1)
+ 214 013a 00C0      		rjmp .L22
+ 215               	.L21:
+ 216 013c 88E1      		ldi r24,lo8(24)
+ 217 013e 90E0      		ldi r25,hi8(24)
+ 218 0140 BE01      		movw r22,r28
+ 219 0142 6F5F      		subi r22,lo8(-(1))
+ 220 0144 7F4F      		sbci r23,hi8(-(1))
+ 221 0146 0995      		icall
+ 222 0148 9C01      		movw r18,r24
+ 223 014a 0097      		sbiw r24,0
+ 224 014c 01F4      		brne .L22
+ 225 014e 8B81      		ldd r24,Y+3
+ 226 0150 9C81      		ldd r25,Y+4
+ 227 0152 892B      		or r24,r25
+ 228 0154 01F0      		breq .L23
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s 			page 5
+
+
+ 229 0156 D801      		movw r26,r16
+ 230 0158 1496      		adiw r26,4
+ 231 015a ED91      		ld r30,X+
+ 232 015c FC91      		ld r31,X
+ 233 015e 1597      		sbiw r26,4+1
+ 234 0160 89E1      		ldi r24,lo8(25)
+ 235 0162 90E0      		ldi r25,hi8(25)
+ 236 0164 BE01      		movw r22,r28
+ 237 0166 6D5F      		subi r22,lo8(-(3))
+ 238 0168 7F4F      		sbci r23,hi8(-(3))
+ 239 016a 0995      		icall
+ 240 016c 9C01      		movw r18,r24
+ 241 016e 0097      		sbiw r24,0
+ 242 0170 01F4      		brne .L22
+ 243               	.L23:
+ 244 0172 2981      		ldd r18,Y+1
+ 245 0174 3A81      		ldd r19,Y+2
+ 246               	.L22:
+ 247 0176 C901      		movw r24,r18
+ 248               	/* epilogue start */
+ 249 0178 0F90      		pop __tmp_reg__
+ 250 017a 0F90      		pop __tmp_reg__
+ 251 017c 0F90      		pop __tmp_reg__
+ 252 017e 0F90      		pop __tmp_reg__
+ 253 0180 CF91      		pop r28
+ 254 0182 DF91      		pop r29
+ 255 0184 1F91      		pop r17
+ 256 0186 0F91      		pop r16
+ 257 0188 0895      		ret
+ 258               		.size	NutIrqSetMode, .-NutIrqSetMode
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ihndlr.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s:11     .text:00000000 CallHandler
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s:29     .text:00000016 NutRegisterIrqHandler
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s:72     .text:0000005a NutIrqEnable
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s:99     .text:0000007e NutIrqDisable
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s:126    .text:000000a2 NutIrqSetPriority
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccgeSLoe.s:191    .text:00000112 NutIrqSetMode
+
+NO UNDEFINED SYMBOLS

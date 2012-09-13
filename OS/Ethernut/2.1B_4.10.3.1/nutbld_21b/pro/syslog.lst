@@ -1,0 +1,683 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s 			page 1
+
+
+   1               		.file	"syslog.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	setlogmask
+  10               		.type	setlogmask, @function
+  11               	setlogmask:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 2091 0000 		lds r18,syslog_mask
+  15 0004 3091 0000 		lds r19,syslog_mask+1
+  16 0008 0097      		sbiw r24,0
+  17 000a 01F0      		breq .L2
+  18 000c 9093 0000 		sts (syslog_mask)+1,r25
+  19 0010 8093 0000 		sts syslog_mask,r24
+  20               	.L2:
+  21 0014 C901      		movw r24,r18
+  22               	/* epilogue start */
+  23 0016 0895      		ret
+  24               		.size	setlogmask, .-setlogmask
+  25               	.global	setlogserver
+  26               		.type	setlogserver, @function
+  27               	setlogserver:
+  28               	/* prologue: function */
+  29               	/* frame size = 0 */
+  30 0018 2091 0000 		lds r18,syslog_server
+  31 001c 3091 0000 		lds r19,syslog_server+1
+  32 0020 E091 0000 		lds r30,syslog_server+2
+  33 0024 F091 0000 		lds r31,syslog_server+3
+  34 0028 6093 0000 		sts syslog_server,r22
+  35 002c 7093 0000 		sts (syslog_server)+1,r23
+  36 0030 8093 0000 		sts (syslog_server)+2,r24
+  37 0034 9093 0000 		sts (syslog_server)+3,r25
+  38 0038 4115      		cp r20,__zero_reg__
+  39 003a 5105      		cpc r21,__zero_reg__
+  40 003c 01F0      		breq .L5
+  41 003e 5093 0000 		sts (syslog_port)+1,r21
+  42 0042 4093 0000 		sts syslog_port,r20
+  43               	.L5:
+  44 0046 B901      		movw r22,r18
+  45 0048 CF01      		movw r24,r30
+  46               	/* epilogue start */
+  47 004a 0895      		ret
+  48               		.size	setlogserver, .-setlogserver
+  49               	.global	closelog
+  50               		.type	closelog, @function
+  51               	closelog:
+  52               	/* prologue: function */
+  53               	/* frame size = 0 */
+  54 004c 8091 0000 		lds r24,syslog_buf
+  55 0050 9091 0000 		lds r25,(syslog_buf)+1
+  56 0054 0097      		sbiw r24,0
+  57 0056 01F0      		breq .L8
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s 			page 2
+
+
+  58 0058 0E94 0000 		call free
+  59 005c 1092 0000 		sts (syslog_buf)+1,__zero_reg__
+  60 0060 1092 0000 		sts syslog_buf,__zero_reg__
+  61               	.L8:
+  62 0064 8091 0000 		lds r24,syslog_taglen
+  63 0068 9091 0000 		lds r25,(syslog_taglen)+1
+  64 006c 892B      		or r24,r25
+  65 006e 01F0      		breq .L9
+  66 0070 8091 0000 		lds r24,syslog_tag
+  67 0074 9091 0000 		lds r25,(syslog_tag)+1
+  68 0078 0E94 0000 		call free
+  69 007c 1092 0000 		sts (syslog_taglen)+1,__zero_reg__
+  70 0080 1092 0000 		sts syslog_taglen,__zero_reg__
+  71               	.L9:
+  72 0084 8091 0000 		lds r24,syslog_sock
+  73 0088 9091 0000 		lds r25,(syslog_sock)+1
+  74 008c 0097      		sbiw r24,0
+  75 008e 01F0      		breq .L11
+  76 0090 0E94 0000 		call NutUdpDestroySocket
+  77 0094 1092 0000 		sts (syslog_sock)+1,__zero_reg__
+  78 0098 1092 0000 		sts syslog_sock,__zero_reg__
+  79               	.L11:
+  80 009c 0895      		ret
+  81               		.size	closelog, .-closelog
+  82               	.global	openlog
+  83               		.type	openlog, @function
+  84               	openlog:
+  85 009e EF92      		push r14
+  86 00a0 FF92      		push r15
+  87 00a2 0F93      		push r16
+  88 00a4 1F93      		push r17
+  89 00a6 CF93      		push r28
+  90 00a8 DF93      		push r29
+  91               	/* prologue: function */
+  92               	/* frame size = 0 */
+  93 00aa EC01      		movw r28,r24
+  94 00ac 8B01      		movw r16,r22
+  95 00ae 7A01      		movw r14,r20
+  96 00b0 0097      		sbiw r24,0
+  97 00b2 01F4      		brne .L13
+  98 00b4 C091 0000 		lds r28,syslog_tag
+  99 00b8 D091 0000 		lds r29,(syslog_tag)+1
+ 100 00bc 1092 0000 		sts (syslog_taglen)+1,__zero_reg__
+ 101 00c0 1092 0000 		sts syslog_taglen,__zero_reg__
+ 102               	.L13:
+ 103 00c4 0E94 0000 		call closelog
+ 104 00c8 1093 0000 		sts (syslog_stat)+1,r17
+ 105 00cc 0093 0000 		sts syslog_stat,r16
+ 106 00d0 F092 0000 		sts (syslog_fac)+1,r15
+ 107 00d4 E092 0000 		sts syslog_fac,r14
+ 108 00d8 2097      		sbiw r28,0
+ 109 00da 01F0      		breq .L14
+ 110 00dc 8881      		ld r24,Y
+ 111 00de 8823      		tst r24
+ 112 00e0 01F0      		breq .L14
+ 113 00e2 FE01      		movw r30,r28
+ 114 00e4 0190      		ld __tmp_reg__,Z+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s 			page 3
+
+
+ 115 00e6 0020      		tst __tmp_reg__
+ 116 00e8 01F4      		brne .-6
+ 117 00ea 3197      		sbiw r30,1
+ 118 00ec EC1B      		sub r30,r28
+ 119 00ee FD0B      		sbc r31,r29
+ 120 00f0 F093 0000 		sts (syslog_taglen)+1,r31
+ 121 00f4 E093 0000 		sts syslog_taglen,r30
+ 122 00f8 CF01      		movw r24,r30
+ 123 00fa 0196      		adiw r24,1
+ 124 00fc 0E94 0000 		call malloc
+ 125 0100 8093 0000 		sts syslog_tag,r24
+ 126 0104 9093 0000 		sts syslog_tag+1,r25
+ 127 0108 BE01      		movw r22,r28
+ 128 010a 0E94 0000 		call strcpy
+ 129               	.L14:
+ 130 010e 8091 0000 		lds r24,syslog_stat
+ 131 0112 83FF      		sbrs r24,3
+ 132 0114 00C0      		rjmp .L17
+ 133 0116 8091 0000 		lds r24,syslog_buf
+ 134 011a 9091 0000 		lds r25,(syslog_buf)+1
+ 135 011e 892B      		or r24,r25
+ 136 0120 01F4      		brne .L16
+ 137 0122 80E0      		ldi r24,lo8(256)
+ 138 0124 91E0      		ldi r25,hi8(256)
+ 139 0126 0E94 0000 		call malloc
+ 140 012a 8093 0000 		sts syslog_buf,r24
+ 141 012e 9093 0000 		sts syslog_buf+1,r25
+ 142               	.L16:
+ 143 0132 8091 0000 		lds r24,syslog_sock
+ 144 0136 9091 0000 		lds r25,(syslog_sock)+1
+ 145 013a 892B      		or r24,r25
+ 146 013c 01F4      		brne .L17
+ 147 013e 82E0      		ldi r24,lo8(514)
+ 148 0140 92E0      		ldi r25,hi8(514)
+ 149 0142 0E94 0000 		call NutUdpCreateSocket
+ 150 0146 9093 0000 		sts (syslog_sock)+1,r25
+ 151 014a 8093 0000 		sts syslog_sock,r24
+ 152               	.L17:
+ 153               	/* epilogue start */
+ 154 014e DF91      		pop r29
+ 155 0150 CF91      		pop r28
+ 156 0152 1F91      		pop r17
+ 157 0154 0F91      		pop r16
+ 158 0156 FF90      		pop r15
+ 159 0158 EF90      		pop r14
+ 160 015a 0895      		ret
+ 161               		.size	openlog, .-openlog
+ 162               		.data
+ 163               	.LC0:
+ 164 0000 0A00      		.string	"\n"
+ 165               		.text
+ 166               	.global	syslog_flush
+ 167               		.type	syslog_flush, @function
+ 168               	syslog_flush:
+ 169 015c EF92      		push r14
+ 170 015e FF92      		push r15
+ 171 0160 0F93      		push r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s 			page 4
+
+
+ 172 0162 1F93      		push r17
+ 173               	/* prologue: function */
+ 174               	/* frame size = 0 */
+ 175 0164 7C01      		movw r14,r24
+ 176 0166 8091 0000 		lds r24,syslog_stat
+ 177 016a 85FF      		sbrs r24,5
+ 178 016c 00C0      		rjmp .L19
+ 179 016e 8091 0000 		lds r24,__iob+4
+ 180 0172 9091 0000 		lds r25,(__iob+4)+1
+ 181 0176 0E94 0000 		call _fileno
+ 182 017a 6091 0000 		lds r22,syslog_buf
+ 183 017e 7091 0000 		lds r23,(syslog_buf)+1
+ 184 0182 A701      		movw r20,r14
+ 185 0184 0E94 0000 		call _write
+ 186 0188 8091 0000 		lds r24,__iob+4
+ 187 018c 9091 0000 		lds r25,(__iob+4)+1
+ 188 0190 0E94 0000 		call _fileno
+ 189 0194 60E0      		ldi r22,lo8(.LC0)
+ 190 0196 70E0      		ldi r23,hi8(.LC0)
+ 191 0198 41E0      		ldi r20,lo8(1)
+ 192 019a 50E0      		ldi r21,hi8(1)
+ 193 019c 0E94 0000 		call _write
+ 194               	.L19:
+ 195 01a0 4091 0000 		lds r20,syslog_server
+ 196 01a4 5091 0000 		lds r21,(syslog_server)+1
+ 197 01a8 6091 0000 		lds r22,(syslog_server)+2
+ 198 01ac 7091 0000 		lds r23,(syslog_server)+3
+ 199 01b0 4115      		cp r20,__zero_reg__
+ 200 01b2 5105      		cpc r21,__zero_reg__
+ 201 01b4 6105      		cpc r22,__zero_reg__
+ 202 01b6 7105      		cpc r23,__zero_reg__
+ 203 01b8 01F0      		breq .L21
+ 204 01ba 2091 0000 		lds r18,syslog_port
+ 205 01be 3091 0000 		lds r19,(syslog_port)+1
+ 206 01c2 0091 0000 		lds r16,syslog_buf
+ 207 01c6 1091 0000 		lds r17,(syslog_buf)+1
+ 208 01ca 8091 0000 		lds r24,syslog_sock
+ 209 01ce 9091 0000 		lds r25,(syslog_sock)+1
+ 210 01d2 0E94 0000 		call NutUdpSendTo
+ 211               	.L21:
+ 212               	/* epilogue start */
+ 213 01d6 1F91      		pop r17
+ 214 01d8 0F91      		pop r16
+ 215 01da FF90      		pop r15
+ 216 01dc EF90      		pop r14
+ 217 01de 0895      		ret
+ 218               		.size	syslog_flush, .-syslog_flush
+ 219               		.data
+ 220               	.LC1:
+ 221 0002 3C25 643E 		.string	"<%d>"
+ 221      00
+ 222               	.LC2:
+ 223 0007 252E 3373 		.string	"%.3s%3d %02d:%02d:%02d"
+ 223      2533 6420 
+ 223      2530 3264 
+ 223      3A25 3032 
+ 223      643A 2530 
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s 			page 5
+
+
+ 224               		.text
+ 225               	.global	syslog_header
+ 226               		.type	syslog_header, @function
+ 227               	syslog_header:
+ 228 01e0 DF92      		push r13
+ 229 01e2 EF92      		push r14
+ 230 01e4 FF92      		push r15
+ 231 01e6 0F93      		push r16
+ 232 01e8 1F93      		push r17
+ 233 01ea DF93      		push r29
+ 234 01ec CF93      		push r28
+ 235 01ee 00D0      		rcall .
+ 236 01f0 00D0      		rcall .
+ 237 01f2 CDB7      		in r28,__SP_L__
+ 238 01f4 DEB7      		in r29,__SP_H__
+ 239               	/* prologue: function */
+ 240               	/* frame size = 4 */
+ 241 01f6 AC01      		movw r20,r24
+ 242 01f8 8C01      		movw r16,r24
+ 243 01fa 1370      		andi r17,hi8(1023)
+ 244 01fc 9C01      		movw r18,r24
+ 245 01fe 2770      		andi r18,lo8(7)
+ 246 0200 3070      		andi r19,hi8(7)
+ 247 0202 8091 0000 		lds r24,syslog_mask
+ 248 0206 9091 0000 		lds r25,(syslog_mask)+1
+ 249 020a 00C0      		rjmp 2f
+ 250 020c 9595      	1:	asr r25
+ 251 020e 8795      		ror r24
+ 252 0210 2A95      	2:	dec r18
+ 253 0212 02F4      		brpl 1b
+ 254 0214 80FD      		sbrc r24,0
+ 255 0216 00C0      		rjmp .L23
+ 256 0218 20E0      		ldi r18,lo8(0)
+ 257 021a 30E0      		ldi r19,hi8(0)
+ 258 021c 00C0      		rjmp .L24
+ 259               	.L23:
+ 260 021e 487F      		andi r20,lo8(1016)
+ 261 0220 5370      		andi r21,hi8(1016)
+ 262 0222 452B      		or r20,r21
+ 263 0224 01F4      		brne .L25
+ 264 0226 8091 0000 		lds r24,syslog_fac
+ 265 022a 9091 0000 		lds r25,(syslog_fac)+1
+ 266 022e 082B      		or r16,r24
+ 267 0230 192B      		or r17,r25
+ 268               	.L25:
+ 269 0232 8091 0000 		lds r24,syslog_buf
+ 270 0236 9091 0000 		lds r25,(syslog_buf)+1
+ 271 023a 892B      		or r24,r25
+ 272 023c 01F4      		brne .L26
+ 273 023e 6091 0000 		lds r22,syslog_stat
+ 274 0242 7091 0000 		lds r23,(syslog_stat)+1
+ 275 0246 6860      		ori r22,lo8(8)
+ 276 0248 4091 0000 		lds r20,syslog_fac
+ 277 024c 5091 0000 		lds r21,(syslog_fac)+1
+ 278 0250 80E0      		ldi r24,lo8(0)
+ 279 0252 90E0      		ldi r25,hi8(0)
+ 280 0254 0E94 0000 		call openlog
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s 			page 6
+
+
+ 281               	.L26:
+ 282 0258 00D0      		rcall .
+ 283 025a 00D0      		rcall .
+ 284 025c 00D0      		rcall .
+ 285 025e EDB7      		in r30,__SP_L__
+ 286 0260 FEB7      		in r31,__SP_H__
+ 287 0262 3196      		adiw r30,1
+ 288 0264 8091 0000 		lds r24,syslog_buf
+ 289 0268 9091 0000 		lds r25,(syslog_buf)+1
+ 290 026c ADB7      		in r26,__SP_L__
+ 291 026e BEB7      		in r27,__SP_H__
+ 292 0270 1296      		adiw r26,1+1
+ 293 0272 9C93      		st X,r25
+ 294 0274 8E93      		st -X,r24
+ 295 0276 1197      		sbiw r26,1
+ 296 0278 80E0      		ldi r24,lo8(.LC1)
+ 297 027a 90E0      		ldi r25,hi8(.LC1)
+ 298 027c 9383      		std Z+3,r25
+ 299 027e 8283      		std Z+2,r24
+ 300 0280 1583      		std Z+5,r17
+ 301 0282 0483      		std Z+4,r16
+ 302 0284 0E94 0000 		call sprintf
+ 303 0288 7C01      		movw r14,r24
+ 304 028a 8DB7      		in r24,__SP_L__
+ 305 028c 9EB7      		in r25,__SP_H__
+ 306 028e 0696      		adiw r24,6
+ 307 0290 0FB6      		in __tmp_reg__,__SREG__
+ 308 0292 F894      		cli
+ 309 0294 9EBF      		out __SP_H__,r25
+ 310 0296 0FBE      		out __SREG__,__tmp_reg__
+ 311 0298 8DBF      		out __SP_L__,r24
+ 312 029a 8E01      		movw r16,r28
+ 313 029c 0F5F      		subi r16,lo8(-(1))
+ 314 029e 1F4F      		sbci r17,hi8(-(1))
+ 315 02a0 C801      		movw r24,r16
+ 316 02a2 0E94 0000 		call time
+ 317 02a6 C801      		movw r24,r16
+ 318 02a8 0E94 0000 		call localtime
+ 319 02ac AC01      		movw r20,r24
+ 320 02ae ADB7      		in r26,__SP_L__
+ 321 02b0 BEB7      		in r27,__SP_H__
+ 322 02b2 1E97      		sbiw r26,14
+ 323 02b4 0FB6      		in __tmp_reg__,__SREG__
+ 324 02b6 F894      		cli
+ 325 02b8 BEBF      		out __SP_H__,r27
+ 326 02ba 0FBE      		out __SREG__,__tmp_reg__
+ 327 02bc ADBF      		out __SP_L__,r26
+ 328 02be EDB7      		in r30,__SP_L__
+ 329 02c0 FEB7      		in r31,__SP_H__
+ 330 02c2 3196      		adiw r30,1
+ 331 02c4 8091 0000 		lds r24,syslog_buf
+ 332 02c8 9091 0000 		lds r25,(syslog_buf)+1
+ 333 02cc 8E0D      		add r24,r14
+ 334 02ce 9F1D      		adc r25,r15
+ 335 02d0 1296      		adiw r26,1+1
+ 336 02d2 9C93      		st X,r25
+ 337 02d4 8E93      		st -X,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s 			page 7
+
+
+ 338 02d6 1197      		sbiw r26,1
+ 339 02d8 80E0      		ldi r24,lo8(.LC2)
+ 340 02da 90E0      		ldi r25,hi8(.LC2)
+ 341 02dc 9383      		std Z+3,r25
+ 342 02de 8283      		std Z+2,r24
+ 343 02e0 DA01      		movw r26,r20
+ 344 02e2 1896      		adiw r26,8
+ 345 02e4 2D91      		ld r18,X+
+ 346 02e6 3C91      		ld r19,X
+ 347 02e8 1997      		sbiw r26,8+1
+ 348 02ea C901      		movw r24,r18
+ 349 02ec 880F      		lsl r24
+ 350 02ee 991F      		rol r25
+ 351 02f0 820F      		add r24,r18
+ 352 02f2 931F      		adc r25,r19
+ 353 02f4 8050      		subi r24,lo8(-(mon_name.2243))
+ 354 02f6 9040      		sbci r25,hi8(-(mon_name.2243))
+ 355 02f8 9583      		std Z+5,r25
+ 356 02fa 8483      		std Z+4,r24
+ 357 02fc 1696      		adiw r26,6
+ 358 02fe 8D91      		ld r24,X+
+ 359 0300 9C91      		ld r25,X
+ 360 0302 1797      		sbiw r26,6+1
+ 361 0304 9783      		std Z+7,r25
+ 362 0306 8683      		std Z+6,r24
+ 363 0308 1496      		adiw r26,4
+ 364 030a 8D91      		ld r24,X+
+ 365 030c 9C91      		ld r25,X
+ 366 030e 1597      		sbiw r26,4+1
+ 367 0310 9187      		std Z+9,r25
+ 368 0312 8087      		std Z+8,r24
+ 369 0314 1296      		adiw r26,2
+ 370 0316 8D91      		ld r24,X+
+ 371 0318 9C91      		ld r25,X
+ 372 031a 1397      		sbiw r26,2+1
+ 373 031c 9387      		std Z+11,r25
+ 374 031e 8287      		std Z+10,r24
+ 375 0320 8D91      		ld r24,X+
+ 376 0322 9C91      		ld r25,X
+ 377 0324 9587      		std Z+13,r25
+ 378 0326 8487      		std Z+12,r24
+ 379 0328 0E94 0000 		call sprintf
+ 380 032c 8C01      		movw r16,r24
+ 381 032e 0E0D      		add r16,r14
+ 382 0330 1F1D      		adc r17,r15
+ 383 0332 E091 0000 		lds r30,syslog_buf
+ 384 0336 F091 0000 		lds r31,(syslog_buf)+1
+ 385 033a E00F      		add r30,r16
+ 386 033c F11F      		adc r31,r17
+ 387 033e 30E2      		ldi r19,lo8(32)
+ 388 0340 D32E      		mov r13,r19
+ 389 0342 D082      		st Z,r13
+ 390 0344 0F5F      		subi r16,lo8(-(1))
+ 391 0346 1F4F      		sbci r17,hi8(-(1))
+ 392 0348 8DB7      		in r24,__SP_L__
+ 393 034a 9EB7      		in r25,__SP_H__
+ 394 034c 0E96      		adiw r24,14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s 			page 8
+
+
+ 395 034e 0FB6      		in __tmp_reg__,__SREG__
+ 396 0350 F894      		cli
+ 397 0352 9EBF      		out __SP_H__,r25
+ 398 0354 0FBE      		out __SREG__,__tmp_reg__
+ 399 0356 8DBF      		out __SP_L__,r24
+ 400 0358 8091 0000 		lds r24,syslog_buf
+ 401 035c 9091 0000 		lds r25,(syslog_buf)+1
+ 402 0360 20E0      		ldi r18,lo8(confos+3)
+ 403 0362 E22E      		mov r14,r18
+ 404 0364 20E0      		ldi r18,hi8(confos+3)
+ 405 0366 F22E      		mov r15,r18
+ 406 0368 800F      		add r24,r16
+ 407 036a 911F      		adc r25,r17
+ 408 036c B701      		movw r22,r14
+ 409 036e 0E94 0000 		call strcpy
+ 410 0372 D701      		movw r26,r14
+ 411 0374 0D90      		ld __tmp_reg__,X+
+ 412 0376 0020      		tst __tmp_reg__
+ 413 0378 01F4      		brne .-6
+ 414 037a A050      		subi r26,lo8(confos+4)
+ 415 037c B040      		sbci r27,hi8(confos+4)
+ 416 037e A00F      		add r26,r16
+ 417 0380 B11F      		adc r27,r17
+ 418 0382 8091 0000 		lds r24,syslog_taglen
+ 419 0386 9091 0000 		lds r25,(syslog_taglen)+1
+ 420 038a 892B      		or r24,r25
+ 421 038c 01F0      		breq .L27
+ 422 038e E091 0000 		lds r30,syslog_buf
+ 423 0392 F091 0000 		lds r31,(syslog_buf)+1
+ 424 0396 EA0F      		add r30,r26
+ 425 0398 FB1F      		adc r31,r27
+ 426 039a D082      		st Z,r13
+ 427 039c 8D01      		movw r16,r26
+ 428 039e 0F5F      		subi r16,lo8(-(1))
+ 429 03a0 1F4F      		sbci r17,hi8(-(1))
+ 430 03a2 8091 0000 		lds r24,syslog_buf
+ 431 03a6 9091 0000 		lds r25,(syslog_buf)+1
+ 432 03aa 6091 0000 		lds r22,syslog_tag
+ 433 03ae 7091 0000 		lds r23,(syslog_tag)+1
+ 434 03b2 800F      		add r24,r16
+ 435 03b4 911F      		adc r25,r17
+ 436 03b6 0E94 0000 		call strcpy
+ 437 03ba 8091 0000 		lds r24,syslog_taglen
+ 438 03be 9091 0000 		lds r25,(syslog_taglen)+1
+ 439 03c2 800F      		add r24,r16
+ 440 03c4 911F      		adc r25,r17
+ 441 03c6 E091 0000 		lds r30,syslog_buf
+ 442 03ca F091 0000 		lds r31,(syslog_buf)+1
+ 443 03ce E80F      		add r30,r24
+ 444 03d0 F91F      		adc r31,r25
+ 445 03d2 2AE3      		ldi r18,lo8(58)
+ 446 03d4 2083      		st Z,r18
+ 447 03d6 DC01      		movw r26,r24
+ 448 03d8 1196      		adiw r26,1
+ 449               	.L27:
+ 450 03da E091 0000 		lds r30,syslog_buf
+ 451 03de F091 0000 		lds r31,(syslog_buf)+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s 			page 9
+
+
+ 452 03e2 EA0F      		add r30,r26
+ 453 03e4 FB1F      		adc r31,r27
+ 454 03e6 80E2      		ldi r24,lo8(32)
+ 455 03e8 8083      		st Z,r24
+ 456 03ea 9D01      		movw r18,r26
+ 457 03ec 2F5F      		subi r18,lo8(-(1))
+ 458 03ee 3F4F      		sbci r19,hi8(-(1))
+ 459 03f0 E091 0000 		lds r30,syslog_buf
+ 460 03f4 F091 0000 		lds r31,(syslog_buf)+1
+ 461 03f8 E20F      		add r30,r18
+ 462 03fa F31F      		adc r31,r19
+ 463 03fc 1082      		st Z,__zero_reg__
+ 464               	.L24:
+ 465 03fe C901      		movw r24,r18
+ 466               	/* epilogue start */
+ 467 0400 0F90      		pop __tmp_reg__
+ 468 0402 0F90      		pop __tmp_reg__
+ 469 0404 0F90      		pop __tmp_reg__
+ 470 0406 0F90      		pop __tmp_reg__
+ 471 0408 CF91      		pop r28
+ 472 040a DF91      		pop r29
+ 473 040c 1F91      		pop r17
+ 474 040e 0F91      		pop r16
+ 475 0410 FF90      		pop r15
+ 476 0412 EF90      		pop r14
+ 477 0414 DF90      		pop r13
+ 478 0416 0895      		ret
+ 479               		.size	syslog_header, .-syslog_header
+ 480               		.data
+ 481               	.LC3:
+ 482 001e 4275 6666 		.string	"Buffer overflow"
+ 482      6572 206F 
+ 482      7665 7266 
+ 482      6C6F 7700 
+ 483               		.text
+ 484               	.global	vsyslog
+ 485               		.type	vsyslog, @function
+ 486               	vsyslog:
+ 487 0418 EF92      		push r14
+ 488 041a FF92      		push r15
+ 489 041c 0F93      		push r16
+ 490 041e 1F93      		push r17
+ 491 0420 CF93      		push r28
+ 492 0422 DF93      		push r29
+ 493               	/* prologue: function */
+ 494               	/* frame size = 0 */
+ 495 0424 F62E      		mov r15,r22
+ 496 0426 E72E      		mov r14,r23
+ 497 0428 8A01      		movw r16,r20
+ 498 042a 0E94 0000 		call syslog_header
+ 499 042e EC01      		movw r28,r24
+ 500 0430 0097      		sbiw r24,0
+ 501 0432 01F0      		breq .L32
+ 502 0434 AF2D      		mov r26,r15
+ 503 0436 BE2D      		mov r27,r14
+ 504 0438 FD01      		movw r30,r26
+ 505 043a 0190      		ld __tmp_reg__,Z+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s 			page 10
+
+
+ 506 043c 0020      		tst __tmp_reg__
+ 507 043e 01F4      		brne .-6
+ 508 0440 3197      		sbiw r30,1
+ 509 0442 EA1B      		sub r30,r26
+ 510 0444 FB0B      		sbc r31,r27
+ 511 0446 E80F      		add r30,r24
+ 512 0448 F91F      		adc r31,r25
+ 513 044a EF3F      		cpi r30,255
+ 514 044c F105      		cpc r31,__zero_reg__
+ 515 044e 01F0      		breq .L31
+ 516 0450 00F0      		brlo .L31
+ 517 0452 80E0      		ldi r24,lo8(.LC3)
+ 518 0454 90E0      		ldi r25,hi8(.LC3)
+ 519 0456 0E94 0000 		call puts
+ 520 045a 00C0      		rjmp .L32
+ 521               	.L31:
+ 522 045c 8091 0000 		lds r24,syslog_buf
+ 523 0460 9091 0000 		lds r25,(syslog_buf)+1
+ 524 0464 8C0F      		add r24,r28
+ 525 0466 9D1F      		adc r25,r29
+ 526 0468 6F2D      		mov r22,r15
+ 527 046a 7E2D      		mov r23,r14
+ 528 046c A801      		movw r20,r16
+ 529 046e 0E94 0000 		call vsprintf
+ 530 0472 8C0F      		add r24,r28
+ 531 0474 9D1F      		adc r25,r29
+ 532 0476 0E94 0000 		call syslog_flush
+ 533               	.L32:
+ 534               	/* epilogue start */
+ 535 047a DF91      		pop r29
+ 536 047c CF91      		pop r28
+ 537 047e 1F91      		pop r17
+ 538 0480 0F91      		pop r16
+ 539 0482 FF90      		pop r15
+ 540 0484 EF90      		pop r14
+ 541 0486 0895      		ret
+ 542               		.size	vsyslog, .-vsyslog
+ 543               	.global	syslog
+ 544               		.type	syslog, @function
+ 545               	syslog:
+ 546 0488 DF93      		push r29
+ 547 048a CF93      		push r28
+ 548 048c CDB7      		in r28,__SP_L__
+ 549 048e DEB7      		in r29,__SP_H__
+ 550               	/* prologue: function */
+ 551               	/* frame size = 0 */
+ 552 0490 9E01      		movw r18,r28
+ 553 0492 275F      		subi r18,lo8(-(9))
+ 554 0494 3F4F      		sbci r19,hi8(-(9))
+ 555 0496 8D81      		ldd r24,Y+5
+ 556 0498 9E81      		ldd r25,Y+6
+ 557 049a 6F81      		ldd r22,Y+7
+ 558 049c 7885      		ldd r23,Y+8
+ 559 049e A901      		movw r20,r18
+ 560 04a0 0E94 0000 		call vsyslog
+ 561               	/* epilogue start */
+ 562 04a4 CF91      		pop r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s 			page 11
+
+
+ 563 04a6 DF91      		pop r29
+ 564 04a8 0895      		ret
+ 565               		.size	syslog, .-syslog
+ 566               		.data
+ 567               		.type	syslog_fac, @object
+ 568               		.size	syslog_fac, 2
+ 569               	syslog_fac:
+ 570 002e 0800      		.word	8
+ 571               		.type	syslog_port, @object
+ 572               		.size	syslog_port, 2
+ 573               	syslog_port:
+ 574 0030 0202      		.word	514
+ 575               		.type	syslog_mask, @object
+ 576               		.size	syslog_mask, 2
+ 577               	syslog_mask:
+ 578 0032 FF00      		.word	255
+ 579               		.type	mon_name.2243, @object
+ 580               		.size	mon_name.2243, 37
+ 581               	mon_name.2243:
+ 582 0034 4A61 6E46 		.string	"JanFebMarAprMayJunJulAugSepOctNovDec"
+ 582      6562 4D61 
+ 582      7241 7072 
+ 582      4D61 794A 
+ 582      756E 4A75 
+ 583               		.lcomm syslog_sock,2
+ 584               		.lcomm syslog_server,4
+ 585               		.lcomm syslog_stat,2
+ 586               		.lcomm syslog_taglen,2
+ 587               		.lcomm syslog_tag,2
+ 588               		.comm syslog_buf,2,1
+ 589               	.global __do_copy_data
+ 590               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 syslog.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:11     .text:00000000 setlogmask
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:577    .data:00000032 syslog_mask
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:27     .text:00000018 setlogserver
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:583    .bss:00000002 syslog_server
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:573    .data:00000030 syslog_port
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:51     .text:0000004c closelog
+                            *COM*:00000002 syslog_buf
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:585    .bss:00000008 syslog_taglen
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:586    .bss:0000000a syslog_tag
+                             .bss:00000000 syslog_sock
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:84     .text:0000009e openlog
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:584    .bss:00000006 syslog_stat
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:569    .data:0000002e syslog_fac
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:168    .text:0000015c syslog_flush
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:227    .text:000001e0 syslog_header
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:581    .data:00000034 mon_name.2243
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:486    .text:00000418 vsyslog
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3qcblo.s:545    .text:00000488 syslog
+
+UNDEFINED SYMBOLS
+free
+NutUdpDestroySocket
+malloc
+strcpy
+NutUdpCreateSocket
+__iob
+_fileno
+_write
+NutUdpSendTo
+sprintf
+time
+localtime
+confos
+puts
+vsprintf
+__do_copy_data
+__do_clear_bss

@@ -1,0 +1,409 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s 			page 1
+
+
+   1               		.file	"lili.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	LiLiDefaultItemCompare, @function
+  10               	LiLiDefaultItemCompare:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 9C01      		movw r18,r24
+  14 0002 261B      		sub r18,r22
+  15 0004 370B      		sbc r19,r23
+  16 0006 C901      		movw r24,r18
+  17               	/* epilogue start */
+  18 0008 0895      		ret
+  19               		.size	LiLiDefaultItemCompare, .-LiLiDefaultItemCompare
+  20               	.global	LiLiClean
+  21               		.type	LiLiClean, @function
+  22               	LiLiClean:
+  23 000a 0F93      		push r16
+  24 000c 1F93      		push r17
+  25 000e CF93      		push r28
+  26 0010 DF93      		push r29
+  27               	/* prologue: function */
+  28               	/* frame size = 0 */
+  29 0012 8C01      		movw r16,r24
+  30 0014 DC01      		movw r26,r24
+  31 0016 8D91      		ld r24,X+
+  32 0018 9C91      		ld r25,X
+  33 001a 892B      		or r24,r25
+  34 001c 01F4      		brne .L9
+  35 001e 00C0      		rjmp .L8
+  36               	.L7:
+  37 0020 8881      		ld r24,Y
+  38 0022 9981      		ldd r25,Y+1
+  39 0024 F801      		movw r30,r16
+  40 0026 9183      		std Z+1,r25
+  41 0028 8083      		st Z,r24
+  42 002a 0780      		ldd __tmp_reg__,Z+7
+  43 002c F085      		ldd r31,Z+8
+  44 002e E02D      		mov r30,__tmp_reg__
+  45 0030 3097      		sbiw r30,0
+  46 0032 01F0      		breq .L6
+  47 0034 8C81      		ldd r24,Y+4
+  48 0036 9D81      		ldd r25,Y+5
+  49 0038 0995      		icall
+  50               	.L6:
+  51 003a CE01      		movw r24,r28
+  52 003c 0E94 0000 		call free
+  53               	.L9:
+  54 0040 D801      		movw r26,r16
+  55 0042 CD91      		ld r28,X+
+  56 0044 DC91      		ld r29,X
+  57 0046 1197      		sbiw r26,1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s 			page 2
+
+
+  58 0048 2097      		sbiw r28,0
+  59 004a 01F4      		brne .L7
+  60 004c 1396      		adiw r26,2+1
+  61 004e 1C92      		st X,__zero_reg__
+  62 0050 1E92      		st -X,__zero_reg__
+  63 0052 1297      		sbiw r26,2
+  64               	.L8:
+  65               	/* epilogue start */
+  66 0054 DF91      		pop r29
+  67 0056 CF91      		pop r28
+  68 0058 1F91      		pop r17
+  69 005a 0F91      		pop r16
+  70 005c 0895      		ret
+  71               		.size	LiLiClean, .-LiLiClean
+  72               	.global	LiLiDestroy
+  73               		.type	LiLiDestroy, @function
+  74               	LiLiDestroy:
+  75 005e 0F93      		push r16
+  76 0060 1F93      		push r17
+  77               	/* prologue: function */
+  78               	/* frame size = 0 */
+  79 0062 8C01      		movw r16,r24
+  80 0064 0E94 0000 		call LiLiClean
+  81 0068 C801      		movw r24,r16
+  82 006a 0E94 0000 		call free
+  83               	/* epilogue start */
+  84 006e 1F91      		pop r17
+  85 0070 0F91      		pop r16
+  86 0072 0895      		ret
+  87               		.size	LiLiDestroy, .-LiLiDestroy
+  88               	.global	LiLiRemoveNode
+  89               		.type	LiLiRemoveNode, @function
+  90               	LiLiRemoveNode:
+  91 0074 CF93      		push r28
+  92 0076 DF93      		push r29
+  93               	/* prologue: function */
+  94               	/* frame size = 0 */
+  95 0078 EC01      		movw r28,r24
+  96 007a FB01      		movw r30,r22
+  97 007c 6115      		cp r22,__zero_reg__
+  98 007e 7105      		cpc r23,__zero_reg__
+  99 0080 01F0      		breq .L18
+ 100 0082 A081      		ld r26,Z
+ 101 0084 B181      		ldd r27,Z+1
+ 102 0086 8281      		ldd r24,Z+2
+ 103 0088 9381      		ldd r25,Z+3
+ 104 008a 1097      		sbiw r26,0
+ 105 008c 01F0      		breq .L14
+ 106 008e 1396      		adiw r26,2+1
+ 107 0090 9C93      		st X,r25
+ 108 0092 8E93      		st -X,r24
+ 109 0094 1297      		sbiw r26,2
+ 110 0096 00C0      		rjmp .L15
+ 111               	.L14:
+ 112 0098 9B83      		std Y+3,r25
+ 113 009a 8A83      		std Y+2,r24
+ 114               	.L15:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s 			page 3
+
+
+ 115 009c A281      		ldd r26,Z+2
+ 116 009e B381      		ldd r27,Z+3
+ 117 00a0 8081      		ld r24,Z
+ 118 00a2 9181      		ldd r25,Z+1
+ 119 00a4 1097      		sbiw r26,0
+ 120 00a6 01F0      		breq .L16
+ 121 00a8 8D93      		st X+,r24
+ 122 00aa 9C93      		st X,r25
+ 123 00ac 00C0      		rjmp .L17
+ 124               	.L16:
+ 125 00ae 9983      		std Y+1,r25
+ 126 00b0 8883      		st Y,r24
+ 127               	.L17:
+ 128 00b2 CF01      		movw r24,r30
+ 129 00b4 0E94 0000 		call free
+ 130               	.L18:
+ 131               	/* epilogue start */
+ 132 00b8 DF91      		pop r29
+ 133 00ba CF91      		pop r28
+ 134 00bc 0895      		ret
+ 135               		.size	LiLiRemoveNode, .-LiLiRemoveNode
+ 136               	.global	LiLiCreate
+ 137               		.type	LiLiCreate, @function
+ 138               	LiLiCreate:
+ 139 00be DF92      		push r13
+ 140 00c0 EF92      		push r14
+ 141 00c2 FF92      		push r15
+ 142 00c4 0F93      		push r16
+ 143 00c6 1F93      		push r17
+ 144 00c8 CF93      		push r28
+ 145 00ca DF93      		push r29
+ 146               	/* prologue: function */
+ 147               	/* frame size = 0 */
+ 148 00cc D82E      		mov r13,r24
+ 149 00ce 8B01      		movw r16,r22
+ 150 00d0 7A01      		movw r14,r20
+ 151 00d2 E901      		movw r28,r18
+ 152 00d4 81E0      		ldi r24,lo8(1)
+ 153 00d6 90E0      		ldi r25,hi8(1)
+ 154 00d8 6BE0      		ldi r22,lo8(11)
+ 155 00da 70E0      		ldi r23,hi8(11)
+ 156 00dc 0E94 0000 		call calloc
+ 157 00e0 FC01      		movw r30,r24
+ 158 00e2 0097      		sbiw r24,0
+ 159 00e4 01F0      		breq .L20
+ 160 00e6 1683      		std Z+6,r17
+ 161 00e8 0583      		std Z+5,r16
+ 162 00ea F086      		std Z+8,r15
+ 163 00ec E782      		std Z+7,r14
+ 164 00ee 2097      		sbiw r28,0
+ 165 00f0 01F0      		breq .L21
+ 166 00f2 D287      		std Z+10,r29
+ 167 00f4 C187      		std Z+9,r28
+ 168 00f6 00C0      		rjmp .L22
+ 169               	.L21:
+ 170 00f8 80E0      		ldi r24,lo8(gs(LiLiDefaultItemCompare))
+ 171 00fa 90E0      		ldi r25,hi8(gs(LiLiDefaultItemCompare))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s 			page 4
+
+
+ 172 00fc 9287      		std Z+10,r25
+ 173 00fe 8187      		std Z+9,r24
+ 174               	.L22:
+ 175 0100 D482      		std Z+4,r13
+ 176               	.L20:
+ 177 0102 CF01      		movw r24,r30
+ 178               	/* epilogue start */
+ 179 0104 DF91      		pop r29
+ 180 0106 CF91      		pop r28
+ 181 0108 1F91      		pop r17
+ 182 010a 0F91      		pop r16
+ 183 010c FF90      		pop r15
+ 184 010e EF90      		pop r14
+ 185 0110 DF90      		pop r13
+ 186 0112 0895      		ret
+ 187               		.size	LiLiCreate, .-LiLiCreate
+ 188               	.global	LiLiInsertItemBeforeNode
+ 189               		.type	LiLiInsertItemBeforeNode, @function
+ 190               	LiLiInsertItemBeforeNode:
+ 191 0114 CF92      		push r12
+ 192 0116 DF92      		push r13
+ 193 0118 EF92      		push r14
+ 194 011a FF92      		push r15
+ 195 011c 0F93      		push r16
+ 196 011e 1F93      		push r17
+ 197 0120 CF93      		push r28
+ 198 0122 DF93      		push r29
+ 199               	/* prologue: function */
+ 200               	/* frame size = 0 */
+ 201 0124 6C01      		movw r12,r24
+ 202 0126 7B01      		movw r14,r22
+ 203 0128 8A01      		movw r16,r20
+ 204 012a 86E0      		ldi r24,lo8(6)
+ 205 012c 90E0      		ldi r25,hi8(6)
+ 206 012e 0E94 0000 		call malloc
+ 207 0132 EC01      		movw r28,r24
+ 208 0134 0097      		sbiw r24,0
+ 209 0136 01F0      		breq .L25
+ 210 0138 D601      		movw r26,r12
+ 211 013a 1596      		adiw r26,5
+ 212 013c ED91      		ld r30,X+
+ 213 013e FC91      		ld r31,X
+ 214 0140 1697      		sbiw r26,5+1
+ 215 0142 3097      		sbiw r30,0
+ 216 0144 01F0      		breq .L26
+ 217 0146 C801      		movw r24,r16
+ 218 0148 0995      		icall
+ 219 014a 8C01      		movw r16,r24
+ 220               	.L26:
+ 221 014c 1D83      		std Y+5,r17
+ 222 014e 0C83      		std Y+4,r16
+ 223 0150 E114      		cp r14,__zero_reg__
+ 224 0152 F104      		cpc r15,__zero_reg__
+ 225 0154 01F0      		breq .L27
+ 226 0156 F982      		std Y+1,r15
+ 227 0158 E882      		st Y,r14
+ 228 015a D701      		movw r26,r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s 			page 5
+
+
+ 229 015c 1296      		adiw r26,2
+ 230 015e ED91      		ld r30,X+
+ 231 0160 FC91      		ld r31,X
+ 232 0162 1397      		sbiw r26,2+1
+ 233 0164 FB83      		std Y+3,r31
+ 234 0166 EA83      		std Y+2,r30
+ 235 0168 3097      		sbiw r30,0
+ 236 016a 01F0      		breq .L28
+ 237 016c D183      		std Z+1,r29
+ 238 016e C083      		st Z,r28
+ 239               	.L28:
+ 240 0170 F701      		movw r30,r14
+ 241 0172 D383      		std Z+3,r29
+ 242 0174 C283      		std Z+2,r28
+ 243 0176 D601      		movw r26,r12
+ 244 0178 8D91      		ld r24,X+
+ 245 017a 9C91      		ld r25,X
+ 246 017c 1197      		sbiw r26,1
+ 247 017e E816      		cp r14,r24
+ 248 0180 F906      		cpc r15,r25
+ 249 0182 01F4      		brne .L25
+ 250 0184 CD93      		st X+,r28
+ 251 0186 DC93      		st X,r29
+ 252 0188 00C0      		rjmp .L25
+ 253               	.L27:
+ 254 018a F601      		movw r30,r12
+ 255 018c D183      		std Z+1,r29
+ 256 018e C083      		st Z,r28
+ 257 0190 D383      		std Z+3,r29
+ 258 0192 C283      		std Z+2,r28
+ 259 0194 1982      		std Y+1,__zero_reg__
+ 260 0196 1882      		st Y,__zero_reg__
+ 261 0198 1B82      		std Y+3,__zero_reg__
+ 262 019a 1A82      		std Y+2,__zero_reg__
+ 263               	.L25:
+ 264 019c CE01      		movw r24,r28
+ 265               	/* epilogue start */
+ 266 019e DF91      		pop r29
+ 267 01a0 CF91      		pop r28
+ 268 01a2 1F91      		pop r17
+ 269 01a4 0F91      		pop r16
+ 270 01a6 FF90      		pop r15
+ 271 01a8 EF90      		pop r14
+ 272 01aa DF90      		pop r13
+ 273 01ac CF90      		pop r12
+ 274 01ae 0895      		ret
+ 275               		.size	LiLiInsertItemBeforeNode, .-LiLiInsertItemBeforeNode
+ 276               	.global	LiLiInsertItemAfterNode
+ 277               		.type	LiLiInsertItemAfterNode, @function
+ 278               	LiLiInsertItemAfterNode:
+ 279 01b0 CF92      		push r12
+ 280 01b2 DF92      		push r13
+ 281 01b4 EF92      		push r14
+ 282 01b6 FF92      		push r15
+ 283 01b8 0F93      		push r16
+ 284 01ba 1F93      		push r17
+ 285 01bc CF93      		push r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s 			page 6
+
+
+ 286 01be DF93      		push r29
+ 287               	/* prologue: function */
+ 288               	/* frame size = 0 */
+ 289 01c0 6C01      		movw r12,r24
+ 290 01c2 7B01      		movw r14,r22
+ 291 01c4 8A01      		movw r16,r20
+ 292 01c6 86E0      		ldi r24,lo8(6)
+ 293 01c8 90E0      		ldi r25,hi8(6)
+ 294 01ca 0E94 0000 		call malloc
+ 295 01ce EC01      		movw r28,r24
+ 296 01d0 0097      		sbiw r24,0
+ 297 01d2 01F0      		breq .L31
+ 298 01d4 D601      		movw r26,r12
+ 299 01d6 1596      		adiw r26,5
+ 300 01d8 ED91      		ld r30,X+
+ 301 01da FC91      		ld r31,X
+ 302 01dc 1697      		sbiw r26,5+1
+ 303 01de 3097      		sbiw r30,0
+ 304 01e0 01F0      		breq .L32
+ 305 01e2 C801      		movw r24,r16
+ 306 01e4 0995      		icall
+ 307 01e6 8C01      		movw r16,r24
+ 308               	.L32:
+ 309 01e8 1D83      		std Y+5,r17
+ 310 01ea 0C83      		std Y+4,r16
+ 311 01ec E114      		cp r14,__zero_reg__
+ 312 01ee F104      		cpc r15,__zero_reg__
+ 313 01f0 01F0      		breq .L33
+ 314 01f2 F701      		movw r30,r14
+ 315 01f4 8081      		ld r24,Z
+ 316 01f6 9181      		ldd r25,Z+1
+ 317 01f8 9983      		std Y+1,r25
+ 318 01fa 8883      		st Y,r24
+ 319 01fc FB82      		std Y+3,r15
+ 320 01fe EA82      		std Y+2,r14
+ 321 0200 D183      		std Z+1,r29
+ 322 0202 C083      		st Z,r28
+ 323 0204 E881      		ld r30,Y
+ 324 0206 F981      		ldd r31,Y+1
+ 325 0208 3097      		sbiw r30,0
+ 326 020a 01F0      		breq .L34
+ 327 020c D383      		std Z+3,r29
+ 328 020e C283      		std Z+2,r28
+ 329               	.L34:
+ 330 0210 D601      		movw r26,r12
+ 331 0212 1296      		adiw r26,2
+ 332 0214 8D91      		ld r24,X+
+ 333 0216 9C91      		ld r25,X
+ 334 0218 1397      		sbiw r26,2+1
+ 335 021a E816      		cp r14,r24
+ 336 021c F906      		cpc r15,r25
+ 337 021e 01F4      		brne .L31
+ 338 0220 1396      		adiw r26,2+1
+ 339 0222 DC93      		st X,r29
+ 340 0224 CE93      		st -X,r28
+ 341 0226 1297      		sbiw r26,2
+ 342 0228 00C0      		rjmp .L31
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s 			page 7
+
+
+ 343               	.L33:
+ 344 022a F601      		movw r30,r12
+ 345 022c D183      		std Z+1,r29
+ 346 022e C083      		st Z,r28
+ 347 0230 D383      		std Z+3,r29
+ 348 0232 C283      		std Z+2,r28
+ 349 0234 1982      		std Y+1,__zero_reg__
+ 350 0236 1882      		st Y,__zero_reg__
+ 351 0238 1B82      		std Y+3,__zero_reg__
+ 352 023a 1A82      		std Y+2,__zero_reg__
+ 353               	.L31:
+ 354 023c CE01      		movw r24,r28
+ 355               	/* epilogue start */
+ 356 023e DF91      		pop r29
+ 357 0240 CF91      		pop r28
+ 358 0242 1F91      		pop r17
+ 359 0244 0F91      		pop r16
+ 360 0246 FF90      		pop r15
+ 361 0248 EF90      		pop r14
+ 362 024a DF90      		pop r13
+ 363 024c CF90      		pop r12
+ 364 024e 0895      		ret
+ 365               		.size	LiLiInsertItemAfterNode, .-LiLiInsertItemAfterNode
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lili.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:10     .text:00000000 LiLiDefaultItemCompare
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:22     .text:0000000a LiLiClean
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:74     .text:0000005e LiLiDestroy
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:90     .text:00000074 LiLiRemoveNode
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:138    .text:000000be LiLiCreate
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:190    .text:00000114 LiLiInsertItemBeforeNode
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceYrzZe.s:278    .text:000001b0 LiLiInsertItemAfterNode
+
+UNDEFINED SYMBOLS
+free
+calloc
+malloc

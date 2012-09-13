@@ -1,0 +1,424 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s 			page 1
+
+
+   1               		.file	"setenv.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.data
+   9               	.LC0:
+  10 0000 00        		.string	""
+  11               		.text
+  12               		.type	save_env, @function
+  13               	save_env:
+  14 0000 CF92      		push r12
+  15 0002 DF92      		push r13
+  16 0004 EF92      		push r14
+  17 0006 FF92      		push r15
+  18 0008 0F93      		push r16
+  19 000a 1F93      		push r17
+  20 000c DF93      		push r29
+  21 000e CF93      		push r28
+  22 0010 00D0      		rcall .
+  23 0012 00D0      		rcall .
+  24 0014 CDB7      		in r28,__SP_L__
+  25 0016 DEB7      		in r29,__SP_H__
+  26               	/* prologue: function */
+  27               	/* frame size = 4 */
+  28 0018 8091 0000 		lds r24,nut_environ
+  29 001c 9091 0000 		lds r25,(nut_environ)+1
+  30 0020 892B      		or r24,r25
+  31 0022 01F4      		brne .+2
+  32 0024 00C0      		rjmp .L2
+  33 0026 85E4      		ldi r24,lo8(5656133)
+  34 0028 9EE4      		ldi r25,hi8(5656133)
+  35 002a A6E5      		ldi r26,hlo8(5656133)
+  36 002c B0E0      		ldi r27,hhi8(5656133)
+  37 002e 8983      		std Y+1,r24
+  38 0030 9A83      		std Y+2,r25
+  39 0032 AB83      		std Y+3,r26
+  40 0034 BC83      		std Y+4,r27
+  41 0036 80E0      		ldi r24,lo8(256)
+  42 0038 91E0      		ldi r25,hi8(256)
+  43 003a BE01      		movw r22,r28
+  44 003c 6F5F      		subi r22,lo8(-(1))
+  45 003e 7F4F      		sbci r23,hi8(-(1))
+  46 0040 44E0      		ldi r20,lo8(4)
+  47 0042 50E0      		ldi r21,hi8(4)
+  48 0044 0E94 0000 		call NutNvMemSave
+  49 0048 892B      		or r24,r25
+  50 004a 01F0      		breq .+2
+  51 004c 00C0      		rjmp .L2
+  52 004e C090 0000 		lds r12,nut_environ
+  53 0052 D090 0000 		lds r13,(nut_environ)+1
+  54 0056 20E0      		ldi r18,lo8(0)
+  55 0058 30E0      		ldi r19,hi8(0)
+  56 005a 84E0      		ldi r24,lo8(260)
+  57 005c E82E      		mov r14,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s 			page 2
+
+
+  58 005e 81E0      		ldi r24,hi8(260)
+  59 0060 F82E      		mov r15,r24
+  60 0062 00C0      		rjmp .L3
+  61               	.L7:
+  62 0064 D601      		movw r26,r12
+  63 0066 1496      		adiw r26,4
+  64 0068 6C91      		ld r22,X
+  65 006a 1497      		sbiw r26,4
+  66 006c 1596      		adiw r26,5
+  67 006e 7C91      		ld r23,X
+  68 0070 FB01      		movw r30,r22
+  69 0072 DF01      		movw r26,r30
+  70 0074 0D90      		ld __tmp_reg__,X+
+  71 0076 0020      		tst __tmp_reg__
+  72 0078 01F4      		brne .-6
+  73 007a 8D01      		movw r16,r26
+  74 007c 0E1B      		sub r16,r30
+  75 007e 1F0B      		sbc r17,r31
+  76 0080 C701      		movw r24,r14
+  77 0082 A801      		movw r20,r16
+  78 0084 0E94 0000 		call NutNvMemSave
+  79 0088 9C01      		movw r18,r24
+  80 008a 0097      		sbiw r24,0
+  81 008c 01F4      		brne .L4
+  82 008e E00E      		add r14,r16
+  83 0090 F11E      		adc r15,r17
+  84 0092 F601      		movw r30,r12
+  85 0094 6681      		ldd r22,Z+6
+  86 0096 7781      		ldd r23,Z+7
+  87 0098 6115      		cp r22,__zero_reg__
+  88 009a 7105      		cpc r23,__zero_reg__
+  89 009c 01F0      		breq .L5
+  90 009e DB01      		movw r26,r22
+  91 00a0 0D90      		ld __tmp_reg__,X+
+  92 00a2 0020      		tst __tmp_reg__
+  93 00a4 01F4      		brne .-6
+  94 00a6 8D01      		movw r16,r26
+  95 00a8 061B      		sub r16,r22
+  96 00aa 170B      		sbc r17,r23
+  97 00ac C701      		movw r24,r14
+  98 00ae A801      		movw r20,r16
+  99 00b0 0E94 0000 		call NutNvMemSave
+ 100 00b4 9C01      		movw r18,r24
+ 101 00b6 0097      		sbiw r24,0
+ 102 00b8 01F0      		breq .L6
+ 103 00ba 00C0      		rjmp .L4
+ 104               	.L5:
+ 105 00bc C701      		movw r24,r14
+ 106 00be 60E0      		ldi r22,lo8(.LC0)
+ 107 00c0 70E0      		ldi r23,hi8(.LC0)
+ 108 00c2 41E0      		ldi r20,lo8(1)
+ 109 00c4 50E0      		ldi r21,hi8(1)
+ 110 00c6 0E94 0000 		call NutNvMemSave
+ 111 00ca 9C01      		movw r18,r24
+ 112 00cc 0097      		sbiw r24,0
+ 113 00ce 01F4      		brne .L4
+ 114 00d0 01E0      		ldi r16,lo8(1)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s 			page 3
+
+
+ 115 00d2 10E0      		ldi r17,hi8(1)
+ 116               	.L6:
+ 117 00d4 E00E      		add r14,r16
+ 118 00d6 F11E      		adc r15,r17
+ 119 00d8 F601      		movw r30,r12
+ 120 00da C080      		ld r12,Z
+ 121 00dc D180      		ldd r13,Z+1
+ 122               	.L3:
+ 123 00de C114      		cp r12,__zero_reg__
+ 124 00e0 D104      		cpc r13,__zero_reg__
+ 125 00e2 01F0      		breq .+2
+ 126 00e4 00C0      		rjmp .L7
+ 127 00e6 2115      		cp r18,__zero_reg__
+ 128 00e8 3105      		cpc r19,__zero_reg__
+ 129 00ea 01F4      		brne .L4
+ 130 00ec C701      		movw r24,r14
+ 131 00ee 60E0      		ldi r22,lo8(.LC0)
+ 132 00f0 70E0      		ldi r23,hi8(.LC0)
+ 133 00f2 41E0      		ldi r20,lo8(1)
+ 134 00f4 50E0      		ldi r21,hi8(1)
+ 135 00f6 0E94 0000 		call NutNvMemSave
+ 136 00fa 9C01      		movw r18,r24
+ 137 00fc 00C0      		rjmp .L4
+ 138               	.L2:
+ 139 00fe 20E0      		ldi r18,lo8(0)
+ 140 0100 30E0      		ldi r19,hi8(0)
+ 141               	.L4:
+ 142 0102 C901      		movw r24,r18
+ 143               	/* epilogue start */
+ 144 0104 0F90      		pop __tmp_reg__
+ 145 0106 0F90      		pop __tmp_reg__
+ 146 0108 0F90      		pop __tmp_reg__
+ 147 010a 0F90      		pop __tmp_reg__
+ 148 010c CF91      		pop r28
+ 149 010e DF91      		pop r29
+ 150 0110 1F91      		pop r17
+ 151 0112 0F91      		pop r16
+ 152 0114 FF90      		pop r15
+ 153 0116 EF90      		pop r14
+ 154 0118 DF90      		pop r13
+ 155 011a CF90      		pop r12
+ 156 011c 0895      		ret
+ 157               		.size	save_env, .-save_env
+ 158               	.global	unsetenv
+ 159               		.type	unsetenv, @function
+ 160               	unsetenv:
+ 161 011e CF93      		push r28
+ 162 0120 DF93      		push r29
+ 163               	/* prologue: function */
+ 164               	/* frame size = 0 */
+ 165 0122 0E94 0000 		call findenv
+ 166 0126 EC01      		movw r28,r24
+ 167 0128 0097      		sbiw r24,0
+ 168 012a 01F4      		brne .L10
+ 169 012c 82E0      		ldi r24,lo8(2)
+ 170 012e 90E0      		ldi r25,hi8(2)
+ 171 0130 9093 0000 		sts (errno)+1,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s 			page 4
+
+
+ 172 0134 8093 0000 		sts errno,r24
+ 173 0138 00C0      		rjmp .L15
+ 174               	.L10:
+ 175 013a EA81      		ldd r30,Y+2
+ 176 013c FB81      		ldd r31,Y+3
+ 177 013e 3097      		sbiw r30,0
+ 178 0140 01F0      		breq .L12
+ 179 0142 8881      		ld r24,Y
+ 180 0144 9981      		ldd r25,Y+1
+ 181 0146 9183      		std Z+1,r25
+ 182 0148 8083      		st Z,r24
+ 183               	.L12:
+ 184 014a E881      		ld r30,Y
+ 185 014c F981      		ldd r31,Y+1
+ 186 014e 3097      		sbiw r30,0
+ 187 0150 01F0      		breq .L13
+ 188 0152 8A81      		ldd r24,Y+2
+ 189 0154 9B81      		ldd r25,Y+3
+ 190 0156 9383      		std Z+3,r25
+ 191 0158 8283      		std Z+2,r24
+ 192               	.L13:
+ 193 015a 8091 0000 		lds r24,nut_environ
+ 194 015e 9091 0000 		lds r25,(nut_environ)+1
+ 195 0162 8C17      		cp r24,r28
+ 196 0164 9D07      		cpc r25,r29
+ 197 0166 01F4      		brne .L14
+ 198 0168 8881      		ld r24,Y
+ 199 016a 9981      		ldd r25,Y+1
+ 200 016c 9093 0000 		sts (nut_environ)+1,r25
+ 201 0170 8093 0000 		sts nut_environ,r24
+ 202               	.L14:
+ 203 0174 8C81      		ldd r24,Y+4
+ 204 0176 9D81      		ldd r25,Y+5
+ 205 0178 0E94 0000 		call free
+ 206 017c 8E81      		ldd r24,Y+6
+ 207 017e 9F81      		ldd r25,Y+7
+ 208 0180 0E94 0000 		call free
+ 209 0184 CE01      		movw r24,r28
+ 210 0186 0E94 0000 		call free
+ 211 018a 0E94 0000 		call save_env
+ 212               	.L15:
+ 213               	/* epilogue start */
+ 214 018e DF91      		pop r29
+ 215 0190 CF91      		pop r28
+ 216 0192 0895      		ret
+ 217               		.size	unsetenv, .-unsetenv
+ 218               	.global	setenv
+ 219               		.type	setenv, @function
+ 220               	setenv:
+ 221 0194 AF92      		push r10
+ 222 0196 BF92      		push r11
+ 223 0198 CF92      		push r12
+ 224 019a DF92      		push r13
+ 225 019c EF92      		push r14
+ 226 019e FF92      		push r15
+ 227 01a0 0F93      		push r16
+ 228 01a2 1F93      		push r17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s 			page 5
+
+
+ 229 01a4 CF93      		push r28
+ 230 01a6 DF93      		push r29
+ 231               	/* prologue: function */
+ 232               	/* frame size = 0 */
+ 233 01a8 8C01      		movw r16,r24
+ 234 01aa 5B01      		movw r10,r22
+ 235 01ac EA01      		movw r28,r20
+ 236 01ae 0E94 0000 		call findenv
+ 237 01b2 6C01      		movw r12,r24
+ 238 01b4 0097      		sbiw r24,0
+ 239 01b6 01F0      		breq .+2
+ 240 01b8 00C0      		rjmp .L17
+ 241 01ba 88E0      		ldi r24,lo8(8)
+ 242 01bc 90E0      		ldi r25,hi8(8)
+ 243 01be 0E94 0000 		call malloc
+ 244 01c2 EC01      		movw r28,r24
+ 245 01c4 6C01      		movw r12,r24
+ 246 01c6 0097      		sbiw r24,0
+ 247 01c8 01F4      		brne .+2
+ 248 01ca 00C0      		rjmp .L18
+ 249 01cc 88E0      		ldi r24,lo8(8)
+ 250 01ce DE01      		movw r26,r28
+ 251 01d0 1D92      		st X+,__zero_reg__
+ 252 01d2 8A95      	        dec r24
+ 253 01d4 01F4      		brne .-6
+ 254 01d6 C801      		movw r24,r16
+ 255 01d8 0E94 0000 		call strdup
+ 256 01dc 7C01      		movw r14,r24
+ 257 01de 9D83      		std Y+5,r25
+ 258 01e0 8C83      		std Y+4,r24
+ 259 01e2 0097      		sbiw r24,0
+ 260 01e4 01F4      		brne .L19
+ 261 01e6 CE01      		movw r24,r28
+ 262 01e8 0E94 0000 		call free
+ 263 01ec 00C0      		rjmp .L18
+ 264               	.L19:
+ 265 01ee 0091 0000 		lds r16,nut_environ
+ 266 01f2 1091 0000 		lds r17,(nut_environ)+1
+ 267 01f6 E0E0      		ldi r30,lo8(0)
+ 268 01f8 F0E0      		ldi r31,hi8(0)
+ 269 01fa 00C0      		rjmp .L21
+ 270               	.L26:
+ 271 01fc F801      		movw r30,r16
+ 272 01fe 6481      		ldd r22,Z+4
+ 273 0200 7581      		ldd r23,Z+5
+ 274 0202 C701      		movw r24,r14
+ 275 0204 0E94 0000 		call strcmp
+ 276 0208 97FF      		sbrs r25,7
+ 277 020a 00C0      		rjmp .L22
+ 278 020c D801      		movw r26,r16
+ 279 020e 1296      		adiw r26,2
+ 280 0210 ED91      		ld r30,X+
+ 281 0212 FC91      		ld r31,X
+ 282 0214 1397      		sbiw r26,2+1
+ 283 0216 3097      		sbiw r30,0
+ 284 0218 01F0      		breq .L23
+ 285 021a D183      		std Z+1,r29
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s 			page 6
+
+
+ 286 021c C083      		st Z,r28
+ 287 021e 00C0      		rjmp .L24
+ 288               	.L23:
+ 289 0220 D093 0000 		sts (nut_environ)+1,r29
+ 290 0224 C093 0000 		sts nut_environ,r28
+ 291               	.L24:
+ 292 0228 1983      		std Y+1,r17
+ 293 022a 0883      		st Y,r16
+ 294 022c F801      		movw r30,r16
+ 295 022e 8281      		ldd r24,Z+2
+ 296 0230 9381      		ldd r25,Z+3
+ 297 0232 9B83      		std Y+3,r25
+ 298 0234 8A83      		std Y+2,r24
+ 299 0236 D383      		std Z+3,r29
+ 300 0238 C283      		std Z+2,r28
+ 301 023a 00C0      		rjmp .L25
+ 302               	.L22:
+ 303 023c F801      		movw r30,r16
+ 304 023e 8081      		ld r24,Z
+ 305 0240 9181      		ldd r25,Z+1
+ 306 0242 9C01      		movw r18,r24
+ 307 0244 8901      		movw r16,r18
+ 308               	.L21:
+ 309 0246 0115      		cp r16,__zero_reg__
+ 310 0248 1105      		cpc r17,__zero_reg__
+ 311 024a 01F4      		brne .L26
+ 312 024c 00C0      		rjmp .L35
+ 313               	.L30:
+ 314 024e D183      		std Z+1,r29
+ 315 0250 C083      		st Z,r28
+ 316 0252 FB83      		std Y+3,r31
+ 317 0254 EA83      		std Y+2,r30
+ 318 0256 00C0      		rjmp .L25
+ 319               	.L36:
+ 320 0258 D093 0000 		sts (nut_environ)+1,r29
+ 321 025c C093 0000 		sts nut_environ,r28
+ 322 0260 00C0      		rjmp .L25
+ 323               	.L17:
+ 324 0262 CD2B      		or r28,r29
+ 325 0264 01F0      		breq .L28
+ 326               	.L25:
+ 327 0266 D601      		movw r26,r12
+ 328 0268 1696      		adiw r26,6
+ 329 026a CD91      		ld r28,X+
+ 330 026c DC91      		ld r29,X
+ 331 026e 1797      		sbiw r26,6+1
+ 332 0270 2097      		sbiw r28,0
+ 333 0272 01F0      		breq .L29
+ 334 0274 CE01      		movw r24,r28
+ 335 0276 B501      		movw r22,r10
+ 336 0278 0E94 0000 		call strcmp
+ 337 027c 0097      		sbiw r24,0
+ 338 027e 01F0      		breq .L28
+ 339 0280 CE01      		movw r24,r28
+ 340 0282 0E94 0000 		call free
+ 341               	.L29:
+ 342 0286 C501      		movw r24,r10
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s 			page 7
+
+
+ 343 0288 0E94 0000 		call strdup
+ 344 028c F601      		movw r30,r12
+ 345 028e 9783      		std Z+7,r25
+ 346 0290 8683      		std Z+6,r24
+ 347 0292 0097      		sbiw r24,0
+ 348 0294 01F0      		breq .L18
+ 349 0296 0E94 0000 		call save_env
+ 350 029a 9C01      		movw r18,r24
+ 351 029c 00C0      		rjmp .L20
+ 352               	.L18:
+ 353 029e 2FEF      		ldi r18,lo8(-1)
+ 354 02a0 3FEF      		ldi r19,hi8(-1)
+ 355 02a2 00C0      		rjmp .L20
+ 356               	.L28:
+ 357 02a4 20E0      		ldi r18,lo8(0)
+ 358 02a6 30E0      		ldi r19,hi8(0)
+ 359               	.L20:
+ 360 02a8 C901      		movw r24,r18
+ 361               	/* epilogue start */
+ 362 02aa DF91      		pop r29
+ 363 02ac CF91      		pop r28
+ 364 02ae 1F91      		pop r17
+ 365 02b0 0F91      		pop r16
+ 366 02b2 FF90      		pop r15
+ 367 02b4 EF90      		pop r14
+ 368 02b6 DF90      		pop r13
+ 369 02b8 CF90      		pop r12
+ 370 02ba BF90      		pop r11
+ 371 02bc AF90      		pop r10
+ 372 02be 0895      		ret
+ 373               	.L35:
+ 374 02c0 3097      		sbiw r30,0
+ 375 02c2 01F4      		brne .L30
+ 376 02c4 00C0      		rjmp .L36
+ 377               		.size	setenv, .-setenv
+ 378               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 setenv.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s:13     .text:00000000 save_env
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s:160    .text:0000011e unsetenv
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciZnMh9.s:220    .text:00000194 setenv
+
+UNDEFINED SYMBOLS
+nut_environ
+NutNvMemSave
+findenv
+errno
+free
+malloc
+strdup
+strcmp
+__do_copy_data

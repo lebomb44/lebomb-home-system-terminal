@@ -1,0 +1,48 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccDUjxR8.s 			page 1
+
+
+   1               		.file	"fputs.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	fputs
+  10               		.type	fputs, @function
+  11               	fputs:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 9C01      		movw r18,r24
+  15 0002 D901      		movw r26,r18
+  16 0004 0D90      		ld __tmp_reg__,X+
+  17 0006 0020      		tst __tmp_reg__
+  18 0008 01F4      		brne .-6
+  19 000a 1197      		sbiw r26,1
+  20 000c A21B      		sub r26,r18
+  21 000e B30B      		sbc r27,r19
+  22 0010 FB01      		movw r30,r22
+  23 0012 8081      		ld r24,Z
+  24 0014 9181      		ldd r25,Z+1
+  25 0016 B901      		movw r22,r18
+  26 0018 AD01      		movw r20,r26
+  27 001a 0E94 0000 		call _write
+  28               	/* epilogue start */
+  29 001e 0895      		ret
+  30               		.size	fputs, .-fputs
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccDUjxR8.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 fputs.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccDUjxR8.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccDUjxR8.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccDUjxR8.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccDUjxR8.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccDUjxR8.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccDUjxR8.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccDUjxR8.s:11     .text:00000000 fputs
+
+UNDEFINED SYMBOLS
+_write

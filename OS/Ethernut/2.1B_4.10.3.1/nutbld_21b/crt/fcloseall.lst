@@ -1,0 +1,53 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLUi0RQ.s 			page 1
+
+
+   1               		.file	"fcloseall.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	fcloseall
+  10               		.type	fcloseall, @function
+  11               	fcloseall:
+  12 0000 CF93      		push r28
+  13 0002 DF93      		push r29
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0004 C0E0      		ldi r28,lo8(__iob+6)
+  17 0006 D0E0      		ldi r29,hi8(__iob+6)
+  18               	.L3:
+  19 0008 8881      		ld r24,Y
+  20 000a 9981      		ldd r25,Y+1
+  21 000c 0097      		sbiw r24,0
+  22 000e 01F0      		breq .L2
+  23 0010 0E94 0000 		call fclose
+  24               	.L2:
+  25 0014 2296      		adiw r28,2
+  26 0016 80E0      		ldi r24,hi8(__iob+16)
+  27 0018 C030      		cpi r28,lo8(__iob+16)
+  28 001a D807      		cpc r29,r24
+  29 001c 01F4      		brne .L3
+  30               	/* epilogue start */
+  31 001e DF91      		pop r29
+  32 0020 CF91      		pop r28
+  33 0022 0895      		ret
+  34               		.size	fcloseall, .-fcloseall
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLUi0RQ.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 fcloseall.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLUi0RQ.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLUi0RQ.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLUi0RQ.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLUi0RQ.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLUi0RQ.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLUi0RQ.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLUi0RQ.s:11     .text:00000000 fcloseall
+
+UNDEFINED SYMBOLS
+__iob
+fclose

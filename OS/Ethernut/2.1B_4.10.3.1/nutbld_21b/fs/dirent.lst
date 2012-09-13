@@ -1,0 +1,307 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s 			page 1
+
+
+   1               		.file	"dirent.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	readdir
+  10               		.type	readdir, @function
+  11               	readdir:
+  12 0000 CF93      		push r28
+  13 0002 DF93      		push r29
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0004 EC01      		movw r28,r24
+  17 0006 E881      		ld r30,Y
+  18 0008 F981      		ldd r31,Y+1
+  19 000a 0280      		ldd __tmp_reg__,Z+2
+  20 000c F381      		ldd r31,Z+3
+  21 000e E02D      		mov r30,__tmp_reg__
+  22 0010 2589      		ldd r18,Z+21
+  23 0012 3689      		ldd r19,Z+22
+  24 0014 CF01      		movw r24,r30
+  25 0016 65E1      		ldi r22,lo8(4373)
+  26 0018 71E1      		ldi r23,hi8(4373)
+  27 001a AE01      		movw r20,r28
+  28 001c F901      		movw r30,r18
+  29 001e 0995      		icall
+  30 0020 892B      		or r24,r25
+  31 0022 01F0      		breq .L2
+  32 0024 40E0      		ldi r20,lo8(0)
+  33 0026 50E0      		ldi r21,hi8(0)
+  34 0028 00C0      		rjmp .L3
+  35               	.L2:
+  36 002a 4A81      		ldd r20,Y+2
+  37 002c 5B81      		ldd r21,Y+3
+  38               	.L3:
+  39 002e CA01      		movw r24,r20
+  40               	/* epilogue start */
+  41 0030 DF91      		pop r29
+  42 0032 CF91      		pop r28
+  43 0034 0895      		ret
+  44               		.size	readdir, .-readdir
+  45               	.global	closedir
+  46               		.type	closedir, @function
+  47               	closedir:
+  48 0036 CF93      		push r28
+  49 0038 DF93      		push r29
+  50               	/* prologue: function */
+  51               	/* frame size = 0 */
+  52 003a EC01      		movw r28,r24
+  53 003c 0097      		sbiw r24,0
+  54 003e 01F0      		breq .L6
+  55 0040 E881      		ld r30,Y
+  56 0042 F981      		ldd r31,Y+1
+  57 0044 0280      		ldd __tmp_reg__,Z+2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s 			page 2
+
+
+  58 0046 F381      		ldd r31,Z+3
+  59 0048 E02D      		mov r30,__tmp_reg__
+  60 004a 2589      		ldd r18,Z+21
+  61 004c 3689      		ldd r19,Z+22
+  62 004e CF01      		movw r24,r30
+  63 0050 64E1      		ldi r22,lo8(4372)
+  64 0052 71E1      		ldi r23,hi8(4372)
+  65 0054 AE01      		movw r20,r28
+  66 0056 F901      		movw r30,r18
+  67 0058 0995      		icall
+  68 005a 8A81      		ldd r24,Y+2
+  69 005c 9B81      		ldd r25,Y+3
+  70 005e 0097      		sbiw r24,0
+  71 0060 01F0      		breq .L7
+  72 0062 0E94 0000 		call free
+  73               	.L7:
+  74 0066 CE01      		movw r24,r28
+  75 0068 0E94 0000 		call free
+  76               	.L6:
+  77 006c 80E0      		ldi r24,lo8(0)
+  78 006e 90E0      		ldi r25,hi8(0)
+  79               	/* epilogue start */
+  80 0070 DF91      		pop r29
+  81 0072 CF91      		pop r28
+  82 0074 0895      		ret
+  83               		.size	closedir, .-closedir
+  84               	.global	opendir
+  85               		.type	opendir, @function
+  86               	opendir:
+  87 0076 6F92      		push r6
+  88 0078 7F92      		push r7
+  89 007a 8F92      		push r8
+  90 007c 9F92      		push r9
+  91 007e AF92      		push r10
+  92 0080 BF92      		push r11
+  93 0082 CF92      		push r12
+  94 0084 DF92      		push r13
+  95 0086 EF92      		push r14
+  96 0088 FF92      		push r15
+  97 008a 0F93      		push r16
+  98 008c 1F93      		push r17
+  99 008e DF93      		push r29
+ 100 0090 CF93      		push r28
+ 101 0092 CDB7      		in r28,__SP_L__
+ 102 0094 DEB7      		in r29,__SP_H__
+ 103 0096 2997      		sbiw r28,9
+ 104 0098 0FB6      		in __tmp_reg__,__SREG__
+ 105 009a F894      		cli
+ 106 009c DEBF      		out __SP_H__,r29
+ 107 009e 0FBE      		out __SREG__,__tmp_reg__
+ 108 00a0 CDBF      		out __SP_L__,r28
+ 109               	/* prologue: function */
+ 110               	/* frame size = 9 */
+ 111 00a2 5C01      		movw r10,r24
+ 112 00a4 FE01      		movw r30,r28
+ 113 00a6 3196      		adiw r30,1
+ 114 00a8 7C01      		movw r14,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s 			page 3
+
+
+ 115 00aa AE01      		movw r20,r28
+ 116 00ac 475F      		subi r20,lo8(-(9))
+ 117 00ae 5F4F      		sbci r21,hi8(-(9))
+ 118 00b0 00C0      		rjmp .L10
+ 119               	.L12:
+ 120 00b2 8193      		st Z+,r24
+ 121 00b4 0894      		sec
+ 122 00b6 E11C      		adc r14,__zero_reg__
+ 123 00b8 F11C      		adc r15,__zero_reg__
+ 124               	.L10:
+ 125 00ba 2E2D      		mov r18,r14
+ 126 00bc 2A19      		sub r18,r10
+ 127 00be D701      		movw r26,r14
+ 128 00c0 8C91      		ld r24,X
+ 129 00c2 8823      		tst r24
+ 130 00c4 01F0      		breq .L11
+ 131 00c6 8A33      		cpi r24,lo8(58)
+ 132 00c8 01F0      		breq .L11
+ 133 00ca E417      		cp r30,r20
+ 134 00cc F507      		cpc r31,r21
+ 135 00ce 01F4      		brne .L12
+ 136               	.L11:
+ 137 00d0 3701      		movw r6,r14
+ 138 00d2 CE01      		movw r24,r28
+ 139 00d4 0196      		adiw r24,1
+ 140 00d6 FC01      		movw r30,r24
+ 141 00d8 E20F      		add r30,r18
+ 142 00da F11D      		adc r31,__zero_reg__
+ 143 00dc 1082      		st Z,__zero_reg__
+ 144 00de 0E94 0000 		call NutDeviceLookup
+ 145 00e2 4C01      		movw r8,r24
+ 146 00e4 0097      		sbiw r24,0
+ 147 00e6 01F4      		brne .L13
+ 148 00e8 83E1      		ldi r24,lo8(19)
+ 149 00ea 90E0      		ldi r25,hi8(19)
+ 150 00ec 00C0      		rjmp .L21
+ 151               	.L13:
+ 152 00ee 86E0      		ldi r24,lo8(6)
+ 153 00f0 90E0      		ldi r25,hi8(6)
+ 154 00f2 0E94 0000 		call malloc
+ 155 00f6 8C01      		movw r16,r24
+ 156 00f8 6C01      		movw r12,r24
+ 157 00fa 0097      		sbiw r24,0
+ 158 00fc 01F4      		brne .L15
+ 159 00fe 8CE0      		ldi r24,lo8(12)
+ 160 0100 90E0      		ldi r25,hi8(12)
+ 161 0102 9093 0000 		sts (errno)+1,r25
+ 162 0106 8093 0000 		sts errno,r24
+ 163 010a 00C0      		rjmp .L14
+ 164               	.L15:
+ 165 010c 86E0      		ldi r24,lo8(6)
+ 166 010e F801      		movw r30,r16
+ 167 0110 1192      		st Z+,__zero_reg__
+ 168 0112 8A95      	        dec r24
+ 169 0114 01F4      		brne .-6
+ 170 0116 D501      		movw r26,r10
+ 171 0118 1196      		adiw r26,1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s 			page 4
+
+
+ 172 011a FD01      		movw r30,r26
+ 173 011c 0190      		ld __tmp_reg__,Z+
+ 174 011e 0020      		tst __tmp_reg__
+ 175 0120 01F4      		brne .-6
+ 176 0122 3197      		sbiw r30,1
+ 177 0124 EA1B      		sub r30,r26
+ 178 0126 FB0B      		sbc r31,r27
+ 179 0128 D801      		movw r26,r16
+ 180 012a 1596      		adiw r26,4+1
+ 181 012c FC93      		st X,r31
+ 182 012e EE93      		st -X,r30
+ 183 0130 1497      		sbiw r26,4
+ 184 0132 E850      		subi r30,lo8(264)
+ 185 0134 F140      		sbci r31,hi8(264)
+ 186 0136 00F4      		brsh .L16
+ 187 0138 88E0      		ldi r24,lo8(264)
+ 188 013a 91E0      		ldi r25,hi8(264)
+ 189 013c F801      		movw r30,r16
+ 190 013e 9583      		std Z+5,r25
+ 191 0140 8483      		std Z+4,r24
+ 192               	.L16:
+ 193 0142 D801      		movw r26,r16
+ 194 0144 1496      		adiw r26,4
+ 195 0146 8D91      		ld r24,X+
+ 196 0148 9C91      		ld r25,X
+ 197 014a 1597      		sbiw r26,4+1
+ 198 014c 0E94 0000 		call malloc
+ 199 0150 9C01      		movw r18,r24
+ 200 0152 F801      		movw r30,r16
+ 201 0154 9383      		std Z+3,r25
+ 202 0156 8283      		std Z+2,r24
+ 203 0158 0097      		sbiw r24,0
+ 204 015a 01F4      		brne .L17
+ 205 015c C801      		movw r24,r16
+ 206 015e 0E94 0000 		call free
+ 207 0162 8CE0      		ldi r24,lo8(12)
+ 208 0164 90E0      		ldi r25,hi8(12)
+ 209               	.L21:
+ 210 0166 9093 0000 		sts (errno)+1,r25
+ 211 016a 8093 0000 		sts errno,r24
+ 212 016e 00C0      		rjmp .L20
+ 213               	.L17:
+ 214 0170 D701      		movw r26,r14
+ 215 0172 8C91      		ld r24,X
+ 216 0174 8A33      		cpi r24,lo8(58)
+ 217 0176 01F4      		brne .L18
+ 218 0178 3701      		movw r6,r14
+ 219 017a 0894      		sec
+ 220 017c 611C      		adc r6,__zero_reg__
+ 221 017e 711C      		adc r7,__zero_reg__
+ 222               	.L18:
+ 223 0180 C901      		movw r24,r18
+ 224 0182 B301      		movw r22,r6
+ 225 0184 0E94 0000 		call strcpy
+ 226 0188 D401      		movw r26,r8
+ 227 018a 5596      		adiw r26,21
+ 228 018c ED91      		ld r30,X+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s 			page 5
+
+
+ 229 018e FC91      		ld r31,X
+ 230 0190 5697      		sbiw r26,21+1
+ 231 0192 C401      		movw r24,r8
+ 232 0194 63E1      		ldi r22,lo8(4371)
+ 233 0196 71E1      		ldi r23,hi8(4371)
+ 234 0198 A801      		movw r20,r16
+ 235 019a 0995      		icall
+ 236 019c 892B      		or r24,r25
+ 237 019e 01F0      		breq .L14
+ 238 01a0 F801      		movw r30,r16
+ 239 01a2 8281      		ldd r24,Z+2
+ 240 01a4 9381      		ldd r25,Z+3
+ 241 01a6 0E94 0000 		call free
+ 242 01aa C801      		movw r24,r16
+ 243 01ac 0E94 0000 		call free
+ 244               	.L20:
+ 245 01b0 CC24      		clr r12
+ 246 01b2 DD24      		clr r13
+ 247               	.L14:
+ 248 01b4 C601      		movw r24,r12
+ 249               	/* epilogue start */
+ 250 01b6 2996      		adiw r28,9
+ 251 01b8 0FB6      		in __tmp_reg__,__SREG__
+ 252 01ba F894      		cli
+ 253 01bc DEBF      		out __SP_H__,r29
+ 254 01be 0FBE      		out __SREG__,__tmp_reg__
+ 255 01c0 CDBF      		out __SP_L__,r28
+ 256 01c2 CF91      		pop r28
+ 257 01c4 DF91      		pop r29
+ 258 01c6 1F91      		pop r17
+ 259 01c8 0F91      		pop r16
+ 260 01ca FF90      		pop r15
+ 261 01cc EF90      		pop r14
+ 262 01ce DF90      		pop r13
+ 263 01d0 CF90      		pop r12
+ 264 01d2 BF90      		pop r11
+ 265 01d4 AF90      		pop r10
+ 266 01d6 9F90      		pop r9
+ 267 01d8 8F90      		pop r8
+ 268 01da 7F90      		pop r7
+ 269 01dc 6F90      		pop r6
+ 270 01de 0895      		ret
+ 271               		.size	opendir, .-opendir
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 dirent.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s:11     .text:00000000 readdir
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s:47     .text:00000036 closedir
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccxXViDu.s:86     .text:00000076 opendir
+
+UNDEFINED SYMBOLS
+free
+NutDeviceLookup
+malloc
+errno
+strcpy

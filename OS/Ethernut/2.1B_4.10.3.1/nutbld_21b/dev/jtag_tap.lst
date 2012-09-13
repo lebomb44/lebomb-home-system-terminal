@@ -1,0 +1,930 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 1
+
+
+   1               		.file	"jtag_tap.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	TapStateWalk
+  10               		.type	TapStateWalk, @function
+  11               	TapStateWalk:
+  12 0000 0F93      		push r16
+  13 0002 1F93      		push r17
+  14 0004 CF93      		push r28
+  15 0006 DF93      		push r29
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0008 EC01      		movw r28,r24
+  19 000a 8B01      		movw r16,r22
+  20 000c 8881      		ld r24,Y
+  21 000e 8031      		cpi r24,lo8(16)
+  22 0010 01F0      		breq .L2
+  23 0012 6115      		cp r22,__zero_reg__
+  24 0014 7105      		cpc r23,__zero_reg__
+  25 0016 01F4      		brne .L3
+  26               	.L2:
+  27 0018 EA81      		ldd r30,Y+2
+  28 001a FB81      		ldd r31,Y+3
+  29 001c 0680      		ldd __tmp_reg__,Z+6
+  30 001e F781      		ldd r31,Z+7
+  31 0020 E02D      		mov r30,__tmp_reg__
+  32 0022 8C81      		ldd r24,Y+4
+  33 0024 9D81      		ldd r25,Y+5
+  34 0026 6FE1      		ldi r22,lo8(31)
+  35 0028 45E0      		ldi r20,lo8(5)
+  36 002a 0995      		icall
+  37 002c 1882      		st Y,__zero_reg__
+  38               	.L3:
+  39 002e E881      		ld r30,Y
+  40 0030 F0E0      		ldi r31,lo8(0)
+  41 0032 94E0      		ldi r25,4
+  42 0034 EE0F      	1:	lsl r30
+  43 0036 FF1F      		rol r31
+  44 0038 9A95      		dec r25
+  45 003a 01F4      		brne 1b
+  46 003c E00F      		add r30,r16
+  47 003e F11F      		adc r31,r17
+  48 0040 AA81      		ldd r26,Y+2
+  49 0042 BB81      		ldd r27,Y+3
+  50 0044 EE0F      		lsl r30
+  51 0046 FF1F      		rol r31
+  52 0048 E050      		subi r30,lo8(-(mode_path))
+  53 004a F040      		sbci r31,hi8(-(mode_path))
+  54 004c 1696      		adiw r26,6
+  55 004e 2D91      		ld r18,X+
+  56 0050 3C91      		ld r19,X
+  57 0052 1797      		sbiw r26,6+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 2
+
+
+  58 0054 8C81      		ldd r24,Y+4
+  59 0056 9D81      		ldd r25,Y+5
+  60 0058 6181      		ldd r22,Z+1
+  61 005a 4081      		ld r20,Z
+  62 005c F901      		movw r30,r18
+  63 005e 0995      		icall
+  64 0060 0883      		st Y,r16
+  65               	/* epilogue start */
+  66 0062 DF91      		pop r29
+  67 0064 CF91      		pop r28
+  68 0066 1F91      		pop r17
+  69 0068 0F91      		pop r16
+  70 006a 0895      		ret
+  71               		.size	TapStateWalk, .-TapStateWalk
+  72               	.global	TapSetIrSize
+  73               		.type	TapSetIrSize, @function
+  74               	TapSetIrSize:
+  75               	/* prologue: function */
+  76               	/* frame size = 0 */
+  77 006c FC01      		movw r30,r24
+  78 006e 6183      		std Z+1,r22
+  79               	/* epilogue start */
+  80 0070 0895      		ret
+  81               		.size	TapSetIrSize, .-TapSetIrSize
+  82               	.global	TapData
+  83               		.type	TapData, @function
+  84               	TapData:
+  85 0072 6F92      		push r6
+  86 0074 7F92      		push r7
+  87 0076 8F92      		push r8
+  88 0078 9F92      		push r9
+  89 007a AF92      		push r10
+  90 007c BF92      		push r11
+  91 007e CF92      		push r12
+  92 0080 DF92      		push r13
+  93 0082 EF92      		push r14
+  94 0084 FF92      		push r15
+  95 0086 0F93      		push r16
+  96 0088 1F93      		push r17
+  97 008a CF93      		push r28
+  98 008c DF93      		push r29
+  99               	/* prologue: function */
+ 100               	/* frame size = 0 */
+ 101 008e EC01      		movw r28,r24
+ 102 0090 4B01      		movw r8,r22
+ 103 0092 3A01      		movw r6,r20
+ 104 0094 5801      		movw r10,r16
+ 105 0096 6901      		movw r12,r18
+ 106 0098 FE2C      		mov r15,r14
+ 107 009a 64E0      		ldi r22,lo8(4)
+ 108 009c 70E0      		ldi r23,hi8(4)
+ 109 009e 0E94 0000 		call TapStateWalk
+ 110 00a2 EA81      		ldd r30,Y+2
+ 111 00a4 FB81      		ldd r31,Y+3
+ 112 00a6 0284      		ldd __tmp_reg__,Z+10
+ 113 00a8 F385      		ldd r31,Z+11
+ 114 00aa E02D      		mov r30,__tmp_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 3
+
+
+ 115 00ac 8C81      		ldd r24,Y+4
+ 116 00ae 9D81      		ldd r25,Y+5
+ 117 00b0 B401      		movw r22,r8
+ 118 00b2 A301      		movw r20,r6
+ 119 00b4 9601      		movw r18,r12
+ 120 00b6 8501      		movw r16,r10
+ 121 00b8 0995      		icall
+ 122 00ba FF20      		tst r15
+ 123 00bc 01F0      		breq .L9
+ 124 00be 8881      		ld r24,Y
+ 125 00c0 8F5F      		subi r24,lo8(-(1))
+ 126 00c2 8883      		st Y,r24
+ 127               	.L9:
+ 128               	/* epilogue start */
+ 129 00c4 DF91      		pop r29
+ 130 00c6 CF91      		pop r28
+ 131 00c8 1F91      		pop r17
+ 132 00ca 0F91      		pop r16
+ 133 00cc FF90      		pop r15
+ 134 00ce EF90      		pop r14
+ 135 00d0 DF90      		pop r13
+ 136 00d2 CF90      		pop r12
+ 137 00d4 BF90      		pop r11
+ 138 00d6 AF90      		pop r10
+ 139 00d8 9F90      		pop r9
+ 140 00da 8F90      		pop r8
+ 141 00dc 7F90      		pop r7
+ 142 00de 6F90      		pop r6
+ 143 00e0 0895      		ret
+ 144               		.size	TapData, .-TapData
+ 145               	.global	TapInstruction
+ 146               		.type	TapInstruction, @function
+ 147               	TapInstruction:
+ 148 00e2 CF92      		push r12
+ 149 00e4 DF92      		push r13
+ 150 00e6 EF92      		push r14
+ 151 00e8 FF92      		push r15
+ 152 00ea 0F93      		push r16
+ 153 00ec 1F93      		push r17
+ 154 00ee DF93      		push r29
+ 155 00f0 CF93      		push r28
+ 156 00f2 00D0      		rcall .
+ 157 00f4 00D0      		rcall .
+ 158 00f6 CDB7      		in r28,__SP_L__
+ 159 00f8 DEB7      		in r29,__SP_H__
+ 160               	/* prologue: function */
+ 161               	/* frame size = 4 */
+ 162 00fa 6C01      		movw r12,r24
+ 163 00fc 4983      		std Y+1,r20
+ 164 00fe 5A83      		std Y+2,r21
+ 165 0100 6B83      		std Y+3,r22
+ 166 0102 7C83      		std Y+4,r23
+ 167 0104 F22E      		mov r15,r18
+ 168 0106 6BE0      		ldi r22,lo8(11)
+ 169 0108 70E0      		ldi r23,hi8(11)
+ 170 010a 0E94 0000 		call TapStateWalk
+ 171 010e D601      		movw r26,r12
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 4
+
+
+ 172 0110 1296      		adiw r26,2
+ 173 0112 ED91      		ld r30,X+
+ 174 0114 FC91      		ld r31,X
+ 175 0116 1397      		sbiw r26,2+1
+ 176 0118 1196      		adiw r26,1
+ 177 011a 0C91      		ld r16,X
+ 178 011c 1197      		sbiw r26,1
+ 179 011e 10E0      		ldi r17,lo8(0)
+ 180 0120 20E0      		ldi r18,lo8(0)
+ 181 0122 30E0      		ldi r19,hi8(0)
+ 182 0124 0284      		ldd __tmp_reg__,Z+10
+ 183 0126 F385      		ldd r31,Z+11
+ 184 0128 E02D      		mov r30,__tmp_reg__
+ 185 012a 1496      		adiw r26,4
+ 186 012c 8D91      		ld r24,X+
+ 187 012e 9C91      		ld r25,X
+ 188 0130 1597      		sbiw r26,4+1
+ 189 0132 60E0      		ldi r22,lo8(0)
+ 190 0134 70E0      		ldi r23,hi8(0)
+ 191 0136 AE01      		movw r20,r28
+ 192 0138 4F5F      		subi r20,lo8(-(1))
+ 193 013a 5F4F      		sbci r21,hi8(-(1))
+ 194 013c EF2C      		mov r14,r15
+ 195 013e 0995      		icall
+ 196 0140 FF20      		tst r15
+ 197 0142 01F0      		breq .L12
+ 198 0144 F601      		movw r30,r12
+ 199 0146 8081      		ld r24,Z
+ 200 0148 8F5F      		subi r24,lo8(-(1))
+ 201 014a 8083      		st Z,r24
+ 202               	.L12:
+ 203               	/* epilogue start */
+ 204 014c 0F90      		pop __tmp_reg__
+ 205 014e 0F90      		pop __tmp_reg__
+ 206 0150 0F90      		pop __tmp_reg__
+ 207 0152 0F90      		pop __tmp_reg__
+ 208 0154 CF91      		pop r28
+ 209 0156 DF91      		pop r29
+ 210 0158 1F91      		pop r17
+ 211 015a 0F91      		pop r16
+ 212 015c FF90      		pop r15
+ 213 015e EF90      		pop r14
+ 214 0160 DF90      		pop r13
+ 215 0162 CF90      		pop r12
+ 216 0164 0895      		ret
+ 217               		.size	TapInstruction, .-TapInstruction
+ 218               	.global	TapTargetReset
+ 219               		.type	TapTargetReset, @function
+ 220               	TapTargetReset:
+ 221 0166 EF92      		push r14
+ 222 0168 FF92      		push r15
+ 223 016a 0F93      		push r16
+ 224 016c 1F93      		push r17
+ 225 016e CF93      		push r28
+ 226 0170 DF93      		push r29
+ 227               	/* prologue: function */
+ 228               	/* frame size = 0 */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 5
+
+
+ 229 0172 EC01      		movw r28,r24
+ 230 0174 7A01      		movw r14,r20
+ 231 0176 8B01      		movw r16,r22
+ 232 0178 EA81      		ldd r30,Y+2
+ 233 017a FB81      		ldd r31,Y+3
+ 234 017c 0480      		ldd __tmp_reg__,Z+4
+ 235 017e F581      		ldd r31,Z+5
+ 236 0180 E02D      		mov r30,__tmp_reg__
+ 237 0182 8C81      		ldd r24,Y+4
+ 238 0184 9D81      		ldd r25,Y+5
+ 239 0186 61E0      		ldi r22,lo8(1)
+ 240 0188 0995      		icall
+ 241 018a E114      		cp r14,__zero_reg__
+ 242 018c F104      		cpc r15,__zero_reg__
+ 243 018e 0105      		cpc r16,__zero_reg__
+ 244 0190 1105      		cpc r17,__zero_reg__
+ 245 0192 01F0      		breq .L14
+ 246 0194 C801      		movw r24,r16
+ 247 0196 B701      		movw r22,r14
+ 248 0198 0E94 0000 		call NutMicroDelay
+ 249               	.L14:
+ 250 019c EA81      		ldd r30,Y+2
+ 251 019e FB81      		ldd r31,Y+3
+ 252 01a0 0480      		ldd __tmp_reg__,Z+4
+ 253 01a2 F581      		ldd r31,Z+5
+ 254 01a4 E02D      		mov r30,__tmp_reg__
+ 255 01a6 8C81      		ldd r24,Y+4
+ 256 01a8 9D81      		ldd r25,Y+5
+ 257 01aa 60E0      		ldi r22,lo8(0)
+ 258 01ac 0995      		icall
+ 259 01ae 80E1      		ldi r24,lo8(16)
+ 260 01b0 8883      		st Y,r24
+ 261               	/* epilogue start */
+ 262 01b2 DF91      		pop r29
+ 263 01b4 CF91      		pop r28
+ 264 01b6 1F91      		pop r17
+ 265 01b8 0F91      		pop r16
+ 266 01ba FF90      		pop r15
+ 267 01bc EF90      		pop r14
+ 268 01be 0895      		ret
+ 269               		.size	TapTargetReset, .-TapTargetReset
+ 270               	.global	TapClose
+ 271               		.type	TapClose, @function
+ 272               	TapClose:
+ 273 01c0 0F93      		push r16
+ 274 01c2 1F93      		push r17
+ 275               	/* prologue: function */
+ 276               	/* frame size = 0 */
+ 277 01c4 8C01      		movw r16,r24
+ 278 01c6 DC01      		movw r26,r24
+ 279 01c8 1296      		adiw r26,2
+ 280 01ca ED91      		ld r30,X+
+ 281 01cc FC91      		ld r31,X
+ 282 01ce 1397      		sbiw r26,2+1
+ 283 01d0 0280      		ldd __tmp_reg__,Z+2
+ 284 01d2 F381      		ldd r31,Z+3
+ 285 01d4 E02D      		mov r30,__tmp_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 6
+
+
+ 286 01d6 1496      		adiw r26,4
+ 287 01d8 8D91      		ld r24,X+
+ 288 01da 9C91      		ld r25,X
+ 289 01dc 1597      		sbiw r26,4+1
+ 290 01de 0995      		icall
+ 291 01e0 C801      		movw r24,r16
+ 292 01e2 0E94 0000 		call free
+ 293               	/* epilogue start */
+ 294 01e6 1F91      		pop r17
+ 295 01e8 0F91      		pop r16
+ 296 01ea 0895      		ret
+ 297               		.size	TapClose, .-TapClose
+ 298               	.global	TapOpen
+ 299               		.type	TapOpen, @function
+ 300               	TapOpen:
+ 301 01ec 0F93      		push r16
+ 302 01ee 1F93      		push r17
+ 303 01f0 CF93      		push r28
+ 304 01f2 DF93      		push r29
+ 305               	/* prologue: function */
+ 306               	/* frame size = 0 */
+ 307 01f4 8C01      		movw r16,r24
+ 308 01f6 DC01      		movw r26,r24
+ 309 01f8 ED91      		ld r30,X+
+ 310 01fa FC91      		ld r31,X
+ 311 01fc 0995      		icall
+ 312 01fe EC01      		movw r28,r24
+ 313 0200 0097      		sbiw r24,0
+ 314 0202 01F4      		brne .L19
+ 315 0204 E0E0      		ldi r30,lo8(0)
+ 316 0206 F0E0      		ldi r31,hi8(0)
+ 317 0208 00C0      		rjmp .L20
+ 318               	.L19:
+ 319 020a 81E0      		ldi r24,lo8(1)
+ 320 020c 90E0      		ldi r25,hi8(1)
+ 321 020e 66E0      		ldi r22,lo8(6)
+ 322 0210 70E0      		ldi r23,hi8(6)
+ 323 0212 0E94 0000 		call calloc
+ 324 0216 FC01      		movw r30,r24
+ 325 0218 80E1      		ldi r24,lo8(16)
+ 326 021a 8083      		st Z,r24
+ 327 021c 1182      		std Z+1,__zero_reg__
+ 328 021e 1383      		std Z+3,r17
+ 329 0220 0283      		std Z+2,r16
+ 330 0222 D583      		std Z+5,r29
+ 331 0224 C483      		std Z+4,r28
+ 332               	.L20:
+ 333 0226 CF01      		movw r24,r30
+ 334               	/* epilogue start */
+ 335 0228 DF91      		pop r29
+ 336 022a CF91      		pop r28
+ 337 022c 1F91      		pop r17
+ 338 022e 0F91      		pop r16
+ 339 0230 0895      		ret
+ 340               		.size	TapOpen, .-TapOpen
+ 341               		.data
+ 342               		.type	mode_path, @object
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 7
+
+
+ 343               		.size	mode_path, 512
+ 344               	mode_path:
+ 345 0000 00        		.byte	0
+ 346 0001 00        		.byte	0
+ 347 0002 01        		.byte	1
+ 348 0003 00        		.byte	0
+ 349 0004 02        		.byte	2
+ 350 0005 02        		.byte	2
+ 351 0006 03        		.byte	3
+ 352 0007 02        		.byte	2
+ 353 0008 04        		.byte	4
+ 354 0009 02        		.byte	2
+ 355 000a 04        		.byte	4
+ 356 000b 0A        		.byte	10
+ 357 000c 05        		.byte	5
+ 358 000d 0A        		.byte	10
+ 359 000e 06        		.byte	6
+ 360 000f 2A        		.byte	42
+ 361 0010 05        		.byte	5
+ 362 0011 1A        		.byte	26
+ 363 0012 03        		.byte	3
+ 364 0013 06        		.byte	6
+ 365 0014 04        		.byte	4
+ 366 0015 06        		.byte	6
+ 367 0016 05        		.byte	5
+ 368 0017 06        		.byte	6
+ 369 0018 05        		.byte	5
+ 370 0019 16        		.byte	22
+ 371 001a 06        		.byte	6
+ 372 001b 16        		.byte	22
+ 373 001c 07        		.byte	7
+ 374 001d 56        		.byte	86
+ 375 001e 06        		.byte	6
+ 376 001f 36        		.byte	54
+ 377 0020 03        		.byte	3
+ 378 0021 07        		.byte	7
+ 379 0022 00        		.byte	0
+ 380 0023 00        		.byte	0
+ 381 0024 01        		.byte	1
+ 382 0025 01        		.byte	1
+ 383 0026 02        		.byte	2
+ 384 0027 01        		.byte	1
+ 385 0028 03        		.byte	3
+ 386 0029 01        		.byte	1
+ 387 002a 03        		.byte	3
+ 388 002b 05        		.byte	5
+ 389 002c 04        		.byte	4
+ 390 002d 05        		.byte	5
+ 391 002e 05        		.byte	5
+ 392 002f 15        		.byte	21
+ 393 0030 04        		.byte	4
+ 394 0031 0D        		.byte	13
+ 395 0032 02        		.byte	2
+ 396 0033 03        		.byte	3
+ 397 0034 03        		.byte	3
+ 398 0035 03        		.byte	3
+ 399 0036 04        		.byte	4
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 8
+
+
+ 400 0037 03        		.byte	3
+ 401 0038 04        		.byte	4
+ 402 0039 0B        		.byte	11
+ 403 003a 05        		.byte	5
+ 404 003b 0B        		.byte	11
+ 405 003c 06        		.byte	6
+ 406 003d 2B        		.byte	43
+ 407 003e 05        		.byte	5
+ 408 003f 1B        		.byte	27
+ 409 0040 02        		.byte	2
+ 410 0041 03        		.byte	3
+ 411 0042 03        		.byte	3
+ 412 0043 03        		.byte	3
+ 413 0044 00        		.byte	0
+ 414 0045 00        		.byte	0
+ 415 0046 01        		.byte	1
+ 416 0047 00        		.byte	0
+ 417 0048 02        		.byte	2
+ 418 0049 00        		.byte	0
+ 419 004a 02        		.byte	2
+ 420 004b 02        		.byte	2
+ 421 004c 03        		.byte	3
+ 422 004d 02        		.byte	2
+ 423 004e 04        		.byte	4
+ 424 004f 0A        		.byte	10
+ 425 0050 03        		.byte	3
+ 426 0051 06        		.byte	6
+ 427 0052 01        		.byte	1
+ 428 0053 01        		.byte	1
+ 429 0054 02        		.byte	2
+ 430 0055 01        		.byte	1
+ 431 0056 03        		.byte	3
+ 432 0057 01        		.byte	1
+ 433 0058 03        		.byte	3
+ 434 0059 05        		.byte	5
+ 435 005a 04        		.byte	4
+ 436 005b 05        		.byte	5
+ 437 005c 05        		.byte	5
+ 438 005d 15        		.byte	21
+ 439 005e 04        		.byte	4
+ 440 005f 0D        		.byte	13
+ 441 0060 05        		.byte	5
+ 442 0061 1F        		.byte	31
+ 443 0062 03        		.byte	3
+ 444 0063 03        		.byte	3
+ 445 0064 03        		.byte	3
+ 446 0065 07        		.byte	7
+ 447 0066 00        		.byte	0
+ 448 0067 00        		.byte	0
+ 449 0068 01        		.byte	1
+ 450 0069 00        		.byte	0
+ 451 006a 01        		.byte	1
+ 452 006b 01        		.byte	1
+ 453 006c 02        		.byte	2
+ 454 006d 01        		.byte	1
+ 455 006e 03        		.byte	3
+ 456 006f 05        		.byte	5
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 9
+
+
+ 457 0070 02        		.byte	2
+ 458 0071 03        		.byte	3
+ 459 0072 04        		.byte	4
+ 460 0073 0F        		.byte	15
+ 461 0074 05        		.byte	5
+ 462 0075 0F        		.byte	15
+ 463 0076 06        		.byte	6
+ 464 0077 0F        		.byte	15
+ 465 0078 06        		.byte	6
+ 466 0079 2F        		.byte	47
+ 467 007a 07        		.byte	7
+ 468 007b 2F        		.byte	47
+ 469 007c 08        		.byte	8
+ 470 007d AF        		.byte	-81
+ 471 007e 07        		.byte	7
+ 472 007f 6F        		.byte	111
+ 473 0080 05        		.byte	5
+ 474 0081 1F        		.byte	31
+ 475 0082 03        		.byte	3
+ 476 0083 03        		.byte	3
+ 477 0084 03        		.byte	3
+ 478 0085 07        		.byte	7
+ 479 0086 04        		.byte	4
+ 480 0087 07        		.byte	7
+ 481 0088 00        		.byte	0
+ 482 0089 00        		.byte	0
+ 483 008a 01        		.byte	1
+ 484 008b 01        		.byte	1
+ 485 008c 02        		.byte	2
+ 486 008d 01        		.byte	1
+ 487 008e 03        		.byte	3
+ 488 008f 05        		.byte	5
+ 489 0090 02        		.byte	2
+ 490 0091 03        		.byte	3
+ 491 0092 04        		.byte	4
+ 492 0093 0F        		.byte	15
+ 493 0094 05        		.byte	5
+ 494 0095 0F        		.byte	15
+ 495 0096 06        		.byte	6
+ 496 0097 0F        		.byte	15
+ 497 0098 06        		.byte	6
+ 498 0099 2F        		.byte	47
+ 499 009a 07        		.byte	7
+ 500 009b 2F        		.byte	47
+ 501 009c 08        		.byte	8
+ 502 009d AF        		.byte	-81
+ 503 009e 07        		.byte	7
+ 504 009f 6F        		.byte	111
+ 505 00a0 04        		.byte	4
+ 506 00a1 0F        		.byte	15
+ 507 00a2 02        		.byte	2
+ 508 00a3 01        		.byte	1
+ 509 00a4 02        		.byte	2
+ 510 00a5 03        		.byte	3
+ 511 00a6 03        		.byte	3
+ 512 00a7 03        		.byte	3
+ 513 00a8 04        		.byte	4
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 10
+
+
+ 514 00a9 03        		.byte	3
+ 515 00aa 00        		.byte	0
+ 516 00ab 00        		.byte	0
+ 517 00ac 01        		.byte	1
+ 518 00ad 00        		.byte	0
+ 519 00ae 02        		.byte	2
+ 520 00af 02        		.byte	2
+ 521 00b0 01        		.byte	1
+ 522 00b1 01        		.byte	1
+ 523 00b2 03        		.byte	3
+ 524 00b3 07        		.byte	7
+ 525 00b4 04        		.byte	4
+ 526 00b5 07        		.byte	7
+ 527 00b6 05        		.byte	5
+ 528 00b7 07        		.byte	7
+ 529 00b8 05        		.byte	5
+ 530 00b9 17        		.byte	23
+ 531 00ba 06        		.byte	6
+ 532 00bb 17        		.byte	23
+ 533 00bc 07        		.byte	7
+ 534 00bd 57        		.byte	87
+ 535 00be 06        		.byte	6
+ 536 00bf 37        		.byte	55
+ 537 00c0 05        		.byte	5
+ 538 00c1 1F        		.byte	31
+ 539 00c2 03        		.byte	3
+ 540 00c3 03        		.byte	3
+ 541 00c4 03        		.byte	3
+ 542 00c5 07        		.byte	7
+ 543 00c6 04        		.byte	4
+ 544 00c7 07        		.byte	7
+ 545 00c8 02        		.byte	2
+ 546 00c9 01        		.byte	1
+ 547 00ca 03        		.byte	3
+ 548 00cb 05        		.byte	5
+ 549 00cc 00        		.byte	0
+ 550 00cd 00        		.byte	0
+ 551 00ce 01        		.byte	1
+ 552 00cf 01        		.byte	1
+ 553 00d0 02        		.byte	2
+ 554 00d1 03        		.byte	3
+ 555 00d2 04        		.byte	4
+ 556 00d3 0F        		.byte	15
+ 557 00d4 05        		.byte	5
+ 558 00d5 0F        		.byte	15
+ 559 00d6 06        		.byte	6
+ 560 00d7 0F        		.byte	15
+ 561 00d8 06        		.byte	6
+ 562 00d9 2F        		.byte	47
+ 563 00da 07        		.byte	7
+ 564 00db 2F        		.byte	47
+ 565 00dc 08        		.byte	8
+ 566 00dd AF        		.byte	-81
+ 567 00de 07        		.byte	7
+ 568 00df 6F        		.byte	111
+ 569 00e0 04        		.byte	4
+ 570 00e1 0F        		.byte	15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 11
+
+
+ 571 00e2 02        		.byte	2
+ 572 00e3 01        		.byte	1
+ 573 00e4 02        		.byte	2
+ 574 00e5 03        		.byte	3
+ 575 00e6 03        		.byte	3
+ 576 00e7 03        		.byte	3
+ 577 00e8 01        		.byte	1
+ 578 00e9 00        		.byte	0
+ 579 00ea 02        		.byte	2
+ 580 00eb 02        		.byte	2
+ 581 00ec 03        		.byte	3
+ 582 00ed 02        		.byte	2
+ 583 00ee 00        		.byte	0
+ 584 00ef 00        		.byte	0
+ 585 00f0 01        		.byte	1
+ 586 00f1 01        		.byte	1
+ 587 00f2 03        		.byte	3
+ 588 00f3 07        		.byte	7
+ 589 00f4 04        		.byte	4
+ 590 00f5 07        		.byte	7
+ 591 00f6 05        		.byte	5
+ 592 00f7 07        		.byte	7
+ 593 00f8 05        		.byte	5
+ 594 00f9 17        		.byte	23
+ 595 00fa 06        		.byte	6
+ 596 00fb 17        		.byte	23
+ 597 00fc 07        		.byte	7
+ 598 00fd 57        		.byte	87
+ 599 00fe 06        		.byte	6
+ 600 00ff 37        		.byte	55
+ 601 0100 03        		.byte	3
+ 602 0101 07        		.byte	7
+ 603 0102 01        		.byte	1
+ 604 0103 00        		.byte	0
+ 605 0104 01        		.byte	1
+ 606 0105 01        		.byte	1
+ 607 0106 02        		.byte	2
+ 608 0107 01        		.byte	1
+ 609 0108 03        		.byte	3
+ 610 0109 01        		.byte	1
+ 611 010a 03        		.byte	3
+ 612 010b 05        		.byte	5
+ 613 010c 04        		.byte	4
+ 614 010d 05        		.byte	5
+ 615 010e 05        		.byte	5
+ 616 010f 15        		.byte	21
+ 617 0110 00        		.byte	0
+ 618 0111 00        		.byte	0
+ 619 0112 02        		.byte	2
+ 620 0113 03        		.byte	3
+ 621 0114 03        		.byte	3
+ 622 0115 03        		.byte	3
+ 623 0116 04        		.byte	4
+ 624 0117 03        		.byte	3
+ 625 0118 04        		.byte	4
+ 626 0119 0B        		.byte	11
+ 627 011a 05        		.byte	5
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 12
+
+
+ 628 011b 0B        		.byte	11
+ 629 011c 06        		.byte	6
+ 630 011d 2B        		.byte	43
+ 631 011e 05        		.byte	5
+ 632 011f 1B        		.byte	27
+ 633 0120 01        		.byte	1
+ 634 0121 01        		.byte	1
+ 635 0122 02        		.byte	2
+ 636 0123 01        		.byte	1
+ 637 0124 03        		.byte	3
+ 638 0125 05        		.byte	5
+ 639 0126 04        		.byte	4
+ 640 0127 05        		.byte	5
+ 641 0128 05        		.byte	5
+ 642 0129 05        		.byte	5
+ 643 012a 05        		.byte	5
+ 644 012b 15        		.byte	21
+ 645 012c 06        		.byte	6
+ 646 012d 15        		.byte	21
+ 647 012e 07        		.byte	7
+ 648 012f 55        		.byte	85
+ 649 0130 06        		.byte	6
+ 650 0131 35        		.byte	53
+ 651 0132 00        		.byte	0
+ 652 0133 00        		.byte	0
+ 653 0134 01        		.byte	1
+ 654 0135 00        		.byte	0
+ 655 0136 02        		.byte	2
+ 656 0137 00        		.byte	0
+ 657 0138 02        		.byte	2
+ 658 0139 02        		.byte	2
+ 659 013a 03        		.byte	3
+ 660 013b 02        		.byte	2
+ 661 013c 04        		.byte	4
+ 662 013d 0A        		.byte	10
+ 663 013e 03        		.byte	3
+ 664 013f 06        		.byte	6
+ 665 0140 05        		.byte	5
+ 666 0141 1F        		.byte	31
+ 667 0142 03        		.byte	3
+ 668 0143 03        		.byte	3
+ 669 0144 03        		.byte	3
+ 670 0145 07        		.byte	7
+ 671 0146 04        		.byte	4
+ 672 0147 07        		.byte	7
+ 673 0148 05        		.byte	5
+ 674 0149 07        		.byte	7
+ 675 014a 05        		.byte	5
+ 676 014b 17        		.byte	23
+ 677 014c 06        		.byte	6
+ 678 014d 17        		.byte	23
+ 679 014e 07        		.byte	7
+ 680 014f 57        		.byte	87
+ 681 0150 06        		.byte	6
+ 682 0151 37        		.byte	55
+ 683 0152 04        		.byte	4
+ 684 0153 0F        		.byte	15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 13
+
+
+ 685 0154 00        		.byte	0
+ 686 0155 00        		.byte	0
+ 687 0156 01        		.byte	1
+ 688 0157 00        		.byte	0
+ 689 0158 01        		.byte	1
+ 690 0159 01        		.byte	1
+ 691 015a 02        		.byte	2
+ 692 015b 01        		.byte	1
+ 693 015c 03        		.byte	3
+ 694 015d 05        		.byte	5
+ 695 015e 02        		.byte	2
+ 696 015f 03        		.byte	3
+ 697 0160 05        		.byte	5
+ 698 0161 1F        		.byte	31
+ 699 0162 03        		.byte	3
+ 700 0163 03        		.byte	3
+ 701 0164 03        		.byte	3
+ 702 0165 07        		.byte	7
+ 703 0166 04        		.byte	4
+ 704 0167 07        		.byte	7
+ 705 0168 05        		.byte	5
+ 706 0169 07        		.byte	7
+ 707 016a 05        		.byte	5
+ 708 016b 17        		.byte	23
+ 709 016c 06        		.byte	6
+ 710 016d 17        		.byte	23
+ 711 016e 07        		.byte	7
+ 712 016f 57        		.byte	87
+ 713 0170 06        		.byte	6
+ 714 0171 37        		.byte	55
+ 715 0172 04        		.byte	4
+ 716 0173 0F        		.byte	15
+ 717 0174 05        		.byte	5
+ 718 0175 0F        		.byte	15
+ 719 0176 00        		.byte	0
+ 720 0177 00        		.byte	0
+ 721 0178 01        		.byte	1
+ 722 0179 01        		.byte	1
+ 723 017a 02        		.byte	2
+ 724 017b 01        		.byte	1
+ 725 017c 03        		.byte	3
+ 726 017d 05        		.byte	5
+ 727 017e 02        		.byte	2
+ 728 017f 03        		.byte	3
+ 729 0180 04        		.byte	4
+ 730 0181 0F        		.byte	15
+ 731 0182 02        		.byte	2
+ 732 0183 01        		.byte	1
+ 733 0184 02        		.byte	2
+ 734 0185 03        		.byte	3
+ 735 0186 03        		.byte	3
+ 736 0187 03        		.byte	3
+ 737 0188 04        		.byte	4
+ 738 0189 03        		.byte	3
+ 739 018a 04        		.byte	4
+ 740 018b 0B        		.byte	11
+ 741 018c 05        		.byte	5
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 14
+
+
+ 742 018d 0B        		.byte	11
+ 743 018e 06        		.byte	6
+ 744 018f 2B        		.byte	43
+ 745 0190 05        		.byte	5
+ 746 0191 1B        		.byte	27
+ 747 0192 03        		.byte	3
+ 748 0193 07        		.byte	7
+ 749 0194 04        		.byte	4
+ 750 0195 07        		.byte	7
+ 751 0196 05        		.byte	5
+ 752 0197 07        		.byte	7
+ 753 0198 00        		.byte	0
+ 754 0199 00        		.byte	0
+ 755 019a 01        		.byte	1
+ 756 019b 00        		.byte	0
+ 757 019c 02        		.byte	2
+ 758 019d 02        		.byte	2
+ 759 019e 01        		.byte	1
+ 760 019f 01        		.byte	1
+ 761 01a0 05        		.byte	5
+ 762 01a1 1F        		.byte	31
+ 763 01a2 03        		.byte	3
+ 764 01a3 03        		.byte	3
+ 765 01a4 03        		.byte	3
+ 766 01a5 07        		.byte	7
+ 767 01a6 04        		.byte	4
+ 768 01a7 07        		.byte	7
+ 769 01a8 05        		.byte	5
+ 770 01a9 07        		.byte	7
+ 771 01aa 05        		.byte	5
+ 772 01ab 17        		.byte	23
+ 773 01ac 06        		.byte	6
+ 774 01ad 17        		.byte	23
+ 775 01ae 07        		.byte	7
+ 776 01af 57        		.byte	87
+ 777 01b0 06        		.byte	6
+ 778 01b1 37        		.byte	55
+ 779 01b2 04        		.byte	4
+ 780 01b3 0F        		.byte	15
+ 781 01b4 05        		.byte	5
+ 782 01b5 0F        		.byte	15
+ 783 01b6 02        		.byte	2
+ 784 01b7 01        		.byte	1
+ 785 01b8 03        		.byte	3
+ 786 01b9 05        		.byte	5
+ 787 01ba 00        		.byte	0
+ 788 01bb 00        		.byte	0
+ 789 01bc 01        		.byte	1
+ 790 01bd 01        		.byte	1
+ 791 01be 02        		.byte	2
+ 792 01bf 03        		.byte	3
+ 793 01c0 04        		.byte	4
+ 794 01c1 0F        		.byte	15
+ 795 01c2 02        		.byte	2
+ 796 01c3 01        		.byte	1
+ 797 01c4 02        		.byte	2
+ 798 01c5 03        		.byte	3
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 15
+
+
+ 799 01c6 03        		.byte	3
+ 800 01c7 03        		.byte	3
+ 801 01c8 04        		.byte	4
+ 802 01c9 03        		.byte	3
+ 803 01ca 04        		.byte	4
+ 804 01cb 0B        		.byte	11
+ 805 01cc 05        		.byte	5
+ 806 01cd 0B        		.byte	11
+ 807 01ce 06        		.byte	6
+ 808 01cf 2B        		.byte	43
+ 809 01d0 05        		.byte	5
+ 810 01d1 1B        		.byte	27
+ 811 01d2 03        		.byte	3
+ 812 01d3 07        		.byte	7
+ 813 01d4 04        		.byte	4
+ 814 01d5 07        		.byte	7
+ 815 01d6 01        		.byte	1
+ 816 01d7 00        		.byte	0
+ 817 01d8 02        		.byte	2
+ 818 01d9 02        		.byte	2
+ 819 01da 03        		.byte	3
+ 820 01db 02        		.byte	2
+ 821 01dc 00        		.byte	0
+ 822 01dd 00        		.byte	0
+ 823 01de 01        		.byte	1
+ 824 01df 01        		.byte	1
+ 825 01e0 03        		.byte	3
+ 826 01e1 07        		.byte	7
+ 827 01e2 01        		.byte	1
+ 828 01e3 00        		.byte	0
+ 829 01e4 01        		.byte	1
+ 830 01e5 01        		.byte	1
+ 831 01e6 02        		.byte	2
+ 832 01e7 01        		.byte	1
+ 833 01e8 03        		.byte	3
+ 834 01e9 01        		.byte	1
+ 835 01ea 03        		.byte	3
+ 836 01eb 05        		.byte	5
+ 837 01ec 04        		.byte	4
+ 838 01ed 05        		.byte	5
+ 839 01ee 05        		.byte	5
+ 840 01ef 15        		.byte	21
+ 841 01f0 04        		.byte	4
+ 842 01f1 0D        		.byte	13
+ 843 01f2 02        		.byte	2
+ 844 01f3 03        		.byte	3
+ 845 01f4 03        		.byte	3
+ 846 01f5 03        		.byte	3
+ 847 01f6 04        		.byte	4
+ 848 01f7 03        		.byte	3
+ 849 01f8 04        		.byte	4
+ 850 01f9 0B        		.byte	11
+ 851 01fa 05        		.byte	5
+ 852 01fb 0B        		.byte	11
+ 853 01fc 06        		.byte	6
+ 854 01fd 2B        		.byte	43
+ 855 01fe 00        		.byte	0
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 16
+
+
+ 856 01ff 00        		.byte	0
+ 857               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s 			page 17
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 jtag_tap.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:11     .text:00000000 TapStateWalk
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:344    .data:00000000 mode_path
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:74     .text:0000006c TapSetIrSize
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:84     .text:00000072 TapData
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:147    .text:000000e2 TapInstruction
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:220    .text:00000166 TapTargetReset
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:272    .text:000001c0 TapClose
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4CAl7X.s:300    .text:000001ec TapOpen
+
+UNDEFINED SYMBOLS
+NutMicroDelay
+free
+calloc
+__do_copy_data

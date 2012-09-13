@@ -1,0 +1,535 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s 			page 1
+
+
+   1               		.file	"lstring.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	luaS_newudata
+  10               		.type	luaS_newudata, @function
+  11               	luaS_newudata:
+  12 0000 EF92      		push r14
+  13 0002 FF92      		push r15
+  14 0004 0F93      		push r16
+  15 0006 1F93      		push r17
+  16 0008 CF93      		push r28
+  17 000a DF93      		push r29
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 000c EC01      		movw r28,r24
+  21 000e 8B01      		movw r16,r22
+  22 0010 7A01      		movw r14,r20
+  23 0012 8FEF      		ldi r24,hi8(-12)
+  24 0014 643F      		cpi r22,lo8(-12)
+  25 0016 7807      		cpc r23,r24
+  26 0018 00F0      		brlo .L2
+  27 001a CE01      		movw r24,r28
+  28 001c 0E94 0000 		call luaM_toobig
+  29               	.L2:
+  30 0020 9801      		movw r18,r16
+  31 0022 265F      		subi r18,lo8(-(10))
+  32 0024 3F4F      		sbci r19,hi8(-(10))
+  33 0026 CE01      		movw r24,r28
+  34 0028 60E0      		ldi r22,lo8(0)
+  35 002a 70E0      		ldi r23,hi8(0)
+  36 002c 40E0      		ldi r20,lo8(0)
+  37 002e 50E0      		ldi r21,hi8(0)
+  38 0030 0E94 0000 		call luaM_realloc_
+  39 0034 FC01      		movw r30,r24
+  40 0036 A985      		ldd r26,Y+9
+  41 0038 BA85      		ldd r27,Y+10
+  42 003a 1C96      		adiw r26,12
+  43 003c 8C91      		ld r24,X
+  44 003e 8370      		andi r24,lo8(3)
+  45 0040 8383      		std Z+3,r24
+  46 0042 89E0      		ldi r24,lo8(9)
+  47 0044 8283      		std Z+2,r24
+  48 0046 1187      		std Z+9,r17
+  49 0048 0087      		std Z+8,r16
+  50 004a 1582      		std Z+5,__zero_reg__
+  51 004c 1482      		std Z+4,__zero_reg__
+  52 004e F782      		std Z+7,r15
+  53 0050 E682      		std Z+6,r14
+  54 0052 A985      		ldd r26,Y+9
+  55 0054 BA85      		ldd r27,Y+10
+  56 0056 DE96      		adiw r26,62
+  57 0058 0D90      		ld __tmp_reg__,X+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s 			page 2
+
+
+  58 005a BC91      		ld r27,X
+  59 005c A02D      		mov r26,__tmp_reg__
+  60 005e 2D91      		ld r18,X+
+  61 0060 3C91      		ld r19,X
+  62 0062 3183      		std Z+1,r19
+  63 0064 2083      		st Z,r18
+  64 0066 A985      		ldd r26,Y+9
+  65 0068 BA85      		ldd r27,Y+10
+  66 006a DE96      		adiw r26,62
+  67 006c 0D90      		ld __tmp_reg__,X+
+  68 006e BC91      		ld r27,X
+  69 0070 A02D      		mov r26,__tmp_reg__
+  70 0072 ED93      		st X+,r30
+  71 0074 FC93      		st X,r31
+  72 0076 8E2F      		mov r24,r30
+  73               	/* epilogue start */
+  74 0078 DF91      		pop r29
+  75 007a CF91      		pop r28
+  76 007c 1F91      		pop r17
+  77 007e 0F91      		pop r16
+  78 0080 FF90      		pop r15
+  79 0082 EF90      		pop r14
+  80 0084 0895      		ret
+  81               		.size	luaS_newudata, .-luaS_newudata
+  82               	.global	luaS_resize
+  83               		.type	luaS_resize, @function
+  84               	luaS_resize:
+  85 0086 AF92      		push r10
+  86 0088 BF92      		push r11
+  87 008a CF92      		push r12
+  88 008c DF92      		push r13
+  89 008e EF92      		push r14
+  90 0090 FF92      		push r15
+  91 0092 0F93      		push r16
+  92 0094 1F93      		push r17
+  93 0096 CF93      		push r28
+  94 0098 DF93      		push r29
+  95               	/* prologue: function */
+  96               	/* frame size = 0 */
+  97 009a 7C01      		movw r14,r24
+  98 009c 6B01      		movw r12,r22
+  99 009e DC01      		movw r26,r24
+ 100 00a0 1996      		adiw r26,9
+ 101 00a2 ED91      		ld r30,X+
+ 102 00a4 FC91      		ld r31,X
+ 103 00a6 1A97      		sbiw r26,9+1
+ 104 00a8 8585      		ldd r24,Z+13
+ 105 00aa 8230      		cpi r24,lo8(2)
+ 106 00ac 01F4      		brne .+2
+ 107 00ae 00C0      		rjmp .L14
+ 108 00b0 CB01      		movw r24,r22
+ 109 00b2 0196      		adiw r24,1
+ 110 00b4 8F5F      		subi r24,lo8(32767)
+ 111 00b6 9F47      		sbci r25,hi8(32767)
+ 112 00b8 00F4      		brsh .L6
+ 113 00ba 9B01      		movw r18,r22
+ 114 00bc 220F      		lsl r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s 			page 3
+
+
+ 115 00be 331F      		rol r19
+ 116 00c0 C701      		movw r24,r14
+ 117 00c2 60E0      		ldi r22,lo8(0)
+ 118 00c4 70E0      		ldi r23,hi8(0)
+ 119 00c6 40E0      		ldi r20,lo8(0)
+ 120 00c8 50E0      		ldi r21,hi8(0)
+ 121 00ca 0E94 0000 		call luaM_realloc_
+ 122 00ce 00C0      		rjmp .L15
+ 123               	.L6:
+ 124 00d0 C701      		movw r24,r14
+ 125 00d2 0E94 0000 		call luaM_toobig
+ 126               	.L15:
+ 127 00d6 C82F      		mov r28,r24
+ 128 00d8 D92F      		mov r29,r25
+ 129 00da F701      		movw r30,r14
+ 130 00dc 0185      		ldd r16,Z+9
+ 131 00de 1285      		ldd r17,Z+10
+ 132 00e0 9C01      		movw r18,r24
+ 133 00e2 F901      		movw r30,r18
+ 134 00e4 80E0      		ldi r24,lo8(0)
+ 135 00e6 90E0      		ldi r25,hi8(0)
+ 136 00e8 00C0      		rjmp .L8
+ 137               	.L9:
+ 138 00ea 1192      		st Z+,__zero_reg__
+ 139 00ec 1192      		st Z+,__zero_reg__
+ 140 00ee 0196      		adiw r24,1
+ 141               	.L8:
+ 142 00f0 8C15      		cp r24,r12
+ 143 00f2 9D05      		cpc r25,r13
+ 144 00f4 04F0      		brlt .L9
+ 145 00f6 60E0      		ldi r22,lo8(0)
+ 146 00f8 70E0      		ldi r23,hi8(0)
+ 147 00fa 5601      		movw r10,r12
+ 148 00fc 0894      		sec
+ 149 00fe A108      		sbc r10,__zero_reg__
+ 150 0100 B108      		sbc r11,__zero_reg__
+ 151 0102 00C0      		rjmp .L10
+ 152               	.L13:
+ 153 0104 CB01      		movw r24,r22
+ 154 0106 880F      		lsl r24
+ 155 0108 991F      		rol r25
+ 156 010a E80F      		add r30,r24
+ 157 010c F91F      		adc r31,r25
+ 158 010e A081      		ld r26,Z
+ 159 0110 B181      		ldd r27,Z+1
+ 160 0112 00C0      		rjmp .L11
+ 161               	.L12:
+ 162 0114 4C91      		ld r20,X
+ 163 0116 1196      		adiw r26,1
+ 164 0118 5C91      		ld r21,X
+ 165 011a 1197      		sbiw r26,1
+ 166 011c 1596      		adiw r26,5
+ 167 011e ED91      		ld r30,X+
+ 168 0120 FC91      		ld r31,X
+ 169 0122 1697      		sbiw r26,5+1
+ 170 0124 EA21      		and r30,r10
+ 171 0126 FB21      		and r31,r11
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s 			page 4
+
+
+ 172 0128 EE0F      		lsl r30
+ 173 012a FF1F      		rol r31
+ 174 012c EC0F      		add r30,r28
+ 175 012e FD1F      		adc r31,r29
+ 176 0130 8081      		ld r24,Z
+ 177 0132 9181      		ldd r25,Z+1
+ 178 0134 1196      		adiw r26,1
+ 179 0136 9C93      		st X,r25
+ 180 0138 8E93      		st -X,r24
+ 181 013a B183      		std Z+1,r27
+ 182 013c A083      		st Z,r26
+ 183 013e 9A01      		movw r18,r20
+ 184 0140 D901      		movw r26,r18
+ 185               	.L11:
+ 186 0142 1097      		sbiw r26,0
+ 187 0144 01F4      		brne .L12
+ 188 0146 6F5F      		subi r22,lo8(-(1))
+ 189 0148 7F4F      		sbci r23,hi8(-(1))
+ 190               	.L10:
+ 191 014a D801      		movw r26,r16
+ 192 014c 1696      		adiw r26,6
+ 193 014e 4D91      		ld r20,X+
+ 194 0150 5C91      		ld r21,X
+ 195 0152 1797      		sbiw r26,6+1
+ 196 0154 ED91      		ld r30,X+
+ 197 0156 FC91      		ld r31,X
+ 198 0158 6417      		cp r22,r20
+ 199 015a 7507      		cpc r23,r21
+ 200 015c 04F0      		brlt .L13
+ 201 015e 440F      		lsl r20
+ 202 0160 551F      		rol r21
+ 203 0162 C701      		movw r24,r14
+ 204 0164 BF01      		movw r22,r30
+ 205 0166 20E0      		ldi r18,lo8(0)
+ 206 0168 30E0      		ldi r19,hi8(0)
+ 207 016a 0E94 0000 		call luaM_realloc_
+ 208 016e F801      		movw r30,r16
+ 209 0170 D782      		std Z+7,r13
+ 210 0172 C682      		std Z+6,r12
+ 211 0174 D183      		std Z+1,r29
+ 212 0176 C083      		st Z,r28
+ 213               	.L14:
+ 214               	/* epilogue start */
+ 215 0178 DF91      		pop r29
+ 216 017a CF91      		pop r28
+ 217 017c 1F91      		pop r17
+ 218 017e 0F91      		pop r16
+ 219 0180 FF90      		pop r15
+ 220 0182 EF90      		pop r14
+ 221 0184 DF90      		pop r13
+ 222 0186 CF90      		pop r12
+ 223 0188 BF90      		pop r11
+ 224 018a AF90      		pop r10
+ 225 018c 0895      		ret
+ 226               		.size	luaS_resize, .-luaS_resize
+ 227               	.global	luaS_newlstr
+ 228               		.type	luaS_newlstr, @function
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s 			page 5
+
+
+ 229               	luaS_newlstr:
+ 230 018e 6F92      		push r6
+ 231 0190 7F92      		push r7
+ 232 0192 8F92      		push r8
+ 233 0194 9F92      		push r9
+ 234 0196 AF92      		push r10
+ 235 0198 BF92      		push r11
+ 236 019a CF92      		push r12
+ 237 019c DF92      		push r13
+ 238 019e EF92      		push r14
+ 239 01a0 FF92      		push r15
+ 240 01a2 0F93      		push r16
+ 241 01a4 1F93      		push r17
+ 242 01a6 CF93      		push r28
+ 243 01a8 DF93      		push r29
+ 244               	/* prologue: function */
+ 245               	/* frame size = 0 */
+ 246 01aa 4C01      		movw r8,r24
+ 247 01ac 3B01      		movw r6,r22
+ 248 01ae 8A01      		movw r16,r20
+ 249 01b0 A5E0      		ldi r26,5
+ 250 01b2 5695      	1:	lsr r21
+ 251 01b4 4795      		ror r20
+ 252 01b6 AA95      		dec r26
+ 253 01b8 01F4      		brne 1b
+ 254 01ba 4F5F      		subi r20,lo8(-(1))
+ 255 01bc 5F4F      		sbci r21,hi8(-(1))
+ 256 01be CC27      		clr r28
+ 257 01c0 DD27      		clr r29
+ 258 01c2 C41B      		sub r28,r20
+ 259 01c4 D50B      		sbc r29,r21
+ 260 01c6 0150      		subi r16,lo8(-(-1))
+ 261 01c8 1040      		sbci r17,hi8(-(-1))
+ 262 01ca DB01      		movw r26,r22
+ 263 01cc A00F      		add r26,r16
+ 264 01ce B11F      		adc r27,r17
+ 265 01d0 0F5F      		subi r16,lo8(-(1))
+ 266 01d2 1F4F      		sbci r17,hi8(-(1))
+ 267 01d4 6801      		movw r12,r16
+ 268 01d6 B801      		movw r22,r16
+ 269 01d8 00C0      		rjmp .L17
+ 270               	.L18:
+ 271 01da C601      		movw r24,r12
+ 272 01dc F5E0      		ldi r31,5
+ 273 01de 880F      	1:	lsl r24
+ 274 01e0 991F      		rol r25
+ 275 01e2 FA95      		dec r31
+ 276 01e4 01F4      		brne 1b
+ 277 01e6 9601      		movw r18,r12
+ 278 01e8 3695      		lsr r19
+ 279 01ea 2795      		ror r18
+ 280 01ec 3695      		lsr r19
+ 281 01ee 2795      		ror r18
+ 282 01f0 820F      		add r24,r18
+ 283 01f2 931F      		adc r25,r19
+ 284 01f4 FD01      		movw r30,r26
+ 285 01f6 E40F      		add r30,r20
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s 			page 6
+
+
+ 286 01f8 F51F      		adc r31,r21
+ 287 01fa 2081      		ld r18,Z
+ 288 01fc 820F      		add r24,r18
+ 289 01fe 911D      		adc r25,__zero_reg__
+ 290 0200 C826      		eor r12,r24
+ 291 0202 D926      		eor r13,r25
+ 292 0204 641B      		sub r22,r20
+ 293 0206 750B      		sbc r23,r21
+ 294               	.L17:
+ 295 0208 AC0F      		add r26,r28
+ 296 020a BD1F      		adc r27,r29
+ 297 020c 6417      		cp r22,r20
+ 298 020e 7507      		cpc r23,r21
+ 299 0210 00F4      		brsh .L18
+ 300 0212 D401      		movw r26,r8
+ 301 0214 1996      		adiw r26,9
+ 302 0216 AD90      		ld r10,X+
+ 303 0218 BC90      		ld r11,X
+ 304 021a 1A97      		sbiw r26,9+1
+ 305 021c F501      		movw r30,r10
+ 306 021e 8681      		ldd r24,Z+6
+ 307 0220 9781      		ldd r25,Z+7
+ 308 0222 0197      		sbiw r24,1
+ 309 0224 8C21      		and r24,r12
+ 310 0226 9D21      		and r25,r13
+ 311 0228 880F      		lsl r24
+ 312 022a 991F      		rol r25
+ 313 022c 0190      		ld __tmp_reg__,Z+
+ 314 022e F081      		ld r31,Z
+ 315 0230 E02D      		mov r30,__tmp_reg__
+ 316 0232 E80F      		add r30,r24
+ 317 0234 F91F      		adc r31,r25
+ 318 0236 E080      		ld r14,Z
+ 319 0238 F180      		ldd r15,Z+1
+ 320 023a 00C0      		rjmp .L19
+ 321               	.L22:
+ 322 023c D701      		movw r26,r14
+ 323 023e 1796      		adiw r26,7
+ 324 0240 8D91      		ld r24,X+
+ 325 0242 9C91      		ld r25,X
+ 326 0244 1897      		sbiw r26,7+1
+ 327 0246 8017      		cp r24,r16
+ 328 0248 9107      		cpc r25,r17
+ 329 024a 01F4      		brne .L20
+ 330 024c E701      		movw r28,r14
+ 331 024e B701      		movw r22,r14
+ 332 0250 675F      		subi r22,lo8(-(9))
+ 333 0252 7F4F      		sbci r23,hi8(-(9))
+ 334 0254 C301      		movw r24,r6
+ 335 0256 A801      		movw r20,r16
+ 336 0258 0E94 0000 		call memcmp
+ 337 025c 0097      		sbiw r24,0
+ 338 025e 01F4      		brne .L20
+ 339 0260 2B81      		ldd r18,Y+3
+ 340 0262 F501      		movw r30,r10
+ 341 0264 8485      		ldd r24,Z+12
+ 342 0266 33E0      		ldi r19,lo8(3)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s 			page 7
+
+
+ 343 0268 8327      		eor r24,r19
+ 344 026a 8223      		and r24,r18
+ 345 026c 90E0      		ldi r25,lo8(0)
+ 346 026e 8370      		andi r24,lo8(3)
+ 347 0270 9070      		andi r25,hi8(3)
+ 348 0272 892B      		or r24,r25
+ 349 0274 01F4      		brne .+2
+ 350 0276 00C0      		rjmp .L21
+ 351 0278 2327      		eor r18,r19
+ 352 027a 2B83      		std Y+3,r18
+ 353 027c 00C0      		rjmp .L21
+ 354               	.L20:
+ 355 027e D701      		movw r26,r14
+ 356 0280 ED90      		ld r14,X+
+ 357 0282 FC90      		ld r15,X
+ 358               	.L19:
+ 359 0284 E114      		cp r14,__zero_reg__
+ 360 0286 F104      		cpc r15,__zero_reg__
+ 361 0288 01F4      		brne .L22
+ 362 028a C801      		movw r24,r16
+ 363 028c 0196      		adiw r24,1
+ 364 028e 855F      		subi r24,lo8(-11)
+ 365 0290 9F4F      		sbci r25,hi8(-11)
+ 366 0292 00F0      		brlo .L23
+ 367 0294 C401      		movw r24,r8
+ 368 0296 0E94 0000 		call luaM_toobig
+ 369               	.L23:
+ 370 029a 9801      		movw r18,r16
+ 371 029c 265F      		subi r18,lo8(-(10))
+ 372 029e 3F4F      		sbci r19,hi8(-(10))
+ 373 02a0 C401      		movw r24,r8
+ 374 02a2 60E0      		ldi r22,lo8(0)
+ 375 02a4 70E0      		ldi r23,hi8(0)
+ 376 02a6 40E0      		ldi r20,lo8(0)
+ 377 02a8 50E0      		ldi r21,hi8(0)
+ 378 02aa 0E94 0000 		call luaM_realloc_
+ 379 02ae EC01      		movw r28,r24
+ 380 02b0 1887      		std Y+8,r17
+ 381 02b2 0F83      		std Y+7,r16
+ 382 02b4 DE82      		std Y+6,r13
+ 383 02b6 CD82      		std Y+5,r12
+ 384 02b8 D401      		movw r26,r8
+ 385 02ba 1996      		adiw r26,9
+ 386 02bc ED91      		ld r30,X+
+ 387 02be FC91      		ld r31,X
+ 388 02c0 1A97      		sbiw r26,9+1
+ 389 02c2 8485      		ldd r24,Z+12
+ 390 02c4 8370      		andi r24,lo8(3)
+ 391 02c6 8B83      		std Y+3,r24
+ 392 02c8 86E0      		ldi r24,lo8(6)
+ 393 02ca 8A83      		std Y+2,r24
+ 394 02cc 1C82      		std Y+4,__zero_reg__
+ 395 02ce 9E01      		movw r18,r28
+ 396 02d0 275F      		subi r18,lo8(-(9))
+ 397 02d2 3F4F      		sbci r19,hi8(-(9))
+ 398 02d4 C901      		movw r24,r18
+ 399 02d6 B301      		movw r22,r6
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s 			page 8
+
+
+ 400 02d8 A801      		movw r20,r16
+ 401 02da 0E94 0000 		call memcpy
+ 402 02de 0C0F      		add r16,r28
+ 403 02e0 1D1F      		adc r17,r29
+ 404 02e2 F801      		movw r30,r16
+ 405 02e4 1186      		std Z+9,__zero_reg__
+ 406 02e6 D401      		movw r26,r8
+ 407 02e8 1996      		adiw r26,9
+ 408 02ea 4D91      		ld r20,X+
+ 409 02ec 5C91      		ld r21,X
+ 410 02ee 1A97      		sbiw r26,9+1
+ 411 02f0 FA01      		movw r30,r20
+ 412 02f2 8681      		ldd r24,Z+6
+ 413 02f4 9781      		ldd r25,Z+7
+ 414 02f6 0197      		sbiw r24,1
+ 415 02f8 8C21      		and r24,r12
+ 416 02fa 9D21      		and r25,r13
+ 417 02fc 880F      		lsl r24
+ 418 02fe 991F      		rol r25
+ 419 0300 0190      		ld __tmp_reg__,Z+
+ 420 0302 F081      		ld r31,Z
+ 421 0304 E02D      		mov r30,__tmp_reg__
+ 422 0306 E80F      		add r30,r24
+ 423 0308 F91F      		adc r31,r25
+ 424 030a 2081      		ld r18,Z
+ 425 030c 3181      		ldd r19,Z+1
+ 426 030e 3983      		std Y+1,r19
+ 427 0310 2883      		st Y,r18
+ 428 0312 DA01      		movw r26,r20
+ 429 0314 ED91      		ld r30,X+
+ 430 0316 FC91      		ld r31,X
+ 431 0318 1197      		sbiw r26,1
+ 432 031a E80F      		add r30,r24
+ 433 031c F91F      		adc r31,r25
+ 434 031e D183      		std Z+1,r29
+ 435 0320 C083      		st Z,r28
+ 436 0322 1296      		adiw r26,2
+ 437 0324 8D91      		ld r24,X+
+ 438 0326 9D91      		ld r25,X+
+ 439 0328 0D90      		ld __tmp_reg__,X+
+ 440 032a BC91      		ld r27,X
+ 441 032c A02D      		mov r26,__tmp_reg__
+ 442 032e 0196      		adiw r24,1
+ 443 0330 A11D      		adc r26,__zero_reg__
+ 444 0332 B11D      		adc r27,__zero_reg__
+ 445 0334 FA01      		movw r30,r20
+ 446 0336 8283      		std Z+2,r24
+ 447 0338 9383      		std Z+3,r25
+ 448 033a A483      		std Z+4,r26
+ 449 033c B583      		std Z+5,r27
+ 450 033e 6681      		ldd r22,Z+6
+ 451 0340 7781      		ldd r23,Z+7
+ 452 0342 9B01      		movw r18,r22
+ 453 0344 4427      		clr r20
+ 454 0346 37FD      		sbrc r19,7
+ 455 0348 4095      		com r20
+ 456 034a 542F      		mov r21,r20
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s 			page 9
+
+
+ 457 034c 2817      		cp r18,r24
+ 458 034e 3907      		cpc r19,r25
+ 459 0350 4A07      		cpc r20,r26
+ 460 0352 5B07      		cpc r21,r27
+ 461 0354 00F4      		brsh .L21
+ 462 0356 FFE3      		ldi r31,hi8(16383)
+ 463 0358 6F3F      		cpi r22,lo8(16383)
+ 464 035a 7F07      		cpc r23,r31
+ 465 035c 04F4      		brge .L21
+ 466 035e 660F      		lsl r22
+ 467 0360 771F      		rol r23
+ 468 0362 C401      		movw r24,r8
+ 469 0364 0E94 0000 		call luaS_resize
+ 470               	.L21:
+ 471 0368 CE01      		movw r24,r28
+ 472               	/* epilogue start */
+ 473 036a DF91      		pop r29
+ 474 036c CF91      		pop r28
+ 475 036e 1F91      		pop r17
+ 476 0370 0F91      		pop r16
+ 477 0372 FF90      		pop r15
+ 478 0374 EF90      		pop r14
+ 479 0376 DF90      		pop r13
+ 480 0378 CF90      		pop r12
+ 481 037a BF90      		pop r11
+ 482 037c AF90      		pop r10
+ 483 037e 9F90      		pop r9
+ 484 0380 8F90      		pop r8
+ 485 0382 7F90      		pop r7
+ 486 0384 6F90      		pop r6
+ 487 0386 0895      		ret
+ 488               		.size	luaS_newlstr, .-luaS_newlstr
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lstring.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s:11     .text:00000000 luaS_newudata
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s:84     .text:00000086 luaS_resize
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccO8RMkU.s:229    .text:0000018e luaS_newlstr
+
+UNDEFINED SYMBOLS
+luaM_toobig
+luaM_realloc_
+memcmp
+memcpy

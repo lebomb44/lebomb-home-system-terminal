@@ -1,0 +1,476 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s 			page 1
+
+
+   1               		.file	"snmp_config.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	SnmpCommunityFind
+  10               		.type	SnmpCommunityFind, @function
+  11               	SnmpCommunityFind:
+  12 0000 CF92      		push r12
+  13 0002 DF92      		push r13
+  14 0004 EF92      		push r14
+  15 0006 FF92      		push r15
+  16 0008 0F93      		push r16
+  17 000a 1F93      		push r17
+  18 000c CF93      		push r28
+  19 000e DF93      		push r29
+  20               	/* prologue: function */
+  21               	/* frame size = 0 */
+  22 0010 6C01      		movw r12,r24
+  23 0012 8B01      		movw r16,r22
+  24 0014 7A01      		movw r14,r20
+  25 0016 C091 0000 		lds r28,communities
+  26 001a D091 0000 		lds r29,(communities)+1
+  27 001e 00C0      		rjmp .L2
+  28               	.L7:
+  29 0020 CE01      		movw r24,r28
+  30 0022 0696      		adiw r24,6
+  31 0024 B601      		movw r22,r12
+  32 0026 0E94 0000 		call strcmp
+  33 002a 0097      		sbiw r24,0
+  34 002c 01F4      		brne .L3
+  35 002e 0115      		cp r16,__zero_reg__
+  36 0030 1105      		cpc r17,__zero_reg__
+  37 0032 01F0      		breq .L4
+  38 0034 8A81      		ldd r24,Y+2
+  39 0036 9B81      		ldd r25,Y+3
+  40 0038 F801      		movw r30,r16
+  41 003a 9183      		std Z+1,r25
+  42 003c 8083      		st Z,r24
+  43               	.L4:
+  44 003e E114      		cp r14,__zero_reg__
+  45 0040 F104      		cpc r15,__zero_reg__
+  46 0042 01F0      		breq .L9
+  47               	.L5:
+  48 0044 8C81      		ldd r24,Y+4
+  49 0046 9D81      		ldd r25,Y+5
+  50 0048 F701      		movw r30,r14
+  51 004a 9183      		std Z+1,r25
+  52 004c 8083      		st Z,r24
+  53               	.L9:
+  54 004e 20E0      		ldi r18,lo8(0)
+  55 0050 30E0      		ldi r19,hi8(0)
+  56 0052 00C0      		rjmp .L6
+  57               	.L3:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s 			page 2
+
+
+  58 0054 0990      		ld __tmp_reg__,Y+
+  59 0056 D881      		ld r29,Y
+  60 0058 C02D      		mov r28,__tmp_reg__
+  61               	.L2:
+  62 005a 2097      		sbiw r28,0
+  63 005c 01F4      		brne .L7
+  64 005e 2FEF      		ldi r18,lo8(-1)
+  65 0060 3FEF      		ldi r19,hi8(-1)
+  66               	.L6:
+  67 0062 C901      		movw r24,r18
+  68               	/* epilogue start */
+  69 0064 DF91      		pop r29
+  70 0066 CF91      		pop r28
+  71 0068 1F91      		pop r17
+  72 006a 0F91      		pop r16
+  73 006c FF90      		pop r15
+  74 006e EF90      		pop r14
+  75 0070 DF90      		pop r13
+  76 0072 CF90      		pop r12
+  77 0074 0895      		ret
+  78               		.size	SnmpCommunityFind, .-SnmpCommunityFind
+  79               		.data
+  80               	.LC0:
+  81 0000 2D00      		.string	"-"
+  82               		.text
+  83               	.global	SnmpViewFind
+  84               		.type	SnmpViewFind, @function
+  85               	SnmpViewFind:
+  86 0076 0F93      		push r16
+  87 0078 1F93      		push r17
+  88 007a CF93      		push r28
+  89 007c DF93      		push r29
+  90               	/* prologue: function */
+  91               	/* frame size = 0 */
+  92 007e 8C01      		movw r16,r24
+  93 0080 60E0      		ldi r22,lo8(.LC0)
+  94 0082 70E0      		ldi r23,hi8(.LC0)
+  95 0084 0E94 0000 		call strcmp
+  96 0088 0097      		sbiw r24,0
+  97 008a 01F4      		brne .L11
+  98 008c 20E0      		ldi r18,lo8(0)
+  99 008e 30E0      		ldi r19,hi8(0)
+ 100 0090 00C0      		rjmp .L12
+ 101               	.L11:
+ 102 0092 C091 0000 		lds r28,views
+ 103 0096 D091 0000 		lds r29,(views)+1
+ 104 009a 00C0      		rjmp .L13
+ 105               	.L15:
+ 106 009c CE01      		movw r24,r28
+ 107 009e 8857      		subi r24,lo8(-(136))
+ 108 00a0 9F4F      		sbci r25,hi8(-(136))
+ 109 00a2 B801      		movw r22,r16
+ 110 00a4 0E94 0000 		call strcmp
+ 111 00a8 0097      		sbiw r24,0
+ 112 00aa 01F4      		brne .L14
+ 113 00ac 2A81      		ldd r18,Y+2
+ 114 00ae 3B81      		ldd r19,Y+3
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s 			page 3
+
+
+ 115 00b0 00C0      		rjmp .L12
+ 116               	.L14:
+ 117 00b2 0990      		ld __tmp_reg__,Y+
+ 118 00b4 D881      		ld r29,Y
+ 119 00b6 C02D      		mov r28,__tmp_reg__
+ 120               	.L13:
+ 121 00b8 2097      		sbiw r28,0
+ 122 00ba 01F4      		brne .L15
+ 123 00bc 2FEF      		ldi r18,lo8(-1)
+ 124 00be 3FEF      		ldi r19,hi8(-1)
+ 125               	.L12:
+ 126 00c0 C901      		movw r24,r18
+ 127               	/* epilogue start */
+ 128 00c2 DF91      		pop r29
+ 129 00c4 CF91      		pop r28
+ 130 00c6 1F91      		pop r17
+ 131 00c8 0F91      		pop r16
+ 132 00ca 0895      		ret
+ 133               		.size	SnmpViewFind, .-SnmpViewFind
+ 134               	.global	SnmpCommunityCreate
+ 135               		.type	SnmpCommunityCreate, @function
+ 136               	SnmpCommunityCreate:
+ 137 00cc AF92      		push r10
+ 138 00ce BF92      		push r11
+ 139 00d0 CF92      		push r12
+ 140 00d2 DF92      		push r13
+ 141 00d4 EF92      		push r14
+ 142 00d6 FF92      		push r15
+ 143 00d8 0F93      		push r16
+ 144 00da 1F93      		push r17
+ 145 00dc CF93      		push r28
+ 146 00de DF93      		push r29
+ 147               	/* prologue: function */
+ 148               	/* frame size = 0 */
+ 149 00e0 F82E      		mov r15,r24
+ 150 00e2 E92E      		mov r14,r25
+ 151 00e4 6B01      		movw r12,r22
+ 152 00e6 5A01      		movw r10,r20
+ 153 00e8 A82F      		mov r26,r24
+ 154 00ea B92F      		mov r27,r25
+ 155 00ec FD01      		movw r30,r26
+ 156 00ee 0190      		ld __tmp_reg__,Z+
+ 157 00f0 0020      		tst __tmp_reg__
+ 158 00f2 01F4      		brne .-6
+ 159 00f4 3197      		sbiw r30,1
+ 160 00f6 EA1B      		sub r30,r26
+ 161 00f8 FB0B      		sbc r31,r27
+ 162 00fa 7097      		sbiw r30,16
+ 163 00fc 00F0      		brlo .L18
+ 164 00fe 2FEF      		ldi r18,lo8(-1)
+ 165 0100 3FEF      		ldi r19,hi8(-1)
+ 166 0102 00C0      		rjmp .L19
+ 167               	.L18:
+ 168 0104 C091 0000 		lds r28,communities
+ 169 0108 D091 0000 		lds r29,(communities)+1
+ 170 010c 00E0      		ldi r16,lo8(0)
+ 171 010e 10E0      		ldi r17,hi8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s 			page 4
+
+
+ 172 0110 00C0      		rjmp .L20
+ 173               	.L22:
+ 174 0112 BE01      		movw r22,r28
+ 175 0114 6A5F      		subi r22,lo8(-(6))
+ 176 0116 7F4F      		sbci r23,hi8(-(6))
+ 177 0118 8F2D      		mov r24,r15
+ 178 011a 9E2D      		mov r25,r14
+ 179 011c 0E94 0000 		call strcmp
+ 180 0120 0097      		sbiw r24,0
+ 181 0122 01F0      		breq .L25
+ 182               	.L21:
+ 183 0124 8E01      		movw r16,r28
+ 184 0126 8881      		ld r24,Y
+ 185 0128 9981      		ldd r25,Y+1
+ 186 012a 9C01      		movw r18,r24
+ 187 012c E901      		movw r28,r18
+ 188               	.L20:
+ 189 012e 2097      		sbiw r28,0
+ 190 0130 01F4      		brne .L22
+ 191 0132 86E1      		ldi r24,lo8(22)
+ 192 0134 90E0      		ldi r25,hi8(22)
+ 193 0136 0E94 0000 		call malloc
+ 194 013a EC01      		movw r28,r24
+ 195 013c 86E1      		ldi r24,lo8(22)
+ 196 013e FE01      		movw r30,r28
+ 197 0140 1192      		st Z+,__zero_reg__
+ 198 0142 8A95      	        dec r24
+ 199 0144 01F4      		brne .-6
+ 200 0146 CE01      		movw r24,r28
+ 201 0148 0696      		adiw r24,6
+ 202 014a 6F2D      		mov r22,r15
+ 203 014c 7E2D      		mov r23,r14
+ 204 014e 0E94 0000 		call strcpy
+ 205 0152 DB82      		std Y+3,r13
+ 206 0154 CA82      		std Y+2,r12
+ 207 0156 BD82      		std Y+5,r11
+ 208 0158 AC82      		std Y+4,r10
+ 209 015a 0115      		cp r16,__zero_reg__
+ 210 015c 1105      		cpc r17,__zero_reg__
+ 211 015e 01F0      		breq .L23
+ 212 0160 F801      		movw r30,r16
+ 213 0162 D183      		std Z+1,r29
+ 214 0164 C083      		st Z,r28
+ 215 0166 00C0      		rjmp .L25
+ 216               	.L23:
+ 217 0168 D093 0000 		sts (communities)+1,r29
+ 218 016c C093 0000 		sts communities,r28
+ 219               	.L25:
+ 220 0170 20E0      		ldi r18,lo8(0)
+ 221 0172 30E0      		ldi r19,hi8(0)
+ 222               	.L19:
+ 223 0174 C901      		movw r24,r18
+ 224               	/* epilogue start */
+ 225 0176 DF91      		pop r29
+ 226 0178 CF91      		pop r28
+ 227 017a 1F91      		pop r17
+ 228 017c 0F91      		pop r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s 			page 5
+
+
+ 229 017e FF90      		pop r15
+ 230 0180 EF90      		pop r14
+ 231 0182 DF90      		pop r13
+ 232 0184 CF90      		pop r12
+ 233 0186 BF90      		pop r11
+ 234 0188 AF90      		pop r10
+ 235 018a 0895      		ret
+ 236               		.size	SnmpCommunityCreate, .-SnmpCommunityCreate
+ 237               	.global	SnmpViewCreate
+ 238               		.type	SnmpViewCreate, @function
+ 239               	SnmpViewCreate:
+ 240 018c 4F92      		push r4
+ 241 018e 5F92      		push r5
+ 242 0190 6F92      		push r6
+ 243 0192 7F92      		push r7
+ 244 0194 8F92      		push r8
+ 245 0196 9F92      		push r9
+ 246 0198 AF92      		push r10
+ 247 019a BF92      		push r11
+ 248 019c CF92      		push r12
+ 249 019e DF92      		push r13
+ 250 01a0 EF92      		push r14
+ 251 01a2 FF92      		push r15
+ 252 01a4 0F93      		push r16
+ 253 01a6 1F93      		push r17
+ 254 01a8 CF93      		push r28
+ 255 01aa DF93      		push r29
+ 256               	/* prologue: function */
+ 257               	/* frame size = 0 */
+ 258 01ac B82E      		mov r11,r24
+ 259 01ae A92E      		mov r10,r25
+ 260 01b0 2B01      		movw r4,r22
+ 261 01b2 4A01      		movw r8,r20
+ 262 01b4 3901      		movw r6,r18
+ 263 01b6 A82F      		mov r26,r24
+ 264 01b8 B92F      		mov r27,r25
+ 265 01ba FD01      		movw r30,r26
+ 266 01bc 0190      		ld __tmp_reg__,Z+
+ 267 01be 0020      		tst __tmp_reg__
+ 268 01c0 01F4      		brne .-6
+ 269 01c2 3197      		sbiw r30,1
+ 270 01c4 EA1B      		sub r30,r26
+ 271 01c6 FB0B      		sbc r31,r27
+ 272 01c8 7097      		sbiw r30,16
+ 273 01ca 00F0      		brlo .L27
+ 274 01cc 2FEF      		ldi r18,lo8(-1)
+ 275 01ce 3FEF      		ldi r19,hi8(-1)
+ 276 01d0 00C0      		rjmp .L28
+ 277               	.L27:
+ 278 01d2 0091 0000 		lds r16,views
+ 279 01d6 1091 0000 		lds r17,(views)+1
+ 280 01da EE24      		clr r14
+ 281 01dc FF24      		clr r15
+ 282 01de 00C0      		rjmp .L29
+ 283               	.L31:
+ 284 01e0 B801      		movw r22,r16
+ 285 01e2 6857      		subi r22,lo8(-(136))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s 			page 6
+
+
+ 286 01e4 7F4F      		sbci r23,hi8(-(136))
+ 287 01e6 8B2D      		mov r24,r11
+ 288 01e8 9A2D      		mov r25,r10
+ 289 01ea 0E94 0000 		call strcmp
+ 290 01ee 0097      		sbiw r24,0
+ 291 01f0 01F0      		breq .L30
+ 292 01f2 7801      		movw r14,r16
+ 293 01f4 F801      		movw r30,r16
+ 294 01f6 8081      		ld r24,Z
+ 295 01f8 9181      		ldd r25,Z+1
+ 296 01fa 9C01      		movw r18,r24
+ 297 01fc 8901      		movw r16,r18
+ 298               	.L29:
+ 299 01fe 0115      		cp r16,__zero_reg__
+ 300 0200 1105      		cpc r17,__zero_reg__
+ 301 0202 01F4      		brne .L31
+ 302               	.L30:
+ 303 0204 6801      		movw r12,r16
+ 304 0206 88E9      		ldi r24,lo8(152)
+ 305 0208 90E0      		ldi r25,hi8(152)
+ 306 020a 0E94 0000 		call malloc
+ 307 020e EC01      		movw r28,r24
+ 308 0210 88E9      		ldi r24,lo8(-104)
+ 309 0212 FE01      		movw r30,r28
+ 310 0214 1192      		st Z+,__zero_reg__
+ 311 0216 8A95      	        dec r24
+ 312 0218 01F4      		brne .-6
+ 313 021a CE01      		movw r24,r28
+ 314 021c 8857      		subi r24,lo8(-(136))
+ 315 021e 9F4F      		sbci r25,hi8(-(136))
+ 316 0220 6B2D      		mov r22,r11
+ 317 0222 7A2D      		mov r23,r10
+ 318 0224 0E94 0000 		call strcpy
+ 319 0228 7D82      		std Y+5,r7
+ 320 022a 6C82      		std Y+4,r6
+ 321 022c 9F82      		std Y+7,r9
+ 322 022e 8E82      		std Y+6,r8
+ 323 0230 BE01      		movw r22,r28
+ 324 0232 20E0      		ldi r18,lo8(0)
+ 325 0234 30E0      		ldi r19,hi8(0)
+ 326 0236 A401      		movw r20,r8
+ 327 0238 440F      		lsl r20
+ 328 023a 551F      		rol r21
+ 329 023c 440F      		lsl r20
+ 330 023e 551F      		rol r21
+ 331 0240 00C0      		rjmp .L32
+ 332               	.L33:
+ 333 0242 F201      		movw r30,r4
+ 334 0244 E20F      		add r30,r18
+ 335 0246 F31F      		adc r31,r19
+ 336 0248 8081      		ld r24,Z
+ 337 024a 9181      		ldd r25,Z+1
+ 338 024c A281      		ldd r26,Z+2
+ 339 024e B381      		ldd r27,Z+3
+ 340 0250 FB01      		movw r30,r22
+ 341 0252 8483      		std Z+4,r24
+ 342 0254 9583      		std Z+5,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s 			page 7
+
+
+ 343 0256 A683      		std Z+6,r26
+ 344 0258 B783      		std Z+7,r27
+ 345 025a 2C5F      		subi r18,lo8(-(4))
+ 346 025c 3F4F      		sbci r19,hi8(-(4))
+ 347               	.L32:
+ 348 025e 6C5F      		subi r22,lo8(-(4))
+ 349 0260 7F4F      		sbci r23,hi8(-(4))
+ 350 0262 2417      		cp r18,r20
+ 351 0264 3507      		cpc r19,r21
+ 352 0266 01F4      		brne .L33
+ 353 0268 0115      		cp r16,__zero_reg__
+ 354 026a 1105      		cpc r17,__zero_reg__
+ 355 026c 01F0      		breq .L34
+ 356 026e F801      		movw r30,r16
+ 357 0270 2281      		ldd r18,Z+2
+ 358 0272 3381      		ldd r19,Z+3
+ 359 0274 00C0      		rjmp .L35
+ 360               	.L34:
+ 361 0276 2091 0000 		lds r18,nextview.1796
+ 362 027a 3091 0000 		lds r19,(nextview.1796)+1
+ 363 027e 2F5F      		subi r18,lo8(-(1))
+ 364 0280 3F4F      		sbci r19,hi8(-(1))
+ 365 0282 3093 0000 		sts (nextview.1796)+1,r19
+ 366 0286 2093 0000 		sts nextview.1796,r18
+ 367 028a 2150      		subi r18,lo8(-(-1))
+ 368 028c 3040      		sbci r19,hi8(-(-1))
+ 369               	.L35:
+ 370 028e 3B83      		std Y+3,r19
+ 371 0290 2A83      		std Y+2,r18
+ 372 0292 8091 0000 		lds r24,views
+ 373 0296 9091 0000 		lds r25,(views)+1
+ 374 029a 892B      		or r24,r25
+ 375 029c 01F4      		brne .L41
+ 376 029e 00C0      		rjmp .L43
+ 377               	.L38:
+ 378 02a0 7601      		movw r14,r12
+ 379 02a2 F601      		movw r30,r12
+ 380 02a4 8081      		ld r24,Z
+ 381 02a6 9181      		ldd r25,Z+1
+ 382 02a8 9C01      		movw r18,r24
+ 383 02aa 6901      		movw r12,r18
+ 384               	.L41:
+ 385 02ac C114      		cp r12,__zero_reg__
+ 386 02ae D104      		cpc r13,__zero_reg__
+ 387 02b0 01F4      		brne .L38
+ 388 02b2 F701      		movw r30,r14
+ 389 02b4 D183      		std Z+1,r29
+ 390 02b6 C083      		st Z,r28
+ 391 02b8 00C0      		rjmp .L39
+ 392               	.L43:
+ 393 02ba D093 0000 		sts (views)+1,r29
+ 394 02be C093 0000 		sts views,r28
+ 395               	.L39:
+ 396 02c2 2A81      		ldd r18,Y+2
+ 397 02c4 3B81      		ldd r19,Y+3
+ 398               	.L28:
+ 399 02c6 C901      		movw r24,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s 			page 8
+
+
+ 400               	/* epilogue start */
+ 401 02c8 DF91      		pop r29
+ 402 02ca CF91      		pop r28
+ 403 02cc 1F91      		pop r17
+ 404 02ce 0F91      		pop r16
+ 405 02d0 FF90      		pop r15
+ 406 02d2 EF90      		pop r14
+ 407 02d4 DF90      		pop r13
+ 408 02d6 CF90      		pop r12
+ 409 02d8 BF90      		pop r11
+ 410 02da AF90      		pop r10
+ 411 02dc 9F90      		pop r9
+ 412 02de 8F90      		pop r8
+ 413 02e0 7F90      		pop r7
+ 414 02e2 6F90      		pop r6
+ 415 02e4 5F90      		pop r5
+ 416 02e6 4F90      		pop r4
+ 417 02e8 0895      		ret
+ 418               		.size	SnmpViewCreate, .-SnmpViewCreate
+ 419               		.data
+ 420               		.type	nextview.1796, @object
+ 421               		.size	nextview.1796, 2
+ 422               	nextview.1796:
+ 423 0002 0100      		.word	1
+ 424               		.lcomm views,2
+ 425               		.lcomm communities,2
+ 426               	.global __do_copy_data
+ 427               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 snmp_config.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s:11     .text:00000000 SnmpCommunityFind
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s:424    .bss:00000002 communities
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s:85     .text:00000076 SnmpViewFind
+                             .bss:00000000 views
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s:136    .text:000000cc SnmpCommunityCreate
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s:239    .text:0000018c SnmpViewCreate
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccV3U2Rw.s:422    .data:00000002 nextview.1796
+
+UNDEFINED SYMBOLS
+strcmp
+malloc
+strcpy
+__do_copy_data
+__do_clear_bss

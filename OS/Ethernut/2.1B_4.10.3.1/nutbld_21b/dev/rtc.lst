@@ -1,0 +1,229 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s 			page 1
+
+
+   1               		.file	"rtc.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutRegisterRtc
+  10               		.type	NutRegisterRtc, @function
+  11               	NutRegisterRtc:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 FC01      		movw r30,r24
+  15 0002 9093 0000 		sts (reg_rtc)+1,r25
+  16 0006 8093 0000 		sts reg_rtc,r24
+  17 000a 0097      		sbiw r24,0
+  18 000c 01F0      		breq .L2
+  19 000e 0190      		ld __tmp_reg__,Z+
+  20 0010 F081      		ld r31,Z
+  21 0012 E02D      		mov r30,__tmp_reg__
+  22 0014 3097      		sbiw r30,0
+  23 0016 01F0      		breq .L2
+  24 0018 0995      		icall
+  25 001a 892B      		or r24,r25
+  26 001c 01F0      		breq .L2
+  27 001e 1092 0000 		sts (reg_rtc)+1,__zero_reg__
+  28 0022 1092 0000 		sts reg_rtc,__zero_reg__
+  29 0026 2FEF      		ldi r18,lo8(-1)
+  30 0028 3FEF      		ldi r19,hi8(-1)
+  31 002a 00C0      		rjmp .L3
+  32               	.L2:
+  33 002c 20E0      		ldi r18,lo8(0)
+  34 002e 30E0      		ldi r19,hi8(0)
+  35               	.L3:
+  36 0030 C901      		movw r24,r18
+  37               	/* epilogue start */
+  38 0032 0895      		ret
+  39               		.size	NutRegisterRtc, .-NutRegisterRtc
+  40               	.global	NutRtcGetTime
+  41               		.type	NutRtcGetTime, @function
+  42               	NutRtcGetTime:
+  43               	/* prologue: function */
+  44               	/* frame size = 0 */
+  45 0034 E091 0000 		lds r30,reg_rtc
+  46 0038 F091 0000 		lds r31,(reg_rtc)+1
+  47 003c 3097      		sbiw r30,0
+  48 003e 01F0      		breq .L6
+  49 0040 0280      		ldd __tmp_reg__,Z+2
+  50 0042 F381      		ldd r31,Z+3
+  51 0044 E02D      		mov r30,__tmp_reg__
+  52 0046 3097      		sbiw r30,0
+  53 0048 01F0      		breq .L6
+  54 004a 0097      		sbiw r24,0
+  55 004c 01F0      		breq .L6
+  56 004e 0995      		icall
+  57 0050 9C01      		movw r18,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s 			page 2
+
+
+  58 0052 00C0      		rjmp .L7
+  59               	.L6:
+  60 0054 2FEF      		ldi r18,lo8(-1)
+  61 0056 3FEF      		ldi r19,hi8(-1)
+  62               	.L7:
+  63 0058 C901      		movw r24,r18
+  64               	/* epilogue start */
+  65 005a 0895      		ret
+  66               		.size	NutRtcGetTime, .-NutRtcGetTime
+  67               	.global	NutRtcSetTime
+  68               		.type	NutRtcSetTime, @function
+  69               	NutRtcSetTime:
+  70               	/* prologue: function */
+  71               	/* frame size = 0 */
+  72 005c E091 0000 		lds r30,reg_rtc
+  73 0060 F091 0000 		lds r31,(reg_rtc)+1
+  74 0064 3097      		sbiw r30,0
+  75 0066 01F0      		breq .L10
+  76 0068 0480      		ldd __tmp_reg__,Z+4
+  77 006a F581      		ldd r31,Z+5
+  78 006c E02D      		mov r30,__tmp_reg__
+  79 006e 3097      		sbiw r30,0
+  80 0070 01F0      		breq .L10
+  81 0072 0097      		sbiw r24,0
+  82 0074 01F0      		breq .L10
+  83 0076 0995      		icall
+  84 0078 9C01      		movw r18,r24
+  85 007a 00C0      		rjmp .L11
+  86               	.L10:
+  87 007c 2FEF      		ldi r18,lo8(-1)
+  88 007e 3FEF      		ldi r19,hi8(-1)
+  89               	.L11:
+  90 0080 C901      		movw r24,r18
+  91               	/* epilogue start */
+  92 0082 0895      		ret
+  93               		.size	NutRtcSetTime, .-NutRtcSetTime
+  94               	.global	NutRtcGetAlarm
+  95               		.type	NutRtcGetAlarm, @function
+  96               	NutRtcGetAlarm:
+  97               	/* prologue: function */
+  98               	/* frame size = 0 */
+  99 0084 E091 0000 		lds r30,reg_rtc
+ 100 0088 F091 0000 		lds r31,(reg_rtc)+1
+ 101 008c 3097      		sbiw r30,0
+ 102 008e 01F0      		breq .L14
+ 103 0090 0680      		ldd __tmp_reg__,Z+6
+ 104 0092 F781      		ldd r31,Z+7
+ 105 0094 E02D      		mov r30,__tmp_reg__
+ 106 0096 3097      		sbiw r30,0
+ 107 0098 01F0      		breq .L14
+ 108 009a 0995      		icall
+ 109 009c 9C01      		movw r18,r24
+ 110 009e 00C0      		rjmp .L15
+ 111               	.L14:
+ 112 00a0 2FEF      		ldi r18,lo8(-1)
+ 113 00a2 3FEF      		ldi r19,hi8(-1)
+ 114               	.L15:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s 			page 3
+
+
+ 115 00a4 C901      		movw r24,r18
+ 116               	/* epilogue start */
+ 117 00a6 0895      		ret
+ 118               		.size	NutRtcGetAlarm, .-NutRtcGetAlarm
+ 119               	.global	NutRtcSetAlarm
+ 120               		.type	NutRtcSetAlarm, @function
+ 121               	NutRtcSetAlarm:
+ 122               	/* prologue: function */
+ 123               	/* frame size = 0 */
+ 124 00a8 E091 0000 		lds r30,reg_rtc
+ 125 00ac F091 0000 		lds r31,(reg_rtc)+1
+ 126 00b0 3097      		sbiw r30,0
+ 127 00b2 01F0      		breq .L18
+ 128 00b4 0084      		ldd __tmp_reg__,Z+8
+ 129 00b6 F185      		ldd r31,Z+9
+ 130 00b8 E02D      		mov r30,__tmp_reg__
+ 131 00ba 3097      		sbiw r30,0
+ 132 00bc 01F0      		breq .L18
+ 133 00be 0995      		icall
+ 134 00c0 9C01      		movw r18,r24
+ 135 00c2 00C0      		rjmp .L19
+ 136               	.L18:
+ 137 00c4 2FEF      		ldi r18,lo8(-1)
+ 138 00c6 3FEF      		ldi r19,hi8(-1)
+ 139               	.L19:
+ 140 00c8 C901      		movw r24,r18
+ 141               	/* epilogue start */
+ 142 00ca 0895      		ret
+ 143               		.size	NutRtcSetAlarm, .-NutRtcSetAlarm
+ 144               	.global	NutRtcGetStatus
+ 145               		.type	NutRtcGetStatus, @function
+ 146               	NutRtcGetStatus:
+ 147               	/* prologue: function */
+ 148               	/* frame size = 0 */
+ 149 00cc E091 0000 		lds r30,reg_rtc
+ 150 00d0 F091 0000 		lds r31,(reg_rtc)+1
+ 151 00d4 3097      		sbiw r30,0
+ 152 00d6 01F0      		breq .L22
+ 153 00d8 0284      		ldd __tmp_reg__,Z+10
+ 154 00da F385      		ldd r31,Z+11
+ 155 00dc E02D      		mov r30,__tmp_reg__
+ 156 00de 3097      		sbiw r30,0
+ 157 00e0 01F0      		breq .L22
+ 158 00e2 0995      		icall
+ 159 00e4 9C01      		movw r18,r24
+ 160 00e6 00C0      		rjmp .L23
+ 161               	.L22:
+ 162 00e8 2FEF      		ldi r18,lo8(-1)
+ 163 00ea 3FEF      		ldi r19,hi8(-1)
+ 164               	.L23:
+ 165 00ec C901      		movw r24,r18
+ 166               	/* epilogue start */
+ 167 00ee 0895      		ret
+ 168               		.size	NutRtcGetStatus, .-NutRtcGetStatus
+ 169               	.global	NutRtcClearStatus
+ 170               		.type	NutRtcClearStatus, @function
+ 171               	NutRtcClearStatus:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s 			page 4
+
+
+ 172               	/* prologue: function */
+ 173               	/* frame size = 0 */
+ 174 00f0 E091 0000 		lds r30,reg_rtc
+ 175 00f4 F091 0000 		lds r31,(reg_rtc)+1
+ 176 00f8 3097      		sbiw r30,0
+ 177 00fa 01F0      		breq .L26
+ 178 00fc 0484      		ldd __tmp_reg__,Z+12
+ 179 00fe F585      		ldd r31,Z+13
+ 180 0100 E02D      		mov r30,__tmp_reg__
+ 181 0102 3097      		sbiw r30,0
+ 182 0104 01F0      		breq .L26
+ 183 0106 0995      		icall
+ 184 0108 9C01      		movw r18,r24
+ 185 010a 00C0      		rjmp .L27
+ 186               	.L26:
+ 187 010c 2FEF      		ldi r18,lo8(-1)
+ 188 010e 3FEF      		ldi r19,hi8(-1)
+ 189               	.L27:
+ 190 0110 C901      		movw r24,r18
+ 191               	/* epilogue start */
+ 192 0112 0895      		ret
+ 193               		.size	NutRtcClearStatus, .-NutRtcClearStatus
+ 194               		.lcomm reg_rtc,2
+ 195               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 rtc.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:11     .text:00000000 NutRegisterRtc
+                             .bss:00000000 reg_rtc
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:42     .text:00000034 NutRtcGetTime
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:69     .text:0000005c NutRtcSetTime
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:96     .text:00000084 NutRtcGetAlarm
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:121    .text:000000a8 NutRtcSetAlarm
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:146    .text:000000cc NutRtcGetStatus
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccg2z5wb.s:171    .text:000000f0 NutRtcClearStatus
+
+UNDEFINED SYMBOLS
+__do_clear_bss

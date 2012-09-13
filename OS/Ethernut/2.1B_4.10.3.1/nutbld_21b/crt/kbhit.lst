@@ -1,0 +1,51 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccc7bTSV.s 			page 1
+
+
+   1               		.file	"kbhit.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	kbhit
+  10               		.type	kbhit, @function
+  11               	kbhit:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 8091 0000 		lds r24,__iob
+  15 0004 9091 0000 		lds r25,(__iob)+1
+  16 0008 0E94 0000 		call _fileno
+  17 000c 0E94 0000 		call _filelength
+  18 0010 20E0      		ldi r18,lo8(0)
+  19 0012 30E0      		ldi r19,hi8(0)
+  20 0014 1616      		cp __zero_reg__,r22
+  21 0016 1706      		cpc __zero_reg__,r23
+  22 0018 1806      		cpc __zero_reg__,r24
+  23 001a 1906      		cpc __zero_reg__,r25
+  24 001c 04F4      		brge .L2
+  25 001e 21E0      		ldi r18,lo8(1)
+  26 0020 30E0      		ldi r19,hi8(1)
+  27               	.L2:
+  28 0022 C901      		movw r24,r18
+  29               	/* epilogue start */
+  30 0024 0895      		ret
+  31               		.size	kbhit, .-kbhit
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccc7bTSV.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 kbhit.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccc7bTSV.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccc7bTSV.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccc7bTSV.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccc7bTSV.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccc7bTSV.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccc7bTSV.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccc7bTSV.s:11     .text:00000000 kbhit
+
+UNDEFINED SYMBOLS
+__iob
+_fileno
+_filelength

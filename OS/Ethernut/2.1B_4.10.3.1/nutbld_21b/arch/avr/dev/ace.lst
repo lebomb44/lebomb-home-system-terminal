@@ -1,0 +1,170 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s 			page 1
+
+
+   1               		.file	"ace.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               	.global	devAce0
+   9               		.data
+  10               		.type	devAce0, @object
+  11               		.size	devAce0, 35
+  12               	devAce0:
+  13 0000 0000      		.word	0
+  14 0002 61        		.byte	97
+  15 0003 63        		.byte	99
+  16 0004 65        		.byte	101
+  17 0005 30        		.byte	48
+  18 0006 00        		.byte	0
+  19 0007 00        		.byte	0
+  20 0008 00        		.byte	0
+  21 0009 00        		.byte	0
+  22 000a 00        		.byte	0
+  23 000b 02        		.byte	2
+  24 000c 008C      		.word	-29696
+  25 000e 04        		.byte	4
+  26 000f 0000      		.word	ifs_ace0
+  27 0011 0000      		.word	dcb_ace0
+  28 0013 0000      		.word	gs(AceInit)
+  29 0015 0000      		.word	gs(AceIOCtl)
+  30 0017 0000      		.word	gs(AceRead)
+  31 0019 0000      		.word	gs(AceWrite)
+  32 001b 0000      		.word	gs(AceWrite_P)
+  33 001d 0000      		.word	gs(AceOpen)
+  34 001f 0000      		.word	gs(AceClose)
+  35 0021 0000      		.word	gs(AceSize)
+  36               	.global	devAce1
+  37               		.type	devAce1, @object
+  38               		.size	devAce1, 35
+  39               	devAce1:
+  40 0023 0000      		.word	0
+  41 0025 61        		.byte	97
+  42 0026 63        		.byte	99
+  43 0027 65        		.byte	101
+  44 0028 31        		.byte	49
+  45 0029 00        		.byte	0
+  46 002a 00        		.byte	0
+  47 002b 00        		.byte	0
+  48 002c 00        		.byte	0
+  49 002d 00        		.byte	0
+  50 002e 02        		.byte	2
+  51 002f 088C      		.word	-29688
+  52 0031 04        		.byte	4
+  53 0032 0000      		.word	ifs_ace1
+  54 0034 0000      		.word	dcb_ace1
+  55 0036 0000      		.word	gs(AceInit)
+  56 0038 0000      		.word	gs(AceIOCtl)
+  57 003a 0000      		.word	gs(AceRead)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s 			page 2
+
+
+  58 003c 0000      		.word	gs(AceWrite)
+  59 003e 0000      		.word	gs(AceWrite_P)
+  60 0040 0000      		.word	gs(AceOpen)
+  61 0042 0000      		.word	gs(AceClose)
+  62 0044 0000      		.word	gs(AceSize)
+  63               	.global	devAce2
+  64               		.type	devAce2, @object
+  65               		.size	devAce2, 35
+  66               	devAce2:
+  67 0046 0000      		.word	0
+  68 0048 61        		.byte	97
+  69 0049 63        		.byte	99
+  70 004a 65        		.byte	101
+  71 004b 32        		.byte	50
+  72 004c 00        		.byte	0
+  73 004d 00        		.byte	0
+  74 004e 00        		.byte	0
+  75 004f 00        		.byte	0
+  76 0050 00        		.byte	0
+  77 0051 02        		.byte	2
+  78 0052 108C      		.word	-29680
+  79 0054 04        		.byte	4
+  80 0055 0000      		.word	ifs_ace2
+  81 0057 0000      		.word	dcb_ace2
+  82 0059 0000      		.word	gs(AceInit)
+  83 005b 0000      		.word	gs(AceIOCtl)
+  84 005d 0000      		.word	gs(AceRead)
+  85 005f 0000      		.word	gs(AceWrite)
+  86 0061 0000      		.word	gs(AceWrite_P)
+  87 0063 0000      		.word	gs(AceOpen)
+  88 0065 0000      		.word	gs(AceClose)
+  89 0067 0000      		.word	gs(AceSize)
+  90               	.global	devAce3
+  91               		.type	devAce3, @object
+  92               		.size	devAce3, 35
+  93               	devAce3:
+  94 0069 0000      		.word	0
+  95 006b 61        		.byte	97
+  96 006c 63        		.byte	99
+  97 006d 65        		.byte	101
+  98 006e 33        		.byte	51
+  99 006f 00        		.byte	0
+ 100 0070 00        		.byte	0
+ 101 0071 00        		.byte	0
+ 102 0072 00        		.byte	0
+ 103 0073 00        		.byte	0
+ 104 0074 02        		.byte	2
+ 105 0075 188C      		.word	-29672
+ 106 0077 04        		.byte	4
+ 107 0078 0000      		.word	ifs_ace3
+ 108 007a 0000      		.word	dcb_ace3
+ 109 007c 0000      		.word	gs(AceInit)
+ 110 007e 0000      		.word	gs(AceIOCtl)
+ 111 0080 0000      		.word	gs(AceRead)
+ 112 0082 0000      		.word	gs(AceWrite)
+ 113 0084 0000      		.word	gs(AceWrite_P)
+ 114 0086 0000      		.word	gs(AceOpen)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s 			page 3
+
+
+ 115 0088 0000      		.word	gs(AceClose)
+ 116 008a 0000      		.word	gs(AceSize)
+ 117               		.lcomm ifs_ace0,524
+ 118               		.lcomm dcb_ace0,20
+ 119               		.lcomm ifs_ace1,524
+ 120               		.lcomm dcb_ace1,20
+ 121               		.lcomm ifs_ace2,524
+ 122               		.lcomm dcb_ace2,20
+ 123               		.lcomm ifs_ace3,524
+ 124               		.lcomm dcb_ace3,20
+ 125               	.global __do_copy_data
+ 126               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ace.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:12     .data:00000000 devAce0
+                             .bss:00000000 ifs_ace0
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:117    .bss:0000020c dcb_ace0
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:39     .data:00000023 devAce1
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:118    .bss:00000220 ifs_ace1
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:119    .bss:0000042c dcb_ace1
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:66     .data:00000046 devAce2
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:120    .bss:00000440 ifs_ace2
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:121    .bss:0000064c dcb_ace2
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:93     .data:00000069 devAce3
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:122    .bss:00000660 ifs_ace3
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIeSvDg.s:123    .bss:0000086c dcb_ace3
+
+UNDEFINED SYMBOLS
+AceInit
+AceIOCtl
+AceRead
+AceWrite
+AceWrite_P
+AceOpen
+AceClose
+AceSize
+__do_copy_data
+__do_clear_bss

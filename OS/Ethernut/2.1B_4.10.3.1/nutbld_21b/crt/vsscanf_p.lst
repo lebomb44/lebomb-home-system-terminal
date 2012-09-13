@@ -1,0 +1,147 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfS2UG.s 			page 1
+
+
+   1               		.file	"vsscanf_p.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	_sgetb, @function
+  10               	_sgetb:
+  11 0000 CF93      		push r28
+  12 0002 DF93      		push r29
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0004 EC01      		movw r28,r24
+  16 0006 20E0      		ldi r18,lo8(0)
+  17 0008 30E0      		ldi r19,hi8(0)
+  18 000a 00C0      		rjmp .L2
+  19               	.L4:
+  20 000c FB01      		movw r30,r22
+  21 000e E20F      		add r30,r18
+  22 0010 F31F      		adc r31,r19
+  23 0012 8083      		st Z,r24
+  24 0014 1196      		adiw r26,1
+  25 0016 B983      		std Y+1,r27
+  26 0018 A883      		st Y,r26
+  27 001a 2F5F      		subi r18,lo8(-(1))
+  28 001c 3F4F      		sbci r19,hi8(-(1))
+  29               	.L2:
+  30 001e 4217      		cp r20,r18
+  31 0020 5307      		cpc r21,r19
+  32 0022 01F0      		breq .L3
+  33 0024 A881      		ld r26,Y
+  34 0026 B981      		ldd r27,Y+1
+  35 0028 8C91      		ld r24,X
+  36 002a 8823      		tst r24
+  37 002c 01F4      		brne .L4
+  38               	.L3:
+  39 002e C901      		movw r24,r18
+  40               	/* epilogue start */
+  41 0030 DF91      		pop r29
+  42 0032 CF91      		pop r28
+  43 0034 0895      		ret
+  44               		.size	_sgetb, .-_sgetb
+  45               	.global	vsscanf_P
+  46               		.type	vsscanf_P, @function
+  47               	vsscanf_P:
+  48 0036 AF92      		push r10
+  49 0038 BF92      		push r11
+  50 003a CF92      		push r12
+  51 003c DF92      		push r13
+  52 003e EF92      		push r14
+  53 0040 FF92      		push r15
+  54 0042 0F93      		push r16
+  55 0044 1F93      		push r17
+  56 0046 DF93      		push r29
+  57 0048 CF93      		push r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfS2UG.s 			page 2
+
+
+  58 004a 00D0      		rcall .
+  59 004c CDB7      		in r28,__SP_L__
+  60 004e DEB7      		in r29,__SP_H__
+  61               	/* prologue: function */
+  62               	/* frame size = 2 */
+  63 0050 6B01      		movw r12,r22
+  64 0052 5A01      		movw r10,r20
+  65 0054 9A83      		std Y+2,r25
+  66 0056 8983      		std Y+1,r24
+  67 0058 CB01      		movw r24,r22
+  68 005a 0E94 0000 		call strlen_P
+  69 005e 7C01      		movw r14,r24
+  70 0060 0894      		sec
+  71 0062 E11C      		adc r14,__zero_reg__
+  72 0064 F11C      		adc r15,__zero_reg__
+  73 0066 80E0      		ldi r24,lo8(heapFreeList)
+  74 0068 90E0      		ldi r25,hi8(heapFreeList)
+  75 006a B701      		movw r22,r14
+  76 006c 0E94 0000 		call NutHeapRootAlloc
+  77 0070 8C01      		movw r16,r24
+  78 0072 0097      		sbiw r24,0
+  79 0074 01F4      		brne .L7
+  80 0076 EE24      		clr r14
+  81 0078 EA94      		dec r14
+  82 007a FE2C      		mov r15,r14
+  83 007c 00C0      		rjmp .L8
+  84               	.L7:
+  85 007e B601      		movw r22,r12
+  86 0080 A701      		movw r20,r14
+  87 0082 0E94 0000 		call memcpy_P
+  88 0086 80E0      		ldi r24,lo8(gs(_sgetb))
+  89 0088 90E0      		ldi r25,hi8(gs(_sgetb))
+  90 008a BE01      		movw r22,r28
+  91 008c 6F5F      		subi r22,lo8(-(1))
+  92 008e 7F4F      		sbci r23,hi8(-(1))
+  93 0090 A801      		movw r20,r16
+  94 0092 9501      		movw r18,r10
+  95 0094 0E94 0000 		call _getf
+  96 0098 7C01      		movw r14,r24
+  97 009a 80E0      		ldi r24,lo8(heapFreeList)
+  98 009c 90E0      		ldi r25,hi8(heapFreeList)
+  99 009e B801      		movw r22,r16
+ 100 00a0 0E94 0000 		call NutHeapRootFree
+ 101               	.L8:
+ 102 00a4 C701      		movw r24,r14
+ 103               	/* epilogue start */
+ 104 00a6 0F90      		pop __tmp_reg__
+ 105 00a8 0F90      		pop __tmp_reg__
+ 106 00aa CF91      		pop r28
+ 107 00ac DF91      		pop r29
+ 108 00ae 1F91      		pop r17
+ 109 00b0 0F91      		pop r16
+ 110 00b2 FF90      		pop r15
+ 111 00b4 EF90      		pop r14
+ 112 00b6 DF90      		pop r13
+ 113 00b8 CF90      		pop r12
+ 114 00ba BF90      		pop r11
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfS2UG.s 			page 3
+
+
+ 115 00bc AF90      		pop r10
+ 116 00be 0895      		ret
+ 117               		.size	vsscanf_P, .-vsscanf_P
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfS2UG.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 vsscanf_p.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfS2UG.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfS2UG.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfS2UG.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfS2UG.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfS2UG.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfS2UG.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfS2UG.s:10     .text:00000000 _sgetb
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIfS2UG.s:47     .text:00000036 vsscanf_P
+
+UNDEFINED SYMBOLS
+strlen_P
+heapFreeList
+NutHeapRootAlloc
+memcpy_P
+_getf
+NutHeapRootFree

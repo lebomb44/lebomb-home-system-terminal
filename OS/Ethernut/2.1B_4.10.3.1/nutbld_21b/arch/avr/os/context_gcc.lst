@@ -1,0 +1,321 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s 			page 1
+
+
+   1               		.file	"context_gcc.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	NutThreadEntry, @function
+  10               	NutThreadEntry:
+  11               	/* prologue: naked */
+  12               	/* frame size = 0 */
+  13               	/* #APP */
+  14               	 ;  209 "../../nut/arch/avr/os/context_gcc.c" 1
+  15 0000 9F91      		pop r25
+  16 0002 8F91      		pop r24
+  17 0004 0F90      		pop __tmp_reg__
+  18 0006 0BBE      		out 59, __tmp_reg__
+  19 0008 0F90      		pop __tmp_reg__
+  20 000a 0FBE      		out 63, __tmp_reg__
+  21 000c 1F90      		pop __zero_reg__
+  22 000e 1895      		reti
+  23               		
+  24               	 ;  0 "" 2
+  25               	/* epilogue start */
+  26               	/* #NOAPP */
+  27               		.size	NutThreadEntry, .-NutThreadEntry
+  28               	.global	NutThreadSwitch
+  29               		.type	NutThreadSwitch, @function
+  30               	NutThreadSwitch:
+  31               	/* prologue: naked */
+  32               	/* frame size = 0 */
+  33               	/* #APP */
+  34               	 ;  239 "../../nut/arch/avr/os/context_gcc.c" 1
+  35 0010 2F92      		push r2
+  36 0012 3F92      		push r3
+  37 0014 4F92      		push r4
+  38 0016 5F92      		push r5
+  39 0018 6F92      		push r6
+  40 001a 7F92      		push r7
+  41 001c 8F92      		push r8
+  42 001e 9F92      		push r9
+  43 0020 AF92      		push r10
+  44 0022 BF92      		push r11
+  45 0024 CF92      		push r12
+  46 0026 DF92      		push r13
+  47 0028 EF92      		push r14
+  48 002a FF92      		push r15
+  49 002c 0F93      		push r16
+  50 002e 1F93      		push r17
+  51 0030 CF93      		push r28
+  52 0032 DF93      		push r29
+  53 0034 8DB7      		in r24, 61
+  54 0036 9EB7      		in r25, 62
+  55               		
+  56               	 ;  0 "" 2
+  57               	/* #NOAPP */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s 			page 2
+
+
+  58 0038 E091 0000 		lds r30,runningThread
+  59 003c F091 0000 		lds r31,(runningThread)+1
+  60 0040 918B      		std Z+17,r25
+  61 0042 808B      		std Z+16,r24
+  62               	/* #APP */
+  63               	 ;  268 "../../nut/arch/avr/os/context_gcc.c" 1
+  64               		.global thread_start
+  65               	thread_start:
+  66               		
+  67               	 ;  0 "" 2
+  68               	/* #NOAPP */
+  69 0044 E091 0000 		lds r30,runQueue
+  70 0048 F091 0000 		lds r31,(runQueue)+1
+  71 004c F093 0000 		sts (runningThread)+1,r31
+  72 0050 E093 0000 		sts runningThread,r30
+  73 0054 81E0      		ldi r24,lo8(1)
+  74 0056 8787      		std Z+15,r24
+  75 0058 8089      		ldd r24,Z+16
+  76 005a 9189      		ldd r25,Z+17
+  77               	/* #APP */
+  78               	 ;  276 "../../nut/arch/avr/os/context_gcc.c" 1
+  79 005c 8DBF      		out 61, r24
+  80 005e 9EBF      		out 62, r25
+  81 0060 DF91      		pop r29
+  82 0062 CF91      		pop r28
+  83 0064 1F91      		pop r17
+  84 0066 0F91      		pop r16
+  85 0068 FF90      		pop r15
+  86 006a EF90      		pop r14
+  87 006c DF90      		pop r13
+  88 006e CF90      		pop r12
+  89 0070 BF90      		pop r11
+  90 0072 AF90      		pop r10
+  91 0074 9F90      		pop r9
+  92 0076 8F90      		pop r8
+  93 0078 7F90      		pop r7
+  94 007a 6F90      		pop r6
+  95 007c 5F90      		pop r5
+  96 007e 4F90      		pop r4
+  97 0080 3F90      		pop r3
+  98 0082 2F90      		pop r2
+  99 0084 0895      		ret
+ 100               		
+ 101               	 ;  0 "" 2
+ 102               	/* epilogue start */
+ 103               	/* #NOAPP */
+ 104               		.size	NutThreadSwitch, .-NutThreadSwitch
+ 105               	.global	NutThreadCreate
+ 106               		.type	NutThreadCreate, @function
+ 107               	NutThreadCreate:
+ 108 0086 AF92      		push r10
+ 109 0088 BF92      		push r11
+ 110 008a CF92      		push r12
+ 111 008c DF92      		push r13
+ 112 008e EF92      		push r14
+ 113 0090 FF92      		push r15
+ 114 0092 0F93      		push r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s 			page 3
+
+
+ 115 0094 1F93      		push r17
+ 116 0096 CF93      		push r28
+ 117 0098 DF93      		push r29
+ 118               	/* prologue: function */
+ 119               	/* frame size = 0 */
+ 120 009a F82E      		mov r15,r24
+ 121 009c E92E      		mov r14,r25
+ 122 009e 6B01      		movw r12,r22
+ 123 00a0 B42E      		mov r11,r20
+ 124 00a2 A52E      		mov r10,r21
+ 125 00a4 E901      		movw r28,r18
+ 126 00a6 B901      		movw r22,r18
+ 127 00a8 675E      		subi r22,lo8(-(25))
+ 128 00aa 7F4F      		sbci r23,hi8(-(25))
+ 129 00ac 80E0      		ldi r24,lo8(heapFreeList)
+ 130 00ae 90E0      		ldi r25,hi8(heapFreeList)
+ 131 00b0 0E94 0000 		call NutHeapRootAlloc
+ 132 00b4 FC01      		movw r30,r24
+ 133 00b6 0097      		sbiw r24,0
+ 134 00b8 01F4      		brne .L6
+ 135 00ba 20E0      		ldi r18,lo8(0)
+ 136 00bc 30E0      		ldi r19,hi8(0)
+ 137 00be 00C0      		rjmp .L7
+ 138               	.L6:
+ 139 00c0 C80F      		add r28,r24
+ 140 00c2 D91F      		adc r29,r25
+ 141 00c4 AE01      		movw r20,r28
+ 142 00c6 4750      		subi r20,lo8(-(-7))
+ 143 00c8 5040      		sbci r21,hi8(-(-7))
+ 144 00ca BE01      		movw r22,r28
+ 145 00cc 6B51      		subi r22,lo8(-(-27))
+ 146 00ce 7040      		sbci r23,hi8(-(-27))
+ 147 00d0 8E01      		movw r16,r28
+ 148 00d2 0A5F      		subi r16,lo8(-(6))
+ 149 00d4 1F4F      		sbci r17,hi8(-(6))
+ 150 00d6 8F2D      		mov r24,r15
+ 151 00d8 9E2D      		mov r25,r14
+ 152 00da 9C01      		movw r18,r24
+ 153 00dc 88E0      		ldi r24,lo8(8)
+ 154               	.L8:
+ 155 00de D901      		movw r26,r18
+ 156 00e0 0D90      		ld r0,X+
+ 157 00e2 9D01      		movw r18,r26
+ 158 00e4 D801      		movw r26,r16
+ 159 00e6 0D92      		st X+,r0
+ 160 00e8 8D01      		movw r16,r26
+ 161 00ea 8150      		subi r24,lo8(-(-1))
+ 162 00ec 01F4      		brne .L8
+ 163 00ee 1E86      		std Y+14,__zero_reg__
+ 164 00f0 6150      		subi r22,lo8(-(-1))
+ 165 00f2 7040      		sbci r23,hi8(-(-1))
+ 166 00f4 798B      		std Y+17,r23
+ 167 00f6 688B      		std Y+16,r22
+ 168 00f8 6F5F      		subi r22,lo8(-(1))
+ 169 00fa 7F4F      		sbci r23,hi8(-(1))
+ 170 00fc FC8B      		std Y+20,r31
+ 171 00fe EB8B      		std Y+19,r30
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s 			page 4
+
+
+ 172 0100 8FEE      		ldi r24,lo8(-559038737)
+ 173 0102 9EEB      		ldi r25,hi8(-559038737)
+ 174 0104 ADEA      		ldi r26,hlo8(-559038737)
+ 175 0106 BEED      		ldi r27,hhi8(-559038737)
+ 176 0108 8083      		st Z,r24
+ 177 010a 9183      		std Z+1,r25
+ 178 010c A283      		std Z+2,r26
+ 179 010e B383      		std Z+3,r27
+ 180 0110 8483      		std Z+4,r24
+ 181 0112 9583      		std Z+5,r25
+ 182 0114 A683      		std Z+6,r26
+ 183 0116 B783      		std Z+7,r27
+ 184 0118 8087      		std Z+8,r24
+ 185 011a 9187      		std Z+9,r25
+ 186 011c A287      		std Z+10,r26
+ 187 011e B387      		std Z+11,r27
+ 188 0120 8487      		std Z+12,r24
+ 189 0122 9587      		std Z+13,r25
+ 190 0124 A687      		std Z+14,r26
+ 191 0126 B787      		std Z+15,r27
+ 192 0128 80E4      		ldi r24,lo8(64)
+ 193 012a 8A8B      		std Y+18,r24
+ 194 012c FA01      		movw r30,r20
+ 195 012e D582      		std Z+5,r13
+ 196 0130 C682      		std Z+6,r12
+ 197 0132 80E8      		ldi r24,lo8(-128)
+ 198 0134 8383      		std Z+3,r24
+ 199 0136 1282      		std Z+2,__zero_reg__
+ 200 0138 1482      		std Z+4,__zero_reg__
+ 201 013a B182      		std Z+1,r11
+ 202 013c A082      		st Z,r10
+ 203 013e 80E0      		ldi r24,lo8(gs(NutThreadEntry))
+ 204 0140 90E0      		ldi r25,hi8(gs(NutThreadEntry))
+ 205 0142 DB01      		movw r26,r22
+ 206 0144 5296      		adiw r26,18
+ 207 0146 9C93      		st X,r25
+ 208 0148 5297      		sbiw r26,18
+ 209 014a 5396      		adiw r26,19
+ 210 014c 8C93      		st X,r24
+ 211 014e 8091 0000 		lds r24,nutThreadList
+ 212 0152 9091 0000 		lds r25,(nutThreadList)+1
+ 213 0156 9983      		std Y+1,r25
+ 214 0158 8883      		st Y,r24
+ 215 015a D093 0000 		sts (nutThreadList)+1,r29
+ 216 015e C093 0000 		sts nutThreadList,r28
+ 217 0162 82E0      		ldi r24,lo8(2)
+ 218 0164 8F87      		std Y+15,r24
+ 219 0166 1E8A      		std Y+22,__zero_reg__
+ 220 0168 1D8A      		std Y+21,__zero_reg__
+ 221 016a 188E      		std Y+24,__zero_reg__
+ 222 016c 1F8A      		std Y+23,__zero_reg__
+ 223 016e CE01      		movw r24,r28
+ 224 0170 60E0      		ldi r22,lo8(runQueue)
+ 225 0172 70E0      		ldi r23,hi8(runQueue)
+ 226 0174 0E94 0000 		call NutThreadAddPriQueue
+ 227 0178 E091 0000 		lds r30,runningThread
+ 228 017c F091 0000 		lds r31,(runningThread)+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s 			page 5
+
+
+ 229 0180 3097      		sbiw r30,0
+ 230 0182 01F4      		brne .L9
+ 231               	/* #APP */
+ 232               	 ;  415 "../../nut/arch/avr/os/context_gcc.c" 1
+ 233 0184 0FB6      		in  __tmp_reg__, __SREG__
+ 234 0186 F894      		cli
+ 235 0188 0F92      		push __tmp_reg__
+ 236               		
+ 237               	 ;  0 "" 2
+ 238               	 ;  416 "../../nut/arch/avr/os/context_gcc.c" 1
+ 239 018a 00C0      		rjmp thread_start
+ 240               		
+ 241               	 ;  0 "" 2
+ 242               	/* #NOAPP */
+ 243               	.L9:
+ 244 018c 8091 0000 		lds r24,runQueue
+ 245 0190 9091 0000 		lds r25,(runQueue)+1
+ 246 0194 E817      		cp r30,r24
+ 247 0196 F907      		cpc r31,r25
+ 248 0198 01F0      		breq .L10
+ 249 019a 82E0      		ldi r24,lo8(2)
+ 250 019c 8787      		std Z+15,r24
+ 251               	/* #APP */
+ 252               	 ;  431 "../../nut/arch/avr/os/context_gcc.c" 1
+ 253 019e 0FB6      		in  __tmp_reg__, __SREG__
+ 254 01a0 F894      		cli
+ 255 01a2 0F92      		push __tmp_reg__
+ 256               		
+ 257               	 ;  0 "" 2
+ 258               	/* #NOAPP */
+ 259 01a4 0E94 0000 		call NutThreadSwitch
+ 260               	/* #APP */
+ 261               	 ;  433 "../../nut/arch/avr/os/context_gcc.c" 1
+ 262 01a8 0F90      		pop __tmp_reg__
+ 263 01aa 0FBE      		out __SREG__, __tmp_reg__
+ 264               		
+ 265               	 ;  0 "" 2
+ 266               	/* #NOAPP */
+ 267               	.L10:
+ 268 01ac 9E01      		movw r18,r28
+ 269               	.L7:
+ 270 01ae C901      		movw r24,r18
+ 271               	/* epilogue start */
+ 272 01b0 DF91      		pop r29
+ 273 01b2 CF91      		pop r28
+ 274 01b4 1F91      		pop r17
+ 275 01b6 0F91      		pop r16
+ 276 01b8 FF90      		pop r15
+ 277 01ba EF90      		pop r14
+ 278 01bc DF90      		pop r13
+ 279 01be CF90      		pop r12
+ 280 01c0 BF90      		pop r11
+ 281 01c2 AF90      		pop r10
+ 282 01c4 0895      		ret
+ 283               		.size	NutThreadCreate, .-NutThreadCreate
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 context_gcc.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s:10     .text:00000000 NutThreadEntry
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s:30     .text:00000010 NutThreadSwitch
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s:65     .text:00000044 thread_start
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccMZOf6D.s:107    .text:00000086 NutThreadCreate
+
+UNDEFINED SYMBOLS
+runningThread
+runQueue
+heapFreeList
+NutHeapRootAlloc
+nutThreadList
+NutThreadAddPriQueue

@@ -1,0 +1,94 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4qV2Rw.s 			page 1
+
+
+   1               		.file	"tcputil.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutTcpCalcRtt
+  10               		.type	NutTcpCalcRtt, @function
+  11               	NutTcpCalcRtt:
+  12 0000 0F93      		push r16
+  13 0002 1F93      		push r17
+  14 0004 CF93      		push r28
+  15 0006 DF93      		push r29
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0008 EC01      		movw r28,r24
+  19 000a 8C01      		movw r16,r24
+  20 000c 015A      		subi r16,lo8(-(95))
+  21 000e 1F4F      		sbci r17,hi8(-(95))
+  22 0010 F801      		movw r30,r16
+  23 0012 8081      		ld r24,Z
+  24 0014 9181      		ldd r25,Z+1
+  25 0016 892B      		or r24,r25
+  26 0018 01F0      		breq .L5
+  27 001a 0E94 0000 		call NutGetMillis
+  28 001e C75A      		subi r28,lo8(-(89))
+  29 0020 DF4F      		sbci r29,hi8(-(89))
+  30 0022 8881      		ld r24,Y
+  31 0024 9981      		ldd r25,Y+1
+  32 0026 C955      		subi r28,lo8(-(-89))
+  33 0028 D040      		sbci r29,hi8(-(-89))
+  34 002a 880F      		lsl r24
+  35 002c 991F      		rol r25
+  36 002e F801      		movw r30,r16
+  37 0030 2081      		ld r18,Z
+  38 0032 3181      		ldd r19,Z+1
+  39 0034 2E7F      		andi r18,lo8(-2)
+  40 0036 821B      		sub r24,r18
+  41 0038 930B      		sbc r25,r19
+  42 003a 860F      		add r24,r22
+  43 003c 971F      		adc r25,r23
+  44 003e 880F      		lsl r24
+  45 0040 991F      		rol r25
+  46 0042 880F      		lsl r24
+  47 0044 991F      		rol r25
+  48 0046 F7E0      		ldi r31,hi8(2000)
+  49 0048 803D      		cpi r24,lo8(2000)
+  50 004a 9F07      		cpc r25,r31
+  51 004c 00F4      		brsh .L3
+  52 004e 88EC      		ldi r24,lo8(200)
+  53 0050 90E0      		ldi r25,hi8(200)
+  54 0052 00C0      		rjmp .L4
+  55               	.L3:
+  56 0054 6AE0      		ldi r22,lo8(10)
+  57 0056 70E0      		ldi r23,hi8(10)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4qV2Rw.s 			page 2
+
+
+  58 0058 0E94 0000 		call __udivmodhi4
+  59 005c CB01      		movw r24,r22
+  60               	.L4:
+  61 005e C75A      		subi r28,lo8(-(89))
+  62 0060 DF4F      		sbci r29,hi8(-(89))
+  63 0062 9983      		std Y+1,r25
+  64 0064 8883      		st Y,r24
+  65               	.L5:
+  66               	/* epilogue start */
+  67 0066 DF91      		pop r29
+  68 0068 CF91      		pop r28
+  69 006a 1F91      		pop r17
+  70 006c 0F91      		pop r16
+  71 006e 0895      		ret
+  72               		.size	NutTcpCalcRtt, .-NutTcpCalcRtt
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4qV2Rw.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tcputil.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4qV2Rw.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4qV2Rw.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4qV2Rw.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4qV2Rw.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4qV2Rw.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4qV2Rw.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc4qV2Rw.s:11     .text:00000000 NutTcpCalcRtt
+
+UNDEFINED SYMBOLS
+NutGetMillis
+__udivmodhi4

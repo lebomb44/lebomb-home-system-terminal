@@ -1,0 +1,4832 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 1
+
+
+   1               		.file	"uflashfs.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	FlashUnitCommit, @function
+  10               	FlashUnitCommit:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 FC01      		movw r30,r24
+  14 0002 660F      		lsl r22
+  15 0004 771F      		rol r23
+  16 0006 660F      		lsl r22
+  17 0008 771F      		rol r23
+  18 000a 640F      		add r22,r20
+  19 000c 751F      		adc r23,r21
+  20 000e 2085      		ldd r18,Z+8
+  21 0010 3185      		ldd r19,Z+9
+  22 0012 260F      		add r18,r22
+  23 0014 371F      		adc r19,r23
+  24 0016 448D      		ldd r20,Z+28
+  25 0018 558D      		ldd r21,Z+29
+  26 001a CF01      		movw r24,r30
+  27 001c B901      		movw r22,r18
+  28 001e FA01      		movw r30,r20
+  29 0020 0995      		icall
+  30               	/* epilogue start */
+  31 0022 0895      		ret
+  32               		.size	FlashUnitCommit, .-FlashUnitCommit
+  33               		.type	FlashReadBlockHead, @function
+  34               	FlashReadBlockHead:
+  35 0024 0F93      		push r16
+  36 0026 1F93      		push r17
+  37               	/* prologue: function */
+  38               	/* frame size = 0 */
+  39 0028 FC01      		movw r30,r24
+  40 002a 9A01      		movw r18,r20
+  41 002c 660F      		lsl r22
+  42 002e 771F      		rol r23
+  43 0030 660F      		lsl r22
+  44 0032 771F      		rol r23
+  45 0034 4085      		ldd r20,Z+8
+  46 0036 5185      		ldd r21,Z+9
+  47 0038 460F      		add r20,r22
+  48 003a 571F      		adc r21,r23
+  49 003c A289      		ldd r26,Z+18
+  50 003e B389      		ldd r27,Z+19
+  51 0040 CF01      		movw r24,r30
+  52 0042 BA01      		movw r22,r20
+  53 0044 40E0      		ldi r20,lo8(0)
+  54 0046 50E0      		ldi r21,hi8(0)
+  55 0048 08E0      		ldi r16,lo8(8)
+  56 004a 10E0      		ldi r17,hi8(8)
+  57 004c FD01      		movw r30,r26
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 2
+
+
+  58 004e 0995      		icall
+  59               	/* epilogue start */
+  60 0050 1F91      		pop r17
+  61 0052 0F91      		pop r16
+  62 0054 0895      		ret
+  63               		.size	FlashReadBlockHead, .-FlashReadBlockHead
+  64               		.type	FlashWriteBlockHead, @function
+  65               	FlashWriteBlockHead:
+  66 0056 EF92      		push r14
+  67 0058 FF92      		push r15
+  68 005a 0F93      		push r16
+  69 005c 1F93      		push r17
+  70               	/* prologue: function */
+  71               	/* frame size = 0 */
+  72 005e FC01      		movw r30,r24
+  73 0060 9B01      		movw r18,r22
+  74 0062 DA01      		movw r26,r20
+  75 0064 1296      		adiw r26,2
+  76 0066 8D91      		ld r24,X+
+  77 0068 9C91      		ld r25,X
+  78 006a 1397      		sbiw r26,2+1
+  79 006c 0196      		adiw r24,1
+  80 006e 1396      		adiw r26,2+1
+  81 0070 9C93      		st X,r25
+  82 0072 8E93      		st -X,r24
+  83 0074 1297      		sbiw r26,2
+  84 0076 220F      		lsl r18
+  85 0078 331F      		rol r19
+  86 007a 220F      		lsl r18
+  87 007c 331F      		rol r19
+  88 007e 6085      		ldd r22,Z+8
+  89 0080 7185      		ldd r23,Z+9
+  90 0082 620F      		add r22,r18
+  91 0084 731F      		adc r23,r19
+  92 0086 E08C      		ldd r14,Z+24
+  93 0088 F18C      		ldd r15,Z+25
+  94 008a CF01      		movw r24,r30
+  95 008c 40E0      		ldi r20,lo8(0)
+  96 008e 50E0      		ldi r21,hi8(0)
+  97 0090 9D01      		movw r18,r26
+  98 0092 08E0      		ldi r16,lo8(8)
+  99 0094 10E0      		ldi r17,hi8(8)
+ 100 0096 F701      		movw r30,r14
+ 101 0098 0995      		icall
+ 102               	/* epilogue start */
+ 103 009a 1F91      		pop r17
+ 104 009c 0F91      		pop r16
+ 105 009e FF90      		pop r15
+ 106 00a0 EF90      		pop r14
+ 107 00a2 0895      		ret
+ 108               		.size	FlashWriteBlockHead, .-FlashWriteBlockHead
+ 109               		.type	FlashWriteEntry, @function
+ 110               	FlashWriteEntry:
+ 111 00a4 AF92      		push r10
+ 112 00a6 BF92      		push r11
+ 113 00a8 CF92      		push r12
+ 114 00aa DF92      		push r13
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 3
+
+
+ 115 00ac EF92      		push r14
+ 116 00ae FF92      		push r15
+ 117 00b0 0F93      		push r16
+ 118 00b2 1F93      		push r17
+ 119 00b4 CF93      		push r28
+ 120 00b6 DF93      		push r29
+ 121               	/* prologue: function */
+ 122               	/* frame size = 0 */
+ 123 00b8 EC01      		movw r28,r24
+ 124 00ba 7B01      		movw r14,r22
+ 125 00bc 6A01      		movw r12,r20
+ 126 00be 5901      		movw r10,r18
+ 127 00c0 EE0C      		lsl r14
+ 128 00c2 FF1C      		rol r15
+ 129 00c4 EE0C      		lsl r14
+ 130 00c6 FF1C      		rol r15
+ 131 00c8 6885      		ldd r22,Y+8
+ 132 00ca 7985      		ldd r23,Y+9
+ 133 00cc 6E0D      		add r22,r14
+ 134 00ce 7F1D      		adc r23,r15
+ 135 00d0 E88D      		ldd r30,Y+24
+ 136 00d2 F98D      		ldd r31,Y+25
+ 137 00d4 48E0      		ldi r20,lo8(8)
+ 138 00d6 50E0      		ldi r21,hi8(8)
+ 139 00d8 9601      		movw r18,r12
+ 140 00da 02E0      		ldi r16,lo8(2)
+ 141 00dc 10E0      		ldi r17,hi8(2)
+ 142 00de 0995      		icall
+ 143 00e0 9C01      		movw r18,r24
+ 144 00e2 0097      		sbiw r24,0
+ 145 00e4 01F4      		brne .L8
+ 146 00e6 8885      		ldd r24,Y+8
+ 147 00e8 9985      		ldd r25,Y+9
+ 148 00ea E80E      		add r14,r24
+ 149 00ec F91E      		adc r15,r25
+ 150 00ee F601      		movw r30,r12
+ 151 00f0 0181      		ldd r16,Z+1
+ 152 00f2 E88D      		ldd r30,Y+24
+ 153 00f4 F98D      		ldd r31,Y+25
+ 154 00f6 CE01      		movw r24,r28
+ 155 00f8 B701      		movw r22,r14
+ 156 00fa 4AE0      		ldi r20,lo8(10)
+ 157 00fc 50E0      		ldi r21,hi8(10)
+ 158 00fe 9501      		movw r18,r10
+ 159 0100 10E0      		ldi r17,lo8(0)
+ 160 0102 0995      		icall
+ 161 0104 9C01      		movw r18,r24
+ 162               	.L8:
+ 163 0106 C901      		movw r24,r18
+ 164               	/* epilogue start */
+ 165 0108 DF91      		pop r29
+ 166 010a CF91      		pop r28
+ 167 010c 1F91      		pop r17
+ 168 010e 0F91      		pop r16
+ 169 0110 FF90      		pop r15
+ 170 0112 EF90      		pop r14
+ 171 0114 DF90      		pop r13
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 4
+
+
+ 172 0116 CF90      		pop r12
+ 173 0118 BF90      		pop r11
+ 174 011a AF90      		pop r10
+ 175 011c 0895      		ret
+ 176               		.size	FlashWriteEntry, .-FlashWriteEntry
+ 177               		.type	FlashReadBlockFoot, @function
+ 178               	FlashReadBlockFoot:
+ 179 011e 0F93      		push r16
+ 180 0120 1F93      		push r17
+ 181               	/* prologue: function */
+ 182               	/* frame size = 0 */
+ 183 0122 FC01      		movw r30,r24
+ 184 0124 9A01      		movw r18,r20
+ 185 0126 4085      		ldd r20,Z+8
+ 186 0128 5185      		ldd r21,Z+9
+ 187 012a 4150      		subi r20,lo8(-(-1))
+ 188 012c 5040      		sbci r21,hi8(-(-1))
+ 189 012e 6F5F      		subi r22,lo8(-(1))
+ 190 0130 7F4F      		sbci r23,hi8(-(1))
+ 191 0132 660F      		lsl r22
+ 192 0134 771F      		rol r23
+ 193 0136 660F      		lsl r22
+ 194 0138 771F      		rol r23
+ 195 013a 460F      		add r20,r22
+ 196 013c 571F      		adc r21,r23
+ 197 013e A289      		ldd r26,Z+18
+ 198 0140 B389      		ldd r27,Z+19
+ 199 0142 BA01      		movw r22,r20
+ 200 0144 4FEF      		ldi r20,lo8(-1)
+ 201 0146 5FEF      		ldi r21,hi8(-1)
+ 202 0148 01E0      		ldi r16,lo8(1)
+ 203 014a 10E0      		ldi r17,hi8(1)
+ 204 014c FD01      		movw r30,r26
+ 205 014e 0995      		icall
+ 206               	/* epilogue start */
+ 207 0150 1F91      		pop r17
+ 208 0152 0F91      		pop r16
+ 209 0154 0895      		ret
+ 210               		.size	FlashReadBlockFoot, .-FlashReadBlockFoot
+ 211               		.type	FlashWriteBlockFoot, @function
+ 212               	FlashWriteBlockFoot:
+ 213 0156 EF92      		push r14
+ 214 0158 FF92      		push r15
+ 215 015a 0F93      		push r16
+ 216 015c 1F93      		push r17
+ 217               	/* prologue: function */
+ 218               	/* frame size = 0 */
+ 219 015e FC01      		movw r30,r24
+ 220 0160 9B01      		movw r18,r22
+ 221 0162 DA01      		movw r26,r20
+ 222 0164 8C91      		ld r24,X
+ 223 0166 8F5F      		subi r24,lo8(-(1))
+ 224 0168 8C93      		st X,r24
+ 225 016a 6085      		ldd r22,Z+8
+ 226 016c 7185      		ldd r23,Z+9
+ 227 016e 6150      		subi r22,lo8(-(-1))
+ 228 0170 7040      		sbci r23,hi8(-(-1))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 5
+
+
+ 229 0172 2F5F      		subi r18,lo8(-(1))
+ 230 0174 3F4F      		sbci r19,hi8(-(1))
+ 231 0176 220F      		lsl r18
+ 232 0178 331F      		rol r19
+ 233 017a 220F      		lsl r18
+ 234 017c 331F      		rol r19
+ 235 017e 620F      		add r22,r18
+ 236 0180 731F      		adc r23,r19
+ 237 0182 E08C      		ldd r14,Z+24
+ 238 0184 F18C      		ldd r15,Z+25
+ 239 0186 CF01      		movw r24,r30
+ 240 0188 4FEF      		ldi r20,lo8(-1)
+ 241 018a 5FEF      		ldi r21,hi8(-1)
+ 242 018c 9D01      		movw r18,r26
+ 243 018e 01E0      		ldi r16,lo8(1)
+ 244 0190 10E0      		ldi r17,hi8(1)
+ 245 0192 F701      		movw r30,r14
+ 246 0194 0995      		icall
+ 247               	/* epilogue start */
+ 248 0196 1F91      		pop r17
+ 249 0198 0F91      		pop r16
+ 250 019a FF90      		pop r15
+ 251 019c EF90      		pop r14
+ 252 019e 0895      		ret
+ 253               		.size	FlashWriteBlockFoot, .-FlashWriteBlockFoot
+ 254               		.type	FlashEraseEntry, @function
+ 255               	FlashEraseEntry:
+ 256               	/* prologue: function */
+ 257               	/* frame size = 0 */
+ 258 01a0 FC01      		movw r30,r24
+ 259 01a2 660F      		lsl r22
+ 260 01a4 771F      		rol r23
+ 261 01a6 660F      		lsl r22
+ 262 01a8 771F      		rol r23
+ 263 01aa 2085      		ldd r18,Z+8
+ 264 01ac 3185      		ldd r19,Z+9
+ 265 01ae 260F      		add r18,r22
+ 266 01b0 371F      		adc r19,r23
+ 267 01b2 A68D      		ldd r26,Z+30
+ 268 01b4 B78D      		ldd r27,Z+31
+ 269 01b6 CF01      		movw r24,r30
+ 270 01b8 B901      		movw r22,r18
+ 271 01ba 41E0      		ldi r20,lo8(1)
+ 272 01bc 50E0      		ldi r21,hi8(1)
+ 273 01be FD01      		movw r30,r26
+ 274 01c0 0995      		icall
+ 275               	/* epilogue start */
+ 276 01c2 0895      		ret
+ 277               		.size	FlashEraseEntry, .-FlashEraseEntry
+ 278               		.type	FlashEraseBlockData, @function
+ 279               	FlashEraseBlockData:
+ 280               	/* prologue: function */
+ 281               	/* frame size = 0 */
+ 282 01c4 FC01      		movw r30,r24
+ 283 01c6 2085      		ldd r18,Z+8
+ 284 01c8 3185      		ldd r19,Z+9
+ 285 01ca 2F5F      		subi r18,lo8(-(1))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 6
+
+
+ 286 01cc 3F4F      		sbci r19,hi8(-(1))
+ 287 01ce 660F      		lsl r22
+ 288 01d0 771F      		rol r23
+ 289 01d2 660F      		lsl r22
+ 290 01d4 771F      		rol r23
+ 291 01d6 260F      		add r18,r22
+ 292 01d8 371F      		adc r19,r23
+ 293 01da A68D      		ldd r26,Z+30
+ 294 01dc B78D      		ldd r27,Z+31
+ 295 01de CF01      		movw r24,r30
+ 296 01e0 B901      		movw r22,r18
+ 297 01e2 43E0      		ldi r20,lo8(3)
+ 298 01e4 50E0      		ldi r21,hi8(3)
+ 299 01e6 FD01      		movw r30,r26
+ 300 01e8 0995      		icall
+ 301               	/* epilogue start */
+ 302 01ea 0895      		ret
+ 303               		.size	FlashEraseBlockData, .-FlashEraseBlockData
+ 304               		.type	EntryPosSet, @function
+ 305               	EntryPosSet:
+ 306 01ec CF92      		push r12
+ 307 01ee DF92      		push r13
+ 308 01f0 EF92      		push r14
+ 309 01f2 FF92      		push r15
+ 310 01f4 0F93      		push r16
+ 311 01f6 1F93      		push r17
+ 312 01f8 CF93      		push r28
+ 313 01fa DF93      		push r29
+ 314               	/* prologue: function */
+ 315               	/* frame size = 0 */
+ 316 01fc FC01      		movw r30,r24
+ 317 01fe C481      		ldd r28,Z+4
+ 318 0200 D581      		ldd r29,Z+5
+ 319 0202 0280      		ldd __tmp_reg__,Z+2
+ 320 0204 F381      		ldd r31,Z+3
+ 321 0206 E02D      		mov r30,__tmp_reg__
+ 322 0208 C188      		ldd r12,Z+17
+ 323 020a D288      		ldd r13,Z+18
+ 324 020c CA01      		movw r24,r20
+ 325 020e DB01      		movw r26,r22
+ 326 0210 8A83      		std Y+2,r24
+ 327 0212 9B83      		std Y+3,r25
+ 328 0214 AC83      		std Y+4,r26
+ 329 0216 BD83      		std Y+5,r27
+ 330 0218 288D      		ldd r18,Y+24
+ 331 021a 398D      		ldd r19,Y+25
+ 332 021c 7901      		movw r14,r18
+ 333 021e 00E0      		ldi r16,lo8(0)
+ 334 0220 10E0      		ldi r17,hi8(0)
+ 335 0222 E80E      		add r14,r24
+ 336 0224 F91E      		adc r15,r25
+ 337 0226 0A1F      		adc r16,r26
+ 338 0228 1B1F      		adc r17,r27
+ 339 022a D601      		movw r26,r12
+ 340 022c ED91      		ld r30,X+
+ 341 022e FC91      		ld r31,X
+ 342 0230 2481      		ldd r18,Z+4
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 7
+
+
+ 343 0232 3581      		ldd r19,Z+5
+ 344 0234 220F      		lsl r18
+ 345 0236 331F      		rol r19
+ 346 0238 220F      		lsl r18
+ 347 023a 331F      		rol r19
+ 348 023c 2950      		subi r18,lo8(-(-9))
+ 349 023e 3040      		sbci r19,hi8(-(-9))
+ 350 0240 40E0      		ldi r20,lo8(0)
+ 351 0242 50E0      		ldi r21,hi8(0)
+ 352 0244 C801      		movw r24,r16
+ 353 0246 B701      		movw r22,r14
+ 354 0248 0E94 0000 		call __udivmodsi4
+ 355 024c 8885      		ldd r24,Y+8
+ 356 024e 9985      		ldd r25,Y+9
+ 357 0250 8217      		cp r24,r18
+ 358 0252 9307      		cpc r25,r19
+ 359 0254 01F0      		breq .L19
+ 360 0256 3987      		std Y+9,r19
+ 361 0258 2887      		std Y+8,r18
+ 362 025a 8FEF      		ldi r24,lo8(-1)
+ 363 025c 9FEF      		ldi r25,hi8(-1)
+ 364 025e 9F83      		std Y+7,r25
+ 365 0260 8E83      		std Y+6,r24
+ 366               	.L19:
+ 367 0262 F601      		movw r30,r12
+ 368 0264 C080      		ld r12,Z
+ 369 0266 D180      		ldd r13,Z+1
+ 370 0268 D601      		movw r26,r12
+ 371 026a 1496      		adiw r26,4
+ 372 026c 2D91      		ld r18,X+
+ 373 026e 3C91      		ld r19,X
+ 374 0270 1597      		sbiw r26,4+1
+ 375 0272 C901      		movw r24,r18
+ 376 0274 880F      		lsl r24
+ 377 0276 991F      		rol r25
+ 378 0278 880F      		lsl r24
+ 379 027a 991F      		rol r25
+ 380 027c 0997      		sbiw r24,9
+ 381 027e 6885      		ldd r22,Y+8
+ 382 0280 7985      		ldd r23,Y+9
+ 383 0282 FC01      		movw r30,r24
+ 384 0284 E69F      		mul r30,r22
+ 385 0286 C001      		movw r24,r0
+ 386 0288 E79F      		mul r30,r23
+ 387 028a 900D      		add r25,r0
+ 388 028c F69F      		mul r31,r22
+ 389 028e 900D      		add r25,r0
+ 390 0290 1124      		clr r1
+ 391 0292 A0E0      		ldi r26,lo8(0)
+ 392 0294 B0E0      		ldi r27,hi8(0)
+ 393 0296 E81A      		sub r14,r24
+ 394 0298 F90A      		sbc r15,r25
+ 395 029a 0A0B      		sbc r16,r26
+ 396 029c 1B0B      		sbc r17,r27
+ 397 029e C801      		movw r24,r16
+ 398 02a0 B701      		movw r22,r14
+ 399 02a2 685F      		subi r22,lo8(-(8))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 8
+
+
+ 400 02a4 7F4F      		sbci r23,hi8(-(8))
+ 401 02a6 8F4F      		sbci r24,hlo8(-(8))
+ 402 02a8 9F4F      		sbci r25,hhi8(-(8))
+ 403 02aa 40E0      		ldi r20,lo8(0)
+ 404 02ac 50E0      		ldi r21,hi8(0)
+ 405 02ae 0E94 0000 		call __udivmodsi4
+ 406 02b2 3B87      		std Y+11,r19
+ 407 02b4 2A87      		std Y+10,r18
+ 408 02b6 D601      		movw r26,r12
+ 409 02b8 1496      		adiw r26,4
+ 410 02ba 8D91      		ld r24,X+
+ 411 02bc 9C91      		ld r25,X
+ 412 02be 1597      		sbiw r26,4+1
+ 413 02c0 FC01      		movw r30,r24
+ 414 02c2 E29F      		mul r30,r18
+ 415 02c4 C001      		movw r24,r0
+ 416 02c6 E39F      		mul r30,r19
+ 417 02c8 900D      		add r25,r0
+ 418 02ca F29F      		mul r31,r18
+ 419 02cc 900D      		add r25,r0
+ 420 02ce 1124      		clr r1
+ 421 02d0 A0E0      		ldi r26,lo8(0)
+ 422 02d2 B0E0      		ldi r27,hi8(0)
+ 423 02d4 E81A      		sub r14,r24
+ 424 02d6 F90A      		sbc r15,r25
+ 425 02d8 0A0B      		sbc r16,r26
+ 426 02da 1B0B      		sbc r17,r27
+ 427 02dc 48E0      		ldi r20,lo8(8)
+ 428 02de 50E0      		ldi r21,hi8(8)
+ 429 02e0 E40E      		add r14,r20
+ 430 02e2 F51E      		adc r15,r21
+ 431 02e4 FD86      		std Y+13,r15
+ 432 02e6 EC86      		std Y+12,r14
+ 433               	/* epilogue start */
+ 434 02e8 DF91      		pop r29
+ 435 02ea CF91      		pop r28
+ 436 02ec 1F91      		pop r17
+ 437 02ee 0F91      		pop r16
+ 438 02f0 FF90      		pop r15
+ 439 02f2 EF90      		pop r14
+ 440 02f4 DF90      		pop r13
+ 441 02f6 CF90      		pop r12
+ 442 02f8 0895      		ret
+ 443               		.size	EntryPosSet, .-EntryPosSet
+ 444               		.type	EntryPosInc, @function
+ 445               	EntryPosInc:
+ 446 02fa CF93      		push r28
+ 447 02fc DF93      		push r29
+ 448               	/* prologue: function */
+ 449               	/* frame size = 0 */
+ 450 02fe FC01      		movw r30,r24
+ 451 0300 C481      		ldd r28,Z+4
+ 452 0302 D581      		ldd r29,Z+5
+ 453 0304 0280      		ldd __tmp_reg__,Z+2
+ 454 0306 F381      		ldd r31,Z+3
+ 455 0308 E02D      		mov r30,__tmp_reg__
+ 456 030a 0188      		ldd __tmp_reg__,Z+17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 9
+
+
+ 457 030c F289      		ldd r31,Z+18
+ 458 030e E02D      		mov r30,__tmp_reg__
+ 459 0310 9B01      		movw r18,r22
+ 460 0312 4427      		clr r20
+ 461 0314 37FD      		sbrc r19,7
+ 462 0316 4095      		com r20
+ 463 0318 542F      		mov r21,r20
+ 464 031a 8A81      		ldd r24,Y+2
+ 465 031c 9B81      		ldd r25,Y+3
+ 466 031e AC81      		ldd r26,Y+4
+ 467 0320 BD81      		ldd r27,Y+5
+ 468 0322 820F      		add r24,r18
+ 469 0324 931F      		adc r25,r19
+ 470 0326 A41F      		adc r26,r20
+ 471 0328 B51F      		adc r27,r21
+ 472 032a 8A83      		std Y+2,r24
+ 473 032c 9B83      		std Y+3,r25
+ 474 032e AC83      		std Y+4,r26
+ 475 0330 BD83      		std Y+5,r27
+ 476 0332 2C85      		ldd r18,Y+12
+ 477 0334 3D85      		ldd r19,Y+13
+ 478 0336 260F      		add r18,r22
+ 479 0338 371F      		adc r19,r23
+ 480 033a 3D87      		std Y+13,r19
+ 481 033c 2C87      		std Y+12,r18
+ 482 033e 8A85      		ldd r24,Y+10
+ 483 0340 9B85      		ldd r25,Y+11
+ 484 0342 0190      		ld __tmp_reg__,Z+
+ 485 0344 F081      		ld r31,Z
+ 486 0346 E02D      		mov r30,__tmp_reg__
+ 487 0348 8330      		cpi r24,3
+ 488 034a 9105      		cpc r25,__zero_reg__
+ 489 034c 00F4      		brsh .L22
+ 490 034e 0480      		ldd __tmp_reg__,Z+4
+ 491 0350 F581      		ldd r31,Z+5
+ 492 0352 E02D      		mov r30,__tmp_reg__
+ 493 0354 00C0      		rjmp .L27
+ 494               	.L22:
+ 495 0356 0480      		ldd __tmp_reg__,Z+4
+ 496 0358 F581      		ldd r31,Z+5
+ 497 035a E02D      		mov r30,__tmp_reg__
+ 498 035c 3197      		sbiw r30,1
+ 499               	.L27:
+ 500 035e E21B      		sub r30,r18
+ 501 0360 F30B      		sbc r31,r19
+ 502 0362 01F4      		brne .L26
+ 503 0364 0196      		adiw r24,1
+ 504 0366 9B87      		std Y+11,r25
+ 505 0368 8A87      		std Y+10,r24
+ 506 036a 0497      		sbiw r24,4
+ 507 036c 00F0      		brlo .L25
+ 508 036e 88E0      		ldi r24,lo8(8)
+ 509 0370 90E0      		ldi r25,hi8(8)
+ 510 0372 9D87      		std Y+13,r25
+ 511 0374 8C87      		std Y+12,r24
+ 512 0376 1B86      		std Y+11,__zero_reg__
+ 513 0378 1A86      		std Y+10,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 10
+
+
+ 514 037a 8885      		ldd r24,Y+8
+ 515 037c 9985      		ldd r25,Y+9
+ 516 037e 0196      		adiw r24,1
+ 517 0380 9987      		std Y+9,r25
+ 518 0382 8887      		std Y+8,r24
+ 519 0384 8FEF      		ldi r24,lo8(-1)
+ 520 0386 9FEF      		ldi r25,hi8(-1)
+ 521 0388 9F83      		std Y+7,r25
+ 522 038a 8E83      		std Y+6,r24
+ 523 038c 00C0      		rjmp .L26
+ 524               	.L25:
+ 525 038e 1D86      		std Y+13,__zero_reg__
+ 526 0390 1C86      		std Y+12,__zero_reg__
+ 527               	.L26:
+ 528               	/* epilogue start */
+ 529 0392 DF91      		pop r29
+ 530 0394 CF91      		pop r28
+ 531 0396 0895      		ret
+ 532               		.size	EntryPosInc, .-EntryPosInc
+ 533               		.type	EntryScan, @function
+ 534               	EntryScan:
+ 535 0398 6F92      		push r6
+ 536 039a 7F92      		push r7
+ 537 039c 8F92      		push r8
+ 538 039e 9F92      		push r9
+ 539 03a0 AF92      		push r10
+ 540 03a2 BF92      		push r11
+ 541 03a4 CF92      		push r12
+ 542 03a6 DF92      		push r13
+ 543 03a8 EF92      		push r14
+ 544 03aa FF92      		push r15
+ 545 03ac 0F93      		push r16
+ 546 03ae 1F93      		push r17
+ 547 03b0 DF93      		push r29
+ 548 03b2 CF93      		push r28
+ 549 03b4 CDB7      		in r28,__SP_L__
+ 550 03b6 DEB7      		in r29,__SP_H__
+ 551 03b8 2897      		sbiw r28,8
+ 552 03ba 0FB6      		in __tmp_reg__,__SREG__
+ 553 03bc F894      		cli
+ 554 03be DEBF      		out __SP_H__,r29
+ 555 03c0 0FBE      		out __SREG__,__tmp_reg__
+ 556 03c2 CDBF      		out __SP_L__,r28
+ 557               	/* prologue: function */
+ 558               	/* frame size = 8 */
+ 559 03c4 4C01      		movw r8,r24
+ 560 03c6 5B01      		movw r10,r22
+ 561 03c8 6B01      		movw r12,r22
+ 562 03ca 00E8      		ldi r16,lo8(128)
+ 563 03cc 10E0      		ldi r17,hi8(128)
+ 564 03ce EE24      		clr r14
+ 565 03d0 FF24      		clr r15
+ 566 03d2 3E01      		movw r6,r28
+ 567 03d4 0894      		sec
+ 568 03d6 611C      		adc r6,__zero_reg__
+ 569 03d8 711C      		adc r7,__zero_reg__
+ 570 03da 00C0      		rjmp .L29
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 11
+
+
+ 571               	.L32:
+ 572 03dc C801      		movw r24,r16
+ 573 03de 880F      		lsl r24
+ 574 03e0 991F      		rol r25
+ 575 03e2 A80F      		add r26,r24
+ 576 03e4 B91F      		adc r27,r25
+ 577 03e6 6D91      		ld r22,X+
+ 578 03e8 7C91      		ld r23,X
+ 579 03ea 6217      		cp r22,r18
+ 580 03ec 7307      		cpc r23,r19
+ 581 03ee 00F4      		brsh .L30
+ 582 03f0 D401      		movw r26,r8
+ 583 03f2 8D91      		ld r24,X+
+ 584 03f4 9C91      		ld r25,X
+ 585 03f6 A301      		movw r20,r6
+ 586 03f8 0E94 0000 		call FlashReadBlockHead
+ 587 03fc 8D81      		ldd r24,Y+5
+ 588 03fe 9E81      		ldd r25,Y+6
+ 589 0400 8A15      		cp r24,r10
+ 590 0402 9B05      		cpc r25,r11
+ 591 0404 01F4      		brne .L30
+ 592 0406 8F81      		ldd r24,Y+7
+ 593 0408 9885      		ldd r25,Y+8
+ 594 040a E816      		cp r14,r24
+ 595 040c F906      		cpc r15,r25
+ 596 040e 00F4      		brsh .L30
+ 597 0410 6801      		movw r12,r16
+ 598 0412 00C0      		rjmp .L31
+ 599               	.L30:
+ 600 0414 C701      		movw r24,r14
+ 601               	.L31:
+ 602 0416 0F5F      		subi r16,lo8(-(1))
+ 603 0418 1F4F      		sbci r17,hi8(-(1))
+ 604 041a 7C01      		movw r14,r24
+ 605               	.L29:
+ 606 041c F401      		movw r30,r8
+ 607 041e 2581      		ldd r18,Z+5
+ 608 0420 3681      		ldd r19,Z+6
+ 609 0422 A781      		ldd r26,Z+7
+ 610 0424 B085      		ldd r27,Z+8
+ 611 0426 0217      		cp r16,r18
+ 612 0428 1307      		cpc r17,r19
+ 613 042a 00F0      		brlo .L32
+ 614 042c 8081      		ld r24,Z
+ 615 042e 9181      		ldd r25,Z+1
+ 616 0430 FC01      		movw r30,r24
+ 617 0432 8481      		ldd r24,Z+4
+ 618 0434 9581      		ldd r25,Z+5
+ 619 0436 880F      		lsl r24
+ 620 0438 991F      		rol r25
+ 621 043a 880F      		lsl r24
+ 622 043c 991F      		rol r25
+ 623 043e 0997      		sbiw r24,9
+ 624 0440 9C01      		movw r18,r24
+ 625 0442 E29E      		mul r14,r18
+ 626 0444 C001      		movw r24,r0
+ 627 0446 E39E      		mul r14,r19
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 12
+
+
+ 628 0448 900D      		add r25,r0
+ 629 044a F29E      		mul r15,r18
+ 630 044c 900D      		add r25,r0
+ 631 044e 1124      		clr r1
+ 632 0450 7C01      		movw r14,r24
+ 633 0452 00E0      		ldi r16,lo8(0)
+ 634 0454 10E0      		ldi r17,hi8(0)
+ 635 0456 CC0C      		lsl r12
+ 636 0458 DD1C      		rol r13
+ 637 045a AC0D      		add r26,r12
+ 638 045c BD1D      		adc r27,r13
+ 639 045e AD90      		ld r10,X+
+ 640 0460 BC90      		ld r11,X
+ 641 0462 AA0C      		lsl r10
+ 642 0464 BB1C      		rol r11
+ 643 0466 AA0C      		lsl r10
+ 644 0468 BB1C      		rol r11
+ 645 046a 64E0      		ldi r22,lo8(4)
+ 646 046c C62E      		mov r12,r22
+ 647 046e D12C      		mov r13,__zero_reg__
+ 648 0470 4FEF      		ldi r20,lo8(-1)
+ 649 0472 5FEF      		ldi r21,hi8(-1)
+ 650 0474 00C0      		rjmp .L33
+ 651               	.L35:
+ 652 0476 D401      		movw r26,r8
+ 653 0478 ED91      		ld r30,X+
+ 654 047a FC91      		ld r31,X
+ 655 047c B601      		movw r22,r12
+ 656 047e 6A0D      		add r22,r10
+ 657 0480 7B1D      		adc r23,r11
+ 658 0482 8085      		ldd r24,Z+8
+ 659 0484 9185      		ldd r25,Z+9
+ 660 0486 680F      		add r22,r24
+ 661 0488 791F      		adc r23,r25
+ 662 048a 2689      		ldd r18,Z+22
+ 663 048c 3789      		ldd r19,Z+23
+ 664 048e CF01      		movw r24,r30
+ 665 0490 F901      		movw r30,r18
+ 666 0492 0995      		icall
+ 667 0494 9C01      		movw r18,r24
+ 668 0496 40E0      		ldi r20,lo8(0)
+ 669 0498 50E0      		ldi r21,hi8(0)
+ 670 049a 0097      		sbiw r24,0
+ 671 049c 01F0      		breq .L33
+ 672 049e 2850      		subi r18,lo8(-(-8))
+ 673 04a0 3040      		sbci r19,hi8(-(-8))
+ 674 04a2 D401      		movw r26,r8
+ 675 04a4 ED91      		ld r30,X+
+ 676 04a6 FC91      		ld r31,X
+ 677 04a8 8481      		ldd r24,Z+4
+ 678 04aa 9581      		ldd r25,Z+5
+ 679 04ac FC01      		movw r30,r24
+ 680 04ae CE9E      		mul r12,r30
+ 681 04b0 C001      		movw r24,r0
+ 682 04b2 CF9E      		mul r12,r31
+ 683 04b4 900D      		add r25,r0
+ 684 04b6 DE9E      		mul r13,r30
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 13
+
+
+ 685 04b8 900D      		add r25,r0
+ 686 04ba 1124      		clr r1
+ 687 04bc 820F      		add r24,r18
+ 688 04be 931F      		adc r25,r19
+ 689 04c0 A0E0      		ldi r26,lo8(0)
+ 690 04c2 B0E0      		ldi r27,hi8(0)
+ 691 04c4 E80E      		add r14,r24
+ 692 04c6 F91E      		adc r15,r25
+ 693 04c8 0A1F      		adc r16,r26
+ 694 04ca 1B1F      		adc r17,r27
+ 695 04cc 00C0      		rjmp .L34
+ 696               	.L33:
+ 697 04ce 0894      		sec
+ 698 04d0 C108      		sbc r12,__zero_reg__
+ 699 04d2 D108      		sbc r13,__zero_reg__
+ 700 04d4 FFEF      		ldi r31,lo8(-1)
+ 701 04d6 CF16      		cp r12,r31
+ 702 04d8 FFEF      		ldi r31,hi8(-1)
+ 703 04da DF06      		cpc r13,r31
+ 704 04dc 01F4      		brne .L35
+ 705               	.L34:
+ 706 04de B701      		movw r22,r14
+ 707 04e0 C801      		movw r24,r16
+ 708               	/* epilogue start */
+ 709 04e2 2896      		adiw r28,8
+ 710 04e4 0FB6      		in __tmp_reg__,__SREG__
+ 711 04e6 F894      		cli
+ 712 04e8 DEBF      		out __SP_H__,r29
+ 713 04ea 0FBE      		out __SREG__,__tmp_reg__
+ 714 04ec CDBF      		out __SP_L__,r28
+ 715 04ee CF91      		pop r28
+ 716 04f0 DF91      		pop r29
+ 717 04f2 1F91      		pop r17
+ 718 04f4 0F91      		pop r16
+ 719 04f6 FF90      		pop r15
+ 720 04f8 EF90      		pop r14
+ 721 04fa DF90      		pop r13
+ 722 04fc CF90      		pop r12
+ 723 04fe BF90      		pop r11
+ 724 0500 AF90      		pop r10
+ 725 0502 9F90      		pop r9
+ 726 0504 8F90      		pop r8
+ 727 0506 7F90      		pop r7
+ 728 0508 6F90      		pop r6
+ 729 050a 0895      		ret
+ 730               		.size	EntryScan, .-EntryScan
+ 731               		.type	EntryTruncateSeq, @function
+ 732               	EntryTruncateSeq:
+ 733 050c 6F92      		push r6
+ 734 050e 7F92      		push r7
+ 735 0510 8F92      		push r8
+ 736 0512 9F92      		push r9
+ 737 0514 AF92      		push r10
+ 738 0516 BF92      		push r11
+ 739 0518 CF92      		push r12
+ 740 051a DF92      		push r13
+ 741 051c EF92      		push r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 14
+
+
+ 742 051e FF92      		push r15
+ 743 0520 0F93      		push r16
+ 744 0522 1F93      		push r17
+ 745 0524 DF93      		push r29
+ 746 0526 CF93      		push r28
+ 747 0528 CDB7      		in r28,__SP_L__
+ 748 052a DEB7      		in r29,__SP_H__
+ 749 052c 2897      		sbiw r28,8
+ 750 052e 0FB6      		in __tmp_reg__,__SREG__
+ 751 0530 F894      		cli
+ 752 0532 DEBF      		out __SP_H__,r29
+ 753 0534 0FBE      		out __SREG__,__tmp_reg__
+ 754 0536 CDBF      		out __SP_L__,r28
+ 755               	/* prologue: function */
+ 756               	/* frame size = 8 */
+ 757 0538 8C01      		movw r16,r24
+ 758 053a 5B01      		movw r10,r22
+ 759 053c 60E8      		ldi r22,lo8(128)
+ 760 053e E62E      		mov r14,r22
+ 761 0540 F12C      		mov r15,__zero_reg__
+ 762 0542 3E01      		movw r6,r28
+ 763 0544 0894      		sec
+ 764 0546 611C      		adc r6,__zero_reg__
+ 765 0548 711C      		adc r7,__zero_reg__
+ 766 054a 8824      		clr r8
+ 767 054c 8A94      		dec r8
+ 768 054e 982C      		mov r9,r8
+ 769 0550 00C0      		rjmp .L39
+ 770               	.L41:
+ 771 0552 6701      		movw r12,r14
+ 772 0554 CC0C      		lsl r12
+ 773 0556 DD1C      		rol r13
+ 774 0558 D801      		movw r26,r16
+ 775 055a 1796      		adiw r26,7
+ 776 055c ED91      		ld r30,X+
+ 777 055e FC91      		ld r31,X
+ 778 0560 1897      		sbiw r26,7+1
+ 779 0562 EC0D      		add r30,r12
+ 780 0564 FD1D      		adc r31,r13
+ 781 0566 6081      		ld r22,Z
+ 782 0568 7181      		ldd r23,Z+1
+ 783 056a 6817      		cp r22,r24
+ 784 056c 7907      		cpc r23,r25
+ 785 056e 00F4      		brsh .L40
+ 786 0570 8D91      		ld r24,X+
+ 787 0572 9C91      		ld r25,X
+ 788 0574 A301      		movw r20,r6
+ 789 0576 0E94 0000 		call FlashReadBlockHead
+ 790 057a 8D81      		ldd r24,Y+5
+ 791 057c 9E81      		ldd r25,Y+6
+ 792 057e 8A15      		cp r24,r10
+ 793 0580 9B05      		cpc r25,r11
+ 794 0582 01F4      		brne .L40
+ 795 0584 D801      		movw r26,r16
+ 796 0586 1796      		adiw r26,7
+ 797 0588 ED91      		ld r30,X+
+ 798 058a FC91      		ld r31,X
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 15
+
+
+ 799 058c 1897      		sbiw r26,7+1
+ 800 058e EC0D      		add r30,r12
+ 801 0590 FD1D      		adc r31,r13
+ 802 0592 6081      		ld r22,Z
+ 803 0594 7181      		ldd r23,Z+1
+ 804 0596 9182      		std Z+1,r9
+ 805 0598 8082      		st Z,r8
+ 806 059a 8D91      		ld r24,X+
+ 807 059c 9C91      		ld r25,X
+ 808 059e 0E94 0000 		call FlashEraseEntry
+ 809               	.L40:
+ 810 05a2 0894      		sec
+ 811 05a4 E11C      		adc r14,__zero_reg__
+ 812 05a6 F11C      		adc r15,__zero_reg__
+ 813               	.L39:
+ 814 05a8 F801      		movw r30,r16
+ 815 05aa 8581      		ldd r24,Z+5
+ 816 05ac 9681      		ldd r25,Z+6
+ 817 05ae E816      		cp r14,r24
+ 818 05b0 F906      		cpc r15,r25
+ 819 05b2 00F0      		brlo .L41
+ 820 05b4 80E0      		ldi r24,lo8(0)
+ 821 05b6 90E0      		ldi r25,hi8(0)
+ 822               	/* epilogue start */
+ 823 05b8 2896      		adiw r28,8
+ 824 05ba 0FB6      		in __tmp_reg__,__SREG__
+ 825 05bc F894      		cli
+ 826 05be DEBF      		out __SP_H__,r29
+ 827 05c0 0FBE      		out __SREG__,__tmp_reg__
+ 828 05c2 CDBF      		out __SP_L__,r28
+ 829 05c4 CF91      		pop r28
+ 830 05c6 DF91      		pop r29
+ 831 05c8 1F91      		pop r17
+ 832 05ca 0F91      		pop r16
+ 833 05cc FF90      		pop r15
+ 834 05ce EF90      		pop r14
+ 835 05d0 DF90      		pop r13
+ 836 05d2 CF90      		pop r12
+ 837 05d4 BF90      		pop r11
+ 838 05d6 AF90      		pop r10
+ 839 05d8 9F90      		pop r9
+ 840 05da 8F90      		pop r8
+ 841 05dc 7F90      		pop r7
+ 842 05de 6F90      		pop r6
+ 843 05e0 0895      		ret
+ 844               		.size	EntryTruncateSeq, .-EntryTruncateSeq
+ 845               		.type	UFlashFileSize, @function
+ 846               	UFlashFileSize:
+ 847               	/* prologue: function */
+ 848               	/* frame size = 0 */
+ 849 05e2 DC01      		movw r26,r24
+ 850 05e4 1496      		adiw r26,4
+ 851 05e6 ED91      		ld r30,X+
+ 852 05e8 FC91      		ld r31,X
+ 853 05ea 1597      		sbiw r26,4+1
+ 854 05ec 6489      		ldd r22,Z+20
+ 855 05ee 7589      		ldd r23,Z+21
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 16
+
+
+ 856 05f0 8689      		ldd r24,Z+22
+ 857 05f2 9789      		ldd r25,Z+23
+ 858               	/* epilogue start */
+ 859 05f4 0895      		ret
+ 860               		.size	UFlashFileSize, .-UFlashFileSize
+ 861               		.type	UFlashFileWrite_P, @function
+ 862               	UFlashFileWrite_P:
+ 863               	/* prologue: function */
+ 864               	/* frame size = 0 */
+ 865 05f6 8FEF      		ldi r24,lo8(-1)
+ 866 05f8 9FEF      		ldi r25,hi8(-1)
+ 867               	/* epilogue start */
+ 868 05fa 0895      		ret
+ 869               		.size	UFlashFileWrite_P, .-UFlashFileWrite_P
+ 870               		.type	UFlashInit, @function
+ 871               	UFlashInit:
+ 872               	/* prologue: function */
+ 873               	/* frame size = 0 */
+ 874 05fc 80E0      		ldi r24,lo8(0)
+ 875 05fe 90E0      		ldi r25,hi8(0)
+ 876               	/* epilogue start */
+ 877 0600 0895      		ret
+ 878               		.size	UFlashInit, .-UFlashInit
+ 879               		.type	UFlashFileClose, @function
+ 880               	UFlashFileClose:
+ 881 0602 0F93      		push r16
+ 882 0604 1F93      		push r17
+ 883               	/* prologue: function */
+ 884               	/* frame size = 0 */
+ 885 0606 8C01      		movw r16,r24
+ 886 0608 FC01      		movw r30,r24
+ 887 060a 8481      		ldd r24,Z+4
+ 888 060c 9581      		ldd r25,Z+5
+ 889 060e 0E94 0000 		call free
+ 890 0612 C801      		movw r24,r16
+ 891 0614 0E94 0000 		call free
+ 892 0618 80E0      		ldi r24,lo8(0)
+ 893 061a 90E0      		ldi r25,hi8(0)
+ 894               	/* epilogue start */
+ 895 061c 1F91      		pop r17
+ 896 061e 0F91      		pop r16
+ 897 0620 0895      		ret
+ 898               		.size	UFlashFileClose, .-UFlashFileClose
+ 899               	.global	UFlashDetach
+ 900               		.type	UFlashDetach, @function
+ 901               	UFlashDetach:
+ 902 0622 EF92      		push r14
+ 903 0624 FF92      		push r15
+ 904 0626 0F93      		push r16
+ 905 0628 1F93      		push r17
+ 906               	/* prologue: function */
+ 907               	/* frame size = 0 */
+ 908 062a 7C01      		movw r14,r24
+ 909 062c DC01      		movw r26,r24
+ 910 062e 5196      		adiw r26,17
+ 911 0630 0D91      		ld r16,X+
+ 912 0632 1C91      		ld r17,X
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 17
+
+
+ 913 0634 5297      		sbiw r26,17+1
+ 914 0636 F801      		movw r30,r16
+ 915 0638 8781      		ldd r24,Z+7
+ 916 063a 9085      		ldd r25,Z+8
+ 917 063c 0E94 0000 		call free
+ 918 0640 C801      		movw r24,r16
+ 919 0642 0E94 0000 		call free
+ 920 0646 D701      		movw r26,r14
+ 921 0648 5296      		adiw r26,17+1
+ 922 064a 1C92      		st X,__zero_reg__
+ 923 064c 1E92      		st -X,__zero_reg__
+ 924 064e 5197      		sbiw r26,17
+ 925 0650 1F96      		adiw r26,15
+ 926 0652 ED91      		ld r30,X+
+ 927 0654 FC91      		ld r31,X
+ 928 0656 5097      		sbiw r26,15+1
+ 929 0658 2685      		ldd r18,Z+14
+ 930 065a 3785      		ldd r19,Z+15
+ 931 065c CF01      		movw r24,r30
+ 932 065e F901      		movw r30,r18
+ 933 0660 0995      		icall
+ 934 0662 F701      		movw r30,r14
+ 935 0664 108A      		std Z+16,__zero_reg__
+ 936 0666 1786      		std Z+15,__zero_reg__
+ 937               	/* epilogue start */
+ 938 0668 1F91      		pop r17
+ 939 066a 0F91      		pop r16
+ 940 066c FF90      		pop r15
+ 941 066e EF90      		pop r14
+ 942 0670 0895      		ret
+ 943               		.size	UFlashDetach, .-UFlashDetach
+ 944               		.type	FlashReadEntry, @function
+ 945               	FlashReadEntry:
+ 946 0672 AF92      		push r10
+ 947 0674 BF92      		push r11
+ 948 0676 CF92      		push r12
+ 949 0678 DF92      		push r13
+ 950 067a EF92      		push r14
+ 951 067c FF92      		push r15
+ 952 067e 0F93      		push r16
+ 953 0680 1F93      		push r17
+ 954 0682 CF93      		push r28
+ 955 0684 DF93      		push r29
+ 956               	/* prologue: function */
+ 957               	/* frame size = 0 */
+ 958 0686 EC01      		movw r28,r24
+ 959 0688 7B01      		movw r14,r22
+ 960 068a 6A01      		movw r12,r20
+ 961 068c 5901      		movw r10,r18
+ 962 068e EE0C      		lsl r14
+ 963 0690 FF1C      		rol r15
+ 964 0692 EE0C      		lsl r14
+ 965 0694 FF1C      		rol r15
+ 966 0696 6885      		ldd r22,Y+8
+ 967 0698 7985      		ldd r23,Y+9
+ 968 069a 6E0D      		add r22,r14
+ 969 069c 7F1D      		adc r23,r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 18
+
+
+ 970 069e EA89      		ldd r30,Y+18
+ 971 06a0 FB89      		ldd r31,Y+19
+ 972 06a2 48E0      		ldi r20,lo8(8)
+ 973 06a4 50E0      		ldi r21,hi8(8)
+ 974 06a6 9601      		movw r18,r12
+ 975 06a8 02E0      		ldi r16,lo8(2)
+ 976 06aa 10E0      		ldi r17,hi8(2)
+ 977 06ac 0995      		icall
+ 978 06ae 9C01      		movw r18,r24
+ 979 06b0 0097      		sbiw r24,0
+ 980 06b2 01F4      		brne .L54
+ 981 06b4 A114      		cp r10,__zero_reg__
+ 982 06b6 B104      		cpc r11,__zero_reg__
+ 983 06b8 01F0      		breq .L54
+ 984 06ba D601      		movw r26,r12
+ 985 06bc 1196      		adiw r26,1
+ 986 06be 8C91      		ld r24,X
+ 987 06c0 90E0      		ldi r25,lo8(0)
+ 988 06c2 0196      		adiw r24,1
+ 989 06c4 0E94 0000 		call malloc
+ 990 06c8 FC01      		movw r30,r24
+ 991 06ca D501      		movw r26,r10
+ 992 06cc 8D93      		st X+,r24
+ 993 06ce 9C93      		st X,r25
+ 994 06d0 0097      		sbiw r24,0
+ 995 06d2 01F4      		brne .L55
+ 996 06d4 2FEF      		ldi r18,lo8(-1)
+ 997 06d6 3FEF      		ldi r19,hi8(-1)
+ 998 06d8 00C0      		rjmp .L54
+ 999               	.L55:
+ 1000 06da D601      		movw r26,r12
+ 1001 06dc 1196      		adiw r26,1
+ 1002 06de 8C91      		ld r24,X
+ 1003 06e0 1197      		sbiw r26,1
+ 1004 06e2 E80F      		add r30,r24
+ 1005 06e4 F11D      		adc r31,__zero_reg__
+ 1006 06e6 1082      		st Z,__zero_reg__
+ 1007 06e8 8885      		ldd r24,Y+8
+ 1008 06ea 9985      		ldd r25,Y+9
+ 1009 06ec E80E      		add r14,r24
+ 1010 06ee F91E      		adc r15,r25
+ 1011 06f0 F501      		movw r30,r10
+ 1012 06f2 2081      		ld r18,Z
+ 1013 06f4 3181      		ldd r19,Z+1
+ 1014 06f6 1196      		adiw r26,1
+ 1015 06f8 0C91      		ld r16,X
+ 1016 06fa EA89      		ldd r30,Y+18
+ 1017 06fc FB89      		ldd r31,Y+19
+ 1018 06fe CE01      		movw r24,r28
+ 1019 0700 B701      		movw r22,r14
+ 1020 0702 4AE0      		ldi r20,lo8(10)
+ 1021 0704 50E0      		ldi r21,hi8(10)
+ 1022 0706 10E0      		ldi r17,lo8(0)
+ 1023 0708 0995      		icall
+ 1024 070a 9C01      		movw r18,r24
+ 1025               	.L54:
+ 1026 070c C901      		movw r24,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 19
+
+
+ 1027               	/* epilogue start */
+ 1028 070e DF91      		pop r29
+ 1029 0710 CF91      		pop r28
+ 1030 0712 1F91      		pop r17
+ 1031 0714 0F91      		pop r16
+ 1032 0716 FF90      		pop r15
+ 1033 0718 EF90      		pop r14
+ 1034 071a DF90      		pop r13
+ 1035 071c CF90      		pop r12
+ 1036 071e BF90      		pop r11
+ 1037 0720 AF90      		pop r10
+ 1038 0722 0895      		ret
+ 1039               		.size	FlashReadEntry, .-FlashReadEntry
+ 1040               		.type	EntrySearchNext, @function
+ 1041               	EntrySearchNext:
+ 1042 0724 2F92      		push r2
+ 1043 0726 3F92      		push r3
+ 1044 0728 4F92      		push r4
+ 1045 072a 5F92      		push r5
+ 1046 072c 6F92      		push r6
+ 1047 072e 7F92      		push r7
+ 1048 0730 8F92      		push r8
+ 1049 0732 9F92      		push r9
+ 1050 0734 AF92      		push r10
+ 1051 0736 BF92      		push r11
+ 1052 0738 CF92      		push r12
+ 1053 073a DF92      		push r13
+ 1054 073c EF92      		push r14
+ 1055 073e FF92      		push r15
+ 1056 0740 0F93      		push r16
+ 1057 0742 1F93      		push r17
+ 1058 0744 CF93      		push r28
+ 1059 0746 DF93      		push r29
+ 1060               	/* prologue: function */
+ 1061               	/* frame size = 0 */
+ 1062 0748 6C01      		movw r12,r24
+ 1063 074a 1B01      		movw r2,r22
+ 1064 074c 2A01      		movw r4,r20
+ 1065 074e 3901      		movw r6,r18
+ 1066 0750 EB01      		movw r28,r22
+ 1067 0752 0990      		ld __tmp_reg__,Y+
+ 1068 0754 0020      		tst __tmp_reg__
+ 1069 0756 01F4      		brne .-6
+ 1070 0758 2197      		sbiw r28,1
+ 1071 075a C61B      		sub r28,r22
+ 1072 075c D70B      		sbc r29,r23
+ 1073 075e 12E0      		ldi r17,lo8(2)
+ 1074 0760 812E      		mov r8,r17
+ 1075 0762 912C      		mov r9,__zero_reg__
+ 1076 0764 880E      		add r8,r24
+ 1077 0766 991E      		adc r9,r25
+ 1078 0768 C401      		movw r24,r8
+ 1079 076a 40E0      		ldi r20,lo8(0)
+ 1080 076c 50E0      		ldi r21,hi8(0)
+ 1081 076e 60E0      		ldi r22,hlo8(0)
+ 1082 0770 70E0      		ldi r23,hhi8(0)
+ 1083 0772 0E94 0000 		call NutEventWait
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 20
+
+
+ 1084 0776 20E8      		ldi r18,lo8(128)
+ 1085 0778 6216      		cp r6,r18
+ 1086 077a 7104      		cpc r7,__zero_reg__
+ 1087 077c 01F4      		brne .L58
+ 1088 077e EE24      		clr r14
+ 1089 0780 FF24      		clr r15
+ 1090 0782 00C0      		rjmp .L59
+ 1091               	.L58:
+ 1092 0784 7301      		movw r14,r6
+ 1093               	.L59:
+ 1094 0786 5701      		movw r10,r14
+ 1095 0788 AA0C      		lsl r10
+ 1096 078a BB1C      		rol r11
+ 1097 078c 00C0      		rjmp .L60
+ 1098               	.L64:
+ 1099 078e D601      		movw r26,r12
+ 1100 0790 1796      		adiw r26,7
+ 1101 0792 ED91      		ld r30,X+
+ 1102 0794 FC91      		ld r31,X
+ 1103 0796 1897      		sbiw r26,7+1
+ 1104 0798 EA0D      		add r30,r10
+ 1105 079a FB1D      		adc r31,r11
+ 1106 079c 0081      		ld r16,Z
+ 1107 079e 1181      		ldd r17,Z+1
+ 1108 07a0 1596      		adiw r26,5
+ 1109 07a2 8D91      		ld r24,X+
+ 1110 07a4 9C91      		ld r25,X
+ 1111 07a6 1697      		sbiw r26,5+1
+ 1112 07a8 0817      		cp r16,r24
+ 1113 07aa 1907      		cpc r17,r25
+ 1114 07ac 00F4      		brsh .L61
+ 1115 07ae 8D91      		ld r24,X+
+ 1116 07b0 9C91      		ld r25,X
+ 1117 07b2 B801      		movw r22,r16
+ 1118 07b4 A201      		movw r20,r4
+ 1119 07b6 20E0      		ldi r18,lo8(0)
+ 1120 07b8 30E0      		ldi r19,hi8(0)
+ 1121 07ba 0E94 0000 		call FlashReadEntry
+ 1122 07be 892B      		or r24,r25
+ 1123 07c0 01F4      		brne .L61
+ 1124 07c2 F201      		movw r30,r4
+ 1125 07c4 8181      		ldd r24,Z+1
+ 1126 07c6 90E0      		ldi r25,lo8(0)
+ 1127 07c8 8C17      		cp r24,r28
+ 1128 07ca 9D07      		cpc r25,r29
+ 1129 07cc 01F0      		breq .L62
+ 1130 07ce F0E8      		ldi r31,lo8(128)
+ 1131 07d0 6F16      		cp r6,r31
+ 1132 07d2 7104      		cpc r7,__zero_reg__
+ 1133 07d4 01F0      		breq .L61
+ 1134 07d6 8C17      		cp r24,r28
+ 1135 07d8 9D07      		cpc r25,r29
+ 1136 07da 04F0      		brlt .L61
+ 1137               	.L62:
+ 1138 07dc D601      		movw r26,r12
+ 1139 07de ED91      		ld r30,X+
+ 1140 07e0 FC91      		ld r31,X
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 21
+
+
+ 1141 07e2 000F      		lsl r16
+ 1142 07e4 111F      		rol r17
+ 1143 07e6 000F      		lsl r16
+ 1144 07e8 111F      		rol r17
+ 1145 07ea 8085      		ldd r24,Z+8
+ 1146 07ec 9185      		ldd r25,Z+9
+ 1147 07ee 080F      		add r16,r24
+ 1148 07f0 191F      		adc r17,r25
+ 1149 07f2 A489      		ldd r26,Z+20
+ 1150 07f4 B589      		ldd r27,Z+21
+ 1151 07f6 CF01      		movw r24,r30
+ 1152 07f8 B801      		movw r22,r16
+ 1153 07fa 4AE0      		ldi r20,lo8(10)
+ 1154 07fc 50E0      		ldi r21,hi8(10)
+ 1155 07fe 9101      		movw r18,r2
+ 1156 0800 0C2F      		mov r16,r28
+ 1157 0802 10E0      		ldi r17,lo8(0)
+ 1158 0804 FD01      		movw r30,r26
+ 1159 0806 0995      		icall
+ 1160 0808 892B      		or r24,r25
+ 1161 080a 01F4      		brne .L61
+ 1162 080c C401      		movw r24,r8
+ 1163 080e 0E94 0000 		call NutEventPost
+ 1164 0812 9701      		movw r18,r14
+ 1165 0814 00C0      		rjmp .L63
+ 1166               	.L61:
+ 1167 0816 0894      		sec
+ 1168 0818 E11C      		adc r14,__zero_reg__
+ 1169 081a F11C      		adc r15,__zero_reg__
+ 1170 081c E2E0      		ldi r30,lo8(2)
+ 1171 081e F0E0      		ldi r31,hi8(2)
+ 1172 0820 AE0E      		add r10,r30
+ 1173 0822 BF1E      		adc r11,r31
+ 1174               	.L60:
+ 1175 0824 F0E8      		ldi r31,lo8(128)
+ 1176 0826 EF16      		cp r14,r31
+ 1177 0828 F104      		cpc r15,__zero_reg__
+ 1178 082a 00F4      		brsh .+2
+ 1179 082c 00C0      		rjmp .L64
+ 1180 082e C401      		movw r24,r8
+ 1181 0830 0E94 0000 		call NutEventPost
+ 1182 0834 20E8      		ldi r18,lo8(128)
+ 1183 0836 30E0      		ldi r19,hi8(128)
+ 1184               	.L63:
+ 1185 0838 C901      		movw r24,r18
+ 1186               	/* epilogue start */
+ 1187 083a DF91      		pop r29
+ 1188 083c CF91      		pop r28
+ 1189 083e 1F91      		pop r17
+ 1190 0840 0F91      		pop r16
+ 1191 0842 FF90      		pop r15
+ 1192 0844 EF90      		pop r14
+ 1193 0846 DF90      		pop r13
+ 1194 0848 CF90      		pop r12
+ 1195 084a BF90      		pop r11
+ 1196 084c AF90      		pop r10
+ 1197 084e 9F90      		pop r9
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 22
+
+
+ 1198 0850 8F90      		pop r8
+ 1199 0852 7F90      		pop r7
+ 1200 0854 6F90      		pop r6
+ 1201 0856 5F90      		pop r5
+ 1202 0858 4F90      		pop r4
+ 1203 085a 3F90      		pop r3
+ 1204 085c 2F90      		pop r2
+ 1205 085e 0895      		ret
+ 1206               		.size	EntrySearchNext, .-EntrySearchNext
+ 1207               		.type	EntrySeek, @function
+ 1208               	EntrySeek:
+ 1209 0860 6F92      		push r6
+ 1210 0862 7F92      		push r7
+ 1211 0864 8F92      		push r8
+ 1212 0866 9F92      		push r9
+ 1213 0868 AF92      		push r10
+ 1214 086a BF92      		push r11
+ 1215 086c CF92      		push r12
+ 1216 086e DF92      		push r13
+ 1217 0870 EF92      		push r14
+ 1218 0872 FF92      		push r15
+ 1219 0874 0F93      		push r16
+ 1220 0876 1F93      		push r17
+ 1221 0878 DF93      		push r29
+ 1222 087a CF93      		push r28
+ 1223 087c CDB7      		in r28,__SP_L__
+ 1224 087e DEB7      		in r29,__SP_H__
+ 1225 0880 2897      		sbiw r28,8
+ 1226 0882 0FB6      		in __tmp_reg__,__SREG__
+ 1227 0884 F894      		cli
+ 1228 0886 DEBF      		out __SP_H__,r29
+ 1229 0888 0FBE      		out __SREG__,__tmp_reg__
+ 1230 088a CDBF      		out __SP_L__,r28
+ 1231               	/* prologue: function */
+ 1232               	/* frame size = 8 */
+ 1233 088c 7C01      		movw r14,r24
+ 1234 088e 4B01      		movw r8,r22
+ 1235 0890 5A01      		movw r10,r20
+ 1236 0892 4115      		cp r20,__zero_reg__
+ 1237 0894 5105      		cpc r21,__zero_reg__
+ 1238 0896 01F4      		brne .L67
+ 1239 0898 8B01      		movw r16,r22
+ 1240 089a 00C0      		rjmp .L68
+ 1241               	.L67:
+ 1242 089c 52E0      		ldi r21,lo8(2)
+ 1243 089e C52E      		mov r12,r21
+ 1244 08a0 D12C      		mov r13,__zero_reg__
+ 1245 08a2 C80E      		add r12,r24
+ 1246 08a4 D91E      		adc r13,r25
+ 1247 08a6 C601      		movw r24,r12
+ 1248 08a8 40E0      		ldi r20,lo8(0)
+ 1249 08aa 50E0      		ldi r21,hi8(0)
+ 1250 08ac 60E0      		ldi r22,hlo8(0)
+ 1251 08ae 70E0      		ldi r23,hhi8(0)
+ 1252 08b0 0E94 0000 		call NutEventWait
+ 1253 08b4 00E8      		ldi r16,lo8(128)
+ 1254 08b6 10E0      		ldi r17,hi8(128)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 23
+
+
+ 1255 08b8 3E01      		movw r6,r28
+ 1256 08ba 0894      		sec
+ 1257 08bc 611C      		adc r6,__zero_reg__
+ 1258 08be 711C      		adc r7,__zero_reg__
+ 1259 08c0 00C0      		rjmp .L69
+ 1260               	.L72:
+ 1261 08c2 C801      		movw r24,r16
+ 1262 08c4 880F      		lsl r24
+ 1263 08c6 991F      		rol r25
+ 1264 08c8 D701      		movw r26,r14
+ 1265 08ca 1796      		adiw r26,7
+ 1266 08cc ED91      		ld r30,X+
+ 1267 08ce FC91      		ld r31,X
+ 1268 08d0 1897      		sbiw r26,7+1
+ 1269 08d2 E80F      		add r30,r24
+ 1270 08d4 F91F      		adc r31,r25
+ 1271 08d6 6081      		ld r22,Z
+ 1272 08d8 7181      		ldd r23,Z+1
+ 1273 08da 6217      		cp r22,r18
+ 1274 08dc 7307      		cpc r23,r19
+ 1275 08de 00F4      		brsh .L70
+ 1276 08e0 8D91      		ld r24,X+
+ 1277 08e2 9C91      		ld r25,X
+ 1278 08e4 A301      		movw r20,r6
+ 1279 08e6 0E94 0000 		call FlashReadBlockHead
+ 1280 08ea 8D81      		ldd r24,Y+5
+ 1281 08ec 9E81      		ldd r25,Y+6
+ 1282 08ee 8815      		cp r24,r8
+ 1283 08f0 9905      		cpc r25,r9
+ 1284 08f2 01F4      		brne .L70
+ 1285 08f4 8F81      		ldd r24,Y+7
+ 1286 08f6 9885      		ldd r25,Y+8
+ 1287 08f8 8A15      		cp r24,r10
+ 1288 08fa 9B05      		cpc r25,r11
+ 1289 08fc 01F0      		breq .L71
+ 1290               	.L70:
+ 1291 08fe 0F5F      		subi r16,lo8(-(1))
+ 1292 0900 1F4F      		sbci r17,hi8(-(1))
+ 1293               	.L69:
+ 1294 0902 F701      		movw r30,r14
+ 1295 0904 2581      		ldd r18,Z+5
+ 1296 0906 3681      		ldd r19,Z+6
+ 1297 0908 0217      		cp r16,r18
+ 1298 090a 1307      		cpc r17,r19
+ 1299 090c 00F0      		brlo .L72
+ 1300               	.L71:
+ 1301 090e C601      		movw r24,r12
+ 1302 0910 0E94 0000 		call NutEventPost
+ 1303               	.L68:
+ 1304 0914 C801      		movw r24,r16
+ 1305               	/* epilogue start */
+ 1306 0916 2896      		adiw r28,8
+ 1307 0918 0FB6      		in __tmp_reg__,__SREG__
+ 1308 091a F894      		cli
+ 1309 091c DEBF      		out __SP_H__,r29
+ 1310 091e 0FBE      		out __SREG__,__tmp_reg__
+ 1311 0920 CDBF      		out __SP_L__,r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 24
+
+
+ 1312 0922 CF91      		pop r28
+ 1313 0924 DF91      		pop r29
+ 1314 0926 1F91      		pop r17
+ 1315 0928 0F91      		pop r16
+ 1316 092a FF90      		pop r15
+ 1317 092c EF90      		pop r14
+ 1318 092e DF90      		pop r13
+ 1319 0930 CF90      		pop r12
+ 1320 0932 BF90      		pop r11
+ 1321 0934 AF90      		pop r10
+ 1322 0936 9F90      		pop r9
+ 1323 0938 8F90      		pop r8
+ 1324 093a 7F90      		pop r7
+ 1325 093c 6F90      		pop r6
+ 1326 093e 0895      		ret
+ 1327               		.size	EntrySeek, .-EntrySeek
+ 1328               		.type	UFlashFileRead, @function
+ 1329               	UFlashFileRead:
+ 1330 0940 2F92      		push r2
+ 1331 0942 3F92      		push r3
+ 1332 0944 4F92      		push r4
+ 1333 0946 5F92      		push r5
+ 1334 0948 6F92      		push r6
+ 1335 094a 7F92      		push r7
+ 1336 094c 8F92      		push r8
+ 1337 094e 9F92      		push r9
+ 1338 0950 AF92      		push r10
+ 1339 0952 BF92      		push r11
+ 1340 0954 CF92      		push r12
+ 1341 0956 DF92      		push r13
+ 1342 0958 EF92      		push r14
+ 1343 095a FF92      		push r15
+ 1344 095c 0F93      		push r16
+ 1345 095e 1F93      		push r17
+ 1346 0960 DF93      		push r29
+ 1347 0962 CF93      		push r28
+ 1348 0964 00D0      		rcall .
+ 1349 0966 00D0      		rcall .
+ 1350 0968 CDB7      		in r28,__SP_L__
+ 1351 096a DEB7      		in r29,__SP_H__
+ 1352               	/* prologue: function */
+ 1353               	/* frame size = 4 */
+ 1354 096c 1C01      		movw r2,r24
+ 1355 096e 6115      		cp r22,__zero_reg__
+ 1356 0970 7105      		cpc r23,__zero_reg__
+ 1357 0972 01F4      		brne .+2
+ 1358 0974 00C0      		rjmp .L75
+ 1359 0976 4115      		cp r20,__zero_reg__
+ 1360 0978 5105      		cpc r21,__zero_reg__
+ 1361 097a 01F4      		brne .+2
+ 1362 097c 00C0      		rjmp .L75
+ 1363 097e 2B01      		movw r4,r22
+ 1364 0980 DC01      		movw r26,r24
+ 1365 0982 1496      		adiw r26,4
+ 1366 0984 CD90      		ld r12,X+
+ 1367 0986 DC90      		ld r13,X
+ 1368 0988 1597      		sbiw r26,4+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 25
+
+
+ 1369 098a 1296      		adiw r26,2
+ 1370 098c ED91      		ld r30,X+
+ 1371 098e FC91      		ld r31,X
+ 1372 0990 1397      		sbiw r26,2+1
+ 1373 0992 8188      		ldd r8,Z+17
+ 1374 0994 9288      		ldd r9,Z+18
+ 1375 0996 F601      		movw r30,r12
+ 1376 0998 2489      		ldd r18,Z+20
+ 1377 099a 3589      		ldd r19,Z+21
+ 1378 099c 8281      		ldd r24,Z+2
+ 1379 099e 9381      		ldd r25,Z+3
+ 1380 09a0 281B      		sub r18,r24
+ 1381 09a2 390B      		sbc r19,r25
+ 1382 09a4 3A01      		movw r6,r20
+ 1383 09a6 2417      		cp r18,r20
+ 1384 09a8 3507      		cpc r19,r21
+ 1385 09aa 04F4      		brge .L76
+ 1386 09ac 3901      		movw r6,r18
+ 1387               	.L76:
+ 1388 09ae 9401      		movw r18,r8
+ 1389 09b0 2E5F      		subi r18,lo8(-(2))
+ 1390 09b2 3F4F      		sbci r19,hi8(-(2))
+ 1391 09b4 3A83      		std Y+2,r19
+ 1392 09b6 2983      		std Y+1,r18
+ 1393 09b8 EE24      		clr r14
+ 1394 09ba FF24      		clr r15
+ 1395 09bc 00C0      		rjmp .L90
+ 1396               	.L86:
+ 1397 09be D601      		movw r26,r12
+ 1398 09c0 1696      		adiw r26,6
+ 1399 09c2 2D91      		ld r18,X+
+ 1400 09c4 3C91      		ld r19,X
+ 1401 09c6 1797      		sbiw r26,6+1
+ 1402 09c8 F401      		movw r30,r8
+ 1403 09ca 8581      		ldd r24,Z+5
+ 1404 09cc 9681      		ldd r25,Z+6
+ 1405 09ce 2817      		cp r18,r24
+ 1406 09d0 3907      		cpc r19,r25
+ 1407 09d2 00F0      		brlo .L78
+ 1408 09d4 6D91      		ld r22,X+
+ 1409 09d6 7C91      		ld r23,X
+ 1410 09d8 1197      		sbiw r26,1
+ 1411 09da 1896      		adiw r26,8
+ 1412 09dc 4D91      		ld r20,X+
+ 1413 09de 5C91      		ld r21,X
+ 1414 09e0 1997      		sbiw r26,8+1
+ 1415 09e2 C401      		movw r24,r8
+ 1416 09e4 0E94 0000 		call EntrySeek
+ 1417 09e8 D601      		movw r26,r12
+ 1418 09ea 1796      		adiw r26,6+1
+ 1419 09ec 9C93      		st X,r25
+ 1420 09ee 8E93      		st -X,r24
+ 1421 09f0 1697      		sbiw r26,6
+ 1422 09f2 F401      		movw r30,r8
+ 1423 09f4 2581      		ldd r18,Z+5
+ 1424 09f6 3681      		ldd r19,Z+6
+ 1425 09f8 8217      		cp r24,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 26
+
+
+ 1426 09fa 9307      		cpc r25,r19
+ 1427 09fc 00F0      		brlo .+2
+ 1428 09fe 00C0      		rjmp .L91
+ 1429               	.L78:
+ 1430 0a00 D601      		movw r26,r12
+ 1431 0a02 1A96      		adiw r26,10
+ 1432 0a04 AD90      		ld r10,X+
+ 1433 0a06 BC90      		ld r11,X
+ 1434 0a08 1B97      		sbiw r26,10+1
+ 1435 0a0a 00C0      		rjmp .L80
+ 1436               	.L85:
+ 1437 0a0c 8981      		ldd r24,Y+1
+ 1438 0a0e 9A81      		ldd r25,Y+2
+ 1439 0a10 40E0      		ldi r20,lo8(0)
+ 1440 0a12 50E0      		ldi r21,hi8(0)
+ 1441 0a14 60E0      		ldi r22,hlo8(0)
+ 1442 0a16 70E0      		ldi r23,hhi8(0)
+ 1443 0a18 0E94 0000 		call NutEventWait
+ 1444 0a1c F401      		movw r30,r8
+ 1445 0a1e A081      		ld r26,Z
+ 1446 0a20 B181      		ldd r27,Z+1
+ 1447 0a22 F601      		movw r30,r12
+ 1448 0a24 8681      		ldd r24,Z+6
+ 1449 0a26 9781      		ldd r25,Z+7
+ 1450 0a28 880F      		lsl r24
+ 1451 0a2a 991F      		rol r25
+ 1452 0a2c F401      		movw r30,r8
+ 1453 0a2e 2781      		ldd r18,Z+7
+ 1454 0a30 3085      		ldd r19,Z+8
+ 1455 0a32 280F      		add r18,r24
+ 1456 0a34 391F      		adc r19,r25
+ 1457 0a36 F901      		movw r30,r18
+ 1458 0a38 6081      		ld r22,Z
+ 1459 0a3a 7181      		ldd r23,Z+1
+ 1460 0a3c F601      		movw r30,r12
+ 1461 0a3e 4485      		ldd r20,Z+12
+ 1462 0a40 5585      		ldd r21,Z+13
+ 1463 0a42 1496      		adiw r26,4
+ 1464 0a44 8D91      		ld r24,X+
+ 1465 0a46 9C91      		ld r25,X
+ 1466 0a48 1597      		sbiw r26,4+1
+ 1467 0a4a 841B      		sub r24,r20
+ 1468 0a4c 950B      		sbc r25,r21
+ 1469 0a4e F3E0      		ldi r31,lo8(3)
+ 1470 0a50 AF16      		cp r10,r31
+ 1471 0a52 B104      		cpc r11,__zero_reg__
+ 1472 0a54 01F0      		breq .L81
+ 1473 0a56 8C01      		movw r16,r24
+ 1474 0a58 00C0      		rjmp .L82
+ 1475               	.L81:
+ 1476 0a5a 8C01      		movw r16,r24
+ 1477 0a5c 0150      		subi r16,lo8(-(-1))
+ 1478 0a5e 1040      		sbci r17,hi8(-(-1))
+ 1479               	.L82:
+ 1480 0a60 C301      		movw r24,r6
+ 1481 0a62 8E19      		sub r24,r14
+ 1482 0a64 9F09      		sbc r25,r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 27
+
+
+ 1483 0a66 1C83      		std Y+4,r17
+ 1484 0a68 0B83      		std Y+3,r16
+ 1485 0a6a 8017      		cp r24,r16
+ 1486 0a6c 9107      		cpc r25,r17
+ 1487 0a6e 04F4      		brge .L83
+ 1488 0a70 9C83      		std Y+4,r25
+ 1489 0a72 8B83      		std Y+3,r24
+ 1490               	.L83:
+ 1491 0a74 660F      		lsl r22
+ 1492 0a76 771F      		rol r23
+ 1493 0a78 660F      		lsl r22
+ 1494 0a7a 771F      		rol r23
+ 1495 0a7c 1896      		adiw r26,8
+ 1496 0a7e 8D91      		ld r24,X+
+ 1497 0a80 9C91      		ld r25,X
+ 1498 0a82 1997      		sbiw r26,8+1
+ 1499 0a84 680F      		add r22,r24
+ 1500 0a86 791F      		adc r23,r25
+ 1501 0a88 6A0D      		add r22,r10
+ 1502 0a8a 7B1D      		adc r23,r11
+ 1503 0a8c 5296      		adiw r26,18
+ 1504 0a8e ED91      		ld r30,X+
+ 1505 0a90 FC91      		ld r31,X
+ 1506 0a92 5397      		sbiw r26,18+1
+ 1507 0a94 CD01      		movw r24,r26
+ 1508 0a96 9201      		movw r18,r4
+ 1509 0a98 0B81      		ldd r16,Y+3
+ 1510 0a9a 1C81      		ldd r17,Y+4
+ 1511 0a9c 0995      		icall
+ 1512 0a9e 8981      		ldd r24,Y+1
+ 1513 0aa0 9A81      		ldd r25,Y+2
+ 1514 0aa2 0E94 0000 		call NutEventPost
+ 1515 0aa6 0B81      		ldd r16,Y+3
+ 1516 0aa8 1C81      		ldd r17,Y+4
+ 1517 0aaa 17FF      		sbrs r17,7
+ 1518 0aac 00C0      		rjmp .L84
+ 1519               	.L91:
+ 1520 0aae 85E0      		ldi r24,lo8(5)
+ 1521 0ab0 90E0      		ldi r25,hi8(5)
+ 1522 0ab2 9093 0000 		sts (errno)+1,r25
+ 1523 0ab6 8093 0000 		sts errno,r24
+ 1524 0aba EE24      		clr r14
+ 1525 0abc EA94      		dec r14
+ 1526 0abe FE2C      		mov r15,r14
+ 1527 0ac0 00C0      		rjmp .L79
+ 1528               	.L84:
+ 1529 0ac2 2B81      		ldd r18,Y+3
+ 1530 0ac4 3C81      		ldd r19,Y+4
+ 1531 0ac6 E20E      		add r14,r18
+ 1532 0ac8 F31E      		adc r15,r19
+ 1533 0aca 420E      		add r4,r18
+ 1534 0acc 531E      		adc r5,r19
+ 1535 0ace C101      		movw r24,r2
+ 1536 0ad0 B901      		movw r22,r18
+ 1537 0ad2 0E94 0000 		call EntryPosInc
+ 1538 0ad6 E614      		cp r14,r6
+ 1539 0ad8 F704      		cpc r15,r7
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 28
+
+
+ 1540 0ada 04F4      		brge .L90
+ 1541 0adc 0894      		sec
+ 1542 0ade A11C      		adc r10,__zero_reg__
+ 1543 0ae0 B11C      		adc r11,__zero_reg__
+ 1544               	.L80:
+ 1545 0ae2 34E0      		ldi r19,lo8(4)
+ 1546 0ae4 A316      		cp r10,r19
+ 1547 0ae6 B104      		cpc r11,__zero_reg__
+ 1548 0ae8 04F4      		brge .+2
+ 1549 0aea 00C0      		rjmp .L85
+ 1550               	.L90:
+ 1551 0aec E614      		cp r14,r6
+ 1552 0aee F704      		cpc r15,r7
+ 1553 0af0 04F4      		brge .+2
+ 1554 0af2 00C0      		rjmp .L86
+ 1555 0af4 00C0      		rjmp .L79
+ 1556               	.L75:
+ 1557 0af6 EE24      		clr r14
+ 1558 0af8 FF24      		clr r15
+ 1559               	.L79:
+ 1560 0afa C701      		movw r24,r14
+ 1561               	/* epilogue start */
+ 1562 0afc 0F90      		pop __tmp_reg__
+ 1563 0afe 0F90      		pop __tmp_reg__
+ 1564 0b00 0F90      		pop __tmp_reg__
+ 1565 0b02 0F90      		pop __tmp_reg__
+ 1566 0b04 CF91      		pop r28
+ 1567 0b06 DF91      		pop r29
+ 1568 0b08 1F91      		pop r17
+ 1569 0b0a 0F91      		pop r16
+ 1570 0b0c FF90      		pop r15
+ 1571 0b0e EF90      		pop r14
+ 1572 0b10 DF90      		pop r13
+ 1573 0b12 CF90      		pop r12
+ 1574 0b14 BF90      		pop r11
+ 1575 0b16 AF90      		pop r10
+ 1576 0b18 9F90      		pop r9
+ 1577 0b1a 8F90      		pop r8
+ 1578 0b1c 7F90      		pop r7
+ 1579 0b1e 6F90      		pop r6
+ 1580 0b20 5F90      		pop r5
+ 1581 0b22 4F90      		pop r4
+ 1582 0b24 3F90      		pop r3
+ 1583 0b26 2F90      		pop r2
+ 1584 0b28 0895      		ret
+ 1585               		.size	UFlashFileRead, .-UFlashFileRead
+ 1586               	.global	UFlashFormat
+ 1587               		.type	UFlashFormat, @function
+ 1588               	UFlashFormat:
+ 1589 0b2a CF93      		push r28
+ 1590 0b2c DF93      		push r29
+ 1591               	/* prologue: function */
+ 1592               	/* frame size = 0 */
+ 1593 0b2e EB01      		movw r28,r22
+ 1594 0b30 FA01      		movw r30,r20
+ 1595 0b32 A881      		ld r26,Y
+ 1596 0b34 B981      		ldd r27,Y+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 29
+
+
+ 1597 0b36 1196      		adiw r26,1
+ 1598 0b38 5C93      		st X,r21
+ 1599 0b3a 4E93      		st -X,r20
+ 1600 0b3c 0084      		ldd __tmp_reg__,Z+8
+ 1601 0b3e F185      		ldd r31,Z+9
+ 1602 0b40 E02D      		mov r30,__tmp_reg__
+ 1603 0b42 CD01      		movw r24,r26
+ 1604 0b44 0995      		icall
+ 1605 0b46 892B      		or r24,r25
+ 1606 0b48 01F0      		breq .L93
+ 1607 0b4a 2FEF      		ldi r18,lo8(-1)
+ 1608 0b4c 3FEF      		ldi r19,hi8(-1)
+ 1609 0b4e 00C0      		rjmp .L94
+ 1610               	.L93:
+ 1611 0b50 E881      		ld r30,Y
+ 1612 0b52 F981      		ldd r31,Y+1
+ 1613 0b54 8081      		ld r24,Z
+ 1614 0b56 9181      		ldd r25,Z+1
+ 1615 0b58 0E94 0000 		call NutEventPost
+ 1616 0b5c EC85      		ldd r30,Y+12
+ 1617 0b5e FD85      		ldd r31,Y+13
+ 1618 0b60 CE01      		movw r24,r28
+ 1619 0b62 0995      		icall
+ 1620 0b64 892B      		or r24,r25
+ 1621 0b66 01F4      		brne .L98
+ 1622               	.L95:
+ 1623 0b68 6885      		ldd r22,Y+8
+ 1624 0b6a 7985      		ldd r23,Y+9
+ 1625 0b6c 4E81      		ldd r20,Y+6
+ 1626 0b6e 5F81      		ldd r21,Y+7
+ 1627 0b70 461B      		sub r20,r22
+ 1628 0b72 570B      		sbc r21,r23
+ 1629 0b74 8A85      		ldd r24,Y+10
+ 1630 0b76 9B85      		ldd r25,Y+11
+ 1631 0b78 481B      		sub r20,r24
+ 1632 0b7a 590B      		sbc r21,r25
+ 1633 0b7c 5695      		lsr r21
+ 1634 0b7e 4795      		ror r20
+ 1635 0b80 5695      		lsr r21
+ 1636 0b82 4795      		ror r20
+ 1637 0b84 80E2      		ldi r24,hi8(8193)
+ 1638 0b86 4130      		cpi r20,lo8(8193)
+ 1639 0b88 5807      		cpc r21,r24
+ 1640 0b8a 00F0      		brlo .L96
+ 1641 0b8c 40E0      		ldi r20,lo8(8192)
+ 1642 0b8e 50E2      		ldi r21,hi8(8192)
+ 1643               	.L96:
+ 1644 0b90 440F      		lsl r20
+ 1645 0b92 551F      		rol r21
+ 1646 0b94 440F      		lsl r20
+ 1647 0b96 551F      		rol r21
+ 1648 0b98 EE8D      		ldd r30,Y+30
+ 1649 0b9a FF8D      		ldd r31,Y+31
+ 1650 0b9c CE01      		movw r24,r28
+ 1651 0b9e 0995      		icall
+ 1652 0ba0 EE85      		ldd r30,Y+14
+ 1653 0ba2 FF85      		ldd r31,Y+15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 30
+
+
+ 1654 0ba4 CE01      		movw r24,r28
+ 1655 0ba6 0995      		icall
+ 1656               	.L98:
+ 1657 0ba8 20E0      		ldi r18,lo8(0)
+ 1658 0baa 30E0      		ldi r19,hi8(0)
+ 1659               	.L94:
+ 1660 0bac C901      		movw r24,r18
+ 1661               	/* epilogue start */
+ 1662 0bae DF91      		pop r29
+ 1663 0bb0 CF91      		pop r28
+ 1664 0bb2 0895      		ret
+ 1665               		.size	UFlashFormat, .-UFlashFormat
+ 1666               		.type	PhysBlkAllocate, @function
+ 1667               	PhysBlkAllocate:
+ 1668 0bb4 2F92      		push r2
+ 1669 0bb6 3F92      		push r3
+ 1670 0bb8 4F92      		push r4
+ 1671 0bba 5F92      		push r5
+ 1672 0bbc 6F92      		push r6
+ 1673 0bbe 7F92      		push r7
+ 1674 0bc0 8F92      		push r8
+ 1675 0bc2 9F92      		push r9
+ 1676 0bc4 AF92      		push r10
+ 1677 0bc6 BF92      		push r11
+ 1678 0bc8 CF92      		push r12
+ 1679 0bca DF92      		push r13
+ 1680 0bcc EF92      		push r14
+ 1681 0bce FF92      		push r15
+ 1682 0bd0 0F93      		push r16
+ 1683 0bd2 1F93      		push r17
+ 1684 0bd4 DF93      		push r29
+ 1685 0bd6 CF93      		push r28
+ 1686 0bd8 CDB7      		in r28,__SP_L__
+ 1687 0bda DEB7      		in r29,__SP_H__
+ 1688 0bdc 2A97      		sbiw r28,10
+ 1689 0bde 0FB6      		in __tmp_reg__,__SREG__
+ 1690 0be0 F894      		cli
+ 1691 0be2 DEBF      		out __SP_H__,r29
+ 1692 0be4 0FBE      		out __SREG__,__tmp_reg__
+ 1693 0be6 CDBF      		out __SP_L__,r28
+ 1694               	/* prologue: function */
+ 1695               	/* frame size = 10 */
+ 1696 0be8 4C01      		movw r8,r24
+ 1697 0bea 7B01      		movw r14,r22
+ 1698 0bec 2E01      		movw r4,r28
+ 1699 0bee 0894      		sec
+ 1700 0bf0 411C      		adc r4,__zero_reg__
+ 1701 0bf2 511C      		adc r5,__zero_reg__
+ 1702               	.L137:
+ 1703 0bf4 E114      		cp r14,__zero_reg__
+ 1704 0bf6 F104      		cpc r15,__zero_reg__
+ 1705 0bf8 01F4      		brne .L100
+ 1706 0bfa 2091 0000 		lds r18,min_used+73
+ 1707 0bfe 3091 0000 		lds r19,(min_used+73)+1
+ 1708 0c02 D401      		movw r26,r8
+ 1709 0c04 1596      		adiw r26,5
+ 1710 0c06 8D91      		ld r24,X+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 31
+
+
+ 1711 0c08 9C91      		ld r25,X
+ 1712 0c0a 1697      		sbiw r26,5+1
+ 1713 0c0c 2817      		cp r18,r24
+ 1714 0c0e 3907      		cpc r19,r25
+ 1715 0c10 00F0      		brlo .+2
+ 1716 0c12 00C0      		rjmp .L101
+ 1717               	.L100:
+ 1718 0c14 F401      		movw r30,r8
+ 1719 0c16 2581      		ldd r18,Z+5
+ 1720 0c18 3681      		ldd r19,Z+6
+ 1721 0c1a E0E0      		ldi r30,lo8(min_used+1)
+ 1722 0c1c F0E0      		ldi r31,hi8(min_used+1)
+ 1723 0c1e 80E0      		ldi r24,lo8(0)
+ 1724 0c20 90E0      		ldi r25,hi8(0)
+ 1725               	.L111:
+ 1726 0c22 6080      		ld r6,Z
+ 1727 0c24 7180      		ldd r7,Z+1
+ 1728 0c26 6216      		cp r6,r18
+ 1729 0c28 7306      		cpc r7,r19
+ 1730 0c2a 00F0      		brlo .+2
+ 1731 0c2c 00C0      		rjmp .L102
+ 1732 0c2e FC01      		movw r30,r24
+ 1733 0c30 EE0F      		lsl r30
+ 1734 0c32 FF1F      		rol r31
+ 1735 0c34 E80F      		add r30,r24
+ 1736 0c36 F91F      		adc r31,r25
+ 1737 0c38 E050      		subi r30,lo8(-(min_used))
+ 1738 0c3a F040      		sbci r31,hi8(-(min_used))
+ 1739 0c3c 8FEF      		ldi r24,lo8(-1)
+ 1740 0c3e 9FEF      		ldi r25,hi8(-1)
+ 1741 0c40 9283      		std Z+2,r25
+ 1742 0c42 8183      		std Z+1,r24
+ 1743 0c44 D401      		movw r26,r8
+ 1744 0c46 1596      		adiw r26,5
+ 1745 0c48 4D91      		ld r20,X+
+ 1746 0c4a 5C91      		ld r21,X
+ 1747 0c4c 1697      		sbiw r26,5+1
+ 1748 0c4e 20E0      		ldi r18,lo8(0)
+ 1749 0c50 30E0      		ldi r19,hi8(0)
+ 1750 0c52 00C0      		rjmp .L103
+ 1751               	.L110:
+ 1752 0c54 8901      		movw r16,r18
+ 1753 0c56 000F      		lsl r16
+ 1754 0c58 111F      		rol r17
+ 1755 0c5a D401      		movw r26,r8
+ 1756 0c5c 1796      		adiw r26,7
+ 1757 0c5e ED91      		ld r30,X+
+ 1758 0c60 FC91      		ld r31,X
+ 1759 0c62 1897      		sbiw r26,7+1
+ 1760 0c64 E00F      		add r30,r16
+ 1761 0c66 F11F      		adc r31,r17
+ 1762 0c68 8081      		ld r24,Z
+ 1763 0c6a 9181      		ldd r25,Z+1
+ 1764 0c6c 8615      		cp r24,r6
+ 1765 0c6e 9705      		cpc r25,r7
+ 1766 0c70 01F0      		breq .+2
+ 1767 0c72 00C0      		rjmp .L104
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 32
+
+
+ 1768 0c74 0894      		sec
+ 1769 0c76 E11C      		adc r14,__zero_reg__
+ 1770 0c78 F11C      		adc r15,__zero_reg__
+ 1771 0c7a C401      		movw r24,r8
+ 1772 0c7c B701      		movw r22,r14
+ 1773 0c7e 0E94 0000 		call PhysBlkAllocate
+ 1774 0c82 5C01      		movw r10,r24
+ 1775 0c84 F401      		movw r30,r8
+ 1776 0c86 8581      		ldd r24,Z+5
+ 1777 0c88 9681      		ldd r25,Z+6
+ 1778 0c8a A816      		cp r10,r24
+ 1779 0c8c B906      		cpc r11,r25
+ 1780 0c8e 00F0      		brlo .L105
+ 1781 0c90 6624      		clr r6
+ 1782 0c92 6A94      		dec r6
+ 1783 0c94 762C      		mov r7,r6
+ 1784 0c96 00C0      		rjmp .L106
+ 1785               	.L105:
+ 1786 0c98 D401      		movw r26,r8
+ 1787 0c9a 1796      		adiw r26,7
+ 1788 0c9c ED91      		ld r30,X+
+ 1789 0c9e FC91      		ld r31,X
+ 1790 0ca0 1897      		sbiw r26,7+1
+ 1791 0ca2 E00F      		add r30,r16
+ 1792 0ca4 F11F      		adc r31,r17
+ 1793 0ca6 B182      		std Z+1,r11
+ 1794 0ca8 A082      		st Z,r10
+ 1795 0caa 72E0      		ldi r23,lo8(2)
+ 1796 0cac E72E      		mov r14,r23
+ 1797 0cae F12C      		mov r15,__zero_reg__
+ 1798 0cb0 EC0E      		add r14,r28
+ 1799 0cb2 FD1E      		adc r15,r29
+ 1800 0cb4 8D91      		ld r24,X+
+ 1801 0cb6 9C91      		ld r25,X
+ 1802 0cb8 B301      		movw r22,r6
+ 1803 0cba A701      		movw r20,r14
+ 1804 0cbc 0E94 0000 		call FlashReadBlockHead
+ 1805 0cc0 F401      		movw r30,r8
+ 1806 0cc2 8081      		ld r24,Z
+ 1807 0cc4 9181      		ldd r25,Z+1
+ 1808 0cc6 B501      		movw r22,r10
+ 1809 0cc8 8E01      		movw r16,r28
+ 1810 0cca 0F5F      		subi r16,lo8(-(1))
+ 1811 0ccc 1F4F      		sbci r17,hi8(-(1))
+ 1812 0cce A801      		movw r20,r16
+ 1813 0cd0 0E94 0000 		call FlashReadBlockFoot
+ 1814 0cd4 D401      		movw r26,r8
+ 1815 0cd6 8D91      		ld r24,X+
+ 1816 0cd8 9C91      		ld r25,X
+ 1817 0cda B501      		movw r22,r10
+ 1818 0cdc 0E94 0000 		call FlashEraseBlockData
+ 1819 0ce0 1301      		movw r2,r6
+ 1820 0ce2 220C      		lsl r2
+ 1821 0ce4 331C      		rol r3
+ 1822 0ce6 220C      		lsl r2
+ 1823 0ce8 331C      		rol r3
+ 1824 0cea 2501      		movw r4,r10
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 33
+
+
+ 1825 0cec 440C      		lsl r4
+ 1826 0cee 551C      		rol r5
+ 1827 0cf0 440C      		lsl r4
+ 1828 0cf2 551C      		rol r5
+ 1829 0cf4 CC24      		clr r12
+ 1830 0cf6 DD24      		clr r13
+ 1831 0cf8 0A87      		std Y+10,r16
+ 1832 0cfa 012F      		mov r16,r17
+ 1833 0cfc 1E2D      		mov r17,r14
+ 1834 0cfe EF2C      		mov r14,r15
+ 1835               	.L109:
+ 1836 0d00 D401      		movw r26,r8
+ 1837 0d02 ED91      		ld r30,X+
+ 1838 0d04 FC91      		ld r31,X
+ 1839 0d06 4085      		ldd r20,Z+8
+ 1840 0d08 5185      		ldd r21,Z+9
+ 1841 0d0a 4C0D      		add r20,r12
+ 1842 0d0c 5D1D      		adc r21,r13
+ 1843 0d0e BA01      		movw r22,r20
+ 1844 0d10 620D      		add r22,r2
+ 1845 0d12 731D      		adc r23,r3
+ 1846 0d14 440D      		add r20,r4
+ 1847 0d16 551D      		adc r21,r5
+ 1848 0d18 228D      		ldd r18,Z+26
+ 1849 0d1a 338D      		ldd r19,Z+27
+ 1850 0d1c CF01      		movw r24,r30
+ 1851 0d1e F901      		movw r30,r18
+ 1852 0d20 0995      		icall
+ 1853 0d22 8C2D      		mov r24,r12
+ 1854 0d24 CC20      		tst r12
+ 1855 0d26 01F4      		brne .L107
+ 1856 0d28 F401      		movw r30,r8
+ 1857 0d2a 8081      		ld r24,Z
+ 1858 0d2c 9181      		ldd r25,Z+1
+ 1859 0d2e B501      		movw r22,r10
+ 1860 0d30 412F      		mov r20,r17
+ 1861 0d32 5E2D      		mov r21,r14
+ 1862 0d34 0E94 0000 		call FlashWriteBlockHead
+ 1863 0d38 00C0      		rjmp .L108
+ 1864               	.L107:
+ 1865 0d3a 8330      		cpi r24,lo8(3)
+ 1866 0d3c 01F4      		brne .L108
+ 1867 0d3e D401      		movw r26,r8
+ 1868 0d40 8D91      		ld r24,X+
+ 1869 0d42 9C91      		ld r25,X
+ 1870 0d44 B501      		movw r22,r10
+ 1871 0d46 4A85      		ldd r20,Y+10
+ 1872 0d48 502F      		mov r21,r16
+ 1873 0d4a 0E94 0000 		call FlashWriteBlockFoot
+ 1874               	.L108:
+ 1875 0d4e F401      		movw r30,r8
+ 1876 0d50 8081      		ld r24,Z
+ 1877 0d52 9181      		ldd r25,Z+1
+ 1878 0d54 B501      		movw r22,r10
+ 1879 0d56 A601      		movw r20,r12
+ 1880 0d58 0E94 0000 		call FlashUnitCommit
+ 1881 0d5c 0894      		sec
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 34
+
+
+ 1882 0d5e C11C      		adc r12,__zero_reg__
+ 1883 0d60 D11C      		adc r13,__zero_reg__
+ 1884 0d62 F4E0      		ldi r31,lo8(4)
+ 1885 0d64 CF16      		cp r12,r31
+ 1886 0d66 D104      		cpc r13,__zero_reg__
+ 1887 0d68 01F4      		brne .L109
+ 1888 0d6a D401      		movw r26,r8
+ 1889 0d6c 8D91      		ld r24,X+
+ 1890 0d6e 9C91      		ld r25,X
+ 1891 0d70 B301      		movw r22,r6
+ 1892 0d72 0E94 0000 		call FlashEraseEntry
+ 1893 0d76 00C0      		rjmp .L106
+ 1894               	.L104:
+ 1895 0d78 2F5F      		subi r18,lo8(-(1))
+ 1896 0d7a 3F4F      		sbci r19,hi8(-(1))
+ 1897               	.L103:
+ 1898 0d7c 2417      		cp r18,r20
+ 1899 0d7e 3507      		cpc r19,r21
+ 1900 0d80 00F4      		brsh .+2
+ 1901 0d82 00C0      		rjmp .L110
+ 1902 0d84 00C0      		rjmp .L106
+ 1903               	.L102:
+ 1904 0d86 0196      		adiw r24,1
+ 1905 0d88 3396      		adiw r30,3
+ 1906 0d8a 8032      		cpi r24,32
+ 1907 0d8c 9105      		cpc r25,__zero_reg__
+ 1908 0d8e 01F0      		breq .+2
+ 1909 0d90 00C0      		rjmp .L111
+ 1910               	.L101:
+ 1911 0d92 F401      		movw r30,r8
+ 1912 0d94 8581      		ldd r24,Z+5
+ 1913 0d96 9681      		ldd r25,Z+6
+ 1914 0d98 61E0      		ldi r22,lo8(1)
+ 1915 0d9a 70E0      		ldi r23,hi8(1)
+ 1916 0d9c 0E94 0000 		call calloc
+ 1917 0da0 6C01      		movw r12,r24
+ 1918 0da2 0097      		sbiw r24,0
+ 1919 0da4 01F4      		brne .+2
+ 1920 0da6 00C0      		rjmp .L112
+ 1921 0da8 00E0      		ldi r16,lo8(0)
+ 1922 0daa 10E0      		ldi r17,hi8(0)
+ 1923 0dac 00C0      		rjmp .L113
+ 1924               	.L114:
+ 1925 0dae D401      		movw r26,r8
+ 1926 0db0 8D91      		ld r24,X+
+ 1927 0db2 9C91      		ld r25,X
+ 1928 0db4 B801      		movw r22,r16
+ 1929 0db6 A201      		movw r20,r4
+ 1930 0db8 0E94 0000 		call FlashReadBlockFoot
+ 1931 0dbc F601      		movw r30,r12
+ 1932 0dbe E00F      		add r30,r16
+ 1933 0dc0 F11F      		adc r31,r17
+ 1934 0dc2 8981      		ldd r24,Y+1
+ 1935 0dc4 8083      		st Z,r24
+ 1936 0dc6 0F5F      		subi r16,lo8(-(1))
+ 1937 0dc8 1F4F      		sbci r17,hi8(-(1))
+ 1938               	.L113:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 35
+
+
+ 1939 0dca F401      		movw r30,r8
+ 1940 0dcc 8581      		ldd r24,Z+5
+ 1941 0dce 9681      		ldd r25,Z+6
+ 1942 0dd0 0817      		cp r16,r24
+ 1943 0dd2 1907      		cpc r17,r25
+ 1944 0dd4 00F0      		brlo .L114
+ 1945 0dd6 20E0      		ldi r18,lo8(0)
+ 1946 0dd8 30E0      		ldi r19,hi8(0)
+ 1947 0dda 00C0      		rjmp .L115
+ 1948               	.L117:
+ 1949 0ddc C901      		movw r24,r18
+ 1950 0dde 880F      		lsl r24
+ 1951 0de0 991F      		rol r25
+ 1952 0de2 D401      		movw r26,r8
+ 1953 0de4 1796      		adiw r26,7
+ 1954 0de6 ED91      		ld r30,X+
+ 1955 0de8 FC91      		ld r31,X
+ 1956 0dea 1897      		sbiw r26,7+1
+ 1957 0dec E80F      		add r30,r24
+ 1958 0dee F91F      		adc r31,r25
+ 1959 0df0 0190      		ld __tmp_reg__,Z+
+ 1960 0df2 F081      		ld r31,Z
+ 1961 0df4 E02D      		mov r30,__tmp_reg__
+ 1962 0df6 E617      		cp r30,r22
+ 1963 0df8 F707      		cpc r31,r23
+ 1964 0dfa 00F4      		brsh .L116
+ 1965 0dfc EC0D      		add r30,r12
+ 1966 0dfe FD1D      		adc r31,r13
+ 1967 0e00 8081      		ld r24,Z
+ 1968 0e02 815E      		subi r24,lo8(-(31))
+ 1969 0e04 8083      		st Z,r24
+ 1970               	.L116:
+ 1971 0e06 2F5F      		subi r18,lo8(-(1))
+ 1972 0e08 3F4F      		sbci r19,hi8(-(1))
+ 1973               	.L115:
+ 1974 0e0a F401      		movw r30,r8
+ 1975 0e0c 6581      		ldd r22,Z+5
+ 1976 0e0e 7681      		ldd r23,Z+6
+ 1977 0e10 2617      		cp r18,r22
+ 1978 0e12 3707      		cpc r19,r23
+ 1979 0e14 00F0      		brlo .L117
+ 1980 0e16 D601      		movw r26,r12
+ 1981 0e18 5C91      		ld r21,X
+ 1982 0e1a 452F      		mov r20,r21
+ 1983 0e1c 21E0      		ldi r18,lo8(1)
+ 1984 0e1e 30E0      		ldi r19,hi8(1)
+ 1985 0e20 00C0      		rjmp .L118
+ 1986               	.L123:
+ 1987 0e22 F601      		movw r30,r12
+ 1988 0e24 E20F      		add r30,r18
+ 1989 0e26 F31F      		adc r31,r19
+ 1990 0e28 E081      		ld r30,Z
+ 1991 0e2a E517      		cp r30,r21
+ 1992 0e2c 00F4      		brsh .L119
+ 1993 0e2e 842F      		mov r24,r20
+ 1994 0e30 90E0      		ldi r25,lo8(0)
+ 1995 0e32 8E1B      		sub r24,r30
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 36
+
+
+ 1996 0e34 9109      		sbc r25,__zero_reg__
+ 1997 0e36 8038      		cpi r24,128
+ 1998 0e38 9105      		cpc r25,__zero_reg__
+ 1999 0e3a 04F4      		brge .L120
+ 2000 0e3c 5E2F      		mov r21,r30
+ 2001 0e3e 00C0      		rjmp .L145
+ 2002               	.L119:
+ 2003 0e40 4E17      		cp r20,r30
+ 2004 0e42 00F0      		brlo .L122
+ 2005               	.L145:
+ 2006 0e44 E42F      		mov r30,r20
+ 2007 0e46 00C0      		rjmp .L121
+ 2008               	.L122:
+ 2009 0e48 8E2F      		mov r24,r30
+ 2010 0e4a 90E0      		ldi r25,lo8(0)
+ 2011 0e4c 851B      		sub r24,r21
+ 2012 0e4e 9109      		sbc r25,__zero_reg__
+ 2013 0e50 8038      		cpi r24,128
+ 2014 0e52 9105      		cpc r25,__zero_reg__
+ 2015 0e54 04F4      		brge .L120
+ 2016               	.L121:
+ 2017 0e56 2F5F      		subi r18,lo8(-(1))
+ 2018 0e58 3F4F      		sbci r19,hi8(-(1))
+ 2019 0e5a 4E2F      		mov r20,r30
+ 2020               	.L118:
+ 2021 0e5c 2617      		cp r18,r22
+ 2022 0e5e 3707      		cpc r19,r23
+ 2023 0e60 00F0      		brlo .L123
+ 2024 0e62 00C0      		rjmp .L124
+ 2025               	.L120:
+ 2026 0e64 2617      		cp r18,r22
+ 2027 0e66 3707      		cpc r19,r23
+ 2028 0e68 00F4      		brsh .L124
+ 2029 0e6a F601      		movw r30,r12
+ 2030 0e6c 20E0      		ldi r18,lo8(0)
+ 2031 0e6e 30E0      		ldi r19,hi8(0)
+ 2032 0e70 00C0      		rjmp .L125
+ 2033               	.L126:
+ 2034 0e72 8081      		ld r24,Z
+ 2035 0e74 8058      		subi r24,lo8(-(-128))
+ 2036 0e76 8193      		st Z+,r24
+ 2037 0e78 2F5F      		subi r18,lo8(-(1))
+ 2038 0e7a 3F4F      		sbci r19,hi8(-(1))
+ 2039               	.L125:
+ 2040 0e7c D401      		movw r26,r8
+ 2041 0e7e 1596      		adiw r26,5
+ 2042 0e80 8D91      		ld r24,X+
+ 2043 0e82 9C91      		ld r25,X
+ 2044 0e84 1697      		sbiw r26,5+1
+ 2045 0e86 2817      		cp r18,r24
+ 2046 0e88 3907      		cpc r19,r25
+ 2047 0e8a 00F0      		brlo .L126
+ 2048               	.L124:
+ 2049 0e8c 80E0      		ldi r24,lo8(min_used)
+ 2050 0e8e 90E0      		ldi r25,hi8(min_used)
+ 2051 0e90 6FEF      		ldi r22,lo8(255)
+ 2052 0e92 70E0      		ldi r23,hi8(255)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 37
+
+
+ 2053 0e94 40E6      		ldi r20,lo8(96)
+ 2054 0e96 50E0      		ldi r21,hi8(96)
+ 2055 0e98 0E94 0000 		call memset
+ 2056 0e9c 8601      		movw r16,r12
+ 2057 0e9e AA24      		clr r10
+ 2058 0ea0 BB24      		clr r11
+ 2059 0ea2 00C0      		rjmp .L127
+ 2060               	.L136:
+ 2061 0ea4 8091 0000 		lds r24,min_used+94
+ 2062 0ea8 9091 0000 		lds r25,(min_used+94)+1
+ 2063 0eac 2817      		cp r18,r24
+ 2064 0eae 3907      		cpc r19,r25
+ 2065 0eb0 00F4      		brsh .L128
+ 2066               	.L130:
+ 2067 0eb2 E0E0      		ldi r30,lo8(min_used+90)
+ 2068 0eb4 F0E0      		ldi r31,hi8(min_used+90)
+ 2069 0eb6 BF01      		movw r22,r30
+ 2070 0eb8 6D5F      		subi r22,lo8(-(3))
+ 2071 0eba 7F4F      		sbci r23,hi8(-(3))
+ 2072 0ebc 4FE1      		ldi r20,lo8(31)
+ 2073 0ebe 50E0      		ldi r21,hi8(31)
+ 2074 0ec0 00C0      		rjmp .L129
+ 2075               	.L128:
+ 2076 0ec2 9091 0000 		lds r25,min_used+93
+ 2077 0ec6 F801      		movw r30,r16
+ 2078 0ec8 8081      		ld r24,Z
+ 2079 0eca 8917      		cp r24,r25
+ 2080 0ecc 00F0      		brlo .L130
+ 2081 0ece 00C0      		rjmp .L131
+ 2082               	.L135:
+ 2083 0ed0 D801      		movw r26,r16
+ 2084 0ed2 9C91      		ld r25,X
+ 2085 0ed4 8081      		ld r24,Z
+ 2086 0ed6 9817      		cp r25,r24
+ 2087 0ed8 00F0      		brlo .L132
+ 2088 0eda 2181      		ldd r18,Z+1
+ 2089 0edc 3281      		ldd r19,Z+2
+ 2090 0ede D401      		movw r26,r8
+ 2091 0ee0 1596      		adiw r26,5
+ 2092 0ee2 8D91      		ld r24,X+
+ 2093 0ee4 9C91      		ld r25,X
+ 2094 0ee6 1697      		sbiw r26,5+1
+ 2095 0ee8 2817      		cp r18,r24
+ 2096 0eea 3907      		cpc r19,r25
+ 2097 0eec 00F0      		brlo .L133
+ 2098               	.L132:
+ 2099 0eee 9B01      		movw r18,r22
+ 2100 0ef0 AF01      		movw r20,r30
+ 2101 0ef2 83E0      		ldi r24,lo8(3)
+ 2102               	.L134:
+ 2103 0ef4 DA01      		movw r26,r20
+ 2104 0ef6 0D90      		ld r0,X+
+ 2105 0ef8 AD01      		movw r20,r26
+ 2106 0efa D901      		movw r26,r18
+ 2107 0efc 0D92      		st X+,r0
+ 2108 0efe 9D01      		movw r18,r26
+ 2109 0f00 8150      		subi r24,lo8(-(-1))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 38
+
+
+ 2110 0f02 01F4      		brne .L134
+ 2111 0f04 3397      		sbiw r30,3
+ 2112 0f06 6350      		subi r22,lo8(-(-3))
+ 2113 0f08 7040      		sbci r23,hi8(-(-3))
+ 2114 0f0a A301      		movw r20,r6
+ 2115               	.L129:
+ 2116 0f0c 3A01      		movw r6,r20
+ 2117 0f0e 0894      		sec
+ 2118 0f10 6108      		sbc r6,__zero_reg__
+ 2119 0f12 7108      		sbc r7,__zero_reg__
+ 2120 0f14 BFEF      		ldi r27,lo8(-1)
+ 2121 0f16 6B16      		cp r6,r27
+ 2122 0f18 BFEF      		ldi r27,hi8(-1)
+ 2123 0f1a 7B06      		cpc r7,r27
+ 2124 0f1c 01F4      		brne .L135
+ 2125               	.L133:
+ 2126 0f1e FA01      		movw r30,r20
+ 2127 0f20 EE0F      		lsl r30
+ 2128 0f22 FF1F      		rol r31
+ 2129 0f24 E40F      		add r30,r20
+ 2130 0f26 F51F      		adc r31,r21
+ 2131 0f28 E050      		subi r30,lo8(-(min_used))
+ 2132 0f2a F040      		sbci r31,hi8(-(min_used))
+ 2133 0f2c D801      		movw r26,r16
+ 2134 0f2e 8C91      		ld r24,X
+ 2135 0f30 8083      		st Z,r24
+ 2136 0f32 B282      		std Z+2,r11
+ 2137 0f34 A182      		std Z+1,r10
+ 2138               	.L131:
+ 2139 0f36 0894      		sec
+ 2140 0f38 A11C      		adc r10,__zero_reg__
+ 2141 0f3a B11C      		adc r11,__zero_reg__
+ 2142 0f3c 0F5F      		subi r16,lo8(-(1))
+ 2143 0f3e 1F4F      		sbci r17,hi8(-(1))
+ 2144               	.L127:
+ 2145 0f40 F401      		movw r30,r8
+ 2146 0f42 2581      		ldd r18,Z+5
+ 2147 0f44 3681      		ldd r19,Z+6
+ 2148 0f46 A216      		cp r10,r18
+ 2149 0f48 B306      		cpc r11,r19
+ 2150 0f4a 00F4      		brsh .+2
+ 2151 0f4c 00C0      		rjmp .L136
+ 2152 0f4e C601      		movw r24,r12
+ 2153 0f50 0E94 0000 		call free
+ 2154 0f54 E114      		cp r14,__zero_reg__
+ 2155 0f56 F104      		cpc r15,__zero_reg__
+ 2156 0f58 01F4      		brne .+2
+ 2157 0f5a 00C0      		rjmp .L137
+ 2158               	.L112:
+ 2159 0f5c 6624      		clr r6
+ 2160 0f5e 7724      		clr r7
+ 2161 0f60 8E01      		movw r16,r28
+ 2162 0f62 0E5F      		subi r16,lo8(-(2))
+ 2163 0f64 1F4F      		sbci r17,hi8(-(2))
+ 2164 0f66 00C0      		rjmp .L138
+ 2165               	.L139:
+ 2166 0f68 D401      		movw r26,r8
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 39
+
+
+ 2167 0f6a 8D91      		ld r24,X+
+ 2168 0f6c 9C91      		ld r25,X
+ 2169 0f6e B301      		movw r22,r6
+ 2170 0f70 A801      		movw r20,r16
+ 2171 0f72 0E94 0000 		call FlashReadBlockHead
+ 2172 0f76 2A81      		ldd r18,Y+2
+ 2173 0f78 3B81      		ldd r19,Y+3
+ 2174 0f7a F401      		movw r30,r8
+ 2175 0f7c 8581      		ldd r24,Z+5
+ 2176 0f7e 9681      		ldd r25,Z+6
+ 2177 0f80 2817      		cp r18,r24
+ 2178 0f82 3907      		cpc r19,r25
+ 2179 0f84 00F4      		brsh .L106
+ 2180 0f86 0894      		sec
+ 2181 0f88 611C      		adc r6,__zero_reg__
+ 2182 0f8a 711C      		adc r7,__zero_reg__
+ 2183               	.L138:
+ 2184 0f8c D401      		movw r26,r8
+ 2185 0f8e 1596      		adiw r26,5
+ 2186 0f90 8D91      		ld r24,X+
+ 2187 0f92 9C91      		ld r25,X
+ 2188 0f94 1697      		sbiw r26,5+1
+ 2189 0f96 6816      		cp r6,r24
+ 2190 0f98 7906      		cpc r7,r25
+ 2191 0f9a 00F0      		brlo .L139
+ 2192               	.L106:
+ 2193 0f9c C301      		movw r24,r6
+ 2194               	/* epilogue start */
+ 2195 0f9e 2A96      		adiw r28,10
+ 2196 0fa0 0FB6      		in __tmp_reg__,__SREG__
+ 2197 0fa2 F894      		cli
+ 2198 0fa4 DEBF      		out __SP_H__,r29
+ 2199 0fa6 0FBE      		out __SREG__,__tmp_reg__
+ 2200 0fa8 CDBF      		out __SP_L__,r28
+ 2201 0faa CF91      		pop r28
+ 2202 0fac DF91      		pop r29
+ 2203 0fae 1F91      		pop r17
+ 2204 0fb0 0F91      		pop r16
+ 2205 0fb2 FF90      		pop r15
+ 2206 0fb4 EF90      		pop r14
+ 2207 0fb6 DF90      		pop r13
+ 2208 0fb8 CF90      		pop r12
+ 2209 0fba BF90      		pop r11
+ 2210 0fbc AF90      		pop r10
+ 2211 0fbe 9F90      		pop r9
+ 2212 0fc0 8F90      		pop r8
+ 2213 0fc2 7F90      		pop r7
+ 2214 0fc4 6F90      		pop r6
+ 2215 0fc6 5F90      		pop r5
+ 2216 0fc8 4F90      		pop r4
+ 2217 0fca 3F90      		pop r3
+ 2218 0fcc 2F90      		pop r2
+ 2219 0fce 0895      		ret
+ 2220               		.size	PhysBlkAllocate, .-PhysBlkAllocate
+ 2221               		.type	LogBlkAllocate, @function
+ 2222               	LogBlkAllocate:
+ 2223 0fd0 0F93      		push r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 40
+
+
+ 2224 0fd2 1F93      		push r17
+ 2225 0fd4 CF93      		push r28
+ 2226 0fd6 DF93      		push r29
+ 2227               	/* prologue: function */
+ 2228               	/* frame size = 0 */
+ 2229 0fd8 FC01      		movw r30,r24
+ 2230 0fda EB01      		movw r28,r22
+ 2231 0fdc 6115      		cp r22,__zero_reg__
+ 2232 0fde 7105      		cpc r23,__zero_reg__
+ 2233 0fe0 01F4      		brne .L147
+ 2234 0fe2 60E8      		ldi r22,lo8(128)
+ 2235 0fe4 70E0      		ldi r23,hi8(128)
+ 2236 0fe6 00C0      		rjmp .L148
+ 2237               	.L147:
+ 2238 0fe8 6581      		ldd r22,Z+5
+ 2239 0fea 7681      		ldd r23,Z+6
+ 2240               	.L148:
+ 2241 0fec AE01      		movw r20,r28
+ 2242 0fee 440F      		lsl r20
+ 2243 0ff0 551F      		rol r21
+ 2244 0ff2 00C0      		rjmp .L149
+ 2245               	.L152:
+ 2246 0ff4 0781      		ldd r16,Z+7
+ 2247 0ff6 1085      		ldd r17,Z+8
+ 2248 0ff8 040F      		add r16,r20
+ 2249 0ffa 151F      		adc r17,r21
+ 2250 0ffc 4E5F      		subi r20,lo8(-(2))
+ 2251 0ffe 5F4F      		sbci r21,hi8(-(2))
+ 2252 1000 D801      		movw r26,r16
+ 2253 1002 2D91      		ld r18,X+
+ 2254 1004 3C91      		ld r19,X
+ 2255 1006 8581      		ldd r24,Z+5
+ 2256 1008 9681      		ldd r25,Z+6
+ 2257 100a 2817      		cp r18,r24
+ 2258 100c 3907      		cpc r19,r25
+ 2259 100e 00F0      		brlo .L150
+ 2260 1010 CF01      		movw r24,r30
+ 2261 1012 60E0      		ldi r22,lo8(0)
+ 2262 1014 70E0      		ldi r23,hi8(0)
+ 2263 1016 0E94 0000 		call PhysBlkAllocate
+ 2264 101a F801      		movw r30,r16
+ 2265 101c 9183      		std Z+1,r25
+ 2266 101e 8083      		st Z,r24
+ 2267 1020 00C0      		rjmp .L151
+ 2268               	.L150:
+ 2269 1022 2196      		adiw r28,1
+ 2270               	.L149:
+ 2271 1024 C617      		cp r28,r22
+ 2272 1026 D707      		cpc r29,r23
+ 2273 1028 00F0      		brlo .L152
+ 2274               	.L151:
+ 2275 102a CE01      		movw r24,r28
+ 2276               	/* epilogue start */
+ 2277 102c DF91      		pop r29
+ 2278 102e CF91      		pop r28
+ 2279 1030 1F91      		pop r17
+ 2280 1032 0F91      		pop r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 41
+
+
+ 2281 1034 0895      		ret
+ 2282               		.size	LogBlkAllocate, .-LogBlkAllocate
+ 2283               		.type	UFlashFileOpen, @function
+ 2284               	UFlashFileOpen:
+ 2285 1036 2F92      		push r2
+ 2286 1038 3F92      		push r3
+ 2287 103a 4F92      		push r4
+ 2288 103c 5F92      		push r5
+ 2289 103e 6F92      		push r6
+ 2290 1040 7F92      		push r7
+ 2291 1042 8F92      		push r8
+ 2292 1044 9F92      		push r9
+ 2293 1046 AF92      		push r10
+ 2294 1048 BF92      		push r11
+ 2295 104a CF92      		push r12
+ 2296 104c DF92      		push r13
+ 2297 104e EF92      		push r14
+ 2298 1050 FF92      		push r15
+ 2299 1052 0F93      		push r16
+ 2300 1054 1F93      		push r17
+ 2301 1056 DF93      		push r29
+ 2302 1058 CF93      		push r28
+ 2303 105a CDB7      		in r28,__SP_L__
+ 2304 105c DEB7      		in r29,__SP_H__
+ 2305 105e 6597      		sbiw r28,21
+ 2306 1060 0FB6      		in __tmp_reg__,__SREG__
+ 2307 1062 F894      		cli
+ 2308 1064 DEBF      		out __SP_H__,r29
+ 2309 1066 0FBE      		out __SREG__,__tmp_reg__
+ 2310 1068 CDBF      		out __SP_L__,r28
+ 2311               	/* prologue: function */
+ 2312               	/* frame size = 21 */
+ 2313 106a 9B8B      		std Y+19,r25
+ 2314 106c 8A8B      		std Y+18,r24
+ 2315 106e 6B01      		movw r12,r22
+ 2316 1070 5D8B      		std Y+21,r21
+ 2317 1072 4C8B      		std Y+20,r20
+ 2318 1074 DC01      		movw r26,r24
+ 2319 1076 5196      		adiw r26,17
+ 2320 1078 1C91      		ld r17,X
+ 2321 107a 5197      		sbiw r26,17
+ 2322 107c 5296      		adiw r26,18
+ 2323 107e 0C91      		ld r16,X
+ 2324 1080 00C0      		rjmp .L155
+ 2325               	.L156:
+ 2326 1082 0894      		sec
+ 2327 1084 C11C      		adc r12,__zero_reg__
+ 2328 1086 D11C      		adc r13,__zero_reg__
+ 2329               	.L155:
+ 2330 1088 F601      		movw r30,r12
+ 2331 108a 8081      		ld r24,Z
+ 2332 108c 8F32      		cpi r24,lo8(47)
+ 2333 108e 01F0      		breq .L156
+ 2334 1090 81E0      		ldi r24,lo8(1)
+ 2335 1092 90E0      		ldi r25,hi8(1)
+ 2336 1094 6AE1      		ldi r22,lo8(26)
+ 2337 1096 70E0      		ldi r23,hi8(26)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 42
+
+
+ 2338 1098 0E94 0000 		call calloc
+ 2339 109c 2C01      		movw r4,r24
+ 2340 109e 0097      		sbiw r24,0
+ 2341 10a0 01F4      		brne .+2
+ 2342 10a2 00C0      		rjmp .L172
+ 2343               	.L157:
+ 2344 10a4 812E      		mov r8,r17
+ 2345 10a6 902E      		mov r9,r16
+ 2346 10a8 2C89      		ldd r18,Y+20
+ 2347 10aa 3D89      		ldd r19,Y+21
+ 2348 10ac C901      		movw r24,r18
+ 2349 10ae AA27      		clr r26
+ 2350 10b0 97FD      		sbrc r25,7
+ 2351 10b2 A095      		com r26
+ 2352 10b4 BA2F      		mov r27,r26
+ 2353 10b6 F201      		movw r30,r4
+ 2354 10b8 8687      		std Z+14,r24
+ 2355 10ba 9787      		std Z+15,r25
+ 2356 10bc A08B      		std Z+16,r26
+ 2357 10be B18B      		std Z+17,r27
+ 2358 10c0 32E0      		ldi r19,lo8(2)
+ 2359 10c2 632E      		mov r6,r19
+ 2360 10c4 712C      		mov r7,__zero_reg__
+ 2361 10c6 6C0E      		add r6,r28
+ 2362 10c8 7D1E      		adc r7,r29
+ 2363 10ca C401      		movw r24,r8
+ 2364 10cc B601      		movw r22,r12
+ 2365 10ce A301      		movw r20,r6
+ 2366 10d0 20E8      		ldi r18,lo8(128)
+ 2367 10d2 30E0      		ldi r19,hi8(128)
+ 2368 10d4 0E94 0000 		call EntrySearchNext
+ 2369 10d8 182F      		mov r17,r24
+ 2370 10da 092F      		mov r16,r25
+ 2371 10dc 282F      		mov r18,r24
+ 2372 10de 392F      		mov r19,r25
+ 2373 10e0 C901      		movw r24,r18
+ 2374 10e2 1C01      		movw r2,r24
+ 2375 10e4 9401      		movw r18,r8
+ 2376 10e6 2E5F      		subi r18,lo8(-(2))
+ 2377 10e8 3F4F      		sbci r19,hi8(-(2))
+ 2378 10ea 398B      		std Y+17,r19
+ 2379 10ec 288B      		std Y+16,r18
+ 2380 10ee C901      		movw r24,r18
+ 2381 10f0 40E0      		ldi r20,lo8(0)
+ 2382 10f2 50E0      		ldi r21,hi8(0)
+ 2383 10f4 60E0      		ldi r22,hlo8(0)
+ 2384 10f6 70E0      		ldi r23,hhi8(0)
+ 2385 10f8 0E94 0000 		call NutEventWait
+ 2386 10fc 30E8      		ldi r19,lo8(128)
+ 2387 10fe 2316      		cp r2,r19
+ 2388 1100 3104      		cpc r3,__zero_reg__
+ 2389 1102 00F0      		brlo .+2
+ 2390 1104 00C0      		rjmp .L159
+ 2391 1106 8C89      		ldd r24,Y+20
+ 2392 1108 9D89      		ldd r25,Y+21
+ 2393 110a 8070      		andi r24,lo8(1280)
+ 2394 110c 9570      		andi r25,hi8(1280)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 43
+
+
+ 2395 110e 8050      		subi r24,lo8(1280)
+ 2396 1110 9540      		sbci r25,hi8(1280)
+ 2397 1112 01F4      		brne .L160
+ 2398 1114 81E1      		ldi r24,lo8(17)
+ 2399 1116 90E0      		ldi r25,hi8(17)
+ 2400 1118 00C0      		rjmp .L169
+ 2401               	.L160:
+ 2402 111a EC89      		ldd r30,Y+20
+ 2403 111c FD89      		ldd r31,Y+21
+ 2404 111e F1FF      		sbrs r31,1
+ 2405 1120 00C0      		rjmp .L162
+ 2406 1122 1F82      		std Y+7,__zero_reg__
+ 2407 1124 1E82      		std Y+6,__zero_reg__
+ 2408 1126 C401      		movw r24,r8
+ 2409 1128 612F      		mov r22,r17
+ 2410 112a 702F      		mov r23,r16
+ 2411 112c 0E94 0000 		call EntryTruncateSeq
+ 2412 1130 C401      		movw r24,r8
+ 2413 1132 60E0      		ldi r22,lo8(0)
+ 2414 1134 70E0      		ldi r23,hi8(0)
+ 2415 1136 0E94 0000 		call PhysBlkAllocate
+ 2416 113a 3C01      		movw r6,r24
+ 2417 113c D401      		movw r26,r8
+ 2418 113e 1596      		adiw r26,5
+ 2419 1140 8D91      		ld r24,X+
+ 2420 1142 9C91      		ld r25,X
+ 2421 1144 1697      		sbiw r26,5+1
+ 2422 1146 6816      		cp r6,r24
+ 2423 1148 7906      		cpc r7,r25
+ 2424 114a 00F0      		brlo .+2
+ 2425 114c 00C0      		rjmp .L161
+ 2426 114e C101      		movw r24,r2
+ 2427 1150 880F      		lsl r24
+ 2428 1152 991F      		rol r25
+ 2429 1154 1796      		adiw r26,7
+ 2430 1156 ED91      		ld r30,X+
+ 2431 1158 FC91      		ld r31,X
+ 2432 115a 1897      		sbiw r26,7+1
+ 2433 115c E80F      		add r30,r24
+ 2434 115e F91F      		adc r31,r25
+ 2435 1160 C080      		ld r12,Z
+ 2436 1162 D180      		ldd r13,Z+1
+ 2437 1164 7182      		std Z+1,r7
+ 2438 1166 6082      		st Z,r6
+ 2439 1168 8D91      		ld r24,X+
+ 2440 116a 9C91      		ld r25,X
+ 2441 116c B301      		movw r22,r6
+ 2442 116e 5E01      		movw r10,r28
+ 2443 1170 0894      		sec
+ 2444 1172 A11C      		adc r10,__zero_reg__
+ 2445 1174 B11C      		adc r11,__zero_reg__
+ 2446 1176 A501      		movw r20,r10
+ 2447 1178 0E94 0000 		call FlashReadBlockFoot
+ 2448 117c F401      		movw r30,r8
+ 2449 117e 8081      		ld r24,Z
+ 2450 1180 9181      		ldd r25,Z+1
+ 2451 1182 B301      		movw r22,r6
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 44
+
+
+ 2452 1184 0E94 0000 		call FlashEraseBlockData
+ 2453 1188 8E01      		movw r16,r28
+ 2454 118a 085F      		subi r16,lo8(-(8))
+ 2455 118c 1F4F      		sbci r17,hi8(-(8))
+ 2456 118e D401      		movw r26,r8
+ 2457 1190 8D91      		ld r24,X+
+ 2458 1192 9C91      		ld r25,X
+ 2459 1194 B601      		movw r22,r12
+ 2460 1196 A801      		movw r20,r16
+ 2461 1198 0E94 0000 		call FlashReadBlockHead
+ 2462 119c 84E0      		ldi r24,lo8(4)
+ 2463 119e E82E      		mov r14,r24
+ 2464 11a0 F12C      		mov r15,__zero_reg__
+ 2465 11a2 EC0E      		add r14,r28
+ 2466 11a4 FD1E      		adc r15,r29
+ 2467 11a6 F401      		movw r30,r8
+ 2468 11a8 8081      		ld r24,Z
+ 2469 11aa 9181      		ldd r25,Z+1
+ 2470 11ac B601      		movw r22,r12
+ 2471 11ae A701      		movw r20,r14
+ 2472 11b0 9E01      		movw r18,r28
+ 2473 11b2 2A5F      		subi r18,lo8(-(6))
+ 2474 11b4 3F4F      		sbci r19,hi8(-(6))
+ 2475 11b6 0E94 0000 		call FlashReadEntry
+ 2476 11ba D401      		movw r26,r8
+ 2477 11bc 8D91      		ld r24,X+
+ 2478 11be 9C91      		ld r25,X
+ 2479 11c0 B301      		movw r22,r6
+ 2480 11c2 A801      		movw r20,r16
+ 2481 11c4 0E94 0000 		call FlashWriteBlockHead
+ 2482 11c8 2E81      		ldd r18,Y+6
+ 2483 11ca 3F81      		ldd r19,Y+7
+ 2484 11cc F401      		movw r30,r8
+ 2485 11ce 8081      		ld r24,Z
+ 2486 11d0 9181      		ldd r25,Z+1
+ 2487 11d2 B301      		movw r22,r6
+ 2488 11d4 A701      		movw r20,r14
+ 2489 11d6 0E94 0000 		call FlashWriteEntry
+ 2490 11da D401      		movw r26,r8
+ 2491 11dc 8D91      		ld r24,X+
+ 2492 11de 9C91      		ld r25,X
+ 2493 11e0 B301      		movw r22,r6
+ 2494 11e2 40E0      		ldi r20,lo8(0)
+ 2495 11e4 50E0      		ldi r21,hi8(0)
+ 2496 11e6 0E94 0000 		call FlashUnitCommit
+ 2497 11ea F401      		movw r30,r8
+ 2498 11ec 8081      		ld r24,Z
+ 2499 11ee 9181      		ldd r25,Z+1
+ 2500 11f0 B301      		movw r22,r6
+ 2501 11f2 A501      		movw r20,r10
+ 2502 11f4 0E94 0000 		call FlashWriteBlockFoot
+ 2503 11f8 D401      		movw r26,r8
+ 2504 11fa 8D91      		ld r24,X+
+ 2505 11fc 9C91      		ld r25,X
+ 2506 11fe B301      		movw r22,r6
+ 2507 1200 43E0      		ldi r20,lo8(3)
+ 2508 1202 50E0      		ldi r21,hi8(3)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 45
+
+
+ 2509 1204 0E94 0000 		call FlashUnitCommit
+ 2510 1208 F401      		movw r30,r8
+ 2511 120a 8081      		ld r24,Z
+ 2512 120c 9181      		ldd r25,Z+1
+ 2513 120e B601      		movw r22,r12
+ 2514 1210 0E94 0000 		call FlashEraseEntry
+ 2515 1214 00C0      		rjmp .L170
+ 2516               	.L162:
+ 2517 1216 C401      		movw r24,r8
+ 2518 1218 B101      		movw r22,r2
+ 2519 121a 40E0      		ldi r20,lo8(0)
+ 2520 121c 50E0      		ldi r21,hi8(0)
+ 2521 121e 0E94 0000 		call EntryScan
+ 2522 1222 6B01      		movw r12,r22
+ 2523 1224 7C01      		movw r14,r24
+ 2524 1226 8B81      		ldd r24,Y+3
+ 2525 1228 90E0      		ldi r25,lo8(0)
+ 2526 122a 0296      		adiw r24,2
+ 2527 122c A0E0      		ldi r26,lo8(0)
+ 2528 122e B0E0      		ldi r27,hi8(0)
+ 2529 1230 C81A      		sub r12,r24
+ 2530 1232 D90A      		sbc r13,r25
+ 2531 1234 EA0A      		sbc r14,r26
+ 2532 1236 FB0A      		sbc r15,r27
+ 2533 1238 00C0      		rjmp .L163
+ 2534               	.L159:
+ 2535 123a 2C89      		ldd r18,Y+20
+ 2536 123c 3D89      		ldd r19,Y+21
+ 2537 123e 30FF      		sbrs r19,0
+ 2538 1240 00C0      		rjmp .L164
+ 2539 1242 C401      		movw r24,r8
+ 2540 1244 60E0      		ldi r22,lo8(0)
+ 2541 1246 70E0      		ldi r23,hi8(0)
+ 2542 1248 0E94 0000 		call LogBlkAllocate
+ 2543 124c 1C01      		movw r2,r24
+ 2544 124e 8038      		cpi r24,128
+ 2545 1250 9105      		cpc r25,__zero_reg__
+ 2546 1252 00F0      		brlo .+2
+ 2547 1254 00C0      		rjmp .L161
+ 2548 1256 F601      		movw r30,r12
+ 2549 1258 0190      		ld __tmp_reg__,Z+
+ 2550 125a 0020      		tst __tmp_reg__
+ 2551 125c 01F4      		brne .-6
+ 2552 125e 3197      		sbiw r30,1
+ 2553 1260 EC19      		sub r30,r12
+ 2554 1262 FD09      		sbc r31,r13
+ 2555 1264 EB83      		std Y+3,r30
+ 2556 1266 1A82      		std Y+2,__zero_reg__
+ 2557 1268 880F      		lsl r24
+ 2558 126a 991F      		rol r25
+ 2559 126c D401      		movw r26,r8
+ 2560 126e 1796      		adiw r26,7
+ 2561 1270 ED91      		ld r30,X+
+ 2562 1272 FC91      		ld r31,X
+ 2563 1274 1897      		sbiw r26,7+1
+ 2564 1276 E80F      		add r30,r24
+ 2565 1278 F91F      		adc r31,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 46
+
+
+ 2566 127a 0081      		ld r16,Z
+ 2567 127c 1181      		ldd r17,Z+1
+ 2568 127e 8D91      		ld r24,X+
+ 2569 1280 9C91      		ld r25,X
+ 2570 1282 B801      		movw r22,r16
+ 2571 1284 7E01      		movw r14,r28
+ 2572 1286 0894      		sec
+ 2573 1288 E11C      		adc r14,__zero_reg__
+ 2574 128a F11C      		adc r15,__zero_reg__
+ 2575 128c A701      		movw r20,r14
+ 2576 128e 0E94 0000 		call FlashReadBlockFoot
+ 2577 1292 F401      		movw r30,r8
+ 2578 1294 8081      		ld r24,Z
+ 2579 1296 9181      		ldd r25,Z+1
+ 2580 1298 B801      		movw r22,r16
+ 2581 129a 0E94 0000 		call FlashEraseBlockData
+ 2582 129e 3986      		std Y+9,r3
+ 2583 12a0 2886      		std Y+8,r2
+ 2584 12a2 8FEF      		ldi r24,lo8(-1)
+ 2585 12a4 9FEF      		ldi r25,hi8(-1)
+ 2586 12a6 9B87      		std Y+11,r25
+ 2587 12a8 8A87      		std Y+10,r24
+ 2588 12aa 3D86      		std Y+13,r3
+ 2589 12ac 2C86      		std Y+12,r2
+ 2590 12ae 1F86      		std Y+15,__zero_reg__
+ 2591 12b0 1E86      		std Y+14,__zero_reg__
+ 2592 12b2 D401      		movw r26,r8
+ 2593 12b4 8D91      		ld r24,X+
+ 2594 12b6 9C91      		ld r25,X
+ 2595 12b8 B801      		movw r22,r16
+ 2596 12ba AE01      		movw r20,r28
+ 2597 12bc 485F      		subi r20,lo8(-(8))
+ 2598 12be 5F4F      		sbci r21,hi8(-(8))
+ 2599 12c0 0E94 0000 		call FlashWriteBlockHead
+ 2600 12c4 F401      		movw r30,r8
+ 2601 12c6 8081      		ld r24,Z
+ 2602 12c8 9181      		ldd r25,Z+1
+ 2603 12ca B801      		movw r22,r16
+ 2604 12cc A301      		movw r20,r6
+ 2605 12ce 9601      		movw r18,r12
+ 2606 12d0 0E94 0000 		call FlashWriteEntry
+ 2607 12d4 D401      		movw r26,r8
+ 2608 12d6 8D91      		ld r24,X+
+ 2609 12d8 9C91      		ld r25,X
+ 2610 12da B801      		movw r22,r16
+ 2611 12dc 40E0      		ldi r20,lo8(0)
+ 2612 12de 50E0      		ldi r21,hi8(0)
+ 2613 12e0 0E94 0000 		call FlashUnitCommit
+ 2614 12e4 F401      		movw r30,r8
+ 2615 12e6 8081      		ld r24,Z
+ 2616 12e8 9181      		ldd r25,Z+1
+ 2617 12ea B801      		movw r22,r16
+ 2618 12ec A701      		movw r20,r14
+ 2619 12ee 0E94 0000 		call FlashWriteBlockFoot
+ 2620 12f2 D401      		movw r26,r8
+ 2621 12f4 8D91      		ld r24,X+
+ 2622 12f6 9C91      		ld r25,X
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 47
+
+
+ 2623 12f8 B801      		movw r22,r16
+ 2624 12fa 43E0      		ldi r20,lo8(3)
+ 2625 12fc 50E0      		ldi r21,hi8(3)
+ 2626 12fe 0E94 0000 		call FlashUnitCommit
+ 2627               	.L170:
+ 2628 1302 CC24      		clr r12
+ 2629 1304 DD24      		clr r13
+ 2630 1306 7601      		movw r14,r12
+ 2631 1308 00C0      		rjmp .L163
+ 2632               	.L164:
+ 2633 130a 82E0      		ldi r24,lo8(2)
+ 2634 130c 90E0      		ldi r25,hi8(2)
+ 2635               	.L169:
+ 2636 130e 9093 0000 		sts (errno)+1,r25
+ 2637 1312 8093 0000 		sts errno,r24
+ 2638               	.L161:
+ 2639 1316 C201      		movw r24,r4
+ 2640 1318 0E94 0000 		call free
+ 2641 131c 0FEF      		ldi r16,lo8(-1)
+ 2642 131e 1FEF      		ldi r17,hi8(-1)
+ 2643 1320 00C0      		rjmp .L165
+ 2644               	.L163:
+ 2645 1322 8A81      		ldd r24,Y+2
+ 2646 1324 F201      		movw r30,r4
+ 2647 1326 828B      		std Z+18,r24
+ 2648 1328 8B81      		ldd r24,Y+3
+ 2649 132a 838B      		std Z+19,r24
+ 2650 132c 90E0      		ldi r25,lo8(0)
+ 2651 132e 0296      		adiw r24,2
+ 2652 1330 918F      		std Z+25,r25
+ 2653 1332 808F      		std Z+24,r24
+ 2654 1334 3182      		std Z+1,r3
+ 2655 1336 2082      		st Z,r2
+ 2656 1338 D201      		movw r26,r4
+ 2657 133a 5496      		adiw r26,20
+ 2658 133c CD92      		st X+,r12
+ 2659 133e DD92      		st X+,r13
+ 2660 1340 ED92      		st X+,r14
+ 2661 1342 FC92      		st X,r15
+ 2662 1344 5797      		sbiw r26,20+3
+ 2663 1346 86E0      		ldi r24,lo8(6)
+ 2664 1348 90E0      		ldi r25,hi8(6)
+ 2665 134a 0E94 0000 		call malloc
+ 2666 134e FC01      		movw r30,r24
+ 2667 1350 8C01      		movw r16,r24
+ 2668 1352 0097      		sbiw r24,0
+ 2669 1354 01F4      		brne .L166
+ 2670 1356 C201      		movw r24,r4
+ 2671 1358 0E94 0000 		call free
+ 2672 135c 8889      		ldd r24,Y+16
+ 2673 135e 9989      		ldd r25,Y+17
+ 2674 1360 0E94 0000 		call NutEventPost
+ 2675               	.L172:
+ 2676 1364 0FEF      		ldi r16,lo8(-1)
+ 2677 1366 1FEF      		ldi r17,hi8(-1)
+ 2678 1368 00C0      		rjmp .L158
+ 2679               	.L166:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 48
+
+
+ 2680 136a 1182      		std Z+1,__zero_reg__
+ 2681 136c 1082      		st Z,__zero_reg__
+ 2682 136e 2A89      		ldd r18,Y+18
+ 2683 1370 3B89      		ldd r19,Y+19
+ 2684 1372 3383      		std Z+3,r19
+ 2685 1374 2283      		std Z+2,r18
+ 2686 1376 5582      		std Z+5,r5
+ 2687 1378 4482      		std Z+4,r4
+ 2688 137a 3C89      		ldd r19,Y+20
+ 2689 137c 33FF      		sbrs r19,3
+ 2690 137e 00C0      		rjmp .L167
+ 2691 1380 8FEF      		ldi r24,lo8(-1)
+ 2692 1382 9FEF      		ldi r25,hi8(-1)
+ 2693 1384 D201      		movw r26,r4
+ 2694 1386 1796      		adiw r26,6+1
+ 2695 1388 9C93      		st X,r25
+ 2696 138a 8E93      		st -X,r24
+ 2697 138c 1697      		sbiw r26,6
+ 2698 138e CF01      		movw r24,r30
+ 2699 1390 B701      		movw r22,r14
+ 2700 1392 A601      		movw r20,r12
+ 2701 1394 00C0      		rjmp .L171
+ 2702               	.L167:
+ 2703 1396 F201      		movw r30,r4
+ 2704 1398 3782      		std Z+7,r3
+ 2705 139a 2682      		std Z+6,r2
+ 2706 139c 40E0      		ldi r20,lo8(0)
+ 2707 139e 50E0      		ldi r21,hi8(0)
+ 2708 13a0 60E0      		ldi r22,hlo8(0)
+ 2709 13a2 70E0      		ldi r23,hhi8(0)
+ 2710               	.L171:
+ 2711 13a4 0E94 0000 		call EntryPosSet
+ 2712               	.L165:
+ 2713 13a8 8889      		ldd r24,Y+16
+ 2714 13aa 9989      		ldd r25,Y+17
+ 2715 13ac 0E94 0000 		call NutEventPost
+ 2716               	.L158:
+ 2717 13b0 C801      		movw r24,r16
+ 2718               	/* epilogue start */
+ 2719 13b2 6596      		adiw r28,21
+ 2720 13b4 0FB6      		in __tmp_reg__,__SREG__
+ 2721 13b6 F894      		cli
+ 2722 13b8 DEBF      		out __SP_H__,r29
+ 2723 13ba 0FBE      		out __SREG__,__tmp_reg__
+ 2724 13bc CDBF      		out __SP_L__,r28
+ 2725 13be CF91      		pop r28
+ 2726 13c0 DF91      		pop r29
+ 2727 13c2 1F91      		pop r17
+ 2728 13c4 0F91      		pop r16
+ 2729 13c6 FF90      		pop r15
+ 2730 13c8 EF90      		pop r14
+ 2731 13ca DF90      		pop r13
+ 2732 13cc CF90      		pop r12
+ 2733 13ce BF90      		pop r11
+ 2734 13d0 AF90      		pop r10
+ 2735 13d2 9F90      		pop r9
+ 2736 13d4 8F90      		pop r8
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 49
+
+
+ 2737 13d6 7F90      		pop r7
+ 2738 13d8 6F90      		pop r6
+ 2739 13da 5F90      		pop r5
+ 2740 13dc 4F90      		pop r4
+ 2741 13de 3F90      		pop r3
+ 2742 13e0 2F90      		pop r2
+ 2743 13e2 0895      		ret
+ 2744               		.size	UFlashFileOpen, .-UFlashFileOpen
+ 2745               		.type	UFlashFileWrite, @function
+ 2746               	UFlashFileWrite:
+ 2747 13e4 2F92      		push r2
+ 2748 13e6 3F92      		push r3
+ 2749 13e8 4F92      		push r4
+ 2750 13ea 5F92      		push r5
+ 2751 13ec 6F92      		push r6
+ 2752 13ee 7F92      		push r7
+ 2753 13f0 8F92      		push r8
+ 2754 13f2 9F92      		push r9
+ 2755 13f4 AF92      		push r10
+ 2756 13f6 BF92      		push r11
+ 2757 13f8 CF92      		push r12
+ 2758 13fa DF92      		push r13
+ 2759 13fc EF92      		push r14
+ 2760 13fe FF92      		push r15
+ 2761 1400 0F93      		push r16
+ 2762 1402 1F93      		push r17
+ 2763 1404 DF93      		push r29
+ 2764 1406 CF93      		push r28
+ 2765 1408 CDB7      		in r28,__SP_L__
+ 2766 140a DEB7      		in r29,__SP_H__
+ 2767 140c 6597      		sbiw r28,21
+ 2768 140e 0FB6      		in __tmp_reg__,__SREG__
+ 2769 1410 F894      		cli
+ 2770 1412 DEBF      		out __SP_H__,r29
+ 2771 1414 0FBE      		out __SREG__,__tmp_reg__
+ 2772 1416 CDBF      		out __SP_L__,r28
+ 2773               	/* prologue: function */
+ 2774               	/* frame size = 21 */
+ 2775 1418 9B8B      		std Y+19,r25
+ 2776 141a 8A8B      		std Y+18,r24
+ 2777 141c 5D8B      		std Y+21,r21
+ 2778 141e 4C8B      		std Y+20,r20
+ 2779 1420 6115      		cp r22,__zero_reg__
+ 2780 1422 7105      		cpc r23,__zero_reg__
+ 2781 1424 01F4      		brne .+2
+ 2782 1426 00C0      		rjmp .L174
+ 2783 1428 4115      		cp r20,__zero_reg__
+ 2784 142a 5105      		cpc r21,__zero_reg__
+ 2785 142c 01F4      		brne .+2
+ 2786 142e 00C0      		rjmp .L174
+ 2787 1430 7F87      		std Y+15,r23
+ 2788 1432 6E87      		std Y+14,r22
+ 2789 1434 DC01      		movw r26,r24
+ 2790 1436 1496      		adiw r26,4
+ 2791 1438 6D90      		ld r6,X+
+ 2792 143a 7C90      		ld r7,X
+ 2793 143c 1597      		sbiw r26,4+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 50
+
+
+ 2794 143e 1296      		adiw r26,2
+ 2795 1440 ED91      		ld r30,X+
+ 2796 1442 FC91      		ld r31,X
+ 2797 1444 1397      		sbiw r26,2+1
+ 2798 1446 C188      		ldd r12,Z+17
+ 2799 1448 D288      		ldd r13,Z+18
+ 2800 144a F601      		movw r30,r12
+ 2801 144c 3296      		adiw r30,2
+ 2802 144e F98B      		std Y+17,r31
+ 2803 1450 E88B      		std Y+16,r30
+ 2804 1452 1A01      		movw r2,r20
+ 2805               	.L190:
+ 2806 1454 D301      		movw r26,r6
+ 2807 1456 1696      		adiw r26,6
+ 2808 1458 2D91      		ld r18,X+
+ 2809 145a 3C91      		ld r19,X
+ 2810 145c 1797      		sbiw r26,6+1
+ 2811 145e F601      		movw r30,r12
+ 2812 1460 8581      		ldd r24,Z+5
+ 2813 1462 9681      		ldd r25,Z+6
+ 2814 1464 2817      		cp r18,r24
+ 2815 1466 3907      		cpc r19,r25
+ 2816 1468 00F0      		brlo .L175
+ 2817 146a 6D91      		ld r22,X+
+ 2818 146c 7C91      		ld r23,X
+ 2819 146e 1197      		sbiw r26,1
+ 2820 1470 1896      		adiw r26,8
+ 2821 1472 4D91      		ld r20,X+
+ 2822 1474 5C91      		ld r21,X
+ 2823 1476 1997      		sbiw r26,8+1
+ 2824 1478 C601      		movw r24,r12
+ 2825 147a 0E94 0000 		call EntrySeek
+ 2826 147e D301      		movw r26,r6
+ 2827 1480 1796      		adiw r26,6+1
+ 2828 1482 9C93      		st X,r25
+ 2829 1484 8E93      		st -X,r24
+ 2830 1486 1697      		sbiw r26,6
+ 2831               	.L175:
+ 2832 1488 8889      		ldd r24,Y+16
+ 2833 148a 9989      		ldd r25,Y+17
+ 2834 148c 40E0      		ldi r20,lo8(0)
+ 2835 148e 50E0      		ldi r21,hi8(0)
+ 2836 1490 60E0      		ldi r22,hlo8(0)
+ 2837 1492 70E0      		ldi r23,hhi8(0)
+ 2838 1494 0E94 0000 		call NutEventWait
+ 2839 1498 F301      		movw r30,r6
+ 2840 149a 0681      		ldd r16,Z+6
+ 2841 149c 1781      		ldd r17,Z+7
+ 2842 149e D601      		movw r26,r12
+ 2843 14a0 1596      		adiw r26,5
+ 2844 14a2 8D91      		ld r24,X+
+ 2845 14a4 9C91      		ld r25,X
+ 2846 14a6 1697      		sbiw r26,5+1
+ 2847 14a8 0817      		cp r16,r24
+ 2848 14aa 1907      		cpc r17,r25
+ 2849 14ac 00F4      		brsh .L176
+ 2850 14ae C601      		movw r24,r12
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 51
+
+
+ 2851 14b0 60E0      		ldi r22,lo8(0)
+ 2852 14b2 70E0      		ldi r23,hi8(0)
+ 2853 14b4 0E94 0000 		call PhysBlkAllocate
+ 2854 14b8 2C01      		movw r4,r24
+ 2855 14ba F601      		movw r30,r12
+ 2856 14bc 8581      		ldd r24,Z+5
+ 2857 14be 9681      		ldd r25,Z+6
+ 2858 14c0 4816      		cp r4,r24
+ 2859 14c2 5906      		cpc r5,r25
+ 2860 14c4 00F4      		brsh .L177
+ 2861 14c6 000F      		lsl r16
+ 2862 14c8 111F      		rol r17
+ 2863 14ca 0780      		ldd __tmp_reg__,Z+7
+ 2864 14cc F085      		ldd r31,Z+8
+ 2865 14ce E02D      		mov r30,__tmp_reg__
+ 2866 14d0 E00F      		add r30,r16
+ 2867 14d2 F11F      		adc r31,r17
+ 2868 14d4 8081      		ld r24,Z
+ 2869 14d6 9181      		ldd r25,Z+1
+ 2870 14d8 5182      		std Z+1,r5
+ 2871 14da 4082      		st Z,r4
+ 2872 14dc 2C01      		movw r4,r24
+ 2873               	.L177:
+ 2874 14de D601      		movw r26,r12
+ 2875 14e0 1596      		adiw r26,5
+ 2876 14e2 8D91      		ld r24,X+
+ 2877 14e4 9C91      		ld r25,X
+ 2878 14e6 1697      		sbiw r26,5+1
+ 2879 14e8 4816      		cp r4,r24
+ 2880 14ea 5906      		cpc r5,r25
+ 2881 14ec 00F4      		brsh .L194
+ 2882               	.L178:
+ 2883 14ee F601      		movw r30,r12
+ 2884 14f0 8081      		ld r24,Z
+ 2885 14f2 9181      		ldd r25,Z+1
+ 2886 14f4 B201      		movw r22,r4
+ 2887 14f6 AE01      		movw r20,r28
+ 2888 14f8 4E5F      		subi r20,lo8(-(2))
+ 2889 14fa 5F4F      		sbci r21,hi8(-(2))
+ 2890 14fc 0E94 0000 		call FlashReadBlockHead
+ 2891 1500 00C0      		rjmp .L180
+ 2892               	.L176:
+ 2893 1502 C601      		movw r24,r12
+ 2894 1504 60E8      		ldi r22,lo8(128)
+ 2895 1506 70E0      		ldi r23,hi8(128)
+ 2896 1508 0E94 0000 		call LogBlkAllocate
+ 2897 150c 9C01      		movw r18,r24
+ 2898 150e D301      		movw r26,r6
+ 2899 1510 1796      		adiw r26,6+1
+ 2900 1512 9C93      		st X,r25
+ 2901 1514 8E93      		st -X,r24
+ 2902 1516 1697      		sbiw r26,6
+ 2903 1518 F601      		movw r30,r12
+ 2904 151a 8581      		ldd r24,Z+5
+ 2905 151c 9681      		ldd r25,Z+6
+ 2906 151e 2817      		cp r18,r24
+ 2907 1520 3907      		cpc r19,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 52
+
+
+ 2908 1522 00F0      		brlo .L181
+ 2909               	.L194:
+ 2910 1524 8889      		ldd r24,Y+16
+ 2911 1526 9989      		ldd r25,Y+17
+ 2912 1528 0E94 0000 		call NutEventPost
+ 2913 152c 4FEF      		ldi r20,lo8(-1)
+ 2914 152e 5FEF      		ldi r21,hi8(-1)
+ 2915 1530 00C0      		rjmp .L179
+ 2916               	.L181:
+ 2917 1532 C901      		movw r24,r18
+ 2918 1534 880F      		lsl r24
+ 2919 1536 991F      		rol r25
+ 2920 1538 D601      		movw r26,r12
+ 2921 153a 1796      		adiw r26,7
+ 2922 153c ED91      		ld r30,X+
+ 2923 153e FC91      		ld r31,X
+ 2924 1540 1897      		sbiw r26,7+1
+ 2925 1542 E80F      		add r30,r24
+ 2926 1544 F91F      		adc r31,r25
+ 2927 1546 4080      		ld r4,Z
+ 2928 1548 5180      		ldd r5,Z+1
+ 2929 154a 3B83      		std Y+3,r19
+ 2930 154c 2A83      		std Y+2,r18
+ 2931 154e F301      		movw r30,r6
+ 2932 1550 8081      		ld r24,Z
+ 2933 1552 9181      		ldd r25,Z+1
+ 2934 1554 9F83      		std Y+7,r25
+ 2935 1556 8E83      		std Y+6,r24
+ 2936 1558 8085      		ldd r24,Z+8
+ 2937 155a 9185      		ldd r25,Z+9
+ 2938 155c 9987      		std Y+9,r25
+ 2939 155e 8887      		std Y+8,r24
+ 2940 1560 8FEF      		ldi r24,lo8(-1)
+ 2941 1562 9FEF      		ldi r25,hi8(-1)
+ 2942 1564 9D83      		std Y+5,r25
+ 2943 1566 8C83      		std Y+4,r24
+ 2944               	.L180:
+ 2945 1568 D301      		movw r26,r6
+ 2946 156a 1696      		adiw r26,6
+ 2947 156c 8D91      		ld r24,X+
+ 2948 156e 9C91      		ld r25,X
+ 2949 1570 1797      		sbiw r26,6+1
+ 2950 1572 880F      		lsl r24
+ 2951 1574 991F      		rol r25
+ 2952 1576 D601      		movw r26,r12
+ 2953 1578 1796      		adiw r26,7
+ 2954 157a ED91      		ld r30,X+
+ 2955 157c FC91      		ld r31,X
+ 2956 157e 1897      		sbiw r26,7+1
+ 2957 1580 E80F      		add r30,r24
+ 2958 1582 F91F      		adc r31,r25
+ 2959 1584 8080      		ld r8,Z
+ 2960 1586 9180      		ldd r9,Z+1
+ 2961 1588 8D91      		ld r24,X+
+ 2962 158a 9C91      		ld r25,X
+ 2963 158c B401      		movw r22,r8
+ 2964 158e AE01      		movw r20,r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 53
+
+
+ 2965 1590 4F5F      		subi r20,lo8(-(1))
+ 2966 1592 5F4F      		sbci r21,hi8(-(1))
+ 2967 1594 0E94 0000 		call FlashReadBlockFoot
+ 2968 1598 F601      		movw r30,r12
+ 2969 159a 8081      		ld r24,Z
+ 2970 159c 9181      		ldd r25,Z+1
+ 2971 159e B401      		movw r22,r8
+ 2972 15a0 0E94 0000 		call FlashEraseBlockData
+ 2973 15a4 C201      		movw r24,r4
+ 2974 15a6 880F      		lsl r24
+ 2975 15a8 991F      		rol r25
+ 2976 15aa 880F      		lsl r24
+ 2977 15ac 991F      		rol r25
+ 2978 15ae 9B87      		std Y+11,r25
+ 2979 15b0 8A87      		std Y+10,r24
+ 2980 15b2 D401      		movw r26,r8
+ 2981 15b4 AA0F      		lsl r26
+ 2982 15b6 BB1F      		rol r27
+ 2983 15b8 AA0F      		lsl r26
+ 2984 15ba BB1F      		rol r27
+ 2985 15bc BD87      		std Y+13,r27
+ 2986 15be AC87      		std Y+12,r26
+ 2987 15c0 AA24      		clr r10
+ 2988 15c2 BB24      		clr r11
+ 2989               	.L188:
+ 2990 15c4 D601      		movw r26,r12
+ 2991 15c6 ED91      		ld r30,X+
+ 2992 15c8 FC91      		ld r31,X
+ 2993 15ca 4085      		ldd r20,Z+8
+ 2994 15cc 5185      		ldd r21,Z+9
+ 2995 15ce 4A0D      		add r20,r10
+ 2996 15d0 5B1D      		adc r21,r11
+ 2997 15d2 6A85      		ldd r22,Y+10
+ 2998 15d4 7B85      		ldd r23,Y+11
+ 2999 15d6 640F      		add r22,r20
+ 3000 15d8 751F      		adc r23,r21
+ 3001 15da 8C85      		ldd r24,Y+12
+ 3002 15dc 9D85      		ldd r25,Y+13
+ 3003 15de 480F      		add r20,r24
+ 3004 15e0 591F      		adc r21,r25
+ 3005 15e2 228D      		ldd r18,Z+26
+ 3006 15e4 338D      		ldd r19,Z+27
+ 3007 15e6 CF01      		movw r24,r30
+ 3008 15e8 F901      		movw r30,r18
+ 3009 15ea 0995      		icall
+ 3010 15ec A114      		cp r10,__zero_reg__
+ 3011 15ee B104      		cpc r11,__zero_reg__
+ 3012 15f0 01F4      		brne .L182
+ 3013 15f2 D601      		movw r26,r12
+ 3014 15f4 8D91      		ld r24,X+
+ 3015 15f6 9C91      		ld r25,X
+ 3016 15f8 B401      		movw r22,r8
+ 3017 15fa AE01      		movw r20,r28
+ 3018 15fc 4E5F      		subi r20,lo8(-(2))
+ 3019 15fe 5F4F      		sbci r21,hi8(-(2))
+ 3020 1600 0E94 0000 		call FlashWriteBlockHead
+ 3021               	.L182:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 54
+
+
+ 3022 1604 2114      		cp r2,__zero_reg__
+ 3023 1606 3104      		cpc r3,__zero_reg__
+ 3024 1608 01F4      		brne .+2
+ 3025 160a 00C0      		rjmp .L183
+ 3026 160c F301      		movw r30,r6
+ 3027 160e 2285      		ldd r18,Z+10
+ 3028 1610 3385      		ldd r19,Z+11
+ 3029 1612 A216      		cp r10,r18
+ 3030 1614 B306      		cpc r11,r19
+ 3031 1616 01F0      		breq .+2
+ 3032 1618 00C0      		rjmp .L183
+ 3033 161a F601      		movw r30,r12
+ 3034 161c A081      		ld r26,Z
+ 3035 161e B181      		ldd r27,Z+1
+ 3036 1620 F301      		movw r30,r6
+ 3037 1622 4485      		ldd r20,Z+12
+ 3038 1624 5585      		ldd r21,Z+13
+ 3039 1626 1496      		adiw r26,4
+ 3040 1628 8D91      		ld r24,X+
+ 3041 162a 9C91      		ld r25,X
+ 3042 162c 1597      		sbiw r26,4+1
+ 3043 162e 841B      		sub r24,r20
+ 3044 1630 950B      		sbc r25,r21
+ 3045 1632 F3E0      		ldi r31,lo8(3)
+ 3046 1634 AF16      		cp r10,r31
+ 3047 1636 B104      		cpc r11,__zero_reg__
+ 3048 1638 01F0      		breq .L184
+ 3049 163a 8C01      		movw r16,r24
+ 3050 163c 00C0      		rjmp .L185
+ 3051               	.L184:
+ 3052 163e 8C01      		movw r16,r24
+ 3053 1640 0150      		subi r16,lo8(-(-1))
+ 3054 1642 1040      		sbci r17,hi8(-(-1))
+ 3055               	.L185:
+ 3056 1644 7801      		movw r14,r16
+ 3057 1646 2016      		cp r2,r16
+ 3058 1648 3106      		cpc r3,r17
+ 3059 164a 04F4      		brge .L186
+ 3060 164c 7101      		movw r14,r2
+ 3061               	.L186:
+ 3062 164e 1896      		adiw r26,8
+ 3063 1650 6D91      		ld r22,X+
+ 3064 1652 7C91      		ld r23,X
+ 3065 1654 1997      		sbiw r26,8+1
+ 3066 1656 8C85      		ldd r24,Y+12
+ 3067 1658 9D85      		ldd r25,Y+13
+ 3068 165a 680F      		add r22,r24
+ 3069 165c 791F      		adc r23,r25
+ 3070 165e 620F      		add r22,r18
+ 3071 1660 731F      		adc r23,r19
+ 3072 1662 5896      		adiw r26,24
+ 3073 1664 ED91      		ld r30,X+
+ 3074 1666 FC91      		ld r31,X
+ 3075 1668 5997      		sbiw r26,24+1
+ 3076 166a CD01      		movw r24,r26
+ 3077 166c 2E85      		ldd r18,Y+14
+ 3078 166e 3F85      		ldd r19,Y+15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 55
+
+
+ 3079 1670 8701      		movw r16,r14
+ 3080 1672 0995      		icall
+ 3081 1674 2E18      		sub r2,r14
+ 3082 1676 3F08      		sbc r3,r15
+ 3083 1678 AE85      		ldd r26,Y+14
+ 3084 167a BF85      		ldd r27,Y+15
+ 3085 167c AE0D      		add r26,r14
+ 3086 167e BF1D      		adc r27,r15
+ 3087 1680 BF87      		std Y+15,r27
+ 3088 1682 AE87      		std Y+14,r26
+ 3089 1684 8A89      		ldd r24,Y+18
+ 3090 1686 9B89      		ldd r25,Y+19
+ 3091 1688 B701      		movw r22,r14
+ 3092 168a 0E94 0000 		call EntryPosInc
+ 3093 168e F301      		movw r30,r6
+ 3094 1690 2281      		ldd r18,Z+2
+ 3095 1692 3381      		ldd r19,Z+3
+ 3096 1694 4481      		ldd r20,Z+4
+ 3097 1696 5581      		ldd r21,Z+5
+ 3098 1698 8489      		ldd r24,Z+20
+ 3099 169a 9589      		ldd r25,Z+21
+ 3100 169c A689      		ldd r26,Z+22
+ 3101 169e B789      		ldd r27,Z+23
+ 3102 16a0 8217      		cp r24,r18
+ 3103 16a2 9307      		cpc r25,r19
+ 3104 16a4 A407      		cpc r26,r20
+ 3105 16a6 B507      		cpc r27,r21
+ 3106 16a8 00F4      		brsh .L183
+ 3107 16aa D301      		movw r26,r6
+ 3108 16ac 5496      		adiw r26,20
+ 3109 16ae 2D93      		st X+,r18
+ 3110 16b0 3D93      		st X+,r19
+ 3111 16b2 4D93      		st X+,r20
+ 3112 16b4 5C93      		st X,r21
+ 3113 16b6 5797      		sbiw r26,20+3
+ 3114               	.L183:
+ 3115 16b8 B3E0      		ldi r27,lo8(3)
+ 3116 16ba AB16      		cp r10,r27
+ 3117 16bc B104      		cpc r11,__zero_reg__
+ 3118 16be 01F4      		brne .L187
+ 3119 16c0 F601      		movw r30,r12
+ 3120 16c2 8081      		ld r24,Z
+ 3121 16c4 9181      		ldd r25,Z+1
+ 3122 16c6 B401      		movw r22,r8
+ 3123 16c8 AE01      		movw r20,r28
+ 3124 16ca 4F5F      		subi r20,lo8(-(1))
+ 3125 16cc 5F4F      		sbci r21,hi8(-(1))
+ 3126 16ce 0E94 0000 		call FlashWriteBlockFoot
+ 3127               	.L187:
+ 3128 16d2 D601      		movw r26,r12
+ 3129 16d4 8D91      		ld r24,X+
+ 3130 16d6 9C91      		ld r25,X
+ 3131 16d8 B401      		movw r22,r8
+ 3132 16da A501      		movw r20,r10
+ 3133 16dc 0E94 0000 		call FlashUnitCommit
+ 3134 16e0 0894      		sec
+ 3135 16e2 A11C      		adc r10,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 56
+
+
+ 3136 16e4 B11C      		adc r11,__zero_reg__
+ 3137 16e6 B4E0      		ldi r27,lo8(4)
+ 3138 16e8 AB16      		cp r10,r27
+ 3139 16ea B104      		cpc r11,__zero_reg__
+ 3140 16ec 01F0      		breq .+2
+ 3141 16ee 00C0      		rjmp .L188
+ 3142 16f0 8414      		cp r8,r4
+ 3143 16f2 9504      		cpc r9,r5
+ 3144 16f4 01F0      		breq .L189
+ 3145 16f6 F601      		movw r30,r12
+ 3146 16f8 8081      		ld r24,Z
+ 3147 16fa 9181      		ldd r25,Z+1
+ 3148 16fc B201      		movw r22,r4
+ 3149 16fe 0E94 0000 		call FlashEraseEntry
+ 3150               	.L189:
+ 3151 1702 8889      		ldd r24,Y+16
+ 3152 1704 9989      		ldd r25,Y+17
+ 3153 1706 0E94 0000 		call NutEventPost
+ 3154 170a 2114      		cp r2,__zero_reg__
+ 3155 170c 3104      		cpc r3,__zero_reg__
+ 3156 170e 01F0      		breq .+2
+ 3157 1710 00C0      		rjmp .L190
+ 3158 1712 4C89      		ldd r20,Y+20
+ 3159 1714 5D89      		ldd r21,Y+21
+ 3160 1716 00C0      		rjmp .L179
+ 3161               	.L174:
+ 3162 1718 40E0      		ldi r20,lo8(0)
+ 3163 171a 50E0      		ldi r21,hi8(0)
+ 3164               	.L179:
+ 3165 171c CA01      		movw r24,r20
+ 3166               	/* epilogue start */
+ 3167 171e 6596      		adiw r28,21
+ 3168 1720 0FB6      		in __tmp_reg__,__SREG__
+ 3169 1722 F894      		cli
+ 3170 1724 DEBF      		out __SP_H__,r29
+ 3171 1726 0FBE      		out __SREG__,__tmp_reg__
+ 3172 1728 CDBF      		out __SP_L__,r28
+ 3173 172a CF91      		pop r28
+ 3174 172c DF91      		pop r29
+ 3175 172e 1F91      		pop r17
+ 3176 1730 0F91      		pop r16
+ 3177 1732 FF90      		pop r15
+ 3178 1734 EF90      		pop r14
+ 3179 1736 DF90      		pop r13
+ 3180 1738 CF90      		pop r12
+ 3181 173a BF90      		pop r11
+ 3182 173c AF90      		pop r10
+ 3183 173e 9F90      		pop r9
+ 3184 1740 8F90      		pop r8
+ 3185 1742 7F90      		pop r7
+ 3186 1744 6F90      		pop r6
+ 3187 1746 5F90      		pop r5
+ 3188 1748 4F90      		pop r4
+ 3189 174a 3F90      		pop r3
+ 3190 174c 2F90      		pop r2
+ 3191 174e 0895      		ret
+ 3192               		.size	UFlashFileWrite, .-UFlashFileWrite
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 57
+
+
+ 3193               		.type	UFlashMount, @function
+ 3194               	UFlashMount:
+ 3195 1750 8F92      		push r8
+ 3196 1752 9F92      		push r9
+ 3197 1754 AF92      		push r10
+ 3198 1756 BF92      		push r11
+ 3199 1758 CF92      		push r12
+ 3200 175a DF92      		push r13
+ 3201 175c EF92      		push r14
+ 3202 175e FF92      		push r15
+ 3203 1760 0F93      		push r16
+ 3204 1762 1F93      		push r17
+ 3205 1764 DF93      		push r29
+ 3206 1766 CF93      		push r28
+ 3207 1768 CDB7      		in r28,__SP_L__
+ 3208 176a DEB7      		in r29,__SP_H__
+ 3209 176c 6097      		sbiw r28,16
+ 3210 176e 0FB6      		in __tmp_reg__,__SREG__
+ 3211 1770 F894      		cli
+ 3212 1772 DEBF      		out __SP_H__,r29
+ 3213 1774 0FBE      		out __SREG__,__tmp_reg__
+ 3214 1776 CDBF      		out __SP_L__,r28
+ 3215               	/* prologue: function */
+ 3216               	/* frame size = 16 */
+ 3217 1778 7C01      		movw r14,r24
+ 3218 177a 81E0      		ldi r24,lo8(1)
+ 3219 177c 90E0      		ldi r25,hi8(1)
+ 3220 177e 69E0      		ldi r22,lo8(9)
+ 3221 1780 70E0      		ldi r23,hi8(9)
+ 3222 1782 0E94 0000 		call calloc
+ 3223 1786 8C01      		movw r16,r24
+ 3224 1788 0097      		sbiw r24,0
+ 3225 178a 01F0      		breq .L211
+ 3226               	.L196:
+ 3227 178c D701      		movw r26,r14
+ 3228 178e 5296      		adiw r26,17+1
+ 3229 1790 9C93      		st X,r25
+ 3230 1792 8E93      		st -X,r24
+ 3231 1794 5197      		sbiw r26,17
+ 3232 1796 1F96      		adiw r26,15
+ 3233 1798 ED91      		ld r30,X+
+ 3234 179a FC91      		ld r31,X
+ 3235 179c 5097      		sbiw r26,15+1
+ 3236 179e DC01      		movw r26,r24
+ 3237 17a0 1196      		adiw r26,1
+ 3238 17a2 FC93      		st X,r31
+ 3239 17a4 EE93      		st -X,r30
+ 3240 17a6 8681      		ldd r24,Z+6
+ 3241 17a8 9781      		ldd r25,Z+7
+ 3242 17aa 2085      		ldd r18,Z+8
+ 3243 17ac 3185      		ldd r19,Z+9
+ 3244 17ae 821B      		sub r24,r18
+ 3245 17b0 930B      		sbc r25,r19
+ 3246 17b2 2285      		ldd r18,Z+10
+ 3247 17b4 3385      		ldd r19,Z+11
+ 3248 17b6 821B      		sub r24,r18
+ 3249 17b8 930B      		sbc r25,r19
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 58
+
+
+ 3250 17ba 9695      		lsr r25
+ 3251 17bc 8795      		ror r24
+ 3252 17be 9695      		lsr r25
+ 3253 17c0 8795      		ror r24
+ 3254 17c2 1696      		adiw r26,5+1
+ 3255 17c4 9C93      		st X,r25
+ 3256 17c6 8E93      		st -X,r24
+ 3257 17c8 1597      		sbiw r26,5
+ 3258 17ca 8150      		subi r24,lo8(8193)
+ 3259 17cc 9042      		sbci r25,hi8(8193)
+ 3260 17ce 00F0      		brlo .L198
+ 3261 17d0 80E0      		ldi r24,lo8(8192)
+ 3262 17d2 90E2      		ldi r25,hi8(8192)
+ 3263 17d4 F801      		movw r30,r16
+ 3264 17d6 9683      		std Z+6,r25
+ 3265 17d8 8583      		std Z+5,r24
+ 3266               	.L198:
+ 3267 17da D801      		movw r26,r16
+ 3268 17dc 1596      		adiw r26,5
+ 3269 17de 8D91      		ld r24,X+
+ 3270 17e0 9C91      		ld r25,X
+ 3271 17e2 1697      		sbiw r26,5+1
+ 3272 17e4 880F      		lsl r24
+ 3273 17e6 991F      		rol r25
+ 3274 17e8 0E94 0000 		call malloc
+ 3275 17ec F801      		movw r30,r16
+ 3276 17ee 9087      		std Z+8,r25
+ 3277 17f0 8783      		std Z+7,r24
+ 3278 17f2 0097      		sbiw r24,0
+ 3279 17f4 01F4      		brne .L199
+ 3280 17f6 C801      		movw r24,r16
+ 3281 17f8 0E94 0000 		call free
+ 3282               	.L211:
+ 3283 17fc 2FEF      		ldi r18,lo8(-1)
+ 3284 17fe 3FEF      		ldi r19,hi8(-1)
+ 3285 1800 00C0      		rjmp .L197
+ 3286               	.L199:
+ 3287 1802 D801      		movw r26,r16
+ 3288 1804 1596      		adiw r26,5
+ 3289 1806 2D91      		ld r18,X+
+ 3290 1808 3C91      		ld r19,X
+ 3291 180a 1697      		sbiw r26,5+1
+ 3292 180c 220F      		lsl r18
+ 3293 180e 331F      		rol r19
+ 3294 1810 6FEF      		ldi r22,lo8(255)
+ 3295 1812 70E0      		ldi r23,hi8(255)
+ 3296 1814 A901      		movw r20,r18
+ 3297 1816 0E94 0000 		call memset
+ 3298 181a 80E0      		ldi r24,lo8(min_used)
+ 3299 181c 90E0      		ldi r25,hi8(min_used)
+ 3300 181e 6FEF      		ldi r22,lo8(255)
+ 3301 1820 70E0      		ldi r23,hi8(255)
+ 3302 1822 40E6      		ldi r20,lo8(96)
+ 3303 1824 50E0      		ldi r21,hi8(96)
+ 3304 1826 0E94 0000 		call memset
+ 3305 182a EE24      		clr r14
+ 3306 182c FF24      		clr r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 59
+
+
+ 3307 182e CC24      		clr r12
+ 3308 1830 DD24      		clr r13
+ 3309 1832 4E01      		movw r8,r28
+ 3310 1834 0894      		sec
+ 3311 1836 811C      		adc r8,__zero_reg__
+ 3312 1838 911C      		adc r9,__zero_reg__
+ 3313 183a 49E0      		ldi r20,lo8(9)
+ 3314 183c A42E      		mov r10,r20
+ 3315 183e B12C      		mov r11,__zero_reg__
+ 3316 1840 AC0E      		add r10,r28
+ 3317 1842 BD1E      		adc r11,r29
+ 3318 1844 00C0      		rjmp .L200
+ 3319               	.L208:
+ 3320 1846 F801      		movw r30,r16
+ 3321 1848 8081      		ld r24,Z
+ 3322 184a 9181      		ldd r25,Z+1
+ 3323 184c B701      		movw r22,r14
+ 3324 184e A401      		movw r20,r8
+ 3325 1850 0E94 0000 		call FlashReadBlockHead
+ 3326 1854 2981      		ldd r18,Y+1
+ 3327 1856 3A81      		ldd r19,Y+2
+ 3328 1858 D801      		movw r26,r16
+ 3329 185a 1596      		adiw r26,5
+ 3330 185c 8D91      		ld r24,X+
+ 3331 185e 9C91      		ld r25,X
+ 3332 1860 1697      		sbiw r26,5+1
+ 3333 1862 2817      		cp r18,r24
+ 3334 1864 3907      		cpc r19,r25
+ 3335 1866 00F0      		brlo .+2
+ 3336 1868 00C0      		rjmp .L201
+ 3337 186a ED91      		ld r30,X+
+ 3338 186c FC91      		ld r31,X
+ 3339 186e 6085      		ldd r22,Z+8
+ 3340 1870 7185      		ldd r23,Z+9
+ 3341 1872 6C0D      		add r22,r12
+ 3342 1874 7D1D      		adc r23,r13
+ 3343 1876 2089      		ldd r18,Z+16
+ 3344 1878 3189      		ldd r19,Z+17
+ 3345 187a CF01      		movw r24,r30
+ 3346 187c 44E0      		ldi r20,lo8(4)
+ 3347 187e 50E0      		ldi r21,hi8(4)
+ 3348 1880 F901      		movw r30,r18
+ 3349 1882 0995      		icall
+ 3350 1884 892B      		or r24,r25
+ 3351 1886 01F0      		breq .L202
+ 3352 1888 F801      		movw r30,r16
+ 3353 188a 8081      		ld r24,Z
+ 3354 188c 9181      		ldd r25,Z+1
+ 3355 188e B701      		movw r22,r14
+ 3356 1890 0E94 0000 		call FlashEraseEntry
+ 3357 1894 D801      		movw r26,r16
+ 3358 1896 1496      		adiw r26,4
+ 3359 1898 8C91      		ld r24,X
+ 3360 189a 1497      		sbiw r26,4
+ 3361 189c 8068      		ori r24,lo8(-128)
+ 3362 189e 1496      		adiw r26,4
+ 3363 18a0 8C93      		st X,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 60
+
+
+ 3364 18a2 00C0      		rjmp .L201
+ 3365               	.L202:
+ 3366 18a4 8981      		ldd r24,Y+1
+ 3367 18a6 9A81      		ldd r25,Y+2
+ 3368 18a8 880F      		lsl r24
+ 3369 18aa 991F      		rol r25
+ 3370 18ac D801      		movw r26,r16
+ 3371 18ae 1796      		adiw r26,7
+ 3372 18b0 ED91      		ld r30,X+
+ 3373 18b2 FC91      		ld r31,X
+ 3374 18b4 1897      		sbiw r26,7+1
+ 3375 18b6 E80F      		add r30,r24
+ 3376 18b8 F91F      		adc r31,r25
+ 3377 18ba 6081      		ld r22,Z
+ 3378 18bc 7181      		ldd r23,Z+1
+ 3379 18be 1596      		adiw r26,5
+ 3380 18c0 8D91      		ld r24,X+
+ 3381 18c2 9C91      		ld r25,X
+ 3382 18c4 1697      		sbiw r26,5+1
+ 3383 18c6 6817      		cp r22,r24
+ 3384 18c8 7907      		cpc r23,r25
+ 3385 18ca 00F0      		brlo .+2
+ 3386 18cc 00C0      		rjmp .L203
+ 3387 18ce 8D91      		ld r24,X+
+ 3388 18d0 9C91      		ld r25,X
+ 3389 18d2 A501      		movw r20,r10
+ 3390 18d4 0E94 0000 		call FlashReadBlockHead
+ 3391 18d8 2B85      		ldd r18,Y+11
+ 3392 18da 3C85      		ldd r19,Y+12
+ 3393 18dc 8B81      		ldd r24,Y+3
+ 3394 18de 9C81      		ldd r25,Y+4
+ 3395 18e0 F801      		movw r30,r16
+ 3396 18e2 6581      		ldd r22,Z+5
+ 3397 18e4 7681      		ldd r23,Z+6
+ 3398 18e6 8217      		cp r24,r18
+ 3399 18e8 9307      		cpc r25,r19
+ 3400 18ea 00F4      		brsh .L204
+ 3401 18ec 281B      		sub r18,r24
+ 3402 18ee 390B      		sbc r19,r25
+ 3403 18f0 4081      		ld r20,Z
+ 3404 18f2 5181      		ldd r21,Z+1
+ 3405 18f4 6217      		cp r22,r18
+ 3406 18f6 7307      		cpc r23,r19
+ 3407 18f8 00F4      		brsh .L207
+ 3408 18fa 00C0      		rjmp .L210
+ 3409               	.L204:
+ 3410 18fc 821B      		sub r24,r18
+ 3411 18fe 930B      		sbc r25,r19
+ 3412 1900 F801      		movw r30,r16
+ 3413 1902 4081      		ld r20,Z
+ 3414 1904 5181      		ldd r21,Z+1
+ 3415 1906 8617      		cp r24,r22
+ 3416 1908 9707      		cpc r25,r23
+ 3417 190a 00F4      		brsh .L207
+ 3418               	.L210:
+ 3419 190c CA01      		movw r24,r20
+ 3420 190e B701      		movw r22,r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 61
+
+
+ 3421 1910 0E94 0000 		call FlashEraseEntry
+ 3422 1914 00C0      		rjmp .L206
+ 3423               	.L207:
+ 3424 1916 8981      		ldd r24,Y+1
+ 3425 1918 9A81      		ldd r25,Y+2
+ 3426 191a 880F      		lsl r24
+ 3427 191c 991F      		rol r25
+ 3428 191e D801      		movw r26,r16
+ 3429 1920 1796      		adiw r26,7
+ 3430 1922 ED91      		ld r30,X+
+ 3431 1924 FC91      		ld r31,X
+ 3432 1926 1897      		sbiw r26,7+1
+ 3433 1928 E80F      		add r30,r24
+ 3434 192a F91F      		adc r31,r25
+ 3435 192c 6081      		ld r22,Z
+ 3436 192e 7181      		ldd r23,Z+1
+ 3437 1930 CA01      		movw r24,r20
+ 3438 1932 0E94 0000 		call FlashEraseEntry
+ 3439 1936 8981      		ldd r24,Y+1
+ 3440 1938 9A81      		ldd r25,Y+2
+ 3441 193a 880F      		lsl r24
+ 3442 193c 991F      		rol r25
+ 3443 193e D801      		movw r26,r16
+ 3444 1940 1796      		adiw r26,7
+ 3445 1942 ED91      		ld r30,X+
+ 3446 1944 FC91      		ld r31,X
+ 3447 1946 1897      		sbiw r26,7+1
+ 3448 1948 E80F      		add r30,r24
+ 3449 194a F91F      		adc r31,r25
+ 3450 194c F182      		std Z+1,r15
+ 3451 194e E082      		st Z,r14
+ 3452               	.L206:
+ 3453 1950 F801      		movw r30,r16
+ 3454 1952 8481      		ldd r24,Z+4
+ 3455 1954 8068      		ori r24,lo8(-128)
+ 3456 1956 8483      		std Z+4,r24
+ 3457 1958 00C0      		rjmp .L201
+ 3458               	.L203:
+ 3459 195a F182      		std Z+1,r15
+ 3460 195c E082      		st Z,r14
+ 3461               	.L201:
+ 3462 195e 0894      		sec
+ 3463 1960 E11C      		adc r14,__zero_reg__
+ 3464 1962 F11C      		adc r15,__zero_reg__
+ 3465 1964 84E0      		ldi r24,lo8(4)
+ 3466 1966 90E0      		ldi r25,hi8(4)
+ 3467 1968 C80E      		add r12,r24
+ 3468 196a D91E      		adc r13,r25
+ 3469               	.L200:
+ 3470 196c D801      		movw r26,r16
+ 3471 196e 1596      		adiw r26,5
+ 3472 1970 8D91      		ld r24,X+
+ 3473 1972 9C91      		ld r25,X
+ 3474 1974 1697      		sbiw r26,5+1
+ 3475 1976 E816      		cp r14,r24
+ 3476 1978 F906      		cpc r15,r25
+ 3477 197a 00F4      		brsh .+2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 62
+
+
+ 3478 197c 00C0      		rjmp .L208
+ 3479 197e C801      		movw r24,r16
+ 3480 1980 0296      		adiw r24,2
+ 3481 1982 0E94 0000 		call NutEventPost
+ 3482 1986 20E0      		ldi r18,lo8(0)
+ 3483 1988 30E0      		ldi r19,hi8(0)
+ 3484               	.L197:
+ 3485 198a C901      		movw r24,r18
+ 3486               	/* epilogue start */
+ 3487 198c 6096      		adiw r28,16
+ 3488 198e 0FB6      		in __tmp_reg__,__SREG__
+ 3489 1990 F894      		cli
+ 3490 1992 DEBF      		out __SP_H__,r29
+ 3491 1994 0FBE      		out __SREG__,__tmp_reg__
+ 3492 1996 CDBF      		out __SP_L__,r28
+ 3493 1998 CF91      		pop r28
+ 3494 199a DF91      		pop r29
+ 3495 199c 1F91      		pop r17
+ 3496 199e 0F91      		pop r16
+ 3497 19a0 FF90      		pop r15
+ 3498 19a2 EF90      		pop r14
+ 3499 19a4 DF90      		pop r13
+ 3500 19a6 CF90      		pop r12
+ 3501 19a8 BF90      		pop r11
+ 3502 19aa AF90      		pop r10
+ 3503 19ac 9F90      		pop r9
+ 3504 19ae 8F90      		pop r8
+ 3505 19b0 0895      		ret
+ 3506               		.size	UFlashMount, .-UFlashMount
+ 3507               	.global	UFlashAttach
+ 3508               		.type	UFlashAttach, @function
+ 3509               	UFlashAttach:
+ 3510 19b2 0F93      		push r16
+ 3511 19b4 1F93      		push r17
+ 3512 19b6 CF93      		push r28
+ 3513 19b8 DF93      		push r29
+ 3514               	/* prologue: function */
+ 3515               	/* frame size = 0 */
+ 3516 19ba 8C01      		movw r16,r24
+ 3517 19bc EB01      		movw r28,r22
+ 3518 19be FA01      		movw r30,r20
+ 3519 19c0 A881      		ld r26,Y
+ 3520 19c2 B981      		ldd r27,Y+1
+ 3521 19c4 1196      		adiw r26,1
+ 3522 19c6 5C93      		st X,r21
+ 3523 19c8 4E93      		st -X,r20
+ 3524 19ca 0084      		ldd __tmp_reg__,Z+8
+ 3525 19cc F185      		ldd r31,Z+9
+ 3526 19ce E02D      		mov r30,__tmp_reg__
+ 3527 19d0 CD01      		movw r24,r26
+ 3528 19d2 0995      		icall
+ 3529 19d4 892B      		or r24,r25
+ 3530 19d6 01F4      		brne .L213
+ 3531 19d8 E881      		ld r30,Y
+ 3532 19da F981      		ldd r31,Y+1
+ 3533 19dc 8081      		ld r24,Z
+ 3534 19de 9181      		ldd r25,Z+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 63
+
+
+ 3535 19e0 0E94 0000 		call NutEventPost
+ 3536 19e4 EC85      		ldd r30,Y+12
+ 3537 19e6 FD85      		ldd r31,Y+13
+ 3538 19e8 CE01      		movw r24,r28
+ 3539 19ea 0995      		icall
+ 3540 19ec 892B      		or r24,r25
+ 3541 19ee 01F4      		brne .L213
+ 3542 19f0 F801      		movw r30,r16
+ 3543 19f2 D08B      		std Z+16,r29
+ 3544 19f4 C787      		std Z+15,r28
+ 3545 19f6 C801      		movw r24,r16
+ 3546 19f8 0E94 0000 		call UFlashMount
+ 3547 19fc 892B      		or r24,r25
+ 3548 19fe 01F4      		brne .L214
+ 3549 1a00 20E0      		ldi r18,lo8(0)
+ 3550 1a02 30E0      		ldi r19,hi8(0)
+ 3551 1a04 00C0      		rjmp .L215
+ 3552               	.L214:
+ 3553 1a06 F801      		movw r30,r16
+ 3554 1a08 108A      		std Z+16,__zero_reg__
+ 3555 1a0a 1786      		std Z+15,__zero_reg__
+ 3556               	.L213:
+ 3557 1a0c 2FEF      		ldi r18,lo8(-1)
+ 3558 1a0e 3FEF      		ldi r19,hi8(-1)
+ 3559               	.L215:
+ 3560 1a10 C901      		movw r24,r18
+ 3561               	/* epilogue start */
+ 3562 1a12 DF91      		pop r29
+ 3563 1a14 CF91      		pop r28
+ 3564 1a16 1F91      		pop r17
+ 3565 1a18 0F91      		pop r16
+ 3566 1a1a 0895      		ret
+ 3567               		.size	UFlashAttach, .-UFlashAttach
+ 3568               		.type	UFlashIOCtl, @function
+ 3569               	UFlashIOCtl:
+ 3570 1a1c 2F92      		push r2
+ 3571 1a1e 3F92      		push r3
+ 3572 1a20 4F92      		push r4
+ 3573 1a22 5F92      		push r5
+ 3574 1a24 6F92      		push r6
+ 3575 1a26 7F92      		push r7
+ 3576 1a28 8F92      		push r8
+ 3577 1a2a 9F92      		push r9
+ 3578 1a2c AF92      		push r10
+ 3579 1a2e BF92      		push r11
+ 3580 1a30 CF92      		push r12
+ 3581 1a32 DF92      		push r13
+ 3582 1a34 EF92      		push r14
+ 3583 1a36 FF92      		push r15
+ 3584 1a38 0F93      		push r16
+ 3585 1a3a 1F93      		push r17
+ 3586 1a3c DF93      		push r29
+ 3587 1a3e CF93      		push r28
+ 3588 1a40 CDB7      		in r28,__SP_L__
+ 3589 1a42 DEB7      		in r29,__SP_H__
+ 3590 1a44 6397      		sbiw r28,19
+ 3591 1a46 0FB6      		in __tmp_reg__,__SREG__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 64
+
+
+ 3592 1a48 F894      		cli
+ 3593 1a4a DEBF      		out __SP_H__,r29
+ 3594 1a4c 0FBE      		out __SREG__,__tmp_reg__
+ 3595 1a4e CDBF      		out __SP_L__,r28
+ 3596               	/* prologue: function */
+ 3597               	/* frame size = 19 */
+ 3598 1a50 4C01      		movw r8,r24
+ 3599 1a52 6A01      		movw r12,r20
+ 3600 1a54 21E1      		ldi r18,hi8(4373)
+ 3601 1a56 6531      		cpi r22,lo8(4373)
+ 3602 1a58 7207      		cpc r23,r18
+ 3603 1a5a 01F4      		brne .+2
+ 3604 1a5c 00C0      		rjmp .L223
+ 3605 1a5e 31E1      		ldi r19,hi8(4374)
+ 3606 1a60 6631      		cpi r22,lo8(4374)
+ 3607 1a62 7307      		cpc r23,r19
+ 3608 1a64 04F4      		brge .L229
+ 3609 1a66 81E1      		ldi r24,hi8(4371)
+ 3610 1a68 6331      		cpi r22,lo8(4371)
+ 3611 1a6a 7807      		cpc r23,r24
+ 3612 1a6c 04F4      		brge .L230
+ 3613 1a6e 91E1      		ldi r25,hi8(4369)
+ 3614 1a70 6131      		cpi r22,lo8(4369)
+ 3615 1a72 7907      		cpc r23,r25
+ 3616 1a74 04F0      		brlt .+2
+ 3617 1a76 00C0      		rjmp .L220
+ 3618 1a78 6150      		subi r22,lo8(4353)
+ 3619 1a7a 7141      		sbci r23,hi8(4353)
+ 3620 1a7c 01F0      		breq .+2
+ 3621 1a7e 00C0      		rjmp .L218
+ 3622 1a80 00C0      		rjmp .L267
+ 3623               	.L230:
+ 3624 1a82 B1E1      		ldi r27,hi8(4371)
+ 3625 1a84 6331      		cpi r22,lo8(4371)
+ 3626 1a86 7B07      		cpc r23,r27
+ 3627 1a88 01F4      		brne .+2
+ 3628 1a8a 00C0      		rjmp .L221
+ 3629 1a8c 6451      		subi r22,lo8(4372)
+ 3630 1a8e 7141      		sbci r23,hi8(4372)
+ 3631 1a90 01F0      		breq .+2
+ 3632 1a92 00C0      		rjmp .L218
+ 3633 1a94 00C0      		rjmp .L268
+ 3634               	.L229:
+ 3635 1a96 F1E1      		ldi r31,hi8(4400)
+ 3636 1a98 6033      		cpi r22,lo8(4400)
+ 3637 1a9a 7F07      		cpc r23,r31
+ 3638 1a9c 01F4      		brne .+2
+ 3639 1a9e 00C0      		rjmp .L226
+ 3640 1aa0 21E1      		ldi r18,hi8(4401)
+ 3641 1aa2 6133      		cpi r22,lo8(4401)
+ 3642 1aa4 7207      		cpc r23,r18
+ 3643 1aa6 04F4      		brge .L231
+ 3644 1aa8 31E1      		ldi r19,hi8(4386)
+ 3645 1aaa 6232      		cpi r22,lo8(4386)
+ 3646 1aac 7307      		cpc r23,r19
+ 3647 1aae 01F4      		brne .+2
+ 3648 1ab0 00C0      		rjmp .L224
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 65
+
+
+ 3649 1ab2 6352      		subi r22,lo8(4387)
+ 3650 1ab4 7141      		sbci r23,hi8(4387)
+ 3651 1ab6 01F0      		breq .+2
+ 3652 1ab8 00C0      		rjmp .L218
+ 3653 1aba 00C0      		rjmp .L269
+ 3654               	.L231:
+ 3655 1abc 91E1      		ldi r25,hi8(4401)
+ 3656 1abe 6133      		cpi r22,lo8(4401)
+ 3657 1ac0 7907      		cpc r23,r25
+ 3658 1ac2 01F4      		brne .+2
+ 3659 1ac4 00C0      		rjmp .L227
+ 3660 1ac6 6253      		subi r22,lo8(4402)
+ 3661 1ac8 7141      		sbci r23,hi8(4402)
+ 3662 1aca 01F0      		breq .+2
+ 3663 1acc 00C0      		rjmp .L218
+ 3664 1ace 00C0      		rjmp .L270
+ 3665               	.L267:
+ 3666 1ad0 FA01      		movw r30,r20
+ 3667 1ad2 0081      		ld r16,Z
+ 3668 1ad4 1181      		ldd r17,Z+1
+ 3669 1ad6 A280      		ldd r10,Z+2
+ 3670 1ad8 B380      		ldd r11,Z+3
+ 3671 1ada D401      		movw r26,r8
+ 3672 1adc 5196      		adiw r26,17
+ 3673 1ade CD90      		ld r12,X+
+ 3674 1ae0 DC90      		ld r13,X
+ 3675 1ae2 5297      		sbiw r26,17+1
+ 3676 1ae4 00C0      		rjmp .L232
+ 3677               	.L233:
+ 3678 1ae6 0F5F      		subi r16,lo8(-(1))
+ 3679 1ae8 1F4F      		sbci r17,hi8(-(1))
+ 3680               	.L232:
+ 3681 1aea F801      		movw r30,r16
+ 3682 1aec 8081      		ld r24,Z
+ 3683 1aee 8F32      		cpi r24,lo8(47)
+ 3684 1af0 01F0      		breq .L233
+ 3685 1af2 C601      		movw r24,r12
+ 3686 1af4 B801      		movw r22,r16
+ 3687 1af6 AE01      		movw r20,r28
+ 3688 1af8 4C5F      		subi r20,lo8(-(4))
+ 3689 1afa 5F4F      		sbci r21,hi8(-(4))
+ 3690 1afc 20E8      		ldi r18,lo8(128)
+ 3691 1afe 30E0      		ldi r19,hi8(128)
+ 3692 1b00 0E94 0000 		call EntrySearchNext
+ 3693 1b04 7C01      		movw r14,r24
+ 3694 1b06 8038      		cpi r24,128
+ 3695 1b08 9105      		cpc r25,__zero_reg__
+ 3696 1b0a 00F4      		brsh .L234
+ 3697 1b0c 880F      		lsl r24
+ 3698 1b0e 991F      		rol r25
+ 3699 1b10 D601      		movw r26,r12
+ 3700 1b12 1796      		adiw r26,7
+ 3701 1b14 ED91      		ld r30,X+
+ 3702 1b16 FC91      		ld r31,X
+ 3703 1b18 1897      		sbiw r26,7+1
+ 3704 1b1a E80F      		add r30,r24
+ 3705 1b1c F91F      		adc r31,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 66
+
+
+ 3706 1b1e 2081      		ld r18,Z
+ 3707 1b20 3181      		ldd r19,Z+1
+ 3708 1b22 1596      		adiw r26,5
+ 3709 1b24 8D91      		ld r24,X+
+ 3710 1b26 9C91      		ld r25,X
+ 3711 1b28 1697      		sbiw r26,5+1
+ 3712 1b2a 8217      		cp r24,r18
+ 3713 1b2c 9307      		cpc r25,r19
+ 3714 1b2e 00F0      		brlo .L234
+ 3715 1b30 90E0      		ldi r25,lo8(0)
+ 3716 1b32 00C0      		rjmp .L235
+ 3717               	.L234:
+ 3718 1b34 C601      		movw r24,r12
+ 3719 1b36 B801      		movw r22,r16
+ 3720 1b38 AE01      		movw r20,r28
+ 3721 1b3a 4C5F      		subi r20,lo8(-(4))
+ 3722 1b3c 5F4F      		sbci r21,hi8(-(4))
+ 3723 1b3e 20E0      		ldi r18,lo8(0)
+ 3724 1b40 30E0      		ldi r19,hi8(0)
+ 3725 1b42 0E94 0000 		call EntrySearchNext
+ 3726 1b46 7C01      		movw r14,r24
+ 3727 1b48 8038      		cpi r24,128
+ 3728 1b4a 9105      		cpc r25,__zero_reg__
+ 3729 1b4c 00F0      		brlo .+2
+ 3730 1b4e 00C0      		rjmp .L218
+ 3731 1b50 880F      		lsl r24
+ 3732 1b52 991F      		rol r25
+ 3733 1b54 D601      		movw r26,r12
+ 3734 1b56 1796      		adiw r26,7
+ 3735 1b58 ED91      		ld r30,X+
+ 3736 1b5a FC91      		ld r31,X
+ 3737 1b5c 1897      		sbiw r26,7+1
+ 3738 1b5e E80F      		add r30,r24
+ 3739 1b60 F91F      		adc r31,r25
+ 3740 1b62 2081      		ld r18,Z
+ 3741 1b64 3181      		ldd r19,Z+1
+ 3742 1b66 1596      		adiw r26,5
+ 3743 1b68 8D91      		ld r24,X+
+ 3744 1b6a 9C91      		ld r25,X
+ 3745 1b6c 1697      		sbiw r26,5+1
+ 3746 1b6e 8217      		cp r24,r18
+ 3747 1b70 9307      		cpc r25,r19
+ 3748 1b72 00F4      		brsh .+2
+ 3749 1b74 00C0      		rjmp .L218
+ 3750 1b76 91E0      		ldi r25,lo8(1)
+ 3751               	.L235:
+ 3752 1b78 8DE0      		ldi r24,lo8(13)
+ 3753 1b7a F501      		movw r30,r10
+ 3754 1b7c 1192      		st Z+,__zero_reg__
+ 3755 1b7e 8A95      	        dec r24
+ 3756 1b80 01F4      		brne .-6
+ 3757 1b82 9923      		tst r25
+ 3758 1b84 01F0      		breq .L236
+ 3759 1b86 81E0      		ldi r24,lo8(1)
+ 3760 1b88 D501      		movw r26,r10
+ 3761 1b8a 1296      		adiw r26,2
+ 3762 1b8c 8C93      		st X,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 67
+
+
+ 3763 1b8e 00C0      		rjmp .L220
+ 3764               	.L236:
+ 3765 1b90 8601      		movw r16,r12
+ 3766 1b92 0E5F      		subi r16,lo8(-(2))
+ 3767 1b94 1F4F      		sbci r17,hi8(-(2))
+ 3768 1b96 C801      		movw r24,r16
+ 3769 1b98 40E0      		ldi r20,lo8(0)
+ 3770 1b9a 50E0      		ldi r21,hi8(0)
+ 3771 1b9c 60E0      		ldi r22,hlo8(0)
+ 3772 1b9e 70E0      		ldi r23,hhi8(0)
+ 3773 1ba0 0E94 0000 		call NutEventWait
+ 3774 1ba4 C601      		movw r24,r12
+ 3775 1ba6 B701      		movw r22,r14
+ 3776 1ba8 40E0      		ldi r20,lo8(0)
+ 3777 1baa 50E0      		ldi r21,hi8(0)
+ 3778 1bac 0E94 0000 		call EntryScan
+ 3779 1bb0 F501      		movw r30,r10
+ 3780 1bb2 6583      		std Z+5,r22
+ 3781 1bb4 7683      		std Z+6,r23
+ 3782 1bb6 8783      		std Z+7,r24
+ 3783 1bb8 9087      		std Z+8,r25
+ 3784 1bba C801      		movw r24,r16
+ 3785 1bbc 0E94 0000 		call NutEventPost
+ 3786 1bc0 8D81      		ldd r24,Y+5
+ 3787 1bc2 90E0      		ldi r25,lo8(0)
+ 3788 1bc4 0296      		adiw r24,2
+ 3789 1bc6 A0E0      		ldi r26,lo8(0)
+ 3790 1bc8 B0E0      		ldi r27,hi8(0)
+ 3791 1bca F501      		movw r30,r10
+ 3792 1bcc 2581      		ldd r18,Z+5
+ 3793 1bce 3681      		ldd r19,Z+6
+ 3794 1bd0 4781      		ldd r20,Z+7
+ 3795 1bd2 5085      		ldd r21,Z+8
+ 3796 1bd4 281B      		sub r18,r24
+ 3797 1bd6 390B      		sbc r19,r25
+ 3798 1bd8 4A0B      		sbc r20,r26
+ 3799 1bda 5B0B      		sbc r21,r27
+ 3800 1bdc D501      		movw r26,r10
+ 3801 1bde 1596      		adiw r26,5
+ 3802 1be0 2D93      		st X+,r18
+ 3803 1be2 3D93      		st X+,r19
+ 3804 1be4 4D93      		st X+,r20
+ 3805 1be6 5C93      		st X,r21
+ 3806 1be8 1897      		sbiw r26,5+3
+ 3807 1bea 00C0      		rjmp .L220
+ 3808               	.L221:
+ 3809 1bec FA01      		movw r30,r20
+ 3810 1bee 6280      		ldd r6,Z+2
+ 3811 1bf0 7380      		ldd r7,Z+3
+ 3812 1bf2 86E0      		ldi r24,lo8(6)
+ 3813 1bf4 90E0      		ldi r25,hi8(6)
+ 3814 1bf6 0E94 0000 		call malloc
+ 3815 1bfa 7C01      		movw r14,r24
+ 3816 1bfc 5C01      		movw r10,r24
+ 3817 1bfe 0097      		sbiw r24,0
+ 3818 1c00 01F0      		breq .L264
+ 3819               	.L238:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 68
+
+
+ 3820 1c02 84E0      		ldi r24,lo8(4)
+ 3821 1c04 90E0      		ldi r25,hi8(4)
+ 3822 1c06 0E94 0000 		call malloc
+ 3823 1c0a 8C01      		movw r16,r24
+ 3824 1c0c 0097      		sbiw r24,0
+ 3825 1c0e 01F0      		breq .L240
+ 3826 1c10 DC01      		movw r26,r24
+ 3827 1c12 1D92      		st X+,__zero_reg__
+ 3828 1c14 1C92      		st X,__zero_reg__
+ 3829 1c16 20E0      		ldi r18,lo8(0)
+ 3830 1c18 30E0      		ldi r19,hi8(0)
+ 3831 1c1a F301      		movw r30,r6
+ 3832 1c1c 8081      		ld r24,Z
+ 3833 1c1e 8F32      		cpi r24,lo8(47)
+ 3834 1c20 01F4      		brne .L241
+ 3835 1c22 21E0      		ldi r18,lo8(1)
+ 3836 1c24 30E0      		ldi r19,hi8(1)
+ 3837               	.L241:
+ 3838 1c26 C301      		movw r24,r6
+ 3839 1c28 820F      		add r24,r18
+ 3840 1c2a 931F      		adc r25,r19
+ 3841 1c2c 0E94 0000 		call strdup
+ 3842 1c30 D801      		movw r26,r16
+ 3843 1c32 1396      		adiw r26,2+1
+ 3844 1c34 9C93      		st X,r25
+ 3845 1c36 8E93      		st -X,r24
+ 3846 1c38 1297      		sbiw r26,2
+ 3847 1c3a 0097      		sbiw r24,0
+ 3848 1c3c 01F0      		breq .L242
+ 3849 1c3e F701      		movw r30,r14
+ 3850 1c40 9382      		std Z+3,r9
+ 3851 1c42 8282      		std Z+2,r8
+ 3852 1c44 1583      		std Z+5,r17
+ 3853 1c46 0483      		std Z+4,r16
+ 3854 1c48 00C0      		rjmp .L239
+ 3855               	.L242:
+ 3856 1c4a C801      		movw r24,r16
+ 3857 1c4c 0E94 0000 		call free
+ 3858               	.L240:
+ 3859 1c50 C701      		movw r24,r14
+ 3860 1c52 0E94 0000 		call free
+ 3861               	.L264:
+ 3862 1c56 AA24      		clr r10
+ 3863 1c58 AA94      		dec r10
+ 3864 1c5a BA2C      		mov r11,r10
+ 3865               	.L239:
+ 3866 1c5c D601      		movw r26,r12
+ 3867 1c5e AD92      		st X+,r10
+ 3868 1c60 BC92      		st X,r11
+ 3869 1c62 BFEF      		ldi r27,lo8(-1)
+ 3870 1c64 AB16      		cp r10,r27
+ 3871 1c66 BFEF      		ldi r27,hi8(-1)
+ 3872 1c68 BB06      		cpc r11,r27
+ 3873 1c6a 01F0      		breq .+2
+ 3874 1c6c 00C0      		rjmp .L220
+ 3875 1c6e 00C0      		rjmp .L218
+ 3876               	.L268:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 69
+
+
+ 3877 1c70 FA01      		movw r30,r20
+ 3878 1c72 E080      		ld r14,Z
+ 3879 1c74 F180      		ldd r15,Z+1
+ 3880 1c76 D701      		movw r26,r14
+ 3881 1c78 1496      		adiw r26,4
+ 3882 1c7a 0D91      		ld r16,X+
+ 3883 1c7c 1C91      		ld r17,X
+ 3884 1c7e 1597      		sbiw r26,4+1
+ 3885 1c80 F801      		movw r30,r16
+ 3886 1c82 8281      		ldd r24,Z+2
+ 3887 1c84 9381      		ldd r25,Z+3
+ 3888 1c86 0E94 0000 		call free
+ 3889 1c8a C801      		movw r24,r16
+ 3890 1c8c 0E94 0000 		call free
+ 3891 1c90 C701      		movw r24,r14
+ 3892 1c92 0E94 0000 		call free
+ 3893 1c96 00C0      		rjmp .L220
+ 3894               	.L223:
+ 3895 1c98 1B82      		std Y+3,__zero_reg__
+ 3896 1c9a 1A82      		std Y+2,__zero_reg__
+ 3897 1c9c DA01      		movw r26,r20
+ 3898 1c9e ED91      		ld r30,X+
+ 3899 1ca0 FC91      		ld r31,X
+ 3900 1ca2 0481      		ldd r16,Z+4
+ 3901 1ca4 1581      		ldd r17,Z+5
+ 3902 1ca6 0280      		ldd __tmp_reg__,Z+2
+ 3903 1ca8 F381      		ldd r31,Z+3
+ 3904 1caa E02D      		mov r30,__tmp_reg__
+ 3905 1cac A188      		ldd r10,Z+17
+ 3906 1cae B288      		ldd r11,Z+18
+ 3907 1cb0 F801      		movw r30,r16
+ 3908 1cb2 6281      		ldd r22,Z+2
+ 3909 1cb4 7381      		ldd r23,Z+3
+ 3910 1cb6 34E0      		ldi r19,lo8(4)
+ 3911 1cb8 E32E      		mov r14,r19
+ 3912 1cba F12C      		mov r15,__zero_reg__
+ 3913 1cbc EC0E      		add r14,r28
+ 3914 1cbe FD1E      		adc r15,r29
+ 3915 1cc0 2081      		ld r18,Z
+ 3916 1cc2 3181      		ldd r19,Z+1
+ 3917 1cc4 C501      		movw r24,r10
+ 3918 1cc6 A701      		movw r20,r14
+ 3919 1cc8 0E94 0000 		call EntrySearchNext
+ 3920 1ccc D801      		movw r26,r16
+ 3921 1cce 8D93      		st X+,r24
+ 3922 1cd0 9C93      		st X,r25
+ 3923 1cd2 8038      		cpi r24,128
+ 3924 1cd4 9105      		cpc r25,__zero_reg__
+ 3925 1cd6 00F0      		brlo .+2
+ 3926 1cd8 00C0      		rjmp .L218
+ 3927 1cda F601      		movw r30,r12
+ 3928 1cdc 8281      		ldd r24,Z+2
+ 3929 1cde 9381      		ldd r25,Z+3
+ 3930 1ce0 6C01      		movw r12,r24
+ 3931 1ce2 FC01      		movw r30,r24
+ 3932 1ce4 88E0      		ldi r24,lo8(264)
+ 3933 1ce6 91E0      		ldi r25,hi8(264)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 70
+
+
+ 3934 1ce8 DF01      		movw r26,r30
+ 3935 1cea 9C01      		movw r18,r24
+ 3936 1cec 1D92      		st X+,__zero_reg__
+ 3937 1cee 2150      		subi r18,1
+ 3938 1cf0 3040      		sbci r19,0
+ 3939 1cf2 01F4      		brne .-8
+ 3940 1cf4 D801      		movw r26,r16
+ 3941 1cf6 8D91      		ld r24,X+
+ 3942 1cf8 9C91      		ld r25,X
+ 3943 1cfa 880F      		lsl r24
+ 3944 1cfc 991F      		rol r25
+ 3945 1cfe D501      		movw r26,r10
+ 3946 1d00 1796      		adiw r26,7
+ 3947 1d02 ED91      		ld r30,X+
+ 3948 1d04 FC91      		ld r31,X
+ 3949 1d06 1897      		sbiw r26,7+1
+ 3950 1d08 E80F      		add r30,r24
+ 3951 1d0a F91F      		adc r31,r25
+ 3952 1d0c 6081      		ld r22,Z
+ 3953 1d0e 7181      		ldd r23,Z+1
+ 3954 1d10 8D91      		ld r24,X+
+ 3955 1d12 9C91      		ld r25,X
+ 3956 1d14 A701      		movw r20,r14
+ 3957 1d16 9E01      		movw r18,r28
+ 3958 1d18 2E5F      		subi r18,lo8(-(2))
+ 3959 1d1a 3F4F      		sbci r19,hi8(-(2))
+ 3960 1d1c 0E94 0000 		call FlashReadEntry
+ 3961 1d20 F801      		movw r30,r16
+ 3962 1d22 A281      		ldd r26,Z+2
+ 3963 1d24 B381      		ldd r27,Z+3
+ 3964 1d26 FD01      		movw r30,r26
+ 3965 1d28 0190      		ld __tmp_reg__,Z+
+ 3966 1d2a 0020      		tst __tmp_reg__
+ 3967 1d2c 01F4      		brne .-6
+ 3968 1d2e 3197      		sbiw r30,1
+ 3969 1d30 EA1B      		sub r30,r26
+ 3970 1d32 FB0B      		sbc r31,r27
+ 3971 1d34 8A81      		ldd r24,Y+2
+ 3972 1d36 9B81      		ldd r25,Y+3
+ 3973 1d38 8E0F      		add r24,r30
+ 3974 1d3a 9F1F      		adc r25,r31
+ 3975 1d3c 6FE2      		ldi r22,lo8(47)
+ 3976 1d3e 70E0      		ldi r23,hi8(47)
+ 3977 1d40 0E94 0000 		call strchr
+ 3978 1d44 FC01      		movw r30,r24
+ 3979 1d46 0097      		sbiw r24,0
+ 3980 1d48 01F0      		breq .L243
+ 3981 1d4a 1082      		st Z,__zero_reg__
+ 3982 1d4c 81E0      		ldi r24,lo8(1)
+ 3983 1d4e D601      		movw r26,r12
+ 3984 1d50 1696      		adiw r26,6
+ 3985 1d52 8C93      		st X,r24
+ 3986 1d54 00C0      		rjmp .L244
+ 3987               	.L243:
+ 3988 1d56 F601      		movw r30,r12
+ 3989 1d58 1682      		std Z+6,__zero_reg__
+ 3990               	.L244:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 71
+
+
+ 3991 1d5a F801      		movw r30,r16
+ 3992 1d5c A281      		ldd r26,Z+2
+ 3993 1d5e B381      		ldd r27,Z+3
+ 3994 1d60 FD01      		movw r30,r26
+ 3995 1d62 0190      		ld __tmp_reg__,Z+
+ 3996 1d64 0020      		tst __tmp_reg__
+ 3997 1d66 01F4      		brne .-6
+ 3998 1d68 3197      		sbiw r30,1
+ 3999 1d6a EA1B      		sub r30,r26
+ 4000 1d6c FB0B      		sbc r31,r27
+ 4001 1d6e 6A81      		ldd r22,Y+2
+ 4002 1d70 7B81      		ldd r23,Y+3
+ 4003 1d72 6E0F      		add r22,r30
+ 4004 1d74 7F1F      		adc r23,r31
+ 4005 1d76 C601      		movw r24,r12
+ 4006 1d78 0896      		adiw r24,8
+ 4007 1d7a 0E94 0000 		call strcpy
+ 4008 1d7e F801      		movw r30,r16
+ 4009 1d80 A281      		ldd r26,Z+2
+ 4010 1d82 B381      		ldd r27,Z+3
+ 4011 1d84 FD01      		movw r30,r26
+ 4012 1d86 0190      		ld __tmp_reg__,Z+
+ 4013 1d88 0020      		tst __tmp_reg__
+ 4014 1d8a 01F4      		brne .-6
+ 4015 1d8c 3197      		sbiw r30,1
+ 4016 1d8e EA1B      		sub r30,r26
+ 4017 1d90 FB0B      		sbc r31,r27
+ 4018 1d92 AA81      		ldd r26,Y+2
+ 4019 1d94 BB81      		ldd r27,Y+3
+ 4020 1d96 AE0F      		add r26,r30
+ 4021 1d98 BF1F      		adc r27,r31
+ 4022 1d9a FD01      		movw r30,r26
+ 4023 1d9c 0190      		ld __tmp_reg__,Z+
+ 4024 1d9e 0020      		tst __tmp_reg__
+ 4025 1da0 01F4      		brne .-6
+ 4026 1da2 3197      		sbiw r30,1
+ 4027 1da4 EA1B      		sub r30,r26
+ 4028 1da6 FB0B      		sbc r31,r27
+ 4029 1da8 D601      		movw r26,r12
+ 4030 1daa 1796      		adiw r26,7
+ 4031 1dac EC93      		st X,r30
+ 4032 1dae 8A81      		ldd r24,Y+2
+ 4033 1db0 9B81      		ldd r25,Y+3
+ 4034 1db2 0E94 0000 		call free
+ 4035 1db6 F801      		movw r30,r16
+ 4036 1db8 8081      		ld r24,Z
+ 4037 1dba 9181      		ldd r25,Z+1
+ 4038 1dbc 0196      		adiw r24,1
+ 4039 1dbe 9183      		std Z+1,r25
+ 4040 1dc0 8083      		st Z,r24
+ 4041 1dc2 00C0      		rjmp .L220
+ 4042               	.L224:
+ 4043 1dc4 FA01      		movw r30,r20
+ 4044 1dc6 DC01      		movw r26,r24
+ 4045 1dc8 5196      		adiw r26,17
+ 4046 1dca ED90      		ld r14,X+
+ 4047 1dcc FC90      		ld r15,X
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 72
+
+
+ 4048 1dce 5297      		sbiw r26,17+1
+ 4049 1dd0 00C0      		rjmp .L245
+ 4050               	.L246:
+ 4051 1dd2 3196      		adiw r30,1
+ 4052               	.L245:
+ 4053 1dd4 8081      		ld r24,Z
+ 4054 1dd6 8F32      		cpi r24,lo8(47)
+ 4055 1dd8 01F0      		breq .L246
+ 4056 1dda C701      		movw r24,r14
+ 4057 1ddc BF01      		movw r22,r30
+ 4058 1dde AE01      		movw r20,r28
+ 4059 1de0 4C5F      		subi r20,lo8(-(4))
+ 4060 1de2 5F4F      		sbci r21,hi8(-(4))
+ 4061 1de4 20E8      		ldi r18,lo8(128)
+ 4062 1de6 30E0      		ldi r19,hi8(128)
+ 4063 1de8 0E94 0000 		call EntrySearchNext
+ 4064 1dec B82E      		mov r11,r24
+ 4065 1dee A92E      		mov r10,r25
+ 4066 1df0 8038      		cpi r24,128
+ 4067 1df2 9105      		cpc r25,__zero_reg__
+ 4068 1df4 00F0      		brlo .+2
+ 4069 1df6 00C0      		rjmp .L218
+ 4070 1df8 6C01      		movw r12,r24
+ 4071 1dfa CC0C      		lsl r12
+ 4072 1dfc DD1C      		rol r13
+ 4073 1dfe D701      		movw r26,r14
+ 4074 1e00 1796      		adiw r26,7
+ 4075 1e02 ED91      		ld r30,X+
+ 4076 1e04 FC91      		ld r31,X
+ 4077 1e06 1897      		sbiw r26,7+1
+ 4078 1e08 EC0D      		add r30,r12
+ 4079 1e0a FD1D      		adc r31,r13
+ 4080 1e0c 2081      		ld r18,Z
+ 4081 1e0e 3181      		ldd r19,Z+1
+ 4082 1e10 1596      		adiw r26,5
+ 4083 1e12 8D91      		ld r24,X+
+ 4084 1e14 9C91      		ld r25,X
+ 4085 1e16 1697      		sbiw r26,5+1
+ 4086 1e18 8217      		cp r24,r18
+ 4087 1e1a 9307      		cpc r25,r19
+ 4088 1e1c 00F4      		brsh .+2
+ 4089 1e1e 00C0      		rjmp .L218
+ 4090 1e20 8701      		movw r16,r14
+ 4091 1e22 0E5F      		subi r16,lo8(-(2))
+ 4092 1e24 1F4F      		sbci r17,hi8(-(2))
+ 4093 1e26 C801      		movw r24,r16
+ 4094 1e28 40E0      		ldi r20,lo8(0)
+ 4095 1e2a 50E0      		ldi r21,hi8(0)
+ 4096 1e2c 60E0      		ldi r22,hlo8(0)
+ 4097 1e2e 70E0      		ldi r23,hhi8(0)
+ 4098 1e30 0E94 0000 		call NutEventWait
+ 4099 1e34 C701      		movw r24,r14
+ 4100 1e36 6B2D      		mov r22,r11
+ 4101 1e38 7A2D      		mov r23,r10
+ 4102 1e3a 0E94 0000 		call EntryTruncateSeq
+ 4103 1e3e D701      		movw r26,r14
+ 4104 1e40 1796      		adiw r26,7
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 73
+
+
+ 4105 1e42 ED91      		ld r30,X+
+ 4106 1e44 FC91      		ld r31,X
+ 4107 1e46 1897      		sbiw r26,7+1
+ 4108 1e48 EC0D      		add r30,r12
+ 4109 1e4a FD1D      		adc r31,r13
+ 4110 1e4c 6081      		ld r22,Z
+ 4111 1e4e 7181      		ldd r23,Z+1
+ 4112 1e50 8FEF      		ldi r24,lo8(-1)
+ 4113 1e52 9FEF      		ldi r25,hi8(-1)
+ 4114 1e54 9183      		std Z+1,r25
+ 4115 1e56 8083      		st Z,r24
+ 4116 1e58 8D91      		ld r24,X+
+ 4117 1e5a 9C91      		ld r25,X
+ 4118 1e5c 0E94 0000 		call FlashEraseEntry
+ 4119 1e60 C801      		movw r24,r16
+ 4120 1e62 00C0      		rjmp .L266
+ 4121               	.L269:
+ 4122 1e64 FA01      		movw r30,r20
+ 4123 1e66 2081      		ld r18,Z
+ 4124 1e68 3181      		ldd r19,Z+1
+ 4125 1e6a A280      		ldd r10,Z+2
+ 4126 1e6c B380      		ldd r11,Z+3
+ 4127 1e6e D901      		movw r26,r18
+ 4128 1e70 1496      		adiw r26,4
+ 4129 1e72 ED91      		ld r30,X+
+ 4130 1e74 FC91      		ld r31,X
+ 4131 1e76 1597      		sbiw r26,4+1
+ 4132 1e78 D501      		movw r26,r10
+ 4133 1e7a ED90      		ld r14,X+
+ 4134 1e7c FD90      		ld r15,X+
+ 4135 1e7e 0D91      		ld r16,X+
+ 4136 1e80 1C91      		ld r17,X
+ 4137 1e82 DA01      		movw r26,r20
+ 4138 1e84 1496      		adiw r26,4
+ 4139 1e86 4D91      		ld r20,X+
+ 4140 1e88 5C91      		ld r21,X
+ 4141 1e8a 1597      		sbiw r26,4+1
+ 4142 1e8c 4130      		cpi r20,1
+ 4143 1e8e 5105      		cpc r21,__zero_reg__
+ 4144 1e90 01F0      		breq .L248
+ 4145 1e92 4230      		cpi r20,2
+ 4146 1e94 5105      		cpc r21,__zero_reg__
+ 4147 1e96 01F4      		brne .L247
+ 4148 1e98 00C0      		rjmp .L271
+ 4149               	.L248:
+ 4150 1e9a 8281      		ldd r24,Z+2
+ 4151 1e9c 9381      		ldd r25,Z+3
+ 4152 1e9e A481      		ldd r26,Z+4
+ 4153 1ea0 B581      		ldd r27,Z+5
+ 4154 1ea2 00C0      		rjmp .L265
+ 4155               	.L271:
+ 4156 1ea4 8489      		ldd r24,Z+20
+ 4157 1ea6 9589      		ldd r25,Z+21
+ 4158 1ea8 A689      		ldd r26,Z+22
+ 4159 1eaa B789      		ldd r27,Z+23
+ 4160               	.L265:
+ 4161 1eac E80E      		add r14,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 74
+
+
+ 4162 1eae F91E      		adc r15,r25
+ 4163 1eb0 0A1F      		adc r16,r26
+ 4164 1eb2 1B1F      		adc r17,r27
+ 4165               	.L247:
+ 4166 1eb4 17FD      		sbrc r17,7
+ 4167 1eb6 00C0      		rjmp .L250
+ 4168 1eb8 8489      		ldd r24,Z+20
+ 4169 1eba 9589      		ldd r25,Z+21
+ 4170 1ebc A689      		ldd r26,Z+22
+ 4171 1ebe B789      		ldd r27,Z+23
+ 4172 1ec0 8E15      		cp r24,r14
+ 4173 1ec2 9F05      		cpc r25,r15
+ 4174 1ec4 A007      		cpc r26,r16
+ 4175 1ec6 B107      		cpc r27,r17
+ 4176 1ec8 04F4      		brge .L251
+ 4177               	.L250:
+ 4178 1eca 86E1      		ldi r24,lo8(22)
+ 4179 1ecc 90E0      		ldi r25,hi8(22)
+ 4180 1ece 9093 0000 		sts (errno)+1,r25
+ 4181 1ed2 8093 0000 		sts errno,r24
+ 4182 1ed6 00C0      		rjmp .L218
+ 4183               	.L251:
+ 4184 1ed8 C901      		movw r24,r18
+ 4185 1eda B801      		movw r22,r16
+ 4186 1edc A701      		movw r20,r14
+ 4187 1ede 0E94 0000 		call EntryPosSet
+ 4188 1ee2 F501      		movw r30,r10
+ 4189 1ee4 E082      		st Z,r14
+ 4190 1ee6 F182      		std Z+1,r15
+ 4191 1ee8 0283      		std Z+2,r16
+ 4192 1eea 1383      		std Z+3,r17
+ 4193 1eec 00C0      		rjmp .L218
+ 4194               	.L270:
+ 4195 1eee DA01      		movw r26,r20
+ 4196 1ef0 ED91      		ld r30,X+
+ 4197 1ef2 FC91      		ld r31,X
+ 4198 1ef4 1197      		sbiw r26,1
+ 4199 1ef6 1296      		adiw r26,2
+ 4200 1ef8 6D90      		ld r6,X+
+ 4201 1efa 7C90      		ld r7,X
+ 4202 1efc 1397      		sbiw r26,2+1
+ 4203 1efe D401      		movw r26,r8
+ 4204 1f00 5196      		adiw r26,17
+ 4205 1f02 ED90      		ld r14,X+
+ 4206 1f04 FC90      		ld r15,X
+ 4207 1f06 5297      		sbiw r26,17+1
+ 4208 1f08 00C0      		rjmp .L252
+ 4209               	.L253:
+ 4210 1f0a 3196      		adiw r30,1
+ 4211               	.L252:
+ 4212 1f0c 8081      		ld r24,Z
+ 4213 1f0e 8F32      		cpi r24,lo8(47)
+ 4214 1f10 01F0      		breq .L253
+ 4215 1f12 00C0      		rjmp .L263
+ 4216               	.L255:
+ 4217 1f14 0894      		sec
+ 4218 1f16 611C      		adc r6,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 75
+
+
+ 4219 1f18 711C      		adc r7,__zero_reg__
+ 4220               	.L263:
+ 4221 1f1a D301      		movw r26,r6
+ 4222 1f1c 8C91      		ld r24,X
+ 4223 1f1e 8F32      		cpi r24,lo8(47)
+ 4224 1f20 01F0      		breq .L255
+ 4225 1f22 C701      		movw r24,r14
+ 4226 1f24 BF01      		movw r22,r30
+ 4227 1f26 AE01      		movw r20,r28
+ 4228 1f28 4C5F      		subi r20,lo8(-(4))
+ 4229 1f2a 5F4F      		sbci r21,hi8(-(4))
+ 4230 1f2c 20E8      		ldi r18,lo8(128)
+ 4231 1f2e 30E0      		ldi r19,hi8(128)
+ 4232 1f30 0E94 0000 		call EntrySearchNext
+ 4233 1f34 8038      		cpi r24,128
+ 4234 1f36 9105      		cpc r25,__zero_reg__
+ 4235 1f38 00F0      		brlo .+2
+ 4236 1f3a 00C0      		rjmp .L218
+ 4237 1f3c 8C01      		movw r16,r24
+ 4238 1f3e 000F      		lsl r16
+ 4239 1f40 111F      		rol r17
+ 4240 1f42 D701      		movw r26,r14
+ 4241 1f44 1796      		adiw r26,7
+ 4242 1f46 ED91      		ld r30,X+
+ 4243 1f48 FC91      		ld r31,X
+ 4244 1f4a 1897      		sbiw r26,7+1
+ 4245 1f4c E00F      		add r30,r16
+ 4246 1f4e F11F      		adc r31,r17
+ 4247 1f50 2081      		ld r18,Z
+ 4248 1f52 3181      		ldd r19,Z+1
+ 4249 1f54 1596      		adiw r26,5
+ 4250 1f56 8D91      		ld r24,X+
+ 4251 1f58 9C91      		ld r25,X
+ 4252 1f5a 1697      		sbiw r26,5+1
+ 4253 1f5c 8217      		cp r24,r18
+ 4254 1f5e 9307      		cpc r25,r19
+ 4255 1f60 00F4      		brsh .+2
+ 4256 1f62 00C0      		rjmp .L218
+ 4257 1f64 D301      		movw r26,r6
+ 4258 1f66 0D90      		ld __tmp_reg__,X+
+ 4259 1f68 0020      		tst __tmp_reg__
+ 4260 1f6a 01F4      		brne .-6
+ 4261 1f6c 1197      		sbiw r26,1
+ 4262 1f6e A619      		sub r26,r6
+ 4263 1f70 B709      		sbc r27,r7
+ 4264 1f72 8D81      		ldd r24,Y+5
+ 4265 1f74 90E0      		ldi r25,lo8(0)
+ 4266 1f76 8A17      		cp r24,r26
+ 4267 1f78 9B07      		cpc r25,r27
+ 4268 1f7a 00F4      		brsh .+2
+ 4269 1f7c 00C0      		rjmp .L218
+ 4270 1f7e AD83      		std Y+5,r26
+ 4271 1f80 B2E0      		ldi r27,lo8(2)
+ 4272 1f82 8B2E      		mov r8,r27
+ 4273 1f84 912C      		mov r9,__zero_reg__
+ 4274 1f86 8E0C      		add r8,r14
+ 4275 1f88 9F1C      		adc r9,r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 76
+
+
+ 4276 1f8a C401      		movw r24,r8
+ 4277 1f8c 40E0      		ldi r20,lo8(0)
+ 4278 1f8e 50E0      		ldi r21,hi8(0)
+ 4279 1f90 60E0      		ldi r22,hlo8(0)
+ 4280 1f92 70E0      		ldi r23,hhi8(0)
+ 4281 1f94 0E94 0000 		call NutEventWait
+ 4282 1f98 C701      		movw r24,r14
+ 4283 1f9a 60E0      		ldi r22,lo8(0)
+ 4284 1f9c 70E0      		ldi r23,hi8(0)
+ 4285 1f9e 0E94 0000 		call PhysBlkAllocate
+ 4286 1fa2 6C01      		movw r12,r24
+ 4287 1fa4 F701      		movw r30,r14
+ 4288 1fa6 8581      		ldd r24,Z+5
+ 4289 1fa8 9681      		ldd r25,Z+6
+ 4290 1faa C816      		cp r12,r24
+ 4291 1fac D906      		cpc r13,r25
+ 4292 1fae 00F0      		brlo .L257
+ 4293 1fb0 C401      		movw r24,r8
+ 4294 1fb2 0E94 0000 		call NutEventPost
+ 4295 1fb6 00C0      		rjmp .L218
+ 4296               	.L257:
+ 4297 1fb8 D701      		movw r26,r14
+ 4298 1fba 1796      		adiw r26,7
+ 4299 1fbc ED91      		ld r30,X+
+ 4300 1fbe FC91      		ld r31,X
+ 4301 1fc0 1897      		sbiw r26,7+1
+ 4302 1fc2 E00F      		add r30,r16
+ 4303 1fc4 F11F      		adc r31,r17
+ 4304 1fc6 4080      		ld r4,Z
+ 4305 1fc8 5180      		ldd r5,Z+1
+ 4306 1fca D182      		std Z+1,r13
+ 4307 1fcc C082      		st Z,r12
+ 4308 1fce 8D91      		ld r24,X+
+ 4309 1fd0 9C91      		ld r25,X
+ 4310 1fd2 B601      		movw r22,r12
+ 4311 1fd4 8E01      		movw r16,r28
+ 4312 1fd6 0F5F      		subi r16,lo8(-(1))
+ 4313 1fd8 1F4F      		sbci r17,hi8(-(1))
+ 4314 1fda A801      		movw r20,r16
+ 4315 1fdc 0E94 0000 		call FlashReadBlockFoot
+ 4316 1fe0 F701      		movw r30,r14
+ 4317 1fe2 8081      		ld r24,Z
+ 4318 1fe4 9181      		ldd r25,Z+1
+ 4319 1fe6 B601      		movw r22,r12
+ 4320 1fe8 0E94 0000 		call FlashEraseBlockData
+ 4321 1fec 9201      		movw r18,r4
+ 4322 1fee 220F      		lsl r18
+ 4323 1ff0 331F      		rol r19
+ 4324 1ff2 220F      		lsl r18
+ 4325 1ff4 331F      		rol r19
+ 4326 1ff6 3F87      		std Y+15,r19
+ 4327 1ff8 2E87      		std Y+14,r18
+ 4328 1ffa 1601      		movw r2,r12
+ 4329 1ffc 220C      		lsl r2
+ 4330 1ffe 331C      		rol r3
+ 4331 2000 220C      		lsl r2
+ 4332 2002 331C      		rol r3
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 77
+
+
+ 4333 2004 AA24      		clr r10
+ 4334 2006 BB24      		clr r11
+ 4335 2008 088B      		std Y+16,r16
+ 4336 200a 198B      		std Y+17,r17
+ 4337 200c 8E01      		movw r16,r28
+ 4338 200e 0A5F      		subi r16,lo8(-(6))
+ 4339 2010 1F4F      		sbci r17,hi8(-(6))
+ 4340 2012 CE01      		movw r24,r28
+ 4341 2014 0496      		adiw r24,4
+ 4342 2016 8A8B      		std Y+18,r24
+ 4343 2018 9B8B      		std Y+19,r25
+ 4344               	.L260:
+ 4345 201a D701      		movw r26,r14
+ 4346 201c ED91      		ld r30,X+
+ 4347 201e FC91      		ld r31,X
+ 4348 2020 4085      		ldd r20,Z+8
+ 4349 2022 5185      		ldd r21,Z+9
+ 4350 2024 4A0D      		add r20,r10
+ 4351 2026 5B1D      		adc r21,r11
+ 4352 2028 6E85      		ldd r22,Y+14
+ 4353 202a 7F85      		ldd r23,Y+15
+ 4354 202c 640F      		add r22,r20
+ 4355 202e 751F      		adc r23,r21
+ 4356 2030 420D      		add r20,r2
+ 4357 2032 531D      		adc r21,r3
+ 4358 2034 228D      		ldd r18,Z+26
+ 4359 2036 338D      		ldd r19,Z+27
+ 4360 2038 CF01      		movw r24,r30
+ 4361 203a F901      		movw r30,r18
+ 4362 203c 0995      		icall
+ 4363 203e 8A2D      		mov r24,r10
+ 4364 2040 AA20      		tst r10
+ 4365 2042 01F4      		brne .L258
+ 4366 2044 F701      		movw r30,r14
+ 4367 2046 8081      		ld r24,Z
+ 4368 2048 9181      		ldd r25,Z+1
+ 4369 204a B601      		movw r22,r12
+ 4370 204c A801      		movw r20,r16
+ 4371 204e 0E94 0000 		call FlashReadBlockHead
+ 4372 2052 D701      		movw r26,r14
+ 4373 2054 8D91      		ld r24,X+
+ 4374 2056 9C91      		ld r25,X
+ 4375 2058 B601      		movw r22,r12
+ 4376 205a A801      		movw r20,r16
+ 4377 205c 0E94 0000 		call FlashWriteBlockHead
+ 4378 2060 F701      		movw r30,r14
+ 4379 2062 8081      		ld r24,Z
+ 4380 2064 9181      		ldd r25,Z+1
+ 4381 2066 B601      		movw r22,r12
+ 4382 2068 4A89      		ldd r20,Y+18
+ 4383 206a 5B89      		ldd r21,Y+19
+ 4384 206c 9301      		movw r18,r6
+ 4385 206e 0E94 0000 		call FlashWriteEntry
+ 4386 2072 00C0      		rjmp .L259
+ 4387               	.L258:
+ 4388 2074 8330      		cpi r24,lo8(3)
+ 4389 2076 01F4      		brne .L259
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 78
+
+
+ 4390 2078 D701      		movw r26,r14
+ 4391 207a 8D91      		ld r24,X+
+ 4392 207c 9C91      		ld r25,X
+ 4393 207e B601      		movw r22,r12
+ 4394 2080 4889      		ldd r20,Y+16
+ 4395 2082 5989      		ldd r21,Y+17
+ 4396 2084 0E94 0000 		call FlashWriteBlockFoot
+ 4397               	.L259:
+ 4398 2088 F701      		movw r30,r14
+ 4399 208a 8081      		ld r24,Z
+ 4400 208c 9181      		ldd r25,Z+1
+ 4401 208e B601      		movw r22,r12
+ 4402 2090 A501      		movw r20,r10
+ 4403 2092 0E94 0000 		call FlashUnitCommit
+ 4404 2096 0894      		sec
+ 4405 2098 A11C      		adc r10,__zero_reg__
+ 4406 209a B11C      		adc r11,__zero_reg__
+ 4407 209c F4E0      		ldi r31,lo8(4)
+ 4408 209e AF16      		cp r10,r31
+ 4409 20a0 B104      		cpc r11,__zero_reg__
+ 4410 20a2 01F0      		breq .+2
+ 4411 20a4 00C0      		rjmp .L260
+ 4412 20a6 D701      		movw r26,r14
+ 4413 20a8 8D91      		ld r24,X+
+ 4414 20aa 9C91      		ld r25,X
+ 4415 20ac B201      		movw r22,r4
+ 4416 20ae 0E94 0000 		call FlashEraseEntry
+ 4417 20b2 C401      		movw r24,r8
+ 4418               	.L266:
+ 4419 20b4 0E94 0000 		call NutEventPost
+ 4420 20b8 00C0      		rjmp .L220
+ 4421               	.L226:
+ 4422 20ba 0E94 0000 		call UFlashMount
+ 4423 20be 9C01      		movw r18,r24
+ 4424 20c0 00C0      		rjmp .L237
+ 4425               	.L227:
+ 4426 20c2 F401      		movw r30,r8
+ 4427 20c4 0189      		ldd r16,Z+17
+ 4428 20c6 1289      		ldd r17,Z+18
+ 4429 20c8 D801      		movw r26,r16
+ 4430 20ca 1796      		adiw r26,7
+ 4431 20cc 8D91      		ld r24,X+
+ 4432 20ce 9C91      		ld r25,X
+ 4433 20d0 1897      		sbiw r26,7+1
+ 4434 20d2 0E94 0000 		call free
+ 4435 20d6 C801      		movw r24,r16
+ 4436 20d8 0E94 0000 		call free
+ 4437 20dc F401      		movw r30,r8
+ 4438 20de 128A      		std Z+18,__zero_reg__
+ 4439 20e0 118A      		std Z+17,__zero_reg__
+ 4440 20e2 00C0      		rjmp .L220
+ 4441               	.L218:
+ 4442 20e4 2FEF      		ldi r18,lo8(-1)
+ 4443 20e6 3FEF      		ldi r19,hi8(-1)
+ 4444 20e8 00C0      		rjmp .L237
+ 4445               	.L220:
+ 4446 20ea 20E0      		ldi r18,lo8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 79
+
+
+ 4447 20ec 30E0      		ldi r19,hi8(0)
+ 4448               	.L237:
+ 4449 20ee C901      		movw r24,r18
+ 4450               	/* epilogue start */
+ 4451 20f0 6396      		adiw r28,19
+ 4452 20f2 0FB6      		in __tmp_reg__,__SREG__
+ 4453 20f4 F894      		cli
+ 4454 20f6 DEBF      		out __SP_H__,r29
+ 4455 20f8 0FBE      		out __SREG__,__tmp_reg__
+ 4456 20fa CDBF      		out __SP_L__,r28
+ 4457 20fc CF91      		pop r28
+ 4458 20fe DF91      		pop r29
+ 4459 2100 1F91      		pop r17
+ 4460 2102 0F91      		pop r16
+ 4461 2104 FF90      		pop r15
+ 4462 2106 EF90      		pop r14
+ 4463 2108 DF90      		pop r13
+ 4464 210a CF90      		pop r12
+ 4465 210c BF90      		pop r11
+ 4466 210e AF90      		pop r10
+ 4467 2110 9F90      		pop r9
+ 4468 2112 8F90      		pop r8
+ 4469 2114 7F90      		pop r7
+ 4470 2116 6F90      		pop r6
+ 4471 2118 5F90      		pop r5
+ 4472 211a 4F90      		pop r4
+ 4473 211c 3F90      		pop r3
+ 4474 211e 2F90      		pop r2
+ 4475 2120 0895      		ret
+ 4476               		.size	UFlashIOCtl, .-UFlashIOCtl
+ 4477               	.global	devUFlash0
+ 4478               		.data
+ 4479               		.type	devUFlash0, @object
+ 4480               		.size	devUFlash0, 35
+ 4481               	devUFlash0:
+ 4482 0000 0000      		.word	0
+ 4483 0002 55        		.byte	85
+ 4484 0003 46        		.byte	70
+ 4485 0004 4C        		.byte	76
+ 4486 0005 41        		.byte	65
+ 4487 0006 53        		.byte	83
+ 4488 0007 48        		.byte	72
+ 4489 0008 30        		.byte	48
+ 4490 0009 00        		.byte	0
+ 4491 000a 00        		.byte	0
+ 4492 000b 10        		.byte	16
+ 4493 000c 0000      		.word	0
+ 4494 000e 00        		.byte	0
+ 4495 000f 0000      		.word	0
+ 4496 0011 0000      		.word	0
+ 4497 0013 0000      		.word	gs(UFlashInit)
+ 4498 0015 0000      		.word	gs(UFlashIOCtl)
+ 4499 0017 0000      		.word	gs(UFlashFileRead)
+ 4500 0019 0000      		.word	gs(UFlashFileWrite)
+ 4501 001b 0000      		.word	gs(UFlashFileWrite_P)
+ 4502 001d 0000      		.word	gs(UFlashFileOpen)
+ 4503 001f 0000      		.word	gs(UFlashFileClose)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 80
+
+
+ 4504 0021 0000      		.word	gs(UFlashFileSize)
+ 4505               	.global	devUFlash1
+ 4506               		.type	devUFlash1, @object
+ 4507               		.size	devUFlash1, 35
+ 4508               	devUFlash1:
+ 4509 0023 0000      		.word	0
+ 4510 0025 55        		.byte	85
+ 4511 0026 46        		.byte	70
+ 4512 0027 4C        		.byte	76
+ 4513 0028 41        		.byte	65
+ 4514 0029 53        		.byte	83
+ 4515 002a 48        		.byte	72
+ 4516 002b 31        		.byte	49
+ 4517 002c 00        		.byte	0
+ 4518 002d 00        		.byte	0
+ 4519 002e 10        		.byte	16
+ 4520 002f 0100      		.word	1
+ 4521 0031 00        		.byte	0
+ 4522 0032 0000      		.word	0
+ 4523 0034 0000      		.word	0
+ 4524 0036 0000      		.word	gs(UFlashInit)
+ 4525 0038 0000      		.word	gs(UFlashIOCtl)
+ 4526 003a 0000      		.word	gs(UFlashFileRead)
+ 4527 003c 0000      		.word	gs(UFlashFileWrite)
+ 4528 003e 0000      		.word	gs(UFlashFileWrite_P)
+ 4529 0040 0000      		.word	gs(UFlashFileOpen)
+ 4530 0042 0000      		.word	gs(UFlashFileClose)
+ 4531 0044 0000      		.word	gs(UFlashFileSize)
+ 4532               		.lcomm min_used,96
+ 4533               	.global __do_copy_data
+ 4534               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s 			page 81
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 uflashfs.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:10     .text:00000000 FlashUnitCommit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:34     .text:00000024 FlashReadBlockHead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:65     .text:00000056 FlashWriteBlockHead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:110    .text:000000a4 FlashWriteEntry
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:178    .text:0000011e FlashReadBlockFoot
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:212    .text:00000156 FlashWriteBlockFoot
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:255    .text:000001a0 FlashEraseEntry
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:279    .text:000001c4 FlashEraseBlockData
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:305    .text:000001ec EntryPosSet
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:445    .text:000002fa EntryPosInc
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:534    .text:00000398 EntryScan
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:732    .text:0000050c EntryTruncateSeq
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:846    .text:000005e2 UFlashFileSize
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:862    .text:000005f6 UFlashFileWrite_P
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:871    .text:000005fc UFlashInit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:880    .text:00000602 UFlashFileClose
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:901    .text:00000622 UFlashDetach
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:945    .text:00000672 FlashReadEntry
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:1041   .text:00000724 EntrySearchNext
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:1208   .text:00000860 EntrySeek
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:1329   .text:00000940 UFlashFileRead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:1588   .text:00000b2a UFlashFormat
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:1667   .text:00000bb4 PhysBlkAllocate
+                             .bss:00000000 min_used
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:2222   .text:00000fd0 LogBlkAllocate
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:2284   .text:00001036 UFlashFileOpen
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:2746   .text:000013e4 UFlashFileWrite
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:3194   .text:00001750 UFlashMount
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:3509   .text:000019b2 UFlashAttach
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:3569   .text:00001a1c UFlashIOCtl
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:4481   .data:00000000 devUFlash0
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccQC2BDA.s:4508   .data:00000023 devUFlash1
+
+UNDEFINED SYMBOLS
+__udivmodsi4
+free
+malloc
+NutEventWait
+NutEventPost
+errno
+calloc
+memset
+strdup
+strchr
+strcpy
+__do_copy_data
+__do_clear_bss

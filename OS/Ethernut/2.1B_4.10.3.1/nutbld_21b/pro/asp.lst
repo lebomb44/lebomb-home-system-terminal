@@ -1,0 +1,557 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s 			page 1
+
+
+   1               		.file	"asp.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutRegisterAspCallback
+  10               		.type	NutRegisterAspCallback, @function
+  11               	NutRegisterAspCallback:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 9C01      		movw r18,r24
+  15 0002 8091 0000 		lds r24,asp_callback
+  16 0006 9091 0000 		lds r25,(asp_callback)+1
+  17 000a 892B      		or r24,r25
+  18 000c 01F0      		breq .L2
+  19 000e 2FEF      		ldi r18,lo8(-1)
+  20 0010 3FEF      		ldi r19,hi8(-1)
+  21 0012 00C0      		rjmp .L3
+  22               	.L2:
+  23 0014 3093 0000 		sts (asp_callback)+1,r19
+  24 0018 2093 0000 		sts asp_callback,r18
+  25 001c 20E0      		ldi r18,lo8(0)
+  26 001e 30E0      		ldi r19,hi8(0)
+  27               	.L3:
+  28 0020 C901      		movw r24,r18
+  29               	/* epilogue start */
+  30 0022 0895      		ret
+  31               		.size	NutRegisterAspCallback, .-NutRegisterAspCallback
+  32               		.data
+  33               	.LC0:
+  34 0000 2E61 7370 		.string	".asp"
+  34      00
+  35               		.text
+  36               	.global	NutRegisterAsp
+  37               		.type	NutRegisterAsp, @function
+  38               	NutRegisterAsp:
+  39               	/* prologue: function */
+  40               	/* frame size = 0 */
+  41 0024 80E0      		ldi r24,lo8(.LC0)
+  42 0026 90E0      		ldi r25,hi8(.LC0)
+  43 0028 60E0      		ldi r22,lo8(gs(NutHttpProcessAsp))
+  44 002a 70E0      		ldi r23,hi8(gs(NutHttpProcessAsp))
+  45 002c 0E94 0000 		call NutSetMimeHandler
+  46               	/* epilogue start */
+  47 0030 0895      		ret
+  48               		.size	NutRegisterAsp, .-NutRegisterAsp
+  49               		.data
+  50               	.LC1:
+  51 0005 6E75 745F 		.string	"nut_version"
+  51      7665 7273 
+  51      696F 6E00 
+  52               	.LC2:
+  53 0011 6E75 745F 		.string	"nut_mac_addr"
+  53      6D61 635F 
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s 			page 2
+
+
+  53      6164 6472 
+  53      00
+  54               	.LC3:
+  55 001e 2530 3258 		.string	"%02X:%02X:%02X:%02X:%02X:%02X"
+  55      3A25 3032 
+  55      583A 2530 
+  55      3258 3A25 
+  55      3032 583A 
+  56               	.LC4:
+  57 003c 6E75 745F 		.string	"nut_ip_addr"
+  57      6970 5F61 
+  57      6464 7200 
+  58               	.LC5:
+  59 0048 6E75 745F 		.string	"nut_ip_mask"
+  59      6970 5F6D 
+  59      6173 6B00 
+  60               	.LC6:
+  61 0054 6E75 745F 		.string	"nut_gateway"
+  61      6761 7465 
+  61      7761 7900 
+  62               		.text
+  63               	.global	NutHttpProcessAsp
+  64               		.type	NutHttpProcessAsp, @function
+  65               	NutHttpProcessAsp:
+  66 0032 2F92      		push r2
+  67 0034 3F92      		push r3
+  68 0036 4F92      		push r4
+  69 0038 5F92      		push r5
+  70 003a 6F92      		push r6
+  71 003c 7F92      		push r7
+  72 003e 8F92      		push r8
+  73 0040 9F92      		push r9
+  74 0042 AF92      		push r10
+  75 0044 BF92      		push r11
+  76 0046 CF92      		push r12
+  77 0048 DF92      		push r13
+  78 004a EF92      		push r14
+  79 004c FF92      		push r15
+  80 004e 0F93      		push r16
+  81 0050 1F93      		push r17
+  82 0052 DF93      		push r29
+  83 0054 CF93      		push r28
+  84 0056 CDB7      		in r28,__SP_L__
+  85 0058 DEB7      		in r29,__SP_H__
+  86 005a 2897      		sbiw r28,8
+  87 005c 0FB6      		in __tmp_reg__,__SREG__
+  88 005e F894      		cli
+  89 0060 DEBF      		out __SP_H__,r29
+  90 0062 0FBE      		out __SREG__,__tmp_reg__
+  91 0064 CDBF      		out __SP_L__,r28
+  92               	/* prologue: function */
+  93               	/* frame size = 8 */
+  94 0066 4C01      		movw r8,r24
+  95 0068 7E83      		std Y+6,r23
+  96 006a 6D83      		std Y+5,r22
+  97 006c CB01      		movw r24,r22
+  98 006e 0E94 0000 		call _filelength
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s 			page 3
+
+
+  99 0072 1B01      		movw r2,r22
+ 100 0074 2C01      		movw r4,r24
+ 101 0076 80E4      		ldi r24,lo8(64)
+ 102 0078 90E0      		ldi r25,hi8(64)
+ 103 007a 0E94 0000 		call malloc
+ 104 007e 7C01      		movw r14,r24
+ 105 0080 80E0      		ldi r24,lo8(256)
+ 106 0082 91E0      		ldi r25,hi8(256)
+ 107 0084 0E94 0000 		call malloc
+ 108 0088 3C01      		movw r6,r24
+ 109 008a 81E0      		ldi r24,lo8(257)
+ 110 008c 91E0      		ldi r25,hi8(257)
+ 111 008e 0E94 0000 		call malloc
+ 112 0092 6C01      		movw r12,r24
+ 113 0094 6114      		cp r6,__zero_reg__
+ 114 0096 7104      		cpc r7,__zero_reg__
+ 115 0098 01F4      		brne .+2
+ 116 009a 00C0      		rjmp .L8
+ 117 009c 0097      		sbiw r24,0
+ 118 009e 01F4      		brne .+2
+ 119 00a0 00C0      		rjmp .L9
+ 120 00a2 E114      		cp r14,__zero_reg__
+ 121 00a4 F104      		cpc r15,__zero_reg__
+ 122 00a6 01F4      		brne .+2
+ 123 00a8 00C0      		rjmp .L9
+ 124 00aa 20E0      		ldi r18,lo8(256)
+ 125 00ac 31E0      		ldi r19,hi8(256)
+ 126 00ae 3A83      		std Y+2,r19
+ 127 00b0 2983      		std Y+1,r18
+ 128 00b2 10E0      		ldi r17,lo8(0)
+ 129 00b4 1886      		std Y+8,__zero_reg__
+ 130 00b6 1F82      		std Y+7,__zero_reg__
+ 131 00b8 00E0      		ldi r16,lo8(0)
+ 132 00ba 00C0      		rjmp .L10
+ 133               	.L31:
+ 134 00bc 3FEF      		ldi r19,lo8(255)
+ 135 00be 2316      		cp r2,r19
+ 136 00c0 3104      		cpc r3,__zero_reg__
+ 137 00c2 4104      		cpc r4,__zero_reg__
+ 138 00c4 5104      		cpc r5,__zero_reg__
+ 139 00c6 01F0      		breq .+2
+ 140 00c8 04F4      		brge .L11
+ 141 00ca 3A82      		std Y+2,r3
+ 142 00cc 2982      		std Y+1,r2
+ 143               	.L11:
+ 144 00ce 8D81      		ldd r24,Y+5
+ 145 00d0 9E81      		ldd r25,Y+6
+ 146 00d2 B301      		movw r22,r6
+ 147 00d4 4981      		ldd r20,Y+1
+ 148 00d6 5A81      		ldd r21,Y+2
+ 149 00d8 0E94 0000 		call _read
+ 150 00dc 9C83      		std Y+4,r25
+ 151 00de 8B83      		std Y+3,r24
+ 152 00e0 AA24      		clr r10
+ 153 00e2 BB24      		clr r11
+ 154 00e4 00C0      		rjmp .L12
+ 155               	.L28:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s 			page 4
+
+
+ 156 00e6 F301      		movw r30,r6
+ 157 00e8 EA0D      		add r30,r10
+ 158 00ea FB1D      		adc r31,r11
+ 159 00ec 8081      		ld r24,Z
+ 160 00ee 1130      		cpi r17,lo8(1)
+ 161 00f0 01F0      		breq .L15
+ 162 00f2 1130      		cpi r17,lo8(1)
+ 163 00f4 00F0      		brlo .L14
+ 164 00f6 1230      		cpi r17,lo8(2)
+ 165 00f8 01F0      		breq .+2
+ 166 00fa 00C0      		rjmp .L13
+ 167 00fc 00C0      		rjmp .L39
+ 168               	.L14:
+ 169 00fe 10E0      		ldi r17,lo8(0)
+ 170 0100 8C33      		cpi r24,lo8(60)
+ 171 0102 01F4      		brne .L17
+ 172 0104 11E0      		ldi r17,lo8(1)
+ 173               	.L17:
+ 174 0106 EF81      		ldd r30,Y+7
+ 175 0108 F885      		ldd r31,Y+8
+ 176 010a EC0D      		add r30,r12
+ 177 010c FD1D      		adc r31,r13
+ 178 010e 8083      		st Z,r24
+ 179 0110 8F81      		ldd r24,Y+7
+ 180 0112 9885      		ldd r25,Y+8
+ 181 0114 0196      		adiw r24,1
+ 182 0116 9887      		std Y+8,r25
+ 183 0118 8F83      		std Y+7,r24
+ 184 011a 00C0      		rjmp .L13
+ 185               	.L15:
+ 186 011c 8532      		cpi r24,lo8(37)
+ 187 011e 01F4      		brne .L18
+ 188 0120 AF81      		ldd r26,Y+7
+ 189 0122 B885      		ldd r27,Y+8
+ 190 0124 1097      		sbiw r26,0
+ 191 0126 01F4      		brne .+2
+ 192 0128 00C0      		rjmp .L19
+ 193 012a 1197      		sbiw r26,1
+ 194 012c B887      		std Y+8,r27
+ 195 012e AF83      		std Y+7,r26
+ 196 0130 1097      		sbiw r26,0
+ 197 0132 01F4      		brne .+2
+ 198 0134 00C0      		rjmp .L19
+ 199 0136 C601      		movw r24,r12
+ 200 0138 61E0      		ldi r22,lo8(1)
+ 201 013a 70E0      		ldi r23,hi8(1)
+ 202 013c AD01      		movw r20,r26
+ 203 013e 9401      		movw r18,r8
+ 204 0140 0E94 0000 		call fwrite
+ 205 0144 12E0      		ldi r17,lo8(2)
+ 206 0146 1886      		std Y+8,__zero_reg__
+ 207 0148 1F82      		std Y+7,__zero_reg__
+ 208 014a 00C0      		rjmp .L13
+ 209               	.L18:
+ 210 014c EF81      		ldd r30,Y+7
+ 211 014e F885      		ldd r31,Y+8
+ 212 0150 EC0D      		add r30,r12
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s 			page 5
+
+
+ 213 0152 FD1D      		adc r31,r13
+ 214 0154 8083      		st Z,r24
+ 215 0156 EF81      		ldd r30,Y+7
+ 216 0158 F885      		ldd r31,Y+8
+ 217 015a 3196      		adiw r30,1
+ 218 015c F887      		std Y+8,r31
+ 219 015e EF83      		std Y+7,r30
+ 220 0160 10E0      		ldi r17,lo8(0)
+ 221 0162 00C0      		rjmp .L13
+ 222               	.L39:
+ 223 0164 8E33      		cpi r24,lo8(62)
+ 224 0166 01F0      		breq .+2
+ 225 0168 00C0      		rjmp .L20
+ 226 016a F701      		movw r30,r14
+ 227 016c E00F      		add r30,r16
+ 228 016e F11D      		adc r31,__zero_reg__
+ 229 0170 1082      		st Z,__zero_reg__
+ 230 0172 C701      		movw r24,r14
+ 231 0174 60E0      		ldi r22,lo8(.LC1)
+ 232 0176 70E0      		ldi r23,hi8(.LC1)
+ 233 0178 0E94 0000 		call strstr
+ 234 017c 0097      		sbiw r24,0
+ 235 017e 01F0      		breq .L21
+ 236 0180 0E94 0000 		call NutVersionString
+ 237 0184 00C0      		rjmp .L37
+ 238               	.L21:
+ 239 0186 C701      		movw r24,r14
+ 240 0188 60E0      		ldi r22,lo8(.LC2)
+ 241 018a 70E0      		ldi r23,hi8(.LC2)
+ 242 018c 0E94 0000 		call strstr
+ 243 0190 0097      		sbiw r24,0
+ 244 0192 01F0      		breq .L22
+ 245 0194 2DB7      		in r18,__SP_L__
+ 246 0196 3EB7      		in r19,__SP_H__
+ 247 0198 2051      		subi r18,lo8(-(-16))
+ 248 019a 3040      		sbci r19,hi8(-(-16))
+ 249 019c 0FB6      		in __tmp_reg__,__SREG__
+ 250 019e F894      		cli
+ 251 01a0 3EBF      		out __SP_H__,r19
+ 252 01a2 0FBE      		out __SREG__,__tmp_reg__
+ 253 01a4 2DBF      		out __SP_L__,r18
+ 254 01a6 EDB7      		in r30,__SP_L__
+ 255 01a8 FEB7      		in r31,__SP_H__
+ 256 01aa 3196      		adiw r30,1
+ 257 01ac ADB7      		in r26,__SP_L__
+ 258 01ae BEB7      		in r27,__SP_H__
+ 259 01b0 1296      		adiw r26,1+1
+ 260 01b2 9C92      		st X,r9
+ 261 01b4 8E92      		st -X,r8
+ 262 01b6 1197      		sbiw r26,1
+ 263 01b8 20E0      		ldi r18,lo8(.LC3)
+ 264 01ba 30E0      		ldi r19,hi8(.LC3)
+ 265 01bc 3383      		std Z+3,r19
+ 266 01be 2283      		std Z+2,r18
+ 267 01c0 8091 0000 		lds r24,confnet+10
+ 268 01c4 8483      		std Z+4,r24
+ 269 01c6 1582      		std Z+5,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s 			page 6
+
+
+ 270 01c8 8091 0000 		lds r24,confnet+11
+ 271 01cc 8683      		std Z+6,r24
+ 272 01ce 1782      		std Z+7,__zero_reg__
+ 273 01d0 8091 0000 		lds r24,confnet+12
+ 274 01d4 8087      		std Z+8,r24
+ 275 01d6 1186      		std Z+9,__zero_reg__
+ 276 01d8 8091 0000 		lds r24,confnet+13
+ 277 01dc 8287      		std Z+10,r24
+ 278 01de 1386      		std Z+11,__zero_reg__
+ 279 01e0 8091 0000 		lds r24,confnet+14
+ 280 01e4 8487      		std Z+12,r24
+ 281 01e6 1586      		std Z+13,__zero_reg__
+ 282 01e8 8091 0000 		lds r24,confnet+15
+ 283 01ec 8687      		std Z+14,r24
+ 284 01ee 1786      		std Z+15,__zero_reg__
+ 285 01f0 0E94 0000 		call fprintf
+ 286 01f4 10E0      		ldi r17,lo8(0)
+ 287 01f6 00E0      		ldi r16,lo8(0)
+ 288 01f8 8DB7      		in r24,__SP_L__
+ 289 01fa 9EB7      		in r25,__SP_H__
+ 290 01fc 4096      		adiw r24,16
+ 291 01fe 0FB6      		in __tmp_reg__,__SREG__
+ 292 0200 F894      		cli
+ 293 0202 9EBF      		out __SP_H__,r25
+ 294 0204 0FBE      		out __SREG__,__tmp_reg__
+ 295 0206 8DBF      		out __SP_L__,r24
+ 296 0208 00C0      		rjmp .L13
+ 297               	.L22:
+ 298 020a C701      		movw r24,r14
+ 299 020c 60E0      		ldi r22,lo8(.LC4)
+ 300 020e 70E0      		ldi r23,hi8(.LC4)
+ 301 0210 0E94 0000 		call strstr
+ 302 0214 0097      		sbiw r24,0
+ 303 0216 01F0      		breq .L23
+ 304 0218 6091 0000 		lds r22,confnet+16
+ 305 021c 7091 0000 		lds r23,(confnet+16)+1
+ 306 0220 8091 0000 		lds r24,(confnet+16)+2
+ 307 0224 9091 0000 		lds r25,(confnet+16)+3
+ 308 0228 00C0      		rjmp .L38
+ 309               	.L23:
+ 310 022a C701      		movw r24,r14
+ 311 022c 60E0      		ldi r22,lo8(.LC5)
+ 312 022e 70E0      		ldi r23,hi8(.LC5)
+ 313 0230 0E94 0000 		call strstr
+ 314 0234 0097      		sbiw r24,0
+ 315 0236 01F0      		breq .L24
+ 316 0238 6091 0000 		lds r22,confnet+20
+ 317 023c 7091 0000 		lds r23,(confnet+20)+1
+ 318 0240 8091 0000 		lds r24,(confnet+20)+2
+ 319 0244 9091 0000 		lds r25,(confnet+20)+3
+ 320 0248 00C0      		rjmp .L38
+ 321               	.L24:
+ 322 024a C701      		movw r24,r14
+ 323 024c 60E0      		ldi r22,lo8(.LC6)
+ 324 024e 70E0      		ldi r23,hi8(.LC6)
+ 325 0250 0E94 0000 		call strstr
+ 326 0254 0097      		sbiw r24,0
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s 			page 7
+
+
+ 327 0256 01F0      		breq .L25
+ 328 0258 6091 0000 		lds r22,confnet+24
+ 329 025c 7091 0000 		lds r23,(confnet+24)+1
+ 330 0260 8091 0000 		lds r24,(confnet+24)+2
+ 331 0264 9091 0000 		lds r25,(confnet+24)+3
+ 332               	.L38:
+ 333 0268 0E94 0000 		call inet_ntoa
+ 334               	.L37:
+ 335 026c B401      		movw r22,r8
+ 336 026e 0E94 0000 		call fputs
+ 337 0272 00C0      		rjmp .L35
+ 338               	.L25:
+ 339 0274 E091 0000 		lds r30,asp_callback
+ 340 0278 F091 0000 		lds r31,(asp_callback)+1
+ 341 027c 3097      		sbiw r30,0
+ 342 027e 01F0      		breq .L35
+ 343               	.L26:
+ 344 0280 C701      		movw r24,r14
+ 345 0282 B401      		movw r22,r8
+ 346 0284 0995      		icall
+ 347               	.L35:
+ 348 0286 10E0      		ldi r17,lo8(0)
+ 349               	.L36:
+ 350 0288 00E0      		ldi r16,lo8(0)
+ 351 028a 00C0      		rjmp .L13
+ 352               	.L20:
+ 353 028c 8532      		cpi r24,lo8(37)
+ 354 028e 01F4      		brne .L27
+ 355 0290 80E0      		ldi r24,lo8(0)
+ 356               	.L27:
+ 357 0292 F701      		movw r30,r14
+ 358 0294 E00F      		add r30,r16
+ 359 0296 F11D      		adc r31,__zero_reg__
+ 360 0298 8083      		st Z,r24
+ 361 029a 0F5F      		subi r16,lo8(-(1))
+ 362 029c 0034      		cpi r16,lo8(64)
+ 363 029e 00F0      		brlo .L13
+ 364 02a0 00C0      		rjmp .L36
+ 365               	.L19:
+ 366 02a2 12E0      		ldi r17,lo8(2)
+ 367               	.L13:
+ 368 02a4 0894      		sec
+ 369 02a6 A11C      		adc r10,__zero_reg__
+ 370 02a8 B11C      		adc r11,__zero_reg__
+ 371               	.L12:
+ 372 02aa AB81      		ldd r26,Y+3
+ 373 02ac BC81      		ldd r27,Y+4
+ 374 02ae AA16      		cp r10,r26
+ 375 02b0 BB06      		cpc r11,r27
+ 376 02b2 04F4      		brge .+2
+ 377 02b4 00C0      		rjmp .L28
+ 378 02b6 EF81      		ldd r30,Y+7
+ 379 02b8 F885      		ldd r31,Y+8
+ 380 02ba 3097      		sbiw r30,0
+ 381 02bc 01F0      		breq .L29
+ 382 02be EC0D      		add r30,r12
+ 383 02c0 FD1D      		adc r31,r13
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s 			page 8
+
+
+ 384 02c2 3197      		sbiw r30,1
+ 385 02c4 B080      		ld r11,Z
+ 386 02c6 FCE3      		ldi r31,lo8(60)
+ 387 02c8 BF16      		cp r11,r31
+ 388 02ca 01F4      		brne .L30
+ 389 02cc 2F81      		ldd r18,Y+7
+ 390 02ce 3885      		ldd r19,Y+8
+ 391 02d0 2150      		subi r18,lo8(-(-1))
+ 392 02d2 3040      		sbci r19,hi8(-(-1))
+ 393 02d4 C601      		movw r24,r12
+ 394 02d6 61E0      		ldi r22,lo8(1)
+ 395 02d8 70E0      		ldi r23,hi8(1)
+ 396 02da A901      		movw r20,r18
+ 397 02dc 9401      		movw r18,r8
+ 398 02de 0E94 0000 		call fwrite
+ 399 02e2 D601      		movw r26,r12
+ 400 02e4 BC92      		st X,r11
+ 401 02e6 E1E0      		ldi r30,lo8(1)
+ 402 02e8 F0E0      		ldi r31,hi8(1)
+ 403 02ea F887      		std Y+8,r31
+ 404 02ec EF83      		std Y+7,r30
+ 405 02ee 00C0      		rjmp .L29
+ 406               	.L30:
+ 407 02f0 C601      		movw r24,r12
+ 408 02f2 61E0      		ldi r22,lo8(1)
+ 409 02f4 70E0      		ldi r23,hi8(1)
+ 410 02f6 4F81      		ldd r20,Y+7
+ 411 02f8 5885      		ldd r21,Y+8
+ 412 02fa 9401      		movw r18,r8
+ 413 02fc 0E94 0000 		call fwrite
+ 414 0300 1886      		std Y+8,__zero_reg__
+ 415 0302 1F82      		std Y+7,__zero_reg__
+ 416               	.L29:
+ 417 0304 2B81      		ldd r18,Y+3
+ 418 0306 3C81      		ldd r19,Y+4
+ 419 0308 C901      		movw r24,r18
+ 420 030a AA27      		clr r26
+ 421 030c 97FD      		sbrc r25,7
+ 422 030e A095      		com r26
+ 423 0310 BA2F      		mov r27,r26
+ 424 0312 281A      		sub r2,r24
+ 425 0314 390A      		sbc r3,r25
+ 426 0316 4A0A      		sbc r4,r26
+ 427 0318 5B0A      		sbc r5,r27
+ 428               	.L10:
+ 429 031a 2114      		cp r2,__zero_reg__
+ 430 031c 3104      		cpc r3,__zero_reg__
+ 431 031e 4104      		cpc r4,__zero_reg__
+ 432 0320 5104      		cpc r5,__zero_reg__
+ 433 0322 01F0      		breq .+2
+ 434 0324 00C0      		rjmp .L31
+ 435 0326 00C0      		rjmp .L9
+ 436               	.L8:
+ 437 0328 C114      		cp r12,__zero_reg__
+ 438 032a D104      		cpc r13,__zero_reg__
+ 439 032c 01F0      		breq .L32
+ 440 032e C601      		movw r24,r12
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s 			page 9
+
+
+ 441 0330 0E94 0000 		call free
+ 442               	.L32:
+ 443 0334 E114      		cp r14,__zero_reg__
+ 444 0336 F104      		cpc r15,__zero_reg__
+ 445 0338 01F0      		breq .L34
+ 446 033a C701      		movw r24,r14
+ 447 033c 0E94 0000 		call free
+ 448 0340 00C0      		rjmp .L34
+ 449               	.L9:
+ 450 0342 C301      		movw r24,r6
+ 451 0344 0E94 0000 		call free
+ 452 0348 00C0      		rjmp .L8
+ 453               	.L34:
+ 454               	/* epilogue start */
+ 455 034a 2896      		adiw r28,8
+ 456 034c 0FB6      		in __tmp_reg__,__SREG__
+ 457 034e F894      		cli
+ 458 0350 DEBF      		out __SP_H__,r29
+ 459 0352 0FBE      		out __SREG__,__tmp_reg__
+ 460 0354 CDBF      		out __SP_L__,r28
+ 461 0356 CF91      		pop r28
+ 462 0358 DF91      		pop r29
+ 463 035a 1F91      		pop r17
+ 464 035c 0F91      		pop r16
+ 465 035e FF90      		pop r15
+ 466 0360 EF90      		pop r14
+ 467 0362 DF90      		pop r13
+ 468 0364 CF90      		pop r12
+ 469 0366 BF90      		pop r11
+ 470 0368 AF90      		pop r10
+ 471 036a 9F90      		pop r9
+ 472 036c 8F90      		pop r8
+ 473 036e 7F90      		pop r7
+ 474 0370 6F90      		pop r6
+ 475 0372 5F90      		pop r5
+ 476 0374 4F90      		pop r4
+ 477 0376 3F90      		pop r3
+ 478 0378 2F90      		pop r2
+ 479 037a 0895      		ret
+ 480               		.size	NutHttpProcessAsp, .-NutHttpProcessAsp
+ 481               		.lcomm asp_callback,2
+ 482               	.global __do_copy_data
+ 483               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 asp.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s:11     .text:00000000 NutRegisterAspCallback
+                             .bss:00000000 asp_callback
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s:38     .text:00000024 NutRegisterAsp
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccR6GUlV.s:65     .text:00000032 NutHttpProcessAsp
+
+UNDEFINED SYMBOLS
+NutSetMimeHandler
+_filelength
+malloc
+_read
+fwrite
+strstr
+NutVersionString
+confnet
+fprintf
+inet_ntoa
+fputs
+free
+__do_copy_data
+__do_clear_bss

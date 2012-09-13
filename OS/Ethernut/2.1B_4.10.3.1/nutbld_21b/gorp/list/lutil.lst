@@ -1,0 +1,50 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpBDSle.s 			page 1
+
+
+   1               		.file	"lutil.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	LiLiNodes
+  10               		.type	LiLiNodes, @function
+  11               	LiLiNodes:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 FC01      		movw r30,r24
+  15 0002 0190      		ld __tmp_reg__,Z+
+  16 0004 F081      		ld r31,Z
+  17 0006 E02D      		mov r30,__tmp_reg__
+  18 0008 20E0      		ldi r18,lo8(0)
+  19 000a 30E0      		ldi r19,hi8(0)
+  20 000c 00C0      		rjmp .L2
+  21               	.L3:
+  22 000e 2F5F      		subi r18,lo8(-(1))
+  23 0010 3F4F      		sbci r19,hi8(-(1))
+  24 0012 0190      		ld __tmp_reg__,Z+
+  25 0014 F081      		ld r31,Z
+  26 0016 E02D      		mov r30,__tmp_reg__
+  27               	.L2:
+  28 0018 3097      		sbiw r30,0
+  29 001a 01F4      		brne .L3
+  30 001c C901      		movw r24,r18
+  31               	/* epilogue start */
+  32 001e 0895      		ret
+  33               		.size	LiLiNodes, .-LiLiNodes
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpBDSle.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lutil.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpBDSle.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpBDSle.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpBDSle.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpBDSle.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpBDSle.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpBDSle.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpBDSle.s:11     .text:00000000 LiLiNodes
+
+NO UNDEFINED SYMBOLS

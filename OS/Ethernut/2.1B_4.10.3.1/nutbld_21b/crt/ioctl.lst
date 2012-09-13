@@ -1,0 +1,55 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYlWisj.s 			page 1
+
+
+   1               		.file	"ioctl.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	_ioctl
+  10               		.type	_ioctl, @function
+  11               	_ioctl:
+  12 0000 CF93      		push r28
+  13 0002 DF93      		push r29
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0004 DC01      		movw r26,r24
+  17 0006 1296      		adiw r26,2
+  18 0008 CD91      		ld r28,X+
+  19 000a DC91      		ld r29,X
+  20 000c 1397      		sbiw r26,2+1
+  21 000e 2097      		sbiw r28,0
+  22 0010 01F4      		brne .L2
+  23 0012 1B96      		adiw r26,11
+  24 0014 ED91      		ld r30,X+
+  25 0016 FC91      		ld r31,X
+  26 0018 1C97      		sbiw r26,11+1
+  27 001a 00C0      		rjmp .L5
+  28               	.L2:
+  29 001c ED89      		ldd r30,Y+21
+  30 001e FE89      		ldd r31,Y+22
+  31 0020 CE01      		movw r24,r28
+  32               	.L5:
+  33 0022 0995      		icall
+  34               	/* epilogue start */
+  35 0024 DF91      		pop r29
+  36 0026 CF91      		pop r28
+  37 0028 0895      		ret
+  38               		.size	_ioctl, .-_ioctl
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYlWisj.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ioctl.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYlWisj.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYlWisj.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYlWisj.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYlWisj.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYlWisj.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYlWisj.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccYlWisj.s:11     .text:00000000 _ioctl
+
+NO UNDEFINED SYMBOLS

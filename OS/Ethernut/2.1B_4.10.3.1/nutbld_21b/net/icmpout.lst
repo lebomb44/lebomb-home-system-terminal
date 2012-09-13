@@ -1,0 +1,254 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s 			page 1
+
+
+   1               		.file	"icmpout.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutIcmpOutput
+  10               		.type	NutIcmpOutput, @function
+  11               	NutIcmpOutput:
+  12 0000 AF92      		push r10
+  13 0002 BF92      		push r11
+  14 0004 CF92      		push r12
+  15 0006 DF92      		push r13
+  16 0008 EF92      		push r14
+  17 000a FF92      		push r15
+  18 000c 0F93      		push r16
+  19 000e 1F93      		push r17
+  20               	/* prologue: function */
+  21               	/* frame size = 0 */
+  22 0010 5A01      		movw r10,r20
+  23 0012 6B01      		movw r12,r22
+  24 0014 8901      		movw r16,r18
+  25 0016 F901      		movw r30,r18
+  26 0018 E384      		ldd r14,Z+11
+  27 001a F484      		ldd r15,Z+12
+  28 001c F701      		movw r30,r14
+  29 001e 8083      		st Z,r24
+  30 0020 1382      		std Z+3,__zero_reg__
+  31 0022 1282      		std Z+2,__zero_reg__
+  32 0024 F901      		movw r30,r18
+  33 0026 6385      		ldd r22,Z+11
+  34 0028 7485      		ldd r23,Z+12
+  35 002a 4585      		ldd r20,Z+13
+  36 002c 5685      		ldd r21,Z+14
+  37 002e 80E0      		ldi r24,lo8(0)
+  38 0030 90E0      		ldi r25,hi8(0)
+  39 0032 0E94 0000 		call NutIpChkSumPartial
+  40 0036 F801      		movw r30,r16
+  41 0038 6785      		ldd r22,Z+15
+  42 003a 7089      		ldd r23,Z+16
+  43 003c 4189      		ldd r20,Z+17
+  44 003e 5289      		ldd r21,Z+18
+  45 0040 0E94 0000 		call NutIpChkSum
+  46 0044 F701      		movw r30,r14
+  47 0046 9383      		std Z+3,r25
+  48 0048 8283      		std Z+2,r24
+  49 004a 81E0      		ldi r24,lo8(1)
+  50 004c B601      		movw r22,r12
+  51 004e A501      		movw r20,r10
+  52 0050 9801      		movw r18,r16
+  53 0052 0E94 0000 		call NutIpOutput
+  54               	/* epilogue start */
+  55 0056 1F91      		pop r17
+  56 0058 0F91      		pop r16
+  57 005a FF90      		pop r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s 			page 2
+
+
+  58 005c EF90      		pop r14
+  59 005e DF90      		pop r13
+  60 0060 CF90      		pop r12
+  61 0062 BF90      		pop r11
+  62 0064 AF90      		pop r10
+  63 0066 0895      		ret
+  64               		.size	NutIcmpOutput, .-NutIcmpOutput
+  65               	.global	NutIcmpReply
+  66               		.type	NutIcmpReply, @function
+  67               	NutIcmpReply:
+  68 0068 6F92      		push r6
+  69 006a 7F92      		push r7
+  70 006c 8F92      		push r8
+  71 006e 9F92      		push r9
+  72 0070 AF92      		push r10
+  73 0072 BF92      		push r11
+  74 0074 CF92      		push r12
+  75 0076 DF92      		push r13
+  76 0078 EF92      		push r14
+  77 007a FF92      		push r15
+  78 007c 0F93      		push r16
+  79 007e 1F93      		push r17
+  80               	/* prologue: function */
+  81               	/* frame size = 0 */
+  82 0080 682E      		mov r6,r24
+  83 0082 762E      		mov r7,r22
+  84 0084 4901      		movw r8,r18
+  85 0086 5A01      		movw r10,r20
+  86 0088 C601      		movw r24,r12
+  87 008a 60E4      		ldi r22,lo8(64)
+  88 008c 48E0      		ldi r20,lo8(8)
+  89 008e 50E0      		ldi r21,hi8(8)
+  90 0090 0E94 0000 		call NutNetBufAlloc
+  91 0094 DC01      		movw r26,r24
+  92 0096 0097      		sbiw r24,0
+  93 0098 01F4      		brne .L4
+  94 009a 2FEF      		ldi r18,lo8(-1)
+  95 009c 3FEF      		ldi r19,hi8(-1)
+  96 009e 00C0      		rjmp .L5
+  97               	.L4:
+  98 00a0 1B96      		adiw r26,11
+  99 00a2 ED91      		ld r30,X+
+ 100 00a4 FC91      		ld r31,X
+ 101 00a6 1C97      		sbiw r26,11+1
+ 102 00a8 7182      		std Z+1,r7
+ 103 00aa 8482      		std Z+4,r8
+ 104 00ac 9582      		std Z+5,r9
+ 105 00ae A682      		std Z+6,r10
+ 106 00b0 B782      		std Z+7,r11
+ 107 00b2 862D      		mov r24,r6
+ 108 00b4 B801      		movw r22,r16
+ 109 00b6 A701      		movw r20,r14
+ 110 00b8 9D01      		movw r18,r26
+ 111 00ba 0E94 0000 		call NutIcmpOutput
+ 112 00be 9C01      		movw r18,r24
+ 113               	.L5:
+ 114 00c0 C901      		movw r24,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s 			page 3
+
+
+ 115               	/* epilogue start */
+ 116 00c2 1F91      		pop r17
+ 117 00c4 0F91      		pop r16
+ 118 00c6 FF90      		pop r15
+ 119 00c8 EF90      		pop r14
+ 120 00ca DF90      		pop r13
+ 121 00cc CF90      		pop r12
+ 122 00ce BF90      		pop r11
+ 123 00d0 AF90      		pop r10
+ 124 00d2 9F90      		pop r9
+ 125 00d4 8F90      		pop r8
+ 126 00d6 7F90      		pop r7
+ 127 00d8 6F90      		pop r6
+ 128 00da 0895      		ret
+ 129               		.size	NutIcmpReply, .-NutIcmpReply
+ 130               	.global	NutIcmpResponse
+ 131               		.type	NutIcmpResponse, @function
+ 132               	NutIcmpResponse:
+ 133 00dc 8F92      		push r8
+ 134 00de 9F92      		push r9
+ 135 00e0 AF92      		push r10
+ 136 00e2 BF92      		push r11
+ 137 00e4 CF92      		push r12
+ 138 00e6 DF92      		push r13
+ 139 00e8 EF92      		push r14
+ 140 00ea FF92      		push r15
+ 141 00ec 0F93      		push r16
+ 142 00ee 1F93      		push r17
+ 143 00f0 CF93      		push r28
+ 144 00f2 DF93      		push r29
+ 145               	/* prologue: function */
+ 146               	/* frame size = 0 */
+ 147 00f4 982E      		mov r9,r24
+ 148 00f6 862E      		mov r8,r22
+ 149 00f8 5901      		movw r10,r18
+ 150 00fa 6A01      		movw r12,r20
+ 151 00fc D801      		movw r26,r16
+ 152 00fe 1796      		adiw r26,7
+ 153 0100 ED91      		ld r30,X+
+ 154 0102 FC91      		ld r31,X
+ 155 0104 1897      		sbiw r26,7+1
+ 156 0106 E484      		ldd r14,Z+12
+ 157 0108 F584      		ldd r15,Z+13
+ 158 010a 0685      		ldd r16,Z+14
+ 159 010c 1785      		ldd r17,Z+15
+ 160 010e CD01      		movw r24,r26
+ 161 0110 60E8      		ldi r22,lo8(-128)
+ 162 0112 4CE1      		ldi r20,lo8(28)
+ 163 0114 50E0      		ldi r21,hi8(28)
+ 164 0116 0E94 0000 		call NutNetBufAlloc
+ 165 011a FC01      		movw r30,r24
+ 166 011c 0097      		sbiw r24,0
+ 167 011e 01F4      		brne .L8
+ 168 0120 2FEF      		ldi r18,lo8(-1)
+ 169 0122 3FEF      		ldi r19,hi8(-1)
+ 170 0124 00C0      		rjmp .L9
+ 171               	.L8:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s 			page 4
+
+
+ 172 0126 2785      		ldd r18,Z+15
+ 173 0128 3089      		ldd r19,Z+16
+ 174 012a C901      		movw r24,r18
+ 175 012c EC01      		movw r28,r24
+ 176 012e 2781      		ldd r18,Z+7
+ 177 0130 3085      		ldd r19,Z+8
+ 178 0132 C901      		movw r24,r18
+ 179 0134 DC01      		movw r26,r24
+ 180 0136 84E1      		ldi r24,lo8(20)
+ 181               	.L10:
+ 182 0138 0D90      		ld r0,X+
+ 183 013a 0992      		st Y+,r0
+ 184 013c 8150      		subi r24,lo8(-(-1))
+ 185 013e 01F4      		brne .L10
+ 186 0140 A785      		ldd r26,Z+15
+ 187 0142 B089      		ldd r27,Z+16
+ 188 0144 5496      		adiw r26,20
+ 189 0146 8385      		ldd r24,Z+11
+ 190 0148 9485      		ldd r25,Z+12
+ 191 014a 9C01      		movw r18,r24
+ 192 014c E901      		movw r28,r18
+ 193 014e 88E0      		ldi r24,lo8(8)
+ 194               	.L11:
+ 195 0150 0990      		ld r0,Y+
+ 196 0152 0D92      		st X+,r0
+ 197 0154 8150      		subi r24,lo8(-(-1))
+ 198 0156 01F4      		brne .L11
+ 199 0158 892D      		mov r24,r9
+ 200 015a 682D      		mov r22,r8
+ 201 015c A601      		movw r20,r12
+ 202 015e 9501      		movw r18,r10
+ 203 0160 6F01      		movw r12,r30
+ 204 0162 0E94 0000 		call NutIcmpReply
+ 205 0166 9C01      		movw r18,r24
+ 206               	.L9:
+ 207 0168 C901      		movw r24,r18
+ 208               	/* epilogue start */
+ 209 016a DF91      		pop r29
+ 210 016c CF91      		pop r28
+ 211 016e 1F91      		pop r17
+ 212 0170 0F91      		pop r16
+ 213 0172 FF90      		pop r15
+ 214 0174 EF90      		pop r14
+ 215 0176 DF90      		pop r13
+ 216 0178 CF90      		pop r12
+ 217 017a BF90      		pop r11
+ 218 017c AF90      		pop r10
+ 219 017e 9F90      		pop r9
+ 220 0180 8F90      		pop r8
+ 221 0182 0895      		ret
+ 222               		.size	NutIcmpResponse, .-NutIcmpResponse
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 icmpout.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s:11     .text:00000000 NutIcmpOutput
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s:67     .text:00000068 NutIcmpReply
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccoaSLoe.s:132    .text:000000dc NutIcmpResponse
+
+UNDEFINED SYMBOLS
+NutIpChkSumPartial
+NutIpChkSum
+NutIpOutput
+NutNetBufAlloc

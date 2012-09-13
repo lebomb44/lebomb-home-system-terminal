@@ -1,0 +1,2867 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 1
+
+
+   1               		.file	"llex.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	luaX_setinput
+  10               		.type	luaX_setinput, @function
+  11               	luaX_setinput:
+  12 0000 0F93      		push r16
+  13 0002 1F93      		push r17
+  14 0004 CF93      		push r28
+  15 0006 DF93      		push r29
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0008 EB01      		movw r28,r22
+  19 000a 6EE2      		ldi r22,lo8(46)
+  20 000c 6C8F      		std Y+28,r22
+  21 000e 9D8B      		std Y+21,r25
+  22 0010 8C8B      		std Y+20,r24
+  23 0012 6FE1      		ldi r22,lo8(287)
+  24 0014 71E0      		ldi r23,hi8(287)
+  25 0016 7D87      		std Y+13,r23
+  26 0018 6C87      		std Y+12,r22
+  27 001a 5F8B      		std Y+23,r21
+  28 001c 4E8B      		std Y+22,r20
+  29 001e 1B8A      		std Y+19,__zero_reg__
+  30 0020 1A8A      		std Y+18,__zero_reg__
+  31 0022 41E0      		ldi r20,lo8(1)
+  32 0024 50E0      		ldi r21,hi8(1)
+  33 0026 5B83      		std Y+3,r21
+  34 0028 4A83      		std Y+2,r20
+  35 002a 5D83      		std Y+5,r21
+  36 002c 4C83      		std Y+4,r20
+  37 002e 3B8F      		std Y+27,r19
+  38 0030 2A8F      		std Y+26,r18
+  39 0032 088D      		ldd r16,Y+24
+  40 0034 198D      		ldd r17,Y+25
+  41 0036 F801      		movw r30,r16
+  42 0038 6081      		ld r22,Z
+  43 003a 7181      		ldd r23,Z+1
+  44 003c 4481      		ldd r20,Z+4
+  45 003e 5581      		ldd r21,Z+5
+  46 0040 20E2      		ldi r18,lo8(32)
+  47 0042 30E0      		ldi r19,hi8(32)
+  48 0044 0E94 0000 		call luaM_realloc_
+  49 0048 F801      		movw r30,r16
+  50 004a 9183      		std Z+1,r25
+  51 004c 8083      		st Z,r24
+  52 004e E88D      		ldd r30,Y+24
+  53 0050 F98D      		ldd r31,Y+25
+  54 0052 80E2      		ldi r24,lo8(32)
+  55 0054 90E0      		ldi r25,hi8(32)
+  56 0056 9583      		std Z+5,r25
+  57 0058 8483      		std Z+4,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 2
+
+
+  58 005a AE89      		ldd r26,Y+22
+  59 005c BF89      		ldd r27,Y+23
+  60 005e 8D91      		ld r24,X+
+  61 0060 9C91      		ld r25,X
+  62 0062 1197      		sbiw r26,1
+  63 0064 0197      		sbiw r24,1
+  64 0066 1196      		adiw r26,1
+  65 0068 9C93      		st X,r25
+  66 006a 8E93      		st -X,r24
+  67 006c 0196      		adiw r24,1
+  68 006e 01F0      		breq .L2
+  69 0070 1296      		adiw r26,2
+  70 0072 ED91      		ld r30,X+
+  71 0074 FC91      		ld r31,X
+  72 0076 1397      		sbiw r26,2+1
+  73 0078 8191      		ld r24,Z+
+  74 007a 90E0      		ldi r25,lo8(0)
+  75 007c 1396      		adiw r26,2+1
+  76 007e FC93      		st X,r31
+  77 0080 EE93      		st -X,r30
+  78 0082 1297      		sbiw r26,2
+  79 0084 00C0      		rjmp .L3
+  80               	.L2:
+  81 0086 CD01      		movw r24,r26
+  82 0088 0E94 0000 		call luaZ_fill
+  83               	.L3:
+  84 008c 8883      		st Y,r24
+  85 008e 9983      		std Y+1,r25
+  86               	/* epilogue start */
+  87 0090 DF91      		pop r29
+  88 0092 CF91      		pop r28
+  89 0094 1F91      		pop r17
+  90 0096 0F91      		pop r16
+  91 0098 0895      		ret
+  92               		.size	luaX_setinput, .-luaX_setinput
+  93               	.global	luaX_newstring
+  94               		.type	luaX_newstring, @function
+  95               	luaX_newstring:
+  96 009a CF92      		push r12
+  97 009c DF92      		push r13
+  98 009e EF92      		push r14
+  99 00a0 FF92      		push r15
+ 100 00a2 0F93      		push r16
+ 101 00a4 1F93      		push r17
+ 102               	/* prologue: function */
+ 103               	/* frame size = 0 */
+ 104 00a6 7C01      		movw r14,r24
+ 105 00a8 DC01      		movw r26,r24
+ 106 00aa 5496      		adiw r26,20
+ 107 00ac 0D91      		ld r16,X+
+ 108 00ae 1C91      		ld r17,X
+ 109 00b0 5597      		sbiw r26,20+1
+ 110 00b2 C801      		movw r24,r16
+ 111 00b4 0E94 0000 		call luaS_newlstr
+ 112 00b8 D82E      		mov r13,r24
+ 113 00ba C92E      		mov r12,r25
+ 114 00bc D701      		movw r26,r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 3
+
+
+ 115 00be 5296      		adiw r26,18
+ 116 00c0 ED91      		ld r30,X+
+ 117 00c2 FC91      		ld r31,X
+ 118 00c4 5397      		sbiw r26,18+1
+ 119 00c6 6281      		ldd r22,Z+2
+ 120 00c8 7381      		ldd r23,Z+3
+ 121 00ca C801      		movw r24,r16
+ 122 00cc 4D2D      		mov r20,r13
+ 123 00ce 5C2D      		mov r21,r12
+ 124 00d0 0E94 0000 		call luaH_setstr
+ 125 00d4 FC01      		movw r30,r24
+ 126 00d6 8481      		ldd r24,Z+4
+ 127 00d8 9581      		ldd r25,Z+5
+ 128 00da 892B      		or r24,r25
+ 129 00dc 01F4      		brne .L6
+ 130 00de 81E0      		ldi r24,lo8(1)
+ 131 00e0 90E0      		ldi r25,hi8(1)
+ 132 00e2 9183      		std Z+1,r25
+ 133 00e4 8083      		st Z,r24
+ 134 00e6 9583      		std Z+5,r25
+ 135 00e8 8483      		std Z+4,r24
+ 136               	.L6:
+ 137 00ea 8D2D      		mov r24,r13
+ 138 00ec 9C2D      		mov r25,r12
+ 139               	/* epilogue start */
+ 140 00ee 1F91      		pop r17
+ 141 00f0 0F91      		pop r16
+ 142 00f2 FF90      		pop r15
+ 143 00f4 EF90      		pop r14
+ 144 00f6 DF90      		pop r13
+ 145 00f8 CF90      		pop r12
+ 146 00fa 0895      		ret
+ 147               		.size	luaX_newstring, .-luaX_newstring
+ 148               		.data
+ 149               	.LC0:
+ 150 0000 6368 6172 		.string	"char(%d)"
+ 150      2825 6429 
+ 150      00
+ 151               	.LC1:
+ 152 0009 2563 00   		.string	"%c"
+ 153               		.text
+ 154               	.global	luaX_token2str
+ 155               		.type	luaX_token2str, @function
+ 156               	luaX_token2str:
+ 157 00fc 0F93      		push r16
+ 158 00fe 1F93      		push r17
+ 159 0100 CF93      		push r28
+ 160 0102 DF93      		push r29
+ 161               	/* prologue: function */
+ 162               	/* frame size = 0 */
+ 163 0104 8C01      		movw r16,r24
+ 164 0106 EB01      		movw r28,r22
+ 165 0108 21E0      		ldi r18,hi8(257)
+ 166 010a 6130      		cpi r22,lo8(257)
+ 167 010c 7207      		cpc r23,r18
+ 168 010e 04F4      		brge .L9
+ 169 0110 CB01      		movw r24,r22
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 4
+
+
+ 170 0112 0E94 0000 		call iscntrl
+ 171 0116 D801      		movw r26,r16
+ 172 0118 5496      		adiw r26,20
+ 173 011a 2D91      		ld r18,X+
+ 174 011c 3C91      		ld r19,X
+ 175 011e 5597      		sbiw r26,20+1
+ 176 0120 892B      		or r24,r25
+ 177 0122 01F0      		breq .L10
+ 178 0124 00D0      		rcall .
+ 179 0126 00D0      		rcall .
+ 180 0128 00D0      		rcall .
+ 181 012a EDB7      		in r30,__SP_L__
+ 182 012c FEB7      		in r31,__SP_H__
+ 183 012e 3196      		adiw r30,1
+ 184 0130 ADB7      		in r26,__SP_L__
+ 185 0132 BEB7      		in r27,__SP_H__
+ 186 0134 1296      		adiw r26,1+1
+ 187 0136 3C93      		st X,r19
+ 188 0138 2E93      		st -X,r18
+ 189 013a 1197      		sbiw r26,1
+ 190 013c 80E0      		ldi r24,lo8(.LC0)
+ 191 013e 90E0      		ldi r25,hi8(.LC0)
+ 192 0140 00C0      		rjmp .L13
+ 193               	.L10:
+ 194 0142 00D0      		rcall .
+ 195 0144 00D0      		rcall .
+ 196 0146 00D0      		rcall .
+ 197 0148 EDB7      		in r30,__SP_L__
+ 198 014a FEB7      		in r31,__SP_H__
+ 199 014c 3196      		adiw r30,1
+ 200 014e ADB7      		in r26,__SP_L__
+ 201 0150 BEB7      		in r27,__SP_H__
+ 202 0152 1296      		adiw r26,1+1
+ 203 0154 3C93      		st X,r19
+ 204 0156 2E93      		st -X,r18
+ 205 0158 1197      		sbiw r26,1
+ 206 015a 80E0      		ldi r24,lo8(.LC1)
+ 207 015c 90E0      		ldi r25,hi8(.LC1)
+ 208               	.L13:
+ 209 015e 9383      		std Z+3,r25
+ 210 0160 8283      		std Z+2,r24
+ 211 0162 D583      		std Z+5,r29
+ 212 0164 C483      		std Z+4,r28
+ 213 0166 0E94 0000 		call luaO_pushfstring
+ 214 016a EDB7      		in r30,__SP_L__
+ 215 016c FEB7      		in r31,__SP_H__
+ 216 016e 3696      		adiw r30,6
+ 217 0170 0FB6      		in __tmp_reg__,__SREG__
+ 218 0172 F894      		cli
+ 219 0174 FEBF      		out __SP_H__,r31
+ 220 0176 0FBE      		out __SREG__,__tmp_reg__
+ 221 0178 EDBF      		out __SP_L__,r30
+ 222 017a 00C0      		rjmp .L11
+ 223               	.L9:
+ 224 017c FB01      		movw r30,r22
+ 225 017e EE0F      		lsl r30
+ 226 0180 FF1F      		rol r31
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 5
+
+
+ 227 0182 E050      		subi r30,lo8(-(luaX_tokens-514))
+ 228 0184 F040      		sbci r31,hi8(-(luaX_tokens-514))
+ 229 0186 8081      		ld r24,Z
+ 230 0188 9181      		ldd r25,Z+1
+ 231               	.L11:
+ 232               	/* epilogue start */
+ 233 018a DF91      		pop r29
+ 234 018c CF91      		pop r28
+ 235 018e 1F91      		pop r17
+ 236 0190 0F91      		pop r16
+ 237 0192 0895      		ret
+ 238               		.size	luaX_token2str, .-luaX_token2str
+ 239               		.data
+ 240               	.LC2:
+ 241 000c 2573 3A25 		.string	"%s:%d: %s"
+ 241      643A 2025 
+ 241      7300 
+ 242               	.LC3:
+ 243 0016 2573 206E 		.string	"%s near '%s'"
+ 243      6561 7220 
+ 243      2725 7327 
+ 243      00
+ 244               		.text
+ 245               	.global	luaX_lexerror
+ 246               		.type	luaX_lexerror, @function
+ 247               	luaX_lexerror:
+ 248 0194 AF92      		push r10
+ 249 0196 BF92      		push r11
+ 250 0198 CF92      		push r12
+ 251 019a DF92      		push r13
+ 252 019c EF92      		push r14
+ 253 019e FF92      		push r15
+ 254 01a0 0F93      		push r16
+ 255 01a2 1F93      		push r17
+ 256 01a4 DF93      		push r29
+ 257 01a6 CF93      		push r28
+ 258 01a8 CDB7      		in r28,__SP_L__
+ 259 01aa DEB7      		in r29,__SP_H__
+ 260 01ac C055      		subi r28,lo8(-(-80))
+ 261 01ae D040      		sbci r29,hi8(-(-80))
+ 262 01b0 0FB6      		in __tmp_reg__,__SREG__
+ 263 01b2 F894      		cli
+ 264 01b4 DEBF      		out __SP_H__,r29
+ 265 01b6 0FBE      		out __SREG__,__tmp_reg__
+ 266 01b8 CDBF      		out __SP_L__,r28
+ 267               	/* prologue: function */
+ 268               	/* frame size = 80 */
+ 269 01ba 6C01      		movw r12,r24
+ 270 01bc 7B01      		movw r14,r22
+ 271 01be 5A01      		movw r10,r20
+ 272 01c0 DC01      		movw r26,r24
+ 273 01c2 5A96      		adiw r26,26
+ 274 01c4 6D91      		ld r22,X+
+ 275 01c6 7C91      		ld r23,X
+ 276 01c8 5B97      		sbiw r26,26+1
+ 277 01ca 675F      		subi r22,lo8(-(9))
+ 278 01cc 7F4F      		sbci r23,hi8(-(9))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 6
+
+
+ 279 01ce 8E01      		movw r16,r28
+ 280 01d0 0F5F      		subi r16,lo8(-(1))
+ 281 01d2 1F4F      		sbci r17,hi8(-(1))
+ 282 01d4 C801      		movw r24,r16
+ 283 01d6 40E5      		ldi r20,lo8(80)
+ 284 01d8 50E0      		ldi r21,hi8(80)
+ 285 01da 0E94 0000 		call luaO_chunkid
+ 286 01de EDB7      		in r30,__SP_L__
+ 287 01e0 FEB7      		in r31,__SP_H__
+ 288 01e2 3A97      		sbiw r30,10
+ 289 01e4 0FB6      		in __tmp_reg__,__SREG__
+ 290 01e6 F894      		cli
+ 291 01e8 FEBF      		out __SP_H__,r31
+ 292 01ea 0FBE      		out __SREG__,__tmp_reg__
+ 293 01ec EDBF      		out __SP_L__,r30
+ 294 01ee 3196      		adiw r30,1
+ 295 01f0 D601      		movw r26,r12
+ 296 01f2 5496      		adiw r26,20
+ 297 01f4 8D91      		ld r24,X+
+ 298 01f6 9C91      		ld r25,X
+ 299 01f8 5597      		sbiw r26,20+1
+ 300 01fa ADB7      		in r26,__SP_L__
+ 301 01fc BEB7      		in r27,__SP_H__
+ 302 01fe 1296      		adiw r26,1+1
+ 303 0200 9C93      		st X,r25
+ 304 0202 8E93      		st -X,r24
+ 305 0204 1197      		sbiw r26,1
+ 306 0206 80E0      		ldi r24,lo8(.LC2)
+ 307 0208 90E0      		ldi r25,hi8(.LC2)
+ 308 020a 9383      		std Z+3,r25
+ 309 020c 8283      		std Z+2,r24
+ 310 020e 1583      		std Z+5,r17
+ 311 0210 0483      		std Z+4,r16
+ 312 0212 D601      		movw r26,r12
+ 313 0214 1296      		adiw r26,2
+ 314 0216 8D91      		ld r24,X+
+ 315 0218 9C91      		ld r25,X
+ 316 021a 1397      		sbiw r26,2+1
+ 317 021c 9783      		std Z+7,r25
+ 318 021e 8683      		std Z+6,r24
+ 319 0220 F186      		std Z+9,r15
+ 320 0222 E086      		std Z+8,r14
+ 321 0224 0E94 0000 		call luaO_pushfstring
+ 322 0228 7C01      		movw r14,r24
+ 323 022a EDB7      		in r30,__SP_L__
+ 324 022c FEB7      		in r31,__SP_H__
+ 325 022e 3A96      		adiw r30,10
+ 326 0230 0FB6      		in __tmp_reg__,__SREG__
+ 327 0232 F894      		cli
+ 328 0234 FEBF      		out __SP_H__,r31
+ 329 0236 0FBE      		out __SREG__,__tmp_reg__
+ 330 0238 EDBF      		out __SP_L__,r30
+ 331 023a A114      		cp r10,__zero_reg__
+ 332 023c B104      		cpc r11,__zero_reg__
+ 333 023e 01F0      		breq .L15
+ 334 0240 D601      		movw r26,r12
+ 335 0242 5496      		adiw r26,20
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 7
+
+
+ 336 0244 0D91      		ld r16,X+
+ 337 0246 1C91      		ld r17,X
+ 338 0248 5597      		sbiw r26,20+1
+ 339 024a C501      		movw r24,r10
+ 340 024c 8C51      		subi r24,lo8(-(-284))
+ 341 024e 9140      		sbci r25,hi8(-(-284))
+ 342 0250 0397      		sbiw r24,3
+ 343 0252 00F4      		brsh .L16
+ 344 0254 C601      		movw r24,r12
+ 345 0256 60E0      		ldi r22,lo8(0)
+ 346 0258 70E0      		ldi r23,hi8(0)
+ 347 025a 0E94 0000 		call save
+ 348 025e D601      		movw r26,r12
+ 349 0260 5896      		adiw r26,24
+ 350 0262 ED91      		ld r30,X+
+ 351 0264 FC91      		ld r31,X
+ 352 0266 5997      		sbiw r26,24+1
+ 353 0268 2081      		ld r18,Z
+ 354 026a 3181      		ldd r19,Z+1
+ 355 026c 00C0      		rjmp .L18
+ 356               	.L16:
+ 357 026e C601      		movw r24,r12
+ 358 0270 B501      		movw r22,r10
+ 359 0272 0E94 0000 		call luaX_token2str
+ 360 0276 9C01      		movw r18,r24
+ 361               	.L18:
+ 362 0278 EDB7      		in r30,__SP_L__
+ 363 027a FEB7      		in r31,__SP_H__
+ 364 027c 3897      		sbiw r30,8
+ 365 027e 0FB6      		in __tmp_reg__,__SREG__
+ 366 0280 F894      		cli
+ 367 0282 FEBF      		out __SP_H__,r31
+ 368 0284 0FBE      		out __SREG__,__tmp_reg__
+ 369 0286 EDBF      		out __SP_L__,r30
+ 370 0288 3196      		adiw r30,1
+ 371 028a ADB7      		in r26,__SP_L__
+ 372 028c BEB7      		in r27,__SP_H__
+ 373 028e 1296      		adiw r26,1+1
+ 374 0290 1C93      		st X,r17
+ 375 0292 0E93      		st -X,r16
+ 376 0294 1197      		sbiw r26,1
+ 377 0296 80E0      		ldi r24,lo8(.LC3)
+ 378 0298 90E0      		ldi r25,hi8(.LC3)
+ 379 029a 9383      		std Z+3,r25
+ 380 029c 8283      		std Z+2,r24
+ 381 029e F582      		std Z+5,r15
+ 382 02a0 E482      		std Z+4,r14
+ 383 02a2 3783      		std Z+7,r19
+ 384 02a4 2683      		std Z+6,r18
+ 385 02a6 0E94 0000 		call luaO_pushfstring
+ 386 02aa EDB7      		in r30,__SP_L__
+ 387 02ac FEB7      		in r31,__SP_H__
+ 388 02ae 3896      		adiw r30,8
+ 389 02b0 0FB6      		in __tmp_reg__,__SREG__
+ 390 02b2 F894      		cli
+ 391 02b4 FEBF      		out __SP_H__,r31
+ 392 02b6 0FBE      		out __SREG__,__tmp_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 8
+
+
+ 393 02b8 EDBF      		out __SP_L__,r30
+ 394               	.L15:
+ 395 02ba D601      		movw r26,r12
+ 396 02bc 5496      		adiw r26,20
+ 397 02be 8D91      		ld r24,X+
+ 398 02c0 9C91      		ld r25,X
+ 399 02c2 5597      		sbiw r26,20+1
+ 400 02c4 63E0      		ldi r22,lo8(3)
+ 401 02c6 70E0      		ldi r23,hi8(3)
+ 402 02c8 0E94 0000 		call luaD_throw
+ 403               	/* epilogue start */
+ 404 02cc C05B      		subi r28,lo8(-(80))
+ 405 02ce DF4F      		sbci r29,hi8(-(80))
+ 406 02d0 0FB6      		in __tmp_reg__,__SREG__
+ 407 02d2 F894      		cli
+ 408 02d4 DEBF      		out __SP_H__,r29
+ 409 02d6 0FBE      		out __SREG__,__tmp_reg__
+ 410 02d8 CDBF      		out __SP_L__,r28
+ 411 02da CF91      		pop r28
+ 412 02dc DF91      		pop r29
+ 413 02de 1F91      		pop r17
+ 414 02e0 0F91      		pop r16
+ 415 02e2 FF90      		pop r15
+ 416 02e4 EF90      		pop r14
+ 417 02e6 DF90      		pop r13
+ 418 02e8 CF90      		pop r12
+ 419 02ea BF90      		pop r11
+ 420 02ec AF90      		pop r10
+ 421 02ee 0895      		ret
+ 422               		.size	luaX_lexerror, .-luaX_lexerror
+ 423               		.data
+ 424               	.LC4:
+ 425 0023 6C65 7869 		.string	"lexical element too long"
+ 425      6361 6C20 
+ 425      656C 656D 
+ 425      656E 7420 
+ 425      746F 6F20 
+ 426               		.text
+ 427               		.type	save, @function
+ 428               	save:
+ 429 02f0 DF92      		push r13
+ 430 02f2 EF92      		push r14
+ 431 02f4 FF92      		push r15
+ 432 02f6 0F93      		push r16
+ 433 02f8 1F93      		push r17
+ 434 02fa CF93      		push r28
+ 435 02fc DF93      		push r29
+ 436               	/* prologue: function */
+ 437               	/* frame size = 0 */
+ 438 02fe 7C01      		movw r14,r24
+ 439 0300 D62E      		mov r13,r22
+ 440 0302 FC01      		movw r30,r24
+ 441 0304 C08D      		ldd r28,Z+24
+ 442 0306 D18D      		ldd r29,Z+25
+ 443 0308 2C81      		ldd r18,Y+4
+ 444 030a 3D81      		ldd r19,Y+5
+ 445 030c 8A81      		ldd r24,Y+2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 9
+
+
+ 446 030e 9B81      		ldd r25,Y+3
+ 447 0310 0196      		adiw r24,1
+ 448 0312 2817      		cp r18,r24
+ 449 0314 3907      		cpc r19,r25
+ 450 0316 00F4      		brsh .L21
+ 451 0318 2E5F      		subi r18,lo8(32766)
+ 452 031a 3F47      		sbci r19,hi8(32766)
+ 453 031c 00F0      		brlo .L22
+ 454 031e C701      		movw r24,r14
+ 455 0320 60E0      		ldi r22,lo8(.LC4)
+ 456 0322 70E0      		ldi r23,hi8(.LC4)
+ 457 0324 40E0      		ldi r20,lo8(0)
+ 458 0326 50E0      		ldi r21,hi8(0)
+ 459 0328 0E94 0000 		call luaX_lexerror
+ 460               	.L22:
+ 461 032c 4C81      		ldd r20,Y+4
+ 462 032e 5D81      		ldd r21,Y+5
+ 463 0330 8A01      		movw r16,r20
+ 464 0332 000F      		lsl r16
+ 465 0334 111F      		rol r17
+ 466 0336 C801      		movw r24,r16
+ 467 0338 0196      		adiw r24,1
+ 468 033a F701      		movw r30,r14
+ 469 033c 2489      		ldd r18,Z+20
+ 470 033e 3589      		ldd r19,Z+21
+ 471 0340 8E5F      		subi r24,lo8(-2)
+ 472 0342 9F4F      		sbci r25,hi8(-2)
+ 473 0344 00F4      		brsh .L23
+ 474 0346 6881      		ld r22,Y
+ 475 0348 7981      		ldd r23,Y+1
+ 476 034a C901      		movw r24,r18
+ 477 034c 9801      		movw r18,r16
+ 478 034e 0E94 0000 		call luaM_realloc_
+ 479 0352 00C0      		rjmp .L24
+ 480               	.L23:
+ 481 0354 C901      		movw r24,r18
+ 482 0356 0E94 0000 		call luaM_toobig
+ 483               	.L24:
+ 484 035a 9983      		std Y+1,r25
+ 485 035c 8883      		st Y,r24
+ 486 035e 1D83      		std Y+5,r17
+ 487 0360 0C83      		std Y+4,r16
+ 488               	.L21:
+ 489 0362 8A81      		ldd r24,Y+2
+ 490 0364 9B81      		ldd r25,Y+3
+ 491 0366 E881      		ld r30,Y
+ 492 0368 F981      		ldd r31,Y+1
+ 493 036a E80F      		add r30,r24
+ 494 036c F91F      		adc r31,r25
+ 495 036e D082      		st Z,r13
+ 496 0370 0196      		adiw r24,1
+ 497 0372 9B83      		std Y+3,r25
+ 498 0374 8A83      		std Y+2,r24
+ 499               	/* epilogue start */
+ 500 0376 DF91      		pop r29
+ 501 0378 CF91      		pop r28
+ 502 037a 1F91      		pop r17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 10
+
+
+ 503 037c 0F91      		pop r16
+ 504 037e FF90      		pop r15
+ 505 0380 EF90      		pop r14
+ 506 0382 DF90      		pop r13
+ 507 0384 0895      		ret
+ 508               		.size	save, .-save
+ 509               		.type	skip_sep, @function
+ 510               	skip_sep:
+ 511 0386 EF92      		push r14
+ 512 0388 FF92      		push r15
+ 513 038a 0F93      		push r16
+ 514 038c 1F93      		push r17
+ 515 038e CF93      		push r28
+ 516 0390 DF93      		push r29
+ 517               	/* prologue: function */
+ 518               	/* frame size = 0 */
+ 519 0392 EC01      		movw r28,r24
+ 520 0394 E880      		ld r14,Y
+ 521 0396 F980      		ldd r15,Y+1
+ 522 0398 B701      		movw r22,r14
+ 523 039a 0E94 0000 		call save
+ 524 039e AE89      		ldd r26,Y+22
+ 525 03a0 BF89      		ldd r27,Y+23
+ 526 03a2 8D91      		ld r24,X+
+ 527 03a4 9C91      		ld r25,X
+ 528 03a6 1197      		sbiw r26,1
+ 529 03a8 0197      		sbiw r24,1
+ 530 03aa 1196      		adiw r26,1
+ 531 03ac 9C93      		st X,r25
+ 532 03ae 8E93      		st -X,r24
+ 533 03b0 0196      		adiw r24,1
+ 534 03b2 01F0      		breq .L27
+ 535 03b4 1296      		adiw r26,2
+ 536 03b6 ED91      		ld r30,X+
+ 537 03b8 FC91      		ld r31,X
+ 538 03ba 1397      		sbiw r26,2+1
+ 539 03bc 8191      		ld r24,Z+
+ 540 03be 90E0      		ldi r25,lo8(0)
+ 541 03c0 1396      		adiw r26,2+1
+ 542 03c2 FC93      		st X,r31
+ 543 03c4 EE93      		st -X,r30
+ 544 03c6 1297      		sbiw r26,2
+ 545 03c8 00C0      		rjmp .L28
+ 546               	.L27:
+ 547 03ca CD01      		movw r24,r26
+ 548 03cc 0E94 0000 		call luaZ_fill
+ 549               	.L28:
+ 550 03d0 8883      		st Y,r24
+ 551 03d2 9983      		std Y+1,r25
+ 552 03d4 00E0      		ldi r16,lo8(0)
+ 553 03d6 10E0      		ldi r17,hi8(0)
+ 554 03d8 00C0      		rjmp .L29
+ 555               	.L32:
+ 556 03da CE01      		movw r24,r28
+ 557 03dc 6DE3      		ldi r22,lo8(61)
+ 558 03de 70E0      		ldi r23,hi8(61)
+ 559 03e0 0E94 0000 		call save
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 11
+
+
+ 560 03e4 AE89      		ldd r26,Y+22
+ 561 03e6 BF89      		ldd r27,Y+23
+ 562 03e8 8D91      		ld r24,X+
+ 563 03ea 9C91      		ld r25,X
+ 564 03ec 1197      		sbiw r26,1
+ 565 03ee 0197      		sbiw r24,1
+ 566 03f0 1196      		adiw r26,1
+ 567 03f2 9C93      		st X,r25
+ 568 03f4 8E93      		st -X,r24
+ 569 03f6 0196      		adiw r24,1
+ 570 03f8 01F0      		breq .L30
+ 571 03fa 1296      		adiw r26,2
+ 572 03fc ED91      		ld r30,X+
+ 573 03fe FC91      		ld r31,X
+ 574 0400 1397      		sbiw r26,2+1
+ 575 0402 8191      		ld r24,Z+
+ 576 0404 90E0      		ldi r25,lo8(0)
+ 577 0406 1396      		adiw r26,2+1
+ 578 0408 FC93      		st X,r31
+ 579 040a EE93      		st -X,r30
+ 580 040c 1297      		sbiw r26,2
+ 581 040e 00C0      		rjmp .L31
+ 582               	.L30:
+ 583 0410 CD01      		movw r24,r26
+ 584 0412 0E94 0000 		call luaZ_fill
+ 585               	.L31:
+ 586 0416 8883      		st Y,r24
+ 587 0418 9983      		std Y+1,r25
+ 588 041a 0F5F      		subi r16,lo8(-(1))
+ 589 041c 1F4F      		sbci r17,hi8(-(1))
+ 590               	.L29:
+ 591 041e 8881      		ld r24,Y
+ 592 0420 9981      		ldd r25,Y+1
+ 593 0422 8D33      		cpi r24,61
+ 594 0424 9105      		cpc r25,__zero_reg__
+ 595 0426 01F0      		breq .L32
+ 596 0428 8E15      		cp r24,r14
+ 597 042a 9F05      		cpc r25,r15
+ 598 042c 01F0      		breq .L33
+ 599 042e 0095      		com r16
+ 600 0430 1095      		com r17
+ 601               	.L33:
+ 602 0432 C801      		movw r24,r16
+ 603               	/* epilogue start */
+ 604 0434 DF91      		pop r29
+ 605 0436 CF91      		pop r28
+ 606 0438 1F91      		pop r17
+ 607 043a 0F91      		pop r16
+ 608 043c FF90      		pop r15
+ 609 043e EF90      		pop r14
+ 610 0440 0895      		ret
+ 611               		.size	skip_sep, .-skip_sep
+ 612               		.type	check_next, @function
+ 613               	check_next:
+ 614 0442 0F93      		push r16
+ 615 0444 1F93      		push r17
+ 616 0446 CF93      		push r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 12
+
+
+ 617 0448 DF93      		push r29
+ 618               	/* prologue: function */
+ 619               	/* frame size = 0 */
+ 620 044a EC01      		movw r28,r24
+ 621 044c CB01      		movw r24,r22
+ 622 044e 0881      		ld r16,Y
+ 623 0450 1981      		ldd r17,Y+1
+ 624 0452 B801      		movw r22,r16
+ 625 0454 0E94 0000 		call strchr
+ 626 0458 0097      		sbiw r24,0
+ 627 045a 01F4      		brne .L36
+ 628 045c 20E0      		ldi r18,lo8(0)
+ 629 045e 30E0      		ldi r19,hi8(0)
+ 630 0460 00C0      		rjmp .L37
+ 631               	.L36:
+ 632 0462 CE01      		movw r24,r28
+ 633 0464 B801      		movw r22,r16
+ 634 0466 0E94 0000 		call save
+ 635 046a AE89      		ldd r26,Y+22
+ 636 046c BF89      		ldd r27,Y+23
+ 637 046e 8D91      		ld r24,X+
+ 638 0470 9C91      		ld r25,X
+ 639 0472 1197      		sbiw r26,1
+ 640 0474 0197      		sbiw r24,1
+ 641 0476 1196      		adiw r26,1
+ 642 0478 9C93      		st X,r25
+ 643 047a 8E93      		st -X,r24
+ 644 047c 0196      		adiw r24,1
+ 645 047e 01F0      		breq .L38
+ 646 0480 1296      		adiw r26,2
+ 647 0482 ED91      		ld r30,X+
+ 648 0484 FC91      		ld r31,X
+ 649 0486 1397      		sbiw r26,2+1
+ 650 0488 8191      		ld r24,Z+
+ 651 048a 90E0      		ldi r25,lo8(0)
+ 652 048c 1396      		adiw r26,2+1
+ 653 048e FC93      		st X,r31
+ 654 0490 EE93      		st -X,r30
+ 655 0492 1297      		sbiw r26,2
+ 656 0494 00C0      		rjmp .L39
+ 657               	.L38:
+ 658 0496 CD01      		movw r24,r26
+ 659 0498 0E94 0000 		call luaZ_fill
+ 660               	.L39:
+ 661 049c 8883      		st Y,r24
+ 662 049e 9983      		std Y+1,r25
+ 663 04a0 21E0      		ldi r18,lo8(1)
+ 664 04a2 30E0      		ldi r19,hi8(1)
+ 665               	.L37:
+ 666 04a4 C901      		movw r24,r18
+ 667               	/* epilogue start */
+ 668 04a6 DF91      		pop r29
+ 669 04a8 CF91      		pop r28
+ 670 04aa 1F91      		pop r17
+ 671 04ac 0F91      		pop r16
+ 672 04ae 0895      		ret
+ 673               		.size	check_next, .-check_next
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 13
+
+
+ 674               		.data
+ 675               	.LC5:
+ 676 003c 4565 00   		.string	"Ee"
+ 677               	.LC6:
+ 678 003f 2B2D 00   		.string	"+-"
+ 679               		.text
+ 680               		.type	read_numeral, @function
+ 681               	read_numeral:
+ 682 04b0 EF92      		push r14
+ 683 04b2 FF92      		push r15
+ 684 04b4 0F93      		push r16
+ 685 04b6 1F93      		push r17
+ 686 04b8 CF93      		push r28
+ 687 04ba DF93      		push r29
+ 688               	/* prologue: function */
+ 689               	/* frame size = 0 */
+ 690 04bc 8C01      		movw r16,r24
+ 691 04be 7B01      		movw r14,r22
+ 692               	.L56:
+ 693 04c0 D801      		movw r26,r16
+ 694 04c2 6D91      		ld r22,X+
+ 695 04c4 7C91      		ld r23,X
+ 696 04c6 C801      		movw r24,r16
+ 697 04c8 0E94 0000 		call save
+ 698 04cc F801      		movw r30,r16
+ 699 04ce A689      		ldd r26,Z+22
+ 700 04d0 B789      		ldd r27,Z+23
+ 701 04d2 8D91      		ld r24,X+
+ 702 04d4 9C91      		ld r25,X
+ 703 04d6 1197      		sbiw r26,1
+ 704 04d8 0197      		sbiw r24,1
+ 705 04da 1196      		adiw r26,1
+ 706 04dc 9C93      		st X,r25
+ 707 04de 8E93      		st -X,r24
+ 708 04e0 0196      		adiw r24,1
+ 709 04e2 01F0      		breq .L42
+ 710 04e4 1296      		adiw r26,2
+ 711 04e6 ED91      		ld r30,X+
+ 712 04e8 FC91      		ld r31,X
+ 713 04ea 1397      		sbiw r26,2+1
+ 714 04ec 8191      		ld r24,Z+
+ 715 04ee 282F      		mov r18,r24
+ 716 04f0 30E0      		ldi r19,lo8(0)
+ 717 04f2 1396      		adiw r26,2+1
+ 718 04f4 FC93      		st X,r31
+ 719 04f6 EE93      		st -X,r30
+ 720 04f8 1297      		sbiw r26,2
+ 721 04fa 00C0      		rjmp .L43
+ 722               	.L42:
+ 723 04fc CD01      		movw r24,r26
+ 724 04fe 0E94 0000 		call luaZ_fill
+ 725 0502 9C01      		movw r18,r24
+ 726               	.L43:
+ 727 0504 D801      		movw r26,r16
+ 728 0506 2D93      		st X+,r18
+ 729 0508 3C93      		st X,r19
+ 730 050a C901      		movw r24,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 14
+
+
+ 731 050c C097      		sbiw r24,48
+ 732 050e 0A97      		sbiw r24,10
+ 733 0510 00F0      		brlo .L56
+ 734 0512 2E32      		cpi r18,46
+ 735 0514 3105      		cpc r19,__zero_reg__
+ 736 0516 01F0      		breq .L56
+ 737 0518 C801      		movw r24,r16
+ 738 051a 60E0      		ldi r22,lo8(.LC5)
+ 739 051c 70E0      		ldi r23,hi8(.LC5)
+ 740 051e 0E94 0000 		call check_next
+ 741 0522 892B      		or r24,r25
+ 742 0524 01F0      		breq .L55
+ 743 0526 C801      		movw r24,r16
+ 744 0528 60E0      		ldi r22,lo8(.LC6)
+ 745 052a 70E0      		ldi r23,hi8(.LC6)
+ 746 052c 0E94 0000 		call check_next
+ 747 0530 00C0      		rjmp .L55
+ 748               	.L48:
+ 749 0532 C801      		movw r24,r16
+ 750 0534 BE01      		movw r22,r28
+ 751 0536 0E94 0000 		call save
+ 752 053a F801      		movw r30,r16
+ 753 053c A689      		ldd r26,Z+22
+ 754 053e B789      		ldd r27,Z+23
+ 755 0540 8D91      		ld r24,X+
+ 756 0542 9C91      		ld r25,X
+ 757 0544 1197      		sbiw r26,1
+ 758 0546 0197      		sbiw r24,1
+ 759 0548 1196      		adiw r26,1
+ 760 054a 9C93      		st X,r25
+ 761 054c 8E93      		st -X,r24
+ 762 054e 0196      		adiw r24,1
+ 763 0550 01F0      		breq .L46
+ 764 0552 1296      		adiw r26,2
+ 765 0554 ED91      		ld r30,X+
+ 766 0556 FC91      		ld r31,X
+ 767 0558 1397      		sbiw r26,2+1
+ 768 055a 8191      		ld r24,Z+
+ 769 055c 90E0      		ldi r25,lo8(0)
+ 770 055e 1396      		adiw r26,2+1
+ 771 0560 FC93      		st X,r31
+ 772 0562 EE93      		st -X,r30
+ 773 0564 1297      		sbiw r26,2
+ 774 0566 00C0      		rjmp .L47
+ 775               	.L46:
+ 776 0568 CD01      		movw r24,r26
+ 777 056a 0E94 0000 		call luaZ_fill
+ 778               	.L47:
+ 779 056e D801      		movw r26,r16
+ 780 0570 8C93      		st X,r24
+ 781 0572 1196      		adiw r26,1
+ 782 0574 9C93      		st X,r25
+ 783               	.L55:
+ 784 0576 F801      		movw r30,r16
+ 785 0578 C081      		ld r28,Z
+ 786 057a D181      		ldd r29,Z+1
+ 787 057c CE01      		movw r24,r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 15
+
+
+ 788 057e 0E94 0000 		call isalnum
+ 789 0582 892B      		or r24,r25
+ 790 0584 01F4      		brne .L48
+ 791 0586 CF35      		cpi r28,95
+ 792 0588 D105      		cpc r29,__zero_reg__
+ 793 058a 01F0      		breq .L48
+ 794 058c C801      		movw r24,r16
+ 795 058e 60E0      		ldi r22,lo8(0)
+ 796 0590 70E0      		ldi r23,hi8(0)
+ 797 0592 0E94 0000 		call save
+ 798 0596 D801      		movw r26,r16
+ 799 0598 5C96      		adiw r26,28
+ 800 059a 9C91      		ld r25,X
+ 801 059c 5C97      		sbiw r26,28
+ 802 059e 5896      		adiw r26,24
+ 803 05a0 ED91      		ld r30,X+
+ 804 05a2 FC91      		ld r31,X
+ 805 05a4 5997      		sbiw r26,24+1
+ 806 05a6 2281      		ldd r18,Z+2
+ 807 05a8 3381      		ldd r19,Z+3
+ 808 05aa 2150      		subi r18,lo8(-(-1))
+ 809 05ac 3040      		sbci r19,hi8(-(-1))
+ 810 05ae 0190      		ld __tmp_reg__,Z+
+ 811 05b0 F081      		ld r31,Z
+ 812 05b2 E02D      		mov r30,__tmp_reg__
+ 813 05b4 E20F      		add r30,r18
+ 814 05b6 F31F      		adc r31,r19
+ 815 05b8 2F5F      		subi r18,lo8(-(1))
+ 816 05ba 3F4F      		sbci r19,hi8(-(1))
+ 817 05bc 00C0      		rjmp .L49
+ 818               	.L51:
+ 819 05be 2150      		subi r18,lo8(-(-1))
+ 820 05c0 3040      		sbci r19,hi8(-(-1))
+ 821 05c2 8081      		ld r24,Z
+ 822 05c4 8E32      		cpi r24,lo8(46)
+ 823 05c6 01F4      		brne .L50
+ 824 05c8 9083      		st Z,r25
+ 825               	.L50:
+ 826 05ca 3197      		sbiw r30,1
+ 827               	.L49:
+ 828 05cc 2115      		cp r18,__zero_reg__
+ 829 05ce 3105      		cpc r19,__zero_reg__
+ 830 05d0 01F4      		brne .L51
+ 831 05d2 D801      		movw r26,r16
+ 832 05d4 5896      		adiw r26,24
+ 833 05d6 ED91      		ld r30,X+
+ 834 05d8 FC91      		ld r31,X
+ 835 05da 5997      		sbiw r26,24+1
+ 836 05dc 8081      		ld r24,Z
+ 837 05de 9181      		ldd r25,Z+1
+ 838 05e0 B701      		movw r22,r14
+ 839 05e2 0E94 0000 		call luaO_str2d
+ 840               	/* epilogue start */
+ 841 05e6 DF91      		pop r29
+ 842 05e8 CF91      		pop r28
+ 843 05ea 1F91      		pop r17
+ 844 05ec 0F91      		pop r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 16
+
+
+ 845 05ee FF90      		pop r15
+ 846 05f0 EF90      		pop r14
+ 847 05f2 0895      		ret
+ 848               		.size	read_numeral, .-read_numeral
+ 849               	.global	luaX_syntaxerror
+ 850               		.type	luaX_syntaxerror, @function
+ 851               	luaX_syntaxerror:
+ 852               	/* prologue: function */
+ 853               	/* frame size = 0 */
+ 854 05f4 FC01      		movw r30,r24
+ 855 05f6 4681      		ldd r20,Z+6
+ 856 05f8 5781      		ldd r21,Z+7
+ 857 05fa 0E94 0000 		call luaX_lexerror
+ 858               	/* epilogue start */
+ 859 05fe 0895      		ret
+ 860               		.size	luaX_syntaxerror, .-luaX_syntaxerror
+ 861               		.data
+ 862               	.LC7:
+ 863 0042 6368 756E 		.string	"chunk has too many lines"
+ 863      6B20 6861 
+ 863      7320 746F 
+ 863      6F20 6D61 
+ 863      6E79 206C 
+ 864               		.text
+ 865               		.type	inclinenumber, @function
+ 866               	inclinenumber:
+ 867 0600 0F93      		push r16
+ 868 0602 1F93      		push r17
+ 869 0604 CF93      		push r28
+ 870 0606 DF93      		push r29
+ 871               	/* prologue: function */
+ 872               	/* frame size = 0 */
+ 873 0608 EC01      		movw r28,r24
+ 874 060a 0881      		ld r16,Y
+ 875 060c 1981      		ldd r17,Y+1
+ 876 060e AE89      		ldd r26,Y+22
+ 877 0610 BF89      		ldd r27,Y+23
+ 878 0612 8D91      		ld r24,X+
+ 879 0614 9C91      		ld r25,X
+ 880 0616 1197      		sbiw r26,1
+ 881 0618 0197      		sbiw r24,1
+ 882 061a 1196      		adiw r26,1
+ 883 061c 9C93      		st X,r25
+ 884 061e 8E93      		st -X,r24
+ 885 0620 0196      		adiw r24,1
+ 886 0622 01F0      		breq .L60
+ 887 0624 1296      		adiw r26,2
+ 888 0626 ED91      		ld r30,X+
+ 889 0628 FC91      		ld r31,X
+ 890 062a 1397      		sbiw r26,2+1
+ 891 062c 8191      		ld r24,Z+
+ 892 062e 90E0      		ldi r25,lo8(0)
+ 893 0630 1396      		adiw r26,2+1
+ 894 0632 FC93      		st X,r31
+ 895 0634 EE93      		st -X,r30
+ 896 0636 1297      		sbiw r26,2
+ 897 0638 00C0      		rjmp .L61
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 17
+
+
+ 898               	.L60:
+ 899 063a CD01      		movw r24,r26
+ 900 063c 0E94 0000 		call luaZ_fill
+ 901               	.L61:
+ 902 0640 9983      		std Y+1,r25
+ 903 0642 8883      		st Y,r24
+ 904 0644 8A30      		cpi r24,10
+ 905 0646 9105      		cpc r25,__zero_reg__
+ 906 0648 01F0      		breq .L62
+ 907 064a 8D30      		cpi r24,13
+ 908 064c 9105      		cpc r25,__zero_reg__
+ 909 064e 01F4      		brne .L63
+ 910               	.L62:
+ 911 0650 8017      		cp r24,r16
+ 912 0652 9107      		cpc r25,r17
+ 913 0654 01F0      		breq .L63
+ 914 0656 AE89      		ldd r26,Y+22
+ 915 0658 BF89      		ldd r27,Y+23
+ 916 065a 8D91      		ld r24,X+
+ 917 065c 9C91      		ld r25,X
+ 918 065e 1197      		sbiw r26,1
+ 919 0660 0197      		sbiw r24,1
+ 920 0662 1196      		adiw r26,1
+ 921 0664 9C93      		st X,r25
+ 922 0666 8E93      		st -X,r24
+ 923 0668 0196      		adiw r24,1
+ 924 066a 01F0      		breq .L64
+ 925 066c 1296      		adiw r26,2
+ 926 066e ED91      		ld r30,X+
+ 927 0670 FC91      		ld r31,X
+ 928 0672 1397      		sbiw r26,2+1
+ 929 0674 8191      		ld r24,Z+
+ 930 0676 90E0      		ldi r25,lo8(0)
+ 931 0678 1396      		adiw r26,2+1
+ 932 067a FC93      		st X,r31
+ 933 067c EE93      		st -X,r30
+ 934 067e 1297      		sbiw r26,2
+ 935 0680 00C0      		rjmp .L65
+ 936               	.L64:
+ 937 0682 CD01      		movw r24,r26
+ 938 0684 0E94 0000 		call luaZ_fill
+ 939               	.L65:
+ 940 0688 8883      		st Y,r24
+ 941 068a 9983      		std Y+1,r25
+ 942               	.L63:
+ 943 068c 8A81      		ldd r24,Y+2
+ 944 068e 9B81      		ldd r25,Y+3
+ 945 0690 0196      		adiw r24,1
+ 946 0692 9B83      		std Y+3,r25
+ 947 0694 8A83      		std Y+2,r24
+ 948 0696 8D5F      		subi r24,lo8(32765)
+ 949 0698 9F47      		sbci r25,hi8(32765)
+ 950 069a 04F0      		brlt .L67
+ 951 069c CE01      		movw r24,r28
+ 952 069e 60E0      		ldi r22,lo8(.LC7)
+ 953 06a0 70E0      		ldi r23,hi8(.LC7)
+ 954 06a2 0E94 0000 		call luaX_syntaxerror
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 18
+
+
+ 955               	.L67:
+ 956               	/* epilogue start */
+ 957 06a6 DF91      		pop r29
+ 958 06a8 CF91      		pop r28
+ 959 06aa 1F91      		pop r17
+ 960 06ac 0F91      		pop r16
+ 961 06ae 0895      		ret
+ 962               		.size	inclinenumber, .-inclinenumber
+ 963               		.data
+ 964               	.LC8:
+ 965 005b 756E 6669 		.string	"unfinished long comment"
+ 965      6E69 7368 
+ 965      6564 206C 
+ 965      6F6E 6720 
+ 965      636F 6D6D 
+ 966               	.LC9:
+ 967 0073 756E 6669 		.string	"unfinished long string"
+ 967      6E69 7368 
+ 967      6564 206C 
+ 967      6F6E 6720 
+ 967      7374 7269 
+ 968               	.LC10:
+ 969 008a 6E65 7374 		.string	"nesting of [[...]] is deprecated"
+ 969      696E 6720 
+ 969      6F66 205B 
+ 969      5B2E 2E2E 
+ 969      5D5D 2069 
+ 970               		.text
+ 971               		.type	read_long_string, @function
+ 972               	read_long_string:
+ 973 06b0 EF92      		push r14
+ 974 06b2 FF92      		push r15
+ 975 06b4 0F93      		push r16
+ 976 06b6 1F93      		push r17
+ 977 06b8 CF93      		push r28
+ 978 06ba DF93      		push r29
+ 979               	/* prologue: function */
+ 980               	/* frame size = 0 */
+ 981 06bc EC01      		movw r28,r24
+ 982 06be 7B01      		movw r14,r22
+ 983 06c0 8A01      		movw r16,r20
+ 984 06c2 6881      		ld r22,Y
+ 985 06c4 7981      		ldd r23,Y+1
+ 986 06c6 0E94 0000 		call save
+ 987 06ca AE89      		ldd r26,Y+22
+ 988 06cc BF89      		ldd r27,Y+23
+ 989 06ce 8D91      		ld r24,X+
+ 990 06d0 9C91      		ld r25,X
+ 991 06d2 1197      		sbiw r26,1
+ 992 06d4 0197      		sbiw r24,1
+ 993 06d6 1196      		adiw r26,1
+ 994 06d8 9C93      		st X,r25
+ 995 06da 8E93      		st -X,r24
+ 996 06dc 0196      		adiw r24,1
+ 997 06de 01F0      		breq .L69
+ 998 06e0 1296      		adiw r26,2
+ 999 06e2 ED91      		ld r30,X+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 19
+
+
+ 1000 06e4 FC91      		ld r31,X
+ 1001 06e6 1397      		sbiw r26,2+1
+ 1002 06e8 8191      		ld r24,Z+
+ 1003 06ea 90E0      		ldi r25,lo8(0)
+ 1004 06ec 1396      		adiw r26,2+1
+ 1005 06ee FC93      		st X,r31
+ 1006 06f0 EE93      		st -X,r30
+ 1007 06f2 1297      		sbiw r26,2
+ 1008 06f4 00C0      		rjmp .L70
+ 1009               	.L69:
+ 1010 06f6 CD01      		movw r24,r26
+ 1011 06f8 0E94 0000 		call luaZ_fill
+ 1012               	.L70:
+ 1013 06fc 9983      		std Y+1,r25
+ 1014 06fe 8883      		st Y,r24
+ 1015 0700 8A30      		cpi r24,10
+ 1016 0702 9105      		cpc r25,__zero_reg__
+ 1017 0704 01F0      		breq .L71
+ 1018 0706 0D97      		sbiw r24,13
+ 1019 0708 01F4      		brne .L96
+ 1020               	.L71:
+ 1021 070a CE01      		movw r24,r28
+ 1022 070c 0E94 0000 		call inclinenumber
+ 1023               	.L96:
+ 1024 0710 6881      		ld r22,Y
+ 1025 0712 7981      		ldd r23,Y+1
+ 1026 0714 6D30      		cpi r22,13
+ 1027 0716 7105      		cpc r23,__zero_reg__
+ 1028 0718 01F4      		brne .+2
+ 1029 071a 00C0      		rjmp .L75
+ 1030 071c 6E30      		cpi r22,14
+ 1031 071e 7105      		cpc r23,__zero_reg__
+ 1032 0720 04F4      		brge .L78
+ 1033 0722 8FEF      		ldi r24,hi8(-1)
+ 1034 0724 6F3F      		cpi r22,lo8(-1)
+ 1035 0726 7807      		cpc r23,r24
+ 1036 0728 01F0      		breq .L74
+ 1037 072a 6A30      		cpi r22,10
+ 1038 072c 7105      		cpc r23,__zero_reg__
+ 1039 072e 01F0      		breq .+2
+ 1040 0730 00C0      		rjmp .L73
+ 1041 0732 00C0      		rjmp .L75
+ 1042               	.L78:
+ 1043 0734 6B35      		cpi r22,91
+ 1044 0736 7105      		cpc r23,__zero_reg__
+ 1045 0738 01F0      		breq .L76
+ 1046 073a 6D35      		cpi r22,93
+ 1047 073c 7105      		cpc r23,__zero_reg__
+ 1048 073e 01F0      		breq .+2
+ 1049 0740 00C0      		rjmp .L73
+ 1050 0742 00C0      		rjmp .L101
+ 1051               	.L74:
+ 1052 0744 E114      		cp r14,__zero_reg__
+ 1053 0746 F104      		cpc r15,__zero_reg__
+ 1054 0748 01F4      		brne .L79
+ 1055 074a 60E0      		ldi r22,lo8(.LC8)
+ 1056 074c 70E0      		ldi r23,hi8(.LC8)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 20
+
+
+ 1057 074e 00C0      		rjmp .L80
+ 1058               	.L79:
+ 1059 0750 60E0      		ldi r22,lo8(.LC9)
+ 1060 0752 70E0      		ldi r23,hi8(.LC9)
+ 1061               	.L80:
+ 1062 0754 CE01      		movw r24,r28
+ 1063 0756 4FE1      		ldi r20,lo8(287)
+ 1064 0758 51E0      		ldi r21,hi8(287)
+ 1065 075a 00C0      		rjmp .L98
+ 1066               	.L76:
+ 1067 075c CE01      		movw r24,r28
+ 1068 075e 0E94 0000 		call skip_sep
+ 1069 0762 8017      		cp r24,r16
+ 1070 0764 9107      		cpc r25,r17
+ 1071 0766 01F4      		brne .L96
+ 1072 0768 6881      		ld r22,Y
+ 1073 076a 7981      		ldd r23,Y+1
+ 1074 076c CE01      		movw r24,r28
+ 1075 076e 0E94 0000 		call save
+ 1076 0772 AE89      		ldd r26,Y+22
+ 1077 0774 BF89      		ldd r27,Y+23
+ 1078 0776 8D91      		ld r24,X+
+ 1079 0778 9C91      		ld r25,X
+ 1080 077a 1197      		sbiw r26,1
+ 1081 077c 0197      		sbiw r24,1
+ 1082 077e 1196      		adiw r26,1
+ 1083 0780 9C93      		st X,r25
+ 1084 0782 8E93      		st -X,r24
+ 1085 0784 0196      		adiw r24,1
+ 1086 0786 01F0      		breq .L81
+ 1087 0788 1296      		adiw r26,2
+ 1088 078a ED91      		ld r30,X+
+ 1089 078c FC91      		ld r31,X
+ 1090 078e 1397      		sbiw r26,2+1
+ 1091 0790 8191      		ld r24,Z+
+ 1092 0792 90E0      		ldi r25,lo8(0)
+ 1093 0794 1396      		adiw r26,2+1
+ 1094 0796 FC93      		st X,r31
+ 1095 0798 EE93      		st -X,r30
+ 1096 079a 1297      		sbiw r26,2
+ 1097 079c 00C0      		rjmp .L82
+ 1098               	.L81:
+ 1099 079e CD01      		movw r24,r26
+ 1100 07a0 0E94 0000 		call luaZ_fill
+ 1101               	.L82:
+ 1102 07a4 8883      		st Y,r24
+ 1103 07a6 9983      		std Y+1,r25
+ 1104 07a8 0115      		cp r16,__zero_reg__
+ 1105 07aa 1105      		cpc r17,__zero_reg__
+ 1106 07ac 01F0      		breq .+2
+ 1107 07ae 00C0      		rjmp .L96
+ 1108 07b0 CE01      		movw r24,r28
+ 1109 07b2 60E0      		ldi r22,lo8(.LC10)
+ 1110 07b4 70E0      		ldi r23,hi8(.LC10)
+ 1111 07b6 4BE5      		ldi r20,lo8(91)
+ 1112 07b8 50E0      		ldi r21,hi8(91)
+ 1113               	.L98:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 21
+
+
+ 1114 07ba 0E94 0000 		call luaX_lexerror
+ 1115 07be 00C0      		rjmp .L96
+ 1116               	.L101:
+ 1117 07c0 CE01      		movw r24,r28
+ 1118 07c2 0E94 0000 		call skip_sep
+ 1119 07c6 8017      		cp r24,r16
+ 1120 07c8 9107      		cpc r25,r17
+ 1121 07ca 01F0      		breq .+2
+ 1122 07cc 00C0      		rjmp .L96
+ 1123 07ce 6881      		ld r22,Y
+ 1124 07d0 7981      		ldd r23,Y+1
+ 1125 07d2 CE01      		movw r24,r28
+ 1126 07d4 0E94 0000 		call save
+ 1127 07d8 AE89      		ldd r26,Y+22
+ 1128 07da BF89      		ldd r27,Y+23
+ 1129 07dc 8D91      		ld r24,X+
+ 1130 07de 9C91      		ld r25,X
+ 1131 07e0 1197      		sbiw r26,1
+ 1132 07e2 0197      		sbiw r24,1
+ 1133 07e4 1196      		adiw r26,1
+ 1134 07e6 9C93      		st X,r25
+ 1135 07e8 8E93      		st -X,r24
+ 1136 07ea 0196      		adiw r24,1
+ 1137 07ec 01F0      		breq .L83
+ 1138 07ee 1296      		adiw r26,2
+ 1139 07f0 ED91      		ld r30,X+
+ 1140 07f2 FC91      		ld r31,X
+ 1141 07f4 1397      		sbiw r26,2+1
+ 1142 07f6 8191      		ld r24,Z+
+ 1143 07f8 90E0      		ldi r25,lo8(0)
+ 1144 07fa 1396      		adiw r26,2+1
+ 1145 07fc FC93      		st X,r31
+ 1146 07fe EE93      		st -X,r30
+ 1147 0800 1297      		sbiw r26,2
+ 1148 0802 00C0      		rjmp .L84
+ 1149               	.L83:
+ 1150 0804 CD01      		movw r24,r26
+ 1151 0806 0E94 0000 		call luaZ_fill
+ 1152               	.L84:
+ 1153 080a 8883      		st Y,r24
+ 1154 080c 9983      		std Y+1,r25
+ 1155               	.L85:
+ 1156 080e E114      		cp r14,__zero_reg__
+ 1157 0810 F104      		cpc r15,__zero_reg__
+ 1158 0812 01F4      		brne .L97
+ 1159 0814 00C0      		rjmp .L92
+ 1160               	.L75:
+ 1161 0816 CE01      		movw r24,r28
+ 1162 0818 6AE0      		ldi r22,lo8(10)
+ 1163 081a 70E0      		ldi r23,hi8(10)
+ 1164 081c 0E94 0000 		call save
+ 1165 0820 CE01      		movw r24,r28
+ 1166 0822 0E94 0000 		call inclinenumber
+ 1167 0826 E114      		cp r14,__zero_reg__
+ 1168 0828 F104      		cpc r15,__zero_reg__
+ 1169 082a 01F0      		breq .+2
+ 1170 082c 00C0      		rjmp .L96
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 22
+
+
+ 1171 082e E88D      		ldd r30,Y+24
+ 1172 0830 F98D      		ldd r31,Y+25
+ 1173 0832 1382      		std Z+3,__zero_reg__
+ 1174 0834 1282      		std Z+2,__zero_reg__
+ 1175 0836 00C0      		rjmp .L96
+ 1176               	.L73:
+ 1177 0838 E114      		cp r14,__zero_reg__
+ 1178 083a F104      		cpc r15,__zero_reg__
+ 1179 083c 01F0      		breq .L86
+ 1180 083e CE01      		movw r24,r28
+ 1181 0840 0E94 0000 		call save
+ 1182               	.L86:
+ 1183 0844 AE89      		ldd r26,Y+22
+ 1184 0846 BF89      		ldd r27,Y+23
+ 1185 0848 8D91      		ld r24,X+
+ 1186 084a 9C91      		ld r25,X
+ 1187 084c 1197      		sbiw r26,1
+ 1188 084e 0197      		sbiw r24,1
+ 1189 0850 1196      		adiw r26,1
+ 1190 0852 9C93      		st X,r25
+ 1191 0854 8E93      		st -X,r24
+ 1192 0856 0196      		adiw r24,1
+ 1193 0858 01F0      		breq .L89
+ 1194 085a 1296      		adiw r26,2
+ 1195 085c ED91      		ld r30,X+
+ 1196 085e FC91      		ld r31,X
+ 1197 0860 1397      		sbiw r26,2+1
+ 1198 0862 8191      		ld r24,Z+
+ 1199 0864 90E0      		ldi r25,lo8(0)
+ 1200 0866 1396      		adiw r26,2+1
+ 1201 0868 FC93      		st X,r31
+ 1202 086a EE93      		st -X,r30
+ 1203 086c 1297      		sbiw r26,2
+ 1204 086e 00C0      		rjmp .L90
+ 1205               	.L89:
+ 1206 0870 CD01      		movw r24,r26
+ 1207 0872 0E94 0000 		call luaZ_fill
+ 1208               	.L90:
+ 1209 0876 8883      		st Y,r24
+ 1210 0878 9983      		std Y+1,r25
+ 1211 087a 00C0      		rjmp .L96
+ 1212               	.L97:
+ 1213 087c E88D      		ldd r30,Y+24
+ 1214 087e F98D      		ldd r31,Y+25
+ 1215 0880 0E5F      		subi r16,lo8(-(2))
+ 1216 0882 1F4F      		sbci r17,hi8(-(2))
+ 1217 0884 6081      		ld r22,Z
+ 1218 0886 7181      		ldd r23,Z+1
+ 1219 0888 600F      		add r22,r16
+ 1220 088a 711F      		adc r23,r17
+ 1221 088c 0250      		subi r16,lo8(-(-2))
+ 1222 088e 1040      		sbci r17,hi8(-(-2))
+ 1223 0890 4EEF      		ldi r20,lo8(-2)
+ 1224 0892 5FEF      		ldi r21,hi8(-2)
+ 1225 0894 401B      		sub r20,r16
+ 1226 0896 510B      		sbc r21,r17
+ 1227 0898 440F      		lsl r20
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 23
+
+
+ 1228 089a 551F      		rol r21
+ 1229 089c 8281      		ldd r24,Z+2
+ 1230 089e 9381      		ldd r25,Z+3
+ 1231 08a0 480F      		add r20,r24
+ 1232 08a2 591F      		adc r21,r25
+ 1233 08a4 CE01      		movw r24,r28
+ 1234 08a6 0E94 0000 		call luaX_newstring
+ 1235 08aa F701      		movw r30,r14
+ 1236 08ac 9183      		std Z+1,r25
+ 1237 08ae 8083      		st Z,r24
+ 1238               	.L92:
+ 1239               	/* epilogue start */
+ 1240 08b0 DF91      		pop r29
+ 1241 08b2 CF91      		pop r28
+ 1242 08b4 1F91      		pop r17
+ 1243 08b6 0F91      		pop r16
+ 1244 08b8 FF90      		pop r15
+ 1245 08ba EF90      		pop r14
+ 1246 08bc 0895      		ret
+ 1247               		.size	read_long_string, .-read_long_string
+ 1248               		.data
+ 1249               	.LC11:
+ 1250 00ab 696E 7661 		.string	"invalid long string delimiter"
+ 1250      6C69 6420 
+ 1250      6C6F 6E67 
+ 1250      2073 7472 
+ 1250      696E 6720 
+ 1251               	.LC12:
+ 1252 00c9 756E 6669 		.string	"unfinished string"
+ 1252      6E69 7368 
+ 1252      6564 2073 
+ 1252      7472 696E 
+ 1252      6700 
+ 1253               	.LC13:
+ 1254 00db 6573 6361 		.string	"escape sequence too large"
+ 1254      7065 2073 
+ 1254      6571 7565 
+ 1254      6E63 6520 
+ 1254      746F 6F20 
+ 1255               	.LC14:
+ 1256 00f5 2E00      		.string	"."
+ 1257               		.text
+ 1258               		.type	llex, @function
+ 1259               	llex:
+ 1260 08be AF92      		push r10
+ 1261 08c0 BF92      		push r11
+ 1262 08c2 CF92      		push r12
+ 1263 08c4 DF92      		push r13
+ 1264 08c6 EF92      		push r14
+ 1265 08c8 FF92      		push r15
+ 1266 08ca 0F93      		push r16
+ 1267 08cc 1F93      		push r17
+ 1268 08ce CF93      		push r28
+ 1269 08d0 DF93      		push r29
+ 1270               	/* prologue: function */
+ 1271               	/* frame size = 0 */
+ 1272 08d2 8C01      		movw r16,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 24
+
+
+ 1273 08d4 5B01      		movw r10,r22
+ 1274               	.L211:
+ 1275 08d6 D801      		movw r26,r16
+ 1276 08d8 5896      		adiw r26,24
+ 1277 08da ED91      		ld r30,X+
+ 1278 08dc FC91      		ld r31,X
+ 1279 08de 5997      		sbiw r26,24+1
+ 1280 08e0 1382      		std Z+3,__zero_reg__
+ 1281 08e2 1282      		std Z+2,__zero_reg__
+ 1282               	.L209:
+ 1283 08e4 F801      		movw r30,r16
+ 1284 08e6 E080      		ld r14,Z
+ 1285 08e8 F180      		ldd r15,Z+1
+ 1286 08ea FDE2      		ldi r31,lo8(45)
+ 1287 08ec EF16      		cp r14,r31
+ 1288 08ee F104      		cpc r15,__zero_reg__
+ 1289 08f0 01F4      		brne .+2
+ 1290 08f2 00C0      		rjmp .L107
+ 1291 08f4 2EE2      		ldi r18,lo8(46)
+ 1292 08f6 E216      		cp r14,r18
+ 1293 08f8 F104      		cpc r15,__zero_reg__
+ 1294 08fa 04F4      		brge .L114
+ 1295 08fc 8DE0      		ldi r24,lo8(13)
+ 1296 08fe E816      		cp r14,r24
+ 1297 0900 F104      		cpc r15,__zero_reg__
+ 1298 0902 01F4      		brne .+2
+ 1299 0904 00C0      		rjmp .L105
+ 1300 0906 9EE0      		ldi r25,lo8(14)
+ 1301 0908 E916      		cp r14,r25
+ 1302 090a F104      		cpc r15,__zero_reg__
+ 1303 090c 04F4      		brge .L115
+ 1304 090e AFEF      		ldi r26,lo8(-1)
+ 1305 0910 EA16      		cp r14,r26
+ 1306 0912 AFEF      		ldi r26,hi8(-1)
+ 1307 0914 FA06      		cpc r15,r26
+ 1308 0916 01F0      		breq .L104
+ 1309 0918 BAE0      		ldi r27,lo8(10)
+ 1310 091a EB16      		cp r14,r27
+ 1311 091c F104      		cpc r15,__zero_reg__
+ 1312 091e 01F0      		breq .+2
+ 1313 0920 00C0      		rjmp .L103
+ 1314 0922 00C0      		rjmp .L105
+ 1315               	.L115:
+ 1316 0924 E2E2      		ldi r30,lo8(34)
+ 1317 0926 EE16      		cp r14,r30
+ 1318 0928 F104      		cpc r15,__zero_reg__
+ 1319 092a 01F4      		brne .+2
+ 1320 092c 00C0      		rjmp .L106
+ 1321 092e F7E2      		ldi r31,lo8(39)
+ 1322 0930 EF16      		cp r14,r31
+ 1323 0932 F104      		cpc r15,__zero_reg__
+ 1324 0934 01F0      		breq .+2
+ 1325 0936 00C0      		rjmp .L103
+ 1326 0938 00C0      		rjmp .L106
+ 1327               	.L114:
+ 1328 093a 2DE3      		ldi r18,lo8(61)
+ 1329 093c E216      		cp r14,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 25
+
+
+ 1330 093e F104      		cpc r15,__zero_reg__
+ 1331 0940 01F4      		brne .+2
+ 1332 0942 00C0      		rjmp .L110
+ 1333 0944 8EE3      		ldi r24,lo8(62)
+ 1334 0946 E816      		cp r14,r24
+ 1335 0948 F104      		cpc r15,__zero_reg__
+ 1336 094a 04F4      		brge .L116
+ 1337 094c 9EE2      		ldi r25,lo8(46)
+ 1338 094e E916      		cp r14,r25
+ 1339 0950 F104      		cpc r15,__zero_reg__
+ 1340 0952 01F4      		brne .+2
+ 1341 0954 00C0      		rjmp .L108
+ 1342 0956 ACE3      		ldi r26,lo8(60)
+ 1343 0958 EA16      		cp r14,r26
+ 1344 095a F104      		cpc r15,__zero_reg__
+ 1345 095c 01F0      		breq .+2
+ 1346 095e 00C0      		rjmp .L103
+ 1347 0960 00C0      		rjmp .L220
+ 1348               	.L116:
+ 1349 0962 BBE5      		ldi r27,lo8(91)
+ 1350 0964 EB16      		cp r14,r27
+ 1351 0966 F104      		cpc r15,__zero_reg__
+ 1352 0968 01F4      		brne .+2
+ 1353 096a 00C0      		rjmp .L112
+ 1354 096c EEE7      		ldi r30,lo8(126)
+ 1355 096e EE16      		cp r14,r30
+ 1356 0970 F104      		cpc r15,__zero_reg__
+ 1357 0972 01F4      		brne .+2
+ 1358 0974 00C0      		rjmp .L113
+ 1359 0976 FEE3      		ldi r31,lo8(62)
+ 1360 0978 EF16      		cp r14,r31
+ 1361 097a F104      		cpc r15,__zero_reg__
+ 1362 097c 01F0      		breq .+2
+ 1363 097e 00C0      		rjmp .L103
+ 1364 0980 00C0      		rjmp .L221
+ 1365               	.L104:
+ 1366 0982 9FE1      		ldi r25,lo8(287)
+ 1367 0984 E92E      		mov r14,r25
+ 1368 0986 91E0      		ldi r25,hi8(287)
+ 1369 0988 F92E      		mov r15,r25
+ 1370 098a 00C0      		rjmp .L117
+ 1371               	.L105:
+ 1372 098c C801      		movw r24,r16
+ 1373 098e 0E94 0000 		call inclinenumber
+ 1374 0992 00C0      		rjmp .L209
+ 1375               	.L107:
+ 1376 0994 F801      		movw r30,r16
+ 1377 0996 A689      		ldd r26,Z+22
+ 1378 0998 B789      		ldd r27,Z+23
+ 1379 099a 8D91      		ld r24,X+
+ 1380 099c 9C91      		ld r25,X
+ 1381 099e 1197      		sbiw r26,1
+ 1382 09a0 0197      		sbiw r24,1
+ 1383 09a2 1196      		adiw r26,1
+ 1384 09a4 9C93      		st X,r25
+ 1385 09a6 8E93      		st -X,r24
+ 1386 09a8 0196      		adiw r24,1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 26
+
+
+ 1387 09aa 01F0      		breq .L119
+ 1388 09ac 1296      		adiw r26,2
+ 1389 09ae ED91      		ld r30,X+
+ 1390 09b0 FC91      		ld r31,X
+ 1391 09b2 1397      		sbiw r26,2+1
+ 1392 09b4 8191      		ld r24,Z+
+ 1393 09b6 90E0      		ldi r25,lo8(0)
+ 1394 09b8 1396      		adiw r26,2+1
+ 1395 09ba FC93      		st X,r31
+ 1396 09bc EE93      		st -X,r30
+ 1397 09be 1297      		sbiw r26,2
+ 1398 09c0 00C0      		rjmp .L120
+ 1399               	.L119:
+ 1400 09c2 CD01      		movw r24,r26
+ 1401 09c4 0E94 0000 		call luaZ_fill
+ 1402               	.L120:
+ 1403 09c8 D801      		movw r26,r16
+ 1404 09ca 1196      		adiw r26,1
+ 1405 09cc 9C93      		st X,r25
+ 1406 09ce 8E93      		st -X,r24
+ 1407 09d0 8D97      		sbiw r24,45
+ 1408 09d2 01F0      		breq .+2
+ 1409 09d4 00C0      		rjmp .L117
+ 1410 09d6 5696      		adiw r26,22
+ 1411 09d8 0D90      		ld __tmp_reg__,X+
+ 1412 09da BC91      		ld r27,X
+ 1413 09dc A02D      		mov r26,__tmp_reg__
+ 1414 09de 8D91      		ld r24,X+
+ 1415 09e0 9C91      		ld r25,X
+ 1416 09e2 1197      		sbiw r26,1
+ 1417 09e4 0197      		sbiw r24,1
+ 1418 09e6 1196      		adiw r26,1
+ 1419 09e8 9C93      		st X,r25
+ 1420 09ea 8E93      		st -X,r24
+ 1421 09ec 0196      		adiw r24,1
+ 1422 09ee 01F0      		breq .L121
+ 1423 09f0 1296      		adiw r26,2
+ 1424 09f2 ED91      		ld r30,X+
+ 1425 09f4 FC91      		ld r31,X
+ 1426 09f6 1397      		sbiw r26,2+1
+ 1427 09f8 8191      		ld r24,Z+
+ 1428 09fa 90E0      		ldi r25,lo8(0)
+ 1429 09fc 1396      		adiw r26,2+1
+ 1430 09fe FC93      		st X,r31
+ 1431 0a00 EE93      		st -X,r30
+ 1432 0a02 1297      		sbiw r26,2
+ 1433 0a04 00C0      		rjmp .L122
+ 1434               	.L121:
+ 1435 0a06 CD01      		movw r24,r26
+ 1436 0a08 0E94 0000 		call luaZ_fill
+ 1437               	.L122:
+ 1438 0a0c F801      		movw r30,r16
+ 1439 0a0e 9183      		std Z+1,r25
+ 1440 0a10 8083      		st Z,r24
+ 1441 0a12 8B35      		cpi r24,91
+ 1442 0a14 9105      		cpc r25,__zero_reg__
+ 1443 0a16 01F4      		brne .L207
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 27
+
+
+ 1444 0a18 C801      		movw r24,r16
+ 1445 0a1a 0E94 0000 		call skip_sep
+ 1446 0a1e AC01      		movw r20,r24
+ 1447 0a20 D801      		movw r26,r16
+ 1448 0a22 5896      		adiw r26,24
+ 1449 0a24 ED91      		ld r30,X+
+ 1450 0a26 FC91      		ld r31,X
+ 1451 0a28 5997      		sbiw r26,24+1
+ 1452 0a2a 1382      		std Z+3,__zero_reg__
+ 1453 0a2c 1282      		std Z+2,__zero_reg__
+ 1454 0a2e 97FD      		sbrc r25,7
+ 1455 0a30 00C0      		rjmp .L207
+ 1456 0a32 C801      		movw r24,r16
+ 1457 0a34 60E0      		ldi r22,lo8(0)
+ 1458 0a36 70E0      		ldi r23,hi8(0)
+ 1459 0a38 0E94 0000 		call read_long_string
+ 1460 0a3c 00C0      		rjmp .L211
+ 1461               	.L126:
+ 1462 0a3e F801      		movw r30,r16
+ 1463 0a40 A689      		ldd r26,Z+22
+ 1464 0a42 B789      		ldd r27,Z+23
+ 1465 0a44 8D91      		ld r24,X+
+ 1466 0a46 9C91      		ld r25,X
+ 1467 0a48 1197      		sbiw r26,1
+ 1468 0a4a 0197      		sbiw r24,1
+ 1469 0a4c 1196      		adiw r26,1
+ 1470 0a4e 9C93      		st X,r25
+ 1471 0a50 8E93      		st -X,r24
+ 1472 0a52 0196      		adiw r24,1
+ 1473 0a54 01F0      		breq .L124
+ 1474 0a56 1296      		adiw r26,2
+ 1475 0a58 ED91      		ld r30,X+
+ 1476 0a5a FC91      		ld r31,X
+ 1477 0a5c 1397      		sbiw r26,2+1
+ 1478 0a5e 8191      		ld r24,Z+
+ 1479 0a60 90E0      		ldi r25,lo8(0)
+ 1480 0a62 1396      		adiw r26,2+1
+ 1481 0a64 FC93      		st X,r31
+ 1482 0a66 EE93      		st -X,r30
+ 1483 0a68 1297      		sbiw r26,2
+ 1484 0a6a 00C0      		rjmp .L125
+ 1485               	.L124:
+ 1486 0a6c CD01      		movw r24,r26
+ 1487 0a6e 0E94 0000 		call luaZ_fill
+ 1488               	.L125:
+ 1489 0a72 D801      		movw r26,r16
+ 1490 0a74 8C93      		st X,r24
+ 1491 0a76 1196      		adiw r26,1
+ 1492 0a78 9C93      		st X,r25
+ 1493               	.L207:
+ 1494 0a7a F801      		movw r30,r16
+ 1495 0a7c 8081      		ld r24,Z
+ 1496 0a7e 9181      		ldd r25,Z+1
+ 1497 0a80 8A30      		cpi r24,10
+ 1498 0a82 9105      		cpc r25,__zero_reg__
+ 1499 0a84 01F4      		brne .+2
+ 1500 0a86 00C0      		rjmp .L209
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 28
+
+
+ 1501 0a88 8D30      		cpi r24,13
+ 1502 0a8a 9105      		cpc r25,__zero_reg__
+ 1503 0a8c 01F4      		brne .+2
+ 1504 0a8e 00C0      		rjmp .L209
+ 1505 0a90 8F5F      		subi r24,lo8(-1)
+ 1506 0a92 9F4F      		sbci r25,hi8(-1)
+ 1507 0a94 01F4      		brne .L126
+ 1508 0a96 00C0      		rjmp .L209
+ 1509               	.L112:
+ 1510 0a98 C801      		movw r24,r16
+ 1511 0a9a 0E94 0000 		call skip_sep
+ 1512 0a9e AC01      		movw r20,r24
+ 1513 0aa0 97FD      		sbrc r25,7
+ 1514 0aa2 00C0      		rjmp .L127
+ 1515 0aa4 C801      		movw r24,r16
+ 1516 0aa6 B501      		movw r22,r10
+ 1517 0aa8 0E94 0000 		call read_long_string
+ 1518 0aac 00C0      		rjmp .L213
+ 1519               	.L127:
+ 1520 0aae 2FEF      		ldi r18,hi8(-1)
+ 1521 0ab0 8F3F      		cpi r24,lo8(-1)
+ 1522 0ab2 9207      		cpc r25,r18
+ 1523 0ab4 01F4      		brne .+2
+ 1524 0ab6 00C0      		rjmp .L117
+ 1525 0ab8 C801      		movw r24,r16
+ 1526 0aba 60E0      		ldi r22,lo8(.LC11)
+ 1527 0abc 70E0      		ldi r23,hi8(.LC11)
+ 1528 0abe 4EE1      		ldi r20,lo8(286)
+ 1529 0ac0 51E0      		ldi r21,hi8(286)
+ 1530 0ac2 0E94 0000 		call luaX_lexerror
+ 1531               	.L110:
+ 1532 0ac6 F801      		movw r30,r16
+ 1533 0ac8 A689      		ldd r26,Z+22
+ 1534 0aca B789      		ldd r27,Z+23
+ 1535 0acc 8D91      		ld r24,X+
+ 1536 0ace 9C91      		ld r25,X
+ 1537 0ad0 1197      		sbiw r26,1
+ 1538 0ad2 0197      		sbiw r24,1
+ 1539 0ad4 1196      		adiw r26,1
+ 1540 0ad6 9C93      		st X,r25
+ 1541 0ad8 8E93      		st -X,r24
+ 1542 0ada 0196      		adiw r24,1
+ 1543 0adc 01F0      		breq .L128
+ 1544 0ade 1296      		adiw r26,2
+ 1545 0ae0 ED91      		ld r30,X+
+ 1546 0ae2 FC91      		ld r31,X
+ 1547 0ae4 1397      		sbiw r26,2+1
+ 1548 0ae6 8191      		ld r24,Z+
+ 1549 0ae8 90E0      		ldi r25,lo8(0)
+ 1550 0aea 1396      		adiw r26,2+1
+ 1551 0aec FC93      		st X,r31
+ 1552 0aee EE93      		st -X,r30
+ 1553 0af0 1297      		sbiw r26,2
+ 1554 0af2 00C0      		rjmp .L129
+ 1555               	.L128:
+ 1556 0af4 CD01      		movw r24,r26
+ 1557 0af6 0E94 0000 		call luaZ_fill
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 29
+
+
+ 1558               	.L129:
+ 1559 0afa D801      		movw r26,r16
+ 1560 0afc 8D93      		st X+,r24
+ 1561 0afe 9C93      		st X,r25
+ 1562 0b00 CD97      		sbiw r24,61
+ 1563 0b02 01F0      		breq .L130
+ 1564 0b04 8DE3      		ldi r24,lo8(61)
+ 1565 0b06 E82E      		mov r14,r24
+ 1566 0b08 F12C      		mov r15,__zero_reg__
+ 1567 0b0a 00C0      		rjmp .L117
+ 1568               	.L130:
+ 1569 0b0c F801      		movw r30,r16
+ 1570 0b0e A689      		ldd r26,Z+22
+ 1571 0b10 B789      		ldd r27,Z+23
+ 1572 0b12 8D91      		ld r24,X+
+ 1573 0b14 9C91      		ld r25,X
+ 1574 0b16 1197      		sbiw r26,1
+ 1575 0b18 0197      		sbiw r24,1
+ 1576 0b1a 1196      		adiw r26,1
+ 1577 0b1c 9C93      		st X,r25
+ 1578 0b1e 8E93      		st -X,r24
+ 1579 0b20 0196      		adiw r24,1
+ 1580 0b22 01F0      		breq .L131
+ 1581 0b24 1296      		adiw r26,2
+ 1582 0b26 ED91      		ld r30,X+
+ 1583 0b28 FC91      		ld r31,X
+ 1584 0b2a 1397      		sbiw r26,2+1
+ 1585 0b2c 8191      		ld r24,Z+
+ 1586 0b2e 90E0      		ldi r25,lo8(0)
+ 1587 0b30 1396      		adiw r26,2+1
+ 1588 0b32 FC93      		st X,r31
+ 1589 0b34 EE93      		st -X,r30
+ 1590 0b36 1297      		sbiw r26,2
+ 1591 0b38 00C0      		rjmp .L132
+ 1592               	.L131:
+ 1593 0b3a CD01      		movw r24,r26
+ 1594 0b3c 0E94 0000 		call luaZ_fill
+ 1595               	.L132:
+ 1596 0b40 D801      		movw r26,r16
+ 1597 0b42 8C93      		st X,r24
+ 1598 0b44 1196      		adiw r26,1
+ 1599 0b46 9C93      		st X,r25
+ 1600 0b48 08E1      		ldi r16,lo8(280)
+ 1601 0b4a E02E      		mov r14,r16
+ 1602 0b4c 01E0      		ldi r16,hi8(280)
+ 1603 0b4e F02E      		mov r15,r16
+ 1604 0b50 00C0      		rjmp .L117
+ 1605               	.L220:
+ 1606 0b52 F801      		movw r30,r16
+ 1607 0b54 A689      		ldd r26,Z+22
+ 1608 0b56 B789      		ldd r27,Z+23
+ 1609 0b58 8D91      		ld r24,X+
+ 1610 0b5a 9C91      		ld r25,X
+ 1611 0b5c 1197      		sbiw r26,1
+ 1612 0b5e 0197      		sbiw r24,1
+ 1613 0b60 1196      		adiw r26,1
+ 1614 0b62 9C93      		st X,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 30
+
+
+ 1615 0b64 8E93      		st -X,r24
+ 1616 0b66 0196      		adiw r24,1
+ 1617 0b68 01F0      		breq .L133
+ 1618 0b6a 1296      		adiw r26,2
+ 1619 0b6c ED91      		ld r30,X+
+ 1620 0b6e FC91      		ld r31,X
+ 1621 0b70 1397      		sbiw r26,2+1
+ 1622 0b72 8191      		ld r24,Z+
+ 1623 0b74 90E0      		ldi r25,lo8(0)
+ 1624 0b76 1396      		adiw r26,2+1
+ 1625 0b78 FC93      		st X,r31
+ 1626 0b7a EE93      		st -X,r30
+ 1627 0b7c 1297      		sbiw r26,2
+ 1628 0b7e 00C0      		rjmp .L134
+ 1629               	.L133:
+ 1630 0b80 CD01      		movw r24,r26
+ 1631 0b82 0E94 0000 		call luaZ_fill
+ 1632               	.L134:
+ 1633 0b86 D801      		movw r26,r16
+ 1634 0b88 1196      		adiw r26,1
+ 1635 0b8a 9C93      		st X,r25
+ 1636 0b8c 8E93      		st -X,r24
+ 1637 0b8e CD97      		sbiw r24,61
+ 1638 0b90 01F0      		breq .+2
+ 1639 0b92 00C0      		rjmp .L117
+ 1640 0b94 5696      		adiw r26,22
+ 1641 0b96 0D90      		ld __tmp_reg__,X+
+ 1642 0b98 BC91      		ld r27,X
+ 1643 0b9a A02D      		mov r26,__tmp_reg__
+ 1644 0b9c 8D91      		ld r24,X+
+ 1645 0b9e 9C91      		ld r25,X
+ 1646 0ba0 1197      		sbiw r26,1
+ 1647 0ba2 0197      		sbiw r24,1
+ 1648 0ba4 1196      		adiw r26,1
+ 1649 0ba6 9C93      		st X,r25
+ 1650 0ba8 8E93      		st -X,r24
+ 1651 0baa 0196      		adiw r24,1
+ 1652 0bac 01F0      		breq .L135
+ 1653 0bae 1296      		adiw r26,2
+ 1654 0bb0 ED91      		ld r30,X+
+ 1655 0bb2 FC91      		ld r31,X
+ 1656 0bb4 1397      		sbiw r26,2+1
+ 1657 0bb6 8191      		ld r24,Z+
+ 1658 0bb8 90E0      		ldi r25,lo8(0)
+ 1659 0bba 1396      		adiw r26,2+1
+ 1660 0bbc FC93      		st X,r31
+ 1661 0bbe EE93      		st -X,r30
+ 1662 0bc0 1297      		sbiw r26,2
+ 1663 0bc2 00C0      		rjmp .L136
+ 1664               	.L135:
+ 1665 0bc4 CD01      		movw r24,r26
+ 1666 0bc6 0E94 0000 		call luaZ_fill
+ 1667               	.L136:
+ 1668 0bca F801      		movw r30,r16
+ 1669 0bcc 8083      		st Z,r24
+ 1670 0bce 9183      		std Z+1,r25
+ 1671 0bd0 1AE1      		ldi r17,lo8(282)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 31
+
+
+ 1672 0bd2 E12E      		mov r14,r17
+ 1673 0bd4 11E0      		ldi r17,hi8(282)
+ 1674 0bd6 F12E      		mov r15,r17
+ 1675 0bd8 00C0      		rjmp .L117
+ 1676               	.L221:
+ 1677 0bda F801      		movw r30,r16
+ 1678 0bdc A689      		ldd r26,Z+22
+ 1679 0bde B789      		ldd r27,Z+23
+ 1680 0be0 8D91      		ld r24,X+
+ 1681 0be2 9C91      		ld r25,X
+ 1682 0be4 1197      		sbiw r26,1
+ 1683 0be6 0197      		sbiw r24,1
+ 1684 0be8 1196      		adiw r26,1
+ 1685 0bea 9C93      		st X,r25
+ 1686 0bec 8E93      		st -X,r24
+ 1687 0bee 0196      		adiw r24,1
+ 1688 0bf0 01F0      		breq .L137
+ 1689 0bf2 1296      		adiw r26,2
+ 1690 0bf4 ED91      		ld r30,X+
+ 1691 0bf6 FC91      		ld r31,X
+ 1692 0bf8 1397      		sbiw r26,2+1
+ 1693 0bfa 8191      		ld r24,Z+
+ 1694 0bfc 90E0      		ldi r25,lo8(0)
+ 1695 0bfe 1396      		adiw r26,2+1
+ 1696 0c00 FC93      		st X,r31
+ 1697 0c02 EE93      		st -X,r30
+ 1698 0c04 1297      		sbiw r26,2
+ 1699 0c06 00C0      		rjmp .L138
+ 1700               	.L137:
+ 1701 0c08 CD01      		movw r24,r26
+ 1702 0c0a 0E94 0000 		call luaZ_fill
+ 1703               	.L138:
+ 1704 0c0e D801      		movw r26,r16
+ 1705 0c10 1196      		adiw r26,1
+ 1706 0c12 9C93      		st X,r25
+ 1707 0c14 8E93      		st -X,r24
+ 1708 0c16 CD97      		sbiw r24,61
+ 1709 0c18 01F0      		breq .+2
+ 1710 0c1a 00C0      		rjmp .L117
+ 1711 0c1c 5696      		adiw r26,22
+ 1712 0c1e 0D90      		ld __tmp_reg__,X+
+ 1713 0c20 BC91      		ld r27,X
+ 1714 0c22 A02D      		mov r26,__tmp_reg__
+ 1715 0c24 8D91      		ld r24,X+
+ 1716 0c26 9C91      		ld r25,X
+ 1717 0c28 1197      		sbiw r26,1
+ 1718 0c2a 0197      		sbiw r24,1
+ 1719 0c2c 1196      		adiw r26,1
+ 1720 0c2e 9C93      		st X,r25
+ 1721 0c30 8E93      		st -X,r24
+ 1722 0c32 0196      		adiw r24,1
+ 1723 0c34 01F0      		breq .L139
+ 1724 0c36 1296      		adiw r26,2
+ 1725 0c38 ED91      		ld r30,X+
+ 1726 0c3a FC91      		ld r31,X
+ 1727 0c3c 1397      		sbiw r26,2+1
+ 1728 0c3e 8191      		ld r24,Z+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 32
+
+
+ 1729 0c40 90E0      		ldi r25,lo8(0)
+ 1730 0c42 1396      		adiw r26,2+1
+ 1731 0c44 FC93      		st X,r31
+ 1732 0c46 EE93      		st -X,r30
+ 1733 0c48 1297      		sbiw r26,2
+ 1734 0c4a 00C0      		rjmp .L140
+ 1735               	.L139:
+ 1736 0c4c CD01      		movw r24,r26
+ 1737 0c4e 0E94 0000 		call luaZ_fill
+ 1738               	.L140:
+ 1739 0c52 F801      		movw r30,r16
+ 1740 0c54 8083      		st Z,r24
+ 1741 0c56 9183      		std Z+1,r25
+ 1742 0c58 B9E1      		ldi r27,lo8(281)
+ 1743 0c5a EB2E      		mov r14,r27
+ 1744 0c5c B1E0      		ldi r27,hi8(281)
+ 1745 0c5e FB2E      		mov r15,r27
+ 1746 0c60 00C0      		rjmp .L117
+ 1747               	.L113:
+ 1748 0c62 F801      		movw r30,r16
+ 1749 0c64 A689      		ldd r26,Z+22
+ 1750 0c66 B789      		ldd r27,Z+23
+ 1751 0c68 8D91      		ld r24,X+
+ 1752 0c6a 9C91      		ld r25,X
+ 1753 0c6c 1197      		sbiw r26,1
+ 1754 0c6e 0197      		sbiw r24,1
+ 1755 0c70 1196      		adiw r26,1
+ 1756 0c72 9C93      		st X,r25
+ 1757 0c74 8E93      		st -X,r24
+ 1758 0c76 0196      		adiw r24,1
+ 1759 0c78 01F0      		breq .L141
+ 1760 0c7a 1296      		adiw r26,2
+ 1761 0c7c ED91      		ld r30,X+
+ 1762 0c7e FC91      		ld r31,X
+ 1763 0c80 1397      		sbiw r26,2+1
+ 1764 0c82 8191      		ld r24,Z+
+ 1765 0c84 90E0      		ldi r25,lo8(0)
+ 1766 0c86 1396      		adiw r26,2+1
+ 1767 0c88 FC93      		st X,r31
+ 1768 0c8a EE93      		st -X,r30
+ 1769 0c8c 1297      		sbiw r26,2
+ 1770 0c8e 00C0      		rjmp .L142
+ 1771               	.L141:
+ 1772 0c90 CD01      		movw r24,r26
+ 1773 0c92 0E94 0000 		call luaZ_fill
+ 1774               	.L142:
+ 1775 0c96 D801      		movw r26,r16
+ 1776 0c98 1196      		adiw r26,1
+ 1777 0c9a 9C93      		st X,r25
+ 1778 0c9c 8E93      		st -X,r24
+ 1779 0c9e CD97      		sbiw r24,61
+ 1780 0ca0 01F0      		breq .+2
+ 1781 0ca2 00C0      		rjmp .L117
+ 1782 0ca4 5696      		adiw r26,22
+ 1783 0ca6 0D90      		ld __tmp_reg__,X+
+ 1784 0ca8 BC91      		ld r27,X
+ 1785 0caa A02D      		mov r26,__tmp_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 33
+
+
+ 1786 0cac 8D91      		ld r24,X+
+ 1787 0cae 9C91      		ld r25,X
+ 1788 0cb0 1197      		sbiw r26,1
+ 1789 0cb2 0197      		sbiw r24,1
+ 1790 0cb4 1196      		adiw r26,1
+ 1791 0cb6 9C93      		st X,r25
+ 1792 0cb8 8E93      		st -X,r24
+ 1793 0cba 0196      		adiw r24,1
+ 1794 0cbc 01F0      		breq .L143
+ 1795 0cbe 1296      		adiw r26,2
+ 1796 0cc0 ED91      		ld r30,X+
+ 1797 0cc2 FC91      		ld r31,X
+ 1798 0cc4 1397      		sbiw r26,2+1
+ 1799 0cc6 8191      		ld r24,Z+
+ 1800 0cc8 90E0      		ldi r25,lo8(0)
+ 1801 0cca 1396      		adiw r26,2+1
+ 1802 0ccc FC93      		st X,r31
+ 1803 0cce EE93      		st -X,r30
+ 1804 0cd0 1297      		sbiw r26,2
+ 1805 0cd2 00C0      		rjmp .L144
+ 1806               	.L143:
+ 1807 0cd4 CD01      		movw r24,r26
+ 1808 0cd6 0E94 0000 		call luaZ_fill
+ 1809               	.L144:
+ 1810 0cda F801      		movw r30,r16
+ 1811 0cdc 8083      		st Z,r24
+ 1812 0cde 9183      		std Z+1,r25
+ 1813 0ce0 ABE1      		ldi r26,lo8(283)
+ 1814 0ce2 EA2E      		mov r14,r26
+ 1815 0ce4 A1E0      		ldi r26,hi8(283)
+ 1816 0ce6 FA2E      		mov r15,r26
+ 1817 0ce8 00C0      		rjmp .L117
+ 1818               	.L106:
+ 1819 0cea C801      		movw r24,r16
+ 1820 0cec B701      		movw r22,r14
+ 1821 0cee 00C0      		rjmp .L219
+ 1822               	.L180:
+ 1823 0cf0 6A30      		cpi r22,10
+ 1824 0cf2 7105      		cpc r23,__zero_reg__
+ 1825 0cf4 01F0      		breq .L150
+ 1826 0cf6 6B30      		cpi r22,11
+ 1827 0cf8 7105      		cpc r23,__zero_reg__
+ 1828 0cfa 04F4      		brge .L152
+ 1829 0cfc BFEF      		ldi r27,hi8(-1)
+ 1830 0cfe 6F3F      		cpi r22,lo8(-1)
+ 1831 0d00 7B07      		cpc r23,r27
+ 1832 0d02 01F0      		breq .+2
+ 1833 0d04 00C0      		rjmp .L148
+ 1834 0d06 00C0      		rjmp .L222
+ 1835               	.L152:
+ 1836 0d08 6D30      		cpi r22,13
+ 1837 0d0a 7105      		cpc r23,__zero_reg__
+ 1838 0d0c 01F0      		breq .L150
+ 1839 0d0e 6C35      		cpi r22,92
+ 1840 0d10 7105      		cpc r23,__zero_reg__
+ 1841 0d12 01F0      		breq .+2
+ 1842 0d14 00C0      		rjmp .L148
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 34
+
+
+ 1843 0d16 00C0      		rjmp .L223
+ 1844               	.L222:
+ 1845 0d18 C801      		movw r24,r16
+ 1846 0d1a 60E0      		ldi r22,lo8(.LC12)
+ 1847 0d1c 70E0      		ldi r23,hi8(.LC12)
+ 1848 0d1e 4FE1      		ldi r20,lo8(287)
+ 1849 0d20 51E0      		ldi r21,hi8(287)
+ 1850 0d22 00C0      		rjmp .L212
+ 1851               	.L150:
+ 1852 0d24 C801      		movw r24,r16
+ 1853 0d26 60E0      		ldi r22,lo8(.LC12)
+ 1854 0d28 70E0      		ldi r23,hi8(.LC12)
+ 1855 0d2a 4EE1      		ldi r20,lo8(286)
+ 1856 0d2c 51E0      		ldi r21,hi8(286)
+ 1857               	.L212:
+ 1858 0d2e 0E94 0000 		call luaX_lexerror
+ 1859 0d32 00C0      		rjmp .L210
+ 1860               	.L223:
+ 1861 0d34 F801      		movw r30,r16
+ 1862 0d36 A689      		ldd r26,Z+22
+ 1863 0d38 B789      		ldd r27,Z+23
+ 1864 0d3a 8D91      		ld r24,X+
+ 1865 0d3c 9C91      		ld r25,X
+ 1866 0d3e 1197      		sbiw r26,1
+ 1867 0d40 0197      		sbiw r24,1
+ 1868 0d42 1196      		adiw r26,1
+ 1869 0d44 9C93      		st X,r25
+ 1870 0d46 8E93      		st -X,r24
+ 1871 0d48 0196      		adiw r24,1
+ 1872 0d4a 01F0      		breq .L153
+ 1873 0d4c 1296      		adiw r26,2
+ 1874 0d4e ED91      		ld r30,X+
+ 1875 0d50 FC91      		ld r31,X
+ 1876 0d52 1397      		sbiw r26,2+1
+ 1877 0d54 8191      		ld r24,Z+
+ 1878 0d56 682F      		mov r22,r24
+ 1879 0d58 70E0      		ldi r23,lo8(0)
+ 1880 0d5a 1396      		adiw r26,2+1
+ 1881 0d5c FC93      		st X,r31
+ 1882 0d5e EE93      		st -X,r30
+ 1883 0d60 1297      		sbiw r26,2
+ 1884 0d62 00C0      		rjmp .L154
+ 1885               	.L153:
+ 1886 0d64 CD01      		movw r24,r26
+ 1887 0d66 0E94 0000 		call luaZ_fill
+ 1888 0d6a BC01      		movw r22,r24
+ 1889               	.L154:
+ 1890 0d6c D801      		movw r26,r16
+ 1891 0d6e 6D93      		st X+,r22
+ 1892 0d70 7C93      		st X,r23
+ 1893 0d72 6236      		cpi r22,98
+ 1894 0d74 7105      		cpc r23,__zero_reg__
+ 1895 0d76 01F0      		breq .L158
+ 1896 0d78 6336      		cpi r22,99
+ 1897 0d7a 7105      		cpc r23,__zero_reg__
+ 1898 0d7c 04F4      		brge .L164
+ 1899 0d7e 6A30      		cpi r22,10
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 35
+
+
+ 1900 0d80 7105      		cpc r23,__zero_reg__
+ 1901 0d82 01F0      		breq .L156
+ 1902 0d84 6B30      		cpi r22,11
+ 1903 0d86 7105      		cpc r23,__zero_reg__
+ 1904 0d88 04F4      		brge .L165
+ 1905 0d8a BFEF      		ldi r27,hi8(-1)
+ 1906 0d8c 6F3F      		cpi r22,lo8(-1)
+ 1907 0d8e 7B07      		cpc r23,r27
+ 1908 0d90 01F4      		brne .L155
+ 1909 0d92 00C0      		rjmp .L210
+ 1910               	.L165:
+ 1911 0d94 6D30      		cpi r22,13
+ 1912 0d96 7105      		cpc r23,__zero_reg__
+ 1913 0d98 01F0      		breq .L156
+ 1914 0d9a 6136      		cpi r22,97
+ 1915 0d9c 7105      		cpc r23,__zero_reg__
+ 1916 0d9e 01F4      		brne .L155
+ 1917 0da0 00C0      		rjmp .L224
+ 1918               	.L164:
+ 1919 0da2 6237      		cpi r22,114
+ 1920 0da4 7105      		cpc r23,__zero_reg__
+ 1921 0da6 01F0      		breq .L161
+ 1922 0da8 6337      		cpi r22,115
+ 1923 0daa 7105      		cpc r23,__zero_reg__
+ 1924 0dac 04F4      		brge .L166
+ 1925 0dae 6636      		cpi r22,102
+ 1926 0db0 7105      		cpc r23,__zero_reg__
+ 1927 0db2 01F0      		breq .L159
+ 1928 0db4 6E36      		cpi r22,110
+ 1929 0db6 7105      		cpc r23,__zero_reg__
+ 1930 0db8 01F4      		brne .L155
+ 1931 0dba 00C0      		rjmp .L225
+ 1932               	.L166:
+ 1933 0dbc 6437      		cpi r22,116
+ 1934 0dbe 7105      		cpc r23,__zero_reg__
+ 1935 0dc0 01F0      		breq .L162
+ 1936 0dc2 6637      		cpi r22,118
+ 1937 0dc4 7105      		cpc r23,__zero_reg__
+ 1938 0dc6 01F4      		brne .L155
+ 1939 0dc8 00C0      		rjmp .L226
+ 1940               	.L158:
+ 1941 0dca 68E0      		ldi r22,lo8(8)
+ 1942 0dcc 70E0      		ldi r23,hi8(8)
+ 1943 0dce 00C0      		rjmp .L148
+ 1944               	.L159:
+ 1945 0dd0 6CE0      		ldi r22,lo8(12)
+ 1946 0dd2 70E0      		ldi r23,hi8(12)
+ 1947 0dd4 00C0      		rjmp .L148
+ 1948               	.L225:
+ 1949 0dd6 6AE0      		ldi r22,lo8(10)
+ 1950 0dd8 70E0      		ldi r23,hi8(10)
+ 1951 0dda 00C0      		rjmp .L148
+ 1952               	.L161:
+ 1953 0ddc 6DE0      		ldi r22,lo8(13)
+ 1954 0dde 70E0      		ldi r23,hi8(13)
+ 1955 0de0 00C0      		rjmp .L148
+ 1956               	.L162:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 36
+
+
+ 1957 0de2 69E0      		ldi r22,lo8(9)
+ 1958 0de4 70E0      		ldi r23,hi8(9)
+ 1959 0de6 00C0      		rjmp .L148
+ 1960               	.L226:
+ 1961 0de8 6BE0      		ldi r22,lo8(11)
+ 1962 0dea 70E0      		ldi r23,hi8(11)
+ 1963 0dec 00C0      		rjmp .L148
+ 1964               	.L156:
+ 1965 0dee C801      		movw r24,r16
+ 1966 0df0 6AE0      		ldi r22,lo8(10)
+ 1967 0df2 70E0      		ldi r23,hi8(10)
+ 1968 0df4 0E94 0000 		call save
+ 1969 0df8 C801      		movw r24,r16
+ 1970 0dfa 0E94 0000 		call inclinenumber
+ 1971 0dfe 00C0      		rjmp .L210
+ 1972               	.L155:
+ 1973 0e00 CB01      		movw r24,r22
+ 1974 0e02 C097      		sbiw r24,48
+ 1975 0e04 0A97      		sbiw r24,10
+ 1976 0e06 00F0      		brlo .+2
+ 1977 0e08 00C0      		rjmp .L148
+ 1978               	.L168:
+ 1979 0e0a CC24      		clr r12
+ 1980 0e0c DD24      		clr r13
+ 1981 0e0e C0E0      		ldi r28,lo8(0)
+ 1982 0e10 D0E0      		ldi r29,hi8(0)
+ 1983               	.L174:
+ 1984 0e12 CE01      		movw r24,r28
+ 1985 0e14 F3E0      		ldi r31,3
+ 1986 0e16 880F      	1:	lsl r24
+ 1987 0e18 991F      		rol r25
+ 1988 0e1a FA95      		dec r31
+ 1989 0e1c 01F4      		brne 1b
+ 1990 0e1e CC0F      		lsl r28
+ 1991 0e20 DD1F      		rol r29
+ 1992 0e22 8C0F      		add r24,r28
+ 1993 0e24 9D1F      		adc r25,r29
+ 1994 0e26 F801      		movw r30,r16
+ 1995 0e28 C081      		ld r28,Z
+ 1996 0e2a D181      		ldd r29,Z+1
+ 1997 0e2c E097      		sbiw r28,48
+ 1998 0e2e C80F      		add r28,r24
+ 1999 0e30 D91F      		adc r29,r25
+ 2000 0e32 A689      		ldd r26,Z+22
+ 2001 0e34 B789      		ldd r27,Z+23
+ 2002 0e36 8D91      		ld r24,X+
+ 2003 0e38 9C91      		ld r25,X
+ 2004 0e3a 1197      		sbiw r26,1
+ 2005 0e3c 0197      		sbiw r24,1
+ 2006 0e3e 1196      		adiw r26,1
+ 2007 0e40 9C93      		st X,r25
+ 2008 0e42 8E93      		st -X,r24
+ 2009 0e44 0196      		adiw r24,1
+ 2010 0e46 01F0      		breq .L171
+ 2011 0e48 1296      		adiw r26,2
+ 2012 0e4a ED91      		ld r30,X+
+ 2013 0e4c FC91      		ld r31,X
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 37
+
+
+ 2014 0e4e 1397      		sbiw r26,2+1
+ 2015 0e50 8191      		ld r24,Z+
+ 2016 0e52 90E0      		ldi r25,lo8(0)
+ 2017 0e54 1396      		adiw r26,2+1
+ 2018 0e56 FC93      		st X,r31
+ 2019 0e58 EE93      		st -X,r30
+ 2020 0e5a 1297      		sbiw r26,2
+ 2021 0e5c 00C0      		rjmp .L172
+ 2022               	.L171:
+ 2023 0e5e CD01      		movw r24,r26
+ 2024 0e60 0E94 0000 		call luaZ_fill
+ 2025               	.L172:
+ 2026 0e64 D801      		movw r26,r16
+ 2027 0e66 8D93      		st X+,r24
+ 2028 0e68 9C93      		st X,r25
+ 2029 0e6a 0894      		sec
+ 2030 0e6c C11C      		adc r12,__zero_reg__
+ 2031 0e6e D11C      		adc r13,__zero_reg__
+ 2032 0e70 B3E0      		ldi r27,lo8(3)
+ 2033 0e72 CB16      		cp r12,r27
+ 2034 0e74 D104      		cpc r13,__zero_reg__
+ 2035 0e76 01F0      		breq .L173
+ 2036 0e78 C097      		sbiw r24,48
+ 2037 0e7a 0A97      		sbiw r24,10
+ 2038 0e7c 00F0      		brlo .L174
+ 2039               	.L173:
+ 2040 0e7e CF3F      		cpi r28,255
+ 2041 0e80 D105      		cpc r29,__zero_reg__
+ 2042 0e82 01F0      		breq .L175
+ 2043 0e84 04F0      		brlt .L175
+ 2044 0e86 C801      		movw r24,r16
+ 2045 0e88 60E0      		ldi r22,lo8(.LC13)
+ 2046 0e8a 70E0      		ldi r23,hi8(.LC13)
+ 2047 0e8c 4EE1      		ldi r20,lo8(286)
+ 2048 0e8e 51E0      		ldi r21,hi8(286)
+ 2049 0e90 0E94 0000 		call luaX_lexerror
+ 2050               	.L175:
+ 2051 0e94 C801      		movw r24,r16
+ 2052 0e96 BE01      		movw r22,r28
+ 2053 0e98 0E94 0000 		call save
+ 2054 0e9c 00C0      		rjmp .L210
+ 2055               	.L224:
+ 2056 0e9e 67E0      		ldi r22,lo8(7)
+ 2057 0ea0 70E0      		ldi r23,hi8(7)
+ 2058               	.L148:
+ 2059 0ea2 C801      		movw r24,r16
+ 2060               	.L219:
+ 2061 0ea4 0E94 0000 		call save
+ 2062 0ea8 F801      		movw r30,r16
+ 2063 0eaa A689      		ldd r26,Z+22
+ 2064 0eac B789      		ldd r27,Z+23
+ 2065 0eae 8D91      		ld r24,X+
+ 2066 0eb0 9C91      		ld r25,X
+ 2067 0eb2 1197      		sbiw r26,1
+ 2068 0eb4 0197      		sbiw r24,1
+ 2069 0eb6 1196      		adiw r26,1
+ 2070 0eb8 9C93      		st X,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 38
+
+
+ 2071 0eba 8E93      		st -X,r24
+ 2072 0ebc 0196      		adiw r24,1
+ 2073 0ebe 01F0      		breq .L178
+ 2074 0ec0 1296      		adiw r26,2
+ 2075 0ec2 ED91      		ld r30,X+
+ 2076 0ec4 FC91      		ld r31,X
+ 2077 0ec6 1397      		sbiw r26,2+1
+ 2078 0ec8 8191      		ld r24,Z+
+ 2079 0eca 90E0      		ldi r25,lo8(0)
+ 2080 0ecc 1396      		adiw r26,2+1
+ 2081 0ece FC93      		st X,r31
+ 2082 0ed0 EE93      		st -X,r30
+ 2083 0ed2 1297      		sbiw r26,2
+ 2084 0ed4 00C0      		rjmp .L179
+ 2085               	.L178:
+ 2086 0ed6 CD01      		movw r24,r26
+ 2087 0ed8 0E94 0000 		call luaZ_fill
+ 2088               	.L179:
+ 2089 0edc D801      		movw r26,r16
+ 2090 0ede 8C93      		st X,r24
+ 2091 0ee0 1196      		adiw r26,1
+ 2092 0ee2 9C93      		st X,r25
+ 2093               	.L210:
+ 2094 0ee4 F801      		movw r30,r16
+ 2095 0ee6 6081      		ld r22,Z
+ 2096 0ee8 7181      		ldd r23,Z+1
+ 2097 0eea 6E15      		cp r22,r14
+ 2098 0eec 7F05      		cpc r23,r15
+ 2099 0eee 01F0      		breq .+2
+ 2100 0ef0 00C0      		rjmp .L180
+ 2101 0ef2 C801      		movw r24,r16
+ 2102 0ef4 B701      		movw r22,r14
+ 2103 0ef6 0E94 0000 		call save
+ 2104 0efa F801      		movw r30,r16
+ 2105 0efc A689      		ldd r26,Z+22
+ 2106 0efe B789      		ldd r27,Z+23
+ 2107 0f00 8D91      		ld r24,X+
+ 2108 0f02 9C91      		ld r25,X
+ 2109 0f04 1197      		sbiw r26,1
+ 2110 0f06 0197      		sbiw r24,1
+ 2111 0f08 1196      		adiw r26,1
+ 2112 0f0a 9C93      		st X,r25
+ 2113 0f0c 8E93      		st -X,r24
+ 2114 0f0e 0196      		adiw r24,1
+ 2115 0f10 01F0      		breq .L181
+ 2116 0f12 1296      		adiw r26,2
+ 2117 0f14 ED91      		ld r30,X+
+ 2118 0f16 FC91      		ld r31,X
+ 2119 0f18 1397      		sbiw r26,2+1
+ 2120 0f1a 8191      		ld r24,Z+
+ 2121 0f1c 90E0      		ldi r25,lo8(0)
+ 2122 0f1e 1396      		adiw r26,2+1
+ 2123 0f20 FC93      		st X,r31
+ 2124 0f22 EE93      		st -X,r30
+ 2125 0f24 1297      		sbiw r26,2
+ 2126 0f26 00C0      		rjmp .L182
+ 2127               	.L181:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 39
+
+
+ 2128 0f28 CD01      		movw r24,r26
+ 2129 0f2a 0E94 0000 		call luaZ_fill
+ 2130               	.L182:
+ 2131 0f2e D801      		movw r26,r16
+ 2132 0f30 8C93      		st X,r24
+ 2133 0f32 1196      		adiw r26,1
+ 2134 0f34 9C93      		st X,r25
+ 2135 0f36 1197      		sbiw r26,1
+ 2136 0f38 5896      		adiw r26,24
+ 2137 0f3a ED91      		ld r30,X+
+ 2138 0f3c FC91      		ld r31,X
+ 2139 0f3e 5997      		sbiw r26,24+1
+ 2140 0f40 6081      		ld r22,Z
+ 2141 0f42 7181      		ldd r23,Z+1
+ 2142 0f44 6F5F      		subi r22,lo8(-(1))
+ 2143 0f46 7F4F      		sbci r23,hi8(-(1))
+ 2144 0f48 4281      		ldd r20,Z+2
+ 2145 0f4a 5381      		ldd r21,Z+3
+ 2146 0f4c 4250      		subi r20,lo8(-(-2))
+ 2147 0f4e 5040      		sbci r21,hi8(-(-2))
+ 2148 0f50 C801      		movw r24,r16
+ 2149 0f52 0E94 0000 		call luaX_newstring
+ 2150 0f56 F501      		movw r30,r10
+ 2151 0f58 9183      		std Z+1,r25
+ 2152 0f5a 8083      		st Z,r24
+ 2153               	.L213:
+ 2154 0f5c 7EE1      		ldi r23,lo8(286)
+ 2155 0f5e E72E      		mov r14,r23
+ 2156 0f60 71E0      		ldi r23,hi8(286)
+ 2157 0f62 F72E      		mov r15,r23
+ 2158 0f64 00C0      		rjmp .L117
+ 2159               	.L108:
+ 2160 0f66 C801      		movw r24,r16
+ 2161 0f68 6EE2      		ldi r22,lo8(46)
+ 2162 0f6a 70E0      		ldi r23,hi8(46)
+ 2163 0f6c 0E94 0000 		call save
+ 2164 0f70 F801      		movw r30,r16
+ 2165 0f72 A689      		ldd r26,Z+22
+ 2166 0f74 B789      		ldd r27,Z+23
+ 2167 0f76 8D91      		ld r24,X+
+ 2168 0f78 9C91      		ld r25,X
+ 2169 0f7a 1197      		sbiw r26,1
+ 2170 0f7c 0197      		sbiw r24,1
+ 2171 0f7e 1196      		adiw r26,1
+ 2172 0f80 9C93      		st X,r25
+ 2173 0f82 8E93      		st -X,r24
+ 2174 0f84 0196      		adiw r24,1
+ 2175 0f86 01F0      		breq .L183
+ 2176 0f88 1296      		adiw r26,2
+ 2177 0f8a ED91      		ld r30,X+
+ 2178 0f8c FC91      		ld r31,X
+ 2179 0f8e 1397      		sbiw r26,2+1
+ 2180 0f90 8191      		ld r24,Z+
+ 2181 0f92 90E0      		ldi r25,lo8(0)
+ 2182 0f94 1396      		adiw r26,2+1
+ 2183 0f96 FC93      		st X,r31
+ 2184 0f98 EE93      		st -X,r30
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 40
+
+
+ 2185 0f9a 1297      		sbiw r26,2
+ 2186 0f9c 00C0      		rjmp .L184
+ 2187               	.L183:
+ 2188 0f9e CD01      		movw r24,r26
+ 2189 0fa0 0E94 0000 		call luaZ_fill
+ 2190               	.L184:
+ 2191 0fa4 D801      		movw r26,r16
+ 2192 0fa6 8C93      		st X,r24
+ 2193 0fa8 1196      		adiw r26,1
+ 2194 0faa 9C93      		st X,r25
+ 2195 0fac C801      		movw r24,r16
+ 2196 0fae 60E0      		ldi r22,lo8(.LC14)
+ 2197 0fb0 70E0      		ldi r23,hi8(.LC14)
+ 2198 0fb2 0E94 0000 		call check_next
+ 2199 0fb6 892B      		or r24,r25
+ 2200 0fb8 01F0      		breq .L185
+ 2201 0fba C801      		movw r24,r16
+ 2202 0fbc 60E0      		ldi r22,lo8(.LC14)
+ 2203 0fbe 70E0      		ldi r23,hi8(.LC14)
+ 2204 0fc0 0E94 0000 		call check_next
+ 2205 0fc4 892B      		or r24,r25
+ 2206 0fc6 01F4      		brne .L186
+ 2207 0fc8 66E1      		ldi r22,lo8(278)
+ 2208 0fca E62E      		mov r14,r22
+ 2209 0fcc 61E0      		ldi r22,hi8(278)
+ 2210 0fce F62E      		mov r15,r22
+ 2211 0fd0 00C0      		rjmp .L117
+ 2212               	.L186:
+ 2213 0fd2 57E1      		ldi r21,lo8(279)
+ 2214 0fd4 E52E      		mov r14,r21
+ 2215 0fd6 51E0      		ldi r21,hi8(279)
+ 2216 0fd8 F52E      		mov r15,r21
+ 2217 0fda 00C0      		rjmp .L117
+ 2218               	.L185:
+ 2219 0fdc F801      		movw r30,r16
+ 2220 0fde 8081      		ld r24,Z
+ 2221 0fe0 9181      		ldd r25,Z+1
+ 2222 0fe2 C097      		sbiw r24,48
+ 2223 0fe4 0A97      		sbiw r24,10
+ 2224 0fe6 00F0      		brlo .+2
+ 2225 0fe8 00C0      		rjmp .L117
+ 2226 0fea 00C0      		rjmp .L214
+ 2227               	.L103:
+ 2228 0fec C701      		movw r24,r14
+ 2229 0fee 0E94 0000 		call isspace
+ 2230 0ff2 892B      		or r24,r25
+ 2231 0ff4 01F0      		breq .L187
+ 2232 0ff6 F801      		movw r30,r16
+ 2233 0ff8 A689      		ldd r26,Z+22
+ 2234 0ffa B789      		ldd r27,Z+23
+ 2235 0ffc 8D91      		ld r24,X+
+ 2236 0ffe 9C91      		ld r25,X
+ 2237 1000 1197      		sbiw r26,1
+ 2238 1002 0197      		sbiw r24,1
+ 2239 1004 1196      		adiw r26,1
+ 2240 1006 9C93      		st X,r25
+ 2241 1008 8E93      		st -X,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 41
+
+
+ 2242 100a 0196      		adiw r24,1
+ 2243 100c 01F0      		breq .L188
+ 2244 100e 1296      		adiw r26,2
+ 2245 1010 ED91      		ld r30,X+
+ 2246 1012 FC91      		ld r31,X
+ 2247 1014 1397      		sbiw r26,2+1
+ 2248 1016 8191      		ld r24,Z+
+ 2249 1018 90E0      		ldi r25,lo8(0)
+ 2250 101a 1396      		adiw r26,2+1
+ 2251 101c FC93      		st X,r31
+ 2252 101e EE93      		st -X,r30
+ 2253 1020 1297      		sbiw r26,2
+ 2254 1022 00C0      		rjmp .L189
+ 2255               	.L188:
+ 2256 1024 CD01      		movw r24,r26
+ 2257 1026 0E94 0000 		call luaZ_fill
+ 2258               	.L189:
+ 2259 102a D801      		movw r26,r16
+ 2260 102c 8C93      		st X,r24
+ 2261 102e 1196      		adiw r26,1
+ 2262 1030 9C93      		st X,r25
+ 2263 1032 00C0      		rjmp .L209
+ 2264               	.L187:
+ 2265 1034 C701      		movw r24,r14
+ 2266 1036 C097      		sbiw r24,48
+ 2267 1038 0A97      		sbiw r24,10
+ 2268 103a 00F4      		brsh .L190
+ 2269               	.L214:
+ 2270 103c C801      		movw r24,r16
+ 2271 103e B501      		movw r22,r10
+ 2272 1040 0E94 0000 		call read_numeral
+ 2273 1044 4CE1      		ldi r20,lo8(284)
+ 2274 1046 E42E      		mov r14,r20
+ 2275 1048 41E0      		ldi r20,hi8(284)
+ 2276 104a F42E      		mov r15,r20
+ 2277 104c 00C0      		rjmp .L117
+ 2278               	.L190:
+ 2279 104e C701      		movw r24,r14
+ 2280 1050 0E94 0000 		call isalpha
+ 2281 1054 892B      		or r24,r25
+ 2282 1056 01F4      		brne .L208
+ 2283 1058 BFE5      		ldi r27,lo8(95)
+ 2284 105a EB16      		cp r14,r27
+ 2285 105c F104      		cpc r15,__zero_reg__
+ 2286 105e 01F0      		breq .+2
+ 2287 1060 00C0      		rjmp .L192
+ 2288               	.L208:
+ 2289 1062 F801      		movw r30,r16
+ 2290 1064 6081      		ld r22,Z
+ 2291 1066 7181      		ldd r23,Z+1
+ 2292 1068 C801      		movw r24,r16
+ 2293 106a 0E94 0000 		call save
+ 2294 106e F801      		movw r30,r16
+ 2295 1070 A689      		ldd r26,Z+22
+ 2296 1072 B789      		ldd r27,Z+23
+ 2297 1074 8D91      		ld r24,X+
+ 2298 1076 9C91      		ld r25,X
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 42
+
+
+ 2299 1078 1197      		sbiw r26,1
+ 2300 107a 0197      		sbiw r24,1
+ 2301 107c 1196      		adiw r26,1
+ 2302 107e 9C93      		st X,r25
+ 2303 1080 8E93      		st -X,r24
+ 2304 1082 0196      		adiw r24,1
+ 2305 1084 01F0      		breq .L193
+ 2306 1086 1296      		adiw r26,2
+ 2307 1088 ED91      		ld r30,X+
+ 2308 108a FC91      		ld r31,X
+ 2309 108c 1397      		sbiw r26,2+1
+ 2310 108e 8191      		ld r24,Z+
+ 2311 1090 C82F      		mov r28,r24
+ 2312 1092 D0E0      		ldi r29,lo8(0)
+ 2313 1094 1396      		adiw r26,2+1
+ 2314 1096 FC93      		st X,r31
+ 2315 1098 EE93      		st -X,r30
+ 2316 109a 1297      		sbiw r26,2
+ 2317 109c 00C0      		rjmp .L194
+ 2318               	.L193:
+ 2319 109e CD01      		movw r24,r26
+ 2320 10a0 0E94 0000 		call luaZ_fill
+ 2321 10a4 EC01      		movw r28,r24
+ 2322               	.L194:
+ 2323 10a6 D801      		movw r26,r16
+ 2324 10a8 CD93      		st X+,r28
+ 2325 10aa DC93      		st X,r29
+ 2326 10ac CE01      		movw r24,r28
+ 2327 10ae 0E94 0000 		call isalnum
+ 2328 10b2 892B      		or r24,r25
+ 2329 10b4 01F4      		brne .L208
+ 2330 10b6 CF35      		cpi r28,95
+ 2331 10b8 D105      		cpc r29,__zero_reg__
+ 2332 10ba 01F0      		breq .L208
+ 2333 10bc D801      		movw r26,r16
+ 2334 10be 5896      		adiw r26,24
+ 2335 10c0 ED91      		ld r30,X+
+ 2336 10c2 FC91      		ld r31,X
+ 2337 10c4 5997      		sbiw r26,24+1
+ 2338 10c6 6081      		ld r22,Z
+ 2339 10c8 7181      		ldd r23,Z+1
+ 2340 10ca 4281      		ldd r20,Z+2
+ 2341 10cc 5381      		ldd r21,Z+3
+ 2342 10ce C801      		movw r24,r16
+ 2343 10d0 0E94 0000 		call luaX_newstring
+ 2344 10d4 FC01      		movw r30,r24
+ 2345 10d6 6481      		ldd r22,Z+4
+ 2346 10d8 6623      		tst r22
+ 2347 10da 01F0      		breq .L195
+ 2348 10dc E62E      		mov r14,r22
+ 2349 10de FF24      		clr r15
+ 2350 10e0 E0E0      		ldi r30,lo8(256)
+ 2351 10e2 F1E0      		ldi r31,hi8(256)
+ 2352 10e4 EE0E      		add r14,r30
+ 2353 10e6 FF1E      		adc r15,r31
+ 2354 10e8 00C0      		rjmp .L117
+ 2355               	.L195:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 43
+
+
+ 2356 10ea D501      		movw r26,r10
+ 2357 10ec 8D93      		st X+,r24
+ 2358 10ee 9C93      		st X,r25
+ 2359 10f0 3DE1      		ldi r19,lo8(285)
+ 2360 10f2 E32E      		mov r14,r19
+ 2361 10f4 31E0      		ldi r19,hi8(285)
+ 2362 10f6 F32E      		mov r15,r19
+ 2363 10f8 00C0      		rjmp .L117
+ 2364               	.L192:
+ 2365 10fa F801      		movw r30,r16
+ 2366 10fc A689      		ldd r26,Z+22
+ 2367 10fe B789      		ldd r27,Z+23
+ 2368 1100 8D91      		ld r24,X+
+ 2369 1102 9C91      		ld r25,X
+ 2370 1104 1197      		sbiw r26,1
+ 2371 1106 0197      		sbiw r24,1
+ 2372 1108 1196      		adiw r26,1
+ 2373 110a 9C93      		st X,r25
+ 2374 110c 8E93      		st -X,r24
+ 2375 110e 0196      		adiw r24,1
+ 2376 1110 01F0      		breq .L196
+ 2377 1112 1296      		adiw r26,2
+ 2378 1114 ED91      		ld r30,X+
+ 2379 1116 FC91      		ld r31,X
+ 2380 1118 1397      		sbiw r26,2+1
+ 2381 111a 8191      		ld r24,Z+
+ 2382 111c 90E0      		ldi r25,lo8(0)
+ 2383 111e 1396      		adiw r26,2+1
+ 2384 1120 FC93      		st X,r31
+ 2385 1122 EE93      		st -X,r30
+ 2386 1124 1297      		sbiw r26,2
+ 2387 1126 00C0      		rjmp .L197
+ 2388               	.L196:
+ 2389 1128 CD01      		movw r24,r26
+ 2390 112a 0E94 0000 		call luaZ_fill
+ 2391               	.L197:
+ 2392 112e D801      		movw r26,r16
+ 2393 1130 8C93      		st X,r24
+ 2394 1132 1196      		adiw r26,1
+ 2395 1134 9C93      		st X,r25
+ 2396               	.L117:
+ 2397 1136 C701      		movw r24,r14
+ 2398               	/* epilogue start */
+ 2399 1138 DF91      		pop r29
+ 2400 113a CF91      		pop r28
+ 2401 113c 1F91      		pop r17
+ 2402 113e 0F91      		pop r16
+ 2403 1140 FF90      		pop r15
+ 2404 1142 EF90      		pop r14
+ 2405 1144 DF90      		pop r13
+ 2406 1146 CF90      		pop r12
+ 2407 1148 BF90      		pop r11
+ 2408 114a AF90      		pop r10
+ 2409 114c 0895      		ret
+ 2410               		.size	llex, .-llex
+ 2411               	.global	luaX_lookahead
+ 2412               		.type	luaX_lookahead, @function
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 44
+
+
+ 2413               	luaX_lookahead:
+ 2414 114e 0F93      		push r16
+ 2415 1150 1F93      		push r17
+ 2416               	/* prologue: function */
+ 2417               	/* frame size = 0 */
+ 2418 1152 8C01      		movw r16,r24
+ 2419 1154 BC01      		movw r22,r24
+ 2420 1156 625F      		subi r22,lo8(-(14))
+ 2421 1158 7F4F      		sbci r23,hi8(-(14))
+ 2422 115a 0E94 0000 		call llex
+ 2423 115e F801      		movw r30,r16
+ 2424 1160 9587      		std Z+13,r25
+ 2425 1162 8487      		std Z+12,r24
+ 2426               	/* epilogue start */
+ 2427 1164 1F91      		pop r17
+ 2428 1166 0F91      		pop r16
+ 2429 1168 0895      		ret
+ 2430               		.size	luaX_lookahead, .-luaX_lookahead
+ 2431               	.global	luaX_next
+ 2432               		.type	luaX_next, @function
+ 2433               	luaX_next:
+ 2434 116a CF93      		push r28
+ 2435 116c DF93      		push r29
+ 2436               	/* prologue: function */
+ 2437               	/* frame size = 0 */
+ 2438 116e EC01      		movw r28,r24
+ 2439 1170 8A81      		ldd r24,Y+2
+ 2440 1172 9B81      		ldd r25,Y+3
+ 2441 1174 9D83      		std Y+5,r25
+ 2442 1176 8C83      		std Y+4,r24
+ 2443 1178 8C85      		ldd r24,Y+12
+ 2444 117a 9D85      		ldd r25,Y+13
+ 2445 117c 8F51      		subi r24,lo8(287)
+ 2446 117e 9140      		sbci r25,hi8(287)
+ 2447 1180 01F0      		breq .L230
+ 2448 1182 DE01      		movw r26,r28
+ 2449 1184 1696      		adiw r26,6
+ 2450 1186 FE01      		movw r30,r28
+ 2451 1188 3C96      		adiw r30,12
+ 2452 118a 86E0      		ldi r24,lo8(6)
+ 2453               	.L231:
+ 2454 118c 0190      		ld r0,Z+
+ 2455 118e 0D92      		st X+,r0
+ 2456 1190 8150      		subi r24,lo8(-(-1))
+ 2457 1192 01F4      		brne .L231
+ 2458 1194 8FE1      		ldi r24,lo8(287)
+ 2459 1196 91E0      		ldi r25,hi8(287)
+ 2460 1198 9D87      		std Y+13,r25
+ 2461 119a 8C87      		std Y+12,r24
+ 2462 119c 00C0      		rjmp .L233
+ 2463               	.L230:
+ 2464 119e BE01      		movw r22,r28
+ 2465 11a0 685F      		subi r22,lo8(-(8))
+ 2466 11a2 7F4F      		sbci r23,hi8(-(8))
+ 2467 11a4 CE01      		movw r24,r28
+ 2468 11a6 0E94 0000 		call llex
+ 2469 11aa 9F83      		std Y+7,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 45
+
+
+ 2470 11ac 8E83      		std Y+6,r24
+ 2471               	.L233:
+ 2472               	/* epilogue start */
+ 2473 11ae DF91      		pop r29
+ 2474 11b0 CF91      		pop r28
+ 2475 11b2 0895      		ret
+ 2476               		.size	luaX_next, .-luaX_next
+ 2477               	.global	luaX_init
+ 2478               		.type	luaX_init, @function
+ 2479               	luaX_init:
+ 2480 11b4 EF92      		push r14
+ 2481 11b6 FF92      		push r15
+ 2482 11b8 1F93      		push r17
+ 2483 11ba CF93      		push r28
+ 2484 11bc DF93      		push r29
+ 2485               	/* prologue: function */
+ 2486               	/* frame size = 0 */
+ 2487 11be 7C01      		movw r14,r24
+ 2488 11c0 C0E0      		ldi r28,lo8(luaX_tokens)
+ 2489 11c2 D0E0      		ldi r29,hi8(luaX_tokens)
+ 2490 11c4 11E0      		ldi r17,lo8(1)
+ 2491               	.L236:
+ 2492 11c6 6881      		ld r22,Y
+ 2493 11c8 7981      		ldd r23,Y+1
+ 2494 11ca FB01      		movw r30,r22
+ 2495 11cc DF01      		movw r26,r30
+ 2496 11ce 0D90      		ld __tmp_reg__,X+
+ 2497 11d0 0020      		tst __tmp_reg__
+ 2498 11d2 01F4      		brne .-6
+ 2499 11d4 1197      		sbiw r26,1
+ 2500 11d6 AE1B      		sub r26,r30
+ 2501 11d8 BF0B      		sbc r27,r31
+ 2502 11da C701      		movw r24,r14
+ 2503 11dc AD01      		movw r20,r26
+ 2504 11de 0E94 0000 		call luaS_newlstr
+ 2505 11e2 FC01      		movw r30,r24
+ 2506 11e4 8381      		ldd r24,Z+3
+ 2507 11e6 8062      		ori r24,lo8(32)
+ 2508 11e8 8383      		std Z+3,r24
+ 2509 11ea 1483      		std Z+4,r17
+ 2510 11ec 2296      		adiw r28,2
+ 2511 11ee 1F5F      		subi r17,lo8(-(1))
+ 2512 11f0 1631      		cpi r17,lo8(22)
+ 2513 11f2 01F4      		brne .L236
+ 2514               	/* epilogue start */
+ 2515 11f4 DF91      		pop r29
+ 2516 11f6 CF91      		pop r28
+ 2517 11f8 1F91      		pop r17
+ 2518 11fa FF90      		pop r15
+ 2519 11fc EF90      		pop r14
+ 2520 11fe 0895      		ret
+ 2521               		.size	luaX_init, .-luaX_init
+ 2522               	.global	luaX_tokens
+ 2523               		.data
+ 2524               	.LC15:
+ 2525 00f7 616E 6400 		.string	"and"
+ 2526               	.LC16:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 46
+
+
+ 2527 00fb 6272 6561 		.string	"break"
+ 2527      6B00 
+ 2528               	.LC17:
+ 2529 0101 646F 00   		.string	"do"
+ 2530               	.LC18:
+ 2531 0104 656C 7365 		.string	"else"
+ 2531      00
+ 2532               	.LC19:
+ 2533 0109 656C 7365 		.string	"elseif"
+ 2533      6966 00
+ 2534               	.LC20:
+ 2535 0110 656E 6400 		.string	"end"
+ 2536               	.LC21:
+ 2537 0114 6661 6C73 		.string	"false"
+ 2537      6500 
+ 2538               	.LC22:
+ 2539 011a 666F 7200 		.string	"for"
+ 2540               	.LC23:
+ 2541 011e 6675 6E63 		.string	"function"
+ 2541      7469 6F6E 
+ 2541      00
+ 2542               	.LC24:
+ 2543 0127 6966 00   		.string	"if"
+ 2544               	.LC25:
+ 2545 012a 696E 00   		.string	"in"
+ 2546               	.LC26:
+ 2547 012d 6C6F 6361 		.string	"local"
+ 2547      6C00 
+ 2548               	.LC27:
+ 2549 0133 6E69 6C00 		.string	"nil"
+ 2550               	.LC28:
+ 2551 0137 6E6F 7400 		.string	"not"
+ 2552               	.LC29:
+ 2553 013b 6F72 00   		.string	"or"
+ 2554               	.LC30:
+ 2555 013e 7265 7065 		.string	"repeat"
+ 2555      6174 00
+ 2556               	.LC31:
+ 2557 0145 7265 7475 		.string	"return"
+ 2557      726E 00
+ 2558               	.LC32:
+ 2559 014c 7468 656E 		.string	"then"
+ 2559      00
+ 2560               	.LC33:
+ 2561 0151 7472 7565 		.string	"true"
+ 2561      00
+ 2562               	.LC34:
+ 2563 0156 756E 7469 		.string	"until"
+ 2563      6C00 
+ 2564               	.LC35:
+ 2565 015c 7768 696C 		.string	"while"
+ 2565      6500 
+ 2566               	.LC36:
+ 2567 0162 2E2E 00   		.string	".."
+ 2568               	.LC37:
+ 2569 0165 2E2E 2E00 		.string	"..."
+ 2570               	.LC38:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 47
+
+
+ 2571 0169 3D3D 00   		.string	"=="
+ 2572               	.LC39:
+ 2573 016c 3E3D 00   		.string	">="
+ 2574               	.LC40:
+ 2575 016f 3C3D 00   		.string	"<="
+ 2576               	.LC41:
+ 2577 0172 7E3D 00   		.string	"~="
+ 2578               	.LC42:
+ 2579 0175 3C6E 756D 		.string	"<number>"
+ 2579      6265 723E 
+ 2579      00
+ 2580               	.LC43:
+ 2581 017e 3C6E 616D 		.string	"<name>"
+ 2581      653E 00
+ 2582               	.LC44:
+ 2583 0185 3C73 7472 		.string	"<string>"
+ 2583      696E 673E 
+ 2583      00
+ 2584               	.LC45:
+ 2585 018e 3C65 6F66 		.string	"<eof>"
+ 2585      3E00 
+ 2586               		.type	luaX_tokens, @object
+ 2587               		.size	luaX_tokens, 64
+ 2588               	luaX_tokens:
+ 2589 0194 0000      		.word	.LC15
+ 2590 0196 0000      		.word	.LC16
+ 2591 0198 0000      		.word	.LC17
+ 2592 019a 0000      		.word	.LC18
+ 2593 019c 0000      		.word	.LC19
+ 2594 019e 0000      		.word	.LC20
+ 2595 01a0 0000      		.word	.LC21
+ 2596 01a2 0000      		.word	.LC22
+ 2597 01a4 0000      		.word	.LC23
+ 2598 01a6 0000      		.word	.LC24
+ 2599 01a8 0000      		.word	.LC25
+ 2600 01aa 0000      		.word	.LC26
+ 2601 01ac 0000      		.word	.LC27
+ 2602 01ae 0000      		.word	.LC28
+ 2603 01b0 0000      		.word	.LC29
+ 2604 01b2 0000      		.word	.LC30
+ 2605 01b4 0000      		.word	.LC31
+ 2606 01b6 0000      		.word	.LC32
+ 2607 01b8 0000      		.word	.LC33
+ 2608 01ba 0000      		.word	.LC34
+ 2609 01bc 0000      		.word	.LC35
+ 2610 01be 0000      		.word	.LC36
+ 2611 01c0 0000      		.word	.LC37
+ 2612 01c2 0000      		.word	.LC38
+ 2613 01c4 0000      		.word	.LC39
+ 2614 01c6 0000      		.word	.LC40
+ 2615 01c8 0000      		.word	.LC41
+ 2616 01ca 0000      		.word	.LC42
+ 2617 01cc 0000      		.word	.LC43
+ 2618 01ce 0000      		.word	.LC44
+ 2619 01d0 0000      		.word	.LC45
+ 2620 01d2 0000      		.word	0
+ 2621               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 48
+
+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s 			page 49
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 llex.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:11     .text:00000000 luaX_setinput
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:95     .text:0000009a luaX_newstring
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:156    .text:000000fc luaX_token2str
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:2588   .data:00000194 luaX_tokens
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:247    .text:00000194 luaX_lexerror
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:428    .text:000002f0 save
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:510    .text:00000386 skip_sep
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:613    .text:00000442 check_next
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:681    .text:000004b0 read_numeral
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:851    .text:000005f4 luaX_syntaxerror
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:866    .text:00000600 inclinenumber
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:972    .text:000006b0 read_long_string
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:1259   .text:000008be llex
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:2413   .text:0000114e luaX_lookahead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:2433   .text:0000116a luaX_next
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cckviIHF.s:2479   .text:000011b4 luaX_init
+
+UNDEFINED SYMBOLS
+luaM_realloc_
+luaZ_fill
+luaS_newlstr
+luaH_setstr
+iscntrl
+luaO_pushfstring
+luaO_chunkid
+luaD_throw
+luaM_toobig
+strchr
+isalnum
+luaO_str2d
+isspace
+isalpha
+__do_copy_data

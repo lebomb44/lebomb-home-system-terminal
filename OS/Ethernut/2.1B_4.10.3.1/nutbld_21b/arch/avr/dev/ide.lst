@@ -1,0 +1,2425 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 1
+
+
+   1               		.file	"ide.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	CFInterrupt, @function
+  10               	CFInterrupt:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 E091 0000 		lds r30,hCFChangeInt
+  14 0004 F091 0000 		lds r31,(hCFChangeInt)+1
+  15 0008 3097      		sbiw r30,0
+  16 000a 01F4      		brne .L2
+  17 000c 8FEF      		ldi r24,lo8(-1)
+  18 000e 9FEF      		ldi r25,hi8(-1)
+  19 0010 9093 0000 		sts (hCFChangeInt)+1,r25
+  20 0014 8093 0000 		sts hCFChangeInt,r24
+  21 0018 0895      		ret
+  22               	.L2:
+  23 001a 8FEF      		ldi r24,hi8(-1)
+  24 001c EF3F      		cpi r30,lo8(-1)
+  25 001e F807      		cpc r31,r24
+  26 0020 01F0      		breq .L4
+  27 0022 8481      		ldd r24,Z+4
+  28 0024 9581      		ldd r25,Z+5
+  29 0026 0196      		adiw r24,1
+  30 0028 9583      		std Z+5,r25
+  31 002a 8483      		std Z+4,r24
+  32               	.L4:
+  33 002c 0895      		ret
+  34               		.size	CFInterrupt, .-CFInterrupt
+  35               		.type	IDEInterrupt, @function
+  36               	IDEInterrupt:
+  37               	/* prologue: function */
+  38               	/* frame size = 0 */
+  39 002e E091 0000 		lds r30,pIDE
+  40 0032 F091 0000 		lds r31,(pIDE)+1
+  41 0036 8781      		ldd r24,Z+7
+  42 0038 8093 0000 		sts gbIntStatus,r24
+  43 003c E091 0000 		lds r30,hIDEEvent
+  44 0040 F091 0000 		lds r31,(hIDEEvent)+1
+  45 0044 3097      		sbiw r30,0
+  46 0046 01F4      		brne .L6
+  47 0048 8FEF      		ldi r24,lo8(-1)
+  48 004a 9FEF      		ldi r25,hi8(-1)
+  49 004c 9093 0000 		sts (hIDEEvent)+1,r25
+  50 0050 8093 0000 		sts hIDEEvent,r24
+  51 0054 0895      		ret
+  52               	.L6:
+  53 0056 8FEF      		ldi r24,hi8(-1)
+  54 0058 EF3F      		cpi r30,lo8(-1)
+  55 005a F807      		cpc r31,r24
+  56 005c 01F0      		breq .L8
+  57 005e 8481      		ldd r24,Z+4
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 2
+
+
+  58 0060 9581      		ldd r25,Z+5
+  59 0062 0196      		adiw r24,1
+  60 0064 9583      		std Z+5,r25
+  61 0066 8483      		std Z+4,r24
+  62               	.L8:
+  63 0068 0895      		ret
+  64               		.size	IDEInterrupt, .-IDEInterrupt
+  65               		.type	WaitNotBusy, @function
+  66               	WaitNotBusy:
+  67 006a EF92      		push r14
+  68 006c FF92      		push r15
+  69 006e 0F93      		push r16
+  70 0070 1F93      		push r17
+  71               	/* prologue: function */
+  72               	/* frame size = 0 */
+  73 0072 9B01      		movw r18,r22
+  74 0074 AC01      		movw r20,r24
+  75 0076 E091 0000 		lds r30,pIDE
+  76 007a F091 0000 		lds r31,(pIDE)+1
+  77 007e 8781      		ldd r24,Z+7
+  78 0080 8878      		andi r24,lo8(-120)
+  79 0082 01F0      		breq .L10
+  80 0084 CA01      		movw r24,r20
+  81 0086 B901      		movw r22,r18
+  82 0088 2AE0      		ldi r18,lo8(10)
+  83 008a 30E0      		ldi r19,hi8(10)
+  84 008c 40E0      		ldi r20,hlo8(10)
+  85 008e 50E0      		ldi r21,hhi8(10)
+  86 0090 0E94 0000 		call __mulsi3
+  87 0094 21E7      		ldi r18,lo8(625)
+  88 0096 32E0      		ldi r19,hi8(625)
+  89 0098 40E0      		ldi r20,hlo8(625)
+  90 009a 50E0      		ldi r21,hhi8(625)
+  91 009c 0E94 0000 		call __udivmodsi4
+  92 00a0 7901      		movw r14,r18
+  93 00a2 8A01      		movw r16,r20
+  94 00a4 0E94 0000 		call NutGetTickCount
+  95 00a8 0894      		sec
+  96 00aa E11C      		adc r14,__zero_reg__
+  97 00ac F11C      		adc r15,__zero_reg__
+  98 00ae 011D      		adc r16,__zero_reg__
+  99 00b0 111D      		adc r17,__zero_reg__
+ 100 00b2 E60E      		add r14,r22
+ 101 00b4 F71E      		adc r15,r23
+ 102 00b6 081F      		adc r16,r24
+ 103 00b8 191F      		adc r17,r25
+ 104 00ba 00C0      		rjmp .L12
+ 105               	.L14:
+ 106 00bc 0E94 0000 		call NutGetTickCount
+ 107 00c0 E616      		cp r14,r22
+ 108 00c2 F706      		cpc r15,r23
+ 109 00c4 0807      		cpc r16,r24
+ 110 00c6 1907      		cpc r17,r25
+ 111 00c8 00F4      		brsh .L12
+ 112 00ca 24E0      		ldi r18,lo8(4)
+ 113 00cc 30E0      		ldi r19,hi8(4)
+ 114 00ce 00C0      		rjmp .L13
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 3
+
+
+ 115               	.L12:
+ 116 00d0 E091 0000 		lds r30,pIDE
+ 117 00d4 F091 0000 		lds r31,(pIDE)+1
+ 118 00d8 8781      		ldd r24,Z+7
+ 119 00da 8878      		andi r24,lo8(-120)
+ 120 00dc 01F4      		brne .L14
+ 121               	.L10:
+ 122 00de 20E0      		ldi r18,lo8(0)
+ 123 00e0 30E0      		ldi r19,hi8(0)
+ 124               	.L13:
+ 125 00e2 C901      		movw r24,r18
+ 126               	/* epilogue start */
+ 127 00e4 1F91      		pop r17
+ 128 00e6 0F91      		pop r16
+ 129 00e8 FF90      		pop r15
+ 130 00ea EF90      		pop r14
+ 131 00ec 0895      		ret
+ 132               		.size	WaitNotBusy, .-WaitNotBusy
+ 133               		.type	SelectDevice, @function
+ 134               	SelectDevice:
+ 135 00ee 1F93      		push r17
+ 136               	/* prologue: function */
+ 137               	/* frame size = 0 */
+ 138 00f0 182F      		mov r17,r24
+ 139 00f2 68EC      		ldi r22,lo8(200)
+ 140 00f4 70E0      		ldi r23,hi8(200)
+ 141 00f6 80E0      		ldi r24,hlo8(200)
+ 142 00f8 90E0      		ldi r25,hhi8(200)
+ 143 00fa 0E94 0000 		call WaitNotBusy
+ 144 00fe 892B      		or r24,r25
+ 145 0100 01F0      		breq .L17
+ 146 0102 44E0      		ldi r20,lo8(4)
+ 147 0104 50E0      		ldi r21,hi8(4)
+ 148 0106 00C0      		rjmp .L18
+ 149               	.L17:
+ 150 0108 E091 0000 		lds r30,pIDE
+ 151 010c F091 0000 		lds r31,(pIDE)+1
+ 152 0110 1295      		swap r17
+ 153 0112 107F      		andi r17,lo8(-16)
+ 154 0114 1056      		subi r17,lo8(-(-96))
+ 155 0116 1683      		std Z+6,r17
+ 156               	/* #APP */
+ 157               	 ;  213 "../../nut/arch/avr/dev/ide.c" 1
+ 158 0118 0000      		nop
+ 159               	 ;  0 "" 2
+ 160               	 ;  214 "../../nut/arch/avr/dev/ide.c" 1
+ 161 011a 0000      		nop
+ 162               	 ;  0 "" 2
+ 163               	 ;  215 "../../nut/arch/avr/dev/ide.c" 1
+ 164 011c 0000      		nop
+ 165               	 ;  0 "" 2
+ 166               	 ;  216 "../../nut/arch/avr/dev/ide.c" 1
+ 167 011e 0000      		nop
+ 168               	 ;  0 "" 2
+ 169               	 ;  217 "../../nut/arch/avr/dev/ide.c" 1
+ 170 0120 0000      		nop
+ 171               	 ;  0 "" 2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 4
+
+
+ 172               	 ;  218 "../../nut/arch/avr/dev/ide.c" 1
+ 173 0122 0000      		nop
+ 174               	 ;  0 "" 2
+ 175               	 ;  219 "../../nut/arch/avr/dev/ide.c" 1
+ 176 0124 0000      		nop
+ 177               	 ;  0 "" 2
+ 178               	 ;  220 "../../nut/arch/avr/dev/ide.c" 1
+ 179 0126 0000      		nop
+ 180               	 ;  0 "" 2
+ 181               	/* #NOAPP */
+ 182 0128 68EC      		ldi r22,lo8(200)
+ 183 012a 70E0      		ldi r23,hi8(200)
+ 184 012c 80E0      		ldi r24,hlo8(200)
+ 185 012e 90E0      		ldi r25,hhi8(200)
+ 186 0130 0E94 0000 		call WaitNotBusy
+ 187 0134 AC01      		movw r20,r24
+ 188 0136 0097      		sbiw r24,0
+ 189 0138 01F0      		breq .L19
+ 190               	.L18:
+ 191 013a E091 0000 		lds r30,pIDE
+ 192 013e F091 0000 		lds r31,(pIDE)+1
+ 193 0142 DF01      		movw r26,r30
+ 194 0144 1796      		adiw r26,7
+ 195 0146 8781      		ldd r24,Z+7
+ 196 0148 83FF      		sbrs r24,3
+ 197 014a 00C0      		rjmp .L19
+ 198 014c 20E0      		ldi r18,lo8(512)
+ 199 014e 32E0      		ldi r19,hi8(512)
+ 200 0150 E050      		subi r30,lo8(-(768))
+ 201 0152 FD4F      		sbci r31,hi8(-(768))
+ 202 0154 00C0      		rjmp .L20
+ 203               	.L21:
+ 204 0156 8081      		ld r24,Z
+ 205 0158 8081      		ld r24,Z
+ 206 015a 8C91      		ld r24,X
+ 207 015c 2150      		subi r18,lo8(-(-1))
+ 208 015e 3040      		sbci r19,hi8(-(-1))
+ 209               	.L20:
+ 210 0160 83FF      		sbrs r24,3
+ 211 0162 00C0      		rjmp .L19
+ 212 0164 2115      		cp r18,__zero_reg__
+ 213 0166 3105      		cpc r19,__zero_reg__
+ 214 0168 01F4      		brne .L21
+ 215               	.L19:
+ 216 016a CA01      		movw r24,r20
+ 217               	/* epilogue start */
+ 218 016c 1F91      		pop r17
+ 219 016e 0895      		ret
+ 220               		.size	SelectDevice, .-SelectDevice
+ 221               		.type	ATAPISendCommand, @function
+ 222               	ATAPISendCommand:
+ 223 0170 8F92      		push r8
+ 224 0172 9F92      		push r9
+ 225 0174 AF92      		push r10
+ 226 0176 BF92      		push r11
+ 227 0178 CF92      		push r12
+ 228 017a DF92      		push r13
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 5
+
+
+ 229 017c EF92      		push r14
+ 230 017e FF92      		push r15
+ 231 0180 0F93      		push r16
+ 232 0182 1F93      		push r17
+ 233 0184 CF93      		push r28
+ 234 0186 DF93      		push r29
+ 235               	/* prologue: function */
+ 236               	/* frame size = 0 */
+ 237 0188 EC01      		movw r28,r24
+ 238 018a 5B01      		movw r10,r22
+ 239 018c 4A01      		movw r8,r20
+ 240 018e 8B81      		ldd r24,Y+3
+ 241 0190 C884      		ldd r12,Y+8
+ 242 0192 D984      		ldd r13,Y+9
+ 243 0194 DA01      		movw r26,r20
+ 244 0196 1D92      		st X+,__zero_reg__
+ 245 0198 1C92      		st X,__zero_reg__
+ 246 019a 0E94 0000 		call SelectDevice
+ 247 019e 892B      		or r24,r25
+ 248 01a0 01F0      		breq .+2
+ 249 01a2 00C0      		rjmp .L24
+ 250               	/* #APP */
+ 251               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 252 01a4 0FB6      		in  __tmp_reg__, __SREG__
+ 253 01a6 F894      		cli
+ 254 01a8 0F92      		push __tmp_reg__
+ 255               		
+ 256               	 ;  0 "" 2
+ 257               	/* #NOAPP */
+ 258 01aa 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 259 01ae 1092 0000 		sts hIDEEvent,__zero_reg__
+ 260               	/* #APP */
+ 261               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 262 01b2 0F90      		pop __tmp_reg__
+ 263 01b4 0FBE      		out __SREG__, __tmp_reg__
+ 264               		
+ 265               	 ;  0 "" 2
+ 266               	/* #NOAPP */
+ 267 01b6 68E8      		ldi r22,lo8(5000)
+ 268 01b8 73E1      		ldi r23,hi8(5000)
+ 269 01ba 80E0      		ldi r24,hlo8(5000)
+ 270 01bc 90E0      		ldi r25,hhi8(5000)
+ 271 01be 0E94 0000 		call WaitNotBusy
+ 272 01c2 892B      		or r24,r25
+ 273 01c4 01F0      		breq .+2
+ 274 01c6 00C0      		rjmp .L24
+ 275 01c8 E091 0000 		lds r30,pIDE
+ 276 01cc F091 0000 		lds r31,(pIDE)+1
+ 277 01d0 1182      		std Z+1,__zero_reg__
+ 278 01d2 1282      		std Z+2,__zero_reg__
+ 279 01d4 1382      		std Z+3,__zero_reg__
+ 280 01d6 C482      		std Z+4,r12
+ 281 01d8 D582      		std Z+5,r13
+ 282 01da 80EA      		ldi r24,lo8(-96)
+ 283 01dc 8783      		std Z+7,r24
+ 284 01de 8881      		ld r24,Y
+ 285 01e0 83FF      		sbrs r24,3
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 6
+
+
+ 286 01e2 00C0      		rjmp .L25
+ 287 01e4 80E0      		ldi r24,lo8(hIDEEvent)
+ 288 01e6 90E0      		ldi r25,hi8(hIDEEvent)
+ 289 01e8 48E8      		ldi r20,lo8(5000)
+ 290 01ea 53E1      		ldi r21,hi8(5000)
+ 291 01ec 60E0      		ldi r22,hlo8(5000)
+ 292 01ee 70E0      		ldi r23,hhi8(5000)
+ 293 01f0 0E94 0000 		call NutEventWait
+ 294 01f4 8F5F      		subi r24,lo8(-1)
+ 295 01f6 9F4F      		sbci r25,hi8(-1)
+ 296 01f8 01F4      		brne .+2
+ 297 01fa 00C0      		rjmp .L24
+ 298               	/* #APP */
+ 299               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 300 01fc 0FB6      		in  __tmp_reg__, __SREG__
+ 301 01fe F894      		cli
+ 302 0200 0F92      		push __tmp_reg__
+ 303               		
+ 304               	 ;  0 "" 2
+ 305               	/* #NOAPP */
+ 306 0202 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 307 0206 1092 0000 		sts hIDEEvent,__zero_reg__
+ 308               	/* #APP */
+ 309               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 310 020a 0F90      		pop __tmp_reg__
+ 311 020c 0FBE      		out __SREG__, __tmp_reg__
+ 312               		
+ 313               	 ;  0 "" 2
+ 314               	/* #NOAPP */
+ 315 020e 00C0      		rjmp .L26
+ 316               	.L25:
+ 317 0210 8781      		ldd r24,Z+7
+ 318 0212 8878      		andi r24,lo8(-120)
+ 319 0214 8830      		cpi r24,lo8(8)
+ 320 0216 01F0      		breq .L26
+ 321 0218 0E94 0000 		call NutGetTickCount
+ 322 021c 7B01      		movw r14,r22
+ 323 021e 8C01      		movw r16,r24
+ 324 0220 81E5      		ldi r24,lo8(81)
+ 325 0222 90E0      		ldi r25,hi8(81)
+ 326 0224 A0E0      		ldi r26,hlo8(81)
+ 327 0226 B0E0      		ldi r27,hhi8(81)
+ 328 0228 E80E      		add r14,r24
+ 329 022a F91E      		adc r15,r25
+ 330 022c 0A1F      		adc r16,r26
+ 331 022e 1B1F      		adc r17,r27
+ 332 0230 00C0      		rjmp .L41
+ 333               	.L28:
+ 334 0232 0E94 0000 		call NutGetTickCount
+ 335 0236 E616      		cp r14,r22
+ 336 0238 F706      		cpc r15,r23
+ 337 023a 0807      		cpc r16,r24
+ 338 023c 1907      		cpc r17,r25
+ 339 023e 00F4      		brsh .+2
+ 340 0240 00C0      		rjmp .L24
+ 341               	.L41:
+ 342 0242 E091 0000 		lds r30,pIDE
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 7
+
+
+ 343 0246 F091 0000 		lds r31,(pIDE)+1
+ 344 024a 8781      		ldd r24,Z+7
+ 345 024c 8878      		andi r24,lo8(-120)
+ 346 024e 8830      		cpi r24,lo8(8)
+ 347 0250 01F4      		brne .L28
+ 348               	.L26:
+ 349 0252 8091 0000 		lds r24,pIDE
+ 350 0256 9091 0000 		lds r25,(pIDE)+1
+ 351 025a EC01      		movw r28,r24
+ 352 025c C050      		subi r28,lo8(-(512))
+ 353 025e DE4F      		sbci r29,hi8(-(512))
+ 354 0260 DC01      		movw r26,r24
+ 355 0262 A050      		subi r26,lo8(-(256))
+ 356 0264 BF4F      		sbci r27,hi8(-(256))
+ 357 0266 E0E0      		ldi r30,lo8(aATAPICmd)
+ 358 0268 F0E0      		ldi r31,hi8(aATAPICmd)
+ 359               	.L29:
+ 360 026a 8181      		ldd r24,Z+1
+ 361 026c 8883      		st Y,r24
+ 362 026e 8081      		ld r24,Z
+ 363 0270 8C93      		st X,r24
+ 364 0272 3296      		adiw r30,2
+ 365 0274 90E0      		ldi r25,hi8(aATAPICmd+12)
+ 366 0276 E030      		cpi r30,lo8(aATAPICmd+12)
+ 367 0278 F907      		cpc r31,r25
+ 368 027a 01F4      		brne .L29
+ 369 027c 80E0      		ldi r24,lo8(hIDEEvent)
+ 370 027e 90E0      		ldi r25,hi8(hIDEEvent)
+ 371 0280 48E8      		ldi r20,lo8(5000)
+ 372 0282 53E1      		ldi r21,hi8(5000)
+ 373 0284 60E0      		ldi r22,hlo8(5000)
+ 374 0286 70E0      		ldi r23,hhi8(5000)
+ 375 0288 0E94 0000 		call NutEventWait
+ 376 028c 8F5F      		subi r24,lo8(-1)
+ 377 028e 9F4F      		sbci r25,hi8(-1)
+ 378 0290 01F4      		brne .+2
+ 379 0292 00C0      		rjmp .L30
+ 380 0294 8091 0000 		lds r24,gbIntStatus
+ 381 0298 80FD      		sbrc r24,0
+ 382 029a 00C0      		rjmp .L24
+ 383 029c 8091 0000 		lds r24,gbIntStatus
+ 384 02a0 83FF      		sbrs r24,3
+ 385 02a2 00C0      		rjmp .L30
+ 386               	/* #APP */
+ 387               	 ;  213 "../../nut/arch/avr/dev/ide.c" 1
+ 388 02a4 0000      		nop
+ 389               	 ;  0 "" 2
+ 390               	 ;  214 "../../nut/arch/avr/dev/ide.c" 1
+ 391 02a6 0000      		nop
+ 392               	 ;  0 "" 2
+ 393               	 ;  215 "../../nut/arch/avr/dev/ide.c" 1
+ 394 02a8 0000      		nop
+ 395               	 ;  0 "" 2
+ 396               	 ;  216 "../../nut/arch/avr/dev/ide.c" 1
+ 397 02aa 0000      		nop
+ 398               	 ;  0 "" 2
+ 399               	 ;  217 "../../nut/arch/avr/dev/ide.c" 1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 8
+
+
+ 400 02ac 0000      		nop
+ 401               	 ;  0 "" 2
+ 402               	 ;  218 "../../nut/arch/avr/dev/ide.c" 1
+ 403 02ae 0000      		nop
+ 404               	 ;  0 "" 2
+ 405               	 ;  219 "../../nut/arch/avr/dev/ide.c" 1
+ 406 02b0 0000      		nop
+ 407               	 ;  0 "" 2
+ 408               	 ;  220 "../../nut/arch/avr/dev/ide.c" 1
+ 409 02b2 0000      		nop
+ 410               	 ;  0 "" 2
+ 411               	/* #NOAPP */
+ 412 02b4 A091 0000 		lds r26,pIDE
+ 413 02b8 B091 0000 		lds r27,(pIDE)+1
+ 414 02bc 1596      		adiw r26,5
+ 415 02be 8C91      		ld r24,X
+ 416 02c0 1597      		sbiw r26,5
+ 417 02c2 382F      		mov r19,r24
+ 418 02c4 20E0      		ldi r18,lo8(0)
+ 419 02c6 1496      		adiw r26,4
+ 420 02c8 8C91      		ld r24,X
+ 421 02ca 1497      		sbiw r26,4
+ 422 02cc 482F      		mov r20,r24
+ 423 02ce 50E0      		ldi r21,lo8(0)
+ 424 02d0 422B      		or r20,r18
+ 425 02d2 532B      		or r21,r19
+ 426 02d4 C416      		cp r12,r20
+ 427 02d6 D506      		cpc r13,r21
+ 428 02d8 00F4      		brsh .L31
+ 429 02da A601      		movw r20,r12
+ 430               	.L31:
+ 431 02dc A114      		cp r10,__zero_reg__
+ 432 02de B104      		cpc r11,__zero_reg__
+ 433 02e0 01F4      		brne .L32
+ 434 02e2 80E0      		ldi r24,lo8(0)
+ 435 02e4 90E0      		ldi r25,hi8(0)
+ 436 02e6 ED01      		movw r28,r26
+ 437 02e8 C050      		subi r28,lo8(-(768))
+ 438 02ea DD4F      		sbci r29,hi8(-(768))
+ 439 02ec FD01      		movw r30,r26
+ 440 02ee E050      		subi r30,lo8(-(1024))
+ 441 02f0 FC4F      		sbci r31,hi8(-(1024))
+ 442 02f2 00C0      		rjmp .L33
+ 443               	.L32:
+ 444 02f4 F501      		movw r30,r10
+ 445 02f6 20E0      		ldi r18,lo8(0)
+ 446 02f8 30E0      		ldi r19,hi8(0)
+ 447 02fa BD01      		movw r22,r26
+ 448 02fc 6050      		subi r22,lo8(-(768))
+ 449 02fe 7D4F      		sbci r23,hi8(-(768))
+ 450 0300 8D01      		movw r16,r26
+ 451 0302 0050      		subi r16,lo8(-(1024))
+ 452 0304 1C4F      		sbci r17,hi8(-(1024))
+ 453 0306 00C0      		rjmp .L34
+ 454               	.L35:
+ 455 0308 EB01      		movw r28,r22
+ 456 030a 8881      		ld r24,Y
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 9
+
+
+ 457 030c 8083      		st Z,r24
+ 458 030e E801      		movw r28,r16
+ 459 0310 8881      		ld r24,Y
+ 460 0312 8183      		std Z+1,r24
+ 461 0314 2E5F      		subi r18,lo8(-(2))
+ 462 0316 3F4F      		sbci r19,hi8(-(2))
+ 463 0318 3296      		adiw r30,2
+ 464               	.L34:
+ 465 031a 2417      		cp r18,r20
+ 466 031c 3507      		cpc r19,r21
+ 467 031e 00F0      		brlo .L35
+ 468 0320 00C0      		rjmp .L36
+ 469               	.L37:
+ 470 0322 2881      		ld r18,Y
+ 471 0324 2081      		ld r18,Z
+ 472 0326 0296      		adiw r24,2
+ 473               	.L33:
+ 474 0328 8417      		cp r24,r20
+ 475 032a 9507      		cpc r25,r21
+ 476 032c 00F0      		brlo .L37
+ 477               	.L36:
+ 478 032e F401      		movw r30,r8
+ 479 0330 5183      		std Z+1,r21
+ 480 0332 4083      		st Z,r20
+ 481 0334 1796      		adiw r26,7
+ 482 0336 8C91      		ld r24,X
+ 483 0338 00C0      		rjmp .L30
+ 484               	.L24:
+ 485 033a 21E0      		ldi r18,lo8(1)
+ 486 033c 30E0      		ldi r19,hi8(1)
+ 487 033e 00C0      		rjmp .L38
+ 488               	.L30:
+ 489 0340 20E0      		ldi r18,lo8(0)
+ 490 0342 30E0      		ldi r19,hi8(0)
+ 491               	.L38:
+ 492 0344 C901      		movw r24,r18
+ 493               	/* epilogue start */
+ 494 0346 DF91      		pop r29
+ 495 0348 CF91      		pop r28
+ 496 034a 1F91      		pop r17
+ 497 034c 0F91      		pop r16
+ 498 034e FF90      		pop r15
+ 499 0350 EF90      		pop r14
+ 500 0352 DF90      		pop r13
+ 501 0354 CF90      		pop r12
+ 502 0356 BF90      		pop r11
+ 503 0358 AF90      		pop r10
+ 504 035a 9F90      		pop r9
+ 505 035c 8F90      		pop r8
+ 506 035e 0895      		ret
+ 507               		.size	ATAPISendCommand, .-ATAPISendCommand
+ 508               	.global	IDEATAPISetCDSpeed
+ 509               		.type	IDEATAPISetCDSpeed, @function
+ 510               	IDEATAPISetCDSpeed:
+ 511 0360 DF93      		push r29
+ 512 0362 CF93      		push r28
+ 513 0364 00D0      		rcall .
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 10
+
+
+ 514 0366 CDB7      		in r28,__SP_L__
+ 515 0368 DEB7      		in r29,__SP_H__
+ 516               	/* prologue: function */
+ 517               	/* frame size = 2 */
+ 518 036a 8823      		tst r24
+ 519 036c 01F0      		breq .L43
+ 520 036e 22E0      		ldi r18,lo8(2)
+ 521 0370 30E0      		ldi r19,hi8(2)
+ 522 0372 00C0      		rjmp .L44
+ 523               	.L43:
+ 524 0374 9091 0000 		lds r25,sDrive
+ 525 0378 8091 0000 		lds r24,sDrive+1
+ 526 037c 282F      		mov r18,r24
+ 527 037e 3327      		clr r19
+ 528 0380 27FD      		sbrc r18,7
+ 529 0382 3095      		com r19
+ 530 0384 2095      		com r18
+ 531 0386 3095      		com r19
+ 532 0388 2227      		clr r18
+ 533 038a 330F      		lsl r19
+ 534 038c 221F      		rol r18
+ 535 038e 3327      		clr r19
+ 536 0390 220F      		lsl r18
+ 537 0392 331F      		rol r19
+ 538 0394 92FF      		sbrs r25,2
+ 539 0396 00C0      		rjmp .L47
+ 540 0398 2115      		cp r18,__zero_reg__
+ 541 039a 3105      		cpc r19,__zero_reg__
+ 542 039c 01F4      		brne .L44
+ 543 039e 8CE0      		ldi r24,lo8(12)
+ 544 03a0 E0E0      		ldi r30,lo8(aATAPICmd)
+ 545 03a2 F0E0      		ldi r31,hi8(aATAPICmd)
+ 546 03a4 DF01      		movw r26,r30
+ 547 03a6 1D92      		st X+,__zero_reg__
+ 548 03a8 8A95      	        dec r24
+ 549 03aa 01F4      		brne .-6
+ 550 03ac 8BEB      		ldi r24,lo8(-69)
+ 551 03ae 8093 0000 		sts aATAPICmd,r24
+ 552 03b2 7093 0000 		sts aATAPICmd+2,r23
+ 553 03b6 6093 0000 		sts aATAPICmd+3,r22
+ 554 03ba 80E0      		ldi r24,lo8(sDrive)
+ 555 03bc 90E0      		ldi r25,hi8(sDrive)
+ 556 03be 60E0      		ldi r22,lo8(0)
+ 557 03c0 70E0      		ldi r23,hi8(0)
+ 558 03c2 AE01      		movw r20,r28
+ 559 03c4 4F5F      		subi r20,lo8(-(1))
+ 560 03c6 5F4F      		sbci r21,hi8(-(1))
+ 561 03c8 0E94 0000 		call ATAPISendCommand
+ 562 03cc 9C01      		movw r18,r24
+ 563               	.L44:
+ 564 03ce C901      		movw r24,r18
+ 565               	/* epilogue start */
+ 566 03d0 0F90      		pop __tmp_reg__
+ 567 03d2 0F90      		pop __tmp_reg__
+ 568 03d4 CF91      		pop r28
+ 569 03d6 DF91      		pop r29
+ 570 03d8 0895      		ret
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 11
+
+
+ 571               	.L47:
+ 572 03da 28E0      		ldi r18,lo8(8)
+ 573 03dc 30E0      		ldi r19,hi8(8)
+ 574 03de 00C0      		rjmp .L44
+ 575               		.size	IDEATAPISetCDSpeed, .-IDEATAPISetCDSpeed
+ 576               		.type	DeviceDiag, @function
+ 577               	DeviceDiag:
+ 578 03e0 CF93      		push r28
+ 579 03e2 DF93      		push r29
+ 580               	/* prologue: function */
+ 581               	/* frame size = 0 */
+ 582 03e4 EC01      		movw r28,r24
+ 583 03e6 80E0      		ldi r24,lo8(0)
+ 584 03e8 0E94 0000 		call SelectDevice
+ 585 03ec 892B      		or r24,r25
+ 586 03ee 01F4      		brne .L50
+ 587               	/* #APP */
+ 588               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 589 03f0 0FB6      		in  __tmp_reg__, __SREG__
+ 590 03f2 F894      		cli
+ 591 03f4 0F92      		push __tmp_reg__
+ 592               		
+ 593               	 ;  0 "" 2
+ 594               	/* #NOAPP */
+ 595 03f6 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 596 03fa 1092 0000 		sts hIDEEvent,__zero_reg__
+ 597               	/* #APP */
+ 598               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 599 03fe 0F90      		pop __tmp_reg__
+ 600 0400 0FBE      		out __SREG__, __tmp_reg__
+ 601               		
+ 602               	 ;  0 "" 2
+ 603               	/* #NOAPP */
+ 604 0402 E091 0000 		lds r30,pIDE
+ 605 0406 F091 0000 		lds r31,(pIDE)+1
+ 606 040a 8281      		ldd r24,Z+2
+ 607 040c 8381      		ldd r24,Z+3
+ 608 040e 8481      		ldd r24,Z+4
+ 609 0410 9581      		ldd r25,Z+5
+ 610 0412 8431      		cpi r24,lo8(20)
+ 611 0414 01F4      		brne .L51
+ 612 0416 9B3E      		cpi r25,lo8(-21)
+ 613 0418 01F0      		breq .L52
+ 614               	.L51:
+ 615 041a 80E9      		ldi r24,lo8(-112)
+ 616 041c 8783      		std Z+7,r24
+ 617 041e 80E0      		ldi r24,lo8(hIDEEvent)
+ 618 0420 90E0      		ldi r25,hi8(hIDEEvent)
+ 619 0422 40E1      		ldi r20,lo8(10000)
+ 620 0424 57E2      		ldi r21,hi8(10000)
+ 621 0426 60E0      		ldi r22,hlo8(10000)
+ 622 0428 70E0      		ldi r23,hhi8(10000)
+ 623 042a 0E94 0000 		call NutEventWait
+ 624 042e 8F5F      		subi r24,lo8(-1)
+ 625 0430 9F4F      		sbci r25,hi8(-1)
+ 626 0432 01F0      		breq .L50
+ 627 0434 E091 0000 		lds r30,pIDE
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 12
+
+
+ 628 0438 F091 0000 		lds r31,(pIDE)+1
+ 629 043c 8181      		ldd r24,Z+1
+ 630 043e 20E0      		ldi r18,lo8(0)
+ 631 0440 30E0      		ldi r19,hi8(0)
+ 632 0442 8130      		cpi r24,lo8(1)
+ 633 0444 01F0      		breq .L54
+ 634               	.L50:
+ 635 0446 21E0      		ldi r18,lo8(1)
+ 636 0448 30E0      		ldi r19,hi8(1)
+ 637               	.L54:
+ 638 044a C901      		movw r24,r18
+ 639               	/* epilogue start */
+ 640 044c DF91      		pop r29
+ 641 044e CF91      		pop r28
+ 642 0450 0895      		ret
+ 643               	.L52:
+ 644 0452 84E0      		ldi r24,lo8(4)
+ 645 0454 90E0      		ldi r25,hi8(4)
+ 646 0456 9983      		std Y+1,r25
+ 647 0458 8883      		st Y,r24
+ 648 045a 20E0      		ldi r18,lo8(0)
+ 649 045c 30E0      		ldi r19,hi8(0)
+ 650 045e 00C0      		rjmp .L54
+ 651               		.size	DeviceDiag, .-DeviceDiag
+ 652               	.global	IDELock
+ 653               		.type	IDELock, @function
+ 654               	IDELock:
+ 655               	/* prologue: function */
+ 656               	/* frame size = 0 */
+ 657 0460 80E0      		ldi r24,lo8(hIDESemaphore)
+ 658 0462 90E0      		ldi r25,hi8(hIDESemaphore)
+ 659 0464 40E0      		ldi r20,lo8(0)
+ 660 0466 50E0      		ldi r21,hi8(0)
+ 661 0468 60E0      		ldi r22,hlo8(0)
+ 662 046a 70E0      		ldi r23,hhi8(0)
+ 663 046c 0E94 0000 		call NutEventWait
+ 664               	/* epilogue start */
+ 665 0470 0895      		ret
+ 666               		.size	IDELock, .-IDELock
+ 667               		.type	HardwareReset, @function
+ 668               	HardwareReset:
+ 669 0472 CF93      		push r28
+ 670 0474 DF93      		push r29
+ 671               	/* prologue: function */
+ 672               	/* frame size = 0 */
+ 673 0476 EC01      		movw r28,r24
+ 674 0478 8A81      		ldd r24,Y+2
+ 675 047a 8330      		cpi r24,lo8(3)
+ 676 047c 01F4      		brne .L59
+ 677 047e 959A      		sbi 50-32,5
+ 678               	/* #APP */
+ 679               	 ;  258 "../../nut/arch/avr/dev/ide.c" 1
+ 680 0480 0000      		nop
+ 681               	 ;  0 "" 2
+ 682               	/* #NOAPP */
+ 683 0482 68EE      		ldi r22,lo8(1000)
+ 684 0484 73E0      		ldi r23,hi8(1000)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 13
+
+
+ 685 0486 80E0      		ldi r24,hlo8(1000)
+ 686 0488 90E0      		ldi r25,hhi8(1000)
+ 687 048a 0E94 0000 		call NutSleep
+ 688 048e 9598      		cbi 50-32,5
+ 689               	/* #APP */
+ 690               	 ;  266 "../../nut/arch/avr/dev/ide.c" 1
+ 691 0490 0000      		nop
+ 692               	 ;  0 "" 2
+ 693               	/* #NOAPP */
+ 694 0492 00C0      		rjmp .L64
+ 695               	.L59:
+ 696 0494 9598      		cbi 50-32,5
+ 697               	/* #APP */
+ 698               	 ;  274 "../../nut/arch/avr/dev/ide.c" 1
+ 699 0496 0000      		nop
+ 700               	 ;  0 "" 2
+ 701               	/* #NOAPP */
+ 702 0498 68EE      		ldi r22,lo8(1000)
+ 703 049a 73E0      		ldi r23,hi8(1000)
+ 704 049c 80E0      		ldi r24,hlo8(1000)
+ 705 049e 90E0      		ldi r25,hhi8(1000)
+ 706 04a0 0E94 0000 		call NutSleep
+ 707 04a4 959A      		sbi 50-32,5
+ 708               	/* #APP */
+ 709               	 ;  282 "../../nut/arch/avr/dev/ide.c" 1
+ 710 04a6 0000      		nop
+ 711               	 ;  0 "" 2
+ 712               	/* #NOAPP */
+ 713 04a8 8A81      		ldd r24,Y+2
+ 714 04aa 8230      		cpi r24,lo8(2)
+ 715 04ac 01F4      		brne .L61
+ 716               	.L64:
+ 717 04ae 68EE      		ldi r22,lo8(1000)
+ 718 04b0 73E0      		ldi r23,hi8(1000)
+ 719 04b2 80E0      		ldi r24,hlo8(1000)
+ 720 04b4 90E0      		ldi r25,hhi8(1000)
+ 721 04b6 00C0      		rjmp .L63
+ 722               	.L61:
+ 723 04b8 60E1      		ldi r22,lo8(10000)
+ 724 04ba 77E2      		ldi r23,hi8(10000)
+ 725 04bc 80E0      		ldi r24,hlo8(10000)
+ 726 04be 90E0      		ldi r25,hhi8(10000)
+ 727               	.L63:
+ 728 04c0 0E94 0000 		call NutSleep
+ 729               	/* epilogue start */
+ 730 04c4 DF91      		pop r29
+ 731 04c6 CF91      		pop r28
+ 732 04c8 0895      		ret
+ 733               		.size	HardwareReset, .-HardwareReset
+ 734               	.global	IDESemaInit
+ 735               		.type	IDESemaInit, @function
+ 736               	IDESemaInit:
+ 737               	/* prologue: function */
+ 738               	/* frame size = 0 */
+ 739 04ca 80E0      		ldi r24,lo8(hIDESemaphore)
+ 740 04cc 90E0      		ldi r25,hi8(hIDESemaphore)
+ 741 04ce 0E94 0000 		call NutEventPost
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 14
+
+
+ 742               	/* epilogue start */
+ 743 04d2 0895      		ret
+ 744               		.size	IDESemaInit, .-IDESemaInit
+ 745               		.data
+ 746               	.LC0:
+ 747 0000 6366 6368 		.string	"cfchange"
+ 747      616E 6765 
+ 747      00
+ 748               		.text
+ 749               	.global	IDEInit
+ 750               		.type	IDEInit, @function
+ 751               	IDEInit:
+ 752 04d4 0F93      		push r16
+ 753 04d6 1F93      		push r17
+ 754 04d8 CF93      		push r28
+ 755 04da DF93      		push r29
+ 756               	/* prologue: function */
+ 757               	/* frame size = 0 */
+ 758 04dc EC01      		movw r28,r24
+ 759 04de 8B01      		movw r16,r22
+ 760 04e0 5093 0000 		sts (pUserMountFunc)+1,r21
+ 761 04e4 4093 0000 		sts pUserMountFunc,r20
+ 762 04e8 3093 0000 		sts (pUserUnMountFunc)+1,r19
+ 763 04ec 2093 0000 		sts pUserUnMountFunc,r18
+ 764 04f0 0097      		sbiw r24,0
+ 765 04f2 01F4      		brne .L68
+ 766 04f4 C0E0      		ldi r28,lo8(-8192)
+ 767 04f6 D0EE      		ldi r29,hi8(-8192)
+ 768               	.L68:
+ 769 04f8 82E0      		ldi r24,lo8(2)
+ 770 04fa 8093 6D00 		sts 109,r24
+ 771 04fe 80E2      		ldi r24,lo8(32)
+ 772 0500 81BB      		out 49-32,r24
+ 773 0502 8AE0      		ldi r24,lo8(10)
+ 774 0504 E0E0      		ldi r30,lo8(sDrive)
+ 775 0506 F0E0      		ldi r31,hi8(sDrive)
+ 776 0508 DF01      		movw r26,r30
+ 777 050a 1D92      		st X+,__zero_reg__
+ 778 050c 8A95      	        dec r24
+ 779 050e 01F4      		brne .-6
+ 780 0510 1092 0000 		sts sDrive+3,__zero_reg__
+ 781 0514 0093 0000 		sts sDrive+2,r16
+ 782 0518 80E0      		ldi r24,lo8(hIDESemaphore)
+ 783 051a 90E0      		ldi r25,hi8(hIDESemaphore)
+ 784 051c 0E94 0000 		call NutEventPost
+ 785 0520 D093 0000 		sts (pIDE)+1,r29
+ 786 0524 C093 0000 		sts pIDE,r28
+ 787               	/* #APP */
+ 788               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 789 0528 0FB6      		in  __tmp_reg__, __SREG__
+ 790 052a F894      		cli
+ 791 052c 0F92      		push __tmp_reg__
+ 792               		
+ 793               	 ;  0 "" 2
+ 794               	/* #NOAPP */
+ 795 052e 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 796 0532 1092 0000 		sts hIDEEvent,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 15
+
+
+ 797               	/* #APP */
+ 798               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 799 0536 0F90      		pop __tmp_reg__
+ 800 0538 0FBE      		out __SREG__, __tmp_reg__
+ 801               		
+ 802               	 ;  0 "" 2
+ 803               	 ;  1230 "../../nut/arch/avr/dev/ide.c" 1
+ 804 053a 0FB6      		in  __tmp_reg__, __SREG__
+ 805 053c F894      		cli
+ 806 053e 0F92      		push __tmp_reg__
+ 807               		
+ 808               	 ;  0 "" 2
+ 809               	/* #NOAPP */
+ 810 0540 1092 0000 		sts gbIntStatus,__zero_reg__
+ 811 0544 80E0      		ldi r24,lo8(sig_INTERRUPT7)
+ 812 0546 90E0      		ldi r25,hi8(sig_INTERRUPT7)
+ 813 0548 60E0      		ldi r22,lo8(gs(IDEInterrupt))
+ 814 054a 70E0      		ldi r23,hi8(gs(IDEInterrupt))
+ 815 054c 40E0      		ldi r20,lo8(0)
+ 816 054e 50E0      		ldi r21,hi8(0)
+ 817 0550 0E94 0000 		call NutRegisterIrqHandler
+ 818 0554 892B      		or r24,r25
+ 819 0556 01F4      		brne .L69
+ 820 0558 8AB7      		in r24,90-32
+ 821 055a 806C      		ori r24,lo8(-64)
+ 822 055c 8ABF      		out 90-32,r24
+ 823 055e 89B7      		in r24,89-32
+ 824 0560 8068      		ori r24,lo8(-128)
+ 825 0562 89BF      		out 89-32,r24
+ 826               	.L69:
+ 827 0564 0130      		cpi r16,1
+ 828 0566 1105      		cpc r17,__zero_reg__
+ 829 0568 01F0      		breq .L71
+ 830 056a 0330      		cpi r16,3
+ 831 056c 1105      		cpc r17,__zero_reg__
+ 832 056e 01F4      		brne .L70
+ 833 0570 00C0      		rjmp .L77
+ 834               	.L71:
+ 835 0572 8FEF      		ldi r24,lo8(-1)
+ 836 0574 8CBF      		out 92-32,r24
+ 837 0576 00C0      		rjmp .L70
+ 838               	.L77:
+ 839 0578 8AB7      		in r24,90-32
+ 840 057a 8F7C      		andi r24,lo8(-49)
+ 841 057c 8ABF      		out 90-32,r24
+ 842 057e 0E99      		sbic 33-32,6
+ 843 0580 00C0      		rjmp .L73
+ 844 0582 1092 0000 		sts gbCFMountStatus,__zero_reg__
+ 845 0586 8AB7      		in r24,90-32
+ 846 0588 8063      		ori r24,lo8(48)
+ 847 058a 00C0      		rjmp .L76
+ 848               	.L73:
+ 849 058c 81E0      		ldi r24,lo8(1)
+ 850 058e 8093 0000 		sts gbCFMountStatus,r24
+ 851 0592 8AB7      		in r24,90-32
+ 852 0594 8062      		ori r24,lo8(32)
+ 853               	.L76:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 16
+
+
+ 854 0596 8ABF      		out 90-32,r24
+ 855 0598 80E0      		ldi r24,lo8(sig_INTERRUPT6)
+ 856 059a 90E0      		ldi r25,hi8(sig_INTERRUPT6)
+ 857 059c 60E0      		ldi r22,lo8(gs(CFInterrupt))
+ 858 059e 70E0      		ldi r23,hi8(gs(CFInterrupt))
+ 859 05a0 40E0      		ldi r20,lo8(0)
+ 860 05a2 50E0      		ldi r21,hi8(0)
+ 861 05a4 0E94 0000 		call NutRegisterIrqHandler
+ 862 05a8 892B      		or r24,r25
+ 863 05aa 01F4      		brne .L70
+ 864 05ac 80E0      		ldi r24,lo8(.LC0)
+ 865 05ae 90E0      		ldi r25,hi8(.LC0)
+ 866 05b0 60E0      		ldi r22,lo8(gs(CFChange))
+ 867 05b2 70E0      		ldi r23,hi8(gs(CFChange))
+ 868 05b4 40E0      		ldi r20,lo8(0)
+ 869 05b6 50E0      		ldi r21,hi8(0)
+ 870 05b8 20E8      		ldi r18,lo8(640)
+ 871 05ba 32E0      		ldi r19,hi8(640)
+ 872 05bc 0E94 0000 		call NutThreadCreate
+ 873 05c0 89B7      		in r24,89-32
+ 874 05c2 8064      		ori r24,lo8(64)
+ 875 05c4 89BF      		out 89-32,r24
+ 876               	.L70:
+ 877               	/* #APP */
+ 878               	 ;  1313 "../../nut/arch/avr/dev/ide.c" 1
+ 879 05c6 0F90      		pop __tmp_reg__
+ 880 05c8 0FBE      		out __SREG__, __tmp_reg__
+ 881               		
+ 882               	 ;  0 "" 2
+ 883               	/* #NOAPP */
+ 884 05ca 80E0      		ldi r24,lo8(sDrive)
+ 885 05cc 90E0      		ldi r25,hi8(sDrive)
+ 886 05ce 0E94 0000 		call HardwareReset
+ 887 05d2 80E0      		ldi r24,lo8(0)
+ 888 05d4 90E0      		ldi r25,hi8(0)
+ 889               	/* epilogue start */
+ 890 05d6 DF91      		pop r29
+ 891 05d8 CF91      		pop r28
+ 892 05da 1F91      		pop r17
+ 893 05dc 0F91      		pop r16
+ 894 05de 0895      		ret
+ 895               		.size	IDEInit, .-IDEInit
+ 896               	.global	IDEFree
+ 897               		.type	IDEFree, @function
+ 898               	IDEFree:
+ 899               	/* prologue: function */
+ 900               	/* frame size = 0 */
+ 901 05e0 80E0      		ldi r24,lo8(hIDESemaphore)
+ 902 05e2 90E0      		ldi r25,hi8(hIDESemaphore)
+ 903 05e4 0E94 0000 		call NutEventPost
+ 904               	/* epilogue start */
+ 905 05e8 0895      		ret
+ 906               		.size	IDEFree, .-IDEFree
+ 907               	.global	IDEReadSectors
+ 908               		.type	IDEReadSectors, @function
+ 909               	IDEReadSectors:
+ 910 05ea 2F92      		push r2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 17
+
+
+ 911 05ec 3F92      		push r3
+ 912 05ee 4F92      		push r4
+ 913 05f0 5F92      		push r5
+ 914 05f2 6F92      		push r6
+ 915 05f4 7F92      		push r7
+ 916 05f6 8F92      		push r8
+ 917 05f8 9F92      		push r9
+ 918 05fa AF92      		push r10
+ 919 05fc BF92      		push r11
+ 920 05fe CF92      		push r12
+ 921 0600 DF92      		push r13
+ 922 0602 EF92      		push r14
+ 923 0604 FF92      		push r15
+ 924 0606 0F93      		push r16
+ 925 0608 1F93      		push r17
+ 926 060a DF93      		push r29
+ 927 060c CF93      		push r28
+ 928 060e CDB7      		in r28,__SP_L__
+ 929 0610 DEB7      		in r29,__SP_H__
+ 930 0612 2A97      		sbiw r28,10
+ 931 0614 0FB6      		in __tmp_reg__,__SREG__
+ 932 0616 F894      		cli
+ 933 0618 DEBF      		out __SP_H__,r29
+ 934 061a 0FBE      		out __SREG__,__tmp_reg__
+ 935 061c CDBF      		out __SP_L__,r28
+ 936               	/* prologue: function */
+ 937               	/* frame size = 10 */
+ 938 061e 8A87      		std Y+10,r24
+ 939 0620 B62E      		mov r11,r22
+ 940 0622 A72E      		mov r10,r23
+ 941 0624 6901      		movw r12,r18
+ 942 0626 7A01      		movw r14,r20
+ 943 0628 2801      		movw r4,r16
+ 944 062a 80E0      		ldi r24,lo8(hIDESemaphore)
+ 945 062c 90E0      		ldi r25,hi8(hIDESemaphore)
+ 946 062e 40E0      		ldi r20,lo8(0)
+ 947 0630 50E0      		ldi r21,hi8(0)
+ 948 0632 60E0      		ldi r22,hlo8(0)
+ 949 0634 70E0      		ldi r23,hhi8(0)
+ 950 0636 0E94 0000 		call NutEventWait
+ 951 063a 2A85      		ldd r18,Y+10
+ 952 063c 2223      		tst r18
+ 953 063e 01F0      		breq .L81
+ 954 0640 82E0      		ldi r24,lo8(2)
+ 955 0642 90E0      		ldi r25,hi8(2)
+ 956 0644 9987      		std Y+9,r25
+ 957 0646 8887      		std Y+8,r24
+ 958 0648 6624      		clr r6
+ 959 064a 7724      		clr r7
+ 960 064c 00C0      		rjmp .L82
+ 961               	.L81:
+ 962 064e 8091 0000 		lds r24,sDrive
+ 963 0652 9091 0000 		lds r25,(sDrive)+1
+ 964 0656 97FD      		sbrc r25,7
+ 965 0658 00C0      		rjmp .L83
+ 966 065a A2E0      		ldi r26,lo8(2)
+ 967 065c B0E0      		ldi r27,hi8(2)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 18
+
+
+ 968 065e B987      		std Y+9,r27
+ 969 0660 A887      		std Y+8,r26
+ 970 0662 00C0      		rjmp .L113
+ 971               	.L83:
+ 972 0664 C801      		movw r24,r16
+ 973 0666 A0E0      		ldi r26,lo8(0)
+ 974 0668 B0E0      		ldi r27,hi8(0)
+ 975 066a 8C0D      		add r24,r12
+ 976 066c 9D1D      		adc r25,r13
+ 977 066e AE1D      		adc r26,r14
+ 978 0670 BF1D      		adc r27,r15
+ 979 0672 2091 0000 		lds r18,sDrive+4
+ 980 0676 3091 0000 		lds r19,(sDrive+4)+1
+ 981 067a 4091 0000 		lds r20,(sDrive+4)+2
+ 982 067e 5091 0000 		lds r21,(sDrive+4)+3
+ 983 0682 2817      		cp r18,r24
+ 984 0684 3907      		cpc r19,r25
+ 985 0686 4A07      		cpc r20,r26
+ 986 0688 5B07      		cpc r21,r27
+ 987 068a 00F4      		brsh .L84
+ 988 068c E3E0      		ldi r30,lo8(3)
+ 989 068e F0E0      		ldi r31,hi8(3)
+ 990 0690 F987      		std Y+9,r31
+ 991 0692 E887      		std Y+8,r30
+ 992 0694 00C0      		rjmp .L113
+ 993               	.L84:
+ 994 0696 1986      		std Y+9,__zero_reg__
+ 995 0698 1886      		std Y+8,__zero_reg__
+ 996               	.L113:
+ 997 069a B0E0      		ldi r27,lo8(sDrive)
+ 998 069c 6B2E      		mov r6,r27
+ 999 069e B0E0      		ldi r27,hi8(sDrive)
+ 1000 06a0 7B2E      		mov r7,r27
+ 1001               	.L82:
+ 1002 06a2 D301      		movw r26,r6
+ 1003 06a4 8C91      		ld r24,X
+ 1004 06a6 82FF      		sbrs r24,2
+ 1005 06a8 00C0      		rjmp .L85
+ 1006 06aa B2E0      		ldi r27,lo8(2)
+ 1007 06ac 4B16      		cp r4,r27
+ 1008 06ae 5104      		cpc r5,__zero_reg__
+ 1009 06b0 00F4      		brsh .+2
+ 1010 06b2 00C0      		rjmp .L86
+ 1011 06b4 03E0      		ldi r16,lo8(3)
+ 1012 06b6 10E0      		ldi r17,hi8(3)
+ 1013 06b8 00C0      		rjmp .L87
+ 1014               	.L85:
+ 1015 06ba E885      		ldd r30,Y+8
+ 1016 06bc F985      		ldd r31,Y+9
+ 1017 06be EF2B      		or r30,r31
+ 1018 06c0 01F0      		breq .L88
+ 1019 06c2 00C0      		rjmp .L89
+ 1020               	.L112:
+ 1021 06c4 E0E0      		ldi r30,lo8(aATAPICmd)
+ 1022 06c6 F0E0      		ldi r31,hi8(aATAPICmd)
+ 1023 06c8 8CE0      		ldi r24,lo8(12)
+ 1024 06ca DF01      		movw r26,r30
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 19
+
+
+ 1025 06cc 1D92      		st X+,__zero_reg__
+ 1026 06ce 8A95      	        dec r24
+ 1027 06d0 01F4      		brne .-6
+ 1028 06d2 88EA      		ldi r24,lo8(-88)
+ 1029 06d4 8093 0000 		sts aATAPICmd,r24
+ 1030 06d8 3596      		adiw r30,5
+ 1031 06da 85E0      		ldi r24,lo8(5)
+ 1032 06dc 90E0      		ldi r25,hi8(5)
+ 1033 06de 00C0      		rjmp .L90
+ 1034               	.L91:
+ 1035 06e0 C082      		st Z,r12
+ 1036 06e2 CD2C      		mov r12,r13
+ 1037 06e4 DE2C      		mov r13,r14
+ 1038 06e6 EF2C      		mov r14,r15
+ 1039 06e8 FF24      		clr r15
+ 1040 06ea 3197      		sbiw r30,1
+ 1041 06ec C901      		movw r24,r18
+ 1042               	.L90:
+ 1043 06ee 9C01      		movw r18,r24
+ 1044 06f0 2150      		subi r18,lo8(-(-1))
+ 1045 06f2 3040      		sbci r19,hi8(-(-1))
+ 1046 06f4 C114      		cp r12,__zero_reg__
+ 1047 06f6 D104      		cpc r13,__zero_reg__
+ 1048 06f8 E104      		cpc r14,__zero_reg__
+ 1049 06fa F104      		cpc r15,__zero_reg__
+ 1050 06fc 01F4      		brne .L91
+ 1051 06fe 9A83      		std Y+2,r25
+ 1052 0700 8983      		std Y+1,r24
+ 1053 0702 81E0      		ldi r24,lo8(1)
+ 1054 0704 8093 0000 		sts aATAPICmd+9,r24
+ 1055 0708 C301      		movw r24,r6
+ 1056 070a 6B2D      		mov r22,r11
+ 1057 070c 7A2D      		mov r23,r10
+ 1058 070e AE01      		movw r20,r28
+ 1059 0710 4F5F      		subi r20,lo8(-(1))
+ 1060 0712 5F4F      		sbci r21,hi8(-(1))
+ 1061 0714 0E94 0000 		call ATAPISendCommand
+ 1062 0718 8C01      		movw r16,r24
+ 1063 071a 0097      		sbiw r24,0
+ 1064 071c 01F0      		breq .+2
+ 1065 071e 00C0      		rjmp .L92
+ 1066 0720 2981      		ldd r18,Y+1
+ 1067 0722 3A81      		ldd r19,Y+2
+ 1068 0724 F301      		movw r30,r6
+ 1069 0726 8085      		ldd r24,Z+8
+ 1070 0728 9185      		ldd r25,Z+9
+ 1071 072a 2817      		cp r18,r24
+ 1072 072c 3907      		cpc r19,r25
+ 1073 072e 01F0      		breq .+2
+ 1074 0730 00C0      		rjmp .L92
+ 1075 0732 00C0      		rjmp .L87
+ 1076               	.L88:
+ 1077 0734 2B2D      		mov r18,r11
+ 1078 0736 3A2D      		mov r19,r10
+ 1079 0738 C901      		movw r24,r18
+ 1080 073a 9F83      		std Y+7,r25
+ 1081 073c 8E83      		std Y+6,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 20
+
+
+ 1082 073e 8AE0      		ldi r24,lo8(10)
+ 1083 0740 3A85      		ldd r19,Y+10
+ 1084 0742 389F      		mul r19,r24
+ 1085 0744 9001      		movw r18,r0
+ 1086 0746 1124      		clr r1
+ 1087 0748 2050      		subi r18,lo8(-(sDrive))
+ 1088 074a 3040      		sbci r19,hi8(-(sDrive))
+ 1089 074c 3D83      		std Y+5,r19
+ 1090 074e 2C83      		std Y+4,r18
+ 1091 0750 8A85      		ldd r24,Y+10
+ 1092 0752 8295      		swap r24
+ 1093 0754 807F      		andi r24,lo8(-16)
+ 1094 0756 806E      		ori r24,lo8(-32)
+ 1095 0758 8B83      		std Y+3,r24
+ 1096 075a 00C0      		rjmp .L93
+ 1097               	.L106:
+ 1098 075c 9FEF      		ldi r25,lo8(255)
+ 1099 075e 4916      		cp r4,r25
+ 1100 0760 5104      		cpc r5,__zero_reg__
+ 1101 0762 01F0      		breq .L94
+ 1102 0764 00F0      		brlo .L94
+ 1103 0766 212C      		mov r2,__zero_reg__
+ 1104 0768 E1E0      		ldi r30,hi8(256)
+ 1105 076a 3E2E      		mov r3,r30
+ 1106 076c 00C0      		rjmp .L95
+ 1107               	.L94:
+ 1108 076e 1201      		movw r2,r4
+ 1109               	.L95:
+ 1110 0770 8A85      		ldd r24,Y+10
+ 1111 0772 0E94 0000 		call SelectDevice
+ 1112 0776 9C01      		movw r18,r24
+ 1113 0778 AC81      		ldd r26,Y+4
+ 1114 077a BD81      		ldd r27,Y+5
+ 1115 077c 8C91      		ld r24,X
+ 1116 077e 80FF      		sbrs r24,0
+ 1117 0780 00C0      		rjmp .L96
+ 1118 0782 2115      		cp r18,__zero_reg__
+ 1119 0784 3105      		cpc r19,__zero_reg__
+ 1120 0786 01F0      		breq .+2
+ 1121 0788 00C0      		rjmp .L97
+ 1122               	/* #APP */
+ 1123               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 1124 078a 0FB6      		in  __tmp_reg__, __SREG__
+ 1125 078c F894      		cli
+ 1126 078e 0F92      		push __tmp_reg__
+ 1127               		
+ 1128               	 ;  0 "" 2
+ 1129               	/* #NOAPP */
+ 1130 0790 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 1131 0794 1092 0000 		sts hIDEEvent,__zero_reg__
+ 1132               	/* #APP */
+ 1133               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 1134 0798 0F90      		pop __tmp_reg__
+ 1135 079a 0FBE      		out __SREG__, __tmp_reg__
+ 1136               		
+ 1137               	 ;  0 "" 2
+ 1138               	/* #NOAPP */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 21
+
+
+ 1139 079c 8F2D      		mov r24,r15
+ 1140 079e 9927      		clr r25
+ 1141 07a0 AA27      		clr r26
+ 1142 07a2 BB27      		clr r27
+ 1143 07a4 EB81      		ldd r30,Y+3
+ 1144 07a6 8E2B      		or r24,r30
+ 1145 07a8 E091 0000 		lds r30,pIDE
+ 1146 07ac F091 0000 		lds r31,(pIDE)+1
+ 1147 07b0 8683      		std Z+6,r24
+ 1148 07b2 C701      		movw r24,r14
+ 1149 07b4 AA27      		clr r26
+ 1150 07b6 BB27      		clr r27
+ 1151 07b8 8583      		std Z+5,r24
+ 1152 07ba BB27      		clr r27
+ 1153 07bc AF2D      		mov r26,r15
+ 1154 07be 9E2D      		mov r25,r14
+ 1155 07c0 8D2D      		mov r24,r13
+ 1156 07c2 8483      		std Z+4,r24
+ 1157 07c4 C382      		std Z+3,r12
+ 1158 07c6 2282      		std Z+2,r2
+ 1159 07c8 20E2      		ldi r18,lo8(32)
+ 1160 07ca 2783      		std Z+7,r18
+ 1161 07cc 8E80      		ldd r8,Y+6
+ 1162 07ce 9F80      		ldd r9,Y+7
+ 1163 07d0 AA24      		clr r10
+ 1164 07d2 BB24      		clr r11
+ 1165               	.L105:
+ 1166 07d4 80E0      		ldi r24,lo8(hIDEEvent)
+ 1167 07d6 90E0      		ldi r25,hi8(hIDEEvent)
+ 1168 07d8 40E1      		ldi r20,lo8(10000)
+ 1169 07da 57E2      		ldi r21,hi8(10000)
+ 1170 07dc 60E0      		ldi r22,hlo8(10000)
+ 1171 07de 70E0      		ldi r23,hhi8(10000)
+ 1172 07e0 0E94 0000 		call NutEventWait
+ 1173 07e4 8F5F      		subi r24,lo8(-1)
+ 1174 07e6 9F4F      		sbci r25,hi8(-1)
+ 1175 07e8 01F4      		brne .+2
+ 1176 07ea 00C0      		rjmp .L99
+ 1177 07ec 8091 0000 		lds r24,gbIntStatus
+ 1178 07f0 E091 0000 		lds r30,pIDE
+ 1179 07f4 F091 0000 		lds r31,(pIDE)+1
+ 1180 07f8 80FF      		sbrs r24,0
+ 1181 07fa 00C0      		rjmp .L100
+ 1182 07fc 8181      		ldd r24,Z+1
+ 1183 07fe 01E0      		ldi r16,lo8(1)
+ 1184 0800 10E0      		ldi r17,hi8(1)
+ 1185 0802 00C0      		rjmp .L101
+ 1186               	.L100:
+ 1187 0804 BF01      		movw r22,r30
+ 1188 0806 6050      		subi r22,lo8(-(768))
+ 1189 0808 7D4F      		sbci r23,hi8(-(768))
+ 1190 080a AF01      		movw r20,r30
+ 1191 080c 4050      		subi r20,lo8(-(1024))
+ 1192 080e 5C4F      		sbci r21,hi8(-(1024))
+ 1193 0810 F401      		movw r30,r8
+ 1194 0812 20E0      		ldi r18,lo8(0)
+ 1195 0814 30E0      		ldi r19,hi8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 22
+
+
+ 1196               	.L104:
+ 1197 0816 DB01      		movw r26,r22
+ 1198 0818 8C91      		ld r24,X
+ 1199 081a 8083      		st Z,r24
+ 1200 081c AC81      		ldd r26,Y+4
+ 1201 081e BD81      		ldd r27,Y+5
+ 1202 0820 1296      		adiw r26,2
+ 1203 0822 8C91      		ld r24,X
+ 1204 0824 8330      		cpi r24,lo8(3)
+ 1205 0826 01F4      		brne .L102
+ 1206 0828 DB01      		movw r26,r22
+ 1207 082a 00C0      		rjmp .L114
+ 1208               	.L102:
+ 1209 082c DA01      		movw r26,r20
+ 1210               	.L114:
+ 1211 082e 8C91      		ld r24,X
+ 1212 0830 8183      		std Z+1,r24
+ 1213 0832 2E5F      		subi r18,lo8(-(2))
+ 1214 0834 3F4F      		sbci r19,hi8(-(2))
+ 1215 0836 3296      		adiw r30,2
+ 1216 0838 B2E0      		ldi r27,hi8(512)
+ 1217 083a 2030      		cpi r18,lo8(512)
+ 1218 083c 3B07      		cpc r19,r27
+ 1219 083e 01F4      		brne .L104
+ 1220 0840 E0E0      		ldi r30,lo8(512)
+ 1221 0842 F2E0      		ldi r31,hi8(512)
+ 1222 0844 8E0E      		add r8,r30
+ 1223 0846 9F1E      		adc r9,r31
+ 1224 0848 00E0      		ldi r16,lo8(0)
+ 1225 084a 10E0      		ldi r17,hi8(0)
+ 1226               	.L107:
+ 1227 084c 0894      		sec
+ 1228 084e A11C      		adc r10,__zero_reg__
+ 1229 0850 B11C      		adc r11,__zero_reg__
+ 1230 0852 A214      		cp r10,r2
+ 1231 0854 B304      		cpc r11,r3
+ 1232 0856 00F4      		brsh .+2
+ 1233 0858 00C0      		rjmp .L105
+ 1234               	.L101:
+ 1235 085a E091 0000 		lds r30,pIDE
+ 1236 085e F091 0000 		lds r31,(pIDE)+1
+ 1237 0862 8781      		ldd r24,Z+7
+ 1238 0864 0115      		cp r16,__zero_reg__
+ 1239 0866 1105      		cpc r17,__zero_reg__
+ 1240 0868 01F4      		brne .L87
+ 1241 086a C101      		movw r24,r2
+ 1242 086c A0E0      		ldi r26,lo8(0)
+ 1243 086e B0E0      		ldi r27,hi8(0)
+ 1244 0870 C80E      		add r12,r24
+ 1245 0872 D91E      		adc r13,r25
+ 1246 0874 EA1E      		adc r14,r26
+ 1247 0876 FB1E      		adc r15,r27
+ 1248 0878 4218      		sub r4,r2
+ 1249 087a 5308      		sbc r5,r3
+ 1250 087c D301      		movw r26,r6
+ 1251 087e 1896      		adiw r26,8
+ 1252 0880 8D91      		ld r24,X+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 23
+
+
+ 1253 0882 9C91      		ld r25,X
+ 1254 0884 1997      		sbiw r26,8+1
+ 1255 0886 FC01      		movw r30,r24
+ 1256 0888 2E9E      		mul r2,r30
+ 1257 088a C001      		movw r24,r0
+ 1258 088c 2F9E      		mul r2,r31
+ 1259 088e 900D      		add r25,r0
+ 1260 0890 3E9E      		mul r3,r30
+ 1261 0892 900D      		add r25,r0
+ 1262 0894 1124      		clr r1
+ 1263 0896 2E81      		ldd r18,Y+6
+ 1264 0898 3F81      		ldd r19,Y+7
+ 1265 089a 280F      		add r18,r24
+ 1266 089c 391F      		adc r19,r25
+ 1267 089e 3F83      		std Y+7,r19
+ 1268 08a0 2E83      		std Y+6,r18
+ 1269               	.L93:
+ 1270 08a2 4114      		cp r4,__zero_reg__
+ 1271 08a4 5104      		cpc r5,__zero_reg__
+ 1272 08a6 01F0      		breq .+2
+ 1273 08a8 00C0      		rjmp .L106
+ 1274 08aa 00C0      		rjmp .L89
+ 1275               	.L92:
+ 1276 08ac 01E0      		ldi r16,lo8(1)
+ 1277 08ae 10E0      		ldi r17,hi8(1)
+ 1278 08b0 00C0      		rjmp .L87
+ 1279               	.L89:
+ 1280 08b2 0885      		ldd r16,Y+8
+ 1281 08b4 1985      		ldd r17,Y+9
+ 1282               	.L87:
+ 1283 08b6 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1284 08b8 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1285 08ba 0E94 0000 		call NutEventPost
+ 1286 08be C801      		movw r24,r16
+ 1287               	/* epilogue start */
+ 1288 08c0 2A96      		adiw r28,10
+ 1289 08c2 0FB6      		in __tmp_reg__,__SREG__
+ 1290 08c4 F894      		cli
+ 1291 08c6 DEBF      		out __SP_H__,r29
+ 1292 08c8 0FBE      		out __SREG__,__tmp_reg__
+ 1293 08ca CDBF      		out __SP_L__,r28
+ 1294 08cc CF91      		pop r28
+ 1295 08ce DF91      		pop r29
+ 1296 08d0 1F91      		pop r17
+ 1297 08d2 0F91      		pop r16
+ 1298 08d4 FF90      		pop r15
+ 1299 08d6 EF90      		pop r14
+ 1300 08d8 DF90      		pop r13
+ 1301 08da CF90      		pop r12
+ 1302 08dc BF90      		pop r11
+ 1303 08de AF90      		pop r10
+ 1304 08e0 9F90      		pop r9
+ 1305 08e2 8F90      		pop r8
+ 1306 08e4 7F90      		pop r7
+ 1307 08e6 6F90      		pop r6
+ 1308 08e8 5F90      		pop r5
+ 1309 08ea 4F90      		pop r4
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 24
+
+
+ 1310 08ec 3F90      		pop r3
+ 1311 08ee 2F90      		pop r2
+ 1312 08f0 0895      		ret
+ 1313               	.L99:
+ 1314 08f2 E091 0000 		lds r30,pIDE
+ 1315 08f6 F091 0000 		lds r31,(pIDE)+1
+ 1316 08fa 8781      		ldd r24,Z+7
+ 1317 08fc 8181      		ldd r24,Z+1
+ 1318 08fe 01E0      		ldi r16,lo8(1)
+ 1319 0900 10E0      		ldi r17,hi8(1)
+ 1320 0902 00C0      		rjmp .L107
+ 1321               	.L96:
+ 1322 0904 21E0      		ldi r18,lo8(1)
+ 1323 0906 30E0      		ldi r19,hi8(1)
+ 1324               	.L97:
+ 1325 0908 8901      		movw r16,r18
+ 1326 090a 00C0      		rjmp .L87
+ 1327               	.L86:
+ 1328 090c 8885      		ldd r24,Y+8
+ 1329 090e 9985      		ldd r25,Y+9
+ 1330 0910 892B      		or r24,r25
+ 1331 0912 01F4      		brne .+2
+ 1332 0914 00C0      		rjmp .L112
+ 1333 0916 00C0      		rjmp .L89
+ 1334               		.size	IDEReadSectors, .-IDEReadSectors
+ 1335               	.global	IDEGetTotalSectors
+ 1336               		.type	IDEGetTotalSectors, @function
+ 1337               	IDEGetTotalSectors:
+ 1338 0918 EF92      		push r14
+ 1339 091a FF92      		push r15
+ 1340 091c 0F93      		push r16
+ 1341 091e 1F93      		push r17
+ 1342               	/* prologue: function */
+ 1343               	/* frame size = 0 */
+ 1344 0920 182F      		mov r17,r24
+ 1345 0922 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1346 0924 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1347 0926 40E0      		ldi r20,lo8(0)
+ 1348 0928 50E0      		ldi r21,hi8(0)
+ 1349 092a 60E0      		ldi r22,hlo8(0)
+ 1350 092c 70E0      		ldi r23,hhi8(0)
+ 1351 092e 0E94 0000 		call NutEventWait
+ 1352 0932 1123      		tst r17
+ 1353 0934 01F0      		breq .L116
+ 1354 0936 EE24      		clr r14
+ 1355 0938 FF24      		clr r15
+ 1356 093a 8701      		movw r16,r14
+ 1357 093c 00C0      		rjmp .L117
+ 1358               	.L116:
+ 1359 093e E090 0000 		lds r14,sDrive+4
+ 1360 0942 F090 0000 		lds r15,(sDrive+4)+1
+ 1361 0946 0091 0000 		lds r16,(sDrive+4)+2
+ 1362 094a 1091 0000 		lds r17,(sDrive+4)+3
+ 1363 094e 80EC      		ldi r24,lo8(-64)
+ 1364 0950 9FEF      		ldi r25,hi8(-64)
+ 1365 0952 AFEF      		ldi r26,hlo8(-64)
+ 1366 0954 BFEF      		ldi r27,hhi8(-64)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 25
+
+
+ 1367 0956 E80E      		add r14,r24
+ 1368 0958 F91E      		adc r15,r25
+ 1369 095a 0A1F      		adc r16,r26
+ 1370 095c 1B1F      		adc r17,r27
+ 1371               	.L117:
+ 1372 095e 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1373 0960 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1374 0962 0E94 0000 		call NutEventPost
+ 1375 0966 B701      		movw r22,r14
+ 1376 0968 C801      		movw r24,r16
+ 1377               	/* epilogue start */
+ 1378 096a 1F91      		pop r17
+ 1379 096c 0F91      		pop r16
+ 1380 096e FF90      		pop r15
+ 1381 0970 EF90      		pop r14
+ 1382 0972 0895      		ret
+ 1383               		.size	IDEGetTotalSectors, .-IDEGetTotalSectors
+ 1384               	.global	IDEUnMountDevice
+ 1385               		.type	IDEUnMountDevice, @function
+ 1386               	IDEUnMountDevice:
+ 1387 0974 1F93      		push r17
+ 1388 0976 CF93      		push r28
+ 1389 0978 DF93      		push r29
+ 1390               	/* prologue: function */
+ 1391               	/* frame size = 0 */
+ 1392 097a 182F      		mov r17,r24
+ 1393 097c 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1394 097e 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1395 0980 40E0      		ldi r20,lo8(0)
+ 1396 0982 50E0      		ldi r21,hi8(0)
+ 1397 0984 60E0      		ldi r22,hlo8(0)
+ 1398 0986 70E0      		ldi r23,hhi8(0)
+ 1399 0988 0E94 0000 		call NutEventWait
+ 1400 098c 1123      		tst r17
+ 1401 098e 01F0      		breq .L120
+ 1402 0990 C1E0      		ldi r28,lo8(1)
+ 1403 0992 D0E0      		ldi r29,hi8(1)
+ 1404 0994 00C0      		rjmp .L121
+ 1405               	.L120:
+ 1406 0996 1092 0000 		sts (sDrive)+1,__zero_reg__
+ 1407 099a 1092 0000 		sts sDrive,__zero_reg__
+ 1408 099e C0E0      		ldi r28,lo8(0)
+ 1409 09a0 D0E0      		ldi r29,hi8(0)
+ 1410               	.L121:
+ 1411 09a2 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1412 09a4 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1413 09a6 0E94 0000 		call NutEventPost
+ 1414 09aa CE01      		movw r24,r28
+ 1415               	/* epilogue start */
+ 1416 09ac DF91      		pop r29
+ 1417 09ae CF91      		pop r28
+ 1418 09b0 1F91      		pop r17
+ 1419 09b2 0895      		ret
+ 1420               		.size	IDEUnMountDevice, .-IDEUnMountDevice
+ 1421               	.global	IDEIsZIPDevice
+ 1422               		.type	IDEIsZIPDevice, @function
+ 1423               	IDEIsZIPDevice:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 26
+
+
+ 1424 09b4 1F93      		push r17
+ 1425 09b6 CF93      		push r28
+ 1426 09b8 DF93      		push r29
+ 1427               	/* prologue: function */
+ 1428               	/* frame size = 0 */
+ 1429 09ba 182F      		mov r17,r24
+ 1430 09bc 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1431 09be 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1432 09c0 40E0      		ldi r20,lo8(0)
+ 1433 09c2 50E0      		ldi r21,hi8(0)
+ 1434 09c4 60E0      		ldi r22,hlo8(0)
+ 1435 09c6 70E0      		ldi r23,hhi8(0)
+ 1436 09c8 0E94 0000 		call NutEventWait
+ 1437 09cc 1123      		tst r17
+ 1438 09ce 01F4      		brne .L124
+ 1439 09d0 8091 0000 		lds r24,sDrive
+ 1440 09d4 9091 0000 		lds r25,(sDrive)+1
+ 1441 09d8 97FF      		sbrs r25,7
+ 1442 09da 00C0      		rjmp .L124
+ 1443 09dc EC01      		movw r28,r24
+ 1444 09de CD2F      		mov r28,r29
+ 1445 09e0 DD27      		clr r29
+ 1446 09e2 C295      		swap r28
+ 1447 09e4 C695      		lsr r28
+ 1448 09e6 C770      		andi r28,0x07
+ 1449 09e8 C170      		andi r28,lo8(1)
+ 1450 09ea D070      		andi r29,hi8(1)
+ 1451 09ec 00C0      		rjmp .L125
+ 1452               	.L124:
+ 1453 09ee C0E0      		ldi r28,lo8(0)
+ 1454 09f0 D0E0      		ldi r29,hi8(0)
+ 1455               	.L125:
+ 1456 09f2 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1457 09f4 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1458 09f6 0E94 0000 		call NutEventPost
+ 1459 09fa CE01      		movw r24,r28
+ 1460               	/* epilogue start */
+ 1461 09fc DF91      		pop r29
+ 1462 09fe CF91      		pop r28
+ 1463 0a00 1F91      		pop r17
+ 1464 0a02 0895      		ret
+ 1465               		.size	IDEIsZIPDevice, .-IDEIsZIPDevice
+ 1466               	.global	IDEIsCDROMDevice
+ 1467               		.type	IDEIsCDROMDevice, @function
+ 1468               	IDEIsCDROMDevice:
+ 1469 0a04 1F93      		push r17
+ 1470 0a06 CF93      		push r28
+ 1471 0a08 DF93      		push r29
+ 1472               	/* prologue: function */
+ 1473               	/* frame size = 0 */
+ 1474 0a0a 182F      		mov r17,r24
+ 1475 0a0c 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1476 0a0e 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1477 0a10 40E0      		ldi r20,lo8(0)
+ 1478 0a12 50E0      		ldi r21,hi8(0)
+ 1479 0a14 60E0      		ldi r22,hlo8(0)
+ 1480 0a16 70E0      		ldi r23,hhi8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 27
+
+
+ 1481 0a18 0E94 0000 		call NutEventWait
+ 1482 0a1c 1123      		tst r17
+ 1483 0a1e 01F4      		brne .L128
+ 1484 0a20 8091 0000 		lds r24,sDrive
+ 1485 0a24 9091 0000 		lds r25,(sDrive)+1
+ 1486 0a28 97FF      		sbrs r25,7
+ 1487 0a2a 00C0      		rjmp .L128
+ 1488 0a2c EC01      		movw r28,r24
+ 1489 0a2e CD2F      		mov r28,r29
+ 1490 0a30 DD27      		clr r29
+ 1491 0a32 C295      		swap r28
+ 1492 0a34 CF70      		andi r28,0x0f
+ 1493 0a36 C170      		andi r28,lo8(1)
+ 1494 0a38 D070      		andi r29,hi8(1)
+ 1495 0a3a 00C0      		rjmp .L129
+ 1496               	.L128:
+ 1497 0a3c C0E0      		ldi r28,lo8(0)
+ 1498 0a3e D0E0      		ldi r29,hi8(0)
+ 1499               	.L129:
+ 1500 0a40 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1501 0a42 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1502 0a44 0E94 0000 		call NutEventPost
+ 1503 0a48 CE01      		movw r24,r28
+ 1504               	/* epilogue start */
+ 1505 0a4a DF91      		pop r29
+ 1506 0a4c CF91      		pop r28
+ 1507 0a4e 1F91      		pop r17
+ 1508 0a50 0895      		ret
+ 1509               		.size	IDEIsCDROMDevice, .-IDEIsCDROMDevice
+ 1510               	.global	IDEGetSectorSize
+ 1511               		.type	IDEGetSectorSize, @function
+ 1512               	IDEGetSectorSize:
+ 1513 0a52 1F93      		push r17
+ 1514 0a54 CF93      		push r28
+ 1515 0a56 DF93      		push r29
+ 1516               	/* prologue: function */
+ 1517               	/* frame size = 0 */
+ 1518 0a58 182F      		mov r17,r24
+ 1519 0a5a 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1520 0a5c 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1521 0a5e 40E0      		ldi r20,lo8(0)
+ 1522 0a60 50E0      		ldi r21,hi8(0)
+ 1523 0a62 60E0      		ldi r22,hlo8(0)
+ 1524 0a64 70E0      		ldi r23,hhi8(0)
+ 1525 0a66 0E94 0000 		call NutEventWait
+ 1526 0a6a 1123      		tst r17
+ 1527 0a6c 01F0      		breq .L132
+ 1528 0a6e C0E0      		ldi r28,lo8(0)
+ 1529 0a70 D0E0      		ldi r29,hi8(0)
+ 1530 0a72 00C0      		rjmp .L133
+ 1531               	.L132:
+ 1532 0a74 C091 0000 		lds r28,sDrive+8
+ 1533 0a78 D091 0000 		lds r29,(sDrive+8)+1
+ 1534               	.L133:
+ 1535 0a7c 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1536 0a7e 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1537 0a80 0E94 0000 		call NutEventPost
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 28
+
+
+ 1538 0a84 CE01      		movw r24,r28
+ 1539               	/* epilogue start */
+ 1540 0a86 DF91      		pop r29
+ 1541 0a88 CF91      		pop r28
+ 1542 0a8a 1F91      		pop r17
+ 1543 0a8c 0895      		ret
+ 1544               		.size	IDEGetSectorSize, .-IDEGetSectorSize
+ 1545               	.global	IDEMountDevice
+ 1546               		.type	IDEMountDevice, @function
+ 1547               	IDEMountDevice:
+ 1548 0a8e 5F92      		push r5
+ 1549 0a90 6F92      		push r6
+ 1550 0a92 7F92      		push r7
+ 1551 0a94 8F92      		push r8
+ 1552 0a96 9F92      		push r9
+ 1553 0a98 AF92      		push r10
+ 1554 0a9a BF92      		push r11
+ 1555 0a9c CF92      		push r12
+ 1556 0a9e DF92      		push r13
+ 1557 0aa0 EF92      		push r14
+ 1558 0aa2 FF92      		push r15
+ 1559 0aa4 0F93      		push r16
+ 1560 0aa6 1F93      		push r17
+ 1561 0aa8 DF93      		push r29
+ 1562 0aaa CF93      		push r28
+ 1563 0aac 00D0      		rcall .
+ 1564 0aae 00D0      		rcall .
+ 1565 0ab0 CDB7      		in r28,__SP_L__
+ 1566 0ab2 DEB7      		in r29,__SP_H__
+ 1567               	/* prologue: function */
+ 1568               	/* frame size = 4 */
+ 1569 0ab4 182F      		mov r17,r24
+ 1570 0ab6 5B01      		movw r10,r22
+ 1571 0ab8 80E0      		ldi r24,lo8(hIDESemaphore)
+ 1572 0aba 90E0      		ldi r25,hi8(hIDESemaphore)
+ 1573 0abc 40E0      		ldi r20,lo8(0)
+ 1574 0abe 50E0      		ldi r21,hi8(0)
+ 1575 0ac0 60E0      		ldi r22,hlo8(0)
+ 1576 0ac2 70E0      		ldi r23,hhi8(0)
+ 1577 0ac4 0E94 0000 		call NutEventWait
+ 1578 0ac8 1123      		tst r17
+ 1579 0aca 01F0      		breq .L136
+ 1580 0acc 51E0      		ldi r21,lo8(1)
+ 1581 0ace C52E      		mov r12,r21
+ 1582 0ad0 D12C      		mov r13,__zero_reg__
+ 1583 0ad2 00C0      		rjmp .L137
+ 1584               	.L136:
+ 1585 0ad4 1092 0000 		sts (sDrive)+1,__zero_reg__
+ 1586 0ad8 1092 0000 		sts sDrive,__zero_reg__
+ 1587 0adc 1092 0000 		sts sDrive+4,__zero_reg__
+ 1588 0ae0 1092 0000 		sts (sDrive+4)+1,__zero_reg__
+ 1589 0ae4 1092 0000 		sts (sDrive+4)+2,__zero_reg__
+ 1590 0ae8 1092 0000 		sts (sDrive+4)+3,__zero_reg__
+ 1591 0aec 80E0      		ldi r24,lo8(sDrive)
+ 1592 0aee 90E0      		ldi r25,hi8(sDrive)
+ 1593 0af0 0E94 0000 		call DeviceDiag
+ 1594 0af4 9C01      		movw r18,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 29
+
+
+ 1595 0af6 8091 0000 		lds r24,sDrive
+ 1596 0afa 82FF      		sbrs r24,2
+ 1597 0afc 00C0      		rjmp .L138
+ 1598 0afe 80E0      		ldi r24,lo8(2048)
+ 1599 0b00 98E0      		ldi r25,hi8(2048)
+ 1600 0b02 9093 0000 		sts (sDrive+8)+1,r25
+ 1601 0b06 8093 0000 		sts sDrive+8,r24
+ 1602 0b0a 5090 0000 		lds r5,sDrive+3
+ 1603 0b0e 852D      		mov r24,r5
+ 1604 0b10 0E94 0000 		call SelectDevice
+ 1605 0b14 892B      		or r24,r25
+ 1606 0b16 01F0      		breq .+2
+ 1607 0b18 00C0      		rjmp .L139
+ 1608               	/* #APP */
+ 1609               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 1610 0b1a 0FB6      		in  __tmp_reg__, __SREG__
+ 1611 0b1c F894      		cli
+ 1612 0b1e 0F92      		push __tmp_reg__
+ 1613               		
+ 1614               	 ;  0 "" 2
+ 1615               	/* #NOAPP */
+ 1616 0b20 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 1617 0b24 1092 0000 		sts hIDEEvent,__zero_reg__
+ 1618               	/* #APP */
+ 1619               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 1620 0b28 0F90      		pop __tmp_reg__
+ 1621 0b2a 0FBE      		out __SREG__, __tmp_reg__
+ 1622               		
+ 1623               	 ;  0 "" 2
+ 1624               	/* #NOAPP */
+ 1625 0b2c E091 0000 		lds r30,pIDE
+ 1626 0b30 F091 0000 		lds r31,(pIDE)+1
+ 1627 0b34 81EA      		ldi r24,lo8(-95)
+ 1628 0b36 8783      		std Z+7,r24
+ 1629 0b38 80E0      		ldi r24,lo8(hIDEEvent)
+ 1630 0b3a 90E0      		ldi r25,hi8(hIDEEvent)
+ 1631 0b3c 40E1      		ldi r20,lo8(10000)
+ 1632 0b3e 57E2      		ldi r21,hi8(10000)
+ 1633 0b40 60E0      		ldi r22,hlo8(10000)
+ 1634 0b42 70E0      		ldi r23,hhi8(10000)
+ 1635 0b44 0E94 0000 		call NutEventWait
+ 1636 0b48 8F5F      		subi r24,lo8(-1)
+ 1637 0b4a 9F4F      		sbci r25,hi8(-1)
+ 1638 0b4c 01F4      		brne .+2
+ 1639 0b4e 00C0      		rjmp .L139
+ 1640 0b50 8091 0000 		lds r24,gbIntStatus
+ 1641 0b54 83FF      		sbrs r24,3
+ 1642 0b56 00C0      		rjmp .L140
+ 1643 0b58 1A82      		std Y+2,__zero_reg__
+ 1644 0b5a 1982      		std Y+1,__zero_reg__
+ 1645 0b5c 00C0      		rjmp .L141
+ 1646               	.L144:
+ 1647 0b5e E050      		subi r30,lo8(-(768))
+ 1648 0b60 FD4F      		sbci r31,hi8(-(768))
+ 1649 0b62 8081      		ld r24,Z
+ 1650 0b64 D501      		movw r26,r10
+ 1651 0b66 A20F      		add r26,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 30
+
+
+ 1652 0b68 B31F      		adc r27,r19
+ 1653 0b6a 8C93      		st X,r24
+ 1654 0b6c 8091 0000 		lds r24,sDrive+2
+ 1655 0b70 E091 0000 		lds r30,pIDE
+ 1656 0b74 F091 0000 		lds r31,(pIDE)+1
+ 1657 0b78 8330      		cpi r24,lo8(3)
+ 1658 0b7a 01F4      		brne .L142
+ 1659 0b7c E050      		subi r30,lo8(-(768))
+ 1660 0b7e FD4F      		sbci r31,hi8(-(768))
+ 1661 0b80 00C0      		rjmp .L169
+ 1662               	.L142:
+ 1663 0b82 E050      		subi r30,lo8(-(1024))
+ 1664 0b84 FC4F      		sbci r31,hi8(-(1024))
+ 1665               	.L169:
+ 1666 0b86 8081      		ld r24,Z
+ 1667 0b88 1196      		adiw r26,1
+ 1668 0b8a 8C93      		st X,r24
+ 1669 0b8c 8981      		ldd r24,Y+1
+ 1670 0b8e 9A81      		ldd r25,Y+2
+ 1671 0b90 0296      		adiw r24,2
+ 1672 0b92 9A83      		std Y+2,r25
+ 1673 0b94 8983      		std Y+1,r24
+ 1674               	.L141:
+ 1675 0b96 2981      		ldd r18,Y+1
+ 1676 0b98 3A81      		ldd r19,Y+2
+ 1677 0b9a E091 0000 		lds r30,pIDE
+ 1678 0b9e F091 0000 		lds r31,(pIDE)+1
+ 1679 0ba2 42E0      		ldi r20,hi8(512)
+ 1680 0ba4 2030      		cpi r18,lo8(512)
+ 1681 0ba6 3407      		cpc r19,r20
+ 1682 0ba8 00F0      		brlo .L144
+ 1683 0baa 8781      		ldd r24,Z+7
+ 1684 0bac 1092 0000 		sts (sDrive)+1,__zero_reg__
+ 1685 0bb0 1092 0000 		sts sDrive,__zero_reg__
+ 1686 0bb4 D501      		movw r26,r10
+ 1687 0bb6 2D91      		ld r18,X+
+ 1688 0bb8 3C91      		ld r19,X
+ 1689 0bba C901      		movw r24,r18
+ 1690 0bbc 8076      		andi r24,lo8(96)
+ 1691 0bbe 9070      		andi r25,hi8(96)
+ 1692 0bc0 8097      		sbiw r24,32
+ 1693 0bc2 01F4      		brne .L145
+ 1694 0bc4 88E0      		ldi r24,lo8(8)
+ 1695 0bc6 90E0      		ldi r25,hi8(8)
+ 1696 0bc8 9093 0000 		sts (sDrive)+1,r25
+ 1697 0bcc 8093 0000 		sts sDrive,r24
+ 1698               	.L145:
+ 1699 0bd0 C901      		movw r24,r18
+ 1700 0bd2 8070      		andi r24,lo8(7936)
+ 1701 0bd4 9F71      		andi r25,hi8(7936)
+ 1702 0bd6 0097      		sbiw r24,0
+ 1703 0bd8 01F4      		brne .L146
+ 1704 0bda 8091 0000 		lds r24,sDrive
+ 1705 0bde 9091 0000 		lds r25,(sDrive)+1
+ 1706 0be2 9062      		ori r25,hi8(8192)
+ 1707 0be4 00C0      		rjmp .L170
+ 1708               	.L146:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 31
+
+
+ 1709 0be6 8050      		subi r24,lo8(1280)
+ 1710 0be8 9540      		sbci r25,hi8(1280)
+ 1711 0bea 01F4      		brne .L147
+ 1712 0bec 8091 0000 		lds r24,sDrive
+ 1713 0bf0 9091 0000 		lds r25,(sDrive)+1
+ 1714 0bf4 9065      		ori r25,hi8(20480)
+ 1715               	.L170:
+ 1716 0bf6 9093 0000 		sts (sDrive)+1,r25
+ 1717 0bfa 8093 0000 		sts sDrive,r24
+ 1718               	.L147:
+ 1719 0bfe C901      		movw r24,r18
+ 1720 0c00 8070      		andi r24,lo8(-16384)
+ 1721 0c02 907C      		andi r25,hi8(-16384)
+ 1722 0c04 8050      		subi r24,lo8(-32768)
+ 1723 0c06 9048      		sbci r25,hi8(-32768)
+ 1724 0c08 01F4      		brne .L148
+ 1725 0c0a 8091 0000 		lds r24,sDrive
+ 1726 0c0e 9091 0000 		lds r25,(sDrive)+1
+ 1727 0c12 8460      		ori r24,lo8(4)
+ 1728 0c14 9093 0000 		sts (sDrive)+1,r25
+ 1729 0c18 8093 0000 		sts sDrive,r24
+ 1730               	.L148:
+ 1731 0c1c 2370      		andi r18,lo8(3)
+ 1732 0c1e 3070      		andi r19,hi8(3)
+ 1733 0c20 232B      		or r18,r19
+ 1734 0c22 01F0      		breq .+2
+ 1735 0c24 00C0      		rjmp .L140
+ 1736 0c26 8091 0000 		lds r24,sDrive
+ 1737 0c2a 9091 0000 		lds r25,(sDrive)+1
+ 1738 0c2e 9068      		ori r25,hi8(-32768)
+ 1739 0c30 9093 0000 		sts (sDrive)+1,r25
+ 1740 0c34 8093 0000 		sts sDrive,r24
+ 1741 0c38 04E0      		ldi r16,lo8(4)
+ 1742 0c3a 10E0      		ldi r17,hi8(4)
+ 1743 0c3c 40E0      		ldi r20,lo8(aATAPICmd)
+ 1744 0c3e 842E      		mov r8,r20
+ 1745 0c40 40E0      		ldi r20,hi8(aATAPICmd)
+ 1746 0c42 942E      		mov r9,r20
+ 1747 0c44 3CE0      		ldi r19,lo8(12)
+ 1748 0c46 632E      		mov r6,r19
+ 1749 0c48 25E2      		ldi r18,lo8(37)
+ 1750 0c4a 722E      		mov r7,r18
+ 1751 0c4c 93E0      		ldi r25,lo8(3)
+ 1752 0c4e E92E      		mov r14,r25
+ 1753 0c50 F12C      		mov r15,__zero_reg__
+ 1754 0c52 EC0E      		add r14,r28
+ 1755 0c54 FD1E      		adc r15,r29
+ 1756               	.L152:
+ 1757 0c56 D401      		movw r26,r8
+ 1758 0c58 E62D      		mov r30,r6
+ 1759 0c5a 1D92      		st X+,__zero_reg__
+ 1760 0c5c EA95      	        dec r30
+ 1761 0c5e 01F4      		brne .-6
+ 1762 0c60 7092 0000 		sts aATAPICmd,r7
+ 1763 0c64 80E0      		ldi r24,lo8(sDrive)
+ 1764 0c66 90E0      		ldi r25,hi8(sDrive)
+ 1765 0c68 B501      		movw r22,r10
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 32
+
+
+ 1766 0c6a A701      		movw r20,r14
+ 1767 0c6c 0E94 0000 		call ATAPISendCommand
+ 1768 0c70 6C01      		movw r12,r24
+ 1769 0c72 0097      		sbiw r24,0
+ 1770 0c74 01F0      		breq .+2
+ 1771 0c76 00C0      		rjmp .L149
+ 1772 0c78 8B81      		ldd r24,Y+3
+ 1773 0c7a 9C81      		ldd r25,Y+4
+ 1774 0c7c 0897      		sbiw r24,8
+ 1775 0c7e 01F0      		breq .+2
+ 1776 0c80 00C0      		rjmp .L149
+ 1777 0c82 D501      		movw r26,r10
+ 1778 0c84 2C91      		ld r18,X
+ 1779 0c86 30E0      		ldi r19,lo8(0)
+ 1780 0c88 40E0      		ldi r20,lo8(0)
+ 1781 0c8a 50E0      		ldi r21,hi8(0)
+ 1782 0c8c 542F      		mov r21,r20
+ 1783 0c8e 432F      		mov r20,r19
+ 1784 0c90 322F      		mov r19,r18
+ 1785 0c92 2227      		clr r18
+ 1786 0c94 1196      		adiw r26,1
+ 1787 0c96 8C91      		ld r24,X
+ 1788 0c98 90E0      		ldi r25,lo8(0)
+ 1789 0c9a A0E0      		ldi r26,lo8(0)
+ 1790 0c9c B0E0      		ldi r27,hi8(0)
+ 1791 0c9e 822B      		or r24,r18
+ 1792 0ca0 932B      		or r25,r19
+ 1793 0ca2 A42B      		or r26,r20
+ 1794 0ca4 B52B      		or r27,r21
+ 1795 0ca6 BA2F      		mov r27,r26
+ 1796 0ca8 A92F      		mov r26,r25
+ 1797 0caa 982F      		mov r25,r24
+ 1798 0cac 8827      		clr r24
+ 1799 0cae F501      		movw r30,r10
+ 1800 0cb0 2281      		ldd r18,Z+2
+ 1801 0cb2 30E0      		ldi r19,lo8(0)
+ 1802 0cb4 40E0      		ldi r20,lo8(0)
+ 1803 0cb6 50E0      		ldi r21,hi8(0)
+ 1804 0cb8 822B      		or r24,r18
+ 1805 0cba 932B      		or r25,r19
+ 1806 0cbc A42B      		or r26,r20
+ 1807 0cbe B52B      		or r27,r21
+ 1808 0cc0 EE24      		clr r14
+ 1809 0cc2 F82E      		mov r15,r24
+ 1810 0cc4 092F      		mov r16,r25
+ 1811 0cc6 1A2F      		mov r17,r26
+ 1812 0cc8 8381      		ldd r24,Z+3
+ 1813 0cca 90E0      		ldi r25,lo8(0)
+ 1814 0ccc A0E0      		ldi r26,lo8(0)
+ 1815 0cce B0E0      		ldi r27,hi8(0)
+ 1816 0cd0 E82A      		or r14,r24
+ 1817 0cd2 F92A      		or r15,r25
+ 1818 0cd4 0A2B      		or r16,r26
+ 1819 0cd6 1B2B      		or r17,r27
+ 1820 0cd8 2481      		ldd r18,Z+4
+ 1821 0cda 30E0      		ldi r19,lo8(0)
+ 1822 0cdc 40E0      		ldi r20,lo8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 33
+
+
+ 1823 0cde 50E0      		ldi r21,hi8(0)
+ 1824 0ce0 542F      		mov r21,r20
+ 1825 0ce2 432F      		mov r20,r19
+ 1826 0ce4 322F      		mov r19,r18
+ 1827 0ce6 2227      		clr r18
+ 1828 0ce8 8581      		ldd r24,Z+5
+ 1829 0cea 90E0      		ldi r25,lo8(0)
+ 1830 0cec A0E0      		ldi r26,lo8(0)
+ 1831 0cee B0E0      		ldi r27,hi8(0)
+ 1832 0cf0 282B      		or r18,r24
+ 1833 0cf2 392B      		or r19,r25
+ 1834 0cf4 4A2B      		or r20,r26
+ 1835 0cf6 5B2B      		or r21,r27
+ 1836 0cf8 542F      		mov r21,r20
+ 1837 0cfa 432F      		mov r20,r19
+ 1838 0cfc 322F      		mov r19,r18
+ 1839 0cfe 2227      		clr r18
+ 1840 0d00 8681      		ldd r24,Z+6
+ 1841 0d02 90E0      		ldi r25,lo8(0)
+ 1842 0d04 A0E0      		ldi r26,lo8(0)
+ 1843 0d06 B0E0      		ldi r27,hi8(0)
+ 1844 0d08 282B      		or r18,r24
+ 1845 0d0a 392B      		or r19,r25
+ 1846 0d0c 4A2B      		or r20,r26
+ 1847 0d0e 5B2B      		or r21,r27
+ 1848 0d10 542F      		mov r21,r20
+ 1849 0d12 432F      		mov r20,r19
+ 1850 0d14 322F      		mov r19,r18
+ 1851 0d16 2227      		clr r18
+ 1852 0d18 8781      		ldd r24,Z+7
+ 1853 0d1a 90E0      		ldi r25,lo8(0)
+ 1854 0d1c A0E0      		ldi r26,lo8(0)
+ 1855 0d1e B0E0      		ldi r27,hi8(0)
+ 1856 0d20 282B      		or r18,r24
+ 1857 0d22 392B      		or r19,r25
+ 1858 0d24 4A2B      		or r20,r26
+ 1859 0d26 5B2B      		or r21,r27
+ 1860 0d28 2130      		cpi r18,lo8(2049)
+ 1861 0d2a F8E0      		ldi r31,hi8(2049)
+ 1862 0d2c 3F07      		cpc r19,r31
+ 1863 0d2e F0E0      		ldi r31,hlo8(2049)
+ 1864 0d30 4F07      		cpc r20,r31
+ 1865 0d32 F0E0      		ldi r31,hhi8(2049)
+ 1866 0d34 5F07      		cpc r21,r31
+ 1867 0d36 00F0      		brlo .L150
+ 1868 0d38 20E0      		ldi r18,lo8(2048)
+ 1869 0d3a 38E0      		ldi r19,hi8(2048)
+ 1870 0d3c 40E0      		ldi r20,hlo8(2048)
+ 1871 0d3e 50E0      		ldi r21,hhi8(2048)
+ 1872               	.L150:
+ 1873 0d40 3093 0000 		sts (sDrive+8)+1,r19
+ 1874 0d44 2093 0000 		sts sDrive+8,r18
+ 1875 0d48 00C0      		rjmp .L151
+ 1876               	.L149:
+ 1877 0d4a 0150      		subi r16,lo8(-(-1))
+ 1878 0d4c 1040      		sbci r17,hi8(-(-1))
+ 1879 0d4e 60ED      		ldi r22,lo8(2000)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 34
+
+
+ 1880 0d50 77E0      		ldi r23,hi8(2000)
+ 1881 0d52 80E0      		ldi r24,hlo8(2000)
+ 1882 0d54 90E0      		ldi r25,hhi8(2000)
+ 1883 0d56 0E94 0000 		call NutSleep
+ 1884 0d5a 0115      		cp r16,__zero_reg__
+ 1885 0d5c 1105      		cpc r17,__zero_reg__
+ 1886 0d5e 01F0      		breq .+2
+ 1887 0d60 00C0      		rjmp .L152
+ 1888 0d62 C114      		cp r12,__zero_reg__
+ 1889 0d64 D104      		cpc r13,__zero_reg__
+ 1890 0d66 01F4      		brne .L153
+ 1891 0d68 EE24      		clr r14
+ 1892 0d6a FF24      		clr r15
+ 1893 0d6c 8701      		movw r16,r14
+ 1894               	.L151:
+ 1895 0d6e E092 0000 		sts sDrive+4,r14
+ 1896 0d72 F092 0000 		sts (sDrive+4)+1,r15
+ 1897 0d76 0093 0000 		sts (sDrive+4)+2,r16
+ 1898 0d7a 1093 0000 		sts (sDrive+4)+3,r17
+ 1899 0d7e 8CE0      		ldi r24,lo8(12)
+ 1900 0d80 E0E0      		ldi r30,lo8(aATAPICmd)
+ 1901 0d82 F0E0      		ldi r31,hi8(aATAPICmd)
+ 1902 0d84 DF01      		movw r26,r30
+ 1903 0d86 1D92      		st X+,__zero_reg__
+ 1904 0d88 8A95      	        dec r24
+ 1905 0d8a 01F4      		brne .-6
+ 1906 0d8c 8AE5      		ldi r24,lo8(90)
+ 1907 0d8e 8093 0000 		sts aATAPICmd,r24
+ 1908 0d92 8AE2      		ldi r24,lo8(42)
+ 1909 0d94 8093 0000 		sts aATAPICmd+2,r24
+ 1910 0d98 88E0      		ldi r24,lo8(8)
+ 1911 0d9a 8093 0000 		sts aATAPICmd+7,r24
+ 1912 0d9e 1092 0000 		sts aATAPICmd+8,__zero_reg__
+ 1913 0da2 80E0      		ldi r24,lo8(sDrive)
+ 1914 0da4 90E0      		ldi r25,hi8(sDrive)
+ 1915 0da6 B501      		movw r22,r10
+ 1916 0da8 AE01      		movw r20,r28
+ 1917 0daa 4F5F      		subi r20,lo8(-(1))
+ 1918 0dac 5F4F      		sbci r21,hi8(-(1))
+ 1919 0dae 0E94 0000 		call ATAPISendCommand
+ 1920 0db2 852D      		mov r24,r5
+ 1921 0db4 66E9      		ldi r22,lo8(150)
+ 1922 0db6 70E0      		ldi r23,hi8(150)
+ 1923 0db8 0E94 0000 		call IDEATAPISetCDSpeed
+ 1924 0dbc 00C0      		rjmp .L154
+ 1925               	.L153:
+ 1926 0dbe 1092 0000 		sts sDrive+4,__zero_reg__
+ 1927 0dc2 1092 0000 		sts (sDrive+4)+1,__zero_reg__
+ 1928 0dc6 1092 0000 		sts (sDrive+4)+2,__zero_reg__
+ 1929 0dca 1092 0000 		sts (sDrive+4)+3,__zero_reg__
+ 1930 0dce 00C0      		rjmp .L154
+ 1931               	.L140:
+ 1932 0dd0 41E0      		ldi r20,lo8(1)
+ 1933 0dd2 C42E      		mov r12,r20
+ 1934 0dd4 D12C      		mov r13,__zero_reg__
+ 1935               	.L154:
+ 1936 0dd6 8091 0000 		lds r24,gbIntStatus
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 35
+
+
+ 1937 0dda 80FF      		sbrs r24,0
+ 1938 0ddc 00C0      		rjmp .L155
+ 1939 0dde E091 0000 		lds r30,pIDE
+ 1940 0de2 F091 0000 		lds r31,(pIDE)+1
+ 1941 0de6 8181      		ldd r24,Z+1
+ 1942 0de8 00C0      		rjmp .L155
+ 1943               	.L139:
+ 1944 0dea 31E0      		ldi r19,lo8(1)
+ 1945 0dec C32E      		mov r12,r19
+ 1946 0dee D12C      		mov r13,__zero_reg__
+ 1947               	.L155:
+ 1948 0df0 8091 0000 		lds r24,sDrive
+ 1949 0df4 9091 0000 		lds r25,(sDrive)+1
+ 1950 0df8 9923      		tst r25
+ 1951 0dfa 04F0      		brlt .+2
+ 1952 0dfc 00C0      		rjmp .L137
+ 1953 0dfe 00C0      		rjmp .L156
+ 1954               	.L138:
+ 1955 0e00 232B      		or r18,r19
+ 1956 0e02 01F0      		breq .L157
+ 1957 0e04 80E0      		ldi r24,lo8(sDrive)
+ 1958 0e06 90E0      		ldi r25,hi8(sDrive)
+ 1959 0e08 0E94 0000 		call DeviceDiag
+ 1960 0e0c 6C01      		movw r12,r24
+ 1961 0e0e 0097      		sbiw r24,0
+ 1962 0e10 01F0      		breq .+2
+ 1963 0e12 00C0      		rjmp .L137
+ 1964               	.L157:
+ 1965 0e14 80E0      		ldi r24,lo8(512)
+ 1966 0e16 92E0      		ldi r25,hi8(512)
+ 1967 0e18 9093 0000 		sts (sDrive+8)+1,r25
+ 1968 0e1c 8093 0000 		sts sDrive+8,r24
+ 1969 0e20 8091 0000 		lds r24,sDrive+3
+ 1970 0e24 0E94 0000 		call SelectDevice
+ 1971 0e28 892B      		or r24,r25
+ 1972 0e2a 01F0      		breq .+2
+ 1973 0e2c 00C0      		rjmp .L158
+ 1974               	/* #APP */
+ 1975               	 ;  324 "../../nut/arch/avr/dev/ide.c" 1
+ 1976 0e2e 0FB6      		in  __tmp_reg__, __SREG__
+ 1977 0e30 F894      		cli
+ 1978 0e32 0F92      		push __tmp_reg__
+ 1979               		
+ 1980               	 ;  0 "" 2
+ 1981               	/* #NOAPP */
+ 1982 0e34 1092 0000 		sts (hIDEEvent)+1,__zero_reg__
+ 1983 0e38 1092 0000 		sts hIDEEvent,__zero_reg__
+ 1984               	/* #APP */
+ 1985               	 ;  328 "../../nut/arch/avr/dev/ide.c" 1
+ 1986 0e3c 0F90      		pop __tmp_reg__
+ 1987 0e3e 0FBE      		out __SREG__, __tmp_reg__
+ 1988               		
+ 1989               	 ;  0 "" 2
+ 1990               	/* #NOAPP */
+ 1991 0e40 E091 0000 		lds r30,pIDE
+ 1992 0e44 F091 0000 		lds r31,(pIDE)+1
+ 1993 0e48 8CEE      		ldi r24,lo8(-20)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 36
+
+
+ 1994 0e4a 8783      		std Z+7,r24
+ 1995 0e4c 80E0      		ldi r24,lo8(hIDEEvent)
+ 1996 0e4e 90E0      		ldi r25,hi8(hIDEEvent)
+ 1997 0e50 40E1      		ldi r20,lo8(10000)
+ 1998 0e52 57E2      		ldi r21,hi8(10000)
+ 1999 0e54 60E0      		ldi r22,hlo8(10000)
+ 2000 0e56 70E0      		ldi r23,hhi8(10000)
+ 2001 0e58 0E94 0000 		call NutEventWait
+ 2002 0e5c 8F5F      		subi r24,lo8(-1)
+ 2003 0e5e 9F4F      		sbci r25,hi8(-1)
+ 2004 0e60 01F4      		brne .+2
+ 2005 0e62 00C0      		rjmp .L158
+ 2006 0e64 8091 0000 		lds r24,gbIntStatus
+ 2007 0e68 83FD      		sbrc r24,3
+ 2008 0e6a 00C0      		rjmp .L159
+ 2009 0e6c 21E0      		ldi r18,lo8(1)
+ 2010 0e6e C22E      		mov r12,r18
+ 2011 0e70 D12C      		mov r13,__zero_reg__
+ 2012 0e72 00C0      		rjmp .L160
+ 2013               	.L159:
+ 2014 0e74 D501      		movw r26,r10
+ 2015 0e76 20E0      		ldi r18,lo8(0)
+ 2016 0e78 30E0      		ldi r19,hi8(0)
+ 2017               	.L163:
+ 2018 0e7a E091 0000 		lds r30,pIDE
+ 2019 0e7e F091 0000 		lds r31,(pIDE)+1
+ 2020 0e82 E050      		subi r30,lo8(-(768))
+ 2021 0e84 FD4F      		sbci r31,hi8(-(768))
+ 2022 0e86 8081      		ld r24,Z
+ 2023 0e88 8C93      		st X,r24
+ 2024 0e8a 8091 0000 		lds r24,sDrive+2
+ 2025 0e8e E091 0000 		lds r30,pIDE
+ 2026 0e92 F091 0000 		lds r31,(pIDE)+1
+ 2027 0e96 8330      		cpi r24,lo8(3)
+ 2028 0e98 01F4      		brne .L161
+ 2029 0e9a E050      		subi r30,lo8(-(768))
+ 2030 0e9c FD4F      		sbci r31,hi8(-(768))
+ 2031 0e9e 00C0      		rjmp .L171
+ 2032               	.L161:
+ 2033 0ea0 E050      		subi r30,lo8(-(1024))
+ 2034 0ea2 FC4F      		sbci r31,hi8(-(1024))
+ 2035               	.L171:
+ 2036 0ea4 8081      		ld r24,Z
+ 2037 0ea6 1196      		adiw r26,1
+ 2038 0ea8 8C93      		st X,r24
+ 2039 0eaa 1197      		sbiw r26,1
+ 2040 0eac 2E5F      		subi r18,lo8(-(2))
+ 2041 0eae 3F4F      		sbci r19,hi8(-(2))
+ 2042 0eb0 1296      		adiw r26,2
+ 2043 0eb2 E2E0      		ldi r30,hi8(512)
+ 2044 0eb4 2030      		cpi r18,lo8(512)
+ 2045 0eb6 3E07      		cpc r19,r30
+ 2046 0eb8 01F4      		brne .L163
+ 2047 0eba E091 0000 		lds r30,pIDE
+ 2048 0ebe F091 0000 		lds r31,(pIDE)+1
+ 2049 0ec2 8781      		ldd r24,Z+7
+ 2050 0ec4 88E7      		ldi r24,lo8(120)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 37
+
+
+ 2051 0ec6 90E0      		ldi r25,hi8(120)
+ 2052 0ec8 A80E      		add r10,r24
+ 2053 0eca B91E      		adc r11,r25
+ 2054 0ecc D501      		movw r26,r10
+ 2055 0ece 2D91      		ld r18,X+
+ 2056 0ed0 3D91      		ld r19,X+
+ 2057 0ed2 4D91      		ld r20,X+
+ 2058 0ed4 5C91      		ld r21,X
+ 2059 0ed6 2115      		cp r18,__zero_reg__
+ 2060 0ed8 3105      		cpc r19,__zero_reg__
+ 2061 0eda 4105      		cpc r20,__zero_reg__
+ 2062 0edc 5105      		cpc r21,__zero_reg__
+ 2063 0ede 01F0      		breq .L172
+ 2064               	.L164:
+ 2065 0ee0 81E0      		ldi r24,lo8(-32767)
+ 2066 0ee2 90E8      		ldi r25,hi8(-32767)
+ 2067 0ee4 9093 0000 		sts (sDrive)+1,r25
+ 2068 0ee8 8093 0000 		sts sDrive,r24
+ 2069 0eec 2093 0000 		sts sDrive+4,r18
+ 2070 0ef0 3093 0000 		sts (sDrive+4)+1,r19
+ 2071 0ef4 4093 0000 		sts (sDrive+4)+2,r20
+ 2072 0ef8 5093 0000 		sts (sDrive+4)+3,r21
+ 2073               	.L172:
+ 2074 0efc CC24      		clr r12
+ 2075 0efe DD24      		clr r13
+ 2076               	.L160:
+ 2077 0f00 8091 0000 		lds r24,gbIntStatus
+ 2078 0f04 80FF      		sbrs r24,0
+ 2079 0f06 00C0      		rjmp .L165
+ 2080 0f08 E091 0000 		lds r30,pIDE
+ 2081 0f0c F091 0000 		lds r31,(pIDE)+1
+ 2082 0f10 8181      		ldd r24,Z+1
+ 2083 0f12 00C0      		rjmp .L165
+ 2084               	.L158:
+ 2085 0f14 91E0      		ldi r25,lo8(1)
+ 2086 0f16 C92E      		mov r12,r25
+ 2087 0f18 D12C      		mov r13,__zero_reg__
+ 2088               	.L165:
+ 2089 0f1a 8091 0000 		lds r24,sDrive
+ 2090 0f1e 9091 0000 		lds r25,(sDrive)+1
+ 2091 0f22 97FF      		sbrs r25,7
+ 2092 0f24 00C0      		rjmp .L137
+ 2093               	.L156:
+ 2094 0f26 CC24      		clr r12
+ 2095 0f28 DD24      		clr r13
+ 2096               	.L137:
+ 2097 0f2a 80E0      		ldi r24,lo8(hIDESemaphore)
+ 2098 0f2c 90E0      		ldi r25,hi8(hIDESemaphore)
+ 2099 0f2e 0E94 0000 		call NutEventPost
+ 2100 0f32 C601      		movw r24,r12
+ 2101               	/* epilogue start */
+ 2102 0f34 0F90      		pop __tmp_reg__
+ 2103 0f36 0F90      		pop __tmp_reg__
+ 2104 0f38 0F90      		pop __tmp_reg__
+ 2105 0f3a 0F90      		pop __tmp_reg__
+ 2106 0f3c CF91      		pop r28
+ 2107 0f3e DF91      		pop r29
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 38
+
+
+ 2108 0f40 1F91      		pop r17
+ 2109 0f42 0F91      		pop r16
+ 2110 0f44 FF90      		pop r15
+ 2111 0f46 EF90      		pop r14
+ 2112 0f48 DF90      		pop r13
+ 2113 0f4a CF90      		pop r12
+ 2114 0f4c BF90      		pop r11
+ 2115 0f4e AF90      		pop r10
+ 2116 0f50 9F90      		pop r9
+ 2117 0f52 8F90      		pop r8
+ 2118 0f54 7F90      		pop r7
+ 2119 0f56 6F90      		pop r6
+ 2120 0f58 5F90      		pop r5
+ 2121 0f5a 0895      		ret
+ 2122               		.size	IDEMountDevice, .-IDEMountDevice
+ 2123               	.global	CFChange
+ 2124               		.type	CFChange, @function
+ 2125               	CFChange:
+ 2126               	/* prologue: function */
+ 2127               	/* frame size = 0 */
+ 2128 0f5c 11E0      		ldi r17,lo8(1)
+ 2129               	.L181:
+ 2130 0f5e 80E0      		ldi r24,lo8(hCFChangeInt)
+ 2131 0f60 90E0      		ldi r25,hi8(hCFChangeInt)
+ 2132 0f62 40E0      		ldi r20,lo8(0)
+ 2133 0f64 50E0      		ldi r21,hi8(0)
+ 2134 0f66 60E0      		ldi r22,hlo8(0)
+ 2135 0f68 70E0      		ldi r23,hhi8(0)
+ 2136 0f6a 0E94 0000 		call NutEventWaitNext
+ 2137 0f6e 60ED      		ldi r22,lo8(2000)
+ 2138 0f70 77E0      		ldi r23,hi8(2000)
+ 2139 0f72 80E0      		ldi r24,hlo8(2000)
+ 2140 0f74 90E0      		ldi r25,hhi8(2000)
+ 2141 0f76 0E94 0000 		call NutSleep
+ 2142 0f7a 91B1      		in r25,33-32
+ 2143 0f7c 9074      		andi r25,lo8(64)
+ 2144 0f7e 8091 0000 		lds r24,gbCFMountStatus
+ 2145 0f82 9817      		cp r25,r24
+ 2146 0f84 01F0      		breq .L181
+ 2147 0f86 9923      		tst r25
+ 2148 0f88 01F4      		brne .L175
+ 2149 0f8a 1092 0000 		sts gbCFMountStatus,__zero_reg__
+ 2150 0f8e 80E0      		ldi r24,lo8(sDrive)
+ 2151 0f90 90E0      		ldi r25,hi8(sDrive)
+ 2152 0f92 0E94 0000 		call HardwareReset
+ 2153 0f96 80E0      		ldi r24,lo8(heapFreeList)
+ 2154 0f98 90E0      		ldi r25,hi8(heapFreeList)
+ 2155 0f9a 60E0      		ldi r22,lo8(512)
+ 2156 0f9c 72E0      		ldi r23,hi8(512)
+ 2157 0f9e 0E94 0000 		call NutHeapRootAlloc
+ 2158 0fa2 EC01      		movw r28,r24
+ 2159 0fa4 0097      		sbiw r24,0
+ 2160 0fa6 01F0      		breq .L176
+ 2161 0fa8 80E0      		ldi r24,lo8(0)
+ 2162 0faa BE01      		movw r22,r28
+ 2163 0fac 0E94 0000 		call IDEMountDevice
+ 2164 0fb0 80E0      		ldi r24,lo8(heapFreeList)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 39
+
+
+ 2165 0fb2 90E0      		ldi r25,hi8(heapFreeList)
+ 2166 0fb4 BE01      		movw r22,r28
+ 2167 0fb6 0E94 0000 		call NutHeapRootFree
+ 2168 0fba E091 0000 		lds r30,pUserMountFunc
+ 2169 0fbe F091 0000 		lds r31,(pUserMountFunc)+1
+ 2170 0fc2 3097      		sbiw r30,0
+ 2171 0fc4 01F0      		breq .L176
+ 2172 0fc6 80E0      		ldi r24,lo8(0)
+ 2173 0fc8 90E0      		ldi r25,hi8(0)
+ 2174 0fca 0995      		icall
+ 2175               	.L176:
+ 2176               	/* #APP */
+ 2177               	 ;  1153 "../../nut/arch/avr/dev/ide.c" 1
+ 2178 0fcc 0FB6      		in  __tmp_reg__, __SREG__
+ 2179 0fce F894      		cli
+ 2180 0fd0 0F92      		push __tmp_reg__
+ 2181               		
+ 2182               	 ;  0 "" 2
+ 2183               	/* #NOAPP */
+ 2184 0fd2 8AB7      		in r24,90-32
+ 2185 0fd4 8F7C      		andi r24,lo8(-49)
+ 2186 0fd6 8ABF      		out 90-32,r24
+ 2187 0fd8 8AB7      		in r24,90-32
+ 2188 0fda 8063      		ori r24,lo8(48)
+ 2189 0fdc 8ABF      		out 90-32,r24
+ 2190               	/* #APP */
+ 2191               	 ;  1156 "../../nut/arch/avr/dev/ide.c" 1
+ 2192 0fde 0F90      		pop __tmp_reg__
+ 2193 0fe0 0FBE      		out __SREG__, __tmp_reg__
+ 2194               		
+ 2195               	 ;  0 "" 2
+ 2196               	/* #NOAPP */
+ 2197 0fe2 00C0      		rjmp .L181
+ 2198               	.L175:
+ 2199 0fe4 1093 0000 		sts gbCFMountStatus,r17
+ 2200 0fe8 80E0      		ldi r24,lo8(0)
+ 2201 0fea 0E94 0000 		call IDEUnMountDevice
+ 2202 0fee E091 0000 		lds r30,pUserUnMountFunc
+ 2203 0ff2 F091 0000 		lds r31,(pUserUnMountFunc)+1
+ 2204 0ff6 3097      		sbiw r30,0
+ 2205 0ff8 01F0      		breq .L177
+ 2206 0ffa 80E0      		ldi r24,lo8(0)
+ 2207 0ffc 90E0      		ldi r25,hi8(0)
+ 2208 0ffe 0995      		icall
+ 2209               	.L177:
+ 2210               	/* #APP */
+ 2211               	 ;  1170 "../../nut/arch/avr/dev/ide.c" 1
+ 2212 1000 0FB6      		in  __tmp_reg__, __SREG__
+ 2213 1002 F894      		cli
+ 2214 1004 0F92      		push __tmp_reg__
+ 2215               		
+ 2216               	 ;  0 "" 2
+ 2217               	/* #NOAPP */
+ 2218 1006 8AB7      		in r24,90-32
+ 2219 1008 8F7C      		andi r24,lo8(-49)
+ 2220 100a 8ABF      		out 90-32,r24
+ 2221 100c 8AB7      		in r24,90-32
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 40
+
+
+ 2222 100e 8062      		ori r24,lo8(32)
+ 2223 1010 8ABF      		out 90-32,r24
+ 2224               	/* #APP */
+ 2225               	 ;  1173 "../../nut/arch/avr/dev/ide.c" 1
+ 2226 1012 0F90      		pop __tmp_reg__
+ 2227 1014 0FBE      		out __SREG__, __tmp_reg__
+ 2228               		
+ 2229               	 ;  0 "" 2
+ 2230               	/* #NOAPP */
+ 2231 1016 00C0      		rjmp .L181
+ 2232               		.size	CFChange, .-CFChange
+ 2233               		.lcomm gbIntStatus,1
+ 2234               		.lcomm pUserMountFunc,2
+ 2235               		.lcomm pUserUnMountFunc,2
+ 2236               		.lcomm gbCFMountStatus,1
+ 2237               		.lcomm hIDEEvent,2
+ 2238               		.lcomm pIDE,2
+ 2239               		.lcomm sDrive,10
+ 2240               		.lcomm hIDESemaphore,2
+ 2241               		.lcomm hCFChangeInt,2
+ 2242               		.lcomm aATAPICmd,12
+ 2243               	.global __do_copy_data
+ 2244               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s 			page 41
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ide.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:10     .text:00000000 CFInterrupt
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:2240   .bss:00000016 hCFChangeInt
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:36     .text:0000002e IDEInterrupt
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:2237   .bss:00000008 pIDE
+                             .bss:00000000 gbIntStatus
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:2236   .bss:00000006 hIDEEvent
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:66     .text:0000006a WaitNotBusy
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:134    .text:000000ee SelectDevice
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:222    .text:00000170 ATAPISendCommand
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:2241   .bss:00000018 aATAPICmd
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:510    .text:00000360 IDEATAPISetCDSpeed
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:2238   .bss:0000000a sDrive
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:577    .text:000003e0 DeviceDiag
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:654    .text:00000460 IDELock
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:2239   .bss:00000014 hIDESemaphore
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:668    .text:00000472 HardwareReset
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:736    .text:000004ca IDESemaInit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:751    .text:000004d4 IDEInit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:2233   .bss:00000001 pUserMountFunc
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:2234   .bss:00000003 pUserUnMountFunc
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:2235   .bss:00000005 gbCFMountStatus
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:2125   .text:00000f5c CFChange
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:898    .text:000005e0 IDEFree
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:909    .text:000005ea IDEReadSectors
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:1337   .text:00000918 IDEGetTotalSectors
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:1386   .text:00000974 IDEUnMountDevice
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:1423   .text:000009b4 IDEIsZIPDevice
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:1468   .text:00000a04 IDEIsCDROMDevice
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:1512   .text:00000a52 IDEGetSectorSize
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccIB2BDA.s:1547   .text:00000a8e IDEMountDevice
+
+UNDEFINED SYMBOLS
+__mulsi3
+__udivmodsi4
+NutGetTickCount
+NutEventWait
+NutSleep
+NutEventPost
+sig_INTERRUPT7
+NutRegisterIrqHandler
+sig_INTERRUPT6
+NutThreadCreate
+NutEventWaitNext
+heapFreeList
+NutHeapRootAlloc
+NutHeapRootFree
+__do_copy_data
+__do_clear_bss

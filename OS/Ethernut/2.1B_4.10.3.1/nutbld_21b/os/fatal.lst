@@ -1,0 +1,90 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccCq7DOh.s 			page 1
+
+
+   1               		.file	"fatal.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.data
+   9               	.LC0:
+  10 0000 2573 3A25 		.string	"%s:%d: Fatal: Expected %s in %s\n"
+  10      643A 2046 
+  10      6174 616C 
+  10      3A20 4578 
+  10      7065 6374 
+  11               		.text
+  12               	.global	NUTFATAL
+  13               		.type	NUTFATAL, @function
+  14               	NUTFATAL:
+  15 0000 CF93      		push r28
+  16 0002 DF93      		push r29
+  17               	/* prologue: function */
+  18               	/* frame size = 0 */
+  19 0004 CDB7      		in r28,__SP_L__
+  20 0006 DEB7      		in r29,__SP_H__
+  21 0008 2A97      		sbiw r28,10
+  22 000a 0FB6      		in __tmp_reg__,__SREG__
+  23 000c F894      		cli
+  24 000e DEBF      		out __SP_H__,r29
+  25 0010 0FBE      		out __SREG__,__tmp_reg__
+  26 0012 CDBF      		out __SP_L__,r28
+  27 0014 ADB7      		in r26,__SP_L__
+  28 0016 BEB7      		in r27,__SP_H__
+  29 0018 1196      		adiw r26,1
+  30 001a E0E0      		ldi r30,lo8(.LC0)
+  31 001c F0E0      		ldi r31,hi8(.LC0)
+  32 001e FA83      		std Y+2,r31
+  33 0020 E983      		std Y+1,r30
+  34 0022 1396      		adiw r26,2+1
+  35 0024 7C93      		st X,r23
+  36 0026 6E93      		st -X,r22
+  37 0028 1297      		sbiw r26,2
+  38 002a 1596      		adiw r26,4+1
+  39 002c 5C93      		st X,r21
+  40 002e 4E93      		st -X,r20
+  41 0030 1497      		sbiw r26,4
+  42 0032 1796      		adiw r26,6+1
+  43 0034 3C93      		st X,r19
+  44 0036 2E93      		st -X,r18
+  45 0038 1697      		sbiw r26,6
+  46 003a 1996      		adiw r26,8+1
+  47 003c 9C93      		st X,r25
+  48 003e 8E93      		st -X,r24
+  49 0040 1897      		sbiw r26,8
+  50 0042 0E94 0000 		call NUTPANIC
+  51 0046 EDB7      		in r30,__SP_L__
+  52 0048 FEB7      		in r31,__SP_H__
+  53 004a 3A96      		adiw r30,10
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccCq7DOh.s 			page 2
+
+
+  54 004c 0FB6      		in __tmp_reg__,__SREG__
+  55 004e F894      		cli
+  56 0050 FEBF      		out __SP_H__,r31
+  57 0052 0FBE      		out __SREG__,__tmp_reg__
+  58 0054 EDBF      		out __SP_L__,r30
+  59               	/* epilogue start */
+  60 0056 DF91      		pop r29
+  61 0058 CF91      		pop r28
+  62 005a 0895      		ret
+  63               		.size	NUTFATAL, .-NUTFATAL
+  64               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccCq7DOh.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 fatal.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccCq7DOh.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccCq7DOh.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccCq7DOh.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccCq7DOh.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccCq7DOh.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccCq7DOh.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccCq7DOh.s:14     .text:00000000 NUTFATAL
+
+UNDEFINED SYMBOLS
+NUTPANIC
+__do_copy_data

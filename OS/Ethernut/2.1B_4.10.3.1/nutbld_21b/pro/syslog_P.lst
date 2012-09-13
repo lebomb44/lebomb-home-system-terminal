@@ -1,0 +1,102 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclUS2UG.s 			page 1
+
+
+   1               		.file	"syslog_P.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	vsyslog_P
+  10               		.type	vsyslog_P, @function
+  11               	vsyslog_P:
+  12 0000 EF92      		push r14
+  13 0002 FF92      		push r15
+  14 0004 0F93      		push r16
+  15 0006 1F93      		push r17
+  16 0008 CF93      		push r28
+  17 000a DF93      		push r29
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 000c 8B01      		movw r16,r22
+  21 000e 7A01      		movw r14,r20
+  22 0010 0E94 0000 		call syslog_header
+  23 0014 EC01      		movw r28,r24
+  24 0016 0097      		sbiw r24,0
+  25 0018 01F0      		breq .L3
+  26 001a C801      		movw r24,r16
+  27 001c 0E94 0000 		call strlen_P
+  28 0020 8C0F      		add r24,r28
+  29 0022 9D1F      		adc r25,r29
+  30 0024 8F3F      		cpi r24,255
+  31 0026 9105      		cpc r25,__zero_reg__
+  32 0028 01F0      		breq .+2
+  33 002a 00F4      		brsh .L3
+  34 002c 8091 0000 		lds r24,syslog_buf
+  35 0030 9091 0000 		lds r25,(syslog_buf)+1
+  36 0034 8C0F      		add r24,r28
+  37 0036 9D1F      		adc r25,r29
+  38 0038 B801      		movw r22,r16
+  39 003a A701      		movw r20,r14
+  40 003c 0E94 0000 		call vsprintf_P
+  41 0040 8C0F      		add r24,r28
+  42 0042 9D1F      		adc r25,r29
+  43 0044 0E94 0000 		call syslog_flush
+  44               	.L3:
+  45               	/* epilogue start */
+  46 0048 DF91      		pop r29
+  47 004a CF91      		pop r28
+  48 004c 1F91      		pop r17
+  49 004e 0F91      		pop r16
+  50 0050 FF90      		pop r15
+  51 0052 EF90      		pop r14
+  52 0054 0895      		ret
+  53               		.size	vsyslog_P, .-vsyslog_P
+  54               	.global	syslog_P
+  55               		.type	syslog_P, @function
+  56               	syslog_P:
+  57 0056 DF93      		push r29
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclUS2UG.s 			page 2
+
+
+  58 0058 CF93      		push r28
+  59 005a CDB7      		in r28,__SP_L__
+  60 005c DEB7      		in r29,__SP_H__
+  61               	/* prologue: function */
+  62               	/* frame size = 0 */
+  63 005e 9E01      		movw r18,r28
+  64 0060 275F      		subi r18,lo8(-(9))
+  65 0062 3F4F      		sbci r19,hi8(-(9))
+  66 0064 8D81      		ldd r24,Y+5
+  67 0066 9E81      		ldd r25,Y+6
+  68 0068 6F81      		ldd r22,Y+7
+  69 006a 7885      		ldd r23,Y+8
+  70 006c A901      		movw r20,r18
+  71 006e 0E94 0000 		call vsyslog_P
+  72               	/* epilogue start */
+  73 0072 CF91      		pop r28
+  74 0074 DF91      		pop r29
+  75 0076 0895      		ret
+  76               		.size	syslog_P, .-syslog_P
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclUS2UG.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 syslog_P.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclUS2UG.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclUS2UG.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclUS2UG.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclUS2UG.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclUS2UG.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclUS2UG.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclUS2UG.s:11     .text:00000000 vsyslog_P
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclUS2UG.s:56     .text:00000056 syslog_P
+
+UNDEFINED SYMBOLS
+syslog_header
+strlen_P
+syslog_buf
+vsprintf_P
+syslog_flush

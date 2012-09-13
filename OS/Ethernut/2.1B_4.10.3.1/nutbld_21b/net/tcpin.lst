@@ -1,0 +1,94 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuXi0RQ.s 			page 1
+
+
+   1               		.file	"tcpin.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutTcpInput
+  10               		.type	NutTcpInput, @function
+  11               	NutTcpInput:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 FB01      		movw r30,r22
+  15 0002 A385      		ldd r26,Z+11
+  16 0004 B485      		ldd r27,Z+12
+  17 0006 1097      		sbiw r26,0
+  18 0008 01F0      		breq .L2
+  19 000a 8281      		ldd r24,Z+2
+  20 000c 83FF      		sbrs r24,3
+  21 000e 00C0      		rjmp .L2
+  22 0010 1C96      		adiw r26,12
+  23 0012 8C91      		ld r24,X
+  24 0014 1C97      		sbiw r26,12
+  25 0016 8295      		swap r24
+  26 0018 8F70      		andi r24,lo8(15)
+  27 001a 880F      		lsl r24
+  28 001c 880F      		lsl r24
+  29 001e 8431      		cpi r24,lo8(20)
+  30 0020 00F0      		brlo .L2
+  31 0022 282F      		mov r18,r24
+  32 0024 30E0      		ldi r19,lo8(0)
+  33 0026 8585      		ldd r24,Z+13
+  34 0028 9685      		ldd r25,Z+14
+  35 002a 8217      		cp r24,r18
+  36 002c 9307      		cpc r25,r19
+  37 002e 04F0      		brlt .L2
+  38 0030 821B      		sub r24,r18
+  39 0032 930B      		sbc r25,r19
+  40 0034 928B      		std Z+18,r25
+  41 0036 818B      		std Z+17,r24
+  42 0038 892B      		or r24,r25
+  43 003a 01F0      		breq .L3
+  44 003c 1C96      		adiw r26,12
+  45 003e 8C91      		ld r24,X
+  46 0040 1C97      		sbiw r26,12
+  47 0042 8295      		swap r24
+  48 0044 8F70      		andi r24,lo8(15)
+  49 0046 90E0      		ldi r25,lo8(0)
+  50 0048 880F      		lsl r24
+  51 004a 991F      		rol r25
+  52 004c 880F      		lsl r24
+  53 004e 991F      		rol r25
+  54 0050 A80F      		add r26,r24
+  55 0052 B91F      		adc r27,r25
+  56 0054 B08B      		std Z+16,r27
+  57 0056 A787      		std Z+15,r26
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuXi0RQ.s 			page 2
+
+
+  58               	.L3:
+  59 0058 3687      		std Z+14,r19
+  60 005a 2587      		std Z+13,r18
+  61 005c CF01      		movw r24,r30
+  62 005e 0E94 0000 		call NutTcpStateMachine
+  63 0062 00C0      		rjmp .L4
+  64               	.L2:
+  65 0064 CF01      		movw r24,r30
+  66 0066 0E94 0000 		call NutNetBufFree
+  67               	.L4:
+  68 006a 80E0      		ldi r24,lo8(0)
+  69 006c 90E0      		ldi r25,hi8(0)
+  70               	/* epilogue start */
+  71 006e 0895      		ret
+  72               		.size	NutTcpInput, .-NutTcpInput
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuXi0RQ.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tcpin.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuXi0RQ.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuXi0RQ.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuXi0RQ.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuXi0RQ.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuXi0RQ.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuXi0RQ.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuXi0RQ.s:11     .text:00000000 NutTcpInput
+
+UNDEFINED SYMBOLS
+NutTcpStateMachine
+NutNetBufFree

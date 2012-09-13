@@ -1,0 +1,621 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s 			page 1
+
+
+   1               		.file	"pppsm.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	IpcpLowerDown
+  10               		.type	IpcpLowerDown, @function
+  11               	IpcpLowerDown:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 DC01      		movw r26,r24
+  15 0002 5196      		adiw r26,17
+  16 0004 ED91      		ld r30,X+
+  17 0006 FC91      		ld r31,X
+  18 0008 5297      		sbiw r26,17+1
+  19 000a 84AD      		ldd r24,Z+60
+  20 000c 8430      		cpi r24,lo8(4)
+  21 000e 01F0      		breq .L5
+  22 0010 8530      		cpi r24,lo8(5)
+  23 0012 00F4      		brsh .L8
+  24 0014 8230      		cpi r24,lo8(2)
+  25 0016 01F0      		breq .L3
+  26 0018 8330      		cpi r24,lo8(3)
+  27 001a 01F4      		brne .L9
+  28 001c 00C0      		rjmp .L6
+  29               	.L8:
+  30 001e 8930      		cpi r24,lo8(9)
+  31 0020 00F0      		brlo .L6
+  32 0022 8930      		cpi r24,lo8(9)
+  33 0024 01F4      		brne .L9
+  34 0026 00C0      		rjmp .L10
+  35               	.L3:
+  36 0028 14AE      		std Z+60,__zero_reg__
+  37 002a FF96      		adiw r30,63
+  38 002c 8081      		ld r24,Z
+  39 002e 9181      		ldd r25,Z+1
+  40 0030 67E1      		ldi r22,lo8(279)
+  41 0032 71E0      		ldi r23,hi8(279)
+  42 0034 40E0      		ldi r20,lo8(0)
+  43 0036 50E0      		ldi r21,hi8(0)
+  44 0038 0E94 0000 		call _ioctl
+  45 003c 0895      		ret
+  46               	.L5:
+  47 003e 14AE      		std Z+60,__zero_reg__
+  48 0040 0895      		ret
+  49               	.L6:
+  50 0042 81E0      		ldi r24,lo8(1)
+  51 0044 84AF      		std Z+60,r24
+  52 0046 0895      		ret
+  53               	.L10:
+  54 0048 81E0      		ldi r24,lo8(1)
+  55 004a 84AF      		std Z+60,r24
+  56 004c CF01      		movw r24,r30
+  57 004e 0E94 0000 		call NutEventPost
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s 			page 2
+
+
+  58               	.L9:
+  59 0052 0895      		ret
+  60               		.size	IpcpLowerDown, .-IpcpLowerDown
+  61               	.global	LcpLowerDown
+  62               		.type	LcpLowerDown, @function
+  63               	LcpLowerDown:
+  64 0054 CF93      		push r28
+  65 0056 DF93      		push r29
+  66               	/* prologue: function */
+  67               	/* frame size = 0 */
+  68 0058 FC01      		movw r30,r24
+  69 005a C189      		ldd r28,Z+17
+  70 005c D289      		ldd r29,Z+18
+  71 005e 8A81      		ldd r24,Y+2
+  72 0060 8430      		cpi r24,lo8(4)
+  73 0062 01F0      		breq .L15
+  74 0064 8530      		cpi r24,lo8(5)
+  75 0066 00F4      		brsh .L18
+  76 0068 8230      		cpi r24,lo8(2)
+  77 006a 01F0      		breq .L15
+  78 006c 8330      		cpi r24,lo8(3)
+  79 006e 01F4      		brne .L19
+  80 0070 00C0      		rjmp .L20
+  81               	.L18:
+  82 0072 8930      		cpi r24,lo8(9)
+  83 0074 00F0      		brlo .L20
+  84 0076 8930      		cpi r24,lo8(9)
+  85 0078 01F4      		brne .L19
+  86 007a 00C0      		rjmp .L21
+  87               	.L15:
+  88 007c 1A82      		std Y+2,__zero_reg__
+  89 007e 00C0      		rjmp .L19
+  90               	.L21:
+  91 0080 CF01      		movw r24,r30
+  92 0082 0E94 0000 		call IpcpLowerDown
+  93               	.L20:
+  94 0086 81E0      		ldi r24,lo8(1)
+  95 0088 8A83      		std Y+2,r24
+  96               	.L19:
+  97               	/* epilogue start */
+  98 008a DF91      		pop r29
+  99 008c CF91      		pop r28
+ 100 008e 0895      		ret
+ 101               		.size	LcpLowerDown, .-LcpLowerDown
+ 102               	.global	IpcpLowerUp
+ 103               		.type	IpcpLowerUp, @function
+ 104               	IpcpLowerUp:
+ 105 0090 CF93      		push r28
+ 106 0092 DF93      		push r29
+ 107               	/* prologue: function */
+ 108               	/* frame size = 0 */
+ 109 0094 FC01      		movw r30,r24
+ 110 0096 C189      		ldd r28,Z+17
+ 111 0098 D289      		ldd r29,Z+18
+ 112 009a 8CAD      		ldd r24,Y+60
+ 113 009c 8823      		tst r24
+ 114 009e 01F0      		breq .L24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s 			page 3
+
+
+ 115 00a0 8130      		cpi r24,lo8(1)
+ 116 00a2 01F4      		brne .L26
+ 117 00a4 00C0      		rjmp .L28
+ 118               	.L24:
+ 119 00a6 82E0      		ldi r24,lo8(2)
+ 120 00a8 00C0      		rjmp .L27
+ 121               	.L28:
+ 122 00aa 6B81      		ldd r22,Y+3
+ 123 00ac 6F5F      		subi r22,lo8(-(1))
+ 124 00ae 6B83      		std Y+3,r22
+ 125 00b0 CF01      		movw r24,r30
+ 126 00b2 0E94 0000 		call IpcpTxConfReq
+ 127 00b6 86E0      		ldi r24,lo8(6)
+ 128               	.L27:
+ 129 00b8 8CAF      		std Y+60,r24
+ 130               	.L26:
+ 131               	/* epilogue start */
+ 132 00ba DF91      		pop r29
+ 133 00bc CF91      		pop r28
+ 134 00be 0895      		ret
+ 135               		.size	IpcpLowerUp, .-IpcpLowerUp
+ 136               	.global	IpcpClose
+ 137               		.type	IpcpClose, @function
+ 138               	IpcpClose:
+ 139 00c0 CF93      		push r28
+ 140 00c2 DF93      		push r29
+ 141               	/* prologue: function */
+ 142               	/* frame size = 0 */
+ 143 00c4 FC01      		movw r30,r24
+ 144 00c6 C189      		ldd r28,Z+17
+ 145 00c8 D289      		ldd r29,Z+18
+ 146 00ca 8CAD      		ldd r24,Y+60
+ 147 00cc 8530      		cpi r24,lo8(5)
+ 148 00ce 01F0      		breq .L33
+ 149 00d0 8630      		cpi r24,lo8(6)
+ 150 00d2 00F4      		brsh .L35
+ 151 00d4 8130      		cpi r24,lo8(1)
+ 152 00d6 01F0      		breq .L31
+ 153 00d8 8330      		cpi r24,lo8(3)
+ 154 00da 01F4      		brne .L36
+ 155 00dc 00C0      		rjmp .L39
+ 156               	.L35:
+ 157 00de 8A30      		cpi r24,lo8(10)
+ 158 00e0 00F4      		brsh .L36
+ 159 00e2 00C0      		rjmp .L40
+ 160               	.L31:
+ 161 00e4 1CAE      		std Y+60,__zero_reg__
+ 162 00e6 00C0      		rjmp .L36
+ 163               	.L39:
+ 164 00e8 82E0      		ldi r24,lo8(2)
+ 165 00ea 00C0      		rjmp .L38
+ 166               	.L33:
+ 167 00ec 84E0      		ldi r24,lo8(4)
+ 168               	.L38:
+ 169 00ee 8CAF      		std Y+60,r24
+ 170 00f0 00C0      		rjmp .L36
+ 171               	.L40:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s 			page 4
+
+
+ 172 00f2 CF01      		movw r24,r30
+ 173 00f4 65E0      		ldi r22,lo8(5)
+ 174 00f6 4B81      		ldd r20,Y+3
+ 175 00f8 20E0      		ldi r18,lo8(0)
+ 176 00fa 30E0      		ldi r19,hi8(0)
+ 177 00fc 0E94 0000 		call NutIpcpOutput
+ 178 0100 84E0      		ldi r24,lo8(4)
+ 179 0102 8CAF      		std Y+60,r24
+ 180 0104 CE01      		movw r24,r28
+ 181 0106 0E94 0000 		call NutEventPost
+ 182               	.L36:
+ 183               	/* epilogue start */
+ 184 010a DF91      		pop r29
+ 185 010c CF91      		pop r28
+ 186 010e 0895      		ret
+ 187               		.size	IpcpClose, .-IpcpClose
+ 188               	.global	LcpLowerUp
+ 189               		.type	LcpLowerUp, @function
+ 190               	LcpLowerUp:
+ 191 0110 CF93      		push r28
+ 192 0112 DF93      		push r29
+ 193               	/* prologue: function */
+ 194               	/* frame size = 0 */
+ 195 0114 FC01      		movw r30,r24
+ 196 0116 C189      		ldd r28,Z+17
+ 197 0118 D289      		ldd r29,Z+18
+ 198 011a 8A81      		ldd r24,Y+2
+ 199 011c 8823      		tst r24
+ 200 011e 01F0      		breq .L43
+ 201 0120 8130      		cpi r24,lo8(1)
+ 202 0122 01F4      		brne .L45
+ 203 0124 00C0      		rjmp .L47
+ 204               	.L43:
+ 205 0126 82E0      		ldi r24,lo8(2)
+ 206 0128 00C0      		rjmp .L46
+ 207               	.L47:
+ 208 012a 6B81      		ldd r22,Y+3
+ 209 012c 6F5F      		subi r22,lo8(-(1))
+ 210 012e 6B83      		std Y+3,r22
+ 211 0130 CF01      		movw r24,r30
+ 212 0132 40E0      		ldi r20,lo8(0)
+ 213 0134 0E94 0000 		call LcpTxConfReq
+ 214 0138 86E0      		ldi r24,lo8(6)
+ 215               	.L46:
+ 216 013a 8A83      		std Y+2,r24
+ 217               	.L45:
+ 218               	/* epilogue start */
+ 219 013c DF91      		pop r29
+ 220 013e CF91      		pop r28
+ 221 0140 0895      		ret
+ 222               		.size	LcpLowerUp, .-LcpLowerUp
+ 223               	.global	LcpOpen
+ 224               		.type	LcpOpen, @function
+ 225               	LcpOpen:
+ 226 0142 CF93      		push r28
+ 227 0144 DF93      		push r29
+ 228               	/* prologue: function */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s 			page 5
+
+
+ 229               	/* frame size = 0 */
+ 230 0146 FC01      		movw r30,r24
+ 231 0148 C189      		ldd r28,Z+17
+ 232 014a D289      		ldd r29,Z+18
+ 233 014c 8A81      		ldd r24,Y+2
+ 234 014e 8230      		cpi r24,lo8(2)
+ 235 0150 01F0      		breq .L51
+ 236 0152 8430      		cpi r24,lo8(4)
+ 237 0154 01F0      		breq .L52
+ 238 0156 8823      		tst r24
+ 239 0158 01F4      		brne .L53
+ 240 015a 81E0      		ldi r24,lo8(1)
+ 241 015c 00C0      		rjmp .L54
+ 242               	.L51:
+ 243 015e 6B81      		ldd r22,Y+3
+ 244 0160 6F5F      		subi r22,lo8(-(1))
+ 245 0162 6B83      		std Y+3,r22
+ 246 0164 CF01      		movw r24,r30
+ 247 0166 40E0      		ldi r20,lo8(0)
+ 248 0168 0E94 0000 		call LcpTxConfReq
+ 249 016c 86E0      		ldi r24,lo8(6)
+ 250 016e 00C0      		rjmp .L54
+ 251               	.L52:
+ 252 0170 85E0      		ldi r24,lo8(5)
+ 253               	.L54:
+ 254 0172 8A83      		std Y+2,r24
+ 255               	.L53:
+ 256               	/* epilogue start */
+ 257 0174 DF91      		pop r29
+ 258 0176 CF91      		pop r28
+ 259 0178 0895      		ret
+ 260               		.size	LcpOpen, .-LcpOpen
+ 261               	.global	IpcpOpen
+ 262               		.type	IpcpOpen, @function
+ 263               	IpcpOpen:
+ 264 017a CF93      		push r28
+ 265 017c DF93      		push r29
+ 266               	/* prologue: function */
+ 267               	/* frame size = 0 */
+ 268 017e FC01      		movw r30,r24
+ 269 0180 C189      		ldd r28,Z+17
+ 270 0182 D289      		ldd r29,Z+18
+ 271 0184 8CAD      		ldd r24,Y+60
+ 272 0186 8230      		cpi r24,lo8(2)
+ 273 0188 01F0      		breq .L58
+ 274 018a 8430      		cpi r24,lo8(4)
+ 275 018c 01F0      		breq .L59
+ 276 018e 8823      		tst r24
+ 277 0190 01F4      		brne .L60
+ 278 0192 81E0      		ldi r24,lo8(1)
+ 279 0194 8CAF      		std Y+60,r24
+ 280 0196 CF01      		movw r24,r30
+ 281 0198 0E94 0000 		call LcpOpen
+ 282 019c 00C0      		rjmp .L60
+ 283               	.L58:
+ 284 019e 6B81      		ldd r22,Y+3
+ 285 01a0 6F5F      		subi r22,lo8(-(1))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s 			page 6
+
+
+ 286 01a2 6B83      		std Y+3,r22
+ 287 01a4 CF01      		movw r24,r30
+ 288 01a6 0E94 0000 		call IpcpTxConfReq
+ 289 01aa 86E0      		ldi r24,lo8(6)
+ 290 01ac 00C0      		rjmp .L61
+ 291               	.L59:
+ 292 01ae 85E0      		ldi r24,lo8(5)
+ 293               	.L61:
+ 294 01b0 8CAF      		std Y+60,r24
+ 295               	.L60:
+ 296               	/* epilogue start */
+ 297 01b2 DF91      		pop r29
+ 298 01b4 CF91      		pop r28
+ 299 01b6 0895      		ret
+ 300               		.size	IpcpOpen, .-IpcpOpen
+ 301               	.global	LcpClose
+ 302               		.type	LcpClose, @function
+ 303               	LcpClose:
+ 304 01b8 0F93      		push r16
+ 305 01ba 1F93      		push r17
+ 306 01bc CF93      		push r28
+ 307 01be DF93      		push r29
+ 308               	/* prologue: function */
+ 309               	/* frame size = 0 */
+ 310 01c0 8C01      		movw r16,r24
+ 311 01c2 FC01      		movw r30,r24
+ 312 01c4 C189      		ldd r28,Z+17
+ 313 01c6 D289      		ldd r29,Z+18
+ 314 01c8 8A81      		ldd r24,Y+2
+ 315 01ca 8530      		cpi r24,lo8(5)
+ 316 01cc 01F0      		breq .L66
+ 317 01ce 8630      		cpi r24,lo8(6)
+ 318 01d0 00F4      		brsh .L68
+ 319 01d2 8130      		cpi r24,lo8(1)
+ 320 01d4 01F0      		breq .L64
+ 321 01d6 8330      		cpi r24,lo8(3)
+ 322 01d8 01F4      		brne .L69
+ 323 01da 00C0      		rjmp .L72
+ 324               	.L68:
+ 325 01dc 8A30      		cpi r24,lo8(10)
+ 326 01de 00F4      		brsh .L69
+ 327 01e0 00C0      		rjmp .L73
+ 328               	.L64:
+ 329 01e2 1A82      		std Y+2,__zero_reg__
+ 330 01e4 00C0      		rjmp .L69
+ 331               	.L72:
+ 332 01e6 82E0      		ldi r24,lo8(2)
+ 333 01e8 00C0      		rjmp .L71
+ 334               	.L66:
+ 335 01ea 84E0      		ldi r24,lo8(4)
+ 336               	.L71:
+ 337 01ec 8A83      		std Y+2,r24
+ 338 01ee 00C0      		rjmp .L69
+ 339               	.L73:
+ 340 01f0 84E0      		ldi r24,lo8(4)
+ 341 01f2 8A83      		std Y+2,r24
+ 342 01f4 C801      		movw r24,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s 			page 7
+
+
+ 343 01f6 0E94 0000 		call IpcpLowerDown
+ 344 01fa C801      		movw r24,r16
+ 345 01fc 65E0      		ldi r22,lo8(5)
+ 346 01fe 4B81      		ldd r20,Y+3
+ 347 0200 20E0      		ldi r18,lo8(0)
+ 348 0202 30E0      		ldi r19,hi8(0)
+ 349 0204 0E94 0000 		call NutLcpOutput
+ 350               	.L69:
+ 351               	/* epilogue start */
+ 352 0208 DF91      		pop r29
+ 353 020a CF91      		pop r28
+ 354 020c 1F91      		pop r17
+ 355 020e 0F91      		pop r16
+ 356 0210 0895      		ret
+ 357               		.size	LcpClose, .-LcpClose
+ 358               		.data
+ 359               	.LC0:
+ 360 0000 7070 7073 		.string	"pppsm"
+ 360      6D00 
+ 361               		.text
+ 362               	.global	NutPppInitStateMachine
+ 363               		.type	NutPppInitStateMachine, @function
+ 364               	NutPppInitStateMachine:
+ 365               	/* prologue: function */
+ 366               	/* frame size = 0 */
+ 367 0212 AC01      		movw r20,r24
+ 368 0214 8091 0000 		lds r24,pppThread
+ 369 0218 9091 0000 		lds r25,(pppThread)+1
+ 370 021c 892B      		or r24,r25
+ 371 021e 01F4      		brne .L75
+ 372 0220 80E0      		ldi r24,lo8(.LC0)
+ 373 0222 90E0      		ldi r25,hi8(.LC0)
+ 374 0224 60E0      		ldi r22,lo8(gs(NutPppSm))
+ 375 0226 70E0      		ldi r23,hi8(gs(NutPppSm))
+ 376 0228 20E0      		ldi r18,lo8(512)
+ 377 022a 32E0      		ldi r19,hi8(512)
+ 378 022c 0E94 0000 		call NutThreadCreate
+ 379 0230 9093 0000 		sts (pppThread)+1,r25
+ 380 0234 8093 0000 		sts pppThread,r24
+ 381 0238 892B      		or r24,r25
+ 382 023a 01F4      		brne .L75
+ 383 023c 2FEF      		ldi r18,lo8(-1)
+ 384 023e 3FEF      		ldi r19,hi8(-1)
+ 385 0240 00C0      		rjmp .L76
+ 386               	.L75:
+ 387 0242 20E0      		ldi r18,lo8(0)
+ 388 0244 30E0      		ldi r19,hi8(0)
+ 389               	.L76:
+ 390 0246 C901      		movw r24,r18
+ 391               	/* epilogue start */
+ 392 0248 0895      		ret
+ 393               		.size	NutPppInitStateMachine, .-NutPppInitStateMachine
+ 394               	.global	NutPppSm
+ 395               		.type	NutPppSm, @function
+ 396               	NutPppSm:
+ 397               	/* prologue: function */
+ 398               	/* frame size = 0 */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s 			page 8
+
+
+ 399 024a 7C01      		movw r14,r24
+ 400 024c FC01      		movw r30,r24
+ 401 024e C189      		ldd r28,Z+17
+ 402 0250 D289      		ldd r29,Z+18
+ 403 0252 03E0      		ldi r16,lo8(3)
+ 404               	.L105:
+ 405 0254 68E8      		ldi r22,lo8(5000)
+ 406 0256 73E1      		ldi r23,hi8(5000)
+ 407 0258 80E0      		ldi r24,hlo8(5000)
+ 408 025a 90E0      		ldi r25,hhi8(5000)
+ 409 025c 0E94 0000 		call NutSleep
+ 410 0260 8091 0000 		lds r24,new_magic
+ 411 0264 9091 0000 		lds r25,(new_magic)+1
+ 412 0268 A091 0000 		lds r26,(new_magic)+2
+ 413 026c B091 0000 		lds r27,(new_magic)+3
+ 414 0270 0196      		adiw r24,1
+ 415 0272 A11D      		adc r26,__zero_reg__
+ 416 0274 B11D      		adc r27,__zero_reg__
+ 417 0276 8093 0000 		sts new_magic,r24
+ 418 027a 9093 0000 		sts (new_magic)+1,r25
+ 419 027e A093 0000 		sts (new_magic)+2,r26
+ 420 0282 B093 0000 		sts (new_magic)+3,r27
+ 421 0286 19AD      		ldd r17,Y+57
+ 422 0288 8A81      		ldd r24,Y+2
+ 423 028a 8630      		cpi r24,lo8(6)
+ 424 028c 01F0      		breq .L82
+ 425 028e 8730      		cpi r24,lo8(7)
+ 426 0290 00F4      		brsh .L83
+ 427 0292 8430      		cpi r24,lo8(4)
+ 428 0294 00F0      		brlo .L80
+ 429 0296 00C0      		rjmp .L108
+ 430               	.L83:
+ 431 0298 8830      		cpi r24,lo8(8)
+ 432 029a 01F4      		brne .L80
+ 433 029c 00C0      		rjmp .L82
+ 434               	.L108:
+ 435 029e 1930      		cpi r17,lo8(9)
+ 436 02a0 00F4      		brsh .L84
+ 437 02a2 1123      		tst r17
+ 438 02a4 01F0      		breq .L89
+ 439 02a6 C701      		movw r24,r14
+ 440 02a8 65E0      		ldi r22,lo8(5)
+ 441 02aa 4B81      		ldd r20,Y+3
+ 442 02ac 20E0      		ldi r18,lo8(0)
+ 443 02ae 30E0      		ldi r19,hi8(0)
+ 444 02b0 0E94 0000 		call NutLcpOutput
+ 445 02b4 00C0      		rjmp .L89
+ 446               	.L84:
+ 447 02b6 8430      		cpi r24,lo8(4)
+ 448 02b8 01F0      		breq .L86
+ 449 02ba 83E0      		ldi r24,lo8(3)
+ 450 02bc 00C0      		rjmp .L87
+ 451               	.L86:
+ 452 02be 82E0      		ldi r24,lo8(2)
+ 453               	.L87:
+ 454 02c0 8A83      		std Y+2,r24
+ 455 02c2 00C0      		rjmp .L80
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s 			page 9
+
+
+ 456               	.L82:
+ 457 02c4 1930      		cpi r17,lo8(9)
+ 458 02c6 00F4      		brsh .L88
+ 459 02c8 1123      		tst r17
+ 460 02ca 01F0      		breq .L89
+ 461 02cc C701      		movw r24,r14
+ 462 02ce 6B81      		ldd r22,Y+3
+ 463 02d0 40E0      		ldi r20,lo8(0)
+ 464 02d2 0E94 0000 		call LcpTxConfReq
+ 465               	.L89:
+ 466 02d6 1F5F      		subi r17,lo8(-(1))
+ 467 02d8 19AF      		std Y+57,r17
+ 468 02da 1150      		subi r17,lo8(-(-1))
+ 469 02dc 00C0      		rjmp .L80
+ 470               	.L88:
+ 471 02de 0A83      		std Y+2,r16
+ 472               	.L80:
+ 473 02e0 8EAD      		ldd r24,Y+62
+ 474 02e2 8330      		cpi r24,lo8(3)
+ 475 02e4 01F4      		brne .L90
+ 476 02e6 1930      		cpi r17,lo8(9)
+ 477 02e8 00F4      		brsh .L91
+ 478 02ea 1123      		tst r17
+ 479 02ec 01F0      		breq .L92
+ 480 02ee C701      		movw r24,r14
+ 481 02f0 6B81      		ldd r22,Y+3
+ 482 02f2 0E94 0000 		call PapTxAuthReq
+ 483               	.L92:
+ 484 02f6 1F5F      		subi r17,lo8(-(1))
+ 485 02f8 19AF      		std Y+57,r17
+ 486 02fa 1150      		subi r17,lo8(-(-1))
+ 487 02fc 00C0      		rjmp .L90
+ 488               	.L91:
+ 489 02fe 8A83      		std Y+2,r24
+ 490               	.L90:
+ 491 0300 8CAD      		ldd r24,Y+60
+ 492 0302 8630      		cpi r24,lo8(6)
+ 493 0304 01F0      		breq .L94
+ 494 0306 8730      		cpi r24,lo8(7)
+ 495 0308 00F4      		brsh .L95
+ 496 030a 8430      		cpi r24,lo8(4)
+ 497 030c 00F4      		brsh .+2
+ 498 030e 00C0      		rjmp .L105
+ 499 0310 00C0      		rjmp .L109
+ 500               	.L95:
+ 501 0312 8830      		cpi r24,lo8(8)
+ 502 0314 01F0      		breq .+2
+ 503 0316 00C0      		rjmp .L105
+ 504 0318 00C0      		rjmp .L94
+ 505               	.L109:
+ 506 031a 1930      		cpi r17,lo8(9)
+ 507 031c 00F4      		brsh .L96
+ 508 031e 1123      		tst r17
+ 509 0320 01F0      		breq .L101
+ 510 0322 C701      		movw r24,r14
+ 511 0324 65E0      		ldi r22,lo8(5)
+ 512 0326 4B81      		ldd r20,Y+3
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s 			page 10
+
+
+ 513 0328 20E0      		ldi r18,lo8(0)
+ 514 032a 30E0      		ldi r19,hi8(0)
+ 515 032c 0E94 0000 		call NutIpcpOutput
+ 516 0330 00C0      		rjmp .L101
+ 517               	.L96:
+ 518 0332 8430      		cpi r24,lo8(4)
+ 519 0334 01F0      		breq .L98
+ 520 0336 83E0      		ldi r24,lo8(3)
+ 521 0338 00C0      		rjmp .L99
+ 522               	.L98:
+ 523 033a 82E0      		ldi r24,lo8(2)
+ 524               	.L99:
+ 525 033c 8CAF      		std Y+60,r24
+ 526 033e 00C0      		rjmp .L105
+ 527               	.L94:
+ 528 0340 1930      		cpi r17,lo8(9)
+ 529 0342 00F4      		brsh .L100
+ 530 0344 1123      		tst r17
+ 531 0346 01F0      		breq .L101
+ 532 0348 C701      		movw r24,r14
+ 533 034a 6B81      		ldd r22,Y+3
+ 534 034c 0E94 0000 		call IpcpTxConfReq
+ 535               	.L101:
+ 536 0350 1F5F      		subi r17,lo8(-(1))
+ 537 0352 19AF      		std Y+57,r17
+ 538 0354 00C0      		rjmp .L105
+ 539               	.L100:
+ 540 0356 0CAF      		std Y+60,r16
+ 541 0358 00C0      		rjmp .L105
+ 542               		.size	NutPppSm, .-NutPppSm
+ 543               	.global	new_magic
+ 544               		.data
+ 545               		.type	new_magic, @object
+ 546               		.size	new_magic, 4
+ 547               	new_magic:
+ 548 0006 78        		.byte	120
+ 549 0007 56        		.byte	86
+ 550 0008 34        		.byte	52
+ 551 0009 12        		.byte	18
+ 552               		.lcomm pppThread,2
+ 553               	.global __do_copy_data
+ 554               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pppsm.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:11     .text:00000000 IpcpLowerDown
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:63     .text:00000054 LcpLowerDown
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:104    .text:00000090 IpcpLowerUp
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:138    .text:000000c0 IpcpClose
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:190    .text:00000110 LcpLowerUp
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:225    .text:00000142 LcpOpen
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:263    .text:0000017a IpcpOpen
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:303    .text:000001b8 LcpClose
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:364    .text:00000212 NutPppInitStateMachine
+                             .bss:00000000 pppThread
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:396    .text:0000024a NutPppSm
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc8SOf6D.s:547    .data:00000006 new_magic
+
+UNDEFINED SYMBOLS
+_ioctl
+NutEventPost
+IpcpTxConfReq
+NutIpcpOutput
+LcpTxConfReq
+NutLcpOutput
+NutThreadCreate
+NutSleep
+PapTxAuthReq
+__do_copy_data
+__do_clear_bss

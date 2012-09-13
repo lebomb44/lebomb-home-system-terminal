@@ -1,0 +1,1697 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 1
+
+
+   1               		.file	"resolv.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	EncodeDnsHeader, @function
+  10               	EncodeDnsHeader:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 DC01      		movw r26,r24
+  14 0002 FB01      		movw r30,r22
+  15 0004 9081      		ld r25,Z
+  16 0006 8181      		ldd r24,Z+1
+  17 0008 8C93      		st X,r24
+  18 000a 1196      		adiw r26,1
+  19 000c 9C93      		st X,r25
+  20 000e 1197      		sbiw r26,1
+  21 0010 9281      		ldd r25,Z+2
+  22 0012 8381      		ldd r24,Z+3
+  23 0014 1296      		adiw r26,2
+  24 0016 8C93      		st X,r24
+  25 0018 1297      		sbiw r26,2
+  26 001a 1396      		adiw r26,3
+  27 001c 9C93      		st X,r25
+  28 001e 1397      		sbiw r26,3
+  29 0020 9481      		ldd r25,Z+4
+  30 0022 8581      		ldd r24,Z+5
+  31 0024 1496      		adiw r26,4
+  32 0026 8C93      		st X,r24
+  33 0028 1497      		sbiw r26,4
+  34 002a 1596      		adiw r26,5
+  35 002c 9C93      		st X,r25
+  36 002e 1597      		sbiw r26,5
+  37 0030 9681      		ldd r25,Z+6
+  38 0032 8781      		ldd r24,Z+7
+  39 0034 1696      		adiw r26,6
+  40 0036 8C93      		st X,r24
+  41 0038 1697      		sbiw r26,6
+  42 003a 1796      		adiw r26,7
+  43 003c 9C93      		st X,r25
+  44 003e 1797      		sbiw r26,7
+  45 0040 9085      		ldd r25,Z+8
+  46 0042 8185      		ldd r24,Z+9
+  47 0044 1896      		adiw r26,8
+  48 0046 8C93      		st X,r24
+  49 0048 1897      		sbiw r26,8
+  50 004a 1996      		adiw r26,9
+  51 004c 9C93      		st X,r25
+  52 004e 1997      		sbiw r26,9
+  53 0050 9285      		ldd r25,Z+10
+  54 0052 8385      		ldd r24,Z+11
+  55 0054 1A96      		adiw r26,10
+  56 0056 8C93      		st X,r24
+  57 0058 1A97      		sbiw r26,10
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 2
+
+
+  58 005a 1B96      		adiw r26,11
+  59 005c 9C93      		st X,r25
+  60 005e 8CE0      		ldi r24,lo8(12)
+  61 0060 90E0      		ldi r25,hi8(12)
+  62               	/* epilogue start */
+  63 0062 0895      		ret
+  64               		.size	EncodeDnsHeader, .-EncodeDnsHeader
+  65               		.type	DecodeDnsHeader, @function
+  66               	DecodeDnsHeader:
+  67               	/* prologue: function */
+  68               	/* frame size = 0 */
+  69 0064 DC01      		movw r26,r24
+  70 0066 FB01      		movw r30,r22
+  71 0068 3081      		ld r19,Z
+  72 006a 20E0      		ldi r18,lo8(0)
+  73 006c 1196      		adiw r26,1
+  74 006e 3C93      		st X,r19
+  75 0070 2E93      		st -X,r18
+  76 0072 8181      		ldd r24,Z+1
+  77 0074 90E0      		ldi r25,lo8(0)
+  78 0076 822B      		or r24,r18
+  79 0078 932B      		or r25,r19
+  80 007a 1196      		adiw r26,1
+  81 007c 9C93      		st X,r25
+  82 007e 8E93      		st -X,r24
+  83 0080 3281      		ldd r19,Z+2
+  84 0082 20E0      		ldi r18,lo8(0)
+  85 0084 1396      		adiw r26,2+1
+  86 0086 3C93      		st X,r19
+  87 0088 2E93      		st -X,r18
+  88 008a 1297      		sbiw r26,2
+  89 008c 8381      		ldd r24,Z+3
+  90 008e 90E0      		ldi r25,lo8(0)
+  91 0090 822B      		or r24,r18
+  92 0092 932B      		or r25,r19
+  93 0094 1396      		adiw r26,2+1
+  94 0096 9C93      		st X,r25
+  95 0098 8E93      		st -X,r24
+  96 009a 1297      		sbiw r26,2
+  97 009c 3481      		ldd r19,Z+4
+  98 009e 20E0      		ldi r18,lo8(0)
+  99 00a0 1596      		adiw r26,4+1
+ 100 00a2 3C93      		st X,r19
+ 101 00a4 2E93      		st -X,r18
+ 102 00a6 1497      		sbiw r26,4
+ 103 00a8 8581      		ldd r24,Z+5
+ 104 00aa 90E0      		ldi r25,lo8(0)
+ 105 00ac 822B      		or r24,r18
+ 106 00ae 932B      		or r25,r19
+ 107 00b0 1596      		adiw r26,4+1
+ 108 00b2 9C93      		st X,r25
+ 109 00b4 8E93      		st -X,r24
+ 110 00b6 1497      		sbiw r26,4
+ 111 00b8 3681      		ldd r19,Z+6
+ 112 00ba 20E0      		ldi r18,lo8(0)
+ 113 00bc 1796      		adiw r26,6+1
+ 114 00be 3C93      		st X,r19
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 3
+
+
+ 115 00c0 2E93      		st -X,r18
+ 116 00c2 1697      		sbiw r26,6
+ 117 00c4 8781      		ldd r24,Z+7
+ 118 00c6 90E0      		ldi r25,lo8(0)
+ 119 00c8 822B      		or r24,r18
+ 120 00ca 932B      		or r25,r19
+ 121 00cc 1796      		adiw r26,6+1
+ 122 00ce 9C93      		st X,r25
+ 123 00d0 8E93      		st -X,r24
+ 124 00d2 1697      		sbiw r26,6
+ 125 00d4 3085      		ldd r19,Z+8
+ 126 00d6 20E0      		ldi r18,lo8(0)
+ 127 00d8 1996      		adiw r26,8+1
+ 128 00da 3C93      		st X,r19
+ 129 00dc 2E93      		st -X,r18
+ 130 00de 1897      		sbiw r26,8
+ 131 00e0 8185      		ldd r24,Z+9
+ 132 00e2 90E0      		ldi r25,lo8(0)
+ 133 00e4 822B      		or r24,r18
+ 134 00e6 932B      		or r25,r19
+ 135 00e8 1996      		adiw r26,8+1
+ 136 00ea 9C93      		st X,r25
+ 137 00ec 8E93      		st -X,r24
+ 138 00ee 1897      		sbiw r26,8
+ 139 00f0 3285      		ldd r19,Z+10
+ 140 00f2 20E0      		ldi r18,lo8(0)
+ 141 00f4 1B96      		adiw r26,10+1
+ 142 00f6 3C93      		st X,r19
+ 143 00f8 2E93      		st -X,r18
+ 144 00fa 1A97      		sbiw r26,10
+ 145 00fc 8385      		ldd r24,Z+11
+ 146 00fe 90E0      		ldi r25,lo8(0)
+ 147 0100 822B      		or r24,r18
+ 148 0102 932B      		or r25,r19
+ 149 0104 1B96      		adiw r26,10+1
+ 150 0106 9C93      		st X,r25
+ 151 0108 8E93      		st -X,r24
+ 152 010a 1A97      		sbiw r26,10
+ 153 010c 8CE0      		ldi r24,lo8(12)
+ 154 010e 90E0      		ldi r25,hi8(12)
+ 155               	/* epilogue start */
+ 156 0110 0895      		ret
+ 157               		.size	DecodeDnsHeader, .-DecodeDnsHeader
+ 158               	.global	NutDnsGetConfig2
+ 159               		.type	NutDnsGetConfig2, @function
+ 160               	NutDnsGetConfig2:
+ 161 0112 CF93      		push r28
+ 162 0114 DF93      		push r29
+ 163               	/* prologue: function */
+ 164               	/* frame size = 0 */
+ 165 0116 FC01      		movw r30,r24
+ 166 0118 DB01      		movw r26,r22
+ 167 011a EA01      		movw r28,r20
+ 168 011c 0097      		sbiw r24,0
+ 169 011e 01F0      		breq .L6
+ 170 0120 8091 0000 		lds r24,confdns
+ 171 0124 9091 0000 		lds r25,(confdns)+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 4
+
+
+ 172 0128 9183      		std Z+1,r25
+ 173 012a 8083      		st Z,r24
+ 174               	.L6:
+ 175 012c 1097      		sbiw r26,0
+ 176 012e 01F0      		breq .L7
+ 177 0130 8091 0000 		lds r24,confdns+2
+ 178 0134 9091 0000 		lds r25,(confdns+2)+1
+ 179 0138 8D93      		st X+,r24
+ 180 013a 9C93      		st X,r25
+ 181               	.L7:
+ 182 013c 2097      		sbiw r28,0
+ 183 013e 01F0      		breq .L8
+ 184 0140 8091 0000 		lds r24,confdns+4
+ 185 0144 9091 0000 		lds r25,(confdns+4)+1
+ 186 0148 A091 0000 		lds r26,(confdns+4)+2
+ 187 014c B091 0000 		lds r27,(confdns+4)+3
+ 188 0150 8883      		st Y,r24
+ 189 0152 9983      		std Y+1,r25
+ 190 0154 AA83      		std Y+2,r26
+ 191 0156 BB83      		std Y+3,r27
+ 192               	.L8:
+ 193 0158 2115      		cp r18,__zero_reg__
+ 194 015a 3105      		cpc r19,__zero_reg__
+ 195 015c 01F0      		breq .L10
+ 196 015e 8091 0000 		lds r24,confdns+8
+ 197 0162 9091 0000 		lds r25,(confdns+8)+1
+ 198 0166 A091 0000 		lds r26,(confdns+8)+2
+ 199 016a B091 0000 		lds r27,(confdns+8)+3
+ 200 016e F901      		movw r30,r18
+ 201 0170 8083      		st Z,r24
+ 202 0172 9183      		std Z+1,r25
+ 203 0174 A283      		std Z+2,r26
+ 204 0176 B383      		std Z+3,r27
+ 205               	.L10:
+ 206               	/* epilogue start */
+ 207 0178 DF91      		pop r29
+ 208 017a CF91      		pop r28
+ 209 017c 0895      		ret
+ 210               		.size	NutDnsGetConfig2, .-NutDnsGetConfig2
+ 211               		.type	ReleaseDnsQuestion, @function
+ 212               	ReleaseDnsQuestion:
+ 213 017e CF93      		push r28
+ 214 0180 DF93      		push r29
+ 215               	/* prologue: function */
+ 216               	/* frame size = 0 */
+ 217 0182 EC01      		movw r28,r24
+ 218 0184 0097      		sbiw r24,0
+ 219 0186 01F0      		breq .L14
+ 220 0188 8881      		ld r24,Y
+ 221 018a 9981      		ldd r25,Y+1
+ 222 018c 0097      		sbiw r24,0
+ 223 018e 01F0      		breq .L13
+ 224 0190 0E94 0000 		call free
+ 225               	.L13:
+ 226 0194 CE01      		movw r24,r28
+ 227 0196 0E94 0000 		call free
+ 228               	.L14:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 5
+
+
+ 229               	/* epilogue start */
+ 230 019a DF91      		pop r29
+ 231 019c CF91      		pop r28
+ 232 019e 0895      		ret
+ 233               		.size	ReleaseDnsQuestion, .-ReleaseDnsQuestion
+ 234               		.type	ReleaseDnsResource, @function
+ 235               	ReleaseDnsResource:
+ 236 01a0 CF93      		push r28
+ 237 01a2 DF93      		push r29
+ 238               	/* prologue: function */
+ 239               	/* frame size = 0 */
+ 240 01a4 EC01      		movw r28,r24
+ 241 01a6 0097      		sbiw r24,0
+ 242 01a8 01F0      		breq .L19
+ 243 01aa 8881      		ld r24,Y
+ 244 01ac 9981      		ldd r25,Y+1
+ 245 01ae 0097      		sbiw r24,0
+ 246 01b0 01F0      		breq .L17
+ 247 01b2 0E94 0000 		call free
+ 248               	.L17:
+ 249 01b6 8C85      		ldd r24,Y+12
+ 250 01b8 9D85      		ldd r25,Y+13
+ 251 01ba 0097      		sbiw r24,0
+ 252 01bc 01F0      		breq .L18
+ 253 01be 0E94 0000 		call free
+ 254               	.L18:
+ 255 01c2 CE01      		movw r24,r28
+ 256 01c4 0E94 0000 		call free
+ 257               	.L19:
+ 258               	/* epilogue start */
+ 259 01c8 DF91      		pop r29
+ 260 01ca CF91      		pop r28
+ 261 01cc 0895      		ret
+ 262               		.size	ReleaseDnsResource, .-ReleaseDnsResource
+ 263               		.type	CreateDnsQuestion, @function
+ 264               	CreateDnsQuestion:
+ 265 01ce EF92      		push r14
+ 266 01d0 FF92      		push r15
+ 267 01d2 0F93      		push r16
+ 268 01d4 1F93      		push r17
+ 269 01d6 CF93      		push r28
+ 270 01d8 DF93      		push r29
+ 271               	/* prologue: function */
+ 272               	/* frame size = 0 */
+ 273 01da EC01      		movw r28,r24
+ 274 01dc 8B01      		movw r16,r22
+ 275 01de 7A01      		movw r14,r20
+ 276 01e0 0097      		sbiw r24,0
+ 277 01e2 01F4      		brne .L21
+ 278 01e4 81E0      		ldi r24,lo8(1)
+ 279 01e6 90E0      		ldi r25,hi8(1)
+ 280 01e8 66E0      		ldi r22,lo8(6)
+ 281 01ea 70E0      		ldi r23,hi8(6)
+ 282 01ec 0E94 0000 		call calloc
+ 283 01f0 EC01      		movw r28,r24
+ 284 01f2 0097      		sbiw r24,0
+ 285 01f4 01F0      		breq .L22
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 6
+
+
+ 286               	.L21:
+ 287 01f6 8881      		ld r24,Y
+ 288 01f8 9981      		ldd r25,Y+1
+ 289 01fa 0097      		sbiw r24,0
+ 290 01fc 01F0      		breq .L23
+ 291 01fe 0E94 0000 		call free
+ 292               	.L23:
+ 293 0202 C801      		movw r24,r16
+ 294 0204 0E94 0000 		call strdup
+ 295 0208 8883      		st Y,r24
+ 296 020a 9983      		std Y+1,r25
+ 297 020c FB82      		std Y+3,r15
+ 298 020e EA82      		std Y+2,r14
+ 299 0210 81E0      		ldi r24,lo8(1)
+ 300 0212 90E0      		ldi r25,hi8(1)
+ 301 0214 9D83      		std Y+5,r25
+ 302 0216 8C83      		std Y+4,r24
+ 303               	.L22:
+ 304 0218 CE01      		movw r24,r28
+ 305               	/* epilogue start */
+ 306 021a DF91      		pop r29
+ 307 021c CF91      		pop r28
+ 308 021e 1F91      		pop r17
+ 309 0220 0F91      		pop r16
+ 310 0222 FF90      		pop r15
+ 311 0224 EF90      		pop r14
+ 312 0226 0895      		ret
+ 313               		.size	CreateDnsQuestion, .-CreateDnsQuestion
+ 314               		.type	EncodeDnsQuestion, @function
+ 315               	EncodeDnsQuestion:
+ 316 0228 EF92      		push r14
+ 317 022a FF92      		push r15
+ 318 022c 0F93      		push r16
+ 319 022e 1F93      		push r17
+ 320 0230 CF93      		push r28
+ 321 0232 DF93      		push r29
+ 322               	/* prologue: function */
+ 323               	/* frame size = 0 */
+ 324 0234 8C01      		movw r16,r24
+ 325 0236 DB01      		movw r26,r22
+ 326 0238 8C91      		ld r24,X
+ 327 023a 1196      		adiw r26,1
+ 328 023c 9C91      		ld r25,X
+ 329 023e FC01      		movw r30,r24
+ 330 0240 EF01      		movw r28,r30
+ 331 0242 0990      		ld __tmp_reg__,Y+
+ 332 0244 0020      		tst __tmp_reg__
+ 333 0246 01F4      		brne .-6
+ 334 0248 CE1B      		sub r28,r30
+ 335 024a DF0B      		sbc r29,r31
+ 336 024c 2196      		adiw r28,1
+ 337 024e F801      		movw r30,r16
+ 338 0250 1192      		st Z+,__zero_reg__
+ 339 0252 A801      		movw r20,r16
+ 340 0254 7C01      		movw r14,r24
+ 341 0256 00C0      		rjmp .L26
+ 342               	.L29:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 7
+
+
+ 343 0258 C701      		movw r24,r14
+ 344 025a 0196      		adiw r24,1
+ 345 025c 2E32      		cpi r18,lo8(46)
+ 346 025e 01F4      		brne .L27
+ 347 0260 1082      		st Z,__zero_reg__
+ 348 0262 7C01      		movw r14,r24
+ 349 0264 AF01      		movw r20,r30
+ 350 0266 00C0      		rjmp .L28
+ 351               	.L27:
+ 352 0268 2083      		st Z,r18
+ 353 026a 7C01      		movw r14,r24
+ 354 026c DA01      		movw r26,r20
+ 355 026e 8C91      		ld r24,X
+ 356 0270 8F5F      		subi r24,lo8(-(1))
+ 357 0272 8C93      		st X,r24
+ 358               	.L28:
+ 359 0274 3196      		adiw r30,1
+ 360               	.L26:
+ 361 0276 D701      		movw r26,r14
+ 362 0278 2C91      		ld r18,X
+ 363 027a 2223      		tst r18
+ 364 027c 01F4      		brne .L29
+ 365 027e 1082      		st Z,__zero_reg__
+ 366 0280 F801      		movw r30,r16
+ 367 0282 EC0F      		add r30,r28
+ 368 0284 FD1F      		adc r31,r29
+ 369 0286 DB01      		movw r26,r22
+ 370 0288 1296      		adiw r26,2
+ 371 028a 9C91      		ld r25,X
+ 372 028c 1297      		sbiw r26,2
+ 373 028e 1396      		adiw r26,3
+ 374 0290 8C91      		ld r24,X
+ 375 0292 1397      		sbiw r26,3
+ 376 0294 8083      		st Z,r24
+ 377 0296 9183      		std Z+1,r25
+ 378 0298 9E01      		movw r18,r28
+ 379 029a 2E5F      		subi r18,lo8(-(2))
+ 380 029c 3F4F      		sbci r19,hi8(-(2))
+ 381 029e F801      		movw r30,r16
+ 382 02a0 E20F      		add r30,r18
+ 383 02a2 F31F      		adc r31,r19
+ 384 02a4 1496      		adiw r26,4
+ 385 02a6 9C91      		ld r25,X
+ 386 02a8 1497      		sbiw r26,4
+ 387 02aa 1596      		adiw r26,5
+ 388 02ac 8C91      		ld r24,X
+ 389 02ae 8083      		st Z,r24
+ 390 02b0 9183      		std Z+1,r25
+ 391 02b2 2E5F      		subi r18,lo8(-(2))
+ 392 02b4 3F4F      		sbci r19,hi8(-(2))
+ 393 02b6 C901      		movw r24,r18
+ 394               	/* epilogue start */
+ 395 02b8 DF91      		pop r29
+ 396 02ba CF91      		pop r28
+ 397 02bc 1F91      		pop r17
+ 398 02be 0F91      		pop r16
+ 399 02c0 FF90      		pop r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 8
+
+
+ 400 02c2 EF90      		pop r14
+ 401 02c4 0895      		ret
+ 402               		.size	EncodeDnsQuestion, .-EncodeDnsQuestion
+ 403               		.type	ScanName, @function
+ 404               	ScanName:
+ 405 02c6 EF92      		push r14
+ 406 02c8 FF92      		push r15
+ 407 02ca 0F93      		push r16
+ 408 02cc 1F93      		push r17
+ 409 02ce CF93      		push r28
+ 410 02d0 DF93      		push r29
+ 411               	/* prologue: function */
+ 412               	/* frame size = 0 */
+ 413 02d2 EC01      		movw r28,r24
+ 414 02d4 7B01      		movw r14,r22
+ 415 02d6 DB01      		movw r26,r22
+ 416 02d8 8D91      		ld r24,X+
+ 417 02da 9C91      		ld r25,X
+ 418 02dc 0097      		sbiw r24,0
+ 419 02de 01F0      		breq .L32
+ 420 02e0 0E94 0000 		call free
+ 421 02e4 F701      		movw r30,r14
+ 422 02e6 1182      		std Z+1,__zero_reg__
+ 423 02e8 1082      		st Z,__zero_reg__
+ 424               	.L32:
+ 425 02ea 8881      		ld r24,Y
+ 426 02ec 807C      		andi r24,lo8(-64)
+ 427 02ee 803C      		cpi r24,lo8(-64)
+ 428 02f0 01F4      		brne .L33
+ 429 02f2 02E0      		ldi r16,lo8(2)
+ 430 02f4 10E0      		ldi r17,hi8(2)
+ 431 02f6 00C0      		rjmp .L34
+ 432               	.L33:
+ 433 02f8 DE01      		movw r26,r28
+ 434 02fa 0D90      		ld __tmp_reg__,X+
+ 435 02fc 0020      		tst __tmp_reg__
+ 436 02fe 01F4      		brne .-6
+ 437 0300 8D01      		movw r16,r26
+ 438 0302 0C1B      		sub r16,r28
+ 439 0304 1D0B      		sbc r17,r29
+ 440 0306 C801      		movw r24,r16
+ 441 0308 0E94 0000 		call malloc
+ 442 030c DC01      		movw r26,r24
+ 443 030e F701      		movw r30,r14
+ 444 0310 9183      		std Z+1,r25
+ 445 0312 8083      		st Z,r24
+ 446 0314 FE01      		movw r30,r28
+ 447 0316 9191      		ld r25,Z+
+ 448 0318 3EE2      		ldi r19,lo8(46)
+ 449 031a 00C0      		rjmp .L35
+ 450               	.L38:
+ 451 031c AF01      		movw r20,r30
+ 452 031e BD01      		movw r22,r26
+ 453 0320 292F      		mov r18,r25
+ 454               	.L36:
+ 455 0322 EA01      		movw r28,r20
+ 456 0324 8991      		ld r24,Y+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 9
+
+
+ 457 0326 AE01      		movw r20,r28
+ 458 0328 EB01      		movw r28,r22
+ 459 032a 8993      		st Y+,r24
+ 460 032c BE01      		movw r22,r28
+ 461 032e 2150      		subi r18,lo8(-(-1))
+ 462 0330 01F4      		brne .L36
+ 463 0332 892F      		mov r24,r25
+ 464 0334 90E0      		ldi r25,lo8(0)
+ 465 0336 A80F      		add r26,r24
+ 466 0338 B91F      		adc r27,r25
+ 467 033a E80F      		add r30,r24
+ 468 033c F91F      		adc r31,r25
+ 469 033e 9081      		ld r25,Z
+ 470 0340 9111      		cpse r25,__zero_reg__
+ 471 0342 3D93      		st X+,r19
+ 472               	.L37:
+ 473 0344 3196      		adiw r30,1
+ 474               	.L35:
+ 475 0346 9923      		tst r25
+ 476 0348 01F4      		brne .L38
+ 477 034a 1C92      		st X,__zero_reg__
+ 478               	.L34:
+ 479 034c C801      		movw r24,r16
+ 480               	/* epilogue start */
+ 481 034e DF91      		pop r29
+ 482 0350 CF91      		pop r28
+ 483 0352 1F91      		pop r17
+ 484 0354 0F91      		pop r16
+ 485 0356 FF90      		pop r15
+ 486 0358 EF90      		pop r14
+ 487 035a 0895      		ret
+ 488               		.size	ScanName, .-ScanName
+ 489               		.type	DecodeDnsQuestion, @function
+ 490               	DecodeDnsQuestion:
+ 491 035c EF92      		push r14
+ 492 035e FF92      		push r15
+ 493 0360 0F93      		push r16
+ 494 0362 1F93      		push r17
+ 495               	/* prologue: function */
+ 496               	/* frame size = 0 */
+ 497 0364 7C01      		movw r14,r24
+ 498 0366 8B01      		movw r16,r22
+ 499 0368 CB01      		movw r24,r22
+ 500 036a B701      		movw r22,r14
+ 501 036c 0E94 0000 		call ScanName
+ 502 0370 AC01      		movw r20,r24
+ 503 0372 F801      		movw r30,r16
+ 504 0374 E80F      		add r30,r24
+ 505 0376 F91F      		adc r31,r25
+ 506 0378 3081      		ld r19,Z
+ 507 037a 20E0      		ldi r18,lo8(0)
+ 508 037c D701      		movw r26,r14
+ 509 037e 1396      		adiw r26,2+1
+ 510 0380 3C93      		st X,r19
+ 511 0382 2E93      		st -X,r18
+ 512 0384 1297      		sbiw r26,2
+ 513 0386 8181      		ldd r24,Z+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 10
+
+
+ 514 0388 90E0      		ldi r25,lo8(0)
+ 515 038a 822B      		or r24,r18
+ 516 038c 932B      		or r25,r19
+ 517 038e 1396      		adiw r26,2+1
+ 518 0390 9C93      		st X,r25
+ 519 0392 8E93      		st -X,r24
+ 520 0394 1297      		sbiw r26,2
+ 521 0396 4E5F      		subi r20,lo8(-(2))
+ 522 0398 5F4F      		sbci r21,hi8(-(2))
+ 523 039a 040F      		add r16,r20
+ 524 039c 151F      		adc r17,r21
+ 525 039e F801      		movw r30,r16
+ 526 03a0 3081      		ld r19,Z
+ 527 03a2 20E0      		ldi r18,lo8(0)
+ 528 03a4 1596      		adiw r26,4+1
+ 529 03a6 3C93      		st X,r19
+ 530 03a8 2E93      		st -X,r18
+ 531 03aa 1497      		sbiw r26,4
+ 532 03ac 8181      		ldd r24,Z+1
+ 533 03ae 90E0      		ldi r25,lo8(0)
+ 534 03b0 822B      		or r24,r18
+ 535 03b2 932B      		or r25,r19
+ 536 03b4 1596      		adiw r26,4+1
+ 537 03b6 9C93      		st X,r25
+ 538 03b8 8E93      		st -X,r24
+ 539 03ba 1497      		sbiw r26,4
+ 540 03bc 4E5F      		subi r20,lo8(-(2))
+ 541 03be 5F4F      		sbci r21,hi8(-(2))
+ 542 03c0 CA01      		movw r24,r20
+ 543               	/* epilogue start */
+ 544 03c2 1F91      		pop r17
+ 545 03c4 0F91      		pop r16
+ 546 03c6 FF90      		pop r15
+ 547 03c8 EF90      		pop r14
+ 548 03ca 0895      		ret
+ 549               		.size	DecodeDnsQuestion, .-DecodeDnsQuestion
+ 550               		.type	DecodeDnsResource, @function
+ 551               	DecodeDnsResource:
+ 552 03cc AF92      		push r10
+ 553 03ce BF92      		push r11
+ 554 03d0 CF92      		push r12
+ 555 03d2 DF92      		push r13
+ 556 03d4 EF92      		push r14
+ 557 03d6 FF92      		push r15
+ 558 03d8 0F93      		push r16
+ 559 03da 1F93      		push r17
+ 560 03dc CF93      		push r28
+ 561 03de DF93      		push r29
+ 562               	/* prologue: function */
+ 563               	/* frame size = 0 */
+ 564 03e0 6C01      		movw r12,r24
+ 565 03e2 5B01      		movw r10,r22
+ 566 03e4 CB01      		movw r24,r22
+ 567 03e6 B601      		movw r22,r12
+ 568 03e8 0E94 0000 		call ScanName
+ 569 03ec F501      		movw r30,r10
+ 570 03ee E80F      		add r30,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 11
+
+
+ 571 03f0 F91F      		adc r31,r25
+ 572 03f2 5081      		ld r21,Z
+ 573 03f4 40E0      		ldi r20,lo8(0)
+ 574 03f6 D601      		movw r26,r12
+ 575 03f8 1396      		adiw r26,2+1
+ 576 03fa 5C93      		st X,r21
+ 577 03fc 4E93      		st -X,r20
+ 578 03fe 1297      		sbiw r26,2
+ 579 0400 2181      		ldd r18,Z+1
+ 580 0402 30E0      		ldi r19,lo8(0)
+ 581 0404 242B      		or r18,r20
+ 582 0406 352B      		or r19,r21
+ 583 0408 1396      		adiw r26,2+1
+ 584 040a 3C93      		st X,r19
+ 585 040c 2E93      		st -X,r18
+ 586 040e 1297      		sbiw r26,2
+ 587 0410 FC01      		movw r30,r24
+ 588 0412 3296      		adiw r30,2
+ 589 0414 D501      		movw r26,r10
+ 590 0416 AE0F      		add r26,r30
+ 591 0418 BF1F      		adc r27,r31
+ 592 041a 5C91      		ld r21,X
+ 593 041c 40E0      		ldi r20,lo8(0)
+ 594 041e E601      		movw r28,r12
+ 595 0420 5D83      		std Y+5,r21
+ 596 0422 4C83      		std Y+4,r20
+ 597 0424 1196      		adiw r26,1
+ 598 0426 2C91      		ld r18,X
+ 599 0428 30E0      		ldi r19,lo8(0)
+ 600 042a 242B      		or r18,r20
+ 601 042c 352B      		or r19,r21
+ 602 042e 3D83      		std Y+5,r19
+ 603 0430 2C83      		std Y+4,r18
+ 604 0432 3296      		adiw r30,2
+ 605 0434 EA0D      		add r30,r10
+ 606 0436 FB1D      		adc r31,r11
+ 607 0438 DF01      		movw r26,r30
+ 608 043a 1196      		adiw r26,1
+ 609 043c E080      		ld r14,Z
+ 610 043e FF24      		clr r15
+ 611 0440 00E0      		ldi r16,lo8(0)
+ 612 0442 10E0      		ldi r17,hi8(0)
+ 613 0444 102F      		mov r17,r16
+ 614 0446 0F2D      		mov r16,r15
+ 615 0448 FE2C      		mov r15,r14
+ 616 044a EE24      		clr r14
+ 617 044c EE82      		std Y+6,r14
+ 618 044e FF82      		std Y+7,r15
+ 619 0450 0887      		std Y+8,r16
+ 620 0452 1987      		std Y+9,r17
+ 621 0454 2181      		ldd r18,Z+1
+ 622 0456 30E0      		ldi r19,lo8(0)
+ 623 0458 40E0      		ldi r20,lo8(0)
+ 624 045a 50E0      		ldi r21,hi8(0)
+ 625 045c 2E29      		or r18,r14
+ 626 045e 3F29      		or r19,r15
+ 627 0460 402B      		or r20,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 12
+
+
+ 628 0462 512B      		or r21,r17
+ 629 0464 542F      		mov r21,r20
+ 630 0466 432F      		mov r20,r19
+ 631 0468 322F      		mov r19,r18
+ 632 046a 2227      		clr r18
+ 633 046c F601      		movw r30,r12
+ 634 046e 2683      		std Z+6,r18
+ 635 0470 3783      		std Z+7,r19
+ 636 0472 4087      		std Z+8,r20
+ 637 0474 5187      		std Z+9,r21
+ 638 0476 1196      		adiw r26,1
+ 639 0478 EC90      		ld r14,X
+ 640 047a 1197      		sbiw r26,1
+ 641 047c FF24      		clr r15
+ 642 047e 00E0      		ldi r16,lo8(0)
+ 643 0480 10E0      		ldi r17,hi8(0)
+ 644 0482 2E29      		or r18,r14
+ 645 0484 3F29      		or r19,r15
+ 646 0486 402B      		or r20,r16
+ 647 0488 512B      		or r21,r17
+ 648 048a 542F      		mov r21,r20
+ 649 048c 432F      		mov r20,r19
+ 650 048e 322F      		mov r19,r18
+ 651 0490 2227      		clr r18
+ 652 0492 2E83      		std Y+6,r18
+ 653 0494 3F83      		std Y+7,r19
+ 654 0496 4887      		std Y+8,r20
+ 655 0498 5987      		std Y+9,r21
+ 656 049a 1296      		adiw r26,2
+ 657 049c EC90      		ld r14,X
+ 658 049e FF24      		clr r15
+ 659 04a0 00E0      		ldi r16,lo8(0)
+ 660 04a2 10E0      		ldi r17,hi8(0)
+ 661 04a4 2E29      		or r18,r14
+ 662 04a6 3F29      		or r19,r15
+ 663 04a8 402B      		or r20,r16
+ 664 04aa 512B      		or r21,r17
+ 665 04ac 2683      		std Z+6,r18
+ 666 04ae 3783      		std Z+7,r19
+ 667 04b0 4087      		std Z+8,r20
+ 668 04b2 5187      		std Z+9,r21
+ 669 04b4 0896      		adiw r24,8
+ 670 04b6 F501      		movw r30,r10
+ 671 04b8 E80F      		add r30,r24
+ 672 04ba F91F      		adc r31,r25
+ 673 04bc 3081      		ld r19,Z
+ 674 04be 20E0      		ldi r18,lo8(0)
+ 675 04c0 D601      		movw r26,r12
+ 676 04c2 1B96      		adiw r26,10+1
+ 677 04c4 3C93      		st X,r19
+ 678 04c6 2E93      		st -X,r18
+ 679 04c8 1A97      		sbiw r26,10
+ 680 04ca 4181      		ldd r20,Z+1
+ 681 04cc C42F      		mov r28,r20
+ 682 04ce D0E0      		ldi r29,lo8(0)
+ 683 04d0 C22B      		or r28,r18
+ 684 04d2 D32B      		or r29,r19
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 13
+
+
+ 685 04d4 1B96      		adiw r26,10+1
+ 686 04d6 DC93      		st X,r29
+ 687 04d8 CE93      		st -X,r28
+ 688 04da 1A97      		sbiw r26,10
+ 689 04dc 8C01      		movw r16,r24
+ 690 04de 0E5F      		subi r16,lo8(-(2))
+ 691 04e0 1F4F      		sbci r17,hi8(-(2))
+ 692 04e2 1C96      		adiw r26,12
+ 693 04e4 8D91      		ld r24,X+
+ 694 04e6 9C91      		ld r25,X
+ 695 04e8 1D97      		sbiw r26,12+1
+ 696 04ea 0097      		sbiw r24,0
+ 697 04ec 01F0      		breq .L44
+ 698 04ee 0E94 0000 		call free
+ 699               	.L44:
+ 700 04f2 CE01      		movw r24,r28
+ 701 04f4 0E94 0000 		call malloc
+ 702 04f8 F601      		movw r30,r12
+ 703 04fa 8487      		std Z+12,r24
+ 704 04fc 9587      		std Z+13,r25
+ 705 04fe 9501      		movw r18,r10
+ 706 0500 200F      		add r18,r16
+ 707 0502 311F      		adc r19,r17
+ 708 0504 B901      		movw r22,r18
+ 709 0506 AE01      		movw r20,r28
+ 710 0508 0E94 0000 		call memcpy
+ 711 050c 9E01      		movw r18,r28
+ 712 050e 200F      		add r18,r16
+ 713 0510 311F      		adc r19,r17
+ 714 0512 C901      		movw r24,r18
+ 715               	/* epilogue start */
+ 716 0514 DF91      		pop r29
+ 717 0516 CF91      		pop r28
+ 718 0518 1F91      		pop r17
+ 719 051a 0F91      		pop r16
+ 720 051c FF90      		pop r15
+ 721 051e EF90      		pop r14
+ 722 0520 DF90      		pop r13
+ 723 0522 CF90      		pop r12
+ 724 0524 BF90      		pop r11
+ 725 0526 AF90      		pop r10
+ 726 0528 0895      		ret
+ 727               		.size	DecodeDnsResource, .-DecodeDnsResource
+ 728               	.global	NutDnsGetResourceAll
+ 729               		.type	NutDnsGetResourceAll, @function
+ 730               	NutDnsGetResourceAll:
+ 731 052a 2F92      		push r2
+ 732 052c 3F92      		push r3
+ 733 052e 4F92      		push r4
+ 734 0530 5F92      		push r5
+ 735 0532 6F92      		push r6
+ 736 0534 7F92      		push r7
+ 737 0536 8F92      		push r8
+ 738 0538 9F92      		push r9
+ 739 053a AF92      		push r10
+ 740 053c BF92      		push r11
+ 741 053e CF92      		push r12
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 14
+
+
+ 742 0540 DF92      		push r13
+ 743 0542 EF92      		push r14
+ 744 0544 FF92      		push r15
+ 745 0546 0F93      		push r16
+ 746 0548 1F93      		push r17
+ 747 054a DF93      		push r29
+ 748 054c CF93      		push r28
+ 749 054e CDB7      		in r28,__SP_L__
+ 750 0550 DEB7      		in r29,__SP_H__
+ 751 0552 6397      		sbiw r28,19
+ 752 0554 0FB6      		in __tmp_reg__,__SREG__
+ 753 0556 F894      		cli
+ 754 0558 DEBF      		out __SP_H__,r29
+ 755 055a 0FBE      		out __SREG__,__tmp_reg__
+ 756 055c CDBF      		out __SP_L__,r28
+ 757               	/* prologue: function */
+ 758               	/* frame size = 19 */
+ 759 055e 9B87      		std Y+11,r25
+ 760 0560 8A87      		std Y+10,r24
+ 761 0562 7D87      		std Y+13,r23
+ 762 0564 6C87      		std Y+12,r22
+ 763 0566 5F87      		std Y+15,r21
+ 764 0568 4E87      		std Y+14,r20
+ 765 056a 80E0      		ldi r24,lo8(0)
+ 766 056c 90E0      		ldi r25,hi8(0)
+ 767               	.L48:
+ 768 056e EE85      		ldd r30,Y+14
+ 769 0570 FF85      		ldd r31,Y+15
+ 770 0572 E80F      		add r30,r24
+ 771 0574 F91F      		adc r31,r25
+ 772 0576 1082      		st Z,__zero_reg__
+ 773 0578 1182      		std Z+1,__zero_reg__
+ 774 057a 1282      		std Z+2,__zero_reg__
+ 775 057c 1382      		std Z+3,__zero_reg__
+ 776 057e 0496      		adiw r24,4
+ 777 0580 8032      		cpi r24,32
+ 778 0582 9105      		cpc r25,__zero_reg__
+ 779 0584 01F4      		brne .L48
+ 780 0586 8091 0000 		lds r24,confdns+4
+ 781 058a 9091 0000 		lds r25,(confdns+4)+1
+ 782 058e A091 0000 		lds r26,(confdns+4)+2
+ 783 0592 B091 0000 		lds r27,(confdns+4)+3
+ 784 0596 0097      		sbiw r24,0
+ 785 0598 A105      		cpc r26,__zero_reg__
+ 786 059a B105      		cpc r27,__zero_reg__
+ 787 059c 01F4      		brne .L49
+ 788 059e 8091 0000 		lds r24,confdns+8
+ 789 05a2 9091 0000 		lds r25,(confdns+8)+1
+ 790 05a6 A091 0000 		lds r26,(confdns+8)+2
+ 791 05aa B091 0000 		lds r27,(confdns+8)+3
+ 792 05ae 0097      		sbiw r24,0
+ 793 05b0 A105      		cpc r26,__zero_reg__
+ 794 05b2 B105      		cpc r27,__zero_reg__
+ 795 05b4 01F4      		brne .+2
+ 796 05b6 00C0      		rjmp .L50
+ 797               	.L49:
+ 798 05b8 80E0      		ldi r24,lo8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 15
+
+
+ 799 05ba 90E0      		ldi r25,hi8(0)
+ 800 05bc 0E94 0000 		call NutUdpCreateSocket
+ 801 05c0 9887      		std Y+8,r25
+ 802 05c2 8F83      		std Y+7,r24
+ 803 05c4 892B      		or r24,r25
+ 804 05c6 01F4      		brne .+2
+ 805 05c8 00C0      		rjmp .L50
+ 806 05ca 80E0      		ldi r24,lo8(heapFreeList)
+ 807 05cc 90E0      		ldi r25,hi8(heapFreeList)
+ 808 05ce 60E0      		ldi r22,lo8(512)
+ 809 05d0 72E0      		ldi r23,hi8(512)
+ 810 05d2 0E94 0000 		call NutHeapRootAlloc
+ 811 05d6 4C01      		movw r8,r24
+ 812 05d8 88E0      		ldi r24,lo8(8)
+ 813 05da 8987      		std Y+9,r24
+ 814 05dc 4424      		clr r4
+ 815 05de 5524      		clr r5
+ 816 05e0 AA24      		clr r10
+ 817 05e2 BB24      		clr r11
+ 818 05e4 2224      		clr r2
+ 819 05e6 3324      		clr r3
+ 820 05e8 6624      		clr r6
+ 821 05ea 7724      		clr r7
+ 822               	.L62:
+ 823 05ec D42C      		mov r13,r4
+ 824 05ee 0894      		sec
+ 825 05f0 411C      		adc r4,__zero_reg__
+ 826 05f2 511C      		adc r5,__zero_reg__
+ 827 05f4 A114      		cp r10,__zero_reg__
+ 828 05f6 B104      		cpc r11,__zero_reg__
+ 829 05f8 01F4      		brne .L51
+ 830 05fa 81E0      		ldi r24,lo8(1)
+ 831 05fc 90E0      		ldi r25,hi8(1)
+ 832 05fe 6CE0      		ldi r22,lo8(12)
+ 833 0600 70E0      		ldi r23,hi8(12)
+ 834 0602 0E94 0000 		call calloc
+ 835 0606 5C01      		movw r10,r24
+ 836 0608 0097      		sbiw r24,0
+ 837 060a 01F0      		breq .L52
+ 838               	.L51:
+ 839 060c D501      		movw r26,r10
+ 840 060e 1196      		adiw r26,1
+ 841 0610 5C92      		st X,r5
+ 842 0612 4E92      		st -X,r4
+ 843 0614 E0E0      		ldi r30,lo8(256)
+ 844 0616 F1E0      		ldi r31,hi8(256)
+ 845 0618 1396      		adiw r26,2+1
+ 846 061a FC93      		st X,r31
+ 847 061c EE93      		st -X,r30
+ 848 061e 1297      		sbiw r26,2
+ 849 0620 81E0      		ldi r24,lo8(1)
+ 850 0622 90E0      		ldi r25,hi8(1)
+ 851 0624 1596      		adiw r26,4+1
+ 852 0626 9C93      		st X,r25
+ 853 0628 8E93      		st -X,r24
+ 854 062a 1497      		sbiw r26,4
+ 855               	.L52:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 16
+
+
+ 856 062c C101      		movw r24,r2
+ 857 062e 6A85      		ldd r22,Y+10
+ 858 0630 7B85      		ldd r23,Y+11
+ 859 0632 4C85      		ldd r20,Y+12
+ 860 0634 5D85      		ldd r21,Y+13
+ 861 0636 0E94 0000 		call CreateDnsQuestion
+ 862 063a 1C01      		movw r2,r24
+ 863 063c C401      		movw r24,r8
+ 864 063e B501      		movw r22,r10
+ 865 0640 0E94 0000 		call EncodeDnsHeader
+ 866 0644 8C01      		movw r16,r24
+ 867 0646 C401      		movw r24,r8
+ 868 0648 800F      		add r24,r16
+ 869 064a 911F      		adc r25,r17
+ 870 064c B101      		movw r22,r2
+ 871 064e 0E94 0000 		call EncodeDnsQuestion
+ 872 0652 7C01      		movw r14,r24
+ 873 0654 E00E      		add r14,r16
+ 874 0656 F11E      		adc r15,r17
+ 875 0658 D0FE      		sbrs r13,0
+ 876 065a 00C0      		rjmp .L53
+ 877 065c 4091 0000 		lds r20,confdns+8
+ 878 0660 5091 0000 		lds r21,(confdns+8)+1
+ 879 0664 6091 0000 		lds r22,(confdns+8)+2
+ 880 0668 7091 0000 		lds r23,(confdns+8)+3
+ 881 066c 4115      		cp r20,__zero_reg__
+ 882 066e 5105      		cpc r21,__zero_reg__
+ 883 0670 6105      		cpc r22,__zero_reg__
+ 884 0672 7105      		cpc r23,__zero_reg__
+ 885 0674 01F4      		brne .L54
+ 886               	.L53:
+ 887 0676 4091 0000 		lds r20,confdns+4
+ 888 067a 5091 0000 		lds r21,(confdns+4)+1
+ 889 067e 6091 0000 		lds r22,(confdns+4)+2
+ 890 0682 7091 0000 		lds r23,(confdns+4)+3
+ 891               	.L54:
+ 892 0686 8F81      		ldd r24,Y+7
+ 893 0688 9885      		ldd r25,Y+8
+ 894 068a 25E3      		ldi r18,lo8(53)
+ 895 068c 30E0      		ldi r19,hi8(53)
+ 896 068e 8401      		movw r16,r8
+ 897 0690 0E94 0000 		call NutUdpSendTo
+ 898 0694 97FD      		sbrc r25,7
+ 899 0696 00C0      		rjmp .L55
+ 900               	.L70:
+ 901 0698 8F81      		ldd r24,Y+7
+ 902 069a 9885      		ldd r25,Y+8
+ 903 069c BE01      		movw r22,r28
+ 904 069e 6D5F      		subi r22,lo8(-(3))
+ 905 06a0 7F4F      		sbci r23,hi8(-(3))
+ 906 06a2 AE01      		movw r20,r28
+ 907 06a4 4F5F      		subi r20,lo8(-(1))
+ 908 06a6 5F4F      		sbci r21,hi8(-(1))
+ 909 06a8 9401      		movw r18,r8
+ 910 06aa 00E0      		ldi r16,lo8(512)
+ 911 06ac 12E0      		ldi r17,hi8(512)
+ 912 06ae E8EE      		ldi r30,lo8(1000)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 17
+
+
+ 913 06b0 CE2E      		mov r12,r30
+ 914 06b2 E3E0      		ldi r30,hi8(1000)
+ 915 06b4 DE2E      		mov r13,r30
+ 916 06b6 E12C      		mov r14,__zero_reg__
+ 917 06b8 F12C      		mov r15,__zero_reg__
+ 918 06ba 0E94 0000 		call NutUdpReceiveFrom
+ 919 06be 1816      		cp __zero_reg__,r24
+ 920 06c0 1906      		cpc __zero_reg__,r25
+ 921 06c2 04F0      		brlt .+2
+ 922 06c4 00C0      		rjmp .L57
+ 923 06c6 0D97      		sbiw r24,13
+ 924 06c8 04F0      		brlt .L70
+ 925 06ca C501      		movw r24,r10
+ 926 06cc B401      		movw r22,r8
+ 927 06ce 0E94 0000 		call DecodeDnsHeader
+ 928 06d2 8C01      		movw r16,r24
+ 929 06d4 D501      		movw r26,r10
+ 930 06d6 8D91      		ld r24,X+
+ 931 06d8 9C91      		ld r25,X
+ 932 06da 1197      		sbiw r26,1
+ 933 06dc 8415      		cp r24,r4
+ 934 06de 9505      		cpc r25,r5
+ 935 06e0 01F4      		brne .L70
+ 936 06e2 0115      		cp r16,__zero_reg__
+ 937 06e4 1105      		cpc r17,__zero_reg__
+ 938 06e6 01F4      		brne .+2
+ 939 06e8 00C0      		rjmp .L57
+ 940 06ea 1496      		adiw r26,4
+ 941 06ec 8D91      		ld r24,X+
+ 942 06ee 9C91      		ld r25,X
+ 943 06f0 1597      		sbiw r26,4+1
+ 944 06f2 0197      		sbiw r24,1
+ 945 06f4 01F0      		breq .+2
+ 946 06f6 00C0      		rjmp .L57
+ 947 06f8 B401      		movw r22,r8
+ 948 06fa 600F      		add r22,r16
+ 949 06fc 711F      		adc r23,r17
+ 950 06fe C101      		movw r24,r2
+ 951 0700 0E94 0000 		call DecodeDnsQuestion
+ 952 0704 9C01      		movw r18,r24
+ 953 0706 F501      		movw r30,r10
+ 954 0708 8681      		ldd r24,Z+6
+ 955 070a 9781      		ldd r25,Z+7
+ 956 070c 892B      		or r24,r25
+ 957 070e 01F4      		brne .+2
+ 958 0710 00C0      		rjmp .L55
+ 959 0712 7901      		movw r14,r18
+ 960 0714 E00E      		add r14,r16
+ 961 0716 F11E      		adc r15,r17
+ 962 0718 1986      		std Y+9,__zero_reg__
+ 963 071a 01E0      		ldi r16,lo8(1)
+ 964 071c 10E0      		ldi r17,hi8(1)
+ 965 071e 00C0      		rjmp .L58
+ 966               	.L61:
+ 967 0720 6114      		cp r6,__zero_reg__
+ 968 0722 7104      		cpc r7,__zero_reg__
+ 969 0724 01F4      		brne .L59
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 18
+
+
+ 970 0726 81E0      		ldi r24,lo8(1)
+ 971 0728 90E0      		ldi r25,hi8(1)
+ 972 072a 6EE0      		ldi r22,lo8(14)
+ 973 072c 70E0      		ldi r23,hi8(14)
+ 974 072e 0E94 0000 		call calloc
+ 975 0732 3C01      		movw r6,r24
+ 976               	.L59:
+ 977 0734 B401      		movw r22,r8
+ 978 0736 6E0D      		add r22,r14
+ 979 0738 7F1D      		adc r23,r15
+ 980 073a C301      		movw r24,r6
+ 981 073c 0E94 0000 		call DecodeDnsResource
+ 982 0740 6C01      		movw r12,r24
+ 983 0742 D301      		movw r26,r6
+ 984 0744 1296      		adiw r26,2
+ 985 0746 8D91      		ld r24,X+
+ 986 0748 9C91      		ld r25,X
+ 987 074a 1397      		sbiw r26,2+1
+ 988 074c 0197      		sbiw r24,1
+ 989 074e 01F0      		breq .+2
+ 990 0750 00C0      		rjmp .L60
+ 991 0752 1A96      		adiw r26,10
+ 992 0754 8D91      		ld r24,X+
+ 993 0756 9C91      		ld r25,X
+ 994 0758 1B97      		sbiw r26,10+1
+ 995 075a 0497      		sbiw r24,4
+ 996 075c 01F0      		breq .+2
+ 997 075e 00C0      		rjmp .L60
+ 998 0760 B985      		ldd r27,Y+9
+ 999 0762 EB2F      		mov r30,r27
+ 1000 0764 F0E0      		ldi r31,lo8(0)
+ 1001 0766 EE0F      		lsl r30
+ 1002 0768 FF1F      		rol r31
+ 1003 076a EE0F      		lsl r30
+ 1004 076c FF1F      		rol r31
+ 1005 076e 8E85      		ldd r24,Y+14
+ 1006 0770 9F85      		ldd r25,Y+15
+ 1007 0772 E80F      		add r30,r24
+ 1008 0774 F91F      		adc r31,r25
+ 1009 0776 D301      		movw r26,r6
+ 1010 0778 1C96      		adiw r26,12
+ 1011 077a 6D91      		ld r22,X+
+ 1012 077c 7C91      		ld r23,X
+ 1013 077e 1D97      		sbiw r26,12+1
+ 1014 0780 DB01      		movw r26,r22
+ 1015 0782 2C91      		ld r18,X
+ 1016 0784 30E0      		ldi r19,lo8(0)
+ 1017 0786 40E0      		ldi r20,lo8(0)
+ 1018 0788 50E0      		ldi r21,hi8(0)
+ 1019 078a 2083      		st Z,r18
+ 1020 078c 3183      		std Z+1,r19
+ 1021 078e 4283      		std Z+2,r20
+ 1022 0790 5383      		std Z+3,r21
+ 1023 0792 1196      		adiw r26,1
+ 1024 0794 BC91      		ld r27,X
+ 1025 0796 8B2F      		mov r24,r27
+ 1026 0798 90E0      		ldi r25,lo8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 19
+
+
+ 1027 079a A0E0      		ldi r26,lo8(0)
+ 1028 079c B0E0      		ldi r27,hi8(0)
+ 1029 079e BA2F      		mov r27,r26
+ 1030 07a0 A92F      		mov r26,r25
+ 1031 07a2 982F      		mov r25,r24
+ 1032 07a4 8827      		clr r24
+ 1033 07a6 820F      		add r24,r18
+ 1034 07a8 931F      		adc r25,r19
+ 1035 07aa A41F      		adc r26,r20
+ 1036 07ac B51F      		adc r27,r21
+ 1037 07ae 888B      		std Y+16,r24
+ 1038 07b0 998B      		std Y+17,r25
+ 1039 07b2 AA8B      		std Y+18,r26
+ 1040 07b4 BB8B      		std Y+19,r27
+ 1041 07b6 8083      		st Z,r24
+ 1042 07b8 9183      		std Z+1,r25
+ 1043 07ba A283      		std Z+2,r26
+ 1044 07bc B383      		std Z+3,r27
+ 1045 07be DB01      		movw r26,r22
+ 1046 07c0 1296      		adiw r26,2
+ 1047 07c2 2C91      		ld r18,X
+ 1048 07c4 30E0      		ldi r19,lo8(0)
+ 1049 07c6 40E0      		ldi r20,lo8(0)
+ 1050 07c8 50E0      		ldi r21,hi8(0)
+ 1051 07ca A901      		movw r20,r18
+ 1052 07cc 3327      		clr r19
+ 1053 07ce 2227      		clr r18
+ 1054 07d0 8889      		ldd r24,Y+16
+ 1055 07d2 9989      		ldd r25,Y+17
+ 1056 07d4 AA89      		ldd r26,Y+18
+ 1057 07d6 BB89      		ldd r27,Y+19
+ 1058 07d8 280F      		add r18,r24
+ 1059 07da 391F      		adc r19,r25
+ 1060 07dc 4A1F      		adc r20,r26
+ 1061 07de 5B1F      		adc r21,r27
+ 1062 07e0 2083      		st Z,r18
+ 1063 07e2 3183      		std Z+1,r19
+ 1064 07e4 4283      		std Z+2,r20
+ 1065 07e6 5383      		std Z+3,r21
+ 1066 07e8 DB01      		movw r26,r22
+ 1067 07ea 1396      		adiw r26,3
+ 1068 07ec 8C91      		ld r24,X
+ 1069 07ee 90E0      		ldi r25,lo8(0)
+ 1070 07f0 A0E0      		ldi r26,lo8(0)
+ 1071 07f2 B0E0      		ldi r27,hi8(0)
+ 1072 07f4 B82F      		mov r27,r24
+ 1073 07f6 AA27      		clr r26
+ 1074 07f8 9927      		clr r25
+ 1075 07fa 8827      		clr r24
+ 1076 07fc 280F      		add r18,r24
+ 1077 07fe 391F      		adc r19,r25
+ 1078 0800 4A1F      		adc r20,r26
+ 1079 0802 5B1F      		adc r21,r27
+ 1080 0804 2083      		st Z,r18
+ 1081 0806 3183      		std Z+1,r19
+ 1082 0808 4283      		std Z+2,r20
+ 1083 080a 5383      		std Z+3,r21
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 20
+
+
+ 1084 080c B985      		ldd r27,Y+9
+ 1085 080e BF5F      		subi r27,lo8(-(1))
+ 1086 0810 B987      		std Y+9,r27
+ 1087               	.L60:
+ 1088 0812 EC0C      		add r14,r12
+ 1089 0814 FD1C      		adc r15,r13
+ 1090 0816 0F5F      		subi r16,lo8(-(1))
+ 1091 0818 1F4F      		sbci r17,hi8(-(1))
+ 1092               	.L58:
+ 1093 081a F501      		movw r30,r10
+ 1094 081c 8681      		ldd r24,Z+6
+ 1095 081e 9781      		ldd r25,Z+7
+ 1096 0820 8017      		cp r24,r16
+ 1097 0822 9107      		cpc r25,r17
+ 1098 0824 04F0      		brlt .+2
+ 1099 0826 00C0      		rjmp .L61
+ 1100               	.L57:
+ 1101 0828 F6E0      		ldi r31,lo8(6)
+ 1102 082a 4F16      		cp r4,r31
+ 1103 082c 5104      		cpc r5,__zero_reg__
+ 1104 082e 01F0      		breq .+2
+ 1105 0830 00C0      		rjmp .L62
+ 1106               	.L55:
+ 1107 0832 A114      		cp r10,__zero_reg__
+ 1108 0834 B104      		cpc r11,__zero_reg__
+ 1109 0836 01F0      		breq .L63
+ 1110 0838 C501      		movw r24,r10
+ 1111 083a 0E94 0000 		call free
+ 1112               	.L63:
+ 1113 083e C101      		movw r24,r2
+ 1114 0840 0E94 0000 		call ReleaseDnsQuestion
+ 1115 0844 C301      		movw r24,r6
+ 1116 0846 0E94 0000 		call ReleaseDnsResource
+ 1117 084a 80E0      		ldi r24,lo8(heapFreeList)
+ 1118 084c 90E0      		ldi r25,hi8(heapFreeList)
+ 1119 084e B401      		movw r22,r8
+ 1120 0850 0E94 0000 		call NutHeapRootFree
+ 1121 0854 8F81      		ldd r24,Y+7
+ 1122 0856 9885      		ldd r25,Y+8
+ 1123 0858 0E94 0000 		call NutUdpDestroySocket
+ 1124 085c 00C0      		rjmp .L64
+ 1125               	.L50:
+ 1126 085e 1986      		std Y+9,__zero_reg__
+ 1127               	.L64:
+ 1128 0860 8985      		ldd r24,Y+9
+ 1129               	/* epilogue start */
+ 1130 0862 6396      		adiw r28,19
+ 1131 0864 0FB6      		in __tmp_reg__,__SREG__
+ 1132 0866 F894      		cli
+ 1133 0868 DEBF      		out __SP_H__,r29
+ 1134 086a 0FBE      		out __SREG__,__tmp_reg__
+ 1135 086c CDBF      		out __SP_L__,r28
+ 1136 086e CF91      		pop r28
+ 1137 0870 DF91      		pop r29
+ 1138 0872 1F91      		pop r17
+ 1139 0874 0F91      		pop r16
+ 1140 0876 FF90      		pop r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 21
+
+
+ 1141 0878 EF90      		pop r14
+ 1142 087a DF90      		pop r13
+ 1143 087c CF90      		pop r12
+ 1144 087e BF90      		pop r11
+ 1145 0880 AF90      		pop r10
+ 1146 0882 9F90      		pop r9
+ 1147 0884 8F90      		pop r8
+ 1148 0886 7F90      		pop r7
+ 1149 0888 6F90      		pop r6
+ 1150 088a 5F90      		pop r5
+ 1151 088c 4F90      		pop r4
+ 1152 088e 3F90      		pop r3
+ 1153 0890 2F90      		pop r2
+ 1154 0892 0895      		ret
+ 1155               		.size	NutDnsGetResourceAll, .-NutDnsGetResourceAll
+ 1156               	.global	NutDnsGetHostsByName
+ 1157               		.type	NutDnsGetHostsByName, @function
+ 1158               	NutDnsGetHostsByName:
+ 1159               	/* prologue: function */
+ 1160               	/* frame size = 0 */
+ 1161 0894 AB01      		movw r20,r22
+ 1162 0896 61E0      		ldi r22,lo8(1)
+ 1163 0898 70E0      		ldi r23,hi8(1)
+ 1164 089a 0E94 0000 		call NutDnsGetResourceAll
+ 1165               	/* epilogue start */
+ 1166 089e 0895      		ret
+ 1167               		.size	NutDnsGetHostsByName, .-NutDnsGetHostsByName
+ 1168               	.global	NutDnsGetResource
+ 1169               		.type	NutDnsGetResource, @function
+ 1170               	NutDnsGetResource:
+ 1171 08a0 2F92      		push r2
+ 1172 08a2 3F92      		push r3
+ 1173 08a4 4F92      		push r4
+ 1174 08a6 5F92      		push r5
+ 1175 08a8 6F92      		push r6
+ 1176 08aa 7F92      		push r7
+ 1177 08ac 8F92      		push r8
+ 1178 08ae 9F92      		push r9
+ 1179 08b0 AF92      		push r10
+ 1180 08b2 BF92      		push r11
+ 1181 08b4 CF92      		push r12
+ 1182 08b6 DF92      		push r13
+ 1183 08b8 EF92      		push r14
+ 1184 08ba FF92      		push r15
+ 1185 08bc 0F93      		push r16
+ 1186 08be 1F93      		push r17
+ 1187 08c0 DF93      		push r29
+ 1188 08c2 CF93      		push r28
+ 1189 08c4 CDB7      		in r28,__SP_L__
+ 1190 08c6 DEB7      		in r29,__SP_H__
+ 1191 08c8 2C97      		sbiw r28,12
+ 1192 08ca 0FB6      		in __tmp_reg__,__SREG__
+ 1193 08cc F894      		cli
+ 1194 08ce DEBF      		out __SP_H__,r29
+ 1195 08d0 0FBE      		out __SREG__,__tmp_reg__
+ 1196 08d2 CDBF      		out __SP_L__,r28
+ 1197               	/* prologue: function */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 22
+
+
+ 1198               	/* frame size = 12 */
+ 1199 08d4 9A87      		std Y+10,r25
+ 1200 08d6 8987      		std Y+9,r24
+ 1201 08d8 7C87      		std Y+12,r23
+ 1202 08da 6B87      		std Y+11,r22
+ 1203 08dc 8091 0000 		lds r24,confdns+4
+ 1204 08e0 9091 0000 		lds r25,(confdns+4)+1
+ 1205 08e4 A091 0000 		lds r26,(confdns+4)+2
+ 1206 08e8 B091 0000 		lds r27,(confdns+4)+3
+ 1207 08ec 0097      		sbiw r24,0
+ 1208 08ee A105      		cpc r26,__zero_reg__
+ 1209 08f0 B105      		cpc r27,__zero_reg__
+ 1210 08f2 01F4      		brne .L74
+ 1211 08f4 8091 0000 		lds r24,confdns+8
+ 1212 08f8 9091 0000 		lds r25,(confdns+8)+1
+ 1213 08fc A091 0000 		lds r26,(confdns+8)+2
+ 1214 0900 B091 0000 		lds r27,(confdns+8)+3
+ 1215 0904 0097      		sbiw r24,0
+ 1216 0906 A105      		cpc r26,__zero_reg__
+ 1217 0908 B105      		cpc r27,__zero_reg__
+ 1218 090a 01F4      		brne .+2
+ 1219 090c 00C0      		rjmp .L75
+ 1220               	.L74:
+ 1221 090e 80E0      		ldi r24,lo8(0)
+ 1222 0910 90E0      		ldi r25,hi8(0)
+ 1223 0912 0E94 0000 		call NutUdpCreateSocket
+ 1224 0916 9887      		std Y+8,r25
+ 1225 0918 8F83      		std Y+7,r24
+ 1226 091a 892B      		or r24,r25
+ 1227 091c 01F4      		brne .+2
+ 1228 091e 00C0      		rjmp .L75
+ 1229 0920 80E0      		ldi r24,lo8(512)
+ 1230 0922 92E0      		ldi r25,hi8(512)
+ 1231 0924 0E94 0000 		call malloc
+ 1232 0928 4C01      		movw r8,r24
+ 1233 092a 4424      		clr r4
+ 1234 092c 5524      		clr r5
+ 1235 092e AA24      		clr r10
+ 1236 0930 BB24      		clr r11
+ 1237 0932 2224      		clr r2
+ 1238 0934 3324      		clr r3
+ 1239 0936 6624      		clr r6
+ 1240 0938 7724      		clr r7
+ 1241               	.L88:
+ 1242 093a D42C      		mov r13,r4
+ 1243 093c 0894      		sec
+ 1244 093e 411C      		adc r4,__zero_reg__
+ 1245 0940 511C      		adc r5,__zero_reg__
+ 1246 0942 A114      		cp r10,__zero_reg__
+ 1247 0944 B104      		cpc r11,__zero_reg__
+ 1248 0946 01F4      		brne .L76
+ 1249 0948 81E0      		ldi r24,lo8(1)
+ 1250 094a 90E0      		ldi r25,hi8(1)
+ 1251 094c 6CE0      		ldi r22,lo8(12)
+ 1252 094e 70E0      		ldi r23,hi8(12)
+ 1253 0950 0E94 0000 		call calloc
+ 1254 0954 5C01      		movw r10,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 23
+
+
+ 1255 0956 0097      		sbiw r24,0
+ 1256 0958 01F0      		breq .L77
+ 1257               	.L76:
+ 1258 095a D501      		movw r26,r10
+ 1259 095c 1196      		adiw r26,1
+ 1260 095e 5C92      		st X,r5
+ 1261 0960 4E92      		st -X,r4
+ 1262 0962 E0E0      		ldi r30,lo8(256)
+ 1263 0964 F1E0      		ldi r31,hi8(256)
+ 1264 0966 1396      		adiw r26,2+1
+ 1265 0968 FC93      		st X,r31
+ 1266 096a EE93      		st -X,r30
+ 1267 096c 1297      		sbiw r26,2
+ 1268 096e 81E0      		ldi r24,lo8(1)
+ 1269 0970 90E0      		ldi r25,hi8(1)
+ 1270 0972 1596      		adiw r26,4+1
+ 1271 0974 9C93      		st X,r25
+ 1272 0976 8E93      		st -X,r24
+ 1273 0978 1497      		sbiw r26,4
+ 1274               	.L77:
+ 1275 097a C101      		movw r24,r2
+ 1276 097c 6985      		ldd r22,Y+9
+ 1277 097e 7A85      		ldd r23,Y+10
+ 1278 0980 4B85      		ldd r20,Y+11
+ 1279 0982 5C85      		ldd r21,Y+12
+ 1280 0984 0E94 0000 		call CreateDnsQuestion
+ 1281 0988 1C01      		movw r2,r24
+ 1282 098a C401      		movw r24,r8
+ 1283 098c B501      		movw r22,r10
+ 1284 098e 0E94 0000 		call EncodeDnsHeader
+ 1285 0992 8C01      		movw r16,r24
+ 1286 0994 C401      		movw r24,r8
+ 1287 0996 800F      		add r24,r16
+ 1288 0998 911F      		adc r25,r17
+ 1289 099a B101      		movw r22,r2
+ 1290 099c 0E94 0000 		call EncodeDnsQuestion
+ 1291 09a0 7C01      		movw r14,r24
+ 1292 09a2 E00E      		add r14,r16
+ 1293 09a4 F11E      		adc r15,r17
+ 1294 09a6 D0FE      		sbrs r13,0
+ 1295 09a8 00C0      		rjmp .L78
+ 1296 09aa 4091 0000 		lds r20,confdns+8
+ 1297 09ae 5091 0000 		lds r21,(confdns+8)+1
+ 1298 09b2 6091 0000 		lds r22,(confdns+8)+2
+ 1299 09b6 7091 0000 		lds r23,(confdns+8)+3
+ 1300 09ba 4115      		cp r20,__zero_reg__
+ 1301 09bc 5105      		cpc r21,__zero_reg__
+ 1302 09be 6105      		cpc r22,__zero_reg__
+ 1303 09c0 7105      		cpc r23,__zero_reg__
+ 1304 09c2 01F4      		brne .L79
+ 1305               	.L78:
+ 1306 09c4 4091 0000 		lds r20,confdns+4
+ 1307 09c8 5091 0000 		lds r21,(confdns+4)+1
+ 1308 09cc 6091 0000 		lds r22,(confdns+4)+2
+ 1309 09d0 7091 0000 		lds r23,(confdns+4)+3
+ 1310               	.L79:
+ 1311 09d4 8F81      		ldd r24,Y+7
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 24
+
+
+ 1312 09d6 9885      		ldd r25,Y+8
+ 1313 09d8 25E3      		ldi r18,lo8(53)
+ 1314 09da 30E0      		ldi r19,hi8(53)
+ 1315 09dc 8401      		movw r16,r8
+ 1316 09de 0E94 0000 		call NutUdpSendTo
+ 1317 09e2 97FD      		sbrc r25,7
+ 1318 09e4 00C0      		rjmp .L80
+ 1319               	.L95:
+ 1320 09e6 8F81      		ldd r24,Y+7
+ 1321 09e8 9885      		ldd r25,Y+8
+ 1322 09ea BE01      		movw r22,r28
+ 1323 09ec 6D5F      		subi r22,lo8(-(3))
+ 1324 09ee 7F4F      		sbci r23,hi8(-(3))
+ 1325 09f0 AE01      		movw r20,r28
+ 1326 09f2 4F5F      		subi r20,lo8(-(1))
+ 1327 09f4 5F4F      		sbci r21,hi8(-(1))
+ 1328 09f6 9401      		movw r18,r8
+ 1329 09f8 00E0      		ldi r16,lo8(512)
+ 1330 09fa 12E0      		ldi r17,hi8(512)
+ 1331 09fc E8EE      		ldi r30,lo8(1000)
+ 1332 09fe CE2E      		mov r12,r30
+ 1333 0a00 E3E0      		ldi r30,hi8(1000)
+ 1334 0a02 DE2E      		mov r13,r30
+ 1335 0a04 E12C      		mov r14,__zero_reg__
+ 1336 0a06 F12C      		mov r15,__zero_reg__
+ 1337 0a08 0E94 0000 		call NutUdpReceiveFrom
+ 1338 0a0c 1816      		cp __zero_reg__,r24
+ 1339 0a0e 1906      		cpc __zero_reg__,r25
+ 1340 0a10 04F0      		brlt .+2
+ 1341 0a12 00C0      		rjmp .L82
+ 1342 0a14 0D97      		sbiw r24,13
+ 1343 0a16 04F0      		brlt .L95
+ 1344 0a18 C501      		movw r24,r10
+ 1345 0a1a B401      		movw r22,r8
+ 1346 0a1c 0E94 0000 		call DecodeDnsHeader
+ 1347 0a20 8C01      		movw r16,r24
+ 1348 0a22 D501      		movw r26,r10
+ 1349 0a24 8D91      		ld r24,X+
+ 1350 0a26 9C91      		ld r25,X
+ 1351 0a28 1197      		sbiw r26,1
+ 1352 0a2a 8415      		cp r24,r4
+ 1353 0a2c 9505      		cpc r25,r5
+ 1354 0a2e 01F4      		brne .L95
+ 1355 0a30 0115      		cp r16,__zero_reg__
+ 1356 0a32 1105      		cpc r17,__zero_reg__
+ 1357 0a34 01F4      		brne .+2
+ 1358 0a36 00C0      		rjmp .L82
+ 1359 0a38 1496      		adiw r26,4
+ 1360 0a3a 8D91      		ld r24,X+
+ 1361 0a3c 9C91      		ld r25,X
+ 1362 0a3e 1597      		sbiw r26,4+1
+ 1363 0a40 0197      		sbiw r24,1
+ 1364 0a42 01F0      		breq .+2
+ 1365 0a44 00C0      		rjmp .L82
+ 1366 0a46 B401      		movw r22,r8
+ 1367 0a48 600F      		add r22,r16
+ 1368 0a4a 711F      		adc r23,r17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 25
+
+
+ 1369 0a4c C101      		movw r24,r2
+ 1370 0a4e 0E94 0000 		call DecodeDnsQuestion
+ 1371 0a52 9C01      		movw r18,r24
+ 1372 0a54 F501      		movw r30,r10
+ 1373 0a56 8681      		ldd r24,Z+6
+ 1374 0a58 9781      		ldd r25,Z+7
+ 1375 0a5a 892B      		or r24,r25
+ 1376 0a5c 01F4      		brne .+2
+ 1377 0a5e 00C0      		rjmp .L80
+ 1378 0a60 7901      		movw r14,r18
+ 1379 0a62 E00E      		add r14,r16
+ 1380 0a64 F11E      		adc r15,r17
+ 1381 0a66 01E0      		ldi r16,lo8(1)
+ 1382 0a68 10E0      		ldi r17,hi8(1)
+ 1383 0a6a 00C0      		rjmp .L83
+ 1384               	.L86:
+ 1385 0a6c 6114      		cp r6,__zero_reg__
+ 1386 0a6e 7104      		cpc r7,__zero_reg__
+ 1387 0a70 01F4      		brne .L84
+ 1388 0a72 81E0      		ldi r24,lo8(1)
+ 1389 0a74 90E0      		ldi r25,hi8(1)
+ 1390 0a76 6EE0      		ldi r22,lo8(14)
+ 1391 0a78 70E0      		ldi r23,hi8(14)
+ 1392 0a7a 0E94 0000 		call calloc
+ 1393 0a7e 3C01      		movw r6,r24
+ 1394               	.L84:
+ 1395 0a80 B401      		movw r22,r8
+ 1396 0a82 6E0D      		add r22,r14
+ 1397 0a84 7F1D      		adc r23,r15
+ 1398 0a86 C301      		movw r24,r6
+ 1399 0a88 0E94 0000 		call DecodeDnsResource
+ 1400 0a8c 9C01      		movw r18,r24
+ 1401 0a8e D301      		movw r26,r6
+ 1402 0a90 1296      		adiw r26,2
+ 1403 0a92 8D91      		ld r24,X+
+ 1404 0a94 9C91      		ld r25,X
+ 1405 0a96 1397      		sbiw r26,2+1
+ 1406 0a98 0197      		sbiw r24,1
+ 1407 0a9a 01F0      		breq .L85
+ 1408 0a9c E20E      		add r14,r18
+ 1409 0a9e F31E      		adc r15,r19
+ 1410 0aa0 0F5F      		subi r16,lo8(-(1))
+ 1411 0aa2 1F4F      		sbci r17,hi8(-(1))
+ 1412               	.L83:
+ 1413 0aa4 F501      		movw r30,r10
+ 1414 0aa6 8681      		ldd r24,Z+6
+ 1415 0aa8 9781      		ldd r25,Z+7
+ 1416 0aaa 8017      		cp r24,r16
+ 1417 0aac 9107      		cpc r25,r17
+ 1418 0aae 04F4      		brge .L86
+ 1419               	.L85:
+ 1420 0ab0 D301      		movw r26,r6
+ 1421 0ab2 1A96      		adiw r26,10
+ 1422 0ab4 8D91      		ld r24,X+
+ 1423 0ab6 9C91      		ld r25,X
+ 1424 0ab8 1B97      		sbiw r26,10+1
+ 1425 0aba 0497      		sbiw r24,4
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 26
+
+
+ 1426 0abc 01F4      		brne .L82
+ 1427 0abe 1C96      		adiw r26,12
+ 1428 0ac0 ED91      		ld r30,X+
+ 1429 0ac2 FC91      		ld r31,X
+ 1430 0ac4 1D97      		sbiw r26,12+1
+ 1431 0ac6 2081      		ld r18,Z
+ 1432 0ac8 8181      		ldd r24,Z+1
+ 1433 0aca 90E0      		ldi r25,lo8(0)
+ 1434 0acc A0E0      		ldi r26,lo8(0)
+ 1435 0ace B0E0      		ldi r27,hi8(0)
+ 1436 0ad0 EE24      		clr r14
+ 1437 0ad2 F82E      		mov r15,r24
+ 1438 0ad4 092F      		mov r16,r25
+ 1439 0ad6 1A2F      		mov r17,r26
+ 1440 0ad8 8281      		ldd r24,Z+2
+ 1441 0ada 90E0      		ldi r25,lo8(0)
+ 1442 0adc A0E0      		ldi r26,lo8(0)
+ 1443 0ade B0E0      		ldi r27,hi8(0)
+ 1444 0ae0 DC01      		movw r26,r24
+ 1445 0ae2 9927      		clr r25
+ 1446 0ae4 8827      		clr r24
+ 1447 0ae6 E80E      		add r14,r24
+ 1448 0ae8 F91E      		adc r15,r25
+ 1449 0aea 0A1F      		adc r16,r26
+ 1450 0aec 1B1F      		adc r17,r27
+ 1451 0aee E20E      		add r14,r18
+ 1452 0af0 F11C      		adc r15,__zero_reg__
+ 1453 0af2 011D      		adc r16,__zero_reg__
+ 1454 0af4 111D      		adc r17,__zero_reg__
+ 1455 0af6 8381      		ldd r24,Z+3
+ 1456 0af8 90E0      		ldi r25,lo8(0)
+ 1457 0afa A0E0      		ldi r26,lo8(0)
+ 1458 0afc B0E0      		ldi r27,hi8(0)
+ 1459 0afe B82F      		mov r27,r24
+ 1460 0b00 AA27      		clr r26
+ 1461 0b02 9927      		clr r25
+ 1462 0b04 8827      		clr r24
+ 1463 0b06 E80E      		add r14,r24
+ 1464 0b08 F91E      		adc r15,r25
+ 1465 0b0a 0A1F      		adc r16,r26
+ 1466 0b0c 1B1F      		adc r17,r27
+ 1467 0b0e 00C0      		rjmp .L87
+ 1468               	.L82:
+ 1469 0b10 B6E0      		ldi r27,lo8(6)
+ 1470 0b12 4B16      		cp r4,r27
+ 1471 0b14 5104      		cpc r5,__zero_reg__
+ 1472 0b16 01F0      		breq .+2
+ 1473 0b18 00C0      		rjmp .L88
+ 1474               	.L80:
+ 1475 0b1a EE24      		clr r14
+ 1476 0b1c FF24      		clr r15
+ 1477 0b1e 8701      		movw r16,r14
+ 1478               	.L87:
+ 1479 0b20 A114      		cp r10,__zero_reg__
+ 1480 0b22 B104      		cpc r11,__zero_reg__
+ 1481 0b24 01F0      		breq .L89
+ 1482 0b26 C501      		movw r24,r10
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 27
+
+
+ 1483 0b28 0E94 0000 		call free
+ 1484               	.L89:
+ 1485 0b2c C101      		movw r24,r2
+ 1486 0b2e 0E94 0000 		call ReleaseDnsQuestion
+ 1487 0b32 C301      		movw r24,r6
+ 1488 0b34 0E94 0000 		call ReleaseDnsResource
+ 1489 0b38 C401      		movw r24,r8
+ 1490 0b3a 0E94 0000 		call free
+ 1491 0b3e 8F81      		ldd r24,Y+7
+ 1492 0b40 9885      		ldd r25,Y+8
+ 1493 0b42 0E94 0000 		call NutUdpDestroySocket
+ 1494 0b46 00C0      		rjmp .L90
+ 1495               	.L75:
+ 1496 0b48 EE24      		clr r14
+ 1497 0b4a FF24      		clr r15
+ 1498 0b4c 8701      		movw r16,r14
+ 1499               	.L90:
+ 1500 0b4e B701      		movw r22,r14
+ 1501 0b50 C801      		movw r24,r16
+ 1502               	/* epilogue start */
+ 1503 0b52 2C96      		adiw r28,12
+ 1504 0b54 0FB6      		in __tmp_reg__,__SREG__
+ 1505 0b56 F894      		cli
+ 1506 0b58 DEBF      		out __SP_H__,r29
+ 1507 0b5a 0FBE      		out __SREG__,__tmp_reg__
+ 1508 0b5c CDBF      		out __SP_L__,r28
+ 1509 0b5e CF91      		pop r28
+ 1510 0b60 DF91      		pop r29
+ 1511 0b62 1F91      		pop r17
+ 1512 0b64 0F91      		pop r16
+ 1513 0b66 FF90      		pop r15
+ 1514 0b68 EF90      		pop r14
+ 1515 0b6a DF90      		pop r13
+ 1516 0b6c CF90      		pop r12
+ 1517 0b6e BF90      		pop r11
+ 1518 0b70 AF90      		pop r10
+ 1519 0b72 9F90      		pop r9
+ 1520 0b74 8F90      		pop r8
+ 1521 0b76 7F90      		pop r7
+ 1522 0b78 6F90      		pop r6
+ 1523 0b7a 5F90      		pop r5
+ 1524 0b7c 4F90      		pop r4
+ 1525 0b7e 3F90      		pop r3
+ 1526 0b80 2F90      		pop r2
+ 1527 0b82 0895      		ret
+ 1528               		.size	NutDnsGetResource, .-NutDnsGetResource
+ 1529               	.global	NutDnsGetMxByDomain
+ 1530               		.type	NutDnsGetMxByDomain, @function
+ 1531               	NutDnsGetMxByDomain:
+ 1532               	/* prologue: function */
+ 1533               	/* frame size = 0 */
+ 1534 0b84 6FE0      		ldi r22,lo8(15)
+ 1535 0b86 70E0      		ldi r23,hi8(15)
+ 1536 0b88 0E94 0000 		call NutDnsGetResource
+ 1537               	/* epilogue start */
+ 1538 0b8c 0895      		ret
+ 1539               		.size	NutDnsGetMxByDomain, .-NutDnsGetMxByDomain
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 28
+
+
+ 1540               	.global	NutDnsGetHostByName
+ 1541               		.type	NutDnsGetHostByName, @function
+ 1542               	NutDnsGetHostByName:
+ 1543               	/* prologue: function */
+ 1544               	/* frame size = 0 */
+ 1545 0b8e 61E0      		ldi r22,lo8(1)
+ 1546 0b90 70E0      		ldi r23,hi8(1)
+ 1547 0b92 0E94 0000 		call NutDnsGetResource
+ 1548               	/* epilogue start */
+ 1549 0b96 0895      		ret
+ 1550               		.size	NutDnsGetHostByName, .-NutDnsGetHostByName
+ 1551               	.global	NutDnsConfig
+ 1552               		.type	NutDnsConfig, @function
+ 1553               	NutDnsConfig:
+ 1554 0b98 EF92      		push r14
+ 1555 0b9a FF92      		push r15
+ 1556 0b9c 0F93      		push r16
+ 1557 0b9e 1F93      		push r17
+ 1558               	/* prologue: function */
+ 1559               	/* frame size = 0 */
+ 1560 0ba0 EE24      		clr r14
+ 1561 0ba2 FF24      		clr r15
+ 1562 0ba4 8701      		movw r16,r14
+ 1563 0ba6 0E94 0000 		call NutDnsConfig2
+ 1564               	/* epilogue start */
+ 1565 0baa 1F91      		pop r17
+ 1566 0bac 0F91      		pop r16
+ 1567 0bae FF90      		pop r15
+ 1568 0bb0 EF90      		pop r14
+ 1569 0bb2 0895      		ret
+ 1570               		.size	NutDnsConfig, .-NutDnsConfig
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s 			page 29
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 resolv.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:10     .text:00000000 EncodeDnsHeader
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:66     .text:00000064 DecodeDnsHeader
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:160    .text:00000112 NutDnsGetConfig2
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:212    .text:0000017e ReleaseDnsQuestion
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:235    .text:000001a0 ReleaseDnsResource
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:264    .text:000001ce CreateDnsQuestion
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:315    .text:00000228 EncodeDnsQuestion
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:404    .text:000002c6 ScanName
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:490    .text:0000035c DecodeDnsQuestion
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:551    .text:000003cc DecodeDnsResource
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:730    .text:0000052a NutDnsGetResourceAll
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:1158   .text:00000894 NutDnsGetHostsByName
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:1170   .text:000008a0 NutDnsGetResource
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:1531   .text:00000b84 NutDnsGetMxByDomain
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:1542   .text:00000b8e NutDnsGetHostByName
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc2P6osD.s:1553   .text:00000b98 NutDnsConfig
+
+UNDEFINED SYMBOLS
+confdns
+free
+calloc
+strdup
+malloc
+memcpy
+NutUdpCreateSocket
+heapFreeList
+NutHeapRootAlloc
+NutUdpSendTo
+NutUdpReceiveFrom
+NutHeapRootFree
+NutUdpDestroySocket
+NutDnsConfig2

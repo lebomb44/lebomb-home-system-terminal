@@ -1,0 +1,134 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s 			page 1
+
+
+   1               		.file	"null.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	NullWrite, @function
+  10               	NullWrite:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 CA01      		movw r24,r20
+  14               	/* epilogue start */
+  15 0002 0895      		ret
+  16               		.size	NullWrite, .-NullWrite
+  17               		.type	NullWriteP, @function
+  18               	NullWriteP:
+  19               	/* prologue: function */
+  20               	/* frame size = 0 */
+  21 0004 CA01      		movw r24,r20
+  22               	/* epilogue start */
+  23 0006 0895      		ret
+  24               		.size	NullWriteP, .-NullWriteP
+  25               		.type	NullRead, @function
+  26               	NullRead:
+  27               	/* prologue: function */
+  28               	/* frame size = 0 */
+  29 0008 80E0      		ldi r24,lo8(0)
+  30 000a 90E0      		ldi r25,hi8(0)
+  31               	/* epilogue start */
+  32 000c 0895      		ret
+  33               		.size	NullRead, .-NullRead
+  34               	.global	NullIOCTL
+  35               		.type	NullIOCTL, @function
+  36               	NullIOCTL:
+  37               	/* prologue: function */
+  38               	/* frame size = 0 */
+  39 000e 80E0      		ldi r24,lo8(0)
+  40 0010 90E0      		ldi r25,hi8(0)
+  41               	/* epilogue start */
+  42 0012 0895      		ret
+  43               		.size	NullIOCTL, .-NullIOCTL
+  44               		.type	NullClose, @function
+  45               	NullClose:
+  46               	/* prologue: function */
+  47               	/* frame size = 0 */
+  48 0014 0097      		sbiw r24,0
+  49 0016 01F0      		breq .L10
+  50 0018 0E94 0000 		call free
+  51               	.L10:
+  52 001c 80E0      		ldi r24,lo8(0)
+  53 001e 90E0      		ldi r25,hi8(0)
+  54               	/* epilogue start */
+  55 0020 0895      		ret
+  56               		.size	NullClose, .-NullClose
+  57               		.type	NullOpen, @function
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s 			page 2
+
+
+  58               	NullOpen:
+  59 0022 0F93      		push r16
+  60 0024 1F93      		push r17
+  61               	/* prologue: function */
+  62               	/* frame size = 0 */
+  63 0026 8C01      		movw r16,r24
+  64 0028 86E0      		ldi r24,lo8(6)
+  65 002a 90E0      		ldi r25,hi8(6)
+  66 002c 0E94 0000 		call malloc
+  67 0030 FC01      		movw r30,r24
+  68 0032 1182      		std Z+1,__zero_reg__
+  69 0034 1082      		st Z,__zero_reg__
+  70 0036 1383      		std Z+3,r17
+  71 0038 0283      		std Z+2,r16
+  72               	/* epilogue start */
+  73 003a 1F91      		pop r17
+  74 003c 0F91      		pop r16
+  75 003e 0895      		ret
+  76               		.size	NullOpen, .-NullOpen
+  77               	.global	devNull
+  78               		.data
+  79               		.type	devNull, @object
+  80               		.size	devNull, 35
+  81               	devNull:
+  82 0000 0000      		.word	0
+  83 0002 6E        		.byte	110
+  84 0003 75        		.byte	117
+  85 0004 6C        		.byte	108
+  86 0005 6C        		.byte	108
+  87 0006 00        		.byte	0
+  88 0007 00        		.byte	0
+  89 0008 00        		.byte	0
+  90 0009 00        		.byte	0
+  91 000a 00        		.byte	0
+  92 000b 00        		.byte	0
+  93 000c 0000      		.word	0
+  94 000e 00        		.byte	0
+  95 000f 0000      		.word	0
+  96 0011 0000      		.word	0
+  97 0013 0000      		.word	0
+  98 0015 0000      		.word	gs(NullIOCTL)
+  99 0017 0000      		.word	gs(NullRead)
+ 100 0019 0000      		.word	gs(NullWrite)
+ 101 001b 0000      		.word	gs(NullWriteP)
+ 102 001d 0000      		.word	gs(NullOpen)
+ 103 001f 0000      		.word	gs(NullClose)
+ 104 0021 0000      		.word	0
+ 105               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 null.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:10     .text:00000000 NullWrite
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:18     .text:00000004 NullWriteP
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:26     .text:00000008 NullRead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:36     .text:0000000e NullIOCTL
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:45     .text:00000014 NullClose
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:58     .text:00000022 NullOpen
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccSikxR8.s:81     .data:00000000 devNull
+
+UNDEFINED SYMBOLS
+free
+malloc
+__do_copy_data

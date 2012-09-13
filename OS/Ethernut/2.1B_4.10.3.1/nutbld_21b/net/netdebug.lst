@@ -1,0 +1,723 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 1
+
+
+   1               		.file	"netdebug.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutTraceTcp
+  10               		.type	NutTraceTcp, @function
+  11               	NutTraceTcp:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 0097      		sbiw r24,0
+  15 0002 01F0      		breq .L2
+  16 0004 9093 0000 		sts (__tcp_trs)+1,r25
+  17 0008 8093 0000 		sts __tcp_trs,r24
+  18               	.L2:
+  19 000c 8091 0000 		lds r24,__tcp_trs
+  20 0010 9091 0000 		lds r25,(__tcp_trs)+1
+  21 0014 892B      		or r24,r25
+  22 0016 01F0      		breq .L3
+  23 0018 6093 0000 		sts __tcp_trf,r22
+  24 001c 0895      		ret
+  25               	.L3:
+  26 001e 1092 0000 		sts __tcp_trf,__zero_reg__
+  27 0022 0895      		ret
+  28               		.size	NutTraceTcp, .-NutTraceTcp
+  29               		.data
+  30               	.LC0:
+  31 0000 4C49 5354 		.string	"LISTEN"
+  31      454E 00
+  32               	.LC1:
+  33 0007 5359 4E53 		.string	"SYNSENT"
+  33      454E 5400 
+  34               	.LC2:
+  35 000f 5359 4E52 		.string	"SYNRCVD"
+  35      4356 4400 
+  36               	.LC3:
+  37 0017 4553 5441 		.string	"ESTABL"
+  37      424C 00
+  38               	.LC4:
+  39 001e 4649 4E57 		.string	"FINWAIT1"
+  39      4149 5431 
+  39      00
+  40               	.LC5:
+  41 0027 4649 4E57 		.string	"FINWAIT2"
+  41      4149 5432 
+  41      00
+  42               	.LC6:
+  43 0030 434C 4F53 		.string	"CLOSEWAIT"
+  43      4557 4149 
+  43      5400 
+  44               	.LC7:
+  45 003a 434C 4F53 		.string	"CLOSING"
+  45      494E 4700 
+  46               	.LC8:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 2
+
+
+  47 0042 4C41 5354 		.string	"LASTACK"
+  47      4143 4B00 
+  48               	.LC9:
+  49 004a 5449 4D45 		.string	"TIMEWAIT"
+  49      5741 4954 
+  49      00
+  50               	.LC10:
+  51 0053 434C 4F53 		.string	"CLOSED"
+  51      4544 00
+  52               	.LC11:
+  53 005a 3F55 4E4B 		.string	"?UNK?"
+  53      3F00 
+  54               		.text
+  55               	.global	NutDumpSockState
+  56               		.type	NutDumpSockState, @function
+  57               	NutDumpSockState:
+  58 0024 EF92      		push r14
+  59 0026 FF92      		push r15
+  60 0028 1F93      		push r17
+  61 002a CF93      		push r28
+  62 002c DF93      		push r29
+  63               	/* prologue: function */
+  64               	/* frame size = 0 */
+  65 002e EC01      		movw r28,r24
+  66 0030 162F      		mov r17,r22
+  67 0032 7901      		movw r14,r18
+  68 0034 4115      		cp r20,__zero_reg__
+  69 0036 5105      		cpc r21,__zero_reg__
+  70 0038 01F0      		breq .L7
+  71 003a CA01      		movw r24,r20
+  72 003c BE01      		movw r22,r28
+  73 003e 0E94 0000 		call fputs
+  74               	.L7:
+  75 0042 1530      		cpi r17,lo8(5)
+  76 0044 01F0      		breq .L14
+  77 0046 1630      		cpi r17,lo8(6)
+  78 0048 00F4      		brsh .L20
+  79 004a 1230      		cpi r17,lo8(2)
+  80 004c 01F0      		breq .L11
+  81 004e 1330      		cpi r17,lo8(3)
+  82 0050 00F4      		brsh .L21
+  83 0052 1123      		tst r17
+  84 0054 01F0      		breq .L9
+  85 0056 1130      		cpi r17,lo8(1)
+  86 0058 01F4      		brne .L8
+  87 005a 00C0      		rjmp .L27
+  88               	.L21:
+  89 005c 1330      		cpi r17,lo8(3)
+  90 005e 01F0      		breq .L12
+  91 0060 1430      		cpi r17,lo8(4)
+  92 0062 01F4      		brne .L8
+  93 0064 00C0      		rjmp .L28
+  94               	.L20:
+  95 0066 1830      		cpi r17,lo8(8)
+  96 0068 01F0      		breq .L17
+  97 006a 1930      		cpi r17,lo8(9)
+  98 006c 00F4      		brsh .L22
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 3
+
+
+  99 006e 1630      		cpi r17,lo8(6)
+ 100 0070 01F0      		breq .L15
+ 101 0072 1730      		cpi r17,lo8(7)
+ 102 0074 01F4      		brne .L8
+ 103 0076 00C0      		rjmp .L29
+ 104               	.L22:
+ 105 0078 1930      		cpi r17,lo8(9)
+ 106 007a 01F0      		breq .L18
+ 107 007c 1A30      		cpi r17,lo8(10)
+ 108 007e 01F4      		brne .L8
+ 109 0080 00C0      		rjmp .L30
+ 110               	.L27:
+ 111 0082 80E0      		ldi r24,lo8(.LC0)
+ 112 0084 90E0      		ldi r25,hi8(.LC0)
+ 113 0086 00C0      		rjmp .L26
+ 114               	.L11:
+ 115 0088 80E0      		ldi r24,lo8(.LC1)
+ 116 008a 90E0      		ldi r25,hi8(.LC1)
+ 117 008c 00C0      		rjmp .L26
+ 118               	.L12:
+ 119 008e 80E0      		ldi r24,lo8(.LC2)
+ 120 0090 90E0      		ldi r25,hi8(.LC2)
+ 121 0092 00C0      		rjmp .L26
+ 122               	.L28:
+ 123 0094 80E0      		ldi r24,lo8(.LC3)
+ 124 0096 90E0      		ldi r25,hi8(.LC3)
+ 125 0098 00C0      		rjmp .L26
+ 126               	.L15:
+ 127 009a 80E0      		ldi r24,lo8(.LC4)
+ 128 009c 90E0      		ldi r25,hi8(.LC4)
+ 129 009e 00C0      		rjmp .L26
+ 130               	.L18:
+ 131 00a0 80E0      		ldi r24,lo8(.LC5)
+ 132 00a2 90E0      		ldi r25,hi8(.LC5)
+ 133 00a4 00C0      		rjmp .L26
+ 134               	.L14:
+ 135 00a6 80E0      		ldi r24,lo8(.LC6)
+ 136 00a8 90E0      		ldi r25,hi8(.LC6)
+ 137 00aa 00C0      		rjmp .L26
+ 138               	.L29:
+ 139 00ac 80E0      		ldi r24,lo8(.LC7)
+ 140 00ae 90E0      		ldi r25,hi8(.LC7)
+ 141 00b0 00C0      		rjmp .L26
+ 142               	.L17:
+ 143 00b2 80E0      		ldi r24,lo8(.LC8)
+ 144 00b4 90E0      		ldi r25,hi8(.LC8)
+ 145 00b6 00C0      		rjmp .L26
+ 146               	.L30:
+ 147 00b8 80E0      		ldi r24,lo8(.LC9)
+ 148 00ba 90E0      		ldi r25,hi8(.LC9)
+ 149 00bc 00C0      		rjmp .L26
+ 150               	.L9:
+ 151 00be 80E0      		ldi r24,lo8(.LC10)
+ 152 00c0 90E0      		ldi r25,hi8(.LC10)
+ 153 00c2 00C0      		rjmp .L26
+ 154               	.L8:
+ 155 00c4 80E0      		ldi r24,lo8(.LC11)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 4
+
+
+ 156 00c6 90E0      		ldi r25,hi8(.LC11)
+ 157               	.L26:
+ 158 00c8 BE01      		movw r22,r28
+ 159 00ca 0E94 0000 		call fputs
+ 160 00ce E114      		cp r14,__zero_reg__
+ 161 00d0 F104      		cpc r15,__zero_reg__
+ 162 00d2 01F0      		breq .L25
+ 163 00d4 C701      		movw r24,r14
+ 164 00d6 BE01      		movw r22,r28
+ 165 00d8 0E94 0000 		call fputs
+ 166               	.L25:
+ 167               	/* epilogue start */
+ 168 00dc DF91      		pop r29
+ 169 00de CF91      		pop r28
+ 170 00e0 1F91      		pop r17
+ 171 00e2 FF90      		pop r15
+ 172 00e4 EF90      		pop r14
+ 173 00e6 0895      		ret
+ 174               		.size	NutDumpSockState, .-NutDumpSockState
+ 175               		.data
+ 176               	.LC12:
+ 177 0060 0D0A 536F 		.ascii	"\r\nSoc"
+ 177      63
+ 178 0065 6B65 7420 		.string	"ket     Typ Local                  Remote                 State\n"
+ 178      2020 2020 
+ 178      5479 7020 
+ 178      4C6F 6361 
+ 178      6C20 2020 
+ 179               	.LC13:
+ 180 00a6 2531 3573 		.string	"%15s:%-6u "
+ 180      3A25 2D36 
+ 180      7520 00
+ 181               	.LC14:
+ 182 00b1 0D0A 00   		.string	"\r\n"
+ 183               		.text
+ 184               	.global	NutDumpSocketList
+ 185               		.type	NutDumpSocketList, @function
+ 186               	NutDumpSocketList:
+ 187 00e8 CF92      		push r12
+ 188 00ea DF92      		push r13
+ 189 00ec EF92      		push r14
+ 190 00ee FF92      		push r15
+ 191 00f0 0F93      		push r16
+ 192 00f2 1F93      		push r17
+ 193 00f4 CF93      		push r28
+ 194 00f6 DF93      		push r29
+ 195               	/* prologue: function */
+ 196               	/* frame size = 0 */
+ 197 00f8 8C01      		movw r16,r24
+ 198 00fa 80E0      		ldi r24,lo8(.LC12)
+ 199 00fc 90E0      		ldi r25,hi8(.LC12)
+ 200 00fe B801      		movw r22,r16
+ 201 0100 0E94 0000 		call fputs
+ 202 0104 C091 0000 		lds r28,tcpSocketList
+ 203 0108 D091 0000 		lds r29,(tcpSocketList)+1
+ 204 010c 20E0      		ldi r18,lo8(fmt1.2232)
+ 205 010e C22E      		mov r12,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 5
+
+
+ 206 0110 20E0      		ldi r18,hi8(fmt1.2232)
+ 207 0112 D22E      		mov r13,r18
+ 208 0114 90E0      		ldi r25,lo8(.LC13)
+ 209 0116 E92E      		mov r14,r25
+ 210 0118 90E0      		ldi r25,hi8(.LC13)
+ 211 011a F92E      		mov r15,r25
+ 212 011c 00C0      		rjmp .L32
+ 213               	.L33:
+ 214 011e 6C89      		ldd r22,Y+20
+ 215 0120 7D89      		ldd r23,Y+21
+ 216 0122 8E89      		ldd r24,Y+22
+ 217 0124 9F89      		ldd r25,Y+23
+ 218 0126 0E94 0000 		call inet_ntoa
+ 219 012a 288D      		ldd r18,Y+24
+ 220 012c 398D      		ldd r19,Y+25
+ 221               	/* #APP */
+ 222               	 ;  305 "../../nut/include/sys/types.h" 1
+ 223 012e 022E      		mov __tmp_reg__, r18
+ 224 0130 232F      		mov r18, r19
+ 225 0132 302D      		mov r19, __tmp_reg__
+ 226               		
+ 227               	 ;  0 "" 2
+ 228               	/* #NOAPP */
+ 229 0134 4DB7      		in r20,__SP_L__
+ 230 0136 5EB7      		in r21,__SP_H__
+ 231 0138 4A50      		subi r20,lo8(-(-10))
+ 232 013a 5040      		sbci r21,hi8(-(-10))
+ 233 013c 0FB6      		in __tmp_reg__,__SREG__
+ 234 013e F894      		cli
+ 235 0140 5EBF      		out __SP_H__,r21
+ 236 0142 0FBE      		out __SREG__,__tmp_reg__
+ 237 0144 4DBF      		out __SP_L__,r20
+ 238 0146 EDB7      		in r30,__SP_L__
+ 239 0148 FEB7      		in r31,__SP_H__
+ 240 014a 3196      		adiw r30,1
+ 241 014c ADB7      		in r26,__SP_L__
+ 242 014e BEB7      		in r27,__SP_H__
+ 243 0150 1296      		adiw r26,1+1
+ 244 0152 1C93      		st X,r17
+ 245 0154 0E93      		st -X,r16
+ 246 0156 1197      		sbiw r26,1
+ 247 0158 D382      		std Z+3,r13
+ 248 015a C282      		std Z+2,r12
+ 249 015c D583      		std Z+5,r29
+ 250 015e C483      		std Z+4,r28
+ 251 0160 9783      		std Z+7,r25
+ 252 0162 8683      		std Z+6,r24
+ 253 0164 3187      		std Z+9,r19
+ 254 0166 2087      		std Z+8,r18
+ 255 0168 0E94 0000 		call fprintf_P
+ 256 016c 2DB7      		in r18,__SP_L__
+ 257 016e 3EB7      		in r19,__SP_H__
+ 258 0170 265F      		subi r18,lo8(-(10))
+ 259 0172 3F4F      		sbci r19,hi8(-(10))
+ 260 0174 0FB6      		in __tmp_reg__,__SREG__
+ 261 0176 F894      		cli
+ 262 0178 3EBF      		out __SP_H__,r19
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 6
+
+
+ 263 017a 0FBE      		out __SREG__,__tmp_reg__
+ 264 017c 2DBF      		out __SP_L__,r18
+ 265 017e 6A8D      		ldd r22,Y+26
+ 266 0180 7B8D      		ldd r23,Y+27
+ 267 0182 8C8D      		ldd r24,Y+28
+ 268 0184 9D8D      		ldd r25,Y+29
+ 269 0186 0E94 0000 		call inet_ntoa
+ 270 018a 2E8D      		ldd r18,Y+30
+ 271 018c 3F8D      		ldd r19,Y+31
+ 272               	/* #APP */
+ 273               	 ;  305 "../../nut/include/sys/types.h" 1
+ 274 018e 022E      		mov __tmp_reg__, r18
+ 275 0190 232F      		mov r18, r19
+ 276 0192 302D      		mov r19, __tmp_reg__
+ 277               		
+ 278               	 ;  0 "" 2
+ 279               	/* #NOAPP */
+ 280 0194 4DB7      		in r20,__SP_L__
+ 281 0196 5EB7      		in r21,__SP_H__
+ 282 0198 4850      		subi r20,lo8(-(-8))
+ 283 019a 5040      		sbci r21,hi8(-(-8))
+ 284 019c 0FB6      		in __tmp_reg__,__SREG__
+ 285 019e F894      		cli
+ 286 01a0 5EBF      		out __SP_H__,r21
+ 287 01a2 0FBE      		out __SREG__,__tmp_reg__
+ 288 01a4 4DBF      		out __SP_L__,r20
+ 289 01a6 EDB7      		in r30,__SP_L__
+ 290 01a8 FEB7      		in r31,__SP_H__
+ 291 01aa 3196      		adiw r30,1
+ 292 01ac ADB7      		in r26,__SP_L__
+ 293 01ae BEB7      		in r27,__SP_H__
+ 294 01b0 1296      		adiw r26,1+1
+ 295 01b2 1C93      		st X,r17
+ 296 01b4 0E93      		st -X,r16
+ 297 01b6 1197      		sbiw r26,1
+ 298 01b8 F382      		std Z+3,r15
+ 299 01ba E282      		std Z+2,r14
+ 300 01bc 9583      		std Z+5,r25
+ 301 01be 8483      		std Z+4,r24
+ 302 01c0 3783      		std Z+7,r19
+ 303 01c2 2683      		std Z+6,r18
+ 304 01c4 0E94 0000 		call fprintf
+ 305 01c8 6B89      		ldd r22,Y+19
+ 306 01ca 2DB7      		in r18,__SP_L__
+ 307 01cc 3EB7      		in r19,__SP_H__
+ 308 01ce 285F      		subi r18,lo8(-(8))
+ 309 01d0 3F4F      		sbci r19,hi8(-(8))
+ 310 01d2 0FB6      		in __tmp_reg__,__SREG__
+ 311 01d4 F894      		cli
+ 312 01d6 3EBF      		out __SP_H__,r19
+ 313 01d8 0FBE      		out __SREG__,__tmp_reg__
+ 314 01da 2DBF      		out __SP_L__,r18
+ 315 01dc C801      		movw r24,r16
+ 316 01de 40E0      		ldi r20,lo8(0)
+ 317 01e0 50E0      		ldi r21,hi8(0)
+ 318 01e2 20E0      		ldi r18,lo8(.LC14)
+ 319 01e4 30E0      		ldi r19,hi8(.LC14)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 7
+
+
+ 320 01e6 0E94 0000 		call NutDumpSockState
+ 321 01ea 0990      		ld __tmp_reg__,Y+
+ 322 01ec D881      		ld r29,Y
+ 323 01ee C02D      		mov r28,__tmp_reg__
+ 324               	.L32:
+ 325 01f0 2097      		sbiw r28,0
+ 326 01f2 01F0      		breq .+2
+ 327 01f4 00C0      		rjmp .L33
+ 328 01f6 C091 0000 		lds r28,udpSocketList
+ 329 01fa D091 0000 		lds r29,(udpSocketList)+1
+ 330 01fe 80E0      		ldi r24,lo8(fmt2.2233)
+ 331 0200 E82E      		mov r14,r24
+ 332 0202 80E0      		ldi r24,hi8(fmt2.2233)
+ 333 0204 F82E      		mov r15,r24
+ 334 0206 00C0      		rjmp .L34
+ 335               	.L35:
+ 336 0208 8A81      		ldd r24,Y+2
+ 337 020a 9B81      		ldd r25,Y+3
+ 338               	/* #APP */
+ 339               	 ;  305 "../../nut/include/sys/types.h" 1
+ 340 020c 082E      		mov __tmp_reg__, r24
+ 341 020e 892F      		mov r24, r25
+ 342 0210 902D      		mov r25, __tmp_reg__
+ 343               		
+ 344               	 ;  0 "" 2
+ 345               	/* #NOAPP */
+ 346 0212 4DB7      		in r20,__SP_L__
+ 347 0214 5EB7      		in r21,__SP_H__
+ 348 0216 4850      		subi r20,lo8(-(-8))
+ 349 0218 5040      		sbci r21,hi8(-(-8))
+ 350 021a 0FB6      		in __tmp_reg__,__SREG__
+ 351 021c F894      		cli
+ 352 021e 5EBF      		out __SP_H__,r21
+ 353 0220 0FBE      		out __SREG__,__tmp_reg__
+ 354 0222 4DBF      		out __SP_L__,r20
+ 355 0224 EDB7      		in r30,__SP_L__
+ 356 0226 FEB7      		in r31,__SP_H__
+ 357 0228 3196      		adiw r30,1
+ 358 022a ADB7      		in r26,__SP_L__
+ 359 022c BEB7      		in r27,__SP_H__
+ 360 022e 1296      		adiw r26,1+1
+ 361 0230 1C93      		st X,r17
+ 362 0232 0E93      		st -X,r16
+ 363 0234 1197      		sbiw r26,1
+ 364 0236 F382      		std Z+3,r15
+ 365 0238 E282      		std Z+2,r14
+ 366 023a D583      		std Z+5,r29
+ 367 023c C483      		std Z+4,r28
+ 368 023e 9783      		std Z+7,r25
+ 369 0240 8683      		std Z+6,r24
+ 370 0242 0E94 0000 		call fprintf_P
+ 371 0246 0990      		ld __tmp_reg__,Y+
+ 372 0248 D881      		ld r29,Y
+ 373 024a C02D      		mov r28,__tmp_reg__
+ 374 024c 2DB7      		in r18,__SP_L__
+ 375 024e 3EB7      		in r19,__SP_H__
+ 376 0250 285F      		subi r18,lo8(-(8))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 8
+
+
+ 377 0252 3F4F      		sbci r19,hi8(-(8))
+ 378 0254 0FB6      		in __tmp_reg__,__SREG__
+ 379 0256 F894      		cli
+ 380 0258 3EBF      		out __SP_H__,r19
+ 381 025a 0FBE      		out __SREG__,__tmp_reg__
+ 382 025c 2DBF      		out __SP_L__,r18
+ 383               	.L34:
+ 384 025e 2097      		sbiw r28,0
+ 385 0260 01F4      		brne .L35
+ 386               	/* epilogue start */
+ 387 0262 DF91      		pop r29
+ 388 0264 CF91      		pop r28
+ 389 0266 1F91      		pop r17
+ 390 0268 0F91      		pop r16
+ 391 026a FF90      		pop r15
+ 392 026c EF90      		pop r14
+ 393 026e DF90      		pop r13
+ 394 0270 CF90      		pop r12
+ 395 0272 0895      		ret
+ 396               		.size	NutDumpSocketList, .-NutDumpSocketList
+ 397               		.data
+ 398               	.LC15:
+ 399 00b4 2D41 434B 		.string	"-ACK(%lx)"
+ 399      2825 6C78 
+ 399      2900 
+ 400               	.LC16:
+ 401 00be 2D46 494E 		.string	"-FIN"
+ 401      00
+ 402               	.LC17:
+ 403 00c3 2D53 594E 		.string	"-SYN"
+ 403      00
+ 404               	.LC18:
+ 405 00c8 2D52 5354 		.string	"-RST"
+ 405      00
+ 406               	.LC19:
+ 407 00cd 2D50 5348 		.string	"-PSH"
+ 407      00
+ 408               	.LC20:
+ 409 00d2 2D55 5247 		.string	"-URG"
+ 409      00
+ 410               		.text
+ 411               	.global	NutDumpTcpHeader
+ 412               		.type	NutDumpTcpHeader, @function
+ 413               	NutDumpTcpHeader:
+ 414 0274 CF92      		push r12
+ 415 0276 DF92      		push r13
+ 416 0278 EF92      		push r14
+ 417 027a FF92      		push r15
+ 418 027c 0F93      		push r16
+ 419 027e 1F93      		push r17
+ 420 0280 CF93      		push r28
+ 421 0282 DF93      		push r29
+ 422               	/* prologue: function */
+ 423               	/* frame size = 0 */
+ 424 0284 7C01      		movw r14,r24
+ 425 0286 6901      		movw r12,r18
+ 426 0288 D901      		movw r26,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 9
+
+
+ 427 028a 1B96      		adiw r26,11
+ 428 028c CD91      		ld r28,X+
+ 429 028e DC91      		ld r29,X
+ 430 0290 1C97      		sbiw r26,11+1
+ 431 0292 0C81      		ldd r16,Y+4
+ 432 0294 1D81      		ldd r17,Y+5
+ 433 0296 2E81      		ldd r18,Y+6
+ 434 0298 3F81      		ldd r19,Y+7
+ 435               	/* #APP */
+ 436               	 ;  315 "../../nut/include/sys/types.h" 1
+ 437 029a 002E      		mov __tmp_reg__, r16
+ 438 029c 032F      		mov r16, r19
+ 439 029e 302D      		mov r19, __tmp_reg__
+ 440 02a0 012E      		mov __tmp_reg__, r17
+ 441 02a2 122F      		mov r17, r18
+ 442 02a4 202D      		mov r18, __tmp_reg__
+ 443               		
+ 444               	 ;  0 "" 2
+ 445               	/* #NOAPP */
+ 446 02a6 EDB7      		in r30,__SP_L__
+ 447 02a8 FEB7      		in r31,__SP_H__
+ 448 02aa 3E97      		sbiw r30,14
+ 449 02ac 0FB6      		in __tmp_reg__,__SREG__
+ 450 02ae F894      		cli
+ 451 02b0 FEBF      		out __SP_H__,r31
+ 452 02b2 0FBE      		out __SREG__,__tmp_reg__
+ 453 02b4 EDBF      		out __SP_L__,r30
+ 454 02b6 3196      		adiw r30,1
+ 455 02b8 ADB7      		in r26,__SP_L__
+ 456 02ba BEB7      		in r27,__SP_H__
+ 457 02bc 1296      		adiw r26,1+1
+ 458 02be 9C93      		st X,r25
+ 459 02c0 8E93      		st -X,r24
+ 460 02c2 1197      		sbiw r26,1
+ 461 02c4 80E0      		ldi r24,lo8(fmt.2189)
+ 462 02c6 90E0      		ldi r25,hi8(fmt.2189)
+ 463 02c8 9383      		std Z+3,r25
+ 464 02ca 8283      		std Z+2,r24
+ 465 02cc 7583      		std Z+5,r23
+ 466 02ce 6483      		std Z+4,r22
+ 467 02d0 5783      		std Z+7,r21
+ 468 02d2 4683      		std Z+6,r20
+ 469 02d4 D601      		movw r26,r12
+ 470 02d6 5196      		adiw r26,17
+ 471 02d8 8D91      		ld r24,X+
+ 472 02da 9C91      		ld r25,X
+ 473 02dc 5297      		sbiw r26,17+1
+ 474 02de 9187      		std Z+9,r25
+ 475 02e0 8087      		std Z+8,r24
+ 476 02e2 0287      		std Z+10,r16
+ 477 02e4 1387      		std Z+11,r17
+ 478 02e6 2487      		std Z+12,r18
+ 479 02e8 3587      		std Z+13,r19
+ 480 02ea 0E94 0000 		call fprintf_P
+ 481 02ee 8D85      		ldd r24,Y+13
+ 482 02f0 EDB7      		in r30,__SP_L__
+ 483 02f2 FEB7      		in r31,__SP_H__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 10
+
+
+ 484 02f4 3E96      		adiw r30,14
+ 485 02f6 0FB6      		in __tmp_reg__,__SREG__
+ 486 02f8 F894      		cli
+ 487 02fa FEBF      		out __SP_H__,r31
+ 488 02fc 0FBE      		out __SREG__,__tmp_reg__
+ 489 02fe EDBF      		out __SP_L__,r30
+ 490 0300 84FF      		sbrs r24,4
+ 491 0302 00C0      		rjmp .L38
+ 492 0304 8885      		ldd r24,Y+8
+ 493 0306 9985      		ldd r25,Y+9
+ 494 0308 AA85      		ldd r26,Y+10
+ 495 030a BB85      		ldd r27,Y+11
+ 496               	/* #APP */
+ 497               	 ;  315 "../../nut/include/sys/types.h" 1
+ 498 030c 082E      		mov __tmp_reg__, r24
+ 499 030e 8B2F      		mov r24, r27
+ 500 0310 B02D      		mov r27, __tmp_reg__
+ 501 0312 092E      		mov __tmp_reg__, r25
+ 502 0314 9A2F      		mov r25, r26
+ 503 0316 A02D      		mov r26, __tmp_reg__
+ 504               		
+ 505               	 ;  0 "" 2
+ 506               	/* #NOAPP */
+ 507 0318 2DB7      		in r18,__SP_L__
+ 508 031a 3EB7      		in r19,__SP_H__
+ 509 031c 2850      		subi r18,lo8(-(-8))
+ 510 031e 3040      		sbci r19,hi8(-(-8))
+ 511 0320 0FB6      		in __tmp_reg__,__SREG__
+ 512 0322 F894      		cli
+ 513 0324 3EBF      		out __SP_H__,r19
+ 514 0326 0FBE      		out __SREG__,__tmp_reg__
+ 515 0328 2DBF      		out __SP_L__,r18
+ 516 032a 4DB7      		in r20,__SP_L__
+ 517 032c 5EB7      		in r21,__SP_H__
+ 518 032e 4F5F      		subi r20,lo8(-(1))
+ 519 0330 5F4F      		sbci r21,hi8(-(1))
+ 520 0332 EDB7      		in r30,__SP_L__
+ 521 0334 FEB7      		in r31,__SP_H__
+ 522 0336 F282      		std Z+2,r15
+ 523 0338 E182      		std Z+1,r14
+ 524 033a 20E0      		ldi r18,lo8(.LC15)
+ 525 033c 30E0      		ldi r19,hi8(.LC15)
+ 526 033e FA01      		movw r30,r20
+ 527 0340 3383      		std Z+3,r19
+ 528 0342 2283      		std Z+2,r18
+ 529 0344 8483      		std Z+4,r24
+ 530 0346 9583      		std Z+5,r25
+ 531 0348 A683      		std Z+6,r26
+ 532 034a B783      		std Z+7,r27
+ 533 034c 0E94 0000 		call fprintf
+ 534 0350 2DB7      		in r18,__SP_L__
+ 535 0352 3EB7      		in r19,__SP_H__
+ 536 0354 285F      		subi r18,lo8(-(8))
+ 537 0356 3F4F      		sbci r19,hi8(-(8))
+ 538 0358 0FB6      		in __tmp_reg__,__SREG__
+ 539 035a F894      		cli
+ 540 035c 3EBF      		out __SP_H__,r19
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 11
+
+
+ 541 035e 0FBE      		out __SREG__,__tmp_reg__
+ 542 0360 2DBF      		out __SP_L__,r18
+ 543               	.L38:
+ 544 0362 8D85      		ldd r24,Y+13
+ 545 0364 80FF      		sbrs r24,0
+ 546 0366 00C0      		rjmp .L39
+ 547 0368 80E0      		ldi r24,lo8(.LC16)
+ 548 036a 90E0      		ldi r25,hi8(.LC16)
+ 549 036c B701      		movw r22,r14
+ 550 036e 0E94 0000 		call fputs
+ 551               	.L39:
+ 552 0372 8D85      		ldd r24,Y+13
+ 553 0374 81FF      		sbrs r24,1
+ 554 0376 00C0      		rjmp .L40
+ 555 0378 80E0      		ldi r24,lo8(.LC17)
+ 556 037a 90E0      		ldi r25,hi8(.LC17)
+ 557 037c B701      		movw r22,r14
+ 558 037e 0E94 0000 		call fputs
+ 559               	.L40:
+ 560 0382 8D85      		ldd r24,Y+13
+ 561 0384 82FF      		sbrs r24,2
+ 562 0386 00C0      		rjmp .L41
+ 563 0388 80E0      		ldi r24,lo8(.LC18)
+ 564 038a 90E0      		ldi r25,hi8(.LC18)
+ 565 038c B701      		movw r22,r14
+ 566 038e 0E94 0000 		call fputs
+ 567               	.L41:
+ 568 0392 8D85      		ldd r24,Y+13
+ 569 0394 83FF      		sbrs r24,3
+ 570 0396 00C0      		rjmp .L42
+ 571 0398 80E0      		ldi r24,lo8(.LC19)
+ 572 039a 90E0      		ldi r25,hi8(.LC19)
+ 573 039c B701      		movw r22,r14
+ 574 039e 0E94 0000 		call fputs
+ 575               	.L42:
+ 576 03a2 8D85      		ldd r24,Y+13
+ 577 03a4 85FF      		sbrs r24,5
+ 578 03a6 00C0      		rjmp .L43
+ 579 03a8 80E0      		ldi r24,lo8(.LC20)
+ 580 03aa 90E0      		ldi r25,hi8(.LC20)
+ 581 03ac B701      		movw r22,r14
+ 582 03ae 0E94 0000 		call fputs
+ 583               	.L43:
+ 584 03b2 8AE0      		ldi r24,lo8(10)
+ 585 03b4 90E0      		ldi r25,hi8(10)
+ 586 03b6 B701      		movw r22,r14
+ 587 03b8 0E94 0000 		call fputc
+ 588               	/* epilogue start */
+ 589 03bc DF91      		pop r29
+ 590 03be CF91      		pop r28
+ 591 03c0 1F91      		pop r17
+ 592 03c2 0F91      		pop r16
+ 593 03c4 FF90      		pop r15
+ 594 03c6 EF90      		pop r14
+ 595 03c8 DF90      		pop r13
+ 596 03ca CF90      		pop r12
+ 597 03cc 0895      		ret
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 12
+
+
+ 598               		.size	NutDumpTcpHeader, .-NutDumpTcpHeader
+ 599               		.section	.progmem.data,"a",@progbits
+ 600               		.type	fmt2.2233, @object
+ 601               		.size	fmt2.2233, 15
+ 602               	fmt2.2233:
+ 603 0000 2531 3070 		.string	"%10p UDP %6u\r\n"
+ 603      2055 4450 
+ 603      2025 3675 
+ 603      0D0A 00
+ 604               		.type	fmt1.2232, @object
+ 605               		.size	fmt1.2232, 20
+ 606               	fmt1.2232:
+ 607 000f 2531 3070 		.string	"%10p TCP %15s:%-6u "
+ 607      2054 4350 
+ 607      2025 3135 
+ 607      733A 252D 
+ 607      3675 2000 
+ 608               		.type	fmt.2189, @object
+ 609               		.size	fmt.2189, 18
+ 610               	fmt.2189:
+ 611 0023 2573 2570 		.string	"%s%p[%u]-SEQ(%lx)"
+ 611      5B25 755D 
+ 611      2D53 4551 
+ 611      2825 6C78 
+ 611      2900 
+ 612               		.comm __tcp_trs,2,1
+ 613               		.comm __tcp_trf,1,1
+ 614               	.global __do_copy_data
+ 615               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 netdebug.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:11     .text:00000000 NutTraceTcp
+                            *COM*:00000002 __tcp_trs
+                            *COM*:00000001 __tcp_trf
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:57     .text:00000024 NutDumpSockState
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:186    .text:000000e8 NutDumpSocketList
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:606    .progmem.data:0000000f fmt1.2232
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:602    .progmem.data:00000000 fmt2.2233
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:413    .text:00000274 NutDumpTcpHeader
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc0f3BDA.s:610    .progmem.data:00000023 fmt.2189
+
+UNDEFINED SYMBOLS
+fputs
+tcpSocketList
+inet_ntoa
+fprintf_P
+fprintf
+udpSocketList
+fputc
+__do_copy_data
+__do_clear_bss

@@ -1,0 +1,1369 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 1
+
+
+   1               		.file	"twif.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	TwInterrupt, @function
+  10               	TwInterrupt:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 5091 7400 		lds r21,116
+  14 0004 4091 7100 		lds r20,113
+  15 0008 487F      		andi r20,lo8(-8)
+  16 000a 4036      		cpi r20,lo8(96)
+  17 000c 01F4      		brne .+2
+  18 000e 00C0      		rjmp .L11
+  19 0010 4136      		cpi r20,lo8(97)
+  20 0012 00F4      		brsh .L18
+  21 0014 4832      		cpi r20,lo8(40)
+  22 0016 01F4      		brne .+2
+  23 0018 00C0      		rjmp .L5
+  24 001a 4932      		cpi r20,lo8(41)
+  25 001c 00F4      		brsh .L19
+  26 001e 4031      		cpi r20,lo8(16)
+  27 0020 01F4      		brne .+2
+  28 0022 00C0      		rjmp .L4
+  29 0024 4131      		cpi r20,lo8(17)
+  30 0026 00F4      		brsh .L20
+  31 0028 4423      		tst r20
+  32 002a 01F4      		brne .+2
+  33 002c 00C0      		rjmp .L3
+  34 002e 4830      		cpi r20,lo8(8)
+  35 0030 01F0      		breq .+2
+  36 0032 00C0      		rjmp .L62
+  37 0034 00C0      		rjmp .L4
+  38               	.L20:
+  39 0036 4831      		cpi r20,lo8(24)
+  40 0038 01F4      		brne .+2
+  41 003a 00C0      		rjmp .L5
+  42 003c 4032      		cpi r20,lo8(32)
+  43 003e 01F0      		breq .+2
+  44 0040 00C0      		rjmp .L62
+  45 0042 00C0      		rjmp .L6
+  46               	.L19:
+  47 0044 4034      		cpi r20,lo8(64)
+  48 0046 01F4      		brne .+2
+  49 0048 00C0      		rjmp .L8
+  50 004a 4134      		cpi r20,lo8(65)
+  51 004c 00F4      		brsh .L21
+  52 004e 4033      		cpi r20,lo8(48)
+  53 0050 01F4      		brne .+2
+  54 0052 00C0      		rjmp .L6
+  55 0054 4833      		cpi r20,lo8(56)
+  56 0056 01F0      		breq .+2
+  57 0058 00C0      		rjmp .L62
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 2
+
+
+  58 005a 00C0      		rjmp .L83
+  59               	.L21:
+  60 005c 4035      		cpi r20,lo8(80)
+  61 005e 01F4      		brne .+2
+  62 0060 00C0      		rjmp .L9
+  63 0062 4835      		cpi r20,lo8(88)
+  64 0064 01F4      		brne .+2
+  65 0066 00C0      		rjmp .L10
+  66 0068 4834      		cpi r20,lo8(72)
+  67 006a 01F0      		breq .+2
+  68 006c 00C0      		rjmp .L62
+  69 006e 00C0      		rjmp .L6
+  70               	.L18:
+  71 0070 4839      		cpi r20,lo8(-104)
+  72 0072 01F4      		brne .+2
+  73 0074 00C0      		rjmp .L13
+  74 0076 4939      		cpi r20,lo8(-103)
+  75 0078 00F4      		brsh .L22
+  76 007a 4837      		cpi r20,lo8(120)
+  77 007c 01F4      		brne .+2
+  78 007e 00C0      		rjmp .L11
+  79 0080 4937      		cpi r20,lo8(121)
+  80 0082 00F4      		brsh .L23
+  81 0084 4836      		cpi r20,lo8(104)
+  82 0086 01F4      		brne .+2
+  83 0088 00C0      		rjmp .L11
+  84 008a 4037      		cpi r20,lo8(112)
+  85 008c 01F0      		breq .+2
+  86 008e 00C0      		rjmp .L62
+  87 0090 00C0      		rjmp .L11
+  88               	.L23:
+  89 0092 4838      		cpi r20,lo8(-120)
+  90 0094 01F4      		brne .+2
+  91 0096 00C0      		rjmp .L13
+  92 0098 4039      		cpi r20,lo8(-112)
+  93 009a 01F4      		brne .+2
+  94 009c 00C0      		rjmp .L12
+  95 009e 4038      		cpi r20,lo8(-128)
+  96 00a0 01F0      		breq .+2
+  97 00a2 00C0      		rjmp .L62
+  98 00a4 00C0      		rjmp .L12
+  99               	.L22:
+ 100 00a6 403B      		cpi r20,lo8(-80)
+ 101 00a8 01F4      		brne .+2
+ 102 00aa 00C0      		rjmp .L15
+ 103 00ac 413B      		cpi r20,lo8(-79)
+ 104 00ae 00F4      		brsh .L24
+ 105 00b0 403A      		cpi r20,lo8(-96)
+ 106 00b2 01F4      		brne .+2
+ 107 00b4 00C0      		rjmp .L14
+ 108 00b6 483A      		cpi r20,lo8(-88)
+ 109 00b8 01F0      		breq .+2
+ 110 00ba 00C0      		rjmp .L62
+ 111 00bc 00C0      		rjmp .L15
+ 112               	.L24:
+ 113 00be 403C      		cpi r20,lo8(-64)
+ 114 00c0 01F4      		brne .+2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 3
+
+
+ 115 00c2 00C0      		rjmp .L17
+ 116 00c4 483C      		cpi r20,lo8(-56)
+ 117 00c6 01F4      		brne .+2
+ 118 00c8 00C0      		rjmp .L17
+ 119 00ca 483B      		cpi r20,lo8(-72)
+ 120 00cc 01F0      		breq .+2
+ 121 00ce 00C0      		rjmp .L62
+ 122 00d0 00C0      		rjmp .L16
+ 123               	.L4:
+ 124 00d2 81E0      		ldi r24,lo8(1)
+ 125 00d4 8093 0000 		sts tw_if_bsy,r24
+ 126 00d8 1092 0000 		sts (tw_mt_idx)+1,__zero_reg__
+ 127 00dc 1092 0000 		sts tw_mt_idx,__zero_reg__
+ 128 00e0 1092 0000 		sts (tw_mr_idx)+1,__zero_reg__
+ 129 00e4 1092 0000 		sts tw_mr_idx,__zero_reg__
+ 130 00e8 8091 0000 		lds r24,tw_mt_len
+ 131 00ec 9091 0000 		lds r25,(tw_mt_len)+1
+ 132 00f0 2091 0000 		lds r18,tw_mm_sla
+ 133 00f4 892B      		or r24,r25
+ 134 00f6 01F4      		brne .L63
+ 135               	.L25:
+ 136 00f8 2160      		ori r18,lo8(1)
+ 137               	.L63:
+ 138 00fa 2093 7300 		sts 115,r18
+ 139               	.L71:
+ 140 00fe 5074      		andi r21,lo8(64)
+ 141 0100 5568      		ori r21,lo8(-123)
+ 142 0102 00C0      		rjmp .L68
+ 143               	.L5:
+ 144 0104 2091 0000 		lds r18,tw_mt_idx
+ 145 0108 3091 0000 		lds r19,(tw_mt_idx)+1
+ 146 010c 8091 0000 		lds r24,tw_mt_len
+ 147 0110 9091 0000 		lds r25,(tw_mt_len)+1
+ 148 0114 2817      		cp r18,r24
+ 149 0116 3907      		cpc r19,r25
+ 150 0118 00F4      		brsh .L27
+ 151 011a 8091 0000 		lds r24,tw_mt_idx
+ 152 011e 9091 0000 		lds r25,(tw_mt_idx)+1
+ 153 0122 E091 0000 		lds r30,tw_mt_buf
+ 154 0126 F091 0000 		lds r31,(tw_mt_buf)+1
+ 155 012a E80F      		add r30,r24
+ 156 012c F91F      		adc r31,r25
+ 157 012e 8081      		ld r24,Z
+ 158 0130 8093 7300 		sts 115,r24
+ 159 0134 8091 0000 		lds r24,tw_mt_idx
+ 160 0138 9091 0000 		lds r25,(tw_mt_idx)+1
+ 161 013c 0196      		adiw r24,1
+ 162 013e 9093 0000 		sts (tw_mt_idx)+1,r25
+ 163 0142 8093 0000 		sts tw_mt_idx,r24
+ 164 0146 00C0      		rjmp .L71
+ 165               	.L27:
+ 166 0148 1092 0000 		sts (tw_mt_len)+1,__zero_reg__
+ 167 014c 1092 0000 		sts tw_mt_len,__zero_reg__
+ 168 0150 8091 0000 		lds r24,tw_mr_siz
+ 169 0154 9091 0000 		lds r25,(tw_mr_siz)+1
+ 170 0158 892B      		or r24,r25
+ 171 015a 01F0      		breq .L6
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 4
+
+
+ 172 015c 5074      		andi r21,lo8(64)
+ 173 015e 556A      		ori r21,lo8(-91)
+ 174 0160 00C0      		rjmp .L68
+ 175               	.L6:
+ 176 0162 4032      		cpi r20,lo8(32)
+ 177 0164 01F0      		breq .L28
+ 178 0166 4834      		cpi r20,lo8(72)
+ 179 0168 01F0      		breq .+2
+ 180 016a 00C0      		rjmp .L81
+ 181               	.L28:
+ 182 016c 84E0      		ldi r24,lo8(4)
+ 183 016e 8093 0000 		sts tw_mm_err,r24
+ 184 0172 1092 0000 		sts (tw_mt_len)+1,__zero_reg__
+ 185 0176 1092 0000 		sts tw_mt_len,__zero_reg__
+ 186 017a 00C0      		rjmp .L82
+ 187               	.L83:
+ 188 017c 8091 7400 		lds r24,116
+ 189 0180 8062      		ori r24,lo8(32)
+ 190 0182 00C0      		rjmp .L67
+ 191               	.L9:
+ 192 0184 8091 0000 		lds r24,tw_mr_idx
+ 193 0188 9091 0000 		lds r25,(tw_mr_idx)+1
+ 194 018c 2091 7300 		lds r18,115
+ 195 0190 E091 0000 		lds r30,tw_mr_buf
+ 196 0194 F091 0000 		lds r31,(tw_mr_buf)+1
+ 197 0198 E80F      		add r30,r24
+ 198 019a F91F      		adc r31,r25
+ 199 019c 2083      		st Z,r18
+ 200 019e 8091 0000 		lds r24,tw_mr_idx
+ 201 01a2 9091 0000 		lds r25,(tw_mr_idx)+1
+ 202 01a6 0196      		adiw r24,1
+ 203 01a8 9093 0000 		sts (tw_mr_idx)+1,r25
+ 204 01ac 8093 0000 		sts tw_mr_idx,r24
+ 205               	.L8:
+ 206 01b0 8091 0000 		lds r24,tw_mr_idx
+ 207 01b4 9091 0000 		lds r25,(tw_mr_idx)+1
+ 208 01b8 2091 0000 		lds r18,tw_mr_siz
+ 209 01bc 3091 0000 		lds r19,(tw_mr_siz)+1
+ 210 01c0 0196      		adiw r24,1
+ 211 01c2 8217      		cp r24,r18
+ 212 01c4 9307      		cpc r25,r19
+ 213 01c6 00F0      		brlo .+2
+ 214 01c8 00C0      		rjmp .L73
+ 215 01ca 00C0      		rjmp .L74
+ 216               	.L10:
+ 217 01cc 8091 0000 		lds r24,tw_mr_idx
+ 218 01d0 9091 0000 		lds r25,(tw_mr_idx)+1
+ 219 01d4 2091 7300 		lds r18,115
+ 220 01d8 E091 0000 		lds r30,tw_mr_buf
+ 221 01dc F091 0000 		lds r31,(tw_mr_buf)+1
+ 222 01e0 E80F      		add r30,r24
+ 223 01e2 F91F      		adc r31,r25
+ 224 01e4 2083      		st Z,r18
+ 225 01e6 8091 0000 		lds r24,tw_mr_idx
+ 226 01ea 9091 0000 		lds r25,(tw_mr_idx)+1
+ 227 01ee 0196      		adiw r24,1
+ 228 01f0 9093 0000 		sts (tw_mr_idx)+1,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 5
+
+
+ 229 01f4 8093 0000 		sts tw_mr_idx,r24
+ 230               	.L82:
+ 231 01f8 1092 0000 		sts (tw_mr_siz)+1,__zero_reg__
+ 232 01fc 1092 0000 		sts tw_mr_siz,__zero_reg__
+ 233               	.L81:
+ 234 0200 E091 0000 		lds r30,tw_mm_que
+ 235 0204 F091 0000 		lds r31,(tw_mm_que)+1
+ 236 0208 3097      		sbiw r30,0
+ 237 020a 01F4      		brne .L35
+ 238 020c 8FEF      		ldi r24,lo8(-1)
+ 239 020e 9FEF      		ldi r25,hi8(-1)
+ 240 0210 9093 0000 		sts (tw_mm_que)+1,r25
+ 241 0214 8093 0000 		sts tw_mm_que,r24
+ 242 0218 00C0      		rjmp .L36
+ 243               	.L35:
+ 244 021a 8FEF      		ldi r24,hi8(-1)
+ 245 021c EF3F      		cpi r30,lo8(-1)
+ 246 021e F807      		cpc r31,r24
+ 247 0220 01F0      		breq .L36
+ 248 0222 8481      		ldd r24,Z+4
+ 249 0224 9581      		ldd r25,Z+5
+ 250 0226 0196      		adiw r24,1
+ 251 0228 9583      		std Z+5,r25
+ 252 022a 8483      		std Z+4,r24
+ 253               	.L36:
+ 254 022c 8091 0000 		lds r24,tw_sr_siz
+ 255 0230 9091 0000 		lds r25,(tw_sr_siz)+1
+ 256 0234 892B      		or r24,r25
+ 257 0236 01F0      		breq .L37
+ 258 0238 85ED      		ldi r24,lo8(-43)
+ 259 023a 00C0      		rjmp .L67
+ 260               	.L37:
+ 261 023c 85E9      		ldi r24,lo8(-107)
+ 262 023e 00C0      		rjmp .L67
+ 263               	.L11:
+ 264 0240 8091 0000 		lds r24,tw_sr_siz
+ 265 0244 9091 0000 		lds r25,(tw_sr_siz)+1
+ 266 0248 892B      		or r24,r25
+ 267 024a 01F4      		brne .+2
+ 268 024c 00C0      		rjmp .L73
+ 269 024e 81E0      		ldi r24,lo8(1)
+ 270 0250 8093 0000 		sts tw_if_bsy,r24
+ 271 0254 8091 7300 		lds r24,115
+ 272 0258 8093 0000 		sts tw_sm_sla,r24
+ 273 025c 85EC      		ldi r24,lo8(-59)
+ 274 025e 8093 7400 		sts 116,r24
+ 275 0262 1092 0000 		sts (tw_sr_idx)+1,__zero_reg__
+ 276 0266 1092 0000 		sts tw_sr_idx,__zero_reg__
+ 277 026a 0895      		ret
+ 278               	.L12:
+ 279 026c 2091 0000 		lds r18,tw_sr_idx
+ 280 0270 3091 0000 		lds r19,(tw_sr_idx)+1
+ 281 0274 8091 0000 		lds r24,tw_sr_siz
+ 282 0278 9091 0000 		lds r25,(tw_sr_siz)+1
+ 283 027c 2817      		cp r18,r24
+ 284 027e 3907      		cpc r19,r25
+ 285 0280 00F4      		brsh .L40
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 6
+
+
+ 286 0282 8091 0000 		lds r24,tw_sr_idx
+ 287 0286 9091 0000 		lds r25,(tw_sr_idx)+1
+ 288 028a 2091 7300 		lds r18,115
+ 289 028e E091 0000 		lds r30,tw_sr_buf
+ 290 0292 F091 0000 		lds r31,(tw_sr_buf)+1
+ 291 0296 E80F      		add r30,r24
+ 292 0298 F91F      		adc r31,r25
+ 293 029a 2083      		st Z,r18
+ 294 029c 8091 0000 		lds r24,tw_sr_idx
+ 295 02a0 9091 0000 		lds r25,(tw_sr_idx)+1
+ 296 02a4 0196      		adiw r24,1
+ 297 02a6 9093 0000 		sts (tw_sr_idx)+1,r25
+ 298 02aa 8093 0000 		sts tw_sr_idx,r24
+ 299 02ae 00C0      		rjmp .L41
+ 300               	.L40:
+ 301 02b0 1092 0000 		sts (tw_sr_siz)+1,__zero_reg__
+ 302 02b4 1092 0000 		sts tw_sr_siz,__zero_reg__
+ 303               	.L41:
+ 304 02b8 8091 0000 		lds r24,tw_sr_siz
+ 305 02bc 9091 0000 		lds r25,(tw_sr_siz)+1
+ 306 02c0 892B      		or r24,r25
+ 307 02c2 01F0      		breq .+2
+ 308 02c4 00C0      		rjmp .L74
+ 309               	.L13:
+ 310 02c6 8091 0000 		lds r24,tw_mt_len
+ 311 02ca 9091 0000 		lds r25,(tw_mt_len)+1
+ 312 02ce 892B      		or r24,r25
+ 313 02d0 01F4      		brne .L42
+ 314 02d2 8091 0000 		lds r24,tw_mr_siz
+ 315 02d6 9091 0000 		lds r25,(tw_mr_siz)+1
+ 316 02da 892B      		or r24,r25
+ 317 02dc 01F0      		breq .L43
+ 318               	.L42:
+ 319 02de 8091 7400 		lds r24,116
+ 320 02e2 8066      		ori r24,lo8(96)
+ 321 02e4 00C0      		rjmp .L70
+ 322               	.L43:
+ 323 02e6 8091 7400 		lds r24,116
+ 324 02ea 8064      		ori r24,lo8(64)
+ 325 02ec 00C0      		rjmp .L70
+ 326               	.L14:
+ 327 02ee E091 0000 		lds r30,tw_sr_que
+ 328 02f2 F091 0000 		lds r31,(tw_sr_que)+1
+ 329 02f6 3097      		sbiw r30,0
+ 330 02f8 01F0      		breq .L44
+ 331 02fa 8091 0000 		lds r24,tw_sm_err
+ 332 02fe 8823      		tst r24
+ 333 0300 01F0      		breq .L45
+ 334               	.L44:
+ 335 0302 8091 0000 		lds r24,tw_mt_len
+ 336 0306 9091 0000 		lds r25,(tw_mt_len)+1
+ 337 030a 892B      		or r24,r25
+ 338 030c 01F4      		brne .L46
+ 339 030e 8091 0000 		lds r24,tw_mr_siz
+ 340 0312 9091 0000 		lds r25,(tw_mr_siz)+1
+ 341 0316 892B      		or r24,r25
+ 342 0318 01F0      		breq .L47
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 7
+
+
+ 343               	.L46:
+ 344 031a 85EA      		ldi r24,lo8(-91)
+ 345 031c 00C0      		rjmp .L67
+ 346               	.L47:
+ 347 031e 85E8      		ldi r24,lo8(-123)
+ 348 0320 00C0      		rjmp .L67
+ 349               	.L45:
+ 350 0322 8FEF      		ldi r24,hi8(-1)
+ 351 0324 EF3F      		cpi r30,lo8(-1)
+ 352 0326 F807      		cpc r31,r24
+ 353 0328 01F0      		breq .L49
+ 354 032a 8481      		ldd r24,Z+4
+ 355 032c 9581      		ldd r25,Z+5
+ 356 032e 0196      		adiw r24,1
+ 357 0330 9583      		std Z+5,r25
+ 358 0332 8483      		std Z+4,r24
+ 359               	.L49:
+ 360 0334 1092 0000 		sts (tw_sr_siz)+1,__zero_reg__
+ 361 0338 1092 0000 		sts tw_sr_siz,__zero_reg__
+ 362 033c 5E77      		andi r21,lo8(126)
+ 363               	.L68:
+ 364 033e 5093 7400 		sts 116,r21
+ 365 0342 0895      		ret
+ 366               	.L15:
+ 367 0344 81E0      		ldi r24,lo8(1)
+ 368 0346 8093 0000 		sts tw_if_bsy,r24
+ 369 034a 1092 0000 		sts (tw_st_idx)+1,__zero_reg__
+ 370 034e 1092 0000 		sts tw_st_idx,__zero_reg__
+ 371               	.L16:
+ 372 0352 2091 0000 		lds r18,tw_st_idx
+ 373 0356 3091 0000 		lds r19,(tw_st_idx)+1
+ 374 035a 8091 0000 		lds r24,tw_st_len
+ 375 035e 9091 0000 		lds r25,(tw_st_len)+1
+ 376 0362 2817      		cp r18,r24
+ 377 0364 3907      		cpc r19,r25
+ 378 0366 00F4      		brsh .L50
+ 379 0368 8091 0000 		lds r24,tw_st_idx
+ 380 036c 9091 0000 		lds r25,(tw_st_idx)+1
+ 381 0370 E091 0000 		lds r30,tw_st_buf
+ 382 0374 F091 0000 		lds r31,(tw_st_buf)+1
+ 383 0378 E80F      		add r30,r24
+ 384 037a F91F      		adc r31,r25
+ 385 037c 8081      		ld r24,Z
+ 386 037e 8093 7300 		sts 115,r24
+ 387 0382 8091 0000 		lds r24,tw_st_idx
+ 388 0386 9091 0000 		lds r25,(tw_st_idx)+1
+ 389 038a 0196      		adiw r24,1
+ 390 038c 9093 0000 		sts (tw_st_idx)+1,r25
+ 391 0390 8093 0000 		sts tw_st_idx,r24
+ 392 0394 2091 0000 		lds r18,tw_st_idx
+ 393 0398 3091 0000 		lds r19,(tw_st_idx)+1
+ 394 039c 8091 0000 		lds r24,tw_st_len
+ 395 03a0 9091 0000 		lds r25,(tw_st_len)+1
+ 396 03a4 2817      		cp r18,r24
+ 397 03a6 3907      		cpc r19,r25
+ 398 03a8 00F4      		brsh .L51
+ 399               	.L74:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 8
+
+
+ 400 03aa 85EC      		ldi r24,lo8(-59)
+ 401 03ac 00C0      		rjmp .L70
+ 402               	.L51:
+ 403 03ae 1092 0000 		sts (tw_st_len)+1,__zero_reg__
+ 404 03b2 1092 0000 		sts tw_st_len,__zero_reg__
+ 405 03b6 00C0      		rjmp .L73
+ 406               	.L50:
+ 407 03b8 1092 7300 		sts 115,__zero_reg__
+ 408               	.L73:
+ 409 03bc 85E8      		ldi r24,lo8(-123)
+ 410               	.L70:
+ 411 03be 8093 7400 		sts 116,r24
+ 412 03c2 0895      		ret
+ 413               	.L17:
+ 414 03c4 E091 0000 		lds r30,tw_st_que
+ 415 03c8 F091 0000 		lds r31,(tw_st_que)+1
+ 416 03cc 3097      		sbiw r30,0
+ 417 03ce 01F4      		brne .L52
+ 418 03d0 8FEF      		ldi r24,lo8(-1)
+ 419 03d2 9FEF      		ldi r25,hi8(-1)
+ 420 03d4 9093 0000 		sts (tw_st_que)+1,r25
+ 421 03d8 8093 0000 		sts tw_st_que,r24
+ 422 03dc 00C0      		rjmp .L53
+ 423               	.L52:
+ 424 03de 8FEF      		ldi r24,hi8(-1)
+ 425 03e0 EF3F      		cpi r30,lo8(-1)
+ 426 03e2 F807      		cpc r31,r24
+ 427 03e4 01F0      		breq .L53
+ 428 03e6 8481      		ldd r24,Z+4
+ 429 03e8 9581      		ldd r25,Z+5
+ 430 03ea 0196      		adiw r24,1
+ 431 03ec 9583      		std Z+5,r25
+ 432 03ee 8483      		std Z+4,r24
+ 433               	.L53:
+ 434 03f0 8091 0000 		lds r24,tw_mt_len
+ 435 03f4 9091 0000 		lds r25,(tw_mt_len)+1
+ 436 03f8 892B      		or r24,r25
+ 437 03fa 01F4      		brne .L54
+ 438 03fc 8091 0000 		lds r24,tw_mr_siz
+ 439 0400 9091 0000 		lds r25,(tw_mr_siz)+1
+ 440 0404 892B      		or r24,r25
+ 441 0406 01F0      		breq .L55
+ 442               	.L54:
+ 443 0408 85EE      		ldi r24,lo8(-27)
+ 444 040a 00C0      		rjmp .L67
+ 445               	.L55:
+ 446 040c 85EC      		ldi r24,lo8(-59)
+ 447               	.L67:
+ 448 040e 8093 7400 		sts 116,r24
+ 449 0412 1092 0000 		sts tw_if_bsy,__zero_reg__
+ 450 0416 0895      		ret
+ 451               	.L3:
+ 452 0418 8091 7400 		lds r24,116
+ 453 041c 8061      		ori r24,lo8(16)
+ 454 041e 8093 7400 		sts 116,r24
+ 455 0422 1092 0000 		sts tw_if_bsy,__zero_reg__
+ 456 0426 82E0      		ldi r24,lo8(2)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 9
+
+
+ 457 0428 8093 0000 		sts tw_mm_err,r24
+ 458 042c 8093 0000 		sts tw_sm_err,r24
+ 459 0430 E091 0000 		lds r30,tw_sr_que
+ 460 0434 F091 0000 		lds r31,(tw_sr_que)+1
+ 461 0438 3097      		sbiw r30,0
+ 462 043a 01F4      		brne .L57
+ 463 043c 8FEF      		ldi r24,lo8(-1)
+ 464 043e 9FEF      		ldi r25,hi8(-1)
+ 465 0440 9093 0000 		sts (tw_sr_que)+1,r25
+ 466 0444 8093 0000 		sts tw_sr_que,r24
+ 467 0448 00C0      		rjmp .L58
+ 468               	.L57:
+ 469 044a 8FEF      		ldi r24,hi8(-1)
+ 470 044c EF3F      		cpi r30,lo8(-1)
+ 471 044e F807      		cpc r31,r24
+ 472 0450 01F0      		breq .L58
+ 473 0452 8481      		ldd r24,Z+4
+ 474 0454 9581      		ldd r25,Z+5
+ 475 0456 0196      		adiw r24,1
+ 476 0458 9583      		std Z+5,r25
+ 477 045a 8483      		std Z+4,r24
+ 478               	.L58:
+ 479 045c E091 0000 		lds r30,tw_st_que
+ 480 0460 F091 0000 		lds r31,(tw_st_que)+1
+ 481 0464 3097      		sbiw r30,0
+ 482 0466 01F4      		brne .L59
+ 483 0468 8FEF      		ldi r24,lo8(-1)
+ 484 046a 9FEF      		ldi r25,hi8(-1)
+ 485 046c 9093 0000 		sts (tw_st_que)+1,r25
+ 486 0470 8093 0000 		sts tw_st_que,r24
+ 487 0474 00C0      		rjmp .L60
+ 488               	.L59:
+ 489 0476 8FEF      		ldi r24,hi8(-1)
+ 490 0478 EF3F      		cpi r30,lo8(-1)
+ 491 047a F807      		cpc r31,r24
+ 492 047c 01F0      		breq .L60
+ 493 047e 8481      		ldd r24,Z+4
+ 494 0480 9581      		ldd r25,Z+5
+ 495 0482 0196      		adiw r24,1
+ 496 0484 9583      		std Z+5,r25
+ 497 0486 8483      		std Z+4,r24
+ 498               	.L60:
+ 499 0488 E091 0000 		lds r30,tw_mm_que
+ 500 048c F091 0000 		lds r31,(tw_mm_que)+1
+ 501 0490 3097      		sbiw r30,0
+ 502 0492 01F4      		brne .L61
+ 503 0494 8FEF      		ldi r24,lo8(-1)
+ 504 0496 9FEF      		ldi r25,hi8(-1)
+ 505 0498 9093 0000 		sts (tw_mm_que)+1,r25
+ 506 049c 8093 0000 		sts tw_mm_que,r24
+ 507 04a0 0895      		ret
+ 508               	.L61:
+ 509 04a2 8FEF      		ldi r24,hi8(-1)
+ 510 04a4 EF3F      		cpi r30,lo8(-1)
+ 511 04a6 F807      		cpc r31,r24
+ 512 04a8 01F0      		breq .L62
+ 513 04aa 8481      		ldd r24,Z+4
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 10
+
+
+ 514 04ac 9581      		ldd r25,Z+5
+ 515 04ae 0196      		adiw r24,1
+ 516 04b0 9583      		std Z+5,r25
+ 517 04b2 8483      		std Z+4,r24
+ 518               	.L62:
+ 519 04b4 0895      		ret
+ 520               		.size	TwInterrupt, .-TwInterrupt
+ 521               	.global	TwMasterError
+ 522               		.type	TwMasterError, @function
+ 523               	TwMasterError:
+ 524               	/* prologue: function */
+ 525               	/* frame size = 0 */
+ 526 04b6 8091 0000 		lds r24,tw_mm_error
+ 527 04ba 1092 0000 		sts tw_mm_error,__zero_reg__
+ 528 04be 90E0      		ldi r25,lo8(0)
+ 529               	/* epilogue start */
+ 530 04c0 0895      		ret
+ 531               		.size	TwMasterError, .-TwMasterError
+ 532               	.global	TwSlaveError
+ 533               		.type	TwSlaveError, @function
+ 534               	TwSlaveError:
+ 535               	/* prologue: function */
+ 536               	/* frame size = 0 */
+ 537 04c2 8091 0000 		lds r24,tw_sm_error
+ 538 04c6 1092 0000 		sts tw_sm_error,__zero_reg__
+ 539 04ca 90E0      		ldi r25,lo8(0)
+ 540               	/* epilogue start */
+ 541 04cc 0895      		ret
+ 542               		.size	TwSlaveError, .-TwSlaveError
+ 543               	.global	TwIOCtl
+ 544               		.type	TwIOCtl, @function
+ 545               	TwIOCtl:
+ 546 04ce AF92      		push r10
+ 547 04d0 BF92      		push r11
+ 548 04d2 CF92      		push r12
+ 549 04d4 DF92      		push r13
+ 550 04d6 EF92      		push r14
+ 551 04d8 FF92      		push r15
+ 552 04da 0F93      		push r16
+ 553 04dc 1F93      		push r17
+ 554 04de CF93      		push r28
+ 555 04e0 DF93      		push r29
+ 556               	/* prologue: function */
+ 557               	/* frame size = 0 */
+ 558 04e2 EB01      		movw r28,r22
+ 559 04e4 24E0      		ldi r18,hi8(1027)
+ 560 04e6 8330      		cpi r24,lo8(1027)
+ 561 04e8 9207      		cpc r25,r18
+ 562 04ea 01F0      		breq .L92
+ 563 04ec 24E0      		ldi r18,hi8(1028)
+ 564 04ee 8430      		cpi r24,lo8(1028)
+ 565 04f0 9207      		cpc r25,r18
+ 566 04f2 04F4      		brge .L95
+ 567 04f4 24E0      		ldi r18,hi8(1025)
+ 568 04f6 8130      		cpi r24,lo8(1025)
+ 569 04f8 9207      		cpc r25,r18
+ 570 04fa 01F0      		breq .L90
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 11
+
+
+ 571 04fc 8250      		subi r24,lo8(1026)
+ 572 04fe 9440      		sbci r25,hi8(1026)
+ 573 0500 01F0      		breq .+2
+ 574 0502 00C0      		rjmp .L89
+ 575 0504 00C0      		rjmp .L108
+ 576               	.L95:
+ 577 0506 24E0      		ldi r18,hi8(1028)
+ 578 0508 8430      		cpi r24,lo8(1028)
+ 579 050a 9207      		cpc r25,r18
+ 580 050c 01F0      		breq .L93
+ 581 050e 8950      		subi r24,lo8(-(-1033))
+ 582 0510 9440      		sbci r25,hi8(-(-1033))
+ 583 0512 0297      		sbiw r24,2
+ 584 0514 00F0      		brlo .+2
+ 585 0516 00C0      		rjmp .L89
+ 586 0518 00C0      		rjmp .L107
+ 587               	.L92:
+ 588 051a 8881      		ld r24,Y
+ 589 051c 880F      		lsl r24
+ 590 051e 8160      		ori r24,lo8(1)
+ 591 0520 8093 7200 		sts 114,r24
+ 592               	.L107:
+ 593 0524 20E0      		ldi r18,lo8(0)
+ 594 0526 30E0      		ldi r19,hi8(0)
+ 595 0528 00C0      		rjmp .L96
+ 596               	.L93:
+ 597 052a 8091 7200 		lds r24,114
+ 598 052e 8883      		st Y,r24
+ 599 0530 00C0      		rjmp .L107
+ 600               	.L90:
+ 601 0532 0E94 0000 		call NutGetCpuClock
+ 602 0536 660F      		lsl r22
+ 603 0538 771F      		rol r23
+ 604 053a 881F      		rol r24
+ 605 053c 991F      		rol r25
+ 606 053e 2881      		ld r18,Y
+ 607 0540 3981      		ldd r19,Y+1
+ 608 0542 4A81      		ldd r20,Y+2
+ 609 0544 5B81      		ldd r21,Y+3
+ 610 0546 0E94 0000 		call __udivmodsi4
+ 611 054a 2F5F      		subi r18,lo8(-(1))
+ 612 054c 3F4F      		sbci r19,hi8(-(1))
+ 613 054e 4F4F      		sbci r20,hlo8(-(1))
+ 614 0550 5F4F      		sbci r21,hhi8(-(1))
+ 615 0552 5695      		lsr r21
+ 616 0554 4795      		ror r20
+ 617 0556 3795      		ror r19
+ 618 0558 2795      		ror r18
+ 619 055a 2051      		subi r18,lo8(-(-16))
+ 620 055c 3040      		sbci r19,hi8(-(-16))
+ 621 055e 4040      		sbci r20,hlo8(-(-16))
+ 622 0560 5040      		sbci r21,hhi8(-(-16))
+ 623 0562 7901      		movw r14,r18
+ 624 0564 8A01      		movw r16,r20
+ 625 0566 1695      		lsr r17
+ 626 0568 0795      		ror r16
+ 627 056a F794      		ror r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 12
+
+
+ 628 056c E794      		ror r14
+ 629 056e 8DEF      		ldi r24,lo8(1021)
+ 630 0570 E816      		cp r14,r24
+ 631 0572 83E0      		ldi r24,hi8(1021)
+ 632 0574 F806      		cpc r15,r24
+ 633 0576 80E0      		ldi r24,hlo8(1021)
+ 634 0578 0807      		cpc r16,r24
+ 635 057a 80E0      		ldi r24,hhi8(1021)
+ 636 057c 1807      		cpc r17,r24
+ 637 057e 00F0      		brlo .L97
+ 638 0580 7901      		movw r14,r18
+ 639 0582 8A01      		movw r16,r20
+ 640 0584 45E0      		ldi r20,5
+ 641 0586 1695      	1:	lsr r17
+ 642 0588 0795      		ror r16
+ 643 058a F794      		ror r15
+ 644 058c E794      		ror r14
+ 645 058e 4A95      		dec r20
+ 646 0590 01F4      		brne 1b
+ 647 0592 8091 7100 		lds r24,113
+ 648 0596 8260      		ori r24,lo8(2)
+ 649 0598 00C0      		rjmp .L105
+ 650               	.L97:
+ 651 059a 8091 7100 		lds r24,113
+ 652 059e 8D7F      		andi r24,lo8(-3)
+ 653               	.L105:
+ 654 05a0 8093 7100 		sts 113,r24
+ 655 05a4 2FEF      		ldi r18,lo8(255)
+ 656 05a6 E216      		cp r14,r18
+ 657 05a8 F104      		cpc r15,__zero_reg__
+ 658 05aa 0105      		cpc r16,__zero_reg__
+ 659 05ac 1105      		cpc r17,__zero_reg__
+ 660 05ae 01F0      		breq .L99
+ 661 05b0 00F0      		brlo .L99
+ 662 05b2 32E0      		ldi r19,2
+ 663 05b4 1695      	1:	lsr r17
+ 664 05b6 0795      		ror r16
+ 665 05b8 F794      		ror r15
+ 666 05ba E794      		ror r14
+ 667 05bc 3A95      		dec r19
+ 668 05be 01F4      		brne 1b
+ 669 05c0 8091 7100 		lds r24,113
+ 670 05c4 8160      		ori r24,lo8(1)
+ 671 05c6 00C0      		rjmp .L106
+ 672               	.L99:
+ 673 05c8 8091 7100 		lds r24,113
+ 674 05cc 8E7F      		andi r24,lo8(-2)
+ 675               	.L106:
+ 676 05ce 8093 7100 		sts 113,r24
+ 677 05d2 D801      		movw r26,r16
+ 678 05d4 C701      		movw r24,r14
+ 679 05d6 0A97      		sbiw r24,10
+ 680 05d8 A109      		sbc r26,__zero_reg__
+ 681 05da B109      		sbc r27,__zero_reg__
+ 682 05dc 863F      		cpi r24,lo8(246)
+ 683 05de 9105      		cpc r25,__zero_reg__
+ 684 05e0 A105      		cpc r26,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 13
+
+
+ 685 05e2 B105      		cpc r27,__zero_reg__
+ 686 05e4 00F4      		brsh .L89
+ 687 05e6 E092 7000 		sts 112,r14
+ 688 05ea 00C0      		rjmp .L107
+ 689               	.L108:
+ 690 05ec 8091 7100 		lds r24,113
+ 691 05f0 80FF      		sbrs r24,0
+ 692 05f2 00C0      		rjmp .L101
+ 693 05f4 28E0      		ldi r18,lo8(8)
+ 694 05f6 A22E      		mov r10,r18
+ 695 05f8 B12C      		mov r11,__zero_reg__
+ 696 05fa C12C      		mov r12,__zero_reg__
+ 697 05fc D12C      		mov r13,__zero_reg__
+ 698 05fe 00C0      		rjmp .L102
+ 699               	.L101:
+ 700 0600 92E0      		ldi r25,lo8(2)
+ 701 0602 A92E      		mov r10,r25
+ 702 0604 B12C      		mov r11,__zero_reg__
+ 703 0606 C12C      		mov r12,__zero_reg__
+ 704 0608 D12C      		mov r13,__zero_reg__
+ 705               	.L102:
+ 706 060a 8091 7100 		lds r24,113
+ 707 060e 81FF      		sbrs r24,1
+ 708 0610 00C0      		rjmp .L103
+ 709 0612 84E0      		ldi r24,4
+ 710 0614 AA0C      	1:	lsl r10
+ 711 0616 BB1C      		rol r11
+ 712 0618 CC1C      		rol r12
+ 713 061a DD1C      		rol r13
+ 714 061c 8A95      		dec r24
+ 715 061e 01F4      		brne 1b
+ 716               	.L103:
+ 717 0620 0E94 0000 		call NutGetCpuClock
+ 718 0624 7B01      		movw r14,r22
+ 719 0626 8C01      		movw r16,r24
+ 720 0628 2091 7000 		lds r18,112
+ 721 062c 30E0      		ldi r19,lo8(0)
+ 722 062e 40E0      		ldi r20,lo8(0)
+ 723 0630 50E0      		ldi r21,hi8(0)
+ 724 0632 C601      		movw r24,r12
+ 725 0634 B501      		movw r22,r10
+ 726 0636 0E94 0000 		call __mulsi3
+ 727 063a 9B01      		movw r18,r22
+ 728 063c AC01      		movw r20,r24
+ 729 063e 205F      		subi r18,lo8(-(16))
+ 730 0640 3F4F      		sbci r19,hi8(-(16))
+ 731 0642 4F4F      		sbci r20,hlo8(-(16))
+ 732 0644 5F4F      		sbci r21,hhi8(-(16))
+ 733 0646 C801      		movw r24,r16
+ 734 0648 B701      		movw r22,r14
+ 735 064a 0E94 0000 		call __udivmodsi4
+ 736 064e 2883      		st Y,r18
+ 737 0650 3983      		std Y+1,r19
+ 738 0652 4A83      		std Y+2,r20
+ 739 0654 5B83      		std Y+3,r21
+ 740 0656 00C0      		rjmp .L107
+ 741               	.L89:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 14
+
+
+ 742 0658 2FEF      		ldi r18,lo8(-1)
+ 743 065a 3FEF      		ldi r19,hi8(-1)
+ 744               	.L96:
+ 745 065c C901      		movw r24,r18
+ 746               	/* epilogue start */
+ 747 065e DF91      		pop r29
+ 748 0660 CF91      		pop r28
+ 749 0662 1F91      		pop r17
+ 750 0664 0F91      		pop r16
+ 751 0666 FF90      		pop r15
+ 752 0668 EF90      		pop r14
+ 753 066a DF90      		pop r13
+ 754 066c CF90      		pop r12
+ 755 066e BF90      		pop r11
+ 756 0670 AF90      		pop r10
+ 757 0672 0895      		ret
+ 758               		.size	TwIOCtl, .-TwIOCtl
+ 759               	.global	TwInit
+ 760               		.type	TwInit, @function
+ 761               	TwInit:
+ 762 0674 1F93      		push r17
+ 763 0676 DF93      		push r29
+ 764 0678 CF93      		push r28
+ 765 067a 00D0      		rcall .
+ 766 067c 00D0      		rcall .
+ 767 067e CDB7      		in r28,__SP_L__
+ 768 0680 DEB7      		in r29,__SP_H__
+ 769               	/* prologue: function */
+ 770               	/* frame size = 4 */
+ 771 0682 182F      		mov r17,r24
+ 772 0684 80E6      		ldi r24,lo8(2400)
+ 773 0686 99E0      		ldi r25,hi8(2400)
+ 774 0688 A0E0      		ldi r26,hlo8(2400)
+ 775 068a B0E0      		ldi r27,hhi8(2400)
+ 776 068c 8983      		std Y+1,r24
+ 777 068e 9A83      		std Y+2,r25
+ 778 0690 AB83      		std Y+3,r26
+ 779 0692 BC83      		std Y+4,r27
+ 780 0694 80E0      		ldi r24,lo8(sig_2WIRE_SERIAL)
+ 781 0696 90E0      		ldi r25,hi8(sig_2WIRE_SERIAL)
+ 782 0698 60E0      		ldi r22,lo8(gs(TwInterrupt))
+ 783 069a 70E0      		ldi r23,hi8(gs(TwInterrupt))
+ 784 069c 40E0      		ldi r20,lo8(0)
+ 785 069e 50E0      		ldi r21,hi8(0)
+ 786 06a0 0E94 0000 		call NutRegisterIrqHandler
+ 787 06a4 892B      		or r24,r25
+ 788 06a6 01F0      		breq .L110
+ 789 06a8 2FEF      		ldi r18,lo8(-1)
+ 790 06aa 3FEF      		ldi r19,hi8(-1)
+ 791 06ac 00C0      		rjmp .L111
+ 792               	.L110:
+ 793 06ae 110F      		lsl r17
+ 794 06b0 1160      		ori r17,lo8(1)
+ 795 06b2 1093 7200 		sts 114,r17
+ 796 06b6 81E0      		ldi r24,lo8(1025)
+ 797 06b8 94E0      		ldi r25,hi8(1025)
+ 798 06ba BE01      		movw r22,r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 15
+
+
+ 799 06bc 6F5F      		subi r22,lo8(-(1))
+ 800 06be 7F4F      		sbci r23,hi8(-(1))
+ 801 06c0 0E94 0000 		call TwIOCtl
+ 802 06c4 80E8      		ldi r24,lo8(-128)
+ 803 06c6 8093 7400 		sts 116,r24
+ 804 06ca 85E0      		ldi r24,lo8(5)
+ 805 06cc 8093 7400 		sts 116,r24
+ 806 06d0 80E0      		ldi r24,lo8(tw_mm_mutex)
+ 807 06d2 90E0      		ldi r25,hi8(tw_mm_mutex)
+ 808 06d4 0E94 0000 		call NutEventPost
+ 809 06d8 20E0      		ldi r18,lo8(0)
+ 810 06da 30E0      		ldi r19,hi8(0)
+ 811               	.L111:
+ 812 06dc C901      		movw r24,r18
+ 813               	/* epilogue start */
+ 814 06de 0F90      		pop __tmp_reg__
+ 815 06e0 0F90      		pop __tmp_reg__
+ 816 06e2 0F90      		pop __tmp_reg__
+ 817 06e4 0F90      		pop __tmp_reg__
+ 818 06e6 CF91      		pop r28
+ 819 06e8 DF91      		pop r29
+ 820 06ea 1F91      		pop r17
+ 821 06ec 0895      		ret
+ 822               		.size	TwInit, .-TwInit
+ 823               	.global	TwSlaveRespond
+ 824               		.type	TwSlaveRespond, @function
+ 825               	TwSlaveRespond:
+ 826               	/* prologue: function */
+ 827               	/* frame size = 0 */
+ 828 06ee 9093 0000 		sts (tw_st_buf)+1,r25
+ 829 06f2 8093 0000 		sts tw_st_buf,r24
+ 830 06f6 7093 0000 		sts (tw_st_len)+1,r23
+ 831 06fa 6093 0000 		sts tw_st_len,r22
+ 832 06fe 672B      		or r22,r23
+ 833 0700 01F4      		brne .+2
+ 834 0702 00C0      		rjmp .L114
+ 835               	/* #APP */
+ 836               	 ;  742 "../../nut/arch/avr/dev/twif.c" 1
+ 837 0704 0FB6      		in  __tmp_reg__, __SREG__
+ 838 0706 F894      		cli
+ 839 0708 0F92      		push __tmp_reg__
+ 840               		
+ 841               	 ;  0 "" 2
+ 842               	/* #NOAPP */
+ 843 070a 8091 0000 		lds r24,tw_st_que
+ 844 070e 9091 0000 		lds r25,(tw_st_que)+1
+ 845 0712 8F5F      		subi r24,lo8(-1)
+ 846 0714 9F4F      		sbci r25,hi8(-1)
+ 847 0716 01F4      		brne .L115
+ 848 0718 1092 0000 		sts (tw_st_que)+1,__zero_reg__
+ 849 071c 1092 0000 		sts tw_st_que,__zero_reg__
+ 850               	.L115:
+ 851 0720 85EC      		ldi r24,lo8(-59)
+ 852 0722 8093 7400 		sts 116,r24
+ 853               	/* #APP */
+ 854               	 ;  752 "../../nut/arch/avr/dev/twif.c" 1
+ 855 0726 0F90      		pop __tmp_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 16
+
+
+ 856 0728 0FBE      		out __SREG__, __tmp_reg__
+ 857               		
+ 858               	 ;  0 "" 2
+ 859               	/* #NOAPP */
+ 860 072a 80E0      		ldi r24,lo8(tw_st_que)
+ 861 072c 90E0      		ldi r25,hi8(tw_st_que)
+ 862 072e BA01      		movw r22,r20
+ 863 0730 A901      		movw r20,r18
+ 864 0732 0E94 0000 		call NutEventWait
+ 865 0736 892B      		or r24,r25
+ 866 0738 01F0      		breq .L116
+ 867 073a 81E0      		ldi r24,lo8(1)
+ 868 073c 8093 0000 		sts tw_sm_err,r24
+ 869               	.L116:
+ 870               	/* #APP */
+ 871               	 ;  757 "../../nut/arch/avr/dev/twif.c" 1
+ 872 0740 0FB6      		in  __tmp_reg__, __SREG__
+ 873 0742 F894      		cli
+ 874 0744 0F92      		push __tmp_reg__
+ 875               		
+ 876               	 ;  0 "" 2
+ 877               	/* #NOAPP */
+ 878 0746 1092 0000 		sts (tw_st_len)+1,__zero_reg__
+ 879 074a 1092 0000 		sts tw_st_len,__zero_reg__
+ 880 074e 8091 0000 		lds r24,tw_sm_err
+ 881 0752 8823      		tst r24
+ 882 0754 01F0      		breq .L117
+ 883 0756 8091 0000 		lds r24,tw_sm_err
+ 884 075a 8093 0000 		sts tw_sm_error,r24
+ 885 075e 2FEF      		ldi r18,lo8(-1)
+ 886 0760 3FEF      		ldi r19,hi8(-1)
+ 887 0762 00C0      		rjmp .L118
+ 888               	.L117:
+ 889 0764 2091 0000 		lds r18,tw_st_idx
+ 890 0768 3091 0000 		lds r19,(tw_st_idx)+1
+ 891               	.L118:
+ 892               	/* #APP */
+ 893               	 ;  764 "../../nut/arch/avr/dev/twif.c" 1
+ 894 076c 0F90      		pop __tmp_reg__
+ 895 076e 0FBE      		out __SREG__, __tmp_reg__
+ 896               		
+ 897               	 ;  0 "" 2
+ 898               	/* #NOAPP */
+ 899 0770 00C0      		rjmp .L119
+ 900               	.L114:
+ 901               	/* #APP */
+ 902               	 ;  776 "../../nut/arch/avr/dev/twif.c" 1
+ 903 0772 0FB6      		in  __tmp_reg__, __SREG__
+ 904 0774 F894      		cli
+ 905 0776 0F92      		push __tmp_reg__
+ 906               		
+ 907               	 ;  0 "" 2
+ 908               	/* #NOAPP */
+ 909 0778 8091 7400 		lds r24,116
+ 910 077c 8091 7100 		lds r24,113
+ 911 0780 8091 0000 		lds r24,tw_mt_len
+ 912 0784 9091 0000 		lds r25,(tw_mt_len)+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 17
+
+
+ 913 0788 892B      		or r24,r25
+ 914 078a 01F4      		brne .L120
+ 915 078c 8091 0000 		lds r24,tw_mr_siz
+ 916 0790 9091 0000 		lds r25,(tw_mr_siz)+1
+ 917 0794 892B      		or r24,r25
+ 918 0796 01F0      		breq .L121
+ 919               	.L120:
+ 920 0798 85EA      		ldi r24,lo8(-91)
+ 921 079a 00C0      		rjmp .L124
+ 922               	.L121:
+ 923 079c 1092 0000 		sts tw_if_bsy,__zero_reg__
+ 924 07a0 85E8      		ldi r24,lo8(-123)
+ 925               	.L124:
+ 926 07a2 8093 7400 		sts 116,r24
+ 927               	/* #APP */
+ 928               	 ;  789 "../../nut/arch/avr/dev/twif.c" 1
+ 929 07a6 0F90      		pop __tmp_reg__
+ 930 07a8 0FBE      		out __SREG__, __tmp_reg__
+ 931               		
+ 932               	 ;  0 "" 2
+ 933               	/* #NOAPP */
+ 934 07aa 20E0      		ldi r18,lo8(0)
+ 935 07ac 30E0      		ldi r19,hi8(0)
+ 936               	.L119:
+ 937 07ae C901      		movw r24,r18
+ 938               	/* epilogue start */
+ 939 07b0 0895      		ret
+ 940               		.size	TwSlaveRespond, .-TwSlaveRespond
+ 941               	.global	TwSlaveListen
+ 942               		.type	TwSlaveListen, @function
+ 943               	TwSlaveListen:
+ 944 07b2 0F93      		push r16
+ 945 07b4 1F93      		push r17
+ 946 07b6 CF93      		push r28
+ 947 07b8 DF93      		push r29
+ 948               	/* prologue: function */
+ 949               	/* frame size = 0 */
+ 950 07ba EC01      		movw r28,r24
+ 951               	/* #APP */
+ 952               	 ;  662 "../../nut/arch/avr/dev/twif.c" 1
+ 953 07bc 0FB6      		in  __tmp_reg__, __SREG__
+ 954 07be F894      		cli
+ 955 07c0 0F92      		push __tmp_reg__
+ 956               		
+ 957               	 ;  0 "" 2
+ 958               	/* #NOAPP */
+ 959 07c2 1092 0000 		sts tw_sm_err,__zero_reg__
+ 960 07c6 5093 0000 		sts (tw_sr_siz)+1,r21
+ 961 07ca 4093 0000 		sts tw_sr_siz,r20
+ 962 07ce 7093 0000 		sts (tw_sr_buf)+1,r23
+ 963 07d2 6093 0000 		sts tw_sr_buf,r22
+ 964 07d6 8091 0000 		lds r24,tw_if_bsy
+ 965 07da 8823      		tst r24
+ 966 07dc 01F4      		brne .L126
+ 967 07de 8091 7100 		lds r24,113
+ 968 07e2 887F      		andi r24,lo8(-8)
+ 969 07e4 883F      		cpi r24,lo8(-8)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 18
+
+
+ 970 07e6 01F4      		brne .L126
+ 971 07e8 8091 0000 		lds r24,tw_mt_len
+ 972 07ec 9091 0000 		lds r25,(tw_mt_len)+1
+ 973 07f0 892B      		or r24,r25
+ 974 07f2 01F4      		brne .L127
+ 975 07f4 8091 0000 		lds r24,tw_mr_siz
+ 976 07f8 9091 0000 		lds r25,(tw_mr_siz)+1
+ 977 07fc 892B      		or r24,r25
+ 978 07fe 01F0      		breq .L128
+ 979               	.L127:
+ 980 0800 85E6      		ldi r24,lo8(101)
+ 981 0802 00C0      		rjmp .L134
+ 982               	.L128:
+ 983 0804 85E4      		ldi r24,lo8(69)
+ 984               	.L134:
+ 985 0806 8093 7400 		sts 116,r24
+ 986               	.L126:
+ 987 080a 8091 0000 		lds r24,tw_sr_que
+ 988 080e 9091 0000 		lds r25,(tw_sr_que)+1
+ 989 0812 8F5F      		subi r24,lo8(-1)
+ 990 0814 9F4F      		sbci r25,hi8(-1)
+ 991 0816 01F4      		brne .L129
+ 992 0818 1092 0000 		sts (tw_sr_que)+1,__zero_reg__
+ 993 081c 1092 0000 		sts tw_sr_que,__zero_reg__
+ 994               	.L129:
+ 995               	/* #APP */
+ 996               	 ;  689 "../../nut/arch/avr/dev/twif.c" 1
+ 997 0820 0F90      		pop __tmp_reg__
+ 998 0822 0FBE      		out __SREG__, __tmp_reg__
+ 999               		
+ 1000               	 ;  0 "" 2
+ 1001               	/* #NOAPP */
+ 1002 0824 80E0      		ldi r24,lo8(tw_sr_que)
+ 1003 0826 90E0      		ldi r25,hi8(tw_sr_que)
+ 1004 0828 B901      		movw r22,r18
+ 1005 082a A801      		movw r20,r16
+ 1006 082c 0E94 0000 		call NutEventWait
+ 1007 0830 892B      		or r24,r25
+ 1008 0832 01F0      		breq .L130
+ 1009               	/* #APP */
+ 1010               	 ;  693 "../../nut/arch/avr/dev/twif.c" 1
+ 1011 0834 0FB6      		in  __tmp_reg__, __SREG__
+ 1012 0836 F894      		cli
+ 1013 0838 0F92      		push __tmp_reg__
+ 1014               		
+ 1015               	 ;  0 "" 2
+ 1016               	/* #NOAPP */
+ 1017 083a 81E0      		ldi r24,lo8(1)
+ 1018 083c 8093 0000 		sts tw_sm_err,r24
+ 1019 0840 1092 0000 		sts (tw_sr_siz)+1,__zero_reg__
+ 1020 0844 1092 0000 		sts tw_sr_siz,__zero_reg__
+ 1021               	/* #APP */
+ 1022               	 ;  696 "../../nut/arch/avr/dev/twif.c" 1
+ 1023 0848 0F90      		pop __tmp_reg__
+ 1024 084a 0FBE      		out __SREG__, __tmp_reg__
+ 1025               		
+ 1026               	 ;  0 "" 2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 19
+
+
+ 1027               	/* #NOAPP */
+ 1028               	.L130:
+ 1029 084c 8091 0000 		lds r24,tw_sm_err
+ 1030 0850 8823      		tst r24
+ 1031 0852 01F0      		breq .L131
+ 1032 0854 2FEF      		ldi r18,lo8(-1)
+ 1033 0856 3FEF      		ldi r19,hi8(-1)
+ 1034 0858 00C0      		rjmp .L132
+ 1035               	.L131:
+ 1036 085a 2091 0000 		lds r18,tw_sr_idx
+ 1037 085e 3091 0000 		lds r19,(tw_sr_idx)+1
+ 1038 0862 8091 0000 		lds r24,tw_sm_sla
+ 1039 0866 8883      		st Y,r24
+ 1040               	.L132:
+ 1041 0868 C901      		movw r24,r18
+ 1042               	/* epilogue start */
+ 1043 086a DF91      		pop r29
+ 1044 086c CF91      		pop r28
+ 1045 086e 1F91      		pop r17
+ 1046 0870 0F91      		pop r16
+ 1047 0872 0895      		ret
+ 1048               		.size	TwSlaveListen, .-TwSlaveListen
+ 1049               	.global	TwMasterTransact
+ 1050               		.type	TwMasterTransact, @function
+ 1051               	TwMasterTransact:
+ 1052 0874 6F92      		push r6
+ 1053 0876 7F92      		push r7
+ 1054 0878 8F92      		push r8
+ 1055 087a 9F92      		push r9
+ 1056 087c BF92      		push r11
+ 1057 087e CF92      		push r12
+ 1058 0880 DF92      		push r13
+ 1059 0882 EF92      		push r14
+ 1060 0884 FF92      		push r15
+ 1061 0886 0F93      		push r16
+ 1062 0888 1F93      		push r17
+ 1063 088a CF93      		push r28
+ 1064 088c DF93      		push r29
+ 1065               	/* prologue: function */
+ 1066               	/* frame size = 0 */
+ 1067 088e B82E      		mov r11,r24
+ 1068 0890 4B01      		movw r8,r22
+ 1069 0892 EA01      		movw r28,r20
+ 1070 0894 3901      		movw r6,r18
+ 1071 0896 80E0      		ldi r24,lo8(tw_mm_mutex)
+ 1072 0898 90E0      		ldi r25,hi8(tw_mm_mutex)
+ 1073 089a 44EF      		ldi r20,lo8(500)
+ 1074 089c 51E0      		ldi r21,hi8(500)
+ 1075 089e 60E0      		ldi r22,hlo8(500)
+ 1076 08a0 70E0      		ldi r23,hhi8(500)
+ 1077 08a2 0E94 0000 		call NutEventWait
+ 1078 08a6 892B      		or r24,r25
+ 1079 08a8 01F0      		breq .L148
+ 1080 08aa 83E0      		ldi r24,lo8(3)
+ 1081 08ac 8093 0000 		sts tw_mm_err,r24
+ 1082 08b0 80E0      		ldi r24,lo8(tw_mm_mutex)
+ 1083 08b2 90E0      		ldi r25,hi8(tw_mm_mutex)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 20
+
+
+ 1084 08b4 0E94 0000 		call NutEventPost
+ 1085 08b8 00C0      		rjmp .L150
+ 1086               	.L139:
+ 1087 08ba C114      		cp r12,__zero_reg__
+ 1088 08bc D104      		cpc r13,__zero_reg__
+ 1089 08be E104      		cpc r14,__zero_reg__
+ 1090 08c0 F104      		cpc r15,__zero_reg__
+ 1091 08c2 01F4      		brne .L138
+ 1092               	.L150:
+ 1093 08c4 0FEF      		ldi r16,lo8(-1)
+ 1094 08c6 1FEF      		ldi r17,hi8(-1)
+ 1095 08c8 00C0      		rjmp .L137
+ 1096               	.L138:
+ 1097 08ca 61E0      		ldi r22,lo8(1)
+ 1098 08cc 70E0      		ldi r23,hi8(1)
+ 1099 08ce 80E0      		ldi r24,hlo8(1)
+ 1100 08d0 90E0      		ldi r25,hhi8(1)
+ 1101 08d2 0E94 0000 		call NutSleep
+ 1102 08d6 0894      		sec
+ 1103 08d8 C108      		sbc r12,__zero_reg__
+ 1104 08da D108      		sbc r13,__zero_reg__
+ 1105 08dc E108      		sbc r14,__zero_reg__
+ 1106 08de F108      		sbc r15,__zero_reg__
+ 1107               	.L148:
+ 1108 08e0 8091 0000 		lds r24,tw_if_bsy
+ 1109 08e4 8823      		tst r24
+ 1110 08e6 01F4      		brne .L139
+ 1111               	/* #APP */
+ 1112               	 ;  552 "../../nut/arch/avr/dev/twif.c" 1
+ 1113 08e8 0FB6      		in  __tmp_reg__, __SREG__
+ 1114 08ea F894      		cli
+ 1115 08ec 0F92      		push __tmp_reg__
+ 1116               		
+ 1117               	 ;  0 "" 2
+ 1118               	/* #NOAPP */
+ 1119 08ee BB0C      		lsl r11
+ 1120 08f0 B092 0000 		sts tw_mm_sla,r11
+ 1121 08f4 1092 0000 		sts tw_mm_err,__zero_reg__
+ 1122 08f8 D093 0000 		sts (tw_mt_len)+1,r29
+ 1123 08fc C093 0000 		sts tw_mt_len,r28
+ 1124 0900 9092 0000 		sts (tw_mt_buf)+1,r9
+ 1125 0904 8092 0000 		sts tw_mt_buf,r8
+ 1126 0908 1093 0000 		sts (tw_mr_siz)+1,r17
+ 1127 090c 0093 0000 		sts tw_mr_siz,r16
+ 1128 0910 7092 0000 		sts (tw_mr_buf)+1,r7
+ 1129 0914 6092 0000 		sts tw_mr_buf,r6
+ 1130 0918 8091 0000 		lds r24,tw_if_bsy
+ 1131 091c 8823      		tst r24
+ 1132 091e 01F4      		brne .L140
+ 1133 0920 2091 7400 		lds r18,116
+ 1134 0924 8091 7100 		lds r24,113
+ 1135 0928 887F      		andi r24,lo8(-8)
+ 1136 092a 883F      		cpi r24,lo8(-8)
+ 1137 092c 01F4      		brne .L140
+ 1138 092e 8091 0000 		lds r24,tw_sr_siz
+ 1139 0932 9091 0000 		lds r25,(tw_sr_siz)+1
+ 1140 0936 2071      		andi r18,lo8(16)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 21
+
+
+ 1141 0938 892B      		or r24,r25
+ 1142 093a 01F0      		breq .L141
+ 1143 093c 2566      		ori r18,lo8(101)
+ 1144 093e 00C0      		rjmp .L149
+ 1145               	.L141:
+ 1146 0940 2562      		ori r18,lo8(37)
+ 1147               	.L149:
+ 1148 0942 2093 7400 		sts 116,r18
+ 1149               	.L140:
+ 1150 0946 8091 0000 		lds r24,tw_mm_que
+ 1151 094a 9091 0000 		lds r25,(tw_mm_que)+1
+ 1152 094e 8F5F      		subi r24,lo8(-1)
+ 1153 0950 9F4F      		sbci r25,hi8(-1)
+ 1154 0952 01F4      		brne .L142
+ 1155 0954 1092 0000 		sts (tw_mm_que)+1,__zero_reg__
+ 1156 0958 1092 0000 		sts tw_mm_que,__zero_reg__
+ 1157               	.L142:
+ 1158               	/* #APP */
+ 1159               	 ;  586 "../../nut/arch/avr/dev/twif.c" 1
+ 1160 095c 0F90      		pop __tmp_reg__
+ 1161 095e 0FBE      		out __SREG__, __tmp_reg__
+ 1162               		
+ 1163               	 ;  0 "" 2
+ 1164               	/* #NOAPP */
+ 1165 0960 80E0      		ldi r24,lo8(tw_mm_que)
+ 1166 0962 90E0      		ldi r25,hi8(tw_mm_que)
+ 1167 0964 B701      		movw r22,r14
+ 1168 0966 A601      		movw r20,r12
+ 1169 0968 0E94 0000 		call NutEventWait
+ 1170 096c 892B      		or r24,r25
+ 1171 096e 01F0      		breq .L143
+ 1172 0970 81E0      		ldi r24,lo8(1)
+ 1173 0972 8093 0000 		sts tw_mm_error,r24
+ 1174 0976 0FEF      		ldi r16,lo8(-1)
+ 1175 0978 1FEF      		ldi r17,hi8(-1)
+ 1176 097a 00C0      		rjmp .L144
+ 1177               	.L143:
+ 1178               	/* #APP */
+ 1179               	 ;  595 "../../nut/arch/avr/dev/twif.c" 1
+ 1180 097c 0FB6      		in  __tmp_reg__, __SREG__
+ 1181 097e F894      		cli
+ 1182 0980 0F92      		push __tmp_reg__
+ 1183               		
+ 1184               	 ;  0 "" 2
+ 1185               	/* #NOAPP */
+ 1186 0982 8091 0000 		lds r24,tw_mm_err
+ 1187 0986 8823      		tst r24
+ 1188 0988 01F0      		breq .L145
+ 1189 098a 8091 0000 		lds r24,tw_mm_err
+ 1190 098e 8093 0000 		sts tw_mm_error,r24
+ 1191 0992 0FEF      		ldi r16,lo8(-1)
+ 1192 0994 1FEF      		ldi r17,hi8(-1)
+ 1193 0996 00C0      		rjmp .L146
+ 1194               	.L145:
+ 1195 0998 0091 0000 		lds r16,tw_mr_idx
+ 1196 099c 1091 0000 		lds r17,(tw_mr_idx)+1
+ 1197               	.L146:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 22
+
+
+ 1198               	/* #APP */
+ 1199               	 ;  601 "../../nut/arch/avr/dev/twif.c" 1
+ 1200 09a0 0F90      		pop __tmp_reg__
+ 1201 09a2 0FBE      		out __SREG__, __tmp_reg__
+ 1202               		
+ 1203               	 ;  0 "" 2
+ 1204               	/* #NOAPP */
+ 1205               	.L144:
+ 1206 09a4 80E0      		ldi r24,lo8(tw_mm_mutex)
+ 1207 09a6 90E0      		ldi r25,hi8(tw_mm_mutex)
+ 1208 09a8 0E94 0000 		call NutEventPost
+ 1209               	.L137:
+ 1210 09ac C801      		movw r24,r16
+ 1211               	/* epilogue start */
+ 1212 09ae DF91      		pop r29
+ 1213 09b0 CF91      		pop r28
+ 1214 09b2 1F91      		pop r17
+ 1215 09b4 0F91      		pop r16
+ 1216 09b6 FF90      		pop r15
+ 1217 09b8 EF90      		pop r14
+ 1218 09ba DF90      		pop r13
+ 1219 09bc CF90      		pop r12
+ 1220 09be BF90      		pop r11
+ 1221 09c0 9F90      		pop r9
+ 1222 09c2 8F90      		pop r8
+ 1223 09c4 7F90      		pop r7
+ 1224 09c6 6F90      		pop r6
+ 1225 09c8 0895      		ret
+ 1226               		.size	TwMasterTransact, .-TwMasterTransact
+ 1227               		.lcomm tw_if_bsy,1
+ 1228               		.lcomm tw_mm_sla,1
+ 1229               		.lcomm tw_mm_err,1
+ 1230               		.lcomm tw_mm_error,1
+ 1231               		.lcomm tw_mt_buf,2
+ 1232               		.lcomm tw_mt_len,2
+ 1233               		.lcomm tw_mt_idx,2
+ 1234               		.lcomm tw_mr_buf,2
+ 1235               		.lcomm tw_mr_siz,2
+ 1236               		.lcomm tw_mr_idx,2
+ 1237               		.lcomm tw_sm_sla,1
+ 1238               		.lcomm tw_sm_err,1
+ 1239               		.lcomm tw_sm_error,1
+ 1240               		.lcomm tw_st_buf,2
+ 1241               		.lcomm tw_st_len,2
+ 1242               		.lcomm tw_st_idx,2
+ 1243               		.lcomm tw_sr_buf,2
+ 1244               		.lcomm tw_sr_siz,2
+ 1245               		.lcomm tw_sr_idx,2
+ 1246               		.comm tw_mm_mutex,2,1
+ 1247               		.comm tw_mm_que,2,1
+ 1248               		.comm tw_sr_que,2,1
+ 1249               		.comm tw_st_que,2,1
+ 1250               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s 			page 23
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 twif.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:10     .text:00000000 TwInterrupt
+                             .bss:00000000 tw_if_bsy
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1232   .bss:00000008 tw_mt_idx
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1235   .bss:0000000e tw_mr_idx
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1231   .bss:00000006 tw_mt_len
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1227   .bss:00000001 tw_mm_sla
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1230   .bss:00000004 tw_mt_buf
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1234   .bss:0000000c tw_mr_siz
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1228   .bss:00000002 tw_mm_err
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1233   .bss:0000000a tw_mr_buf
+                            *COM*:00000002 tw_mm_que
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1243   .bss:0000001b tw_sr_siz
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1236   .bss:00000010 tw_sm_sla
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1244   .bss:0000001d tw_sr_idx
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1242   .bss:00000019 tw_sr_buf
+                            *COM*:00000002 tw_sr_que
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1237   .bss:00000011 tw_sm_err
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1241   .bss:00000017 tw_st_idx
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1240   .bss:00000015 tw_st_len
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1239   .bss:00000013 tw_st_buf
+                            *COM*:00000002 tw_st_que
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:523    .text:000004b6 TwMasterError
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1229   .bss:00000003 tw_mm_error
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:534    .text:000004c2 TwSlaveError
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1238   .bss:00000012 tw_sm_error
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:545    .text:000004ce TwIOCtl
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:761    .text:00000674 TwInit
+                            *COM*:00000002 tw_mm_mutex
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:825    .text:000006ee TwSlaveRespond
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:943    .text:000007b2 TwSlaveListen
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccyiGczp.s:1051   .text:00000874 TwMasterTransact
+
+UNDEFINED SYMBOLS
+NutGetCpuClock
+__udivmodsi4
+__mulsi3
+sig_2WIRE_SERIAL
+NutRegisterIrqHandler
+NutEventPost
+NutEventWait
+NutSleep
+__do_clear_bss

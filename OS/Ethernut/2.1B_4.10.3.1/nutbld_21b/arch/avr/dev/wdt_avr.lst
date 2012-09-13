@@ -1,0 +1,191 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s 			page 1
+
+
+   1               		.file	"wdt_avr.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	AvrWatchDogStart
+  10               		.type	AvrWatchDogStart, @function
+  11               	AvrWatchDogStart:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14               	/* #APP */
+  15               	 ;  80 "../../nut/arch/avr/dev/wdt_avr.c" 1
+  16 0000 A895      		wdr
+  17               	 ;  0 "" 2
+  18               	/* #NOAPP */
+  19 0002 2DE8      		ldi r18,lo8(1165)
+  20 0004 34E0      		ldi r19,hi8(1165)
+  21 0006 40E0      		ldi r20,hlo8(1165)
+  22 0008 50E0      		ldi r21,hhi8(1165)
+  23 000a 0E94 0000 		call __mulsi3
+  24 000e 4EE0      		ldi r20,14
+  25 0010 9695      	1:	lsr r25
+  26 0012 8795      		ror r24
+  27 0014 7795      		ror r23
+  28 0016 6795      		ror r22
+  29 0018 4A95      		dec r20
+  30 001a 01F4      		brne 1b
+  31 001c 30E0      		ldi r19,lo8(0)
+  32 001e 00C0      		rjmp .L2
+  33               	.L5:
+  34 0020 9695      		lsr r25
+  35 0022 8795      		ror r24
+  36 0024 7795      		ror r23
+  37 0026 6795      		ror r22
+  38 0028 322F      		mov r19,r18
+  39               	.L2:
+  40 002a 3730      		cpi r19,lo8(7)
+  41 002c 00F4      		brsh .L7
+  42               	.L3:
+  43 002e 232F      		mov r18,r19
+  44 0030 2F5F      		subi r18,lo8(-(1))
+  45 0032 6115      		cp r22,__zero_reg__
+  46 0034 7105      		cpc r23,__zero_reg__
+  47 0036 8105      		cpc r24,__zero_reg__
+  48 0038 9105      		cpc r25,__zero_reg__
+  49 003a 01F4      		brne .L5
+  50               	.L7:
+  51 003c 3093 0000 		sts wdt_div,r19
+  52 0040 232F      		mov r18,r19
+  53 0042 2770      		andi r18,lo8(7)
+  54 0044 2860      		ori r18,lo8(8)
+  55 0046 88E1      		ldi r24,lo8(24)
+  56 0048 90E0      		ldi r25,hi8(24)
+  57               	/* #APP */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s 			page 2
+
+
+  58               	 ;  86 "../../nut/arch/avr/dev/wdt_avr.c" 1
+  59 004a 0FB6      		in __tmp_reg__,__SREG__
+  60 004c F894      		cli
+  61 004e A895      		wdr
+  62 0050 81BD      		out 33,r24
+  63 0052 0FBE      		out __SREG__,__tmp_reg__
+  64 0054 21BD      		out 33,r18
+  65               	 ;  0 "" 2
+  66               	/* #NOAPP */
+  67 0056 81E0      		ldi r24,lo8(1)
+  68 0058 8093 0000 		sts nested,r24
+  69 005c 60E0      		ldi r22,lo8(16384)
+  70 005e 70E4      		ldi r23,hi8(16384)
+  71 0060 80E0      		ldi r24,hlo8(16384)
+  72 0062 90E0      		ldi r25,hhi8(16384)
+  73 0064 00C0      		rjmp 2f
+  74 0066 660F      	1:	lsl r22
+  75 0068 771F      		rol r23
+  76 006a 881F      		rol r24
+  77 006c 991F      		rol r25
+  78 006e 3A95      	2:	dec r19
+  79 0070 02F4      		brpl 1b
+  80 0072 2DE8      		ldi r18,lo8(1165)
+  81 0074 34E0      		ldi r19,hi8(1165)
+  82 0076 40E0      		ldi r20,hlo8(1165)
+  83 0078 50E0      		ldi r21,hhi8(1165)
+  84 007a 0E94 0000 		call __udivmodsi4
+  85 007e CA01      		movw r24,r20
+  86 0080 B901      		movw r22,r18
+  87               	/* epilogue start */
+  88 0082 0895      		ret
+  89               		.size	AvrWatchDogStart, .-AvrWatchDogStart
+  90               	.global	AvrWatchDogRestart
+  91               		.type	AvrWatchDogRestart, @function
+  92               	AvrWatchDogRestart:
+  93               	/* prologue: function */
+  94               	/* frame size = 0 */
+  95               	/* #APP */
+  96               	 ;  101 "../../nut/arch/avr/dev/wdt_avr.c" 1
+  97 0084 A895      		wdr
+  98               	 ;  0 "" 2
+  99               	/* epilogue start */
+ 100               	/* #NOAPP */
+ 101 0086 0895      		ret
+ 102               		.size	AvrWatchDogRestart, .-AvrWatchDogRestart
+ 103               	.global	AvrWatchDogDisable
+ 104               		.type	AvrWatchDogDisable, @function
+ 105               	AvrWatchDogDisable:
+ 106               	/* prologue: function */
+ 107               	/* frame size = 0 */
+ 108 0088 8091 0000 		lds r24,nested
+ 109 008c 8823      		tst r24
+ 110 008e 01F0      		breq .L11
+ 111 0090 8F5F      		subi r24,lo8(-(1))
+ 112 0092 8093 0000 		sts nested,r24
+ 113               	.L11:
+ 114 0096 88E1      		ldi r24,lo8(24)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s 			page 3
+
+
+ 115               	/* #APP */
+ 116               	 ;  115 "../../nut/arch/avr/dev/wdt_avr.c" 1
+ 117 0098 0FB6      		in __tmp_reg__, __SREG__
+ 118 009a F894      		cli
+ 119 009c 81BD      		out 33, r24
+ 120 009e 11BC      		out 33, __zero_reg__
+ 121 00a0 0FBE      		out __SREG__,__tmp_reg__
+ 122               		
+ 123               	 ;  0 "" 2
+ 124               	/* epilogue start */
+ 125               	/* #NOAPP */
+ 126 00a2 0895      		ret
+ 127               		.size	AvrWatchDogDisable, .-AvrWatchDogDisable
+ 128               	.global	AvrWatchDogEnable
+ 129               		.type	AvrWatchDogEnable, @function
+ 130               	AvrWatchDogEnable:
+ 131               	/* prologue: function */
+ 132               	/* frame size = 0 */
+ 133 00a4 8091 0000 		lds r24,nested
+ 134 00a8 8230      		cpi r24,lo8(2)
+ 135 00aa 00F0      		brlo .L15
+ 136 00ac 8150      		subi r24,lo8(-(-1))
+ 137 00ae 8093 0000 		sts nested,r24
+ 138 00b2 8130      		cpi r24,lo8(1)
+ 139 00b4 01F4      		brne .L15
+ 140 00b6 2091 0000 		lds r18,wdt_div
+ 141 00ba 2770      		andi r18,lo8(7)
+ 142 00bc 2860      		ori r18,lo8(8)
+ 143 00be 88E1      		ldi r24,lo8(24)
+ 144 00c0 90E0      		ldi r25,hi8(24)
+ 145               	/* #APP */
+ 146               	 ;  127 "../../nut/arch/avr/dev/wdt_avr.c" 1
+ 147 00c2 0FB6      		in __tmp_reg__,__SREG__
+ 148 00c4 F894      		cli
+ 149 00c6 A895      		wdr
+ 150 00c8 81BD      		out 33,r24
+ 151 00ca 0FBE      		out __SREG__,__tmp_reg__
+ 152 00cc 21BD      		out 33,r18
+ 153               	 ;  0 "" 2
+ 154               	/* #NOAPP */
+ 155               	.L15:
+ 156 00ce 0895      		ret
+ 157               		.size	AvrWatchDogEnable, .-AvrWatchDogEnable
+ 158               		.lcomm nested,1
+ 159               		.lcomm wdt_div,1
+ 160               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 wdt_avr.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s:11     .text:00000000 AvrWatchDogStart
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s:158    .bss:00000001 wdt_div
+                             .bss:00000000 nested
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s:92     .text:00000084 AvrWatchDogRestart
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s:105    .text:00000088 AvrWatchDogDisable
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccLIv62j.s:130    .text:000000a4 AvrWatchDogEnable
+
+UNDEFINED SYMBOLS
+__mulsi3
+__udivmodsi4
+__do_clear_bss

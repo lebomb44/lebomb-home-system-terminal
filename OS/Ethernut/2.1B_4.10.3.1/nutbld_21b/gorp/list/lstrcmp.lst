@@ -1,0 +1,49 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc9YgfzW.s 			page 1
+
+
+   1               		.file	"lstrcmp.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	LiLiCompareStringItems
+  10               		.type	LiLiCompareStringItems, @function
+  11               	LiLiCompareStringItems:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 0097      		sbiw r24,0
+  15 0002 01F0      		breq .L2
+  16 0004 6115      		cp r22,__zero_reg__
+  17 0006 7105      		cpc r23,__zero_reg__
+  18 0008 01F0      		breq .L2
+  19 000a 0E94 0000 		call strcmp
+  20 000e BC01      		movw r22,r24
+  21 0010 00C0      		rjmp .L3
+  22               	.L2:
+  23 0012 9C01      		movw r18,r24
+  24 0014 261B      		sub r18,r22
+  25 0016 370B      		sbc r19,r23
+  26 0018 B901      		movw r22,r18
+  27               	.L3:
+  28 001a CB01      		movw r24,r22
+  29               	/* epilogue start */
+  30 001c 0895      		ret
+  31               		.size	LiLiCompareStringItems, .-LiLiCompareStringItems
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc9YgfzW.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lstrcmp.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc9YgfzW.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc9YgfzW.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc9YgfzW.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc9YgfzW.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc9YgfzW.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc9YgfzW.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc9YgfzW.s:11     .text:00000000 LiLiCompareStringItems
+
+UNDEFINED SYMBOLS
+strcmp

@@ -1,0 +1,631 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s 			page 1
+
+
+   1               		.file	"loslib.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.data
+   9               	.LC0:
+  10 0000 6669 656C 		.string	"field '%s' missing in date table"
+  10      6420 2725 
+  10      7327 206D 
+  10      6973 7369 
+  10      6E67 2069 
+  11               		.text
+  12               		.type	getfield, @function
+  13               	getfield:
+  14 0000 EF92      		push r14
+  15 0002 FF92      		push r15
+  16 0004 0F93      		push r16
+  17 0006 1F93      		push r17
+  18 0008 CF93      		push r28
+  19 000a DF93      		push r29
+  20               	/* prologue: function */
+  21               	/* frame size = 0 */
+  22 000c 8C01      		movw r16,r24
+  23 000e 7B01      		movw r14,r22
+  24 0010 EA01      		movw r28,r20
+  25 0012 6FEF      		ldi r22,lo8(-1)
+  26 0014 7FEF      		ldi r23,hi8(-1)
+  27 0016 A701      		movw r20,r14
+  28 0018 0E94 0000 		call lua_getfield
+  29 001c C801      		movw r24,r16
+  30 001e 6FEF      		ldi r22,lo8(-1)
+  31 0020 7FEF      		ldi r23,hi8(-1)
+  32 0022 0E94 0000 		call lua_isnumber
+  33 0026 892B      		or r24,r25
+  34 0028 01F0      		breq .L2
+  35 002a C801      		movw r24,r16
+  36 002c 6FEF      		ldi r22,lo8(-1)
+  37 002e 7FEF      		ldi r23,hi8(-1)
+  38 0030 0E94 0000 		call lua_tointeger
+  39 0034 7C01      		movw r14,r24
+  40 0036 00C0      		rjmp .L3
+  41               	.L2:
+  42 0038 D7FF      		sbrs r29,7
+  43 003a 00C0      		rjmp .L4
+  44 003c 00D0      		rcall .
+  45 003e 00D0      		rcall .
+  46 0040 00D0      		rcall .
+  47 0042 EDB7      		in r30,__SP_L__
+  48 0044 FEB7      		in r31,__SP_H__
+  49 0046 3196      		adiw r30,1
+  50 0048 ADB7      		in r26,__SP_L__
+  51 004a BEB7      		in r27,__SP_H__
+  52 004c 1296      		adiw r26,1+1
+  53 004e 1C93      		st X,r17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s 			page 2
+
+
+  54 0050 0E93      		st -X,r16
+  55 0052 1197      		sbiw r26,1
+  56 0054 80E0      		ldi r24,lo8(.LC0)
+  57 0056 90E0      		ldi r25,hi8(.LC0)
+  58 0058 9383      		std Z+3,r25
+  59 005a 8283      		std Z+2,r24
+  60 005c F582      		std Z+5,r15
+  61 005e E482      		std Z+4,r14
+  62 0060 0E94 0000 		call luaL_error
+  63 0064 7C01      		movw r14,r24
+  64 0066 8DB7      		in r24,__SP_L__
+  65 0068 9EB7      		in r25,__SP_H__
+  66 006a 0696      		adiw r24,6
+  67 006c 0FB6      		in __tmp_reg__,__SREG__
+  68 006e F894      		cli
+  69 0070 9EBF      		out __SP_H__,r25
+  70 0072 0FBE      		out __SREG__,__tmp_reg__
+  71 0074 8DBF      		out __SP_L__,r24
+  72 0076 00C0      		rjmp .L5
+  73               	.L4:
+  74 0078 7E01      		movw r14,r28
+  75               	.L3:
+  76 007a C801      		movw r24,r16
+  77 007c 6EEF      		ldi r22,lo8(-2)
+  78 007e 7FEF      		ldi r23,hi8(-2)
+  79 0080 0E94 0000 		call lua_settop
+  80               	.L5:
+  81 0084 C701      		movw r24,r14
+  82               	/* epilogue start */
+  83 0086 DF91      		pop r29
+  84 0088 CF91      		pop r28
+  85 008a 1F91      		pop r17
+  86 008c 0F91      		pop r16
+  87 008e FF90      		pop r15
+  88 0090 EF90      		pop r14
+  89 0092 0895      		ret
+  90               		.size	getfield, .-getfield
+  91               		.data
+  92               	.LC1:
+  93 0021 7365 6300 		.string	"sec"
+  94               	.LC2:
+  95 0025 6D69 6E00 		.string	"min"
+  96               	.LC3:
+  97 0029 686F 7572 		.string	"hour"
+  97      00
+  98               	.LC4:
+  99 002e 6461 7900 		.string	"day"
+ 100               	.LC5:
+ 101 0032 6D6F 6E74 		.string	"month"
+ 101      6800 
+ 102               	.LC6:
+ 103 0038 7965 6172 		.string	"year"
+ 103      00
+ 104               	.LC7:
+ 105 003d 6973 6473 		.string	"isdst"
+ 105      7400 
+ 106               		.text
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s 			page 3
+
+
+ 107               		.type	os_time, @function
+ 108               	os_time:
+ 109 0094 EF92      		push r14
+ 110 0096 FF92      		push r15
+ 111 0098 0F93      		push r16
+ 112 009a 1F93      		push r17
+ 113 009c DF93      		push r29
+ 114 009e CF93      		push r28
+ 115 00a0 CDB7      		in r28,__SP_L__
+ 116 00a2 DEB7      		in r29,__SP_H__
+ 117 00a4 6297      		sbiw r28,18
+ 118 00a6 0FB6      		in __tmp_reg__,__SREG__
+ 119 00a8 F894      		cli
+ 120 00aa DEBF      		out __SP_H__,r29
+ 121 00ac 0FBE      		out __SREG__,__tmp_reg__
+ 122 00ae CDBF      		out __SP_L__,r28
+ 123               	/* prologue: function */
+ 124               	/* frame size = 18 */
+ 125 00b0 8C01      		movw r16,r24
+ 126 00b2 61E0      		ldi r22,lo8(1)
+ 127 00b4 70E0      		ldi r23,hi8(1)
+ 128 00b6 0E94 0000 		call lua_type
+ 129 00ba 1816      		cp __zero_reg__,r24
+ 130 00bc 1906      		cpc __zero_reg__,r25
+ 131 00be 04F0      		brlt .L8
+ 132 00c0 80E0      		ldi r24,lo8(0)
+ 133 00c2 90E0      		ldi r25,hi8(0)
+ 134 00c4 0E94 0000 		call time
+ 135 00c8 00C0      		rjmp .L15
+ 136               	.L8:
+ 137 00ca C801      		movw r24,r16
+ 138 00cc 61E0      		ldi r22,lo8(1)
+ 139 00ce 70E0      		ldi r23,hi8(1)
+ 140 00d0 47E0      		ldi r20,lo8(7)
+ 141 00d2 50E0      		ldi r21,hi8(7)
+ 142 00d4 0E94 0000 		call luaL_checktype
+ 143 00d8 C801      		movw r24,r16
+ 144 00da 61E0      		ldi r22,lo8(1)
+ 145 00dc 70E0      		ldi r23,hi8(1)
+ 146 00de 0E94 0000 		call lua_settop
+ 147 00e2 C801      		movw r24,r16
+ 148 00e4 60E0      		ldi r22,lo8(.LC1)
+ 149 00e6 70E0      		ldi r23,hi8(.LC1)
+ 150 00e8 40E0      		ldi r20,lo8(0)
+ 151 00ea 50E0      		ldi r21,hi8(0)
+ 152 00ec 0E94 0000 		call getfield
+ 153 00f0 9A83      		std Y+2,r25
+ 154 00f2 8983      		std Y+1,r24
+ 155 00f4 C801      		movw r24,r16
+ 156 00f6 60E0      		ldi r22,lo8(.LC2)
+ 157 00f8 70E0      		ldi r23,hi8(.LC2)
+ 158 00fa 40E0      		ldi r20,lo8(0)
+ 159 00fc 50E0      		ldi r21,hi8(0)
+ 160 00fe 0E94 0000 		call getfield
+ 161 0102 9C83      		std Y+4,r25
+ 162 0104 8B83      		std Y+3,r24
+ 163 0106 C801      		movw r24,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s 			page 4
+
+
+ 164 0108 60E0      		ldi r22,lo8(.LC3)
+ 165 010a 70E0      		ldi r23,hi8(.LC3)
+ 166 010c 4CE0      		ldi r20,lo8(12)
+ 167 010e 50E0      		ldi r21,hi8(12)
+ 168 0110 0E94 0000 		call getfield
+ 169 0114 9E83      		std Y+6,r25
+ 170 0116 8D83      		std Y+5,r24
+ 171 0118 C801      		movw r24,r16
+ 172 011a 60E0      		ldi r22,lo8(.LC4)
+ 173 011c 70E0      		ldi r23,hi8(.LC4)
+ 174 011e 4FEF      		ldi r20,lo8(-1)
+ 175 0120 5FEF      		ldi r21,hi8(-1)
+ 176 0122 0E94 0000 		call getfield
+ 177 0126 9887      		std Y+8,r25
+ 178 0128 8F83      		std Y+7,r24
+ 179 012a C801      		movw r24,r16
+ 180 012c 60E0      		ldi r22,lo8(.LC5)
+ 181 012e 70E0      		ldi r23,hi8(.LC5)
+ 182 0130 4FEF      		ldi r20,lo8(-1)
+ 183 0132 5FEF      		ldi r21,hi8(-1)
+ 184 0134 0E94 0000 		call getfield
+ 185 0138 0197      		sbiw r24,1
+ 186 013a 9A87      		std Y+10,r25
+ 187 013c 8987      		std Y+9,r24
+ 188 013e C801      		movw r24,r16
+ 189 0140 60E0      		ldi r22,lo8(.LC6)
+ 190 0142 70E0      		ldi r23,hi8(.LC6)
+ 191 0144 4FEF      		ldi r20,lo8(-1)
+ 192 0146 5FEF      		ldi r21,hi8(-1)
+ 193 0148 0E94 0000 		call getfield
+ 194 014c 8C56      		subi r24,lo8(-(-1900))
+ 195 014e 9740      		sbci r25,hi8(-(-1900))
+ 196 0150 9C87      		std Y+12,r25
+ 197 0152 8B87      		std Y+11,r24
+ 198 0154 C801      		movw r24,r16
+ 199 0156 6FEF      		ldi r22,lo8(-1)
+ 200 0158 7FEF      		ldi r23,hi8(-1)
+ 201 015a 40E0      		ldi r20,lo8(.LC7)
+ 202 015c 50E0      		ldi r21,hi8(.LC7)
+ 203 015e 0E94 0000 		call lua_getfield
+ 204 0162 C801      		movw r24,r16
+ 205 0164 6FEF      		ldi r22,lo8(-1)
+ 206 0166 7FEF      		ldi r23,hi8(-1)
+ 207 0168 0E94 0000 		call lua_type
+ 208 016c 892B      		or r24,r25
+ 209 016e 01F4      		brne .L10
+ 210 0170 EE24      		clr r14
+ 211 0172 EA94      		dec r14
+ 212 0174 FE2C      		mov r15,r14
+ 213 0176 00C0      		rjmp .L11
+ 214               	.L10:
+ 215 0178 C801      		movw r24,r16
+ 216 017a 6FEF      		ldi r22,lo8(-1)
+ 217 017c 7FEF      		ldi r23,hi8(-1)
+ 218 017e 0E94 0000 		call lua_toboolean
+ 219 0182 7C01      		movw r14,r24
+ 220               	.L11:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s 			page 5
+
+
+ 221 0184 C801      		movw r24,r16
+ 222 0186 6EEF      		ldi r22,lo8(-2)
+ 223 0188 7FEF      		ldi r23,hi8(-2)
+ 224 018a 0E94 0000 		call lua_settop
+ 225 018e FA8A      		std Y+18,r15
+ 226 0190 E98A      		std Y+17,r14
+ 227 0192 CE01      		movw r24,r28
+ 228 0194 0196      		adiw r24,1
+ 229 0196 0E94 0000 		call mktime
+ 230               	.L15:
+ 231 019a AB01      		movw r20,r22
+ 232 019c BC01      		movw r22,r24
+ 233 019e 4F3F      		cpi r20,lo8(-1)
+ 234 01a0 8FEF      		ldi r24,hi8(-1)
+ 235 01a2 5807      		cpc r21,r24
+ 236 01a4 8FEF      		ldi r24,hlo8(-1)
+ 237 01a6 6807      		cpc r22,r24
+ 238 01a8 8FEF      		ldi r24,hhi8(-1)
+ 239 01aa 7807      		cpc r23,r24
+ 240 01ac 01F4      		brne .L12
+ 241 01ae C801      		movw r24,r16
+ 242 01b0 0E94 0000 		call lua_pushnil
+ 243 01b4 00C0      		rjmp .L13
+ 244               	.L12:
+ 245 01b6 C801      		movw r24,r16
+ 246 01b8 0E94 0000 		call lua_pushnumber
+ 247               	.L13:
+ 248 01bc 81E0      		ldi r24,lo8(1)
+ 249 01be 90E0      		ldi r25,hi8(1)
+ 250               	/* epilogue start */
+ 251 01c0 6296      		adiw r28,18
+ 252 01c2 0FB6      		in __tmp_reg__,__SREG__
+ 253 01c4 F894      		cli
+ 254 01c6 DEBF      		out __SP_H__,r29
+ 255 01c8 0FBE      		out __SREG__,__tmp_reg__
+ 256 01ca CDBF      		out __SP_L__,r28
+ 257 01cc CF91      		pop r28
+ 258 01ce DF91      		pop r29
+ 259 01d0 1F91      		pop r17
+ 260 01d2 0F91      		pop r16
+ 261 01d4 FF90      		pop r15
+ 262 01d6 EF90      		pop r14
+ 263 01d8 0895      		ret
+ 264               		.size	os_time, .-os_time
+ 265               		.type	os_getenv, @function
+ 266               	os_getenv:
+ 267 01da 0F93      		push r16
+ 268 01dc 1F93      		push r17
+ 269               	/* prologue: function */
+ 270               	/* frame size = 0 */
+ 271 01de 8C01      		movw r16,r24
+ 272 01e0 61E0      		ldi r22,lo8(1)
+ 273 01e2 70E0      		ldi r23,hi8(1)
+ 274 01e4 40E0      		ldi r20,lo8(0)
+ 275 01e6 50E0      		ldi r21,hi8(0)
+ 276 01e8 0E94 0000 		call luaL_checklstring
+ 277 01ec 0E94 0000 		call getenv
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s 			page 6
+
+
+ 278 01f0 BC01      		movw r22,r24
+ 279 01f2 C801      		movw r24,r16
+ 280 01f4 0E94 0000 		call lua_pushstring
+ 281 01f8 81E0      		ldi r24,lo8(1)
+ 282 01fa 90E0      		ldi r25,hi8(1)
+ 283               	/* epilogue start */
+ 284 01fc 1F91      		pop r17
+ 285 01fe 0F91      		pop r16
+ 286 0200 0895      		ret
+ 287               		.size	os_getenv, .-os_getenv
+ 288               		.type	setfield, @function
+ 289               	setfield:
+ 290 0202 EF92      		push r14
+ 291 0204 FF92      		push r15
+ 292 0206 0F93      		push r16
+ 293 0208 1F93      		push r17
+ 294               	/* prologue: function */
+ 295               	/* frame size = 0 */
+ 296 020a 8C01      		movw r16,r24
+ 297 020c 7B01      		movw r14,r22
+ 298 020e BA01      		movw r22,r20
+ 299 0210 0E94 0000 		call lua_pushinteger
+ 300 0214 C801      		movw r24,r16
+ 301 0216 6EEF      		ldi r22,lo8(-2)
+ 302 0218 7FEF      		ldi r23,hi8(-2)
+ 303 021a A701      		movw r20,r14
+ 304 021c 0E94 0000 		call lua_setfield
+ 305               	/* epilogue start */
+ 306 0220 1F91      		pop r17
+ 307 0222 0F91      		pop r16
+ 308 0224 FF90      		pop r15
+ 309 0226 EF90      		pop r14
+ 310 0228 0895      		ret
+ 311               		.size	setfield, .-setfield
+ 312               		.data
+ 313               	.LC8:
+ 314 0043 2563 00   		.string	"%c"
+ 315               	.LC9:
+ 316 0046 2A74 00   		.string	"*t"
+ 317               	.LC10:
+ 318 0049 7764 6179 		.string	"wday"
+ 318      00
+ 319               	.LC11:
+ 320 004e 7964 6179 		.string	"yday"
+ 320      00
+ 321               		.text
+ 322               		.type	os_date, @function
+ 323               	os_date:
+ 324 022a CF92      		push r12
+ 325 022c DF92      		push r13
+ 326 022e EF92      		push r14
+ 327 0230 FF92      		push r15
+ 328 0232 0F93      		push r16
+ 329 0234 1F93      		push r17
+ 330 0236 DF93      		push r29
+ 331 0238 CF93      		push r28
+ 332 023a 00D0      		rcall .
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s 			page 7
+
+
+ 333 023c 00D0      		rcall .
+ 334 023e CDB7      		in r28,__SP_L__
+ 335 0240 DEB7      		in r29,__SP_H__
+ 336               	/* prologue: function */
+ 337               	/* frame size = 4 */
+ 338 0242 8C01      		movw r16,r24
+ 339 0244 61E0      		ldi r22,lo8(1)
+ 340 0246 70E0      		ldi r23,hi8(1)
+ 341 0248 40E0      		ldi r20,lo8(.LC8)
+ 342 024a 50E0      		ldi r21,hi8(.LC8)
+ 343 024c 20E0      		ldi r18,lo8(0)
+ 344 024e 30E0      		ldi r19,hi8(0)
+ 345 0250 0E94 0000 		call luaL_optlstring
+ 346 0254 6C01      		movw r12,r24
+ 347 0256 C801      		movw r24,r16
+ 348 0258 62E0      		ldi r22,lo8(2)
+ 349 025a 70E0      		ldi r23,hi8(2)
+ 350 025c 0E94 0000 		call lua_type
+ 351 0260 1816      		cp __zero_reg__,r24
+ 352 0262 1906      		cpc __zero_reg__,r25
+ 353 0264 04F0      		brlt .L21
+ 354 0266 80E0      		ldi r24,lo8(0)
+ 355 0268 90E0      		ldi r25,hi8(0)
+ 356 026a 0E94 0000 		call time
+ 357 026e 00C0      		rjmp .L22
+ 358               	.L21:
+ 359 0270 C801      		movw r24,r16
+ 360 0272 62E0      		ldi r22,lo8(2)
+ 361 0274 70E0      		ldi r23,hi8(2)
+ 362 0276 0E94 0000 		call luaL_checknumber
+ 363               	.L22:
+ 364 027a 6983      		std Y+1,r22
+ 365 027c 7A83      		std Y+2,r23
+ 366 027e 8B83      		std Y+3,r24
+ 367 0280 9C83      		std Y+4,r25
+ 368 0282 F601      		movw r30,r12
+ 369 0284 8081      		ld r24,Z
+ 370 0286 9E01      		movw r18,r28
+ 371 0288 2F5F      		subi r18,lo8(-(1))
+ 372 028a 3F4F      		sbci r19,hi8(-(1))
+ 373 028c 8132      		cpi r24,lo8(33)
+ 374 028e 01F4      		brne .L23
+ 375 0290 C901      		movw r24,r18
+ 376 0292 0E94 0000 		call gmtime
+ 377 0296 7C01      		movw r14,r24
+ 378 0298 0894      		sec
+ 379 029a C11C      		adc r12,__zero_reg__
+ 380 029c D11C      		adc r13,__zero_reg__
+ 381 029e 00C0      		rjmp .L24
+ 382               	.L23:
+ 383 02a0 C901      		movw r24,r18
+ 384 02a2 0E94 0000 		call localtime
+ 385 02a6 7C01      		movw r14,r24
+ 386               	.L24:
+ 387 02a8 E114      		cp r14,__zero_reg__
+ 388 02aa F104      		cpc r15,__zero_reg__
+ 389 02ac 01F4      		brne .+2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s 			page 8
+
+
+ 390 02ae 00C0      		rjmp .L27
+ 391               	.L25:
+ 392 02b0 C601      		movw r24,r12
+ 393 02b2 60E0      		ldi r22,lo8(.LC9)
+ 394 02b4 70E0      		ldi r23,hi8(.LC9)
+ 395 02b6 0E94 0000 		call strcmp
+ 396 02ba 0097      		sbiw r24,0
+ 397 02bc 01F0      		breq .+2
+ 398 02be 00C0      		rjmp .L27
+ 399 02c0 C801      		movw r24,r16
+ 400 02c2 60E0      		ldi r22,lo8(0)
+ 401 02c4 70E0      		ldi r23,hi8(0)
+ 402 02c6 49E0      		ldi r20,lo8(9)
+ 403 02c8 50E0      		ldi r21,hi8(9)
+ 404 02ca 0E94 0000 		call lua_createtable
+ 405 02ce F701      		movw r30,r14
+ 406 02d0 4081      		ld r20,Z
+ 407 02d2 5181      		ldd r21,Z+1
+ 408 02d4 C801      		movw r24,r16
+ 409 02d6 60E0      		ldi r22,lo8(.LC1)
+ 410 02d8 70E0      		ldi r23,hi8(.LC1)
+ 411 02da 0E94 0000 		call setfield
+ 412 02de F701      		movw r30,r14
+ 413 02e0 4281      		ldd r20,Z+2
+ 414 02e2 5381      		ldd r21,Z+3
+ 415 02e4 C801      		movw r24,r16
+ 416 02e6 60E0      		ldi r22,lo8(.LC2)
+ 417 02e8 70E0      		ldi r23,hi8(.LC2)
+ 418 02ea 0E94 0000 		call setfield
+ 419 02ee F701      		movw r30,r14
+ 420 02f0 4481      		ldd r20,Z+4
+ 421 02f2 5581      		ldd r21,Z+5
+ 422 02f4 C801      		movw r24,r16
+ 423 02f6 60E0      		ldi r22,lo8(.LC3)
+ 424 02f8 70E0      		ldi r23,hi8(.LC3)
+ 425 02fa 0E94 0000 		call setfield
+ 426 02fe F701      		movw r30,r14
+ 427 0300 4681      		ldd r20,Z+6
+ 428 0302 5781      		ldd r21,Z+7
+ 429 0304 C801      		movw r24,r16
+ 430 0306 60E0      		ldi r22,lo8(.LC4)
+ 431 0308 70E0      		ldi r23,hi8(.LC4)
+ 432 030a 0E94 0000 		call setfield
+ 433 030e F701      		movw r30,r14
+ 434 0310 4085      		ldd r20,Z+8
+ 435 0312 5185      		ldd r21,Z+9
+ 436 0314 4F5F      		subi r20,lo8(-(1))
+ 437 0316 5F4F      		sbci r21,hi8(-(1))
+ 438 0318 C801      		movw r24,r16
+ 439 031a 60E0      		ldi r22,lo8(.LC5)
+ 440 031c 70E0      		ldi r23,hi8(.LC5)
+ 441 031e 0E94 0000 		call setfield
+ 442 0322 F701      		movw r30,r14
+ 443 0324 4285      		ldd r20,Z+10
+ 444 0326 5385      		ldd r21,Z+11
+ 445 0328 4459      		subi r20,lo8(-(1900))
+ 446 032a 584F      		sbci r21,hi8(-(1900))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s 			page 9
+
+
+ 447 032c C801      		movw r24,r16
+ 448 032e 60E0      		ldi r22,lo8(.LC6)
+ 449 0330 70E0      		ldi r23,hi8(.LC6)
+ 450 0332 0E94 0000 		call setfield
+ 451 0336 F701      		movw r30,r14
+ 452 0338 4485      		ldd r20,Z+12
+ 453 033a 5585      		ldd r21,Z+13
+ 454 033c 4F5F      		subi r20,lo8(-(1))
+ 455 033e 5F4F      		sbci r21,hi8(-(1))
+ 456 0340 C801      		movw r24,r16
+ 457 0342 60E0      		ldi r22,lo8(.LC10)
+ 458 0344 70E0      		ldi r23,hi8(.LC10)
+ 459 0346 0E94 0000 		call setfield
+ 460 034a F701      		movw r30,r14
+ 461 034c 4685      		ldd r20,Z+14
+ 462 034e 5785      		ldd r21,Z+15
+ 463 0350 4F5F      		subi r20,lo8(-(1))
+ 464 0352 5F4F      		sbci r21,hi8(-(1))
+ 465 0354 C801      		movw r24,r16
+ 466 0356 60E0      		ldi r22,lo8(.LC11)
+ 467 0358 70E0      		ldi r23,hi8(.LC11)
+ 468 035a 0E94 0000 		call setfield
+ 469 035e F701      		movw r30,r14
+ 470 0360 6089      		ldd r22,Z+16
+ 471 0362 7189      		ldd r23,Z+17
+ 472 0364 77FD      		sbrc r23,7
+ 473 0366 00C0      		rjmp .L26
+ 474 0368 C801      		movw r24,r16
+ 475 036a 0E94 0000 		call lua_pushboolean
+ 476 036e C801      		movw r24,r16
+ 477 0370 6EEF      		ldi r22,lo8(-2)
+ 478 0372 7FEF      		ldi r23,hi8(-2)
+ 479 0374 40E0      		ldi r20,lo8(.LC7)
+ 480 0376 50E0      		ldi r21,hi8(.LC7)
+ 481 0378 0E94 0000 		call lua_setfield
+ 482 037c 00C0      		rjmp .L26
+ 483               	.L27:
+ 484 037e C801      		movw r24,r16
+ 485 0380 0E94 0000 		call lua_pushnil
+ 486               	.L26:
+ 487 0384 81E0      		ldi r24,lo8(1)
+ 488 0386 90E0      		ldi r25,hi8(1)
+ 489               	/* epilogue start */
+ 490 0388 0F90      		pop __tmp_reg__
+ 491 038a 0F90      		pop __tmp_reg__
+ 492 038c 0F90      		pop __tmp_reg__
+ 493 038e 0F90      		pop __tmp_reg__
+ 494 0390 CF91      		pop r28
+ 495 0392 DF91      		pop r29
+ 496 0394 1F91      		pop r17
+ 497 0396 0F91      		pop r16
+ 498 0398 FF90      		pop r15
+ 499 039a EF90      		pop r14
+ 500 039c DF90      		pop r13
+ 501 039e CF90      		pop r12
+ 502 03a0 0895      		ret
+ 503               		.size	os_date, .-os_date
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s 			page 10
+
+
+ 504               		.data
+ 505               	.LC12:
+ 506 0053 6F73 00   		.string	"os"
+ 507               		.text
+ 508               	.global	luaopen_os
+ 509               		.type	luaopen_os, @function
+ 510               	luaopen_os:
+ 511               	/* prologue: function */
+ 512               	/* frame size = 0 */
+ 513 03a2 60E0      		ldi r22,lo8(.LC12)
+ 514 03a4 70E0      		ldi r23,hi8(.LC12)
+ 515 03a6 40E0      		ldi r20,lo8(syslib)
+ 516 03a8 50E0      		ldi r21,hi8(syslib)
+ 517 03aa 0E94 0000 		call luaL_register
+ 518 03ae 81E0      		ldi r24,lo8(1)
+ 519 03b0 90E0      		ldi r25,hi8(1)
+ 520               	/* epilogue start */
+ 521 03b2 0895      		ret
+ 522               		.size	luaopen_os, .-luaopen_os
+ 523               	.global	syslib
+ 524               		.data
+ 525               	.LC13:
+ 526 0056 6461 7465 		.string	"date"
+ 526      00
+ 527               	.LC14:
+ 528 005b 6765 7465 		.string	"getenv"
+ 528      6E76 00
+ 529               	.LC15:
+ 530 0062 7469 6D65 		.string	"time"
+ 530      00
+ 531               		.type	syslib, @object
+ 532               		.size	syslib, 16
+ 533               	syslib:
+ 534 0067 0000      		.word	.LC13
+ 535 0069 0000      		.word	gs(os_date)
+ 536 006b 0000      		.word	.LC14
+ 537 006d 0000      		.word	gs(os_getenv)
+ 538 006f 0000      		.word	.LC15
+ 539 0071 0000      		.word	gs(os_time)
+ 540 0073 0000      		.word	0
+ 541 0075 0000      		.word	0
+ 542               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 loslib.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:13     .text:00000000 getfield
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:108    .text:00000094 os_time
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:266    .text:000001da os_getenv
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:289    .text:00000202 setfield
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:323    .text:0000022a os_date
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:510    .text:000003a2 luaopen_os
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cczQr2OL.s:533    .data:00000067 syslib
+
+UNDEFINED SYMBOLS
+lua_getfield
+lua_isnumber
+lua_tointeger
+luaL_error
+lua_settop
+lua_type
+time
+luaL_checktype
+lua_toboolean
+mktime
+lua_pushnil
+lua_pushnumber
+luaL_checklstring
+getenv
+lua_pushstring
+lua_pushinteger
+lua_setfield
+luaL_optlstring
+luaL_checknumber
+gmtime
+localtime
+strcmp
+lua_createtable
+lua_pushboolean
+luaL_register
+__do_copy_data

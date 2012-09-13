@@ -1,0 +1,141 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccqcV2Rw.s 			page 1
+
+
+   1               		.file	"vsprintf_p.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	vsprintf_P
+  10               		.type	vsprintf_P, @function
+  11               	vsprintf_P:
+  12 0000 AF92      		push r10
+  13 0002 BF92      		push r11
+  14 0004 CF92      		push r12
+  15 0006 DF92      		push r13
+  16 0008 EF92      		push r14
+  17 000a FF92      		push r15
+  18 000c 0F93      		push r16
+  19 000e 1F93      		push r17
+  20 0010 DF93      		push r29
+  21 0012 CF93      		push r28
+  22 0014 00D0      		rcall .
+  23 0016 CDB7      		in r28,__SP_L__
+  24 0018 DEB7      		in r29,__SP_H__
+  25               	/* prologue: function */
+  26               	/* frame size = 2 */
+  27 001a 9A83      		std Y+2,r25
+  28 001c 8983      		std Y+1,r24
+  29 001e 6B01      		movw r12,r22
+  30 0020 5A01      		movw r10,r20
+  31 0022 CB01      		movw r24,r22
+  32 0024 0E94 0000 		call strlen_P
+  33 0028 7C01      		movw r14,r24
+  34 002a 0894      		sec
+  35 002c E11C      		adc r14,__zero_reg__
+  36 002e F11C      		adc r15,__zero_reg__
+  37 0030 80E0      		ldi r24,lo8(heapFreeList)
+  38 0032 90E0      		ldi r25,hi8(heapFreeList)
+  39 0034 B701      		movw r22,r14
+  40 0036 0E94 0000 		call NutHeapRootAlloc
+  41 003a 8C01      		movw r16,r24
+  42 003c 0097      		sbiw r24,0
+  43 003e 01F4      		brne .L2
+  44 0040 EE24      		clr r14
+  45 0042 EA94      		dec r14
+  46 0044 FE2C      		mov r15,r14
+  47 0046 00C0      		rjmp .L3
+  48               	.L2:
+  49 0048 B601      		movw r22,r12
+  50 004a A701      		movw r20,r14
+  51 004c 0E94 0000 		call memcpy_P
+  52 0050 80E0      		ldi r24,lo8(gs(_sputb))
+  53 0052 90E0      		ldi r25,hi8(gs(_sputb))
+  54 0054 BE01      		movw r22,r28
+  55 0056 6F5F      		subi r22,lo8(-(1))
+  56 0058 7F4F      		sbci r23,hi8(-(1))
+  57 005a A801      		movw r20,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccqcV2Rw.s 			page 2
+
+
+  58 005c 9501      		movw r18,r10
+  59 005e 0E94 0000 		call _putf
+  60 0062 7C01      		movw r14,r24
+  61 0064 80E0      		ldi r24,lo8(heapFreeList)
+  62 0066 90E0      		ldi r25,hi8(heapFreeList)
+  63 0068 B801      		movw r22,r16
+  64 006a 0E94 0000 		call NutHeapRootFree
+  65 006e E981      		ldd r30,Y+1
+  66 0070 FA81      		ldd r31,Y+2
+  67 0072 1082      		st Z,__zero_reg__
+  68               	.L3:
+  69 0074 C701      		movw r24,r14
+  70               	/* epilogue start */
+  71 0076 0F90      		pop __tmp_reg__
+  72 0078 0F90      		pop __tmp_reg__
+  73 007a CF91      		pop r28
+  74 007c DF91      		pop r29
+  75 007e 1F91      		pop r17
+  76 0080 0F91      		pop r16
+  77 0082 FF90      		pop r15
+  78 0084 EF90      		pop r14
+  79 0086 DF90      		pop r13
+  80 0088 CF90      		pop r12
+  81 008a BF90      		pop r11
+  82 008c AF90      		pop r10
+  83 008e 0895      		ret
+  84               		.size	vsprintf_P, .-vsprintf_P
+  85               		.type	_sputb, @function
+  86               	_sputb:
+  87 0090 EF92      		push r14
+  88 0092 FF92      		push r15
+  89 0094 0F93      		push r16
+  90 0096 1F93      		push r17
+  91               	/* prologue: function */
+  92               	/* frame size = 0 */
+  93 0098 7A01      		movw r14,r20
+  94 009a 8C01      		movw r16,r24
+  95 009c FC01      		movw r30,r24
+  96 009e 8081      		ld r24,Z
+  97 00a0 9181      		ldd r25,Z+1
+  98 00a2 0E94 0000 		call memcpy
+  99 00a6 F801      		movw r30,r16
+ 100 00a8 8081      		ld r24,Z
+ 101 00aa 9181      		ldd r25,Z+1
+ 102 00ac 8E0D      		add r24,r14
+ 103 00ae 9F1D      		adc r25,r15
+ 104 00b0 9183      		std Z+1,r25
+ 105 00b2 8083      		st Z,r24
+ 106 00b4 C701      		movw r24,r14
+ 107               	/* epilogue start */
+ 108 00b6 1F91      		pop r17
+ 109 00b8 0F91      		pop r16
+ 110 00ba FF90      		pop r15
+ 111 00bc EF90      		pop r14
+ 112 00be 0895      		ret
+ 113               		.size	_sputb, .-_sputb
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccqcV2Rw.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 vsprintf_p.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccqcV2Rw.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccqcV2Rw.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccqcV2Rw.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccqcV2Rw.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccqcV2Rw.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccqcV2Rw.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccqcV2Rw.s:11     .text:00000000 vsprintf_P
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccqcV2Rw.s:86     .text:00000090 _sputb
+
+UNDEFINED SYMBOLS
+strlen_P
+heapFreeList
+NutHeapRootAlloc
+memcpy_P
+_putf
+NutHeapRootFree
+memcpy

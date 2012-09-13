@@ -1,0 +1,370 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s 			page 1
+
+
+   1               		.file	"lrotable.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	luaR_findkey, @function
+  10               	luaR_findkey:
+  11 0000 AF92      		push r10
+  12 0002 BF92      		push r11
+  13 0004 CF92      		push r12
+  14 0006 DF92      		push r13
+  15 0008 EF92      		push r14
+  16 000a FF92      		push r15
+  17 000c 0F93      		push r16
+  18 000e 1F93      		push r17
+  19 0010 CF93      		push r28
+  20 0012 DF93      		push r29
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23 0014 5B01      		movw r10,r22
+  24 0016 6901      		movw r12,r18
+  25 0018 EE24      		clr r14
+  26 001a FF24      		clr r15
+  27 001c 452B      		or r20,r21
+  28 001e 01F4      		brne .L2
+  29 0020 21E0      		ldi r18,lo8(1)
+  30 0022 E22E      		mov r14,r18
+  31 0024 F12C      		mov r15,__zero_reg__
+  32               	.L2:
+  33 0026 F601      		movw r30,r12
+  34 0028 1182      		std Z+1,__zero_reg__
+  35 002a 1082      		st Z,__zero_reg__
+  36 002c 0097      		sbiw r24,0
+  37 002e 01F0      		breq .L3
+  38 0030 EC01      		movw r28,r24
+  39 0032 8C01      		movw r16,r24
+  40               	.L9:
+  41 0034 E114      		cp r14,__zero_reg__
+  42 0036 F104      		cpc r15,__zero_reg__
+  43 0038 01F0      		breq .L4
+  44 003a 8881      		ld r24,Y
+  45 003c 9981      		ldd r25,Y+1
+  46 003e 00C0      		rjmp .L5
+  47               	.L4:
+  48 0040 F801      		movw r30,r16
+  49 0042 8081      		ld r24,Z
+  50 0044 9181      		ldd r25,Z+1
+  51               	.L5:
+  52 0046 0097      		sbiw r24,0
+  53 0048 01F0      		breq .L3
+  54 004a B501      		movw r22,r10
+  55 004c 0E94 0000 		call strcmp
+  56 0050 0097      		sbiw r24,0
+  57 0052 01F4      		brne .L6
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s 			page 2
+
+
+  58 0054 81E0      		ldi r24,lo8(1)
+  59 0056 90E0      		ldi r25,hi8(1)
+  60 0058 F601      		movw r30,r12
+  61 005a 9183      		std Z+1,r25
+  62 005c 8083      		st Z,r24
+  63 005e EF28      		or r14,r15
+  64 0060 01F0      		breq .L7
+  65 0062 8A81      		ldd r24,Y+2
+  66 0064 9B81      		ldd r25,Y+3
+  67 0066 9C01      		movw r18,r24
+  68 0068 40E0      		ldi r20,lo8(0)
+  69 006a 50E0      		ldi r21,hi8(0)
+  70 006c 00C0      		rjmp .L8
+  71               	.L7:
+  72 006e F801      		movw r30,r16
+  73 0070 2281      		ldd r18,Z+2
+  74 0072 3381      		ldd r19,Z+3
+  75 0074 4481      		ldd r20,Z+4
+  76 0076 5581      		ldd r21,Z+5
+  77 0078 00C0      		rjmp .L8
+  78               	.L6:
+  79 007a 2496      		adiw r28,4
+  80 007c 0A5F      		subi r16,lo8(-(6))
+  81 007e 1F4F      		sbci r17,hi8(-(6))
+  82 0080 00C0      		rjmp .L9
+  83               	.L3:
+  84 0082 20E0      		ldi r18,lo8(0)
+  85 0084 30E0      		ldi r19,hi8(0)
+  86 0086 40E0      		ldi r20,hlo8(0)
+  87 0088 50E0      		ldi r21,hhi8(0)
+  88               	.L8:
+  89 008a B901      		movw r22,r18
+  90 008c CA01      		movw r24,r20
+  91               	/* epilogue start */
+  92 008e DF91      		pop r29
+  93 0090 CF91      		pop r28
+  94 0092 1F91      		pop r17
+  95 0094 0F91      		pop r16
+  96 0096 FF90      		pop r15
+  97 0098 EF90      		pop r14
+  98 009a DF90      		pop r13
+  99 009c CF90      		pop r12
+ 100 009e BF90      		pop r11
+ 101 00a0 AF90      		pop r10
+ 102 00a2 0895      		ret
+ 103               		.size	luaR_findkey, .-luaR_findkey
+ 104               	.global	luaR_findentry
+ 105               		.type	luaR_findentry, @function
+ 106               	luaR_findentry:
+ 107 00a4 AF92      		push r10
+ 108 00a6 BF92      		push r11
+ 109 00a8 CF92      		push r12
+ 110 00aa DF92      		push r13
+ 111 00ac EF92      		push r14
+ 112 00ae FF92      		push r15
+ 113 00b0 0F93      		push r16
+ 114 00b2 1F93      		push r17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s 			page 3
+
+
+ 115 00b4 DF93      		push r29
+ 116 00b6 CF93      		push r28
+ 117 00b8 00D0      		rcall .
+ 118 00ba CDB7      		in r28,__SP_L__
+ 119 00bc DEB7      		in r29,__SP_H__
+ 120               	/* prologue: function */
+ 121               	/* frame size = 2 */
+ 122 00be 6B01      		movw r12,r22
+ 123 00c0 7A01      		movw r14,r20
+ 124 00c2 0197      		sbiw r24,1
+ 125 00c4 FA01      		movw r30,r20
+ 126 00c6 1082      		st Z,__zero_reg__
+ 127 00c8 8C01      		movw r16,r24
+ 128 00ca 000F      		lsl r16
+ 129 00cc 111F      		rol r17
+ 130 00ce 080F      		add r16,r24
+ 131 00d0 191F      		adc r17,r25
+ 132 00d2 F801      		movw r30,r16
+ 133 00d4 EE0F      		lsl r30
+ 134 00d6 FF1F      		rol r31
+ 135 00d8 E050      		subi r30,lo8(-(lua_rotable+2))
+ 136 00da F040      		sbci r31,hi8(-(lua_rotable+2))
+ 137 00dc 8081      		ld r24,Z
+ 138 00de 9181      		ldd r25,Z+1
+ 139 00e0 40E0      		ldi r20,lo8(0)
+ 140 00e2 50E0      		ldi r21,hi8(0)
+ 141 00e4 5E01      		movw r10,r28
+ 142 00e6 0894      		sec
+ 143 00e8 A11C      		adc r10,__zero_reg__
+ 144 00ea B11C      		adc r11,__zero_reg__
+ 145 00ec 9501      		movw r18,r10
+ 146 00ee 0E94 0000 		call luaR_findkey
+ 147 00f2 9B01      		movw r18,r22
+ 148 00f4 AC01      		movw r20,r24
+ 149 00f6 8981      		ldd r24,Y+1
+ 150 00f8 9A81      		ldd r25,Y+2
+ 151 00fa 892B      		or r24,r25
+ 152 00fc 01F0      		breq .L12
+ 153 00fe 83E0      		ldi r24,lo8(3)
+ 154 0100 00C0      		rjmp .L16
+ 155               	.L12:
+ 156 0102 F801      		movw r30,r16
+ 157 0104 EE0F      		lsl r30
+ 158 0106 FF1F      		rol r31
+ 159 0108 E050      		subi r30,lo8(-(lua_rotable))
+ 160 010a F040      		sbci r31,hi8(-(lua_rotable))
+ 161 010c 8481      		ldd r24,Z+4
+ 162 010e 9581      		ldd r25,Z+5
+ 163 0110 B601      		movw r22,r12
+ 164 0112 41E0      		ldi r20,lo8(1)
+ 165 0114 50E0      		ldi r21,hi8(1)
+ 166 0116 9501      		movw r18,r10
+ 167 0118 0E94 0000 		call luaR_findkey
+ 168 011c 9B01      		movw r18,r22
+ 169 011e AC01      		movw r20,r24
+ 170 0120 8981      		ldd r24,Y+1
+ 171 0122 9A81      		ldd r25,Y+2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s 			page 4
+
+
+ 172 0124 892B      		or r24,r25
+ 173 0126 01F4      		brne .L14
+ 174 0128 20E0      		ldi r18,lo8(0)
+ 175 012a 30E0      		ldi r19,hi8(0)
+ 176 012c 40E0      		ldi r20,hlo8(0)
+ 177 012e 50E0      		ldi r21,hhi8(0)
+ 178 0130 00C0      		rjmp .L13
+ 179               	.L14:
+ 180 0132 85E0      		ldi r24,lo8(5)
+ 181               	.L16:
+ 182 0134 F701      		movw r30,r14
+ 183 0136 8083      		st Z,r24
+ 184               	.L13:
+ 185 0138 B901      		movw r22,r18
+ 186 013a CA01      		movw r24,r20
+ 187               	/* epilogue start */
+ 188 013c 0F90      		pop __tmp_reg__
+ 189 013e 0F90      		pop __tmp_reg__
+ 190 0140 CF91      		pop r28
+ 191 0142 DF91      		pop r29
+ 192 0144 1F91      		pop r17
+ 193 0146 0F91      		pop r16
+ 194 0148 FF90      		pop r15
+ 195 014a EF90      		pop r14
+ 196 014c DF90      		pop r13
+ 197 014e CF90      		pop r12
+ 198 0150 BF90      		pop r11
+ 199 0152 AF90      		pop r10
+ 200 0154 0895      		ret
+ 201               		.size	luaR_findentry, .-luaR_findentry
+ 202               	.global	luaR_findfunction
+ 203               		.type	luaR_findfunction, @function
+ 204               	luaR_findfunction:
+ 205 0156 EF92      		push r14
+ 206 0158 FF92      		push r15
+ 207 015a 0F93      		push r16
+ 208 015c 1F93      		push r17
+ 209 015e DF93      		push r29
+ 210 0160 CF93      		push r28
+ 211 0162 00D0      		rcall .
+ 212 0164 CDB7      		in r28,__SP_L__
+ 213 0166 DEB7      		in r29,__SP_H__
+ 214               	/* prologue: function */
+ 215               	/* frame size = 2 */
+ 216 0168 7C01      		movw r14,r24
+ 217 016a 8B01      		movw r16,r22
+ 218 016c 62E0      		ldi r22,lo8(2)
+ 219 016e 70E0      		ldi r23,hi8(2)
+ 220 0170 40E0      		ldi r20,lo8(0)
+ 221 0172 50E0      		ldi r21,hi8(0)
+ 222 0174 0E94 0000 		call luaL_checklstring
+ 223 0178 BC01      		movw r22,r24
+ 224 017a C801      		movw r24,r16
+ 225 017c 40E0      		ldi r20,lo8(0)
+ 226 017e 50E0      		ldi r21,hi8(0)
+ 227 0180 9E01      		movw r18,r28
+ 228 0182 2F5F      		subi r18,lo8(-(1))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s 			page 5
+
+
+ 229 0184 3F4F      		sbci r19,hi8(-(1))
+ 230 0186 0E94 0000 		call luaR_findkey
+ 231 018a 9B01      		movw r18,r22
+ 232 018c AC01      		movw r20,r24
+ 233 018e 8981      		ldd r24,Y+1
+ 234 0190 9A81      		ldd r25,Y+2
+ 235 0192 892B      		or r24,r25
+ 236 0194 01F0      		breq .L18
+ 237 0196 C701      		movw r24,r14
+ 238 0198 B901      		movw r22,r18
+ 239 019a 0E94 0000 		call lua_pushlightfunction
+ 240 019e 00C0      		rjmp .L19
+ 241               	.L18:
+ 242 01a0 C701      		movw r24,r14
+ 243 01a2 0E94 0000 		call lua_pushnil
+ 244               	.L19:
+ 245 01a6 81E0      		ldi r24,lo8(1)
+ 246 01a8 90E0      		ldi r25,hi8(1)
+ 247               	/* epilogue start */
+ 248 01aa 0F90      		pop __tmp_reg__
+ 249 01ac 0F90      		pop __tmp_reg__
+ 250 01ae CF91      		pop r28
+ 251 01b0 DF91      		pop r29
+ 252 01b2 1F91      		pop r17
+ 253 01b4 0F91      		pop r16
+ 254 01b6 FF90      		pop r15
+ 255 01b8 EF90      		pop r14
+ 256 01ba 0895      		ret
+ 257               		.size	luaR_findfunction, .-luaR_findfunction
+ 258               	.global	luaR_findglobal
+ 259               		.type	luaR_findglobal, @function
+ 260               	luaR_findglobal:
+ 261 01bc CF92      		push r12
+ 262 01be DF92      		push r13
+ 263 01c0 EF92      		push r14
+ 264 01c2 FF92      		push r15
+ 265 01c4 0F93      		push r16
+ 266 01c6 1F93      		push r17
+ 267 01c8 CF93      		push r28
+ 268 01ca DF93      		push r29
+ 269               	/* prologue: function */
+ 270               	/* frame size = 0 */
+ 271 01cc 6C01      		movw r12,r24
+ 272 01ce 7B01      		movw r14,r22
+ 273 01d0 FB01      		movw r30,r22
+ 274 01d2 1082      		st Z,__zero_reg__
+ 275 01d4 FC01      		movw r30,r24
+ 276 01d6 0190      		ld __tmp_reg__,Z+
+ 277 01d8 0020      		tst __tmp_reg__
+ 278 01da 01F4      		brne .-6
+ 279 01dc 3197      		sbiw r30,1
+ 280 01de E81B      		sub r30,r24
+ 281 01e0 F90B      		sbc r31,r25
+ 282 01e2 7197      		sbiw r30,17
+ 283 01e4 00F4      		brsh .L22
+ 284 01e6 C0E0      		ldi r28,lo8(lua_rotable)
+ 285 01e8 D0E0      		ldi r29,hi8(lua_rotable)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s 			page 6
+
+
+ 286 01ea 00E0      		ldi r16,lo8(0)
+ 287 01ec 10E0      		ldi r17,hi8(0)
+ 288 01ee 00C0      		rjmp .L23
+ 289               	.L26:
+ 290 01f0 B601      		movw r22,r12
+ 291 01f2 0E94 0000 		call strcmp
+ 292 01f6 2696      		adiw r28,6
+ 293 01f8 B801      		movw r22,r16
+ 294 01fa 6F5F      		subi r22,lo8(-(1))
+ 295 01fc 7F4F      		sbci r23,hi8(-(1))
+ 296 01fe 0097      		sbiw r24,0
+ 297 0200 01F4      		brne .L24
+ 298 0202 82E0      		ldi r24,lo8(2)
+ 299 0204 F701      		movw r30,r14
+ 300 0206 8083      		st Z,r24
+ 301 0208 9B01      		movw r18,r22
+ 302 020a 40E0      		ldi r20,lo8(0)
+ 303 020c 50E0      		ldi r21,hi8(0)
+ 304 020e 00C0      		rjmp .L25
+ 305               	.L24:
+ 306 0210 8B01      		movw r16,r22
+ 307               	.L23:
+ 308 0212 8881      		ld r24,Y
+ 309 0214 9981      		ldd r25,Y+1
+ 310 0216 0097      		sbiw r24,0
+ 311 0218 01F4      		brne .L26
+ 312               	.L22:
+ 313 021a 20E0      		ldi r18,lo8(0)
+ 314 021c 30E0      		ldi r19,hi8(0)
+ 315 021e 40E0      		ldi r20,hlo8(0)
+ 316 0220 50E0      		ldi r21,hhi8(0)
+ 317               	.L25:
+ 318 0222 B901      		movw r22,r18
+ 319 0224 CA01      		movw r24,r20
+ 320               	/* epilogue start */
+ 321 0226 DF91      		pop r29
+ 322 0228 CF91      		pop r28
+ 323 022a 1F91      		pop r17
+ 324 022c 0F91      		pop r16
+ 325 022e FF90      		pop r15
+ 326 0230 EF90      		pop r14
+ 327 0232 DF90      		pop r13
+ 328 0234 CF90      		pop r12
+ 329 0236 0895      		ret
+ 330               		.size	luaR_findglobal, .-luaR_findglobal
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lrotable.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s:10     .text:00000000 luaR_findkey
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s:106    .text:000000a4 luaR_findentry
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s:204    .text:00000156 luaR_findfunction
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRFDSle.s:260    .text:000001bc luaR_findglobal
+
+UNDEFINED SYMBOLS
+strcmp
+lua_rotable
+luaL_checklstring
+lua_pushlightfunction
+lua_pushnil

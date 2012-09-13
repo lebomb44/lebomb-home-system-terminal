@@ -1,0 +1,375 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s 			page 1
+
+
+   1               		.file	"phatio.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	PhatSectorFlush
+  10               		.type	PhatSectorFlush, @function
+  11               	PhatSectorFlush:
+  12 0000 6F92      		push r6
+  13 0002 7F92      		push r7
+  14 0004 8F92      		push r8
+  15 0006 9F92      		push r9
+  16 0008 AF92      		push r10
+  17 000a BF92      		push r11
+  18 000c CF92      		push r12
+  19 000e DF92      		push r13
+  20 0010 EF92      		push r14
+  21 0012 FF92      		push r15
+  22 0014 0F93      		push r16
+  23 0016 1F93      		push r17
+  24 0018 DF93      		push r29
+  25 001a CF93      		push r28
+  26 001c 00D0      		rcall .
+  27 001e 00D0      		rcall .
+  28 0020 00D0      		rcall .
+  29 0022 CDB7      		in r28,__SP_L__
+  30 0024 DEB7      		in r29,__SP_H__
+  31               	/* prologue: function */
+  32               	/* frame size = 6 */
+  33 0026 FC01      		movw r30,r24
+  34 0028 6B01      		movw r12,r22
+  35 002a 8189      		ldd r24,Z+17
+  36 002c 9289      		ldd r25,Z+18
+  37 002e 8784      		ldd r8,Z+15
+  38 0030 9088      		ldd r9,Z+16
+  39 0032 D401      		movw r26,r8
+  40 0034 1296      		adiw r26,2
+  41 0036 AD90      		ld r10,X+
+  42 0038 BC90      		ld r11,X
+  43 003a 1397      		sbiw r26,2+1
+  44 003c 77FD      		sbrc r23,7
+  45 003e 00C0      		rjmp .L2
+  46 0040 7B01      		movw r14,r22
+  47 0042 00C0      		rjmp .L3
+  48               	.L2:
+  49 0044 CC24      		clr r12
+  50 0046 DD24      		clr r13
+  51 0048 EE24      		clr r14
+  52 004a FF24      		clr r15
+  53               	.L3:
+  54 004c 8701      		movw r16,r14
+  55 004e 23E0      		ldi r18,3
+  56 0050 000F      	1:	lsl r16
+  57 0052 111F      		rol r17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s 			page 2
+
+
+  58 0054 2A95      		dec r18
+  59 0056 01F4      		brne 1b
+  60 0058 065F      		subi r16,lo8(-(10))
+  61 005a 1F4F      		sbci r17,hi8(-(10))
+  62 005c 080F      		add r16,r24
+  63 005e 191F      		adc r17,r25
+  64 0060 3E01      		movw r6,r28
+  65 0062 0894      		sec
+  66 0064 611C      		adc r6,__zero_reg__
+  67 0066 711C      		adc r7,__zero_reg__
+  68 0068 00C0      		rjmp .L4
+  69               	.L9:
+  70 006a F801      		movw r30,r16
+  71 006c 8681      		ldd r24,Z+6
+  72 006e 9781      		ldd r25,Z+7
+  73 0070 892B      		or r24,r25
+  74 0072 01F0      		breq .L5
+  75 0074 9A82      		std Y+2,r9
+  76 0076 8982      		std Y+1,r8
+  77 0078 8281      		ldd r24,Z+2
+  78 007a 9381      		ldd r25,Z+3
+  79 007c A481      		ldd r26,Z+4
+  80 007e B581      		ldd r27,Z+5
+  81 0080 8B83      		std Y+3,r24
+  82 0082 9C83      		std Y+4,r25
+  83 0084 AD83      		std Y+5,r26
+  84 0086 BE83      		std Y+6,r27
+  85 0088 D501      		movw r26,r10
+  86 008a 5596      		adiw r26,21
+  87 008c ED91      		ld r30,X+
+  88 008e FC91      		ld r31,X
+  89 0090 5697      		sbiw r26,21+1
+  90 0092 C501      		movw r24,r10
+  91 0094 63E0      		ldi r22,lo8(4611)
+  92 0096 72E1      		ldi r23,hi8(4611)
+  93 0098 A301      		movw r20,r6
+  94 009a 0995      		icall
+  95 009c 892B      		or r24,r25
+  96 009e 01F4      		brne .L11
+  97               	.L6:
+  98 00a0 F801      		movw r30,r16
+  99 00a2 6081      		ld r22,Z
+ 100 00a4 7181      		ldd r23,Z+1
+ 101 00a6 D501      		movw r26,r10
+ 102 00a8 5996      		adiw r26,25
+ 103 00aa ED91      		ld r30,X+
+ 104 00ac FC91      		ld r31,X
+ 105 00ae 5A97      		sbiw r26,25+1
+ 106 00b0 C401      		movw r24,r8
+ 107 00b2 41E0      		ldi r20,lo8(1)
+ 108 00b4 50E0      		ldi r21,hi8(1)
+ 109 00b6 0995      		icall
+ 110 00b8 0197      		sbiw r24,1
+ 111 00ba 01F0      		breq .L8
+ 112               	.L11:
+ 113 00bc 85E0      		ldi r24,lo8(5)
+ 114 00be 90E0      		ldi r25,hi8(5)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s 			page 3
+
+
+ 115 00c0 9093 0000 		sts (errno)+1,r25
+ 116 00c4 8093 0000 		sts errno,r24
+ 117 00c8 2FEF      		ldi r18,lo8(-1)
+ 118 00ca 3FEF      		ldi r19,hi8(-1)
+ 119 00cc 00C0      		rjmp .L7
+ 120               	.L8:
+ 121 00ce F801      		movw r30,r16
+ 122 00d0 1782      		std Z+7,__zero_reg__
+ 123 00d2 1682      		std Z+6,__zero_reg__
+ 124               	.L5:
+ 125 00d4 0894      		sec
+ 126 00d6 E11C      		adc r14,__zero_reg__
+ 127 00d8 F11C      		adc r15,__zero_reg__
+ 128 00da 085F      		subi r16,lo8(-(8))
+ 129 00dc 1F4F      		sbci r17,hi8(-(8))
+ 130               	.L4:
+ 131 00de CE14      		cp r12,r14
+ 132 00e0 DF04      		cpc r13,r15
+ 133 00e2 04F4      		brge .L9
+ 134 00e4 20E0      		ldi r18,lo8(0)
+ 135 00e6 30E0      		ldi r19,hi8(0)
+ 136               	.L7:
+ 137 00e8 C901      		movw r24,r18
+ 138               	/* epilogue start */
+ 139 00ea 2696      		adiw r28,6
+ 140 00ec 0FB6      		in __tmp_reg__,__SREG__
+ 141 00ee F894      		cli
+ 142 00f0 DEBF      		out __SP_H__,r29
+ 143 00f2 0FBE      		out __SREG__,__tmp_reg__
+ 144 00f4 CDBF      		out __SP_L__,r28
+ 145 00f6 CF91      		pop r28
+ 146 00f8 DF91      		pop r29
+ 147 00fa 1F91      		pop r17
+ 148 00fc 0F91      		pop r16
+ 149 00fe FF90      		pop r15
+ 150 0100 EF90      		pop r14
+ 151 0102 DF90      		pop r13
+ 152 0104 CF90      		pop r12
+ 153 0106 BF90      		pop r11
+ 154 0108 AF90      		pop r10
+ 155 010a 9F90      		pop r9
+ 156 010c 8F90      		pop r8
+ 157 010e 7F90      		pop r7
+ 158 0110 6F90      		pop r6
+ 159 0112 0895      		ret
+ 160               		.size	PhatSectorFlush, .-PhatSectorFlush
+ 161               	.global	PhatSectorRead
+ 162               		.type	PhatSectorRead, @function
+ 163               	PhatSectorRead:
+ 164 0114 CF92      		push r12
+ 165 0116 DF92      		push r13
+ 166 0118 EF92      		push r14
+ 167 011a FF92      		push r15
+ 168 011c 0F93      		push r16
+ 169 011e 1F93      		push r17
+ 170 0120 DF93      		push r29
+ 171 0122 CF93      		push r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s 			page 4
+
+
+ 172 0124 00D0      		rcall .
+ 173 0126 00D0      		rcall .
+ 174 0128 00D0      		rcall .
+ 175 012a CDB7      		in r28,__SP_L__
+ 176 012c DEB7      		in r29,__SP_H__
+ 177               	/* prologue: function */
+ 178               	/* frame size = 6 */
+ 179 012e 7C01      		movw r14,r24
+ 180 0130 6901      		movw r12,r18
+ 181 0132 DC01      		movw r26,r24
+ 182 0134 1296      		adiw r26,2
+ 183 0136 0D91      		ld r16,X+
+ 184 0138 1C91      		ld r17,X
+ 185 013a 1397      		sbiw r26,2+1
+ 186 013c 9A83      		std Y+2,r25
+ 187 013e 8983      		std Y+1,r24
+ 188 0140 4B83      		std Y+3,r20
+ 189 0142 5C83      		std Y+4,r21
+ 190 0144 6D83      		std Y+5,r22
+ 191 0146 7E83      		std Y+6,r23
+ 192 0148 D801      		movw r26,r16
+ 193 014a 5596      		adiw r26,21
+ 194 014c ED91      		ld r30,X+
+ 195 014e FC91      		ld r31,X
+ 196 0150 5697      		sbiw r26,21+1
+ 197 0152 C801      		movw r24,r16
+ 198 0154 63E0      		ldi r22,lo8(4611)
+ 199 0156 72E1      		ldi r23,hi8(4611)
+ 200 0158 AE01      		movw r20,r28
+ 201 015a 4F5F      		subi r20,lo8(-(1))
+ 202 015c 5F4F      		sbci r21,hi8(-(1))
+ 203 015e 0995      		icall
+ 204 0160 892B      		or r24,r25
+ 205 0162 01F4      		brne .L15
+ 206               	.L13:
+ 207 0164 D801      		movw r26,r16
+ 208 0166 5796      		adiw r26,23
+ 209 0168 ED91      		ld r30,X+
+ 210 016a FC91      		ld r31,X
+ 211 016c 5897      		sbiw r26,23+1
+ 212 016e C701      		movw r24,r14
+ 213 0170 B601      		movw r22,r12
+ 214 0172 41E0      		ldi r20,lo8(1)
+ 215 0174 50E0      		ldi r21,hi8(1)
+ 216 0176 0995      		icall
+ 217 0178 0197      		sbiw r24,1
+ 218 017a 01F4      		brne .L15
+ 219 017c 20E0      		ldi r18,lo8(0)
+ 220 017e 30E0      		ldi r19,hi8(0)
+ 221 0180 00C0      		rjmp .L14
+ 222               	.L15:
+ 223 0182 85E0      		ldi r24,lo8(5)
+ 224 0184 90E0      		ldi r25,hi8(5)
+ 225 0186 9093 0000 		sts (errno)+1,r25
+ 226 018a 8093 0000 		sts errno,r24
+ 227 018e 2FEF      		ldi r18,lo8(-1)
+ 228 0190 3FEF      		ldi r19,hi8(-1)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s 			page 5
+
+
+ 229               	.L14:
+ 230 0192 C901      		movw r24,r18
+ 231               	/* epilogue start */
+ 232 0194 2696      		adiw r28,6
+ 233 0196 0FB6      		in __tmp_reg__,__SREG__
+ 234 0198 F894      		cli
+ 235 019a DEBF      		out __SP_H__,r29
+ 236 019c 0FBE      		out __SREG__,__tmp_reg__
+ 237 019e CDBF      		out __SP_L__,r28
+ 238 01a0 CF91      		pop r28
+ 239 01a2 DF91      		pop r29
+ 240 01a4 1F91      		pop r17
+ 241 01a6 0F91      		pop r16
+ 242 01a8 FF90      		pop r15
+ 243 01aa EF90      		pop r14
+ 244 01ac DF90      		pop r13
+ 245 01ae CF90      		pop r12
+ 246 01b0 0895      		ret
+ 247               		.size	PhatSectorRead, .-PhatSectorRead
+ 248               	.global	PhatSectorLoad
+ 249               		.type	PhatSectorLoad, @function
+ 250               	PhatSectorLoad:
+ 251 01b2 AF92      		push r10
+ 252 01b4 BF92      		push r11
+ 253 01b6 CF92      		push r12
+ 254 01b8 DF92      		push r13
+ 255 01ba EF92      		push r14
+ 256 01bc FF92      		push r15
+ 257 01be 0F93      		push r16
+ 258 01c0 1F93      		push r17
+ 259 01c2 CF93      		push r28
+ 260 01c4 DF93      		push r29
+ 261               	/* prologue: function */
+ 262               	/* frame size = 0 */
+ 263 01c6 6C01      		movw r12,r24
+ 264 01c8 7A01      		movw r14,r20
+ 265 01ca 8B01      		movw r16,r22
+ 266 01cc FC01      		movw r30,r24
+ 267 01ce C189      		ldd r28,Z+17
+ 268 01d0 D289      		ldd r29,Z+18
+ 269 01d2 34E1      		ldi r19,lo8(20)
+ 270 01d4 A32E      		mov r10,r19
+ 271 01d6 B12C      		mov r11,__zero_reg__
+ 272 01d8 AC0E      		add r10,r28
+ 273 01da BD1E      		adc r11,r29
+ 274 01dc C501      		movw r24,r10
+ 275 01de 40E0      		ldi r20,lo8(0)
+ 276 01e0 50E0      		ldi r21,hi8(0)
+ 277 01e2 60E0      		ldi r22,hlo8(0)
+ 278 01e4 70E0      		ldi r23,hhi8(0)
+ 279 01e6 0E94 0000 		call NutEventWait
+ 280 01ea 8C85      		ldd r24,Y+12
+ 281 01ec 9D85      		ldd r25,Y+13
+ 282 01ee AE85      		ldd r26,Y+14
+ 283 01f0 BF85      		ldd r27,Y+15
+ 284 01f2 8E15      		cp r24,r14
+ 285 01f4 9F05      		cpc r25,r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s 			page 6
+
+
+ 286 01f6 A007      		cpc r26,r16
+ 287 01f8 B107      		cpc r27,r17
+ 288 01fa 01F4      		brne .L18
+ 289 01fc C501      		movw r24,r10
+ 290 01fe 0E94 0000 		call NutEventPostAsync
+ 291 0202 C0E0      		ldi r28,lo8(0)
+ 292 0204 D0E0      		ldi r29,hi8(0)
+ 293 0206 00C0      		rjmp .L19
+ 294               	.L18:
+ 295 0208 C601      		movw r24,r12
+ 296 020a 60E0      		ldi r22,lo8(0)
+ 297 020c 70E0      		ldi r23,hi8(0)
+ 298 020e 0E94 0000 		call PhatSectorFlush
+ 299 0212 892B      		or r24,r25
+ 300 0214 01F4      		brne .L20
+ 301 0216 2A85      		ldd r18,Y+10
+ 302 0218 3B85      		ldd r19,Y+11
+ 303 021a F601      		movw r30,r12
+ 304 021c 8785      		ldd r24,Z+15
+ 305 021e 9089      		ldd r25,Z+16
+ 306 0220 B801      		movw r22,r16
+ 307 0222 A701      		movw r20,r14
+ 308 0224 0E94 0000 		call PhatSectorRead
+ 309 0228 892B      		or r24,r25
+ 310 022a 01F4      		brne .L20
+ 311 022c EC86      		std Y+12,r14
+ 312 022e FD86      		std Y+13,r15
+ 313 0230 0E87      		std Y+14,r16
+ 314 0232 1F87      		std Y+15,r17
+ 315 0234 C0E0      		ldi r28,lo8(0)
+ 316 0236 D0E0      		ldi r29,hi8(0)
+ 317 0238 00C0      		rjmp .L21
+ 318               	.L20:
+ 319 023a CFEF      		ldi r28,lo8(-1)
+ 320 023c DFEF      		ldi r29,hi8(-1)
+ 321               	.L21:
+ 322 023e C501      		movw r24,r10
+ 323 0240 0E94 0000 		call NutEventPostAsync
+ 324               	.L19:
+ 325 0244 CE01      		movw r24,r28
+ 326               	/* epilogue start */
+ 327 0246 DF91      		pop r29
+ 328 0248 CF91      		pop r28
+ 329 024a 1F91      		pop r17
+ 330 024c 0F91      		pop r16
+ 331 024e FF90      		pop r15
+ 332 0250 EF90      		pop r14
+ 333 0252 DF90      		pop r13
+ 334 0254 CF90      		pop r12
+ 335 0256 BF90      		pop r11
+ 336 0258 AF90      		pop r10
+ 337 025a 0895      		ret
+ 338               		.size	PhatSectorLoad, .-PhatSectorLoad
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 phatio.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s:11     .text:00000000 PhatSectorFlush
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s:163    .text:00000114 PhatSectorRead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccI5GaWH.s:250    .text:000001b2 PhatSectorLoad
+
+UNDEFINED SYMBOLS
+errno
+NutEventWait
+NutEventPostAsync

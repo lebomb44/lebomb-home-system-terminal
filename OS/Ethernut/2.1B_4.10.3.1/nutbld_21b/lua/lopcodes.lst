@@ -1,0 +1,233 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s 			page 1
+
+
+   1               		.file	"lopcodes.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               	.global	luaP_opnames
+   9               		.data
+  10               	.LC0:
+  11 0000 4D4F 5645 		.string	"MOVE"
+  11      00
+  12               	.LC1:
+  13 0005 4C4F 4144 		.string	"LOADK"
+  13      4B00 
+  14               	.LC2:
+  15 000b 4C4F 4144 		.string	"LOADBOOL"
+  15      424F 4F4C 
+  15      00
+  16               	.LC3:
+  17 0014 4C4F 4144 		.string	"LOADNIL"
+  17      4E49 4C00 
+  18               	.LC4:
+  19 001c 4745 5455 		.string	"GETUPVAL"
+  19      5056 414C 
+  19      00
+  20               	.LC5:
+  21 0025 4745 5447 		.string	"GETGLOBAL"
+  21      4C4F 4241 
+  21      4C00 
+  22               	.LC6:
+  23 002f 4745 5454 		.string	"GETTABLE"
+  23      4142 4C45 
+  23      00
+  24               	.LC7:
+  25 0038 5345 5447 		.string	"SETGLOBAL"
+  25      4C4F 4241 
+  25      4C00 
+  26               	.LC8:
+  27 0042 5345 5455 		.string	"SETUPVAL"
+  27      5056 414C 
+  27      00
+  28               	.LC9:
+  29 004b 5345 5454 		.string	"SETTABLE"
+  29      4142 4C45 
+  29      00
+  30               	.LC10:
+  31 0054 4E45 5754 		.string	"NEWTABLE"
+  31      4142 4C45 
+  31      00
+  32               	.LC11:
+  33 005d 5345 4C46 		.string	"SELF"
+  33      00
+  34               	.LC12:
+  35 0062 4144 4400 		.string	"ADD"
+  36               	.LC13:
+  37 0066 5355 4200 		.string	"SUB"
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s 			page 2
+
+
+  38               	.LC14:
+  39 006a 4D55 4C00 		.string	"MUL"
+  40               	.LC15:
+  41 006e 4449 5600 		.string	"DIV"
+  42               	.LC16:
+  43 0072 4D4F 4400 		.string	"MOD"
+  44               	.LC17:
+  45 0076 504F 5700 		.string	"POW"
+  46               	.LC18:
+  47 007a 554E 4D00 		.string	"UNM"
+  48               	.LC19:
+  49 007e 4E4F 5400 		.string	"NOT"
+  50               	.LC20:
+  51 0082 4C45 4E00 		.string	"LEN"
+  52               	.LC21:
+  53 0086 434F 4E43 		.string	"CONCAT"
+  53      4154 00
+  54               	.LC22:
+  55 008d 4A4D 5000 		.string	"JMP"
+  56               	.LC23:
+  57 0091 4551 00   		.string	"EQ"
+  58               	.LC24:
+  59 0094 4C54 00   		.string	"LT"
+  60               	.LC25:
+  61 0097 4C45 00   		.string	"LE"
+  62               	.LC26:
+  63 009a 5445 5354 		.string	"TEST"
+  63      00
+  64               	.LC27:
+  65 009f 5445 5354 		.string	"TESTSET"
+  65      5345 5400 
+  66               	.LC28:
+  67 00a7 4341 4C4C 		.string	"CALL"
+  67      00
+  68               	.LC29:
+  69 00ac 5441 494C 		.string	"TAILCALL"
+  69      4341 4C4C 
+  69      00
+  70               	.LC30:
+  71 00b5 5245 5455 		.string	"RETURN"
+  71      524E 00
+  72               	.LC31:
+  73 00bc 464F 524C 		.string	"FORLOOP"
+  73      4F4F 5000 
+  74               	.LC32:
+  75 00c4 464F 5250 		.string	"FORPREP"
+  75      5245 5000 
+  76               	.LC33:
+  77 00cc 5446 4F52 		.string	"TFORLOOP"
+  77      4C4F 4F50 
+  77      00
+  78               	.LC34:
+  79 00d5 5345 544C 		.string	"SETLIST"
+  79      4953 5400 
+  80               	.LC35:
+  81 00dd 434C 4F53 		.string	"CLOSE"
+  81      4500 
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s 			page 3
+
+
+  82               	.LC36:
+  83 00e3 434C 4F53 		.string	"CLOSURE"
+  83      5552 4500 
+  84               	.LC37:
+  85 00eb 5641 5241 		.string	"VARARG"
+  85      5247 00
+  86               		.type	luaP_opnames, @object
+  87               		.size	luaP_opnames, 78
+  88               	luaP_opnames:
+  89 00f2 0000      		.word	.LC0
+  90 00f4 0000      		.word	.LC1
+  91 00f6 0000      		.word	.LC2
+  92 00f8 0000      		.word	.LC3
+  93 00fa 0000      		.word	.LC4
+  94 00fc 0000      		.word	.LC5
+  95 00fe 0000      		.word	.LC6
+  96 0100 0000      		.word	.LC7
+  97 0102 0000      		.word	.LC8
+  98 0104 0000      		.word	.LC9
+  99 0106 0000      		.word	.LC10
+ 100 0108 0000      		.word	.LC11
+ 101 010a 0000      		.word	.LC12
+ 102 010c 0000      		.word	.LC13
+ 103 010e 0000      		.word	.LC14
+ 104 0110 0000      		.word	.LC15
+ 105 0112 0000      		.word	.LC16
+ 106 0114 0000      		.word	.LC17
+ 107 0116 0000      		.word	.LC18
+ 108 0118 0000      		.word	.LC19
+ 109 011a 0000      		.word	.LC20
+ 110 011c 0000      		.word	.LC21
+ 111 011e 0000      		.word	.LC22
+ 112 0120 0000      		.word	.LC23
+ 113 0122 0000      		.word	.LC24
+ 114 0124 0000      		.word	.LC25
+ 115 0126 0000      		.word	.LC26
+ 116 0128 0000      		.word	.LC27
+ 117 012a 0000      		.word	.LC28
+ 118 012c 0000      		.word	.LC29
+ 119 012e 0000      		.word	.LC30
+ 120 0130 0000      		.word	.LC31
+ 121 0132 0000      		.word	.LC32
+ 122 0134 0000      		.word	.LC33
+ 123 0136 0000      		.word	.LC34
+ 124 0138 0000      		.word	.LC35
+ 125 013a 0000      		.word	.LC36
+ 126 013c 0000      		.word	.LC37
+ 127 013e 0000      		.word	0
+ 128               	.global	luaP_opmodes
+ 129               		.type	luaP_opmodes, @object
+ 130               		.size	luaP_opmodes, 38
+ 131               	luaP_opmodes:
+ 132 0140 60        		.byte	96
+ 133 0141 71        		.byte	113
+ 134 0142 54        		.byte	84
+ 135 0143 60        		.byte	96
+ 136 0144 50        		.byte	80
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s 			page 4
+
+
+ 137 0145 71        		.byte	113
+ 138 0146 6C        		.byte	108
+ 139 0147 31        		.byte	49
+ 140 0148 10        		.byte	16
+ 141 0149 3C        		.byte	60
+ 142 014a 54        		.byte	84
+ 143 014b 6C        		.byte	108
+ 144 014c 7C        		.byte	124
+ 145 014d 7C        		.byte	124
+ 146 014e 7C        		.byte	124
+ 147 014f 7C        		.byte	124
+ 148 0150 7C        		.byte	124
+ 149 0151 7C        		.byte	124
+ 150 0152 60        		.byte	96
+ 151 0153 60        		.byte	96
+ 152 0154 60        		.byte	96
+ 153 0155 68        		.byte	104
+ 154 0156 22        		.byte	34
+ 155 0157 BC        		.byte	-68
+ 156 0158 BC        		.byte	-68
+ 157 0159 BC        		.byte	-68
+ 158 015a E4        		.byte	-28
+ 159 015b E4        		.byte	-28
+ 160 015c 54        		.byte	84
+ 161 015d 54        		.byte	84
+ 162 015e 10        		.byte	16
+ 163 015f 62        		.byte	98
+ 164 0160 62        		.byte	98
+ 165 0161 84        		.byte	-124
+ 166 0162 14        		.byte	20
+ 167 0163 00        		.byte	0
+ 168 0164 51        		.byte	81
+ 169 0165 50        		.byte	80
+ 170               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lopcodes.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s:88     .data:000000f2 luaP_opnames
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccElhKkn.s:131    .data:00000140 luaP_opmodes
+
+UNDEFINED SYMBOLS
+__do_copy_data

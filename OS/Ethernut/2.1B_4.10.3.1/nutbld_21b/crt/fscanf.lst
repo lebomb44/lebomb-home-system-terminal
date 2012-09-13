@@ -1,0 +1,49 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciO3Qdi.s 			page 1
+
+
+   1               		.file	"fscanf.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	fscanf
+  10               		.type	fscanf, @function
+  11               	fscanf:
+  12 0000 DF93      		push r29
+  13 0002 CF93      		push r28
+  14 0004 CDB7      		in r28,__SP_L__
+  15 0006 DEB7      		in r29,__SP_H__
+  16               	/* prologue: function */
+  17               	/* frame size = 0 */
+  18 0008 9E01      		movw r18,r28
+  19 000a 275F      		subi r18,lo8(-(9))
+  20 000c 3F4F      		sbci r19,hi8(-(9))
+  21 000e 8D81      		ldd r24,Y+5
+  22 0010 9E81      		ldd r25,Y+6
+  23 0012 6F81      		ldd r22,Y+7
+  24 0014 7885      		ldd r23,Y+8
+  25 0016 A901      		movw r20,r18
+  26 0018 0E94 0000 		call vfscanf
+  27               	/* epilogue start */
+  28 001c CF91      		pop r28
+  29 001e DF91      		pop r29
+  30 0020 0895      		ret
+  31               		.size	fscanf, .-fscanf
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciO3Qdi.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 fscanf.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciO3Qdi.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciO3Qdi.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciO3Qdi.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciO3Qdi.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciO3Qdi.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciO3Qdi.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cciO3Qdi.s:11     .text:00000000 fscanf
+
+UNDEFINED SYMBOLS
+vfscanf

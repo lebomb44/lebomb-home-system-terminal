@@ -1,0 +1,51 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceJcTad.s 			page 1
+
+
+   1               		.file	"realloc.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	realloc
+  10               		.type	realloc, @function
+  11               	realloc:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 9C01      		movw r18,r24
+  15 0002 AB01      		movw r20,r22
+  16 0004 80E0      		ldi r24,lo8(heapFreeList)
+  17 0006 90E0      		ldi r25,hi8(heapFreeList)
+  18 0008 B901      		movw r22,r18
+  19 000a 0E94 0000 		call NutHeapRootRealloc
+  20 000e 9C01      		movw r18,r24
+  21 0010 0097      		sbiw r24,0
+  22 0012 01F4      		brne .L2
+  23 0014 8CE0      		ldi r24,lo8(12)
+  24 0016 90E0      		ldi r25,hi8(12)
+  25 0018 9093 0000 		sts (errno)+1,r25
+  26 001c 8093 0000 		sts errno,r24
+  27               	.L2:
+  28 0020 C901      		movw r24,r18
+  29               	/* epilogue start */
+  30 0022 0895      		ret
+  31               		.size	realloc, .-realloc
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceJcTad.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 realloc.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceJcTad.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceJcTad.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceJcTad.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceJcTad.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceJcTad.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceJcTad.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cceJcTad.s:11     .text:00000000 realloc
+
+UNDEFINED SYMBOLS
+heapFreeList
+NutHeapRootRealloc
+errno

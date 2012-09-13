@@ -1,0 +1,1494 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 1
+
+
+   1               		.file	"smtpc.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.data
+   9               	.LC0:
+  10 0000 2C0D 0A20 		.string	",\r\n    "
+  10      2020 2000 
+  11               	.LC1:
+  12 0008 4343 3A20 		.string	"CC: "
+  12      00
+  13               	.LC2:
+  14 000d 546F 3A20 		.string	"To: "
+  14      00
+  15               	.LC3:
+  16 0012 0D0A 00   		.string	"\r\n"
+  17               		.text
+  18               		.type	SendMailHeaderRecipient, @function
+  19               	SendMailHeaderRecipient:
+  20 0000 8F92      		push r8
+  21 0002 9F92      		push r9
+  22 0004 AF92      		push r10
+  23 0006 BF92      		push r11
+  24 0008 CF92      		push r12
+  25 000a DF92      		push r13
+  26 000c EF92      		push r14
+  27 000e FF92      		push r15
+  28 0010 0F93      		push r16
+  29 0012 1F93      		push r17
+  30 0014 CF93      		push r28
+  31 0016 DF93      		push r29
+  32               	/* prologue: function */
+  33               	/* frame size = 0 */
+  34 0018 6C01      		movw r12,r24
+  35 001a A42E      		mov r10,r20
+  36 001c 8B01      		movw r16,r22
+  37 001e 7B01      		movw r14,r22
+  38 0020 BB24      		clr r11
+  39 0022 C0E0      		ldi r28,lo8(0)
+  40 0024 D0E0      		ldi r29,hi8(0)
+  41 0026 842E      		mov r8,r20
+  42 0028 9924      		clr r9
+  43               	.L7:
+  44 002a F801      		movw r30,r16
+  45 002c 848D      		ldd r24,Z+28
+  46 002e 90E0      		ldi r25,lo8(0)
+  47 0030 8370      		andi r24,lo8(3)
+  48 0032 9070      		andi r25,hi8(3)
+  49 0034 8815      		cp r24,r8
+  50 0036 9905      		cpc r25,r9
+  51 0038 01F4      		brne .L2
+  52 003a 2097      		sbiw r28,0
+  53 003c 01F0      		breq .L3
+  54 003e 80E0      		ldi r24,lo8(.LC0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 2
+
+
+  55 0040 90E0      		ldi r25,hi8(.LC0)
+  56 0042 00C0      		rjmp .L6
+  57               	.L3:
+  58 0044 F1E0      		ldi r31,lo8(1)
+  59 0046 AF16      		cp r10,r31
+  60 0048 01F0      		breq .L5
+  61 004a 80E0      		ldi r24,lo8(.LC1)
+  62 004c 90E0      		ldi r25,hi8(.LC1)
+  63 004e 00C0      		rjmp .L6
+  64               	.L5:
+  65 0050 80E0      		ldi r24,lo8(.LC2)
+  66 0052 90E0      		ldi r25,hi8(.LC2)
+  67               	.L6:
+  68 0054 B601      		movw r22,r12
+  69 0056 0E94 0000 		call fputs
+  70 005a F701      		movw r30,r14
+  71 005c 8489      		ldd r24,Z+20
+  72 005e 9589      		ldd r25,Z+21
+  73 0060 B601      		movw r22,r12
+  74 0062 0E94 0000 		call fputs
+  75 0066 2196      		adiw r28,1
+  76               	.L2:
+  77 0068 B394      		inc r11
+  78 006a 0F5F      		subi r16,lo8(-(1))
+  79 006c 1F4F      		sbci r17,hi8(-(1))
+  80 006e 82E0      		ldi r24,lo8(2)
+  81 0070 90E0      		ldi r25,hi8(2)
+  82 0072 E80E      		add r14,r24
+  83 0074 F91E      		adc r15,r25
+  84 0076 94E0      		ldi r25,lo8(4)
+  85 0078 B916      		cp r11,r25
+  86 007a 01F4      		brne .L7
+  87 007c CD2B      		or r28,r29
+  88 007e 01F0      		breq .L8
+  89 0080 80E0      		ldi r24,lo8(.LC3)
+  90 0082 90E0      		ldi r25,hi8(.LC3)
+  91 0084 B601      		movw r22,r12
+  92 0086 0E94 0000 		call fputs
+  93               	.L8:
+  94 008a 80E0      		ldi r24,lo8(0)
+  95 008c 90E0      		ldi r25,hi8(0)
+  96               	/* epilogue start */
+  97 008e DF91      		pop r29
+  98 0090 CF91      		pop r28
+  99 0092 1F91      		pop r17
+ 100 0094 0F91      		pop r16
+ 101 0096 FF90      		pop r15
+ 102 0098 EF90      		pop r14
+ 103 009a DF90      		pop r13
+ 104 009c CF90      		pop r12
+ 105 009e BF90      		pop r11
+ 106 00a0 AF90      		pop r10
+ 107 00a2 9F90      		pop r9
+ 108 00a4 8F90      		pop r8
+ 109 00a6 0895      		ret
+ 110               		.size	SendMailHeaderRecipient, .-SendMailHeaderRecipient
+ 111               	.global	NutSmtpSendEncodedLines
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 3
+
+
+ 112               		.type	NutSmtpSendEncodedLines, @function
+ 113               	NutSmtpSendEncodedLines:
+ 114 00a8 EF92      		push r14
+ 115 00aa FF92      		push r15
+ 116 00ac 0F93      		push r16
+ 117 00ae 1F93      		push r17
+ 118 00b0 CF93      		push r28
+ 119 00b2 DF93      		push r29
+ 120               	/* prologue: function */
+ 121               	/* frame size = 0 */
+ 122 00b4 8C01      		movw r16,r24
+ 123 00b6 EB01      		movw r28,r22
+ 124 00b8 88E0      		ldi r24,lo8(8)
+ 125 00ba E82E      		mov r14,r24
+ 126 00bc F12C      		mov r15,__zero_reg__
+ 127 00be E00E      		add r14,r16
+ 128 00c0 F11E      		adc r15,r17
+ 129 00c2 00C0      		rjmp .L24
+ 130               	.L17:
+ 131 00c4 2D30      		cpi r18,lo8(13)
+ 132 00c6 01F0      		breq .L13
+ 133 00c8 2A30      		cpi r18,lo8(10)
+ 134 00ca 01F0      		breq .L14
+ 135 00cc 2193      		st Z+,r18
+ 136 00ce 0196      		adiw r24,1
+ 137 00d0 00C0      		rjmp .L13
+ 138               	.L14:
+ 139 00d2 2196      		adiw r28,1
+ 140 00d4 00C0      		rjmp .L15
+ 141               	.L13:
+ 142 00d6 2196      		adiw r28,1
+ 143               	.L22:
+ 144 00d8 2881      		ld r18,Y
+ 145 00da 2223      		tst r18
+ 146 00dc 01F4      		brne .L16
+ 147 00de 892B      		or r24,r25
+ 148 00e0 01F0      		breq .L24
+ 149 00e2 00C0      		rjmp .L15
+ 150               	.L16:
+ 151 00e4 8F3F      		cpi r24,255
+ 152 00e6 9105      		cpc r25,__zero_reg__
+ 153 00e8 01F0      		breq .L17
+ 154 00ea 04F0      		brlt .L17
+ 155               	.L15:
+ 156 00ec 1082      		st Z,__zero_reg__
+ 157 00ee F801      		movw r30,r16
+ 158 00f0 8085      		ldd r24,Z+8
+ 159 00f2 8E32      		cpi r24,lo8(46)
+ 160 00f4 01F4      		brne .L18
+ 161 00f6 6281      		ldd r22,Z+2
+ 162 00f8 7381      		ldd r23,Z+3
+ 163 00fa 8EE2      		ldi r24,lo8(46)
+ 164 00fc 90E0      		ldi r25,hi8(46)
+ 165 00fe 0E94 0000 		call fputc
+ 166               	.L18:
+ 167 0102 F801      		movw r30,r16
+ 168 0104 6281      		ldd r22,Z+2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 4
+
+
+ 169 0106 7381      		ldd r23,Z+3
+ 170 0108 C701      		movw r24,r14
+ 171 010a 0E94 0000 		call fputs
+ 172 010e F801      		movw r30,r16
+ 173 0110 6281      		ldd r22,Z+2
+ 174 0112 7381      		ldd r23,Z+3
+ 175 0114 80E0      		ldi r24,lo8(.LC3)
+ 176 0116 90E0      		ldi r25,hi8(.LC3)
+ 177 0118 0E94 0000 		call fputs
+ 178 011c FFEF      		ldi r31,hi8(-1)
+ 179 011e 8F3F      		cpi r24,lo8(-1)
+ 180 0120 9F07      		cpc r25,r31
+ 181 0122 01F0      		breq .L19
+ 182               	.L24:
+ 183 0124 8881      		ld r24,Y
+ 184 0126 8823      		tst r24
+ 185 0128 01F4      		brne .L20
+ 186 012a 20E0      		ldi r18,lo8(0)
+ 187 012c 30E0      		ldi r19,hi8(0)
+ 188 012e 00C0      		rjmp .L21
+ 189               	.L20:
+ 190 0130 F701      		movw r30,r14
+ 191 0132 80E0      		ldi r24,lo8(0)
+ 192 0134 90E0      		ldi r25,hi8(0)
+ 193 0136 00C0      		rjmp .L22
+ 194               	.L19:
+ 195 0138 2FEF      		ldi r18,lo8(-1)
+ 196 013a 3FEF      		ldi r19,hi8(-1)
+ 197               	.L21:
+ 198 013c C901      		movw r24,r18
+ 199               	/* epilogue start */
+ 200 013e DF91      		pop r29
+ 201 0140 CF91      		pop r28
+ 202 0142 1F91      		pop r17
+ 203 0144 0F91      		pop r16
+ 204 0146 FF90      		pop r15
+ 205 0148 EF90      		pop r14
+ 206 014a 0895      		ret
+ 207               		.size	NutSmtpSendEncodedLines, .-NutSmtpSendEncodedLines
+ 208               		.data
+ 209               	.LC4:
+ 210 0015 4461 7465 		.string	"Date: %s\r\n"
+ 210      3A20 2573 
+ 210      0D0A 00
+ 211               	.LC5:
+ 212 0020 4672 6F6D 		.string	"From: %s\r\n"
+ 212      3A20 2573 
+ 212      0D0A 00
+ 213               	.LC6:
+ 214 002b 5375 626A 		.string	"Subject: %s\r\n"
+ 214      6563 743A 
+ 214      2025 730D 
+ 214      0A00 
+ 215               		.text
+ 216               	.global	NutSmtpSendMailHeader
+ 217               		.type	NutSmtpSendMailHeader, @function
+ 218               	NutSmtpSendMailHeader:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 5
+
+
+ 219 014c EF92      		push r14
+ 220 014e FF92      		push r15
+ 221 0150 0F93      		push r16
+ 222 0152 1F93      		push r17
+ 223 0154 CF93      		push r28
+ 224 0156 DF93      		push r29
+ 225               	/* prologue: function */
+ 226               	/* frame size = 0 */
+ 227 0158 7C01      		movw r14,r24
+ 228 015a EB01      		movw r28,r22
+ 229 015c 8881      		ld r24,Y
+ 230 015e 9981      		ldd r25,Y+1
+ 231 0160 AA81      		ldd r26,Y+2
+ 232 0162 BB81      		ldd r27,Y+3
+ 233 0164 0097      		sbiw r24,0
+ 234 0166 A105      		cpc r26,__zero_reg__
+ 235 0168 B105      		cpc r27,__zero_reg__
+ 236 016a 01F0      		breq .L26
+ 237 016c D701      		movw r26,r14
+ 238 016e 1296      		adiw r26,2
+ 239 0170 0D91      		ld r16,X+
+ 240 0172 1C91      		ld r17,X
+ 241 0174 1397      		sbiw r26,2+1
+ 242 0176 CB01      		movw r24,r22
+ 243 0178 0E94 0000 		call gmtime
+ 244 017c 0E94 0000 		call Rfc1123TimeString
+ 245 0180 00D0      		rcall .
+ 246 0182 00D0      		rcall .
+ 247 0184 00D0      		rcall .
+ 248 0186 EDB7      		in r30,__SP_L__
+ 249 0188 FEB7      		in r31,__SP_H__
+ 250 018a 3196      		adiw r30,1
+ 251 018c ADB7      		in r26,__SP_L__
+ 252 018e BEB7      		in r27,__SP_H__
+ 253 0190 1296      		adiw r26,1+1
+ 254 0192 1C93      		st X,r17
+ 255 0194 0E93      		st -X,r16
+ 256 0196 1197      		sbiw r26,1
+ 257 0198 20E0      		ldi r18,lo8(.LC4)
+ 258 019a 30E0      		ldi r19,hi8(.LC4)
+ 259 019c 3383      		std Z+3,r19
+ 260 019e 2283      		std Z+2,r18
+ 261 01a0 9583      		std Z+5,r25
+ 262 01a2 8483      		std Z+4,r24
+ 263 01a4 0E94 0000 		call fprintf
+ 264 01a8 EDB7      		in r30,__SP_L__
+ 265 01aa FEB7      		in r31,__SP_H__
+ 266 01ac 3696      		adiw r30,6
+ 267 01ae 0FB6      		in __tmp_reg__,__SREG__
+ 268 01b0 F894      		cli
+ 269 01b2 FEBF      		out __SP_H__,r31
+ 270 01b4 0FBE      		out __SREG__,__tmp_reg__
+ 271 01b6 EDBF      		out __SP_L__,r30
+ 272               	.L26:
+ 273 01b8 00D0      		rcall .
+ 274 01ba 00D0      		rcall .
+ 275 01bc 00D0      		rcall .
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 6
+
+
+ 276 01be EDB7      		in r30,__SP_L__
+ 277 01c0 FEB7      		in r31,__SP_H__
+ 278 01c2 3196      		adiw r30,1
+ 279 01c4 D701      		movw r26,r14
+ 280 01c6 1296      		adiw r26,2
+ 281 01c8 8D91      		ld r24,X+
+ 282 01ca 9C91      		ld r25,X
+ 283 01cc 1397      		sbiw r26,2+1
+ 284 01ce ADB7      		in r26,__SP_L__
+ 285 01d0 BEB7      		in r27,__SP_H__
+ 286 01d2 1296      		adiw r26,1+1
+ 287 01d4 9C93      		st X,r25
+ 288 01d6 8E93      		st -X,r24
+ 289 01d8 1197      		sbiw r26,1
+ 290 01da 80E0      		ldi r24,lo8(.LC5)
+ 291 01dc 90E0      		ldi r25,hi8(.LC5)
+ 292 01de 9383      		std Z+3,r25
+ 293 01e0 8283      		std Z+2,r24
+ 294 01e2 8E81      		ldd r24,Y+6
+ 295 01e4 9F81      		ldd r25,Y+7
+ 296 01e6 9583      		std Z+5,r25
+ 297 01e8 8483      		std Z+4,r24
+ 298 01ea 0E94 0000 		call fprintf
+ 299 01ee EDB7      		in r30,__SP_L__
+ 300 01f0 FEB7      		in r31,__SP_H__
+ 301 01f2 3196      		adiw r30,1
+ 302 01f4 D701      		movw r26,r14
+ 303 01f6 1296      		adiw r26,2
+ 304 01f8 8D91      		ld r24,X+
+ 305 01fa 9C91      		ld r25,X
+ 306 01fc 1397      		sbiw r26,2+1
+ 307 01fe ADB7      		in r26,__SP_L__
+ 308 0200 BEB7      		in r27,__SP_H__
+ 309 0202 1296      		adiw r26,1+1
+ 310 0204 9C93      		st X,r25
+ 311 0206 8E93      		st -X,r24
+ 312 0208 1197      		sbiw r26,1
+ 313 020a 80E0      		ldi r24,lo8(.LC6)
+ 314 020c 90E0      		ldi r25,hi8(.LC6)
+ 315 020e 9383      		std Z+3,r25
+ 316 0210 8283      		std Z+2,r24
+ 317 0212 8885      		ldd r24,Y+8
+ 318 0214 9985      		ldd r25,Y+9
+ 319 0216 9583      		std Z+5,r25
+ 320 0218 8483      		std Z+4,r24
+ 321 021a 0E94 0000 		call fprintf
+ 322 021e EDB7      		in r30,__SP_L__
+ 323 0220 FEB7      		in r31,__SP_H__
+ 324 0222 3696      		adiw r30,6
+ 325 0224 0FB6      		in __tmp_reg__,__SREG__
+ 326 0226 F894      		cli
+ 327 0228 FEBF      		out __SP_H__,r31
+ 328 022a 0FBE      		out __SREG__,__tmp_reg__
+ 329 022c EDBF      		out __SP_L__,r30
+ 330 022e D701      		movw r26,r14
+ 331 0230 1296      		adiw r26,2
+ 332 0232 8D91      		ld r24,X+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 7
+
+
+ 333 0234 9C91      		ld r25,X
+ 334 0236 1397      		sbiw r26,2+1
+ 335 0238 BE01      		movw r22,r28
+ 336 023a 41E0      		ldi r20,lo8(1)
+ 337 023c 0E94 0000 		call SendMailHeaderRecipient
+ 338 0240 F701      		movw r30,r14
+ 339 0242 8281      		ldd r24,Z+2
+ 340 0244 9381      		ldd r25,Z+3
+ 341 0246 BE01      		movw r22,r28
+ 342 0248 42E0      		ldi r20,lo8(2)
+ 343 024a 0E94 0000 		call SendMailHeaderRecipient
+ 344 024e 80E0      		ldi r24,lo8(0)
+ 345 0250 90E0      		ldi r25,hi8(0)
+ 346               	/* epilogue start */
+ 347 0252 DF91      		pop r29
+ 348 0254 CF91      		pop r28
+ 349 0256 1F91      		pop r17
+ 350 0258 0F91      		pop r16
+ 351 025a FF90      		pop r15
+ 352 025c EF90      		pop r14
+ 353 025e 0895      		ret
+ 354               		.size	NutSmtpSendMailHeader, .-NutSmtpSendMailHeader
+ 355               	.global	NutSmtpReceiveResponse
+ 356               		.type	NutSmtpReceiveResponse, @function
+ 357               	NutSmtpReceiveResponse:
+ 358 0260 CF93      		push r28
+ 359 0262 DF93      		push r29
+ 360               	/* prologue: function */
+ 361               	/* frame size = 0 */
+ 362 0264 FC01      		movw r30,r24
+ 363 0266 EC01      		movw r28,r24
+ 364 0268 2896      		adiw r28,8
+ 365 026a 4281      		ldd r20,Z+2
+ 366 026c 5381      		ldd r21,Z+3
+ 367 026e CE01      		movw r24,r28
+ 368 0270 60E0      		ldi r22,lo8(256)
+ 369 0272 71E0      		ldi r23,hi8(256)
+ 370 0274 0E94 0000 		call fgets
+ 371 0278 892B      		or r24,r25
+ 372 027a 01F0      		breq .L29
+ 373 027c CE01      		movw r24,r28
+ 374 027e 6DE0      		ldi r22,lo8(13)
+ 375 0280 70E0      		ldi r23,hi8(13)
+ 376 0282 0E94 0000 		call strchr
+ 377 0286 FC01      		movw r30,r24
+ 378 0288 0097      		sbiw r24,0
+ 379 028a 01F4      		brne .L30
+ 380 028c CE01      		movw r24,r28
+ 381 028e 6AE0      		ldi r22,lo8(10)
+ 382 0290 70E0      		ldi r23,hi8(10)
+ 383 0292 0E94 0000 		call strchr
+ 384 0296 FC01      		movw r30,r24
+ 385 0298 0097      		sbiw r24,0
+ 386 029a 01F0      		breq .L29
+ 387               	.L30:
+ 388 029c 1082      		st Z,__zero_reg__
+ 389 029e FE01      		movw r30,r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 8
+
+
+ 390 02a0 00C0      		rjmp .L31
+ 391               	.L29:
+ 392 02a2 E0E0      		ldi r30,lo8(0)
+ 393 02a4 F0E0      		ldi r31,hi8(0)
+ 394               	.L31:
+ 395 02a6 CF01      		movw r24,r30
+ 396               	/* epilogue start */
+ 397 02a8 DF91      		pop r29
+ 398 02aa CF91      		pop r28
+ 399 02ac 0895      		ret
+ 400               		.size	NutSmtpReceiveResponse, .-NutSmtpReceiveResponse
+ 401               	.global	NutSmtpSendCommand
+ 402               		.type	NutSmtpSendCommand, @function
+ 403               	NutSmtpSendCommand:
+ 404 02ae 0F93      		push r16
+ 405 02b0 1F93      		push r17
+ 406 02b2 DF93      		push r29
+ 407 02b4 CF93      		push r28
+ 408 02b6 CDB7      		in r28,__SP_L__
+ 409 02b8 DEB7      		in r29,__SP_H__
+ 410               	/* prologue: function */
+ 411               	/* frame size = 0 */
+ 412 02ba 0F81      		ldd r16,Y+7
+ 413 02bc 1885      		ldd r17,Y+8
+ 414 02be 9E01      		movw r18,r28
+ 415 02c0 255F      		subi r18,lo8(-(11))
+ 416 02c2 3F4F      		sbci r19,hi8(-(11))
+ 417 02c4 F801      		movw r30,r16
+ 418 02c6 8281      		ldd r24,Z+2
+ 419 02c8 9381      		ldd r25,Z+3
+ 420 02ca 6985      		ldd r22,Y+9
+ 421 02cc 7A85      		ldd r23,Y+10
+ 422 02ce A901      		movw r20,r18
+ 423 02d0 0E94 0000 		call vfprintf
+ 424 02d4 F801      		movw r30,r16
+ 425 02d6 6281      		ldd r22,Z+2
+ 426 02d8 7381      		ldd r23,Z+3
+ 427 02da 80E0      		ldi r24,lo8(.LC3)
+ 428 02dc 90E0      		ldi r25,hi8(.LC3)
+ 429 02de 0E94 0000 		call fputs
+ 430 02e2 F801      		movw r30,r16
+ 431 02e4 8281      		ldd r24,Z+2
+ 432 02e6 9381      		ldd r25,Z+3
+ 433 02e8 0E94 0000 		call fflush
+ 434 02ec C801      		movw r24,r16
+ 435 02ee 0E94 0000 		call NutSmtpReceiveResponse
+ 436               	/* epilogue start */
+ 437 02f2 CF91      		pop r28
+ 438 02f4 DF91      		pop r29
+ 439 02f6 1F91      		pop r17
+ 440 02f8 0F91      		pop r16
+ 441 02fa 0895      		ret
+ 442               		.size	NutSmtpSendCommand, .-NutSmtpSendCommand
+ 443               		.data
+ 444               	.LC7:
+ 445 0039 4D41 494C 		.string	"MAIL FROM:%s"
+ 445      2046 524F 
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 9
+
+
+ 445      4D3A 2573 
+ 445      00
+ 446               	.LC8:
+ 447 0046 5243 5054 		.string	"RCPT TO:%s"
+ 447      2054 4F3A 
+ 447      2573 00
+ 448               		.text
+ 449               	.global	NutSmtpSendMailRequest
+ 450               		.type	NutSmtpSendMailRequest, @function
+ 451               	NutSmtpSendMailRequest:
+ 452 02fc 8F92      		push r8
+ 453 02fe 9F92      		push r9
+ 454 0300 AF92      		push r10
+ 455 0302 BF92      		push r11
+ 456 0304 CF92      		push r12
+ 457 0306 DF92      		push r13
+ 458 0308 EF92      		push r14
+ 459 030a FF92      		push r15
+ 460 030c 0F93      		push r16
+ 461 030e 1F93      		push r17
+ 462 0310 CF93      		push r28
+ 463 0312 DF93      		push r29
+ 464               	/* prologue: function */
+ 465               	/* frame size = 0 */
+ 466 0314 5C01      		movw r10,r24
+ 467 0316 EB01      		movw r28,r22
+ 468 0318 00D0      		rcall .
+ 469 031a 00D0      		rcall .
+ 470 031c 00D0      		rcall .
+ 471 031e EDB7      		in r30,__SP_L__
+ 472 0320 FEB7      		in r31,__SP_H__
+ 473 0322 3196      		adiw r30,1
+ 474 0324 ADB7      		in r26,__SP_L__
+ 475 0326 BEB7      		in r27,__SP_H__
+ 476 0328 1296      		adiw r26,1+1
+ 477 032a 9C93      		st X,r25
+ 478 032c 8E93      		st -X,r24
+ 479 032e 1197      		sbiw r26,1
+ 480 0330 80E0      		ldi r24,lo8(.LC7)
+ 481 0332 90E0      		ldi r25,hi8(.LC7)
+ 482 0334 9383      		std Z+3,r25
+ 483 0336 8283      		std Z+2,r24
+ 484 0338 8C81      		ldd r24,Y+4
+ 485 033a 9D81      		ldd r25,Y+5
+ 486 033c 9583      		std Z+5,r25
+ 487 033e 8483      		std Z+4,r24
+ 488 0340 0E94 0000 		call NutSmtpSendCommand
+ 489 0344 FC01      		movw r30,r24
+ 490 0346 8DB7      		in r24,__SP_L__
+ 491 0348 9EB7      		in r25,__SP_H__
+ 492 034a 0696      		adiw r24,6
+ 493 034c 0FB6      		in __tmp_reg__,__SREG__
+ 494 034e F894      		cli
+ 495 0350 9EBF      		out __SP_H__,r25
+ 496 0352 0FBE      		out __SREG__,__tmp_reg__
+ 497 0354 8DBF      		out __SP_L__,r24
+ 498 0356 3097      		sbiw r30,0
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 10
+
+
+ 499 0358 01F4      		brne .+2
+ 500 035a 00C0      		rjmp .L36
+ 501 035c 8081      		ld r24,Z
+ 502 035e 8233      		cpi r24,lo8(50)
+ 503 0360 01F0      		breq .+2
+ 504 0362 00C0      		rjmp .L36
+ 505 0364 7E01      		movw r14,r28
+ 506 0366 00E0      		ldi r16,lo8(0)
+ 507 0368 10E0      		ldi r17,hi8(0)
+ 508 036a CC24      		clr r12
+ 509 036c DD24      		clr r13
+ 510 036e 90E0      		ldi r25,lo8(.LC8)
+ 511 0370 892E      		mov r8,r25
+ 512 0372 90E0      		ldi r25,hi8(.LC8)
+ 513 0374 992E      		mov r9,r25
+ 514               	.L39:
+ 515 0376 D701      		movw r26,r14
+ 516 0378 1C96      		adiw r26,12
+ 517 037a 2D91      		ld r18,X+
+ 518 037c 3C91      		ld r19,X
+ 519 037e 1D97      		sbiw r26,12+1
+ 520 0380 2115      		cp r18,__zero_reg__
+ 521 0382 3105      		cpc r19,__zero_reg__
+ 522 0384 01F0      		breq .L37
+ 523 0386 8C8D      		ldd r24,Y+28
+ 524 0388 807C      		andi r24,lo8(-64)
+ 525 038a 01F4      		brne .L37
+ 526 038c 00D0      		rcall .
+ 527 038e 00D0      		rcall .
+ 528 0390 00D0      		rcall .
+ 529 0392 EDB7      		in r30,__SP_L__
+ 530 0394 FEB7      		in r31,__SP_H__
+ 531 0396 3196      		adiw r30,1
+ 532 0398 ADB7      		in r26,__SP_L__
+ 533 039a BEB7      		in r27,__SP_H__
+ 534 039c 1296      		adiw r26,1+1
+ 535 039e BC92      		st X,r11
+ 536 03a0 AE92      		st -X,r10
+ 537 03a2 1197      		sbiw r26,1
+ 538 03a4 9382      		std Z+3,r9
+ 539 03a6 8282      		std Z+2,r8
+ 540 03a8 3583      		std Z+5,r19
+ 541 03aa 2483      		std Z+4,r18
+ 542 03ac 0E94 0000 		call NutSmtpSendCommand
+ 543 03b0 FC01      		movw r30,r24
+ 544 03b2 8DB7      		in r24,__SP_L__
+ 545 03b4 9EB7      		in r25,__SP_H__
+ 546 03b6 0696      		adiw r24,6
+ 547 03b8 0FB6      		in __tmp_reg__,__SREG__
+ 548 03ba F894      		cli
+ 549 03bc 9EBF      		out __SP_H__,r25
+ 550 03be 0FBE      		out __SREG__,__tmp_reg__
+ 551 03c0 8DBF      		out __SP_L__,r24
+ 552 03c2 3097      		sbiw r30,0
+ 553 03c4 01F0      		breq .L37
+ 554 03c6 8081      		ld r24,Z
+ 555 03c8 9C8D      		ldd r25,Y+28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 11
+
+
+ 556 03ca 8233      		cpi r24,lo8(50)
+ 557 03cc 01F4      		brne .L38
+ 558 03ce 9062      		ori r25,lo8(32)
+ 559 03d0 9C8F      		std Y+28,r25
+ 560 03d2 0F5F      		subi r16,lo8(-(1))
+ 561 03d4 1F4F      		sbci r17,hi8(-(1))
+ 562 03d6 00C0      		rjmp .L37
+ 563               	.L38:
+ 564 03d8 292F      		mov r18,r25
+ 565 03da 2F7D      		andi r18,lo8(-33)
+ 566 03dc 2C8F      		std Y+28,r18
+ 567 03de 8081      		ld r24,Z
+ 568 03e0 8533      		cpi r24,lo8(53)
+ 569 03e2 01F4      		brne .L37
+ 570 03e4 2068      		ori r18,lo8(-128)
+ 571 03e6 2C8F      		std Y+28,r18
+ 572               	.L37:
+ 573 03e8 0894      		sec
+ 574 03ea C11C      		adc r12,__zero_reg__
+ 575 03ec D11C      		adc r13,__zero_reg__
+ 576 03ee A2E0      		ldi r26,lo8(2)
+ 577 03f0 B0E0      		ldi r27,hi8(2)
+ 578 03f2 EA0E      		add r14,r26
+ 579 03f4 FB1E      		adc r15,r27
+ 580 03f6 2196      		adiw r28,1
+ 581 03f8 B4E0      		ldi r27,lo8(4)
+ 582 03fa CB16      		cp r12,r27
+ 583 03fc D104      		cpc r13,__zero_reg__
+ 584 03fe 01F0      		breq .+2
+ 585 0400 00C0      		rjmp .L39
+ 586 0402 00C0      		rjmp .L40
+ 587               	.L36:
+ 588 0404 00E0      		ldi r16,lo8(0)
+ 589 0406 10E0      		ldi r17,hi8(0)
+ 590               	.L40:
+ 591 0408 C801      		movw r24,r16
+ 592               	/* epilogue start */
+ 593 040a DF91      		pop r29
+ 594 040c CF91      		pop r28
+ 595 040e 1F91      		pop r17
+ 596 0410 0F91      		pop r16
+ 597 0412 FF90      		pop r15
+ 598 0414 EF90      		pop r14
+ 599 0416 DF90      		pop r13
+ 600 0418 CF90      		pop r12
+ 601 041a BF90      		pop r11
+ 602 041c AF90      		pop r10
+ 603 041e 9F90      		pop r9
+ 604 0420 8F90      		pop r8
+ 605 0422 0895      		ret
+ 606               		.size	NutSmtpSendMailRequest, .-NutSmtpSendMailRequest
+ 607               		.data
+ 608               	.LC9:
+ 609 0051 2573 2025 		.string	"%s %s"
+ 609      7300 
+ 610               	.LC10:
+ 611 0057 2573 205B 		.string	"%s [%s]"
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 12
+
+
+ 611      2573 5D00 
+ 612               		.text
+ 613               		.type	SayHello, @function
+ 614               	SayHello:
+ 615 0424 0F93      		push r16
+ 616 0426 1F93      		push r17
+ 617 0428 CF93      		push r28
+ 618 042a DF93      		push r29
+ 619               	/* prologue: function */
+ 620               	/* frame size = 0 */
+ 621 042c EC01      		movw r28,r24
+ 622 042e 8B01      		movw r16,r22
+ 623 0430 4115      		cp r20,__zero_reg__
+ 624 0432 5105      		cpc r21,__zero_reg__
+ 625 0434 01F0      		breq .L44
+ 626 0436 2DB7      		in r18,__SP_L__
+ 627 0438 3EB7      		in r19,__SP_H__
+ 628 043a 2850      		subi r18,lo8(-(-8))
+ 629 043c 3040      		sbci r19,hi8(-(-8))
+ 630 043e 0FB6      		in __tmp_reg__,__SREG__
+ 631 0440 F894      		cli
+ 632 0442 3EBF      		out __SP_H__,r19
+ 633 0444 0FBE      		out __SREG__,__tmp_reg__
+ 634 0446 2DBF      		out __SP_L__,r18
+ 635 0448 EDB7      		in r30,__SP_L__
+ 636 044a FEB7      		in r31,__SP_H__
+ 637 044c 3196      		adiw r30,1
+ 638 044e ADB7      		in r26,__SP_L__
+ 639 0450 BEB7      		in r27,__SP_H__
+ 640 0452 1296      		adiw r26,1+1
+ 641 0454 9C93      		st X,r25
+ 642 0456 8E93      		st -X,r24
+ 643 0458 1197      		sbiw r26,1
+ 644 045a 80E0      		ldi r24,lo8(.LC9)
+ 645 045c 90E0      		ldi r25,hi8(.LC9)
+ 646 045e 9383      		std Z+3,r25
+ 647 0460 8283      		std Z+2,r24
+ 648 0462 7583      		std Z+5,r23
+ 649 0464 6483      		std Z+4,r22
+ 650 0466 5783      		std Z+7,r21
+ 651 0468 4683      		std Z+6,r20
+ 652 046a 00C0      		rjmp .L47
+ 653               	.L44:
+ 654 046c 6091 0000 		lds r22,confnet+16
+ 655 0470 7091 0000 		lds r23,(confnet+16)+1
+ 656 0474 8091 0000 		lds r24,(confnet+16)+2
+ 657 0478 9091 0000 		lds r25,(confnet+16)+3
+ 658 047c 0E94 0000 		call inet_ntoa
+ 659 0480 ADB7      		in r26,__SP_L__
+ 660 0482 BEB7      		in r27,__SP_H__
+ 661 0484 1897      		sbiw r26,8
+ 662 0486 0FB6      		in __tmp_reg__,__SREG__
+ 663 0488 F894      		cli
+ 664 048a BEBF      		out __SP_H__,r27
+ 665 048c 0FBE      		out __SREG__,__tmp_reg__
+ 666 048e ADBF      		out __SP_L__,r26
+ 667 0490 EDB7      		in r30,__SP_L__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 13
+
+
+ 668 0492 FEB7      		in r31,__SP_H__
+ 669 0494 3196      		adiw r30,1
+ 670 0496 1296      		adiw r26,1+1
+ 671 0498 DC93      		st X,r29
+ 672 049a CE93      		st -X,r28
+ 673 049c 1197      		sbiw r26,1
+ 674 049e 20E0      		ldi r18,lo8(.LC10)
+ 675 04a0 30E0      		ldi r19,hi8(.LC10)
+ 676 04a2 3383      		std Z+3,r19
+ 677 04a4 2283      		std Z+2,r18
+ 678 04a6 1583      		std Z+5,r17
+ 679 04a8 0483      		std Z+4,r16
+ 680 04aa 9783      		std Z+7,r25
+ 681 04ac 8683      		std Z+6,r24
+ 682               	.L47:
+ 683 04ae 0E94 0000 		call NutSmtpSendCommand
+ 684 04b2 2DB7      		in r18,__SP_L__
+ 685 04b4 3EB7      		in r19,__SP_H__
+ 686 04b6 285F      		subi r18,lo8(-(8))
+ 687 04b8 3F4F      		sbci r19,hi8(-(8))
+ 688 04ba 0FB6      		in __tmp_reg__,__SREG__
+ 689 04bc F894      		cli
+ 690 04be 3EBF      		out __SP_H__,r19
+ 691 04c0 0FBE      		out __SREG__,__tmp_reg__
+ 692 04c2 2DBF      		out __SP_L__,r18
+ 693               	/* epilogue start */
+ 694 04c4 DF91      		pop r29
+ 695 04c6 CF91      		pop r28
+ 696 04c8 1F91      		pop r17
+ 697 04ca 0F91      		pop r16
+ 698 04cc 0895      		ret
+ 699               		.size	SayHello, .-SayHello
+ 700               		.data
+ 701               	.LC11:
+ 702 005f 5155 4954 		.string	"QUIT"
+ 702      00
+ 703               		.text
+ 704               	.global	NutSmtpDisconnect
+ 705               		.type	NutSmtpDisconnect, @function
+ 706               	NutSmtpDisconnect:
+ 707 04ce CF93      		push r28
+ 708 04d0 DF93      		push r29
+ 709               	/* prologue: function */
+ 710               	/* frame size = 0 */
+ 711 04d2 EC01      		movw r28,r24
+ 712 04d4 8881      		ld r24,Y
+ 713 04d6 9981      		ldd r25,Y+1
+ 714 04d8 892B      		or r24,r25
+ 715 04da 01F0      		breq .L49
+ 716 04dc 8A81      		ldd r24,Y+2
+ 717 04de 9B81      		ldd r25,Y+3
+ 718 04e0 892B      		or r24,r25
+ 719 04e2 01F0      		breq .L50
+ 720 04e4 00D0      		rcall .
+ 721 04e6 00D0      		rcall .
+ 722 04e8 EDB7      		in r30,__SP_L__
+ 723 04ea FEB7      		in r31,__SP_H__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 14
+
+
+ 724 04ec D283      		std Z+2,r29
+ 725 04ee C183      		std Z+1,r28
+ 726 04f0 80E0      		ldi r24,lo8(.LC11)
+ 727 04f2 90E0      		ldi r25,hi8(.LC11)
+ 728 04f4 9483      		std Z+4,r25
+ 729 04f6 8383      		std Z+3,r24
+ 730 04f8 0E94 0000 		call NutSmtpSendCommand
+ 731 04fc 0F90      		pop __tmp_reg__
+ 732 04fe 0F90      		pop __tmp_reg__
+ 733 0500 0F90      		pop __tmp_reg__
+ 734 0502 0F90      		pop __tmp_reg__
+ 735 0504 8A81      		ldd r24,Y+2
+ 736 0506 9B81      		ldd r25,Y+3
+ 737 0508 0E94 0000 		call fclose
+ 738               	.L50:
+ 739 050c 8881      		ld r24,Y
+ 740 050e 9981      		ldd r25,Y+1
+ 741 0510 0E94 0000 		call NutTcpCloseSocket
+ 742               	.L49:
+ 743 0514 CE01      		movw r24,r28
+ 744 0516 0E94 0000 		call free
+ 745               	/* epilogue start */
+ 746 051a DF91      		pop r29
+ 747 051c CF91      		pop r28
+ 748 051e 0895      		ret
+ 749               		.size	NutSmtpDisconnect, .-NutSmtpDisconnect
+ 750               		.data
+ 751               	.LC12:
+ 752 0064 4441 5441 		.string	"DATA"
+ 752      00
+ 753               	.LC13:
+ 754 0069 2E0D 0A00 		.string	".\r\n"
+ 755               		.text
+ 756               	.global	NutSmtpSendMail
+ 757               		.type	NutSmtpSendMail, @function
+ 758               	NutSmtpSendMail:
+ 759 0520 0F93      		push r16
+ 760 0522 1F93      		push r17
+ 761 0524 CF93      		push r28
+ 762 0526 DF93      		push r29
+ 763               	/* prologue: function */
+ 764               	/* frame size = 0 */
+ 765 0528 EC01      		movw r28,r24
+ 766 052a 8B01      		movw r16,r22
+ 767 052c 0E94 0000 		call NutSmtpSendMailRequest
+ 768 0530 1816      		cp __zero_reg__,r24
+ 769 0532 1906      		cpc __zero_reg__,r25
+ 770 0534 04F0      		brlt .L53
+ 771 0536 E0E0      		ldi r30,lo8(0)
+ 772 0538 F0E0      		ldi r31,hi8(0)
+ 773 053a 00C0      		rjmp .L54
+ 774               	.L53:
+ 775 053c 00D0      		rcall .
+ 776 053e 00D0      		rcall .
+ 777 0540 EDB7      		in r30,__SP_L__
+ 778 0542 FEB7      		in r31,__SP_H__
+ 779 0544 D283      		std Z+2,r29
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 15
+
+
+ 780 0546 C183      		std Z+1,r28
+ 781 0548 80E0      		ldi r24,lo8(.LC12)
+ 782 054a 90E0      		ldi r25,hi8(.LC12)
+ 783 054c 9483      		std Z+4,r25
+ 784 054e 8383      		std Z+3,r24
+ 785 0550 0E94 0000 		call NutSmtpSendCommand
+ 786 0554 FC01      		movw r30,r24
+ 787 0556 0F90      		pop __tmp_reg__
+ 788 0558 0F90      		pop __tmp_reg__
+ 789 055a 0F90      		pop __tmp_reg__
+ 790 055c 0F90      		pop __tmp_reg__
+ 791 055e 0097      		sbiw r24,0
+ 792 0560 01F0      		breq .L54
+ 793 0562 8081      		ld r24,Z
+ 794 0564 8333      		cpi r24,lo8(51)
+ 795 0566 01F4      		brne .L54
+ 796 0568 CE01      		movw r24,r28
+ 797 056a B801      		movw r22,r16
+ 798 056c 0E94 0000 		call NutSmtpSendMailHeader
+ 799 0570 6A81      		ldd r22,Y+2
+ 800 0572 7B81      		ldd r23,Y+3
+ 801 0574 80E0      		ldi r24,lo8(.LC3)
+ 802 0576 90E0      		ldi r25,hi8(.LC3)
+ 803 0578 0E94 0000 		call fputs
+ 804 057c F801      		movw r30,r16
+ 805 057e 6285      		ldd r22,Z+10
+ 806 0580 7385      		ldd r23,Z+11
+ 807 0582 6115      		cp r22,__zero_reg__
+ 808 0584 7105      		cpc r23,__zero_reg__
+ 809 0586 01F0      		breq .L55
+ 810 0588 CE01      		movw r24,r28
+ 811 058a 0E94 0000 		call NutSmtpSendEncodedLines
+ 812               	.L55:
+ 813 058e 6A81      		ldd r22,Y+2
+ 814 0590 7B81      		ldd r23,Y+3
+ 815 0592 80E0      		ldi r24,lo8(.LC13)
+ 816 0594 90E0      		ldi r25,hi8(.LC13)
+ 817 0596 0E94 0000 		call fputs
+ 818 059a 8A81      		ldd r24,Y+2
+ 819 059c 9B81      		ldd r25,Y+3
+ 820 059e 0E94 0000 		call fflush
+ 821 05a2 CE01      		movw r24,r28
+ 822 05a4 0E94 0000 		call NutSmtpReceiveResponse
+ 823 05a8 FC01      		movw r30,r24
+ 824 05aa 0097      		sbiw r24,0
+ 825 05ac 01F0      		breq .L54
+ 826 05ae 8081      		ld r24,Z
+ 827 05b0 8233      		cpi r24,lo8(50)
+ 828 05b2 01F4      		brne .L54
+ 829 05b4 E801      		movw r28,r16
+ 830 05b6 D801      		movw r26,r16
+ 831 05b8 20E0      		ldi r18,lo8(0)
+ 832               	.L57:
+ 833 05ba 8C85      		ldd r24,Y+12
+ 834 05bc 9D85      		ldd r25,Y+13
+ 835 05be 892B      		or r24,r25
+ 836 05c0 01F0      		breq .L56
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 16
+
+
+ 837 05c2 5C96      		adiw r26,28
+ 838 05c4 8C91      		ld r24,X
+ 839 05c6 5C97      		sbiw r26,28
+ 840 05c8 85FF      		sbrs r24,5
+ 841 05ca 00C0      		rjmp .L56
+ 842 05cc 8064      		ori r24,lo8(64)
+ 843 05ce 5C96      		adiw r26,28
+ 844 05d0 8C93      		st X,r24
+ 845 05d2 5C97      		sbiw r26,28
+ 846               	.L56:
+ 847 05d4 2F5F      		subi r18,lo8(-(1))
+ 848 05d6 2296      		adiw r28,2
+ 849 05d8 1196      		adiw r26,1
+ 850 05da 2430      		cpi r18,lo8(4)
+ 851 05dc 01F4      		brne .L57
+ 852               	.L54:
+ 853 05de CF01      		movw r24,r30
+ 854               	/* epilogue start */
+ 855 05e0 DF91      		pop r29
+ 856 05e2 CF91      		pop r28
+ 857 05e4 1F91      		pop r17
+ 858 05e6 0F91      		pop r16
+ 859 05e8 0895      		ret
+ 860               		.size	NutSmtpSendMail, .-NutSmtpSendMail
+ 861               		.data
+ 862               	.LC14:
+ 863 006d 4548 4C4F 		.string	"EHLO"
+ 863      00
+ 864               	.LC15:
+ 865 0072 4845 4C4F 		.string	"HELO"
+ 865      00
+ 866               	.LC16:
+ 867 0077 4155 5448 		.string	"AUTH "
+ 867      2000 
+ 868               	.LC17:
+ 869 007d 4C4F 4749 		.string	"LOGIN"
+ 869      4E00 
+ 870               	.LC18:
+ 871 0083 504C 4149 		.string	"PLAIN"
+ 871      4E00 
+ 872               	.LC19:
+ 873 0089 4155 5448 		.string	"AUTH PLAIN %s"
+ 873      2050 4C41 
+ 873      494E 2025 
+ 873      7300 
+ 874               		.text
+ 875               	.global	NutSmtpLogin
+ 876               		.type	NutSmtpLogin, @function
+ 877               	NutSmtpLogin:
+ 878 05ea 4F92      		push r4
+ 879 05ec 5F92      		push r5
+ 880 05ee 6F92      		push r6
+ 881 05f0 7F92      		push r7
+ 882 05f2 8F92      		push r8
+ 883 05f4 9F92      		push r9
+ 884 05f6 AF92      		push r10
+ 885 05f8 BF92      		push r11
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 17
+
+
+ 886 05fa CF92      		push r12
+ 887 05fc DF92      		push r13
+ 888 05fe EF92      		push r14
+ 889 0600 FF92      		push r15
+ 890 0602 0F93      		push r16
+ 891 0604 1F93      		push r17
+ 892 0606 CF93      		push r28
+ 893 0608 DF93      		push r29
+ 894               	/* prologue: function */
+ 895               	/* frame size = 0 */
+ 896 060a 4C01      		movw r8,r24
+ 897 060c 8B01      		movw r16,r22
+ 898 060e 3A01      		movw r6,r20
+ 899 0610 522E      		mov r5,r18
+ 900 0612 432E      		mov r4,r19
+ 901 0614 60E0      		ldi r22,lo8(.LC14)
+ 902 0616 70E0      		ldi r23,hi8(.LC14)
+ 903 0618 A801      		movw r20,r16
+ 904 061a 0E94 0000 		call SayHello
+ 905 061e EC01      		movw r28,r24
+ 906 0620 0097      		sbiw r24,0
+ 907 0622 01F4      		brne .+2
+ 908 0624 00C0      		rjmp .L61
+ 909 0626 8881      		ld r24,Y
+ 910 0628 8533      		cpi r24,lo8(53)
+ 911 062a 01F4      		brne .L62
+ 912 062c F401      		movw r30,r8
+ 913 062e 8481      		ldd r24,Z+4
+ 914 0630 9581      		ldd r25,Z+5
+ 915 0632 A681      		ldd r26,Z+6
+ 916 0634 B781      		ldd r27,Z+7
+ 917 0636 8160      		ori r24,lo8(1)
+ 918 0638 8483      		std Z+4,r24
+ 919 063a 9583      		std Z+5,r25
+ 920 063c A683      		std Z+6,r26
+ 921 063e B783      		std Z+7,r27
+ 922 0640 C401      		movw r24,r8
+ 923 0642 60E0      		ldi r22,lo8(.LC15)
+ 924 0644 70E0      		ldi r23,hi8(.LC15)
+ 925 0646 A801      		movw r20,r16
+ 926 0648 0E94 0000 		call SayHello
+ 927 064c EC01      		movw r28,r24
+ 928 064e 0097      		sbiw r24,0
+ 929 0650 01F4      		brne .+2
+ 930 0652 00C0      		rjmp .L61
+ 931               	.L62:
+ 932 0654 8881      		ld r24,Y
+ 933 0656 8233      		cpi r24,lo8(50)
+ 934 0658 01F0      		breq .+2
+ 935 065a 00C0      		rjmp .L61
+ 936 065c D401      		movw r26,r8
+ 937 065e 1496      		adiw r26,4
+ 938 0660 8C91      		ld r24,X
+ 939 0662 1497      		sbiw r26,4
+ 940 0664 80FD      		sbrc r24,0
+ 941 0666 00C0      		rjmp .L63
+ 942               	.L80:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 18
+
+
+ 943 0668 CE01      		movw r24,r28
+ 944 066a 0496      		adiw r24,4
+ 945 066c 60E0      		ldi r22,lo8(.LC16)
+ 946 066e 70E0      		ldi r23,hi8(.LC16)
+ 947 0670 45E0      		ldi r20,lo8(5)
+ 948 0672 50E0      		ldi r21,hi8(5)
+ 949 0674 0E94 0000 		call strncmp
+ 950 0678 0097      		sbiw r24,0
+ 951 067a 01F4      		brne .L64
+ 952 067c 8E01      		movw r16,r28
+ 953 067e 075F      		subi r16,lo8(-(9))
+ 954 0680 1F4F      		sbci r17,hi8(-(9))
+ 955 0682 C801      		movw r24,r16
+ 956 0684 60E0      		ldi r22,lo8(.LC17)
+ 957 0686 70E0      		ldi r23,hi8(.LC17)
+ 958 0688 0E94 0000 		call strstr
+ 959 068c 0097      		sbiw r24,0
+ 960 068e 01F0      		breq .L65
+ 961 0690 F401      		movw r30,r8
+ 962 0692 8481      		ldd r24,Z+4
+ 963 0694 9581      		ldd r25,Z+5
+ 964 0696 A681      		ldd r26,Z+6
+ 965 0698 B781      		ldd r27,Z+7
+ 966 069a 8260      		ori r24,lo8(2)
+ 967 069c 8483      		std Z+4,r24
+ 968 069e 9583      		std Z+5,r25
+ 969 06a0 A683      		std Z+6,r26
+ 970 06a2 B783      		std Z+7,r27
+ 971               	.L65:
+ 972 06a4 C801      		movw r24,r16
+ 973 06a6 60E0      		ldi r22,lo8(.LC18)
+ 974 06a8 70E0      		ldi r23,hi8(.LC18)
+ 975 06aa 0E94 0000 		call strstr
+ 976 06ae 0097      		sbiw r24,0
+ 977 06b0 01F0      		breq .L64
+ 978 06b2 F401      		movw r30,r8
+ 979 06b4 8481      		ldd r24,Z+4
+ 980 06b6 9581      		ldd r25,Z+5
+ 981 06b8 A681      		ldd r26,Z+6
+ 982 06ba B781      		ldd r27,Z+7
+ 983 06bc 8460      		ori r24,lo8(4)
+ 984 06be 8483      		std Z+4,r24
+ 985 06c0 9583      		std Z+5,r25
+ 986 06c2 A683      		std Z+6,r26
+ 987 06c4 B783      		std Z+7,r27
+ 988               	.L64:
+ 989 06c6 8B81      		ldd r24,Y+3
+ 990 06c8 8D32      		cpi r24,lo8(45)
+ 991 06ca 01F4      		brne .L63
+ 992 06cc C401      		movw r24,r8
+ 993 06ce 0E94 0000 		call NutSmtpReceiveResponse
+ 994 06d2 EC01      		movw r28,r24
+ 995 06d4 0097      		sbiw r24,0
+ 996 06d6 01F4      		brne .L80
+ 997               	.L63:
+ 998 06d8 6114      		cp r6,__zero_reg__
+ 999 06da 7104      		cpc r7,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 19
+
+
+ 1000 06dc 01F4      		brne .+2
+ 1001 06de 00C0      		rjmp .L67
+ 1002 06e0 D401      		movw r26,r8
+ 1003 06e2 1496      		adiw r26,4
+ 1004 06e4 8C91      		ld r24,X
+ 1005 06e6 1497      		sbiw r26,4
+ 1006 06e8 82FF      		sbrs r24,2
+ 1007 06ea 00C0      		rjmp .L61
+ 1008 06ec D301      		movw r26,r6
+ 1009 06ee 0D90      		ld __tmp_reg__,X+
+ 1010 06f0 0020      		tst __tmp_reg__
+ 1011 06f2 01F4      		brne .-6
+ 1012 06f4 8D01      		movw r16,r26
+ 1013 06f6 0150      		subi r16,lo8(-(-1))
+ 1014 06f8 1040      		sbci r17,hi8(-(-1))
+ 1015 06fa 0619      		sub r16,r6
+ 1016 06fc 1709      		sbc r17,r7
+ 1017 06fe E52D      		mov r30,r5
+ 1018 0700 F42D      		mov r31,r4
+ 1019 0702 DF01      		movw r26,r30
+ 1020 0704 0D90      		ld __tmp_reg__,X+
+ 1021 0706 0020      		tst __tmp_reg__
+ 1022 0708 01F4      		brne .-6
+ 1023 070a 6D01      		movw r12,r26
+ 1024 070c 0894      		sec
+ 1025 070e C108      		sbc r12,__zero_reg__
+ 1026 0710 D108      		sbc r13,__zero_reg__
+ 1027 0712 CE1A      		sub r12,r30
+ 1028 0714 DF0A      		sbc r13,r31
+ 1029 0716 5601      		movw r10,r12
+ 1030 0718 A00E      		add r10,r16
+ 1031 071a B11E      		adc r11,r17
+ 1032 071c C501      		movw r24,r10
+ 1033 071e 0396      		adiw r24,3
+ 1034 0720 0E94 0000 		call malloc
+ 1035 0724 7C01      		movw r14,r24
+ 1036 0726 FC01      		movw r30,r24
+ 1037 0728 1192      		st Z+,__zero_reg__
+ 1038 072a 9801      		movw r18,r16
+ 1039 072c 2F5F      		subi r18,lo8(-(1))
+ 1040 072e 3F4F      		sbci r19,hi8(-(1))
+ 1041 0730 CF01      		movw r24,r30
+ 1042 0732 B301      		movw r22,r6
+ 1043 0734 A901      		movw r20,r18
+ 1044 0736 0E94 0000 		call memcpy
+ 1045 073a 0E5F      		subi r16,lo8(-(2))
+ 1046 073c 1F4F      		sbci r17,hi8(-(2))
+ 1047 073e 0E0D      		add r16,r14
+ 1048 0740 1F1D      		adc r17,r15
+ 1049 0742 C801      		movw r24,r16
+ 1050 0744 652D      		mov r22,r5
+ 1051 0746 742D      		mov r23,r4
+ 1052 0748 A601      		movw r20,r12
+ 1053 074a 0E94 0000 		call memcpy
+ 1054 074e 8501      		movw r16,r10
+ 1055 0750 0E5F      		subi r16,lo8(-(2))
+ 1056 0752 1F4F      		sbci r17,hi8(-(2))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 20
+
+
+ 1057 0754 48E0      		ldi r20,lo8(8)
+ 1058 0756 642E      		mov r6,r20
+ 1059 0758 712C      		mov r7,__zero_reg__
+ 1060 075a 680C      		add r6,r8
+ 1061 075c 791C      		adc r7,r9
+ 1062 075e F301      		movw r30,r6
+ 1063 0760 E701      		movw r28,r14
+ 1064 0762 70E0      		ldi r23,lo8(0)
+ 1065 0764 3DE3      		ldi r19,lo8(61)
+ 1066 0766 E32E      		mov r14,r19
+ 1067 0768 00C0      		rjmp .L70
+ 1068               	.L77:
+ 1069 076a 8991      		ld r24,Y+
+ 1070 076c 90E0      		ldi r25,lo8(0)
+ 1071 076e A0E0      		ldi r26,lo8(0)
+ 1072 0770 B0E0      		ldi r27,hi8(0)
+ 1073 0772 AC01      		movw r20,r24
+ 1074 0774 3327      		clr r19
+ 1075 0776 2227      		clr r18
+ 1076 0778 0230      		cpi r16,2
+ 1077 077a 1105      		cpc r17,__zero_reg__
+ 1078 077c 00F4      		brsh .L71
+ 1079 077e 72E0      		ldi r23,lo8(2)
+ 1080 0780 00C0      		rjmp .L72
+ 1081               	.L71:
+ 1082 0782 8991      		ld r24,Y+
+ 1083 0784 90E0      		ldi r25,lo8(0)
+ 1084 0786 A0E0      		ldi r26,lo8(0)
+ 1085 0788 B0E0      		ldi r27,hi8(0)
+ 1086 078a BA2F      		mov r27,r26
+ 1087 078c A92F      		mov r26,r25
+ 1088 078e 982F      		mov r25,r24
+ 1089 0790 8827      		clr r24
+ 1090 0792 282B      		or r18,r24
+ 1091 0794 392B      		or r19,r25
+ 1092 0796 4A2B      		or r20,r26
+ 1093 0798 5B2B      		or r21,r27
+ 1094 079a 0230      		cpi r16,2
+ 1095 079c 1105      		cpc r17,__zero_reg__
+ 1096 079e 01F4      		brne .L73
+ 1097 07a0 71E0      		ldi r23,lo8(1)
+ 1098 07a2 00C0      		rjmp .L72
+ 1099               	.L73:
+ 1100 07a4 8991      		ld r24,Y+
+ 1101 07a6 90E0      		ldi r25,lo8(0)
+ 1102 07a8 A0E0      		ldi r26,lo8(0)
+ 1103 07aa B0E0      		ldi r27,hi8(0)
+ 1104 07ac 282B      		or r18,r24
+ 1105 07ae 392B      		or r19,r25
+ 1106 07b0 4A2B      		or r20,r26
+ 1107 07b2 5B2B      		or r21,r27
+ 1108               	.L72:
+ 1109 07b4 672F      		mov r22,r23
+ 1110               	.L74:
+ 1111 07b6 DA01      		movw r26,r20
+ 1112 07b8 C901      		movw r24,r18
+ 1113 07ba 072E      		mov r0,r23
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 21
+
+
+ 1114 07bc 72E1      		ldi r23,18
+ 1115 07be B695      	1:	lsr r27
+ 1116 07c0 A795      		ror r26
+ 1117 07c2 9795      		ror r25
+ 1118 07c4 8795      		ror r24
+ 1119 07c6 7A95      		dec r23
+ 1120 07c8 01F4      		brne 1b
+ 1121 07ca 702D      		mov r23,r0
+ 1122 07cc 8F73      		andi r24,lo8(63)
+ 1123 07ce 9070      		andi r25,hi8(63)
+ 1124 07d0 8050      		subi r24,lo8(-(base64set.2234))
+ 1125 07d2 9040      		sbci r25,hi8(-(base64set.2234))
+ 1126 07d4 DC01      		movw r26,r24
+ 1127 07d6 8C91      		ld r24,X
+ 1128 07d8 8193      		st Z+,r24
+ 1129 07da A6E0      		ldi r26,6
+ 1130 07dc 220F      	1:	lsl r18
+ 1131 07de 331F      		rol r19
+ 1132 07e0 441F      		rol r20
+ 1133 07e2 551F      		rol r21
+ 1134 07e4 AA95      		dec r26
+ 1135 07e6 01F4      		brne 1b
+ 1136 07e8 6F5F      		subi r22,lo8(-(1))
+ 1137 07ea 6430      		cpi r22,lo8(4)
+ 1138 07ec 00F0      		brlo .L74
+ 1139 07ee 9F01      		movw r18,r30
+ 1140 07f0 00C0      		rjmp .L75
+ 1141               	.L76:
+ 1142 07f2 E192      		st Z+,r14
+ 1143               	.L75:
+ 1144 07f4 8E2F      		mov r24,r30
+ 1145 07f6 821B      		sub r24,r18
+ 1146 07f8 8717      		cp r24,r23
+ 1147 07fa 00F0      		brlo .L76
+ 1148 07fc 872F      		mov r24,r23
+ 1149 07fe 90E0      		ldi r25,lo8(0)
+ 1150 0800 F901      		movw r30,r18
+ 1151 0802 E80F      		add r30,r24
+ 1152 0804 F91F      		adc r31,r25
+ 1153 0806 0397      		sbiw r24,3
+ 1154 0808 080F      		add r16,r24
+ 1155 080a 191F      		adc r17,r25
+ 1156               	.L70:
+ 1157 080c 0115      		cp r16,__zero_reg__
+ 1158 080e 1105      		cpc r17,__zero_reg__
+ 1159 0810 01F0      		breq .+2
+ 1160 0812 00C0      		rjmp .L77
+ 1161 0814 1082      		st Z,__zero_reg__
+ 1162 0816 00D0      		rcall .
+ 1163 0818 00D0      		rcall .
+ 1164 081a 00D0      		rcall .
+ 1165 081c EDB7      		in r30,__SP_L__
+ 1166 081e FEB7      		in r31,__SP_H__
+ 1167 0820 3196      		adiw r30,1
+ 1168 0822 ADB7      		in r26,__SP_L__
+ 1169 0824 BEB7      		in r27,__SP_H__
+ 1170 0826 1296      		adiw r26,1+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 22
+
+
+ 1171 0828 9C92      		st X,r9
+ 1172 082a 8E92      		st -X,r8
+ 1173 082c 1197      		sbiw r26,1
+ 1174 082e 80E0      		ldi r24,lo8(.LC19)
+ 1175 0830 90E0      		ldi r25,hi8(.LC19)
+ 1176 0832 9383      		std Z+3,r25
+ 1177 0834 8283      		std Z+2,r24
+ 1178 0836 7582      		std Z+5,r7
+ 1179 0838 6482      		std Z+4,r6
+ 1180 083a 0E94 0000 		call NutSmtpSendCommand
+ 1181 083e FC01      		movw r30,r24
+ 1182 0840 8DB7      		in r24,__SP_L__
+ 1183 0842 9EB7      		in r25,__SP_H__
+ 1184 0844 0696      		adiw r24,6
+ 1185 0846 0FB6      		in __tmp_reg__,__SREG__
+ 1186 0848 F894      		cli
+ 1187 084a 9EBF      		out __SP_H__,r25
+ 1188 084c 0FBE      		out __SREG__,__tmp_reg__
+ 1189 084e 8DBF      		out __SP_L__,r24
+ 1190 0850 3097      		sbiw r30,0
+ 1191 0852 01F0      		breq .L61
+ 1192 0854 8081      		ld r24,Z
+ 1193 0856 8233      		cpi r24,lo8(50)
+ 1194 0858 01F4      		brne .L61
+ 1195               	.L67:
+ 1196 085a 20E0      		ldi r18,lo8(0)
+ 1197 085c 30E0      		ldi r19,hi8(0)
+ 1198 085e 00C0      		rjmp .L78
+ 1199               	.L61:
+ 1200 0860 2FEF      		ldi r18,lo8(-1)
+ 1201 0862 3FEF      		ldi r19,hi8(-1)
+ 1202               	.L78:
+ 1203 0864 C901      		movw r24,r18
+ 1204               	/* epilogue start */
+ 1205 0866 DF91      		pop r29
+ 1206 0868 CF91      		pop r28
+ 1207 086a 1F91      		pop r17
+ 1208 086c 0F91      		pop r16
+ 1209 086e FF90      		pop r15
+ 1210 0870 EF90      		pop r14
+ 1211 0872 DF90      		pop r13
+ 1212 0874 CF90      		pop r12
+ 1213 0876 BF90      		pop r11
+ 1214 0878 AF90      		pop r10
+ 1215 087a 9F90      		pop r9
+ 1216 087c 8F90      		pop r8
+ 1217 087e 7F90      		pop r7
+ 1218 0880 6F90      		pop r6
+ 1219 0882 5F90      		pop r5
+ 1220 0884 4F90      		pop r4
+ 1221 0886 0895      		ret
+ 1222               		.size	NutSmtpLogin, .-NutSmtpLogin
+ 1223               		.data
+ 1224               	.LC20:
+ 1225 0097 722B 6200 		.string	"r+b"
+ 1226               		.text
+ 1227               	.global	NutSmtpConnect
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 23
+
+
+ 1228               		.type	NutSmtpConnect, @function
+ 1229               	NutSmtpConnect:
+ 1230 0888 8F92      		push r8
+ 1231 088a 9F92      		push r9
+ 1232 088c AF92      		push r10
+ 1233 088e BF92      		push r11
+ 1234 0890 CF92      		push r12
+ 1235 0892 DF92      		push r13
+ 1236 0894 EF92      		push r14
+ 1237 0896 FF92      		push r15
+ 1238 0898 0F93      		push r16
+ 1239 089a 1F93      		push r17
+ 1240 089c DF93      		push r29
+ 1241 089e CF93      		push r28
+ 1242 08a0 00D0      		rcall .
+ 1243 08a2 00D0      		rcall .
+ 1244 08a4 CDB7      		in r28,__SP_L__
+ 1245 08a6 DEB7      		in r29,__SP_H__
+ 1246               	/* prologue: function */
+ 1247               	/* frame size = 4 */
+ 1248 08a8 6B01      		movw r12,r22
+ 1249 08aa 7C01      		movw r14,r24
+ 1250 08ac 4A01      		movw r8,r20
+ 1251 08ae 81E0      		ldi r24,lo8(1)
+ 1252 08b0 90E0      		ldi r25,hi8(1)
+ 1253 08b2 68E0      		ldi r22,lo8(264)
+ 1254 08b4 71E0      		ldi r23,hi8(264)
+ 1255 08b6 0E94 0000 		call calloc
+ 1256 08ba 8C01      		movw r16,r24
+ 1257 08bc 5C01      		movw r10,r24
+ 1258 08be 0097      		sbiw r24,0
+ 1259 08c0 01F0      		breq .L84
+ 1260 08c2 0E94 0000 		call NutTcpCreateSocket
+ 1261 08c6 F801      		movw r30,r16
+ 1262 08c8 9183      		std Z+1,r25
+ 1263 08ca 8083      		st Z,r24
+ 1264 08cc 0097      		sbiw r24,0
+ 1265 08ce 01F0      		breq .L85
+ 1266 08d0 B701      		movw r22,r14
+ 1267 08d2 A601      		movw r20,r12
+ 1268 08d4 9401      		movw r18,r8
+ 1269 08d6 0E94 0000 		call NutTcpConnect
+ 1270 08da 892B      		or r24,r25
+ 1271 08dc 01F4      		brne .L85
+ 1272 08de 80EC      		ldi r24,lo8(600000)
+ 1273 08e0 97E2      		ldi r25,hi8(600000)
+ 1274 08e2 A9E0      		ldi r26,hlo8(600000)
+ 1275 08e4 B0E0      		ldi r27,hhi8(600000)
+ 1276 08e6 8983      		std Y+1,r24
+ 1277 08e8 9A83      		std Y+2,r25
+ 1278 08ea AB83      		std Y+3,r26
+ 1279 08ec BC83      		std Y+4,r27
+ 1280 08ee F801      		movw r30,r16
+ 1281 08f0 8081      		ld r24,Z
+ 1282 08f2 9181      		ldd r25,Z+1
+ 1283 08f4 66E0      		ldi r22,lo8(4102)
+ 1284 08f6 70E1      		ldi r23,hi8(4102)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 24
+
+
+ 1285 08f8 AE01      		movw r20,r28
+ 1286 08fa 4F5F      		subi r20,lo8(-(1))
+ 1287 08fc 5F4F      		sbci r21,hi8(-(1))
+ 1288 08fe 24E0      		ldi r18,lo8(4)
+ 1289 0900 30E0      		ldi r19,hi8(4)
+ 1290 0902 0E94 0000 		call NutTcpSetSockOpt
+ 1291 0906 F801      		movw r30,r16
+ 1292 0908 8081      		ld r24,Z
+ 1293 090a 9181      		ldd r25,Z+1
+ 1294 090c 60E0      		ldi r22,lo8(.LC20)
+ 1295 090e 70E0      		ldi r23,hi8(.LC20)
+ 1296 0910 0E94 0000 		call _fdopen
+ 1297 0914 F801      		movw r30,r16
+ 1298 0916 9383      		std Z+3,r25
+ 1299 0918 8283      		std Z+2,r24
+ 1300 091a 892B      		or r24,r25
+ 1301 091c 01F0      		breq .L85
+ 1302 091e C801      		movw r24,r16
+ 1303 0920 0E94 0000 		call NutSmtpReceiveResponse
+ 1304 0924 FC01      		movw r30,r24
+ 1305 0926 8081      		ld r24,Z
+ 1306 0928 8233      		cpi r24,lo8(50)
+ 1307 092a 01F0      		breq .L84
+ 1308               	.L85:
+ 1309 092c C801      		movw r24,r16
+ 1310 092e 0E94 0000 		call NutSmtpDisconnect
+ 1311 0932 AA24      		clr r10
+ 1312 0934 BB24      		clr r11
+ 1313               	.L84:
+ 1314 0936 C501      		movw r24,r10
+ 1315               	/* epilogue start */
+ 1316 0938 0F90      		pop __tmp_reg__
+ 1317 093a 0F90      		pop __tmp_reg__
+ 1318 093c 0F90      		pop __tmp_reg__
+ 1319 093e 0F90      		pop __tmp_reg__
+ 1320 0940 CF91      		pop r28
+ 1321 0942 DF91      		pop r29
+ 1322 0944 1F91      		pop r17
+ 1323 0946 0F91      		pop r16
+ 1324 0948 FF90      		pop r15
+ 1325 094a EF90      		pop r14
+ 1326 094c DF90      		pop r13
+ 1327 094e CF90      		pop r12
+ 1328 0950 BF90      		pop r11
+ 1329 0952 AF90      		pop r10
+ 1330 0954 9F90      		pop r9
+ 1331 0956 8F90      		pop r8
+ 1332 0958 0895      		ret
+ 1333               		.size	NutSmtpConnect, .-NutSmtpConnect
+ 1334               		.data
+ 1335               		.type	base64set.2234, @object
+ 1336               		.size	base64set.2234, 65
+ 1337               	base64set.2234:
+ 1338 009b 4142 4344 		.string	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+ 1338      4546 4748 
+ 1338      494A 4B4C 
+ 1338      4D4E 4F50 
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 25
+
+
+ 1338      5152 5354 
+ 1339               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s 			page 26
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 smtpc.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:19     .text:00000000 SendMailHeaderRecipient
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:113    .text:000000a8 NutSmtpSendEncodedLines
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:218    .text:0000014c NutSmtpSendMailHeader
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:357    .text:00000260 NutSmtpReceiveResponse
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:403    .text:000002ae NutSmtpSendCommand
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:451    .text:000002fc NutSmtpSendMailRequest
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:614    .text:00000424 SayHello
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:706    .text:000004ce NutSmtpDisconnect
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:758    .text:00000520 NutSmtpSendMail
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:877    .text:000005ea NutSmtpLogin
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:1337   .data:0000009b base64set.2234
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cclZfGZf.s:1229   .text:00000888 NutSmtpConnect
+
+UNDEFINED SYMBOLS
+fputs
+fputc
+gmtime
+Rfc1123TimeString
+fprintf
+fgets
+strchr
+vfprintf
+fflush
+confnet
+inet_ntoa
+fclose
+NutTcpCloseSocket
+free
+strncmp
+strstr
+malloc
+memcpy
+calloc
+NutTcpCreateSocket
+NutTcpConnect
+NutTcpSetSockOpt
+_fdopen
+__do_copy_data

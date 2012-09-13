@@ -1,0 +1,260 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s 			page 1
+
+
+   1               		.file	"can_dev.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	CAN_SetSpeed
+  10               		.type	CAN_SetSpeed, @function
+  11               	CAN_SetSpeed:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 DC01      		movw r26,r24
+  15 0002 1F96      		adiw r26,15
+  16 0004 ED91      		ld r30,X+
+  17 0006 FC91      		ld r31,X
+  18 0008 5097      		sbiw r26,15+1
+  19 000a 058C      		ldd __tmp_reg__,Z+29
+  20 000c F68D      		ldd r31,Z+30
+  21 000e E02D      		mov r30,__tmp_reg__
+  22 0010 0995      		icall
+  23               	/* epilogue start */
+  24 0012 0895      		ret
+  25               		.size	CAN_SetSpeed, .-CAN_SetSpeed
+  26               	.global	CAN_SetFilter
+  27               		.type	CAN_SetFilter, @function
+  28               	CAN_SetFilter:
+  29 0014 EF92      		push r14
+  30 0016 FF92      		push r15
+  31 0018 0F93      		push r16
+  32 001a 1F93      		push r17
+  33               	/* prologue: function */
+  34               	/* frame size = 0 */
+  35 001c 8C01      		movw r16,r24
+  36 001e 7A01      		movw r14,r20
+  37 0020 DC01      		movw r26,r24
+  38 0022 1F96      		adiw r26,15
+  39 0024 ED91      		ld r30,X+
+  40 0026 FC91      		ld r31,X
+  41 0028 5097      		sbiw r26,15+1
+  42 002a 018C      		ldd __tmp_reg__,Z+25
+  43 002c F28D      		ldd r31,Z+26
+  44 002e E02D      		mov r30,__tmp_reg__
+  45 0030 0995      		icall
+  46 0032 D801      		movw r26,r16
+  47 0034 1F96      		adiw r26,15
+  48 0036 ED91      		ld r30,X+
+  49 0038 FC91      		ld r31,X
+  50 003a 5097      		sbiw r26,15+1
+  51 003c 038C      		ldd __tmp_reg__,Z+27
+  52 003e F48D      		ldd r31,Z+28
+  53 0040 E02D      		mov r30,__tmp_reg__
+  54 0042 C801      		movw r24,r16
+  55 0044 B701      		movw r22,r14
+  56 0046 0995      		icall
+  57               	/* epilogue start */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s 			page 2
+
+
+  58 0048 1F91      		pop r17
+  59 004a 0F91      		pop r16
+  60 004c FF90      		pop r15
+  61 004e EF90      		pop r14
+  62 0050 0895      		ret
+  63               		.size	CAN_SetFilter, .-CAN_SetFilter
+  64               	.global	CAN_TxFrame
+  65               		.type	CAN_TxFrame, @function
+  66               	CAN_TxFrame:
+  67               	/* prologue: function */
+  68               	/* frame size = 0 */
+  69 0052 DC01      		movw r26,r24
+  70 0054 1F96      		adiw r26,15
+  71 0056 ED91      		ld r30,X+
+  72 0058 FC91      		ld r31,X
+  73 005a 5097      		sbiw r26,15+1
+  74 005c 0788      		ldd __tmp_reg__,Z+23
+  75 005e F08D      		ldd r31,Z+24
+  76 0060 E02D      		mov r30,__tmp_reg__
+  77 0062 0995      		icall
+  78               	/* epilogue start */
+  79 0064 0895      		ret
+  80               		.size	CAN_TxFrame, .-CAN_TxFrame
+  81               	.global	CAN_TryTxFrame
+  82               		.type	CAN_TryTxFrame, @function
+  83               	CAN_TryTxFrame:
+  84 0066 0F93      		push r16
+  85 0068 1F93      		push r17
+  86 006a CF93      		push r28
+  87 006c DF93      		push r29
+  88               	/* prologue: function */
+  89               	/* frame size = 0 */
+  90 006e EC01      		movw r28,r24
+  91 0070 8B01      		movw r16,r22
+  92 0072 EF85      		ldd r30,Y+15
+  93 0074 F889      		ldd r31,Y+16
+  94 0076 0388      		ldd __tmp_reg__,Z+19
+  95 0078 F489      		ldd r31,Z+20
+  96 007a E02D      		mov r30,__tmp_reg__
+  97 007c 0995      		icall
+  98 007e 8823      		tst r24
+  99 0080 01F4      		brne .L8
+ 100 0082 81E0      		ldi r24,lo8(1)
+ 101 0084 00C0      		rjmp .L9
+ 102               	.L8:
+ 103 0086 EF85      		ldd r30,Y+15
+ 104 0088 F889      		ldd r31,Y+16
+ 105 008a 0788      		ldd __tmp_reg__,Z+23
+ 106 008c F08D      		ldd r31,Z+24
+ 107 008e E02D      		mov r30,__tmp_reg__
+ 108 0090 CE01      		movw r24,r28
+ 109 0092 B801      		movw r22,r16
+ 110 0094 0995      		icall
+ 111 0096 80E0      		ldi r24,lo8(0)
+ 112               	.L9:
+ 113               	/* epilogue start */
+ 114 0098 DF91      		pop r29
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s 			page 3
+
+
+ 115 009a CF91      		pop r28
+ 116 009c 1F91      		pop r17
+ 117 009e 0F91      		pop r16
+ 118 00a0 0895      		ret
+ 119               		.size	CAN_TryTxFrame, .-CAN_TryTxFrame
+ 120               	.global	CAN_TxFree
+ 121               		.type	CAN_TxFree, @function
+ 122               	CAN_TxFree:
+ 123               	/* prologue: function */
+ 124               	/* frame size = 0 */
+ 125 00a2 FC01      		movw r30,r24
+ 126 00a4 A785      		ldd r26,Z+15
+ 127 00a6 B089      		ldd r27,Z+16
+ 128 00a8 5396      		adiw r26,19
+ 129 00aa 2D91      		ld r18,X+
+ 130 00ac 3C91      		ld r19,X
+ 131 00ae 5497      		sbiw r26,19+1
+ 132 00b0 F901      		movw r30,r18
+ 133 00b2 0995      		icall
+ 134               	/* epilogue start */
+ 135 00b4 0895      		ret
+ 136               		.size	CAN_TxFree, .-CAN_TxFree
+ 137               	.global	CAN_RxFrame
+ 138               		.type	CAN_RxFrame, @function
+ 139               	CAN_RxFrame:
+ 140               	/* prologue: function */
+ 141               	/* frame size = 0 */
+ 142 00b6 DC01      		movw r26,r24
+ 143 00b8 1F96      		adiw r26,15
+ 144 00ba ED91      		ld r30,X+
+ 145 00bc FC91      		ld r31,X
+ 146 00be 5097      		sbiw r26,15+1
+ 147 00c0 0588      		ldd __tmp_reg__,Z+21
+ 148 00c2 F689      		ldd r31,Z+22
+ 149 00c4 E02D      		mov r30,__tmp_reg__
+ 150 00c6 0995      		icall
+ 151               	/* epilogue start */
+ 152 00c8 0895      		ret
+ 153               		.size	CAN_RxFrame, .-CAN_RxFrame
+ 154               	.global	CAN_TryRxFrame
+ 155               		.type	CAN_TryRxFrame, @function
+ 156               	CAN_TryRxFrame:
+ 157 00ca 0F93      		push r16
+ 158 00cc 1F93      		push r17
+ 159 00ce CF93      		push r28
+ 160 00d0 DF93      		push r29
+ 161               	/* prologue: function */
+ 162               	/* frame size = 0 */
+ 163 00d2 EC01      		movw r28,r24
+ 164 00d4 8B01      		movw r16,r22
+ 165 00d6 EF85      		ldd r30,Y+15
+ 166 00d8 F889      		ldd r31,Y+16
+ 167 00da 0188      		ldd __tmp_reg__,Z+17
+ 168 00dc F289      		ldd r31,Z+18
+ 169 00de E02D      		mov r30,__tmp_reg__
+ 170 00e0 0995      		icall
+ 171 00e2 8823      		tst r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s 			page 4
+
+
+ 172 00e4 01F4      		brne .L16
+ 173 00e6 81E0      		ldi r24,lo8(1)
+ 174 00e8 00C0      		rjmp .L17
+ 175               	.L16:
+ 176 00ea EF85      		ldd r30,Y+15
+ 177 00ec F889      		ldd r31,Y+16
+ 178 00ee 0588      		ldd __tmp_reg__,Z+21
+ 179 00f0 F689      		ldd r31,Z+22
+ 180 00f2 E02D      		mov r30,__tmp_reg__
+ 181 00f4 CE01      		movw r24,r28
+ 182 00f6 B801      		movw r22,r16
+ 183 00f8 0995      		icall
+ 184 00fa 80E0      		ldi r24,lo8(0)
+ 185               	.L17:
+ 186               	/* epilogue start */
+ 187 00fc DF91      		pop r29
+ 188 00fe CF91      		pop r28
+ 189 0100 1F91      		pop r17
+ 190 0102 0F91      		pop r16
+ 191 0104 0895      		ret
+ 192               		.size	CAN_TryRxFrame, .-CAN_TryRxFrame
+ 193               	.global	CAN_RxAvail
+ 194               		.type	CAN_RxAvail, @function
+ 195               	CAN_RxAvail:
+ 196               	/* prologue: function */
+ 197               	/* frame size = 0 */
+ 198 0106 FC01      		movw r30,r24
+ 199 0108 A785      		ldd r26,Z+15
+ 200 010a B089      		ldd r27,Z+16
+ 201 010c 5196      		adiw r26,17
+ 202 010e 2D91      		ld r18,X+
+ 203 0110 3C91      		ld r19,X
+ 204 0112 5297      		sbiw r26,17+1
+ 205 0114 F901      		movw r30,r18
+ 206 0116 0995      		icall
+ 207               	/* epilogue start */
+ 208 0118 0895      		ret
+ 209               		.size	CAN_RxAvail, .-CAN_RxAvail
+ 210               	.global	CAN_SetRxTimeout
+ 211               		.type	CAN_SetRxTimeout, @function
+ 212               	CAN_SetRxTimeout:
+ 213               	/* prologue: function */
+ 214               	/* frame size = 0 */
+ 215 011a DC01      		movw r26,r24
+ 216 011c 1F96      		adiw r26,15
+ 217 011e ED91      		ld r30,X+
+ 218 0120 FC91      		ld r31,X
+ 219 0122 5097      		sbiw r26,15+1
+ 220 0124 4587      		std Z+13,r20
+ 221 0126 5687      		std Z+14,r21
+ 222 0128 6787      		std Z+15,r22
+ 223 012a 708B      		std Z+16,r23
+ 224               	/* epilogue start */
+ 225 012c 0895      		ret
+ 226               		.size	CAN_SetRxTimeout, .-CAN_SetRxTimeout
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 can_dev.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:11     .text:00000000 CAN_SetSpeed
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:28     .text:00000014 CAN_SetFilter
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:66     .text:00000052 CAN_TxFrame
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:83     .text:00000066 CAN_TryTxFrame
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:122    .text:000000a2 CAN_TxFree
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:139    .text:000000b6 CAN_RxFrame
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:156    .text:000000ca CAN_TryRxFrame
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:195    .text:00000106 CAN_RxAvail
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccXL042M.s:212    .text:0000011a CAN_SetRxTimeout
+
+NO UNDEFINED SYMBOLS

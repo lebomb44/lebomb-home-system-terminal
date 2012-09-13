@@ -1,0 +1,101 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbWR2UG.s 			page 1
+
+
+   1               		.file	"vfscanf_p.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	vfscanf_P
+  10               		.type	vfscanf_P, @function
+  11               	vfscanf_P:
+  12 0000 AF92      		push r10
+  13 0002 BF92      		push r11
+  14 0004 CF92      		push r12
+  15 0006 DF92      		push r13
+  16 0008 EF92      		push r14
+  17 000a FF92      		push r15
+  18 000c 0F93      		push r16
+  19 000e 1F93      		push r17
+  20 0010 CF93      		push r28
+  21 0012 DF93      		push r29
+  22               	/* prologue: function */
+  23               	/* frame size = 0 */
+  24 0014 6C01      		movw r12,r24
+  25 0016 7B01      		movw r14,r22
+  26 0018 5A01      		movw r10,r20
+  27 001a CB01      		movw r24,r22
+  28 001c 0E94 0000 		call strlen_P
+  29 0020 8C01      		movw r16,r24
+  30 0022 0F5F      		subi r16,lo8(-(1))
+  31 0024 1F4F      		sbci r17,hi8(-(1))
+  32 0026 80E0      		ldi r24,lo8(heapFreeList)
+  33 0028 90E0      		ldi r25,hi8(heapFreeList)
+  34 002a B801      		movw r22,r16
+  35 002c 0E94 0000 		call NutHeapRootAlloc
+  36 0030 EC01      		movw r28,r24
+  37 0032 0097      		sbiw r24,0
+  38 0034 01F4      		brne .L2
+  39 0036 0FEF      		ldi r16,lo8(-1)
+  40 0038 1FEF      		ldi r17,hi8(-1)
+  41 003a 00C0      		rjmp .L3
+  42               	.L2:
+  43 003c B701      		movw r22,r14
+  44 003e A801      		movw r20,r16
+  45 0040 0E94 0000 		call memcpy_P
+  46 0044 C601      		movw r24,r12
+  47 0046 0E94 0000 		call _fileno
+  48 004a BC01      		movw r22,r24
+  49 004c 80E0      		ldi r24,lo8(gs(_read))
+  50 004e 90E0      		ldi r25,hi8(gs(_read))
+  51 0050 AE01      		movw r20,r28
+  52 0052 9501      		movw r18,r10
+  53 0054 0E94 0000 		call _getf
+  54 0058 8C01      		movw r16,r24
+  55 005a 80E0      		ldi r24,lo8(heapFreeList)
+  56 005c 90E0      		ldi r25,hi8(heapFreeList)
+  57 005e BE01      		movw r22,r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbWR2UG.s 			page 2
+
+
+  58 0060 0E94 0000 		call NutHeapRootFree
+  59               	.L3:
+  60 0064 C801      		movw r24,r16
+  61               	/* epilogue start */
+  62 0066 DF91      		pop r29
+  63 0068 CF91      		pop r28
+  64 006a 1F91      		pop r17
+  65 006c 0F91      		pop r16
+  66 006e FF90      		pop r15
+  67 0070 EF90      		pop r14
+  68 0072 DF90      		pop r13
+  69 0074 CF90      		pop r12
+  70 0076 BF90      		pop r11
+  71 0078 AF90      		pop r10
+  72 007a 0895      		ret
+  73               		.size	vfscanf_P, .-vfscanf_P
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbWR2UG.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 vfscanf_p.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbWR2UG.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbWR2UG.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbWR2UG.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbWR2UG.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbWR2UG.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbWR2UG.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccbWR2UG.s:11     .text:00000000 vfscanf_P
+
+UNDEFINED SYMBOLS
+strlen_P
+heapFreeList
+NutHeapRootAlloc
+memcpy_P
+_fileno
+_read
+_getf
+NutHeapRootFree

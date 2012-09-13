@@ -1,0 +1,57 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAbujac.s 			page 1
+
+
+   1               		.file	"reset.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutResetCause
+  10               		.type	NutResetCause, @function
+  11               	NutResetCause:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 80E0      		ldi r24,lo8(0)
+  15 0002 90E0      		ldi r25,hi8(0)
+  16               	/* epilogue start */
+  17 0004 0895      		ret
+  18               		.size	NutResetCause, .-NutResetCause
+  19               	.global	NutReset
+  20               		.type	NutReset, @function
+  21               	NutReset:
+  22               	/* prologue: function */
+  23               	/* frame size = 0 */
+  24 0006 61E0      		ldi r22,lo8(1)
+  25 0008 70E0      		ldi r23,hi8(1)
+  26 000a 80E0      		ldi r24,hlo8(1)
+  27 000c 90E0      		ldi r25,hhi8(1)
+  28 000e 0E94 0000 		call AvrWatchDogStart
+  29 0012 6115      		cp r22,__zero_reg__
+  30 0014 7105      		cpc r23,__zero_reg__
+  31 0016 8105      		cpc r24,__zero_reg__
+  32 0018 9105      		cpc r25,__zero_reg__
+  33 001a 01F0      		breq .L6
+  34               	.L7:
+  35 001c 00C0      		rjmp .L7
+  36               	.L6:
+  37 001e 0895      		ret
+  38               		.size	NutReset, .-NutReset
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAbujac.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 reset.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAbujac.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAbujac.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAbujac.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAbujac.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAbujac.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAbujac.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAbujac.s:11     .text:00000000 NutResetCause
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccAbujac.s:21     .text:00000006 NutReset
+
+UNDEFINED SYMBOLS
+AvrWatchDogStart

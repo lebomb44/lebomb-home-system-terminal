@@ -1,0 +1,63 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRtEUo5.s 			page 1
+
+
+   1               		.file	"malloc.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	free
+  10               		.type	free, @function
+  11               	free:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 BC01      		movw r22,r24
+  15 0002 80E0      		ldi r24,lo8(heapFreeList)
+  16 0004 90E0      		ldi r25,hi8(heapFreeList)
+  17 0006 0E94 0000 		call NutHeapRootFree
+  18               	/* epilogue start */
+  19 000a 0895      		ret
+  20               		.size	free, .-free
+  21               	.global	malloc
+  22               		.type	malloc, @function
+  23               	malloc:
+  24               	/* prologue: function */
+  25               	/* frame size = 0 */
+  26 000c BC01      		movw r22,r24
+  27 000e 80E0      		ldi r24,lo8(heapFreeList)
+  28 0010 90E0      		ldi r25,hi8(heapFreeList)
+  29 0012 0E94 0000 		call NutHeapRootAlloc
+  30 0016 9C01      		movw r18,r24
+  31 0018 0097      		sbiw r24,0
+  32 001a 01F4      		brne .L4
+  33 001c 8CE0      		ldi r24,lo8(12)
+  34 001e 90E0      		ldi r25,hi8(12)
+  35 0020 9093 0000 		sts (errno)+1,r25
+  36 0024 8093 0000 		sts errno,r24
+  37               	.L4:
+  38 0028 C901      		movw r24,r18
+  39               	/* epilogue start */
+  40 002a 0895      		ret
+  41               		.size	malloc, .-malloc
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRtEUo5.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 malloc.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRtEUo5.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRtEUo5.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRtEUo5.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRtEUo5.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRtEUo5.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRtEUo5.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRtEUo5.s:11     .text:00000000 free
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRtEUo5.s:23     .text:0000000c malloc
+
+UNDEFINED SYMBOLS
+heapFreeList
+NutHeapRootFree
+NutHeapRootAlloc
+errno

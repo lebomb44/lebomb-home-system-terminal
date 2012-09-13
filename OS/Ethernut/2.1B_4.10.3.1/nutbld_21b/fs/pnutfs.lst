@@ -1,0 +1,2578 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 1
+
+
+   1               		.file	"pnutfs.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	BankSelect
+  10               		.type	BankSelect, @function
+  11               	BankSelect:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 60E2      		ldi r22,lo8(32)
+  15 0002 70E0      		ldi r23,hi8(32)
+  16 0004 0E94 0000 		call __divmodhi4
+  17 0008 FB01      		movw r30,r22
+  18 000a E050      		subi r30,lo8(-(-256))
+  19 000c F140      		sbci r31,hi8(-(-256))
+  20 000e 6083      		st Z,r22
+  21               	/* epilogue start */
+  22 0010 0895      		ret
+  23               		.size	BankSelect, .-BankSelect
+  24               	.global	BankNodePointer
+  25               		.type	BankNodePointer, @function
+  26               	BankNodePointer:
+  27 0012 CF93      		push r28
+  28 0014 DF93      		push r29
+  29               	/* prologue: function */
+  30               	/* frame size = 0 */
+  31 0016 EC01      		movw r28,r24
+  32 0018 97FF      		sbrs r25,7
+  33 001a 00C0      		rjmp .L4
+  34 001c 20E0      		ldi r18,lo8(0)
+  35 001e 30E0      		ldi r19,hi8(0)
+  36 0020 00C0      		rjmp .L5
+  37               	.L4:
+  38 0022 0E94 0000 		call BankSelect
+  39 0026 9E01      		movw r18,r28
+  40 0028 2F71      		andi r18,lo8(31)
+  41 002a 3070      		andi r19,hi8(31)
+  42 002c 322F      		mov r19,r18
+  43 002e 2227      		clr r18
+  44 0030 330F      		lsl r19
+  45 0032 2050      		subi r18,lo8(-(-32768))
+  46 0034 3048      		sbci r19,hi8(-(-32768))
+  47               	.L5:
+  48 0036 C901      		movw r24,r18
+  49               	/* epilogue start */
+  50 0038 DF91      		pop r29
+  51 003a CF91      		pop r28
+  52 003c 0895      		ret
+  53               		.size	BankNodePointer, .-BankNodePointer
+  54               		.type	PnutBlockRelease, @function
+  55               	PnutBlockRelease:
+  56 003e 0F93      		push r16
+  57 0040 1F93      		push r17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 2
+
+
+  58               	/* prologue: function */
+  59               	/* frame size = 0 */
+  60 0042 8C01      		movw r16,r24
+  61 0044 0E94 0000 		call BankNodePointer
+  62 0048 FC01      		movw r30,r24
+  63 004a 8091 0000 		lds r24,blockFreeList
+  64 004e 9091 0000 		lds r25,(blockFreeList)+1
+  65 0052 9183      		std Z+1,r25
+  66 0054 8083      		st Z,r24
+  67 0056 1093 0000 		sts (blockFreeList)+1,r17
+  68 005a 0093 0000 		sts blockFreeList,r16
+  69               	/* epilogue start */
+  70 005e 1F91      		pop r17
+  71 0060 0F91      		pop r16
+  72 0062 0895      		ret
+  73               		.size	PnutBlockRelease, .-PnutBlockRelease
+  74               		.type	PnutFileWrite_P, @function
+  75               	PnutFileWrite_P:
+  76               	/* prologue: function */
+  77               	/* frame size = 0 */
+  78 0064 8FEF      		ldi r24,lo8(-1)
+  79 0066 9FEF      		ldi r25,hi8(-1)
+  80               	/* epilogue start */
+  81 0068 0895      		ret
+  82               		.size	PnutFileWrite_P, .-PnutFileWrite_P
+  83               		.type	PnutFileSize, @function
+  84               	PnutFileSize:
+  85               	/* prologue: function */
+  86               	/* frame size = 0 */
+  87 006a DC01      		movw r26,r24
+  88 006c 1496      		adiw r26,4
+  89 006e ED91      		ld r30,X+
+  90 0070 FC91      		ld r31,X
+  91 0072 1597      		sbiw r26,4+1
+  92 0074 8081      		ld r24,Z
+  93 0076 9181      		ldd r25,Z+1
+  94 0078 0E94 0000 		call BankNodePointer
+  95 007c FC01      		movw r30,r24
+  96 007e 6481      		ldd r22,Z+4
+  97 0080 7581      		ldd r23,Z+5
+  98 0082 8681      		ldd r24,Z+6
+  99 0084 9781      		ldd r25,Z+7
+ 100               	/* epilogue start */
+ 101 0086 0895      		ret
+ 102               		.size	PnutFileSize, .-PnutFileSize
+ 103               		.type	PnutFileClose, @function
+ 104               	PnutFileClose:
+ 105 0088 0F93      		push r16
+ 106 008a 1F93      		push r17
+ 107 008c CF93      		push r28
+ 108 008e DF93      		push r29
+ 109               	/* prologue: function */
+ 110               	/* frame size = 0 */
+ 111 0090 8C01      		movw r16,r24
+ 112 0092 8FEF      		ldi r24,hi8(-1)
+ 113 0094 0F3F      		cpi r16,lo8(-1)
+ 114 0096 1807      		cpc r17,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 3
+
+
+ 115 0098 01F4      		brne .L14
+ 116 009a 26E1      		ldi r18,lo8(22)
+ 117 009c 30E0      		ldi r19,hi8(22)
+ 118 009e 00C0      		rjmp .L15
+ 119               	.L14:
+ 120 00a0 F801      		movw r30,r16
+ 121 00a2 C481      		ldd r28,Z+4
+ 122 00a4 D581      		ldd r29,Z+5
+ 123 00a6 2097      		sbiw r28,0
+ 124 00a8 01F0      		breq .L16
+ 125 00aa 8881      		ld r24,Y
+ 126 00ac 9981      		ldd r25,Y+1
+ 127 00ae 0E94 0000 		call BankNodePointer
+ 128 00b2 FC01      		movw r30,r24
+ 129 00b4 8181      		ldd r24,Z+1
+ 130 00b6 8150      		subi r24,lo8(-(-1))
+ 131 00b8 8183      		std Z+1,r24
+ 132 00ba CE01      		movw r24,r28
+ 133 00bc 0E94 0000 		call free
+ 134               	.L16:
+ 135 00c0 C801      		movw r24,r16
+ 136 00c2 0E94 0000 		call free
+ 137 00c6 20E0      		ldi r18,lo8(0)
+ 138 00c8 30E0      		ldi r19,hi8(0)
+ 139               	.L15:
+ 140 00ca C901      		movw r24,r18
+ 141               	/* epilogue start */
+ 142 00cc DF91      		pop r29
+ 143 00ce CF91      		pop r28
+ 144 00d0 1F91      		pop r17
+ 145 00d2 0F91      		pop r16
+ 146 00d4 0895      		ret
+ 147               		.size	PnutFileClose, .-PnutFileClose
+ 148               		.type	PnutBlockAlloc, @function
+ 149               	PnutBlockAlloc:
+ 150 00d6 CF93      		push r28
+ 151 00d8 DF93      		push r29
+ 152               	/* prologue: function */
+ 153               	/* frame size = 0 */
+ 154 00da C091 0000 		lds r28,blockFreeList
+ 155 00de D091 0000 		lds r29,(blockFreeList)+1
+ 156 00e2 D7FD      		sbrc r29,7
+ 157 00e4 00C0      		rjmp .L19
+ 158 00e6 CE01      		movw r24,r28
+ 159 00e8 0E94 0000 		call BankNodePointer
+ 160 00ec FC01      		movw r30,r24
+ 161 00ee 8081      		ld r24,Z
+ 162 00f0 9181      		ldd r25,Z+1
+ 163 00f2 9093 0000 		sts (blockFreeList)+1,r25
+ 164 00f6 8093 0000 		sts blockFreeList,r24
+ 165 00fa 80E0      		ldi r24,lo8(512)
+ 166 00fc 92E0      		ldi r25,hi8(512)
+ 167 00fe DF01      		movw r26,r30
+ 168 0100 9C01      		movw r18,r24
+ 169 0102 1D92      		st X+,__zero_reg__
+ 170 0104 2150      		subi r18,1
+ 171 0106 3040      		sbci r19,0
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 4
+
+
+ 172 0108 01F4      		brne .-8
+ 173               	.L19:
+ 174 010a CE01      		movw r24,r28
+ 175               	/* epilogue start */
+ 176 010c DF91      		pop r29
+ 177 010e CF91      		pop r28
+ 178 0110 0895      		ret
+ 179               		.size	PnutBlockAlloc, .-PnutBlockAlloc
+ 180               		.type	PnutNodeGetDataPtr, @function
+ 181               	PnutNodeGetDataPtr:
+ 182 0112 4F92      		push r4
+ 183 0114 5F92      		push r5
+ 184 0116 6F92      		push r6
+ 185 0118 7F92      		push r7
+ 186 011a 8F92      		push r8
+ 187 011c 9F92      		push r9
+ 188 011e AF92      		push r10
+ 189 0120 BF92      		push r11
+ 190 0122 CF92      		push r12
+ 191 0124 DF92      		push r13
+ 192 0126 EF92      		push r14
+ 193 0128 FF92      		push r15
+ 194 012a 0F93      		push r16
+ 195 012c 1F93      		push r17
+ 196 012e CF93      		push r28
+ 197 0130 DF93      		push r29
+ 198               	/* prologue: function */
+ 199               	/* frame size = 0 */
+ 200 0132 4C01      		movw r8,r24
+ 201 0134 5A01      		movw r10,r20
+ 202 0136 6B01      		movw r12,r22
+ 203 0138 3901      		movw r6,r18
+ 204 013a 2801      		movw r4,r16
+ 205 013c F901      		movw r30,r18
+ 206 013e 1182      		std Z+1,__zero_reg__
+ 207 0140 1082      		st Z,__zero_reg__
+ 208 0142 F801      		movw r30,r16
+ 209 0144 1182      		std Z+1,__zero_reg__
+ 210 0146 1082      		st Z,__zero_reg__
+ 211 0148 DB01      		movw r26,r22
+ 212 014a CA01      		movw r24,r20
+ 213 014c 39E0      		ldi r19,9
+ 214 014e B695      	1:	lsr r27
+ 215 0150 A795      		ror r26
+ 216 0152 9795      		ror r25
+ 217 0154 8795      		ror r24
+ 218 0156 3A95      		dec r19
+ 219 0158 01F4      		brne 1b
+ 220 015a EC01      		movw r28,r24
+ 221 015c 8A3F      		cpi r24,250
+ 222 015e 9105      		cpc r25,__zero_reg__
+ 223 0160 04F4      		brge .L28
+ 224               	.L22:
+ 225 0162 C401      		movw r24,r8
+ 226 0164 0E94 0000 		call BankNodePointer
+ 227 0168 2696      		adiw r28,6
+ 228 016a CC0F      		lsl r28
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 5
+
+
+ 229 016c DD1F      		rol r29
+ 230 016e FC01      		movw r30,r24
+ 231 0170 EC0F      		add r30,r28
+ 232 0172 FD1F      		adc r31,r29
+ 233 0174 0081      		ld r16,Z
+ 234 0176 1181      		ldd r17,Z+1
+ 235 0178 17FF      		sbrs r17,7
+ 236 017a 00C0      		rjmp .L24
+ 237 017c EF28      		or r14,r15
+ 238 017e 01F4      		brne .L25
+ 239               	.L28:
+ 240 0180 26E1      		ldi r18,lo8(22)
+ 241 0182 30E0      		ldi r19,hi8(22)
+ 242 0184 00C0      		rjmp .L23
+ 243               	.L25:
+ 244 0186 0E94 0000 		call PnutBlockAlloc
+ 245 018a 8C01      		movw r16,r24
+ 246 018c 97FD      		sbrc r25,7
+ 247 018e 00C0      		rjmp .L26
+ 248 0190 C401      		movw r24,r8
+ 249 0192 0E94 0000 		call BankNodePointer
+ 250 0196 C80F      		add r28,r24
+ 251 0198 D91F      		adc r29,r25
+ 252 019a 1983      		std Y+1,r17
+ 253 019c 0883      		st Y,r16
+ 254               	.L24:
+ 255 019e C801      		movw r24,r16
+ 256 01a0 0E94 0000 		call BankNodePointer
+ 257 01a4 9501      		movw r18,r10
+ 258 01a6 3170      		andi r19,hi8(511)
+ 259 01a8 820F      		add r24,r18
+ 260 01aa 931F      		adc r25,r19
+ 261 01ac F301      		movw r30,r6
+ 262 01ae 9183      		std Z+1,r25
+ 263 01b0 8083      		st Z,r24
+ 264 01b2 80E0      		ldi r24,lo8(512)
+ 265 01b4 92E0      		ldi r25,hi8(512)
+ 266 01b6 821B      		sub r24,r18
+ 267 01b8 930B      		sbc r25,r19
+ 268 01ba F201      		movw r30,r4
+ 269 01bc 9183      		std Z+1,r25
+ 270 01be 8083      		st Z,r24
+ 271 01c0 20E0      		ldi r18,lo8(0)
+ 272 01c2 30E0      		ldi r19,hi8(0)
+ 273               	.L23:
+ 274 01c4 C901      		movw r24,r18
+ 275               	/* epilogue start */
+ 276 01c6 DF91      		pop r29
+ 277 01c8 CF91      		pop r28
+ 278 01ca 1F91      		pop r17
+ 279 01cc 0F91      		pop r16
+ 280 01ce FF90      		pop r15
+ 281 01d0 EF90      		pop r14
+ 282 01d2 DF90      		pop r13
+ 283 01d4 CF90      		pop r12
+ 284 01d6 BF90      		pop r11
+ 285 01d8 AF90      		pop r10
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 6
+
+
+ 286 01da 9F90      		pop r9
+ 287 01dc 8F90      		pop r8
+ 288 01de 7F90      		pop r7
+ 289 01e0 6F90      		pop r6
+ 290 01e2 5F90      		pop r5
+ 291 01e4 4F90      		pop r4
+ 292 01e6 0895      		ret
+ 293               	.L26:
+ 294 01e8 2CE1      		ldi r18,lo8(28)
+ 295 01ea 30E0      		ldi r19,hi8(28)
+ 296 01ec 00C0      		rjmp .L23
+ 297               		.size	PnutNodeGetDataPtr, .-PnutNodeGetDataPtr
+ 298               		.type	PnutDirFindEntry, @function
+ 299               	PnutDirFindEntry:
+ 300 01ee 2F92      		push r2
+ 301 01f0 3F92      		push r3
+ 302 01f2 4F92      		push r4
+ 303 01f4 5F92      		push r5
+ 304 01f6 6F92      		push r6
+ 305 01f8 7F92      		push r7
+ 306 01fa 8F92      		push r8
+ 307 01fc 9F92      		push r9
+ 308 01fe AF92      		push r10
+ 309 0200 BF92      		push r11
+ 310 0202 CF92      		push r12
+ 311 0204 DF92      		push r13
+ 312 0206 EF92      		push r14
+ 313 0208 FF92      		push r15
+ 314 020a 0F93      		push r16
+ 315 020c 1F93      		push r17
+ 316 020e DF93      		push r29
+ 317 0210 CF93      		push r28
+ 318 0212 00D0      		rcall .
+ 319 0214 00D0      		rcall .
+ 320 0216 CDB7      		in r28,__SP_L__
+ 321 0218 DEB7      		in r29,__SP_H__
+ 322               	/* prologue: function */
+ 323               	/* frame size = 4 */
+ 324 021a 2C01      		movw r4,r24
+ 325 021c 1B01      		movw r2,r22
+ 326 021e 3A01      		movw r6,r20
+ 327 0220 4901      		movw r8,r18
+ 328 0222 AA24      		clr r10
+ 329 0224 BB24      		clr r11
+ 330 0226 6501      		movw r12,r10
+ 331 0228 00C0      		rjmp .L30
+ 332               	.L34:
+ 333 022a D401      		movw r26,r8
+ 334 022c 8D91      		ld r24,X+
+ 335 022e 9C91      		ld r25,X
+ 336 0230 9C83      		std Y+4,r25
+ 337 0232 8B83      		std Y+3,r24
+ 338 0234 C201      		movw r24,r4
+ 339 0236 B601      		movw r22,r12
+ 340 0238 A501      		movw r20,r10
+ 341 023a 9E01      		movw r18,r28
+ 342 023c 2D5F      		subi r18,lo8(-(3))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 7
+
+
+ 343 023e 3F4F      		sbci r19,hi8(-(3))
+ 344 0240 8E01      		movw r16,r28
+ 345 0242 0F5F      		subi r16,lo8(-(1))
+ 346 0244 1F4F      		sbci r17,hi8(-(1))
+ 347 0246 EE24      		clr r14
+ 348 0248 FF24      		clr r15
+ 349 024a 0E94 0000 		call PnutNodeGetDataPtr
+ 350 024e 892B      		or r24,r25
+ 351 0250 01F4      		brne .L31
+ 352 0252 8981      		ldd r24,Y+1
+ 353 0254 9A81      		ldd r25,Y+2
+ 354 0256 0097      		sbiw r24,0
+ 355 0258 01F0      		breq .L31
+ 356 025a EB81      		ldd r30,Y+3
+ 357 025c FC81      		ldd r31,Y+4
+ 358 025e D401      		movw r26,r8
+ 359 0260 ED93      		st X+,r30
+ 360 0262 FC93      		st X,r31
+ 361 0264 8097      		sbiw r24,32
+ 362 0266 00F0      		brlo .L32
+ 363 0268 8281      		ldd r24,Z+2
+ 364 026a 8823      		tst r24
+ 365 026c 01F0      		breq .L32
+ 366 026e CF01      		movw r24,r30
+ 367 0270 0396      		adiw r24,3
+ 368 0272 FC01      		movw r30,r24
+ 369 0274 0190      		ld __tmp_reg__,Z+
+ 370 0276 0020      		tst __tmp_reg__
+ 371 0278 01F4      		brne .-6
+ 372 027a 3197      		sbiw r30,1
+ 373 027c E81B      		sub r30,r24
+ 374 027e F90B      		sbc r31,r25
+ 375 0280 E615      		cp r30,r6
+ 376 0282 F705      		cpc r31,r7
+ 377 0284 01F4      		brne .L32
+ 378 0286 B101      		movw r22,r2
+ 379 0288 A301      		movw r20,r6
+ 380 028a 0E94 0000 		call strncmp
+ 381 028e 0097      		sbiw r24,0
+ 382 0290 01F4      		brne .L32
+ 383 0292 20E0      		ldi r18,lo8(0)
+ 384 0294 30E0      		ldi r19,hi8(0)
+ 385 0296 00C0      		rjmp .L33
+ 386               	.L32:
+ 387 0298 80E2      		ldi r24,lo8(32)
+ 388 029a 90E0      		ldi r25,hi8(32)
+ 389 029c A0E0      		ldi r26,hlo8(32)
+ 390 029e B0E0      		ldi r27,hhi8(32)
+ 391 02a0 A80E      		add r10,r24
+ 392 02a2 B91E      		adc r11,r25
+ 393 02a4 CA1E      		adc r12,r26
+ 394 02a6 DB1E      		adc r13,r27
+ 395               	.L30:
+ 396 02a8 C201      		movw r24,r4
+ 397 02aa 0E94 0000 		call BankNodePointer
+ 398 02ae FC01      		movw r30,r24
+ 399 02b0 8481      		ldd r24,Z+4
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 8
+
+
+ 400 02b2 9581      		ldd r25,Z+5
+ 401 02b4 A681      		ldd r26,Z+6
+ 402 02b6 B781      		ldd r27,Z+7
+ 403 02b8 A816      		cp r10,r24
+ 404 02ba B906      		cpc r11,r25
+ 405 02bc CA06      		cpc r12,r26
+ 406 02be DB06      		cpc r13,r27
+ 407 02c0 00F4      		brsh .+2
+ 408 02c2 00C0      		rjmp .L34
+ 409               	.L31:
+ 410 02c4 22E0      		ldi r18,lo8(2)
+ 411 02c6 30E0      		ldi r19,hi8(2)
+ 412               	.L33:
+ 413 02c8 C901      		movw r24,r18
+ 414               	/* epilogue start */
+ 415 02ca 0F90      		pop __tmp_reg__
+ 416 02cc 0F90      		pop __tmp_reg__
+ 417 02ce 0F90      		pop __tmp_reg__
+ 418 02d0 0F90      		pop __tmp_reg__
+ 419 02d2 CF91      		pop r28
+ 420 02d4 DF91      		pop r29
+ 421 02d6 1F91      		pop r17
+ 422 02d8 0F91      		pop r16
+ 423 02da FF90      		pop r15
+ 424 02dc EF90      		pop r14
+ 425 02de DF90      		pop r13
+ 426 02e0 CF90      		pop r12
+ 427 02e2 BF90      		pop r11
+ 428 02e4 AF90      		pop r10
+ 429 02e6 9F90      		pop r9
+ 430 02e8 8F90      		pop r8
+ 431 02ea 7F90      		pop r7
+ 432 02ec 6F90      		pop r6
+ 433 02ee 5F90      		pop r5
+ 434 02f0 4F90      		pop r4
+ 435 02f2 3F90      		pop r3
+ 436 02f4 2F90      		pop r2
+ 437 02f6 0895      		ret
+ 438               		.size	PnutDirFindEntry, .-PnutDirFindEntry
+ 439               		.data
+ 440               	.LC0:
+ 441 0000 2E00      		.string	"."
+ 442               		.text
+ 443               		.type	PnutDirFindPath, @function
+ 444               	PnutDirFindPath:
+ 445 02f8 6F92      		push r6
+ 446 02fa 7F92      		push r7
+ 447 02fc 8F92      		push r8
+ 448 02fe 9F92      		push r9
+ 449 0300 AF92      		push r10
+ 450 0302 BF92      		push r11
+ 451 0304 CF92      		push r12
+ 452 0306 DF92      		push r13
+ 453 0308 EF92      		push r14
+ 454 030a FF92      		push r15
+ 455 030c 0F93      		push r16
+ 456 030e 1F93      		push r17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 9
+
+
+ 457 0310 DF93      		push r29
+ 458 0312 CF93      		push r28
+ 459 0314 00D0      		rcall .
+ 460 0316 CDB7      		in r28,__SP_L__
+ 461 0318 DEB7      		in r29,__SP_H__
+ 462               	/* prologue: function */
+ 463               	/* frame size = 2 */
+ 464 031a 4C01      		movw r8,r24
+ 465 031c 8B01      		movw r16,r22
+ 466 031e 7A01      		movw r14,r20
+ 467 0320 1A82      		std Y+2,__zero_reg__
+ 468 0322 1982      		std Y+1,__zero_reg__
+ 469 0324 FA01      		movw r30,r20
+ 470 0326 8283      		std Z+2,r24
+ 471 0328 9382      		std Z+3,r9
+ 472 032a 8FEF      		ldi r24,lo8(-1)
+ 473 032c 9FEF      		ldi r25,hi8(-1)
+ 474 032e 9183      		std Z+1,r25
+ 475 0330 8083      		st Z,r24
+ 476 0332 1582      		std Z+5,__zero_reg__
+ 477 0334 1482      		std Z+4,__zero_reg__
+ 478 0336 00C0      		rjmp .L37
+ 479               	.L38:
+ 480 0338 0F5F      		subi r16,lo8(-(1))
+ 481 033a 1F4F      		sbci r17,hi8(-(1))
+ 482               	.L37:
+ 483 033c F801      		movw r30,r16
+ 484 033e 8081      		ld r24,Z
+ 485 0340 8F32      		cpi r24,lo8(47)
+ 486 0342 01F0      		breq .L38
+ 487 0344 8823      		tst r24
+ 488 0346 01F0      		breq .+2
+ 489 0348 00C0      		rjmp .L39
+ 490 034a 00E0      		ldi r16,lo8(.LC0)
+ 491 034c 10E0      		ldi r17,hi8(.LC0)
+ 492 034e 00C0      		rjmp .L39
+ 493               	.L49:
+ 494 0350 C401      		movw r24,r8
+ 495 0352 0E94 0000 		call BankNodePointer
+ 496 0356 FC01      		movw r30,r24
+ 497 0358 8081      		ld r24,Z
+ 498 035a 8130      		cpi r24,lo8(1)
+ 499 035c 01F0      		breq .L40
+ 500 035e 24E1      		ldi r18,lo8(20)
+ 501 0360 30E0      		ldi r19,hi8(20)
+ 502 0362 00C0      		rjmp .L41
+ 503               	.L40:
+ 504 0364 6801      		movw r12,r16
+ 505 0366 AA24      		clr r10
+ 506 0368 BB24      		clr r11
+ 507 036a 00C0      		rjmp .L42
+ 508               	.L44:
+ 509 036c 0894      		sec
+ 510 036e A11C      		adc r10,__zero_reg__
+ 511 0370 B11C      		adc r11,__zero_reg__
+ 512 0372 0894      		sec
+ 513 0374 C11C      		adc r12,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 10
+
+
+ 514 0376 D11C      		adc r13,__zero_reg__
+ 515               	.L42:
+ 516 0378 F601      		movw r30,r12
+ 517 037a 8081      		ld r24,Z
+ 518 037c 8823      		tst r24
+ 519 037e 01F0      		breq .L43
+ 520 0380 8F32      		cpi r24,lo8(47)
+ 521 0382 01F4      		brne .L44
+ 522 0384 00C0      		rjmp .L45
+ 523               	.L43:
+ 524 0386 F701      		movw r30,r14
+ 525 0388 1583      		std Z+5,r17
+ 526 038a 0483      		std Z+4,r16
+ 527               	.L45:
+ 528 038c C401      		movw r24,r8
+ 529 038e B801      		movw r22,r16
+ 530 0390 A501      		movw r20,r10
+ 531 0392 9301      		movw r18,r6
+ 532 0394 0E94 0000 		call PnutDirFindEntry
+ 533 0398 9C01      		movw r18,r24
+ 534 039a 0097      		sbiw r24,0
+ 535 039c 01F0      		breq .L46
+ 536 039e 22E0      		ldi r18,lo8(2)
+ 537 03a0 30E0      		ldi r19,hi8(2)
+ 538 03a2 00C0      		rjmp .L41
+ 539               	.L46:
+ 540 03a4 E981      		ldd r30,Y+1
+ 541 03a6 FA81      		ldd r31,Y+2
+ 542 03a8 4081      		ld r20,Z
+ 543 03aa 9181      		ldd r25,Z+1
+ 544 03ac F701      		movw r30,r14
+ 545 03ae 4083      		st Z,r20
+ 546 03b0 9183      		std Z+1,r25
+ 547 03b2 F601      		movw r30,r12
+ 548 03b4 8081      		ld r24,Z
+ 549 03b6 8823      		tst r24
+ 550 03b8 01F0      		breq .L41
+ 551 03ba F701      		movw r30,r14
+ 552 03bc 4283      		std Z+2,r20
+ 553 03be 9383      		std Z+3,r25
+ 554 03c0 842E      		mov r8,r20
+ 555 03c2 992E      		mov r9,r25
+ 556 03c4 0A0D      		add r16,r10
+ 557 03c6 1B1D      		adc r17,r11
+ 558 03c8 00C0      		rjmp .L47
+ 559               	.L52:
+ 560 03ca 0F5F      		subi r16,lo8(-(1))
+ 561 03cc 1F4F      		sbci r17,hi8(-(1))
+ 562               	.L47:
+ 563 03ce F801      		movw r30,r16
+ 564 03d0 8081      		ld r24,Z
+ 565 03d2 8F32      		cpi r24,lo8(47)
+ 566 03d4 01F4      		brne .L51
+ 567 03d6 00C0      		rjmp .L52
+ 568               	.L39:
+ 569 03d8 3E01      		movw r6,r28
+ 570 03da 0894      		sec
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 11
+
+
+ 571 03dc 611C      		adc r6,__zero_reg__
+ 572 03de 711C      		adc r7,__zero_reg__
+ 573               	.L51:
+ 574 03e0 F801      		movw r30,r16
+ 575 03e2 8081      		ld r24,Z
+ 576 03e4 8823      		tst r24
+ 577 03e6 01F0      		breq .+2
+ 578 03e8 00C0      		rjmp .L49
+ 579 03ea 20E0      		ldi r18,lo8(0)
+ 580 03ec 30E0      		ldi r19,hi8(0)
+ 581               	.L41:
+ 582 03ee C901      		movw r24,r18
+ 583               	/* epilogue start */
+ 584 03f0 0F90      		pop __tmp_reg__
+ 585 03f2 0F90      		pop __tmp_reg__
+ 586 03f4 CF91      		pop r28
+ 587 03f6 DF91      		pop r29
+ 588 03f8 1F91      		pop r17
+ 589 03fa 0F91      		pop r16
+ 590 03fc FF90      		pop r15
+ 591 03fe EF90      		pop r14
+ 592 0400 DF90      		pop r13
+ 593 0402 CF90      		pop r12
+ 594 0404 BF90      		pop r11
+ 595 0406 AF90      		pop r10
+ 596 0408 9F90      		pop r9
+ 597 040a 8F90      		pop r8
+ 598 040c 7F90      		pop r7
+ 599 040e 6F90      		pop r6
+ 600 0410 0895      		ret
+ 601               		.size	PnutDirFindPath, .-PnutDirFindPath
+ 602               		.type	PnutNodeDataRelease, @function
+ 603               	PnutNodeDataRelease:
+ 604 0412 CF92      		push r12
+ 605 0414 DF92      		push r13
+ 606 0416 EF92      		push r14
+ 607 0418 FF92      		push r15
+ 608 041a 0F93      		push r16
+ 609 041c 1F93      		push r17
+ 610 041e CF93      		push r28
+ 611 0420 DF93      		push r29
+ 612               	/* prologue: function */
+ 613               	/* frame size = 0 */
+ 614 0422 7C01      		movw r14,r24
+ 615 0424 C0E0      		ldi r28,lo8(0)
+ 616 0426 D0E0      		ldi r29,hi8(0)
+ 617 0428 CC24      		clr r12
+ 618 042a CA94      		dec r12
+ 619 042c DC2C      		mov r13,r12
+ 620               	.L55:
+ 621 042e C701      		movw r24,r14
+ 622 0430 0E94 0000 		call BankNodePointer
+ 623 0434 2696      		adiw r28,6
+ 624 0436 8E01      		movw r16,r28
+ 625 0438 000F      		lsl r16
+ 626 043a 111F      		rol r17
+ 627 043c 2697      		sbiw r28,6
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 12
+
+
+ 628 043e FC01      		movw r30,r24
+ 629 0440 E00F      		add r30,r16
+ 630 0442 F11F      		adc r31,r17
+ 631 0444 8081      		ld r24,Z
+ 632 0446 9181      		ldd r25,Z+1
+ 633 0448 97FD      		sbrc r25,7
+ 634 044a 00C0      		rjmp .L54
+ 635 044c C701      		movw r24,r14
+ 636 044e 0E94 0000 		call BankNodePointer
+ 637 0452 FC01      		movw r30,r24
+ 638 0454 E00F      		add r30,r16
+ 639 0456 F11F      		adc r31,r17
+ 640 0458 8081      		ld r24,Z
+ 641 045a 9181      		ldd r25,Z+1
+ 642 045c 0E94 0000 		call PnutBlockRelease
+ 643 0460 C701      		movw r24,r14
+ 644 0462 0E94 0000 		call BankNodePointer
+ 645 0466 080F      		add r16,r24
+ 646 0468 191F      		adc r17,r25
+ 647 046a F801      		movw r30,r16
+ 648 046c D182      		std Z+1,r13
+ 649 046e C082      		st Z,r12
+ 650               	.L54:
+ 651 0470 2196      		adiw r28,1
+ 652 0472 CA3F      		cpi r28,250
+ 653 0474 D105      		cpc r29,__zero_reg__
+ 654 0476 01F4      		brne .L55
+ 655 0478 C701      		movw r24,r14
+ 656 047a 0E94 0000 		call BankNodePointer
+ 657 047e FC01      		movw r30,r24
+ 658 0480 1482      		std Z+4,__zero_reg__
+ 659 0482 1582      		std Z+5,__zero_reg__
+ 660 0484 1682      		std Z+6,__zero_reg__
+ 661 0486 1782      		std Z+7,__zero_reg__
+ 662 0488 C701      		movw r24,r14
+ 663 048a 0E94 0000 		call BankNodePointer
+ 664 048e 8C01      		movw r16,r24
+ 665 0490 80E0      		ldi r24,lo8(0)
+ 666 0492 90E0      		ldi r25,hi8(0)
+ 667 0494 0E94 0000 		call time
+ 668 0498 F801      		movw r30,r16
+ 669 049a 6087      		std Z+8,r22
+ 670 049c 7187      		std Z+9,r23
+ 671 049e 8287      		std Z+10,r24
+ 672 04a0 9387      		std Z+11,r25
+ 673               	/* epilogue start */
+ 674 04a2 DF91      		pop r29
+ 675 04a4 CF91      		pop r28
+ 676 04a6 1F91      		pop r17
+ 677 04a8 0F91      		pop r16
+ 678 04aa FF90      		pop r15
+ 679 04ac EF90      		pop r14
+ 680 04ae DF90      		pop r13
+ 681 04b0 CF90      		pop r12
+ 682 04b2 0895      		ret
+ 683               		.size	PnutNodeDataRelease, .-PnutNodeDataRelease
+ 684               		.type	PnutNodeRelease, @function
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 13
+
+
+ 685               	PnutNodeRelease:
+ 686 04b4 0F93      		push r16
+ 687 04b6 1F93      		push r17
+ 688               	/* prologue: function */
+ 689               	/* frame size = 0 */
+ 690 04b8 8C01      		movw r16,r24
+ 691 04ba 0E94 0000 		call PnutNodeDataRelease
+ 692 04be C801      		movw r24,r16
+ 693 04c0 0E94 0000 		call PnutBlockRelease
+ 694               	/* epilogue start */
+ 695 04c4 1F91      		pop r17
+ 696 04c6 0F91      		pop r16
+ 697 04c8 0895      		ret
+ 698               		.size	PnutNodeRelease, .-PnutNodeRelease
+ 699               		.type	PnutNodeAlloc, @function
+ 700               	PnutNodeAlloc:
+ 701 04ca FF92      		push r15
+ 702 04cc 0F93      		push r16
+ 703 04ce 1F93      		push r17
+ 704 04d0 CF93      		push r28
+ 705 04d2 DF93      		push r29
+ 706               	/* prologue: function */
+ 707               	/* frame size = 0 */
+ 708 04d4 F82E      		mov r15,r24
+ 709 04d6 0E94 0000 		call PnutBlockAlloc
+ 710 04da 8C01      		movw r16,r24
+ 711 04dc 97FD      		sbrc r25,7
+ 712 04de 00C0      		rjmp .L61
+ 713 04e0 0E94 0000 		call BankNodePointer
+ 714 04e4 EC01      		movw r28,r24
+ 715 04e6 FC01      		movw r30,r24
+ 716 04e8 80E0      		ldi r24,lo8(0)
+ 717 04ea 90E0      		ldi r25,hi8(0)
+ 718 04ec 2FEF      		ldi r18,lo8(-1)
+ 719 04ee 3FEF      		ldi r19,hi8(-1)
+ 720               	.L62:
+ 721 04f0 3587      		std Z+13,r19
+ 722 04f2 2487      		std Z+12,r18
+ 723 04f4 0196      		adiw r24,1
+ 724 04f6 3296      		adiw r30,2
+ 725 04f8 8A3F      		cpi r24,250
+ 726 04fa 9105      		cpc r25,__zero_reg__
+ 727 04fc 01F4      		brne .L62
+ 728 04fe F882      		st Y,r15
+ 729 0500 80E0      		ldi r24,lo8(0)
+ 730 0502 90E0      		ldi r25,hi8(0)
+ 731 0504 0E94 0000 		call time
+ 732 0508 6887      		std Y+8,r22
+ 733 050a 7987      		std Y+9,r23
+ 734 050c 8A87      		std Y+10,r24
+ 735 050e 9B87      		std Y+11,r25
+ 736               	.L61:
+ 737 0510 C801      		movw r24,r16
+ 738               	/* epilogue start */
+ 739 0512 DF91      		pop r29
+ 740 0514 CF91      		pop r28
+ 741 0516 1F91      		pop r17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 14
+
+
+ 742 0518 0F91      		pop r16
+ 743 051a FF90      		pop r15
+ 744 051c 0895      		ret
+ 745               		.size	PnutNodeAlloc, .-PnutNodeAlloc
+ 746               		.type	PnutDirAddEntry, @function
+ 747               	PnutDirAddEntry:
+ 748 051e 2F92      		push r2
+ 749 0520 3F92      		push r3
+ 750 0522 4F92      		push r4
+ 751 0524 5F92      		push r5
+ 752 0526 6F92      		push r6
+ 753 0528 7F92      		push r7
+ 754 052a 8F92      		push r8
+ 755 052c 9F92      		push r9
+ 756 052e AF92      		push r10
+ 757 0530 BF92      		push r11
+ 758 0532 CF92      		push r12
+ 759 0534 DF92      		push r13
+ 760 0536 EF92      		push r14
+ 761 0538 FF92      		push r15
+ 762 053a 0F93      		push r16
+ 763 053c 1F93      		push r17
+ 764 053e DF93      		push r29
+ 765 0540 CF93      		push r28
+ 766 0542 00D0      		rcall .
+ 767 0544 00D0      		rcall .
+ 768 0546 CDB7      		in r28,__SP_L__
+ 769 0548 DEB7      		in r29,__SP_H__
+ 770               	/* prologue: function */
+ 771               	/* frame size = 4 */
+ 772 054a 4C01      		movw r8,r24
+ 773 054c 2B01      		movw r4,r22
+ 774 054e 3A01      		movw r6,r20
+ 775 0550 AA24      		clr r10
+ 776 0552 BB24      		clr r11
+ 777 0554 6501      		movw r12,r10
+ 778 0556 E0E0      		ldi r30,lo8(0)
+ 779 0558 F0E0      		ldi r31,hi8(0)
+ 780 055a 1E01      		movw r2,r28
+ 781 055c 0894      		sec
+ 782 055e 211C      		adc r2,__zero_reg__
+ 783 0560 311C      		adc r3,__zero_reg__
+ 784               	.L72:
+ 785 0562 FC83      		std Y+4,r31
+ 786 0564 EB83      		std Y+3,r30
+ 787 0566 C401      		movw r24,r8
+ 788 0568 B601      		movw r22,r12
+ 789 056a A501      		movw r20,r10
+ 790 056c 9E01      		movw r18,r28
+ 791 056e 2D5F      		subi r18,lo8(-(3))
+ 792 0570 3F4F      		sbci r19,hi8(-(3))
+ 793 0572 8101      		movw r16,r2
+ 794 0574 E1E0      		ldi r30,lo8(1)
+ 795 0576 EE2E      		mov r14,r30
+ 796 0578 F12C      		mov r15,__zero_reg__
+ 797 057a 0E94 0000 		call PnutNodeGetDataPtr
+ 798 057e 7C01      		movw r14,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 15
+
+
+ 799 0580 0097      		sbiw r24,0
+ 800 0582 01F0      		breq .+2
+ 801 0584 00C0      		rjmp .L66
+ 802 0586 EB81      		ldd r30,Y+3
+ 803 0588 FC81      		ldd r31,Y+4
+ 804 058a 80E2      		ldi r24,lo8(32)
+ 805 058c 90E0      		ldi r25,hi8(32)
+ 806 058e A0E0      		ldi r26,hlo8(32)
+ 807 0590 B0E0      		ldi r27,hhi8(32)
+ 808 0592 A80E      		add r10,r24
+ 809 0594 B91E      		adc r11,r25
+ 810 0596 CA1E      		adc r12,r26
+ 811 0598 DB1E      		adc r13,r27
+ 812 059a 8981      		ldd r24,Y+1
+ 813 059c 9A81      		ldd r25,Y+2
+ 814 059e 8097      		sbiw r24,32
+ 815 05a0 00F0      		brlo .L72
+ 816 05a2 8281      		ldd r24,Z+2
+ 817 05a4 8823      		tst r24
+ 818 05a6 01F4      		brne .L72
+ 819 05a8 7182      		std Z+1,r7
+ 820 05aa 6082      		st Z,r6
+ 821 05ac 81E0      		ldi r24,lo8(1)
+ 822 05ae 8283      		std Z+2,r24
+ 823 05b0 CF01      		movw r24,r30
+ 824 05b2 0396      		adiw r24,3
+ 825 05b4 B201      		movw r22,r4
+ 826 05b6 0E94 0000 		call strcpy
+ 827 05ba C401      		movw r24,r8
+ 828 05bc 0E94 0000 		call BankNodePointer
+ 829 05c0 8C01      		movw r16,r24
+ 830 05c2 80E0      		ldi r24,lo8(0)
+ 831 05c4 90E0      		ldi r25,hi8(0)
+ 832 05c6 0E94 0000 		call time
+ 833 05ca D801      		movw r26,r16
+ 834 05cc 1896      		adiw r26,8
+ 835 05ce 6D93      		st X+,r22
+ 836 05d0 7D93      		st X+,r23
+ 837 05d2 8D93      		st X+,r24
+ 838 05d4 9C93      		st X,r25
+ 839 05d6 1B97      		sbiw r26,8+3
+ 840 05d8 1496      		adiw r26,4
+ 841 05da 8D91      		ld r24,X+
+ 842 05dc 9D91      		ld r25,X+
+ 843 05de 0D90      		ld __tmp_reg__,X+
+ 844 05e0 BC91      		ld r27,X
+ 845 05e2 A02D      		mov r26,__tmp_reg__
+ 846 05e4 8A15      		cp r24,r10
+ 847 05e6 9B05      		cpc r25,r11
+ 848 05e8 AC05      		cpc r26,r12
+ 849 05ea BD05      		cpc r27,r13
+ 850 05ec 00F4      		brsh .L68
+ 851 05ee F801      		movw r30,r16
+ 852 05f0 A482      		std Z+4,r10
+ 853 05f2 B582      		std Z+5,r11
+ 854 05f4 C682      		std Z+6,r12
+ 855 05f6 D782      		std Z+7,r13
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 16
+
+
+ 856               	.L68:
+ 857 05f8 C301      		movw r24,r6
+ 858 05fa 0E94 0000 		call BankNodePointer
+ 859 05fe FC01      		movw r30,r24
+ 860 0600 8281      		ldd r24,Z+2
+ 861 0602 9381      		ldd r25,Z+3
+ 862 0604 0196      		adiw r24,1
+ 863 0606 9383      		std Z+3,r25
+ 864 0608 8283      		std Z+2,r24
+ 865               	.L66:
+ 866 060a C701      		movw r24,r14
+ 867               	/* epilogue start */
+ 868 060c 0F90      		pop __tmp_reg__
+ 869 060e 0F90      		pop __tmp_reg__
+ 870 0610 0F90      		pop __tmp_reg__
+ 871 0612 0F90      		pop __tmp_reg__
+ 872 0614 CF91      		pop r28
+ 873 0616 DF91      		pop r29
+ 874 0618 1F91      		pop r17
+ 875 061a 0F91      		pop r16
+ 876 061c FF90      		pop r15
+ 877 061e EF90      		pop r14
+ 878 0620 DF90      		pop r13
+ 879 0622 CF90      		pop r12
+ 880 0624 BF90      		pop r11
+ 881 0626 AF90      		pop r10
+ 882 0628 9F90      		pop r9
+ 883 062a 8F90      		pop r8
+ 884 062c 7F90      		pop r7
+ 885 062e 6F90      		pop r6
+ 886 0630 5F90      		pop r5
+ 887 0632 4F90      		pop r4
+ 888 0634 3F90      		pop r3
+ 889 0636 2F90      		pop r2
+ 890 0638 0895      		ret
+ 891               		.size	PnutDirAddEntry, .-PnutDirAddEntry
+ 892               		.type	PnutFileOpen, @function
+ 893               	PnutFileOpen:
+ 894 063a AF92      		push r10
+ 895 063c BF92      		push r11
+ 896 063e CF92      		push r12
+ 897 0640 DF92      		push r13
+ 898 0642 EF92      		push r14
+ 899 0644 FF92      		push r15
+ 900 0646 0F93      		push r16
+ 901 0648 1F93      		push r17
+ 902 064a DF93      		push r29
+ 903 064c CF93      		push r28
+ 904 064e 00D0      		rcall .
+ 905 0650 00D0      		rcall .
+ 906 0652 00D0      		rcall .
+ 907 0654 CDB7      		in r28,__SP_L__
+ 908 0656 DEB7      		in r29,__SP_H__
+ 909               	/* prologue: function */
+ 910               	/* frame size = 6 */
+ 911 0658 5C01      		movw r10,r24
+ 912 065a 7A01      		movw r14,r20
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 17
+
+
+ 913 065c 8091 0000 		lds r24,root
+ 914 0660 9091 0000 		lds r25,(root)+1
+ 915 0664 AE01      		movw r20,r28
+ 916 0666 4F5F      		subi r20,lo8(-(1))
+ 917 0668 5F4F      		sbci r21,hi8(-(1))
+ 918 066a 0E94 0000 		call PnutDirFindPath
+ 919 066e 0097      		sbiw r24,0
+ 920 0670 01F4      		brne .L74
+ 921 0672 8981      		ldd r24,Y+1
+ 922 0674 9A81      		ldd r25,Y+2
+ 923 0676 0E94 0000 		call BankNodePointer
+ 924 067a FC01      		movw r30,r24
+ 925 067c 8081      		ld r24,Z
+ 926 067e 8823      		tst r24
+ 927 0680 01F0      		breq .L75
+ 928 0682 85E1      		ldi r24,lo8(21)
+ 929 0684 90E0      		ldi r25,hi8(21)
+ 930 0686 00C0      		rjmp .L86
+ 931               	.L75:
+ 932 0688 C701      		movw r24,r14
+ 933 068a 8070      		andi r24,lo8(1280)
+ 934 068c 9570      		andi r25,hi8(1280)
+ 935 068e 8050      		subi r24,lo8(1280)
+ 936 0690 9540      		sbci r25,hi8(1280)
+ 937 0692 01F4      		brne .L77
+ 938 0694 81E1      		ldi r24,lo8(17)
+ 939 0696 90E0      		ldi r25,hi8(17)
+ 940 0698 00C0      		rjmp .L86
+ 941               	.L77:
+ 942 069a C980      		ldd r12,Y+1
+ 943 069c DA80      		ldd r13,Y+2
+ 944 069e F1FE      		sbrs r15,1
+ 945 06a0 00C0      		rjmp .L78
+ 946 06a2 C601      		movw r24,r12
+ 947 06a4 0E94 0000 		call PnutNodeDataRelease
+ 948 06a8 00C0      		rjmp .L78
+ 949               	.L74:
+ 950 06aa 0297      		sbiw r24,2
+ 951 06ac 01F0      		breq .+2
+ 952 06ae 00C0      		rjmp .L79
+ 953 06b0 8D81      		ldd r24,Y+5
+ 954 06b2 9E81      		ldd r25,Y+6
+ 955 06b4 892B      		or r24,r25
+ 956 06b6 01F4      		brne .+2
+ 957 06b8 00C0      		rjmp .L79
+ 958 06ba F0FE      		sbrs r15,0
+ 959 06bc 00C0      		rjmp .L79
+ 960 06be 80E0      		ldi r24,lo8(0)
+ 961 06c0 0E94 0000 		call PnutNodeAlloc
+ 962 06c4 6C01      		movw r12,r24
+ 963 06c6 97FF      		sbrs r25,7
+ 964 06c8 00C0      		rjmp .L80
+ 965 06ca 8CE1      		ldi r24,lo8(28)
+ 966 06cc 90E0      		ldi r25,hi8(28)
+ 967               	.L86:
+ 968 06ce 9093 0000 		sts (errno)+1,r25
+ 969 06d2 8093 0000 		sts errno,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 18
+
+
+ 970 06d6 00C0      		rjmp .L79
+ 971               	.L80:
+ 972 06d8 6D81      		ldd r22,Y+5
+ 973 06da 7E81      		ldd r23,Y+6
+ 974 06dc 8B81      		ldd r24,Y+3
+ 975 06de 9C81      		ldd r25,Y+4
+ 976 06e0 A601      		movw r20,r12
+ 977 06e2 0E94 0000 		call PnutDirAddEntry
+ 978 06e6 892B      		or r24,r25
+ 979 06e8 01F0      		breq .L81
+ 980 06ea C601      		movw r24,r12
+ 981 06ec 0E94 0000 		call PnutBlockRelease
+ 982 06f0 00C0      		rjmp .L79
+ 983               	.L81:
+ 984 06f2 88E0      		ldi r24,lo8(8)
+ 985 06f4 90E0      		ldi r25,hi8(8)
+ 986 06f6 0E94 0000 		call malloc
+ 987 06fa 8C01      		movw r16,r24
+ 988 06fc 0097      		sbiw r24,0
+ 989 06fe 01F0      		breq .L79
+ 990 0700 9701      		movw r18,r14
+ 991 0702 2970      		andi r18,lo8(9)
+ 992 0704 3070      		andi r19,hi8(9)
+ 993 0706 FC01      		movw r30,r24
+ 994 0708 8681      		ldd r24,Z+6
+ 995 070a 9781      		ldd r25,Z+7
+ 996 070c 822B      		or r24,r18
+ 997 070e 932B      		or r25,r19
+ 998 0710 9783      		std Z+7,r25
+ 999 0712 8683      		std Z+6,r24
+ 1000 0714 E3FC      		sbrc r14,3
+ 1001 0716 00C0      		rjmp .L82
+ 1002 0718 80E0      		ldi r24,lo8(0)
+ 1003 071a 90E0      		ldi r25,hi8(0)
+ 1004 071c A0E0      		ldi r26,hlo8(0)
+ 1005 071e B0E0      		ldi r27,hhi8(0)
+ 1006 0720 00C0      		rjmp .L83
+ 1007               	.L82:
+ 1008 0722 C601      		movw r24,r12
+ 1009 0724 0E94 0000 		call BankNodePointer
+ 1010 0728 FC01      		movw r30,r24
+ 1011 072a 8481      		ldd r24,Z+4
+ 1012 072c 9581      		ldd r25,Z+5
+ 1013 072e A681      		ldd r26,Z+6
+ 1014 0730 B781      		ldd r27,Z+7
+ 1015               	.L83:
+ 1016 0732 F801      		movw r30,r16
+ 1017 0734 8283      		std Z+2,r24
+ 1018 0736 9383      		std Z+3,r25
+ 1019 0738 A483      		std Z+4,r26
+ 1020 073a B583      		std Z+5,r27
+ 1021 073c D182      		std Z+1,r13
+ 1022 073e C082      		st Z,r12
+ 1023 0740 86E0      		ldi r24,lo8(6)
+ 1024 0742 90E0      		ldi r25,hi8(6)
+ 1025 0744 0E94 0000 		call malloc
+ 1026 0748 FC01      		movw r30,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 19
+
+
+ 1027 074a 7C01      		movw r14,r24
+ 1028 074c 0097      		sbiw r24,0
+ 1029 074e 01F4      		brne .L84
+ 1030 0750 C801      		movw r24,r16
+ 1031 0752 0E94 0000 		call free
+ 1032 0756 00C0      		rjmp .L79
+ 1033               	.L84:
+ 1034 0758 1182      		std Z+1,__zero_reg__
+ 1035 075a 1082      		st Z,__zero_reg__
+ 1036 075c B382      		std Z+3,r11
+ 1037 075e A282      		std Z+2,r10
+ 1038 0760 1583      		std Z+5,r17
+ 1039 0762 0483      		std Z+4,r16
+ 1040 0764 C601      		movw r24,r12
+ 1041 0766 0E94 0000 		call BankNodePointer
+ 1042 076a FC01      		movw r30,r24
+ 1043 076c 8181      		ldd r24,Z+1
+ 1044 076e 8F5F      		subi r24,lo8(-(1))
+ 1045 0770 8183      		std Z+1,r24
+ 1046 0772 00C0      		rjmp .L76
+ 1047               	.L79:
+ 1048 0774 EE24      		clr r14
+ 1049 0776 EA94      		dec r14
+ 1050 0778 FE2C      		mov r15,r14
+ 1051               	.L76:
+ 1052 077a C701      		movw r24,r14
+ 1053               	/* epilogue start */
+ 1054 077c 2696      		adiw r28,6
+ 1055 077e 0FB6      		in __tmp_reg__,__SREG__
+ 1056 0780 F894      		cli
+ 1057 0782 DEBF      		out __SP_H__,r29
+ 1058 0784 0FBE      		out __SREG__,__tmp_reg__
+ 1059 0786 CDBF      		out __SP_L__,r28
+ 1060 0788 CF91      		pop r28
+ 1061 078a DF91      		pop r29
+ 1062 078c 1F91      		pop r17
+ 1063 078e 0F91      		pop r16
+ 1064 0790 FF90      		pop r15
+ 1065 0792 EF90      		pop r14
+ 1066 0794 DF90      		pop r13
+ 1067 0796 CF90      		pop r12
+ 1068 0798 BF90      		pop r11
+ 1069 079a AF90      		pop r10
+ 1070 079c 0895      		ret
+ 1071               	.L78:
+ 1072 079e D7FE      		sbrs r13,7
+ 1073 07a0 00C0      		rjmp .L81
+ 1074 07a2 00C0      		rjmp .L79
+ 1075               		.size	PnutFileOpen, .-PnutFileOpen
+ 1076               		.data
+ 1077               	.LC1:
+ 1078 0002 2E2E 00   		.string	".."
+ 1079               		.text
+ 1080               		.type	PnutInit, @function
+ 1081               	PnutInit:
+ 1082 07a4 CF93      		push r28
+ 1083 07a6 DF93      		push r29
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 20
+
+
+ 1084               	/* prologue: function */
+ 1085               	/* frame size = 0 */
+ 1086 07a8 C0E0      		ldi r28,lo8(0)
+ 1087 07aa D0E0      		ldi r29,hi8(0)
+ 1088               	.L88:
+ 1089 07ac CE01      		movw r24,r28
+ 1090 07ae 0E94 0000 		call PnutBlockRelease
+ 1091 07b2 2196      		adiw r28,1
+ 1092 07b4 83E0      		ldi r24,hi8(960)
+ 1093 07b6 C03C      		cpi r28,lo8(960)
+ 1094 07b8 D807      		cpc r29,r24
+ 1095 07ba 01F4      		brne .L88
+ 1096 07bc 81E0      		ldi r24,lo8(1)
+ 1097 07be 0E94 0000 		call PnutNodeAlloc
+ 1098 07c2 AC01      		movw r20,r24
+ 1099 07c4 9093 0000 		sts (root)+1,r25
+ 1100 07c8 8093 0000 		sts root,r24
+ 1101 07cc 8FEF      		ldi r24,hi8(-1)
+ 1102 07ce 4F3F      		cpi r20,lo8(-1)
+ 1103 07d0 5807      		cpc r21,r24
+ 1104 07d2 01F4      		brne .L89
+ 1105 07d4 CCE1      		ldi r28,lo8(28)
+ 1106 07d6 D0E0      		ldi r29,hi8(28)
+ 1107 07d8 00C0      		rjmp .L90
+ 1108               	.L89:
+ 1109 07da CA01      		movw r24,r20
+ 1110 07dc 60E0      		ldi r22,lo8(.LC0)
+ 1111 07de 70E0      		ldi r23,hi8(.LC0)
+ 1112 07e0 0E94 0000 		call PnutDirAddEntry
+ 1113 07e4 EC01      		movw r28,r24
+ 1114 07e6 0097      		sbiw r24,0
+ 1115 07e8 01F4      		brne .L91
+ 1116 07ea 4091 0000 		lds r20,root
+ 1117 07ee 5091 0000 		lds r21,(root)+1
+ 1118 07f2 CA01      		movw r24,r20
+ 1119 07f4 60E0      		ldi r22,lo8(.LC1)
+ 1120 07f6 70E0      		ldi r23,hi8(.LC1)
+ 1121 07f8 0E94 0000 		call PnutDirAddEntry
+ 1122 07fc EC01      		movw r28,r24
+ 1123 07fe 0097      		sbiw r24,0
+ 1124 0800 01F0      		breq .L90
+ 1125               	.L91:
+ 1126 0802 8091 0000 		lds r24,root
+ 1127 0806 9091 0000 		lds r25,(root)+1
+ 1128 080a 0E94 0000 		call PnutBlockRelease
+ 1129               	.L90:
+ 1130 080e CE01      		movw r24,r28
+ 1131               	/* epilogue start */
+ 1132 0810 DF91      		pop r29
+ 1133 0812 CF91      		pop r28
+ 1134 0814 0895      		ret
+ 1135               		.size	PnutInit, .-PnutInit
+ 1136               		.type	PnutFileWrite, @function
+ 1137               	PnutFileWrite:
+ 1138 0816 2F92      		push r2
+ 1139 0818 3F92      		push r3
+ 1140 081a 4F92      		push r4
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 21
+
+
+ 1141 081c 5F92      		push r5
+ 1142 081e 6F92      		push r6
+ 1143 0820 7F92      		push r7
+ 1144 0822 8F92      		push r8
+ 1145 0824 9F92      		push r9
+ 1146 0826 AF92      		push r10
+ 1147 0828 BF92      		push r11
+ 1148 082a CF92      		push r12
+ 1149 082c DF92      		push r13
+ 1150 082e EF92      		push r14
+ 1151 0830 FF92      		push r15
+ 1152 0832 0F93      		push r16
+ 1153 0834 1F93      		push r17
+ 1154 0836 DF93      		push r29
+ 1155 0838 CF93      		push r28
+ 1156 083a 00D0      		rcall .
+ 1157 083c 00D0      		rcall .
+ 1158 083e CDB7      		in r28,__SP_L__
+ 1159 0840 DEB7      		in r29,__SP_H__
+ 1160               	/* prologue: function */
+ 1161               	/* frame size = 4 */
+ 1162 0842 6A01      		movw r12,r20
+ 1163 0844 FC01      		movw r30,r24
+ 1164 0846 8480      		ldd r8,Z+4
+ 1165 0848 9580      		ldd r9,Z+5
+ 1166 084a F401      		movw r30,r8
+ 1167 084c 6080      		ld r6,Z
+ 1168 084e 7180      		ldd r7,Z+1
+ 1169 0850 5B01      		movw r10,r22
+ 1170 0852 4424      		clr r4
+ 1171 0854 5524      		clr r5
+ 1172 0856 1E01      		movw r2,r28
+ 1173 0858 0894      		sec
+ 1174 085a 211C      		adc r2,__zero_reg__
+ 1175 085c 311C      		adc r3,__zero_reg__
+ 1176 085e 00C0      		rjmp .L95
+ 1177               	.L100:
+ 1178 0860 F401      		movw r30,r8
+ 1179 0862 4281      		ldd r20,Z+2
+ 1180 0864 5381      		ldd r21,Z+3
+ 1181 0866 6481      		ldd r22,Z+4
+ 1182 0868 7581      		ldd r23,Z+5
+ 1183 086a C301      		movw r24,r6
+ 1184 086c 9101      		movw r18,r2
+ 1185 086e 8E01      		movw r16,r28
+ 1186 0870 0D5F      		subi r16,lo8(-(3))
+ 1187 0872 1F4F      		sbci r17,hi8(-(3))
+ 1188 0874 F1E0      		ldi r31,lo8(1)
+ 1189 0876 EF2E      		mov r14,r31
+ 1190 0878 F12C      		mov r15,__zero_reg__
+ 1191 087a 0E94 0000 		call PnutNodeGetDataPtr
+ 1192 087e 0097      		sbiw r24,0
+ 1193 0880 01F4      		brne .L96
+ 1194 0882 8B81      		ldd r24,Y+3
+ 1195 0884 9C81      		ldd r25,Y+4
+ 1196 0886 8C15      		cp r24,r12
+ 1197 0888 9D05      		cpc r25,r13
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 22
+
+
+ 1198 088a 00F0      		brlo .L97
+ 1199 088c DC82      		std Y+4,r13
+ 1200 088e CB82      		std Y+3,r12
+ 1201 0890 CC24      		clr r12
+ 1202 0892 DD24      		clr r13
+ 1203 0894 00C0      		rjmp .L98
+ 1204               	.L97:
+ 1205 0896 C81A      		sub r12,r24
+ 1206 0898 D90A      		sbc r13,r25
+ 1207               	.L98:
+ 1208 089a 4B81      		ldd r20,Y+3
+ 1209 089c 5C81      		ldd r21,Y+4
+ 1210 089e 8981      		ldd r24,Y+1
+ 1211 08a0 9A81      		ldd r25,Y+2
+ 1212 08a2 B501      		movw r22,r10
+ 1213 08a4 0E94 0000 		call memcpy
+ 1214 08a8 2B81      		ldd r18,Y+3
+ 1215 08aa 3C81      		ldd r19,Y+4
+ 1216 08ac 420E      		add r4,r18
+ 1217 08ae 531E      		adc r5,r19
+ 1218 08b0 A20E      		add r10,r18
+ 1219 08b2 B31E      		adc r11,r19
+ 1220 08b4 40E0      		ldi r20,lo8(0)
+ 1221 08b6 50E0      		ldi r21,hi8(0)
+ 1222 08b8 F401      		movw r30,r8
+ 1223 08ba 8281      		ldd r24,Z+2
+ 1224 08bc 9381      		ldd r25,Z+3
+ 1225 08be A481      		ldd r26,Z+4
+ 1226 08c0 B581      		ldd r27,Z+5
+ 1227 08c2 820F      		add r24,r18
+ 1228 08c4 931F      		adc r25,r19
+ 1229 08c6 A41F      		adc r26,r20
+ 1230 08c8 B51F      		adc r27,r21
+ 1231 08ca 8283      		std Z+2,r24
+ 1232 08cc 9383      		std Z+3,r25
+ 1233 08ce A483      		std Z+4,r26
+ 1234 08d0 B583      		std Z+5,r27
+ 1235               	.L95:
+ 1236 08d2 C114      		cp r12,__zero_reg__
+ 1237 08d4 D104      		cpc r13,__zero_reg__
+ 1238 08d6 01F4      		brne .L100
+ 1239 08d8 00C0      		rjmp .L101
+ 1240               	.L96:
+ 1241 08da 4C97      		sbiw r24,28
+ 1242 08dc 01F4      		brne .L102
+ 1243               	.L101:
+ 1244 08de C301      		movw r24,r6
+ 1245 08e0 0E94 0000 		call BankNodePointer
+ 1246 08e4 FC01      		movw r30,r24
+ 1247 08e6 2481      		ldd r18,Z+4
+ 1248 08e8 3581      		ldd r19,Z+5
+ 1249 08ea 4681      		ldd r20,Z+6
+ 1250 08ec 5781      		ldd r21,Z+7
+ 1251 08ee F401      		movw r30,r8
+ 1252 08f0 8281      		ldd r24,Z+2
+ 1253 08f2 9381      		ldd r25,Z+3
+ 1254 08f4 A481      		ldd r26,Z+4
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 23
+
+
+ 1255 08f6 B581      		ldd r27,Z+5
+ 1256 08f8 2817      		cp r18,r24
+ 1257 08fa 3907      		cpc r19,r25
+ 1258 08fc 4A07      		cpc r20,r26
+ 1259 08fe 5B07      		cpc r21,r27
+ 1260 0900 00F4      		brsh .L103
+ 1261 0902 C301      		movw r24,r6
+ 1262 0904 0E94 0000 		call BankNodePointer
+ 1263 0908 F401      		movw r30,r8
+ 1264 090a 2281      		ldd r18,Z+2
+ 1265 090c 3381      		ldd r19,Z+3
+ 1266 090e 4481      		ldd r20,Z+4
+ 1267 0910 5581      		ldd r21,Z+5
+ 1268 0912 FC01      		movw r30,r24
+ 1269 0914 2483      		std Z+4,r18
+ 1270 0916 3583      		std Z+5,r19
+ 1271 0918 4683      		std Z+6,r20
+ 1272 091a 5783      		std Z+7,r21
+ 1273               	.L103:
+ 1274 091c C301      		movw r24,r6
+ 1275 091e 0E94 0000 		call BankNodePointer
+ 1276 0922 8C01      		movw r16,r24
+ 1277 0924 80E0      		ldi r24,lo8(0)
+ 1278 0926 90E0      		ldi r25,hi8(0)
+ 1279 0928 0E94 0000 		call time
+ 1280 092c F801      		movw r30,r16
+ 1281 092e 6087      		std Z+8,r22
+ 1282 0930 7187      		std Z+9,r23
+ 1283 0932 8287      		std Z+10,r24
+ 1284 0934 9387      		std Z+11,r25
+ 1285               	.L102:
+ 1286 0936 C201      		movw r24,r4
+ 1287               	/* epilogue start */
+ 1288 0938 0F90      		pop __tmp_reg__
+ 1289 093a 0F90      		pop __tmp_reg__
+ 1290 093c 0F90      		pop __tmp_reg__
+ 1291 093e 0F90      		pop __tmp_reg__
+ 1292 0940 CF91      		pop r28
+ 1293 0942 DF91      		pop r29
+ 1294 0944 1F91      		pop r17
+ 1295 0946 0F91      		pop r16
+ 1296 0948 FF90      		pop r15
+ 1297 094a EF90      		pop r14
+ 1298 094c DF90      		pop r13
+ 1299 094e CF90      		pop r12
+ 1300 0950 BF90      		pop r11
+ 1301 0952 AF90      		pop r10
+ 1302 0954 9F90      		pop r9
+ 1303 0956 8F90      		pop r8
+ 1304 0958 7F90      		pop r7
+ 1305 095a 6F90      		pop r6
+ 1306 095c 5F90      		pop r5
+ 1307 095e 4F90      		pop r4
+ 1308 0960 3F90      		pop r3
+ 1309 0962 2F90      		pop r2
+ 1310 0964 0895      		ret
+ 1311               		.size	PnutFileWrite, .-PnutFileWrite
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 24
+
+
+ 1312               		.type	PnutFileRead, @function
+ 1313               	PnutFileRead:
+ 1314 0966 2F92      		push r2
+ 1315 0968 3F92      		push r3
+ 1316 096a 4F92      		push r4
+ 1317 096c 5F92      		push r5
+ 1318 096e 6F92      		push r6
+ 1319 0970 7F92      		push r7
+ 1320 0972 8F92      		push r8
+ 1321 0974 9F92      		push r9
+ 1322 0976 AF92      		push r10
+ 1323 0978 BF92      		push r11
+ 1324 097a CF92      		push r12
+ 1325 097c DF92      		push r13
+ 1326 097e EF92      		push r14
+ 1327 0980 FF92      		push r15
+ 1328 0982 0F93      		push r16
+ 1329 0984 1F93      		push r17
+ 1330 0986 DF93      		push r29
+ 1331 0988 CF93      		push r28
+ 1332 098a 00D0      		rcall .
+ 1333 098c 00D0      		rcall .
+ 1334 098e CDB7      		in r28,__SP_L__
+ 1335 0990 DEB7      		in r29,__SP_H__
+ 1336               	/* prologue: function */
+ 1337               	/* frame size = 4 */
+ 1338 0992 B62E      		mov r11,r22
+ 1339 0994 A72E      		mov r10,r23
+ 1340 0996 6A01      		movw r12,r20
+ 1341 0998 FC01      		movw r30,r24
+ 1342 099a 6480      		ldd r6,Z+4
+ 1343 099c 7580      		ldd r7,Z+5
+ 1344 099e F301      		movw r30,r6
+ 1345 09a0 4080      		ld r4,Z
+ 1346 09a2 5180      		ldd r5,Z+1
+ 1347 09a4 C201      		movw r24,r4
+ 1348 09a6 0E94 0000 		call BankNodePointer
+ 1349 09aa 9601      		movw r18,r12
+ 1350 09ac 4427      		clr r20
+ 1351 09ae 37FD      		sbrc r19,7
+ 1352 09b0 4095      		com r20
+ 1353 09b2 542F      		mov r21,r20
+ 1354 09b4 FC01      		movw r30,r24
+ 1355 09b6 8481      		ldd r24,Z+4
+ 1356 09b8 9581      		ldd r25,Z+5
+ 1357 09ba A681      		ldd r26,Z+6
+ 1358 09bc B781      		ldd r27,Z+7
+ 1359 09be F301      		movw r30,r6
+ 1360 09c0 E280      		ldd r14,Z+2
+ 1361 09c2 F380      		ldd r15,Z+3
+ 1362 09c4 0481      		ldd r16,Z+4
+ 1363 09c6 1581      		ldd r17,Z+5
+ 1364 09c8 8E19      		sub r24,r14
+ 1365 09ca 9F09      		sbc r25,r15
+ 1366 09cc A00B      		sbc r26,r16
+ 1367 09ce B10B      		sbc r27,r17
+ 1368 09d0 8217      		cp r24,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 25
+
+
+ 1369 09d2 9307      		cpc r25,r19
+ 1370 09d4 A407      		cpc r26,r20
+ 1371 09d6 B507      		cpc r27,r21
+ 1372 09d8 00F4      		brsh .L106
+ 1373 09da C201      		movw r24,r4
+ 1374 09dc 0E94 0000 		call BankNodePointer
+ 1375 09e0 FC01      		movw r30,r24
+ 1376 09e2 C480      		ldd r12,Z+4
+ 1377 09e4 D580      		ldd r13,Z+5
+ 1378 09e6 F301      		movw r30,r6
+ 1379 09e8 8281      		ldd r24,Z+2
+ 1380 09ea 9381      		ldd r25,Z+3
+ 1381 09ec C81A      		sub r12,r24
+ 1382 09ee D90A      		sbc r13,r25
+ 1383               	.L106:
+ 1384 09f0 8B2D      		mov r24,r11
+ 1385 09f2 9A2D      		mov r25,r10
+ 1386 09f4 9C01      		movw r18,r24
+ 1387 09f6 5901      		movw r10,r18
+ 1388 09f8 8824      		clr r8
+ 1389 09fa 9924      		clr r9
+ 1390 09fc 1E01      		movw r2,r28
+ 1391 09fe 0894      		sec
+ 1392 0a00 211C      		adc r2,__zero_reg__
+ 1393 0a02 311C      		adc r3,__zero_reg__
+ 1394 0a04 00C0      		rjmp .L107
+ 1395               	.L112:
+ 1396 0a06 F301      		movw r30,r6
+ 1397 0a08 4281      		ldd r20,Z+2
+ 1398 0a0a 5381      		ldd r21,Z+3
+ 1399 0a0c 6481      		ldd r22,Z+4
+ 1400 0a0e 7581      		ldd r23,Z+5
+ 1401 0a10 C201      		movw r24,r4
+ 1402 0a12 9101      		movw r18,r2
+ 1403 0a14 8E01      		movw r16,r28
+ 1404 0a16 0D5F      		subi r16,lo8(-(3))
+ 1405 0a18 1F4F      		sbci r17,hi8(-(3))
+ 1406 0a1a EE24      		clr r14
+ 1407 0a1c FF24      		clr r15
+ 1408 0a1e 0E94 0000 		call PnutNodeGetDataPtr
+ 1409 0a22 892B      		or r24,r25
+ 1410 0a24 01F4      		brne .L108
+ 1411 0a26 8B81      		ldd r24,Y+3
+ 1412 0a28 9C81      		ldd r25,Y+4
+ 1413 0a2a 8C15      		cp r24,r12
+ 1414 0a2c 9D05      		cpc r25,r13
+ 1415 0a2e 00F0      		brlo .L109
+ 1416 0a30 DC82      		std Y+4,r13
+ 1417 0a32 CB82      		std Y+3,r12
+ 1418 0a34 CC24      		clr r12
+ 1419 0a36 DD24      		clr r13
+ 1420 0a38 00C0      		rjmp .L110
+ 1421               	.L109:
+ 1422 0a3a C81A      		sub r12,r24
+ 1423 0a3c D90A      		sbc r13,r25
+ 1424               	.L110:
+ 1425 0a3e 6981      		ldd r22,Y+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 26
+
+
+ 1426 0a40 7A81      		ldd r23,Y+2
+ 1427 0a42 4B81      		ldd r20,Y+3
+ 1428 0a44 5C81      		ldd r21,Y+4
+ 1429 0a46 C501      		movw r24,r10
+ 1430 0a48 0E94 0000 		call memcpy
+ 1431 0a4c 2B81      		ldd r18,Y+3
+ 1432 0a4e 3C81      		ldd r19,Y+4
+ 1433 0a50 820E      		add r8,r18
+ 1434 0a52 931E      		adc r9,r19
+ 1435 0a54 A20E      		add r10,r18
+ 1436 0a56 B31E      		adc r11,r19
+ 1437 0a58 40E0      		ldi r20,lo8(0)
+ 1438 0a5a 50E0      		ldi r21,hi8(0)
+ 1439 0a5c F301      		movw r30,r6
+ 1440 0a5e 8281      		ldd r24,Z+2
+ 1441 0a60 9381      		ldd r25,Z+3
+ 1442 0a62 A481      		ldd r26,Z+4
+ 1443 0a64 B581      		ldd r27,Z+5
+ 1444 0a66 820F      		add r24,r18
+ 1445 0a68 931F      		adc r25,r19
+ 1446 0a6a A41F      		adc r26,r20
+ 1447 0a6c B51F      		adc r27,r21
+ 1448 0a6e 8283      		std Z+2,r24
+ 1449 0a70 9383      		std Z+3,r25
+ 1450 0a72 A483      		std Z+4,r26
+ 1451 0a74 B583      		std Z+5,r27
+ 1452               	.L107:
+ 1453 0a76 C114      		cp r12,__zero_reg__
+ 1454 0a78 D104      		cpc r13,__zero_reg__
+ 1455 0a7a 01F4      		brne .L112
+ 1456               	.L108:
+ 1457 0a7c C401      		movw r24,r8
+ 1458               	/* epilogue start */
+ 1459 0a7e 0F90      		pop __tmp_reg__
+ 1460 0a80 0F90      		pop __tmp_reg__
+ 1461 0a82 0F90      		pop __tmp_reg__
+ 1462 0a84 0F90      		pop __tmp_reg__
+ 1463 0a86 CF91      		pop r28
+ 1464 0a88 DF91      		pop r29
+ 1465 0a8a 1F91      		pop r17
+ 1466 0a8c 0F91      		pop r16
+ 1467 0a8e FF90      		pop r15
+ 1468 0a90 EF90      		pop r14
+ 1469 0a92 DF90      		pop r13
+ 1470 0a94 CF90      		pop r12
+ 1471 0a96 BF90      		pop r11
+ 1472 0a98 AF90      		pop r10
+ 1473 0a9a 9F90      		pop r9
+ 1474 0a9c 8F90      		pop r8
+ 1475 0a9e 7F90      		pop r7
+ 1476 0aa0 6F90      		pop r6
+ 1477 0aa2 5F90      		pop r5
+ 1478 0aa4 4F90      		pop r4
+ 1479 0aa6 3F90      		pop r3
+ 1480 0aa8 2F90      		pop r2
+ 1481 0aaa 0895      		ret
+ 1482               		.size	PnutFileRead, .-PnutFileRead
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 27
+
+
+ 1483               		.type	PnutDelete, @function
+ 1484               	PnutDelete:
+ 1485 0aac 2F92      		push r2
+ 1486 0aae 3F92      		push r3
+ 1487 0ab0 4F92      		push r4
+ 1488 0ab2 5F92      		push r5
+ 1489 0ab4 6F92      		push r6
+ 1490 0ab6 7F92      		push r7
+ 1491 0ab8 8F92      		push r8
+ 1492 0aba 9F92      		push r9
+ 1493 0abc AF92      		push r10
+ 1494 0abe BF92      		push r11
+ 1495 0ac0 CF92      		push r12
+ 1496 0ac2 DF92      		push r13
+ 1497 0ac4 EF92      		push r14
+ 1498 0ac6 FF92      		push r15
+ 1499 0ac8 0F93      		push r16
+ 1500 0aca 1F93      		push r17
+ 1501 0acc DF93      		push r29
+ 1502 0ace CF93      		push r28
+ 1503 0ad0 CDB7      		in r28,__SP_L__
+ 1504 0ad2 DEB7      		in r29,__SP_H__
+ 1505 0ad4 2C97      		sbiw r28,12
+ 1506 0ad6 0FB6      		in __tmp_reg__,__SREG__
+ 1507 0ad8 F894      		cli
+ 1508 0ada DEBF      		out __SP_H__,r29
+ 1509 0adc 0FBE      		out __SREG__,__tmp_reg__
+ 1510 0ade CDBF      		out __SP_L__,r28
+ 1511               	/* prologue: function */
+ 1512               	/* frame size = 12 */
+ 1513 0ae0 BC01      		movw r22,r24
+ 1514 0ae2 8091 0000 		lds r24,root
+ 1515 0ae6 9091 0000 		lds r25,(root)+1
+ 1516 0aea AE01      		movw r20,r28
+ 1517 0aec 495F      		subi r20,lo8(-(7))
+ 1518 0aee 5F4F      		sbci r21,hi8(-(7))
+ 1519 0af0 0E94 0000 		call PnutDirFindPath
+ 1520 0af4 0097      		sbiw r24,0
+ 1521 0af6 01F0      		breq .+2
+ 1522 0af8 00C0      		rjmp .L115
+ 1523 0afa 6984      		ldd r6,Y+9
+ 1524 0afc 7A84      		ldd r7,Y+10
+ 1525 0afe 5B84      		ldd r5,Y+11
+ 1526 0b00 4C84      		ldd r4,Y+12
+ 1527 0b02 1A82      		std Y+2,__zero_reg__
+ 1528 0b04 1982      		std Y+1,__zero_reg__
+ 1529 0b06 E52D      		mov r30,r5
+ 1530 0b08 F42D      		mov r31,r4
+ 1531 0b0a DF01      		movw r26,r30
+ 1532 0b0c 0D90      		ld __tmp_reg__,X+
+ 1533 0b0e 0020      		tst __tmp_reg__
+ 1534 0b10 01F4      		brne .-6
+ 1535 0b12 1197      		sbiw r26,1
+ 1536 0b14 AE1B      		sub r26,r30
+ 1537 0b16 BF0B      		sbc r27,r31
+ 1538 0b18 C301      		movw r24,r6
+ 1539 0b1a 652D      		mov r22,r5
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 28
+
+
+ 1540 0b1c 742D      		mov r23,r4
+ 1541 0b1e AD01      		movw r20,r26
+ 1542 0b20 9E01      		movw r18,r28
+ 1543 0b22 2F5F      		subi r18,lo8(-(1))
+ 1544 0b24 3F4F      		sbci r19,hi8(-(1))
+ 1545 0b26 0E94 0000 		call PnutDirFindEntry
+ 1546 0b2a 0097      		sbiw r24,0
+ 1547 0b2c 01F0      		breq .+2
+ 1548 0b2e 00C0      		rjmp .L115
+ 1549 0b30 E981      		ldd r30,Y+1
+ 1550 0b32 FA81      		ldd r31,Y+2
+ 1551 0b34 8080      		ld r8,Z
+ 1552 0b36 9180      		ldd r9,Z+1
+ 1553 0b38 C401      		movw r24,r8
+ 1554 0b3a 0E94 0000 		call BankNodePointer
+ 1555 0b3e FC01      		movw r30,r24
+ 1556 0b40 8181      		ldd r24,Z+1
+ 1557 0b42 8823      		tst r24
+ 1558 0b44 01F0      		breq .+2
+ 1559 0b46 00C0      		rjmp .L116
+ 1560 0b48 8081      		ld r24,Z
+ 1561 0b4a 8130      		cpi r24,lo8(1)
+ 1562 0b4c 01F0      		breq .+2
+ 1563 0b4e 00C0      		rjmp .L117
+ 1564 0b50 8281      		ldd r24,Z+2
+ 1565 0b52 9381      		ldd r25,Z+3
+ 1566 0b54 0397      		sbiw r24,3
+ 1567 0b56 00F0      		brlo .+2
+ 1568 0b58 00C0      		rjmp .L116
+ 1569 0b5a AA24      		clr r10
+ 1570 0b5c BB24      		clr r11
+ 1571 0b5e 6501      		movw r12,r10
+ 1572 0b60 EE24      		clr r14
+ 1573 0b62 FF24      		clr r15
+ 1574 0b64 A3E0      		ldi r26,lo8(3)
+ 1575 0b66 2A2E      		mov r2,r26
+ 1576 0b68 312C      		mov r3,__zero_reg__
+ 1577 0b6a 2C0E      		add r2,r28
+ 1578 0b6c 3D1E      		adc r3,r29
+ 1579 0b6e 00C0      		rjmp .L118
+ 1580               	.L121:
+ 1581 0b70 FE82      		std Y+6,r15
+ 1582 0b72 ED82      		std Y+5,r14
+ 1583 0b74 C401      		movw r24,r8
+ 1584 0b76 B601      		movw r22,r12
+ 1585 0b78 A501      		movw r20,r10
+ 1586 0b7a 9E01      		movw r18,r28
+ 1587 0b7c 2B5F      		subi r18,lo8(-(5))
+ 1588 0b7e 3F4F      		sbci r19,hi8(-(5))
+ 1589 0b80 8101      		movw r16,r2
+ 1590 0b82 EE24      		clr r14
+ 1591 0b84 FF24      		clr r15
+ 1592 0b86 0E94 0000 		call PnutNodeGetDataPtr
+ 1593 0b8a 892B      		or r24,r25
+ 1594 0b8c 01F4      		brne .L119
+ 1595 0b8e 8B81      		ldd r24,Y+3
+ 1596 0b90 9C81      		ldd r25,Y+4
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 29
+
+
+ 1597 0b92 0097      		sbiw r24,0
+ 1598 0b94 01F0      		breq .L119
+ 1599 0b96 ED80      		ldd r14,Y+5
+ 1600 0b98 FE80      		ldd r15,Y+6
+ 1601 0b9a 8097      		sbiw r24,32
+ 1602 0b9c 00F0      		brlo .L120
+ 1603 0b9e D701      		movw r26,r14
+ 1604 0ba0 1296      		adiw r26,2
+ 1605 0ba2 8C91      		ld r24,X
+ 1606 0ba4 8823      		tst r24
+ 1607 0ba6 01F0      		breq .L120
+ 1608 0ba8 8701      		movw r16,r14
+ 1609 0baa 0D5F      		subi r16,lo8(-(3))
+ 1610 0bac 1F4F      		sbci r17,hi8(-(3))
+ 1611 0bae C801      		movw r24,r16
+ 1612 0bb0 60E0      		ldi r22,lo8(.LC0)
+ 1613 0bb2 70E0      		ldi r23,hi8(.LC0)
+ 1614 0bb4 0E94 0000 		call strcmp
+ 1615 0bb8 0097      		sbiw r24,0
+ 1616 0bba 01F0      		breq .L120
+ 1617 0bbc C801      		movw r24,r16
+ 1618 0bbe 60E0      		ldi r22,lo8(.LC1)
+ 1619 0bc0 70E0      		ldi r23,hi8(.LC1)
+ 1620 0bc2 0E94 0000 		call strcmp
+ 1621 0bc6 0097      		sbiw r24,0
+ 1622 0bc8 01F4      		brne .L116
+ 1623               	.L120:
+ 1624 0bca 80E2      		ldi r24,lo8(32)
+ 1625 0bcc 90E0      		ldi r25,hi8(32)
+ 1626 0bce A0E0      		ldi r26,hlo8(32)
+ 1627 0bd0 B0E0      		ldi r27,hhi8(32)
+ 1628 0bd2 A80E      		add r10,r24
+ 1629 0bd4 B91E      		adc r11,r25
+ 1630 0bd6 CA1E      		adc r12,r26
+ 1631 0bd8 DB1E      		adc r13,r27
+ 1632               	.L118:
+ 1633 0bda C401      		movw r24,r8
+ 1634 0bdc 0E94 0000 		call BankNodePointer
+ 1635 0be0 FC01      		movw r30,r24
+ 1636 0be2 8481      		ldd r24,Z+4
+ 1637 0be4 9581      		ldd r25,Z+5
+ 1638 0be6 A681      		ldd r26,Z+6
+ 1639 0be8 B781      		ldd r27,Z+7
+ 1640 0bea A816      		cp r10,r24
+ 1641 0bec B906      		cpc r11,r25
+ 1642 0bee CA06      		cpc r12,r26
+ 1643 0bf0 DB06      		cpc r13,r27
+ 1644 0bf2 00F4      		brsh .+2
+ 1645 0bf4 00C0      		rjmp .L121
+ 1646               	.L119:
+ 1647 0bf6 C301      		movw r24,r6
+ 1648 0bf8 0E94 0000 		call BankNodePointer
+ 1649 0bfc FC01      		movw r30,r24
+ 1650 0bfe 8281      		ldd r24,Z+2
+ 1651 0c00 9381      		ldd r25,Z+3
+ 1652 0c02 0197      		sbiw r24,1
+ 1653 0c04 9383      		std Z+3,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 30
+
+
+ 1654 0c06 8283      		std Z+2,r24
+ 1655               	.L117:
+ 1656 0c08 C401      		movw r24,r8
+ 1657 0c0a 0E94 0000 		call PnutNodeRelease
+ 1658 0c0e E52D      		mov r30,r5
+ 1659 0c10 F42D      		mov r31,r4
+ 1660 0c12 DF01      		movw r26,r30
+ 1661 0c14 0D90      		ld __tmp_reg__,X+
+ 1662 0c16 0020      		tst __tmp_reg__
+ 1663 0c18 01F4      		brne .-6
+ 1664 0c1a 1197      		sbiw r26,1
+ 1665 0c1c AE1B      		sub r26,r30
+ 1666 0c1e BF0B      		sbc r27,r31
+ 1667 0c20 C301      		movw r24,r6
+ 1668 0c22 652D      		mov r22,r5
+ 1669 0c24 742D      		mov r23,r4
+ 1670 0c26 AD01      		movw r20,r26
+ 1671 0c28 9E01      		movw r18,r28
+ 1672 0c2a 2F5F      		subi r18,lo8(-(1))
+ 1673 0c2c 3F4F      		sbci r19,hi8(-(1))
+ 1674 0c2e 0E94 0000 		call PnutDirFindEntry
+ 1675 0c32 E981      		ldd r30,Y+1
+ 1676 0c34 FA81      		ldd r31,Y+2
+ 1677 0c36 1282      		std Z+2,__zero_reg__
+ 1678 0c38 20E0      		ldi r18,lo8(0)
+ 1679 0c3a 30E0      		ldi r19,hi8(0)
+ 1680 0c3c 00C0      		rjmp .L123
+ 1681               	.L116:
+ 1682 0c3e 8DE0      		ldi r24,lo8(13)
+ 1683 0c40 90E0      		ldi r25,hi8(13)
+ 1684               	.L115:
+ 1685 0c42 9093 0000 		sts (errno)+1,r25
+ 1686 0c46 8093 0000 		sts errno,r24
+ 1687 0c4a 2FEF      		ldi r18,lo8(-1)
+ 1688 0c4c 3FEF      		ldi r19,hi8(-1)
+ 1689               	.L123:
+ 1690 0c4e C901      		movw r24,r18
+ 1691               	/* epilogue start */
+ 1692 0c50 2C96      		adiw r28,12
+ 1693 0c52 0FB6      		in __tmp_reg__,__SREG__
+ 1694 0c54 F894      		cli
+ 1695 0c56 DEBF      		out __SP_H__,r29
+ 1696 0c58 0FBE      		out __SREG__,__tmp_reg__
+ 1697 0c5a CDBF      		out __SP_L__,r28
+ 1698 0c5c CF91      		pop r28
+ 1699 0c5e DF91      		pop r29
+ 1700 0c60 1F91      		pop r17
+ 1701 0c62 0F91      		pop r16
+ 1702 0c64 FF90      		pop r15
+ 1703 0c66 EF90      		pop r14
+ 1704 0c68 DF90      		pop r13
+ 1705 0c6a CF90      		pop r12
+ 1706 0c6c BF90      		pop r11
+ 1707 0c6e AF90      		pop r10
+ 1708 0c70 9F90      		pop r9
+ 1709 0c72 8F90      		pop r8
+ 1710 0c74 7F90      		pop r7
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 31
+
+
+ 1711 0c76 6F90      		pop r6
+ 1712 0c78 5F90      		pop r5
+ 1713 0c7a 4F90      		pop r4
+ 1714 0c7c 3F90      		pop r3
+ 1715 0c7e 2F90      		pop r2
+ 1716 0c80 0895      		ret
+ 1717               		.size	PnutDelete, .-PnutDelete
+ 1718               	.global	PnutIOCtl
+ 1719               		.type	PnutIOCtl, @function
+ 1720               	PnutIOCtl:
+ 1721 0c82 2F92      		push r2
+ 1722 0c84 3F92      		push r3
+ 1723 0c86 4F92      		push r4
+ 1724 0c88 5F92      		push r5
+ 1725 0c8a 6F92      		push r6
+ 1726 0c8c 7F92      		push r7
+ 1727 0c8e 8F92      		push r8
+ 1728 0c90 9F92      		push r9
+ 1729 0c92 AF92      		push r10
+ 1730 0c94 BF92      		push r11
+ 1731 0c96 CF92      		push r12
+ 1732 0c98 DF92      		push r13
+ 1733 0c9a EF92      		push r14
+ 1734 0c9c FF92      		push r15
+ 1735 0c9e 0F93      		push r16
+ 1736 0ca0 1F93      		push r17
+ 1737 0ca2 DF93      		push r29
+ 1738 0ca4 CF93      		push r28
+ 1739 0ca6 CDB7      		in r28,__SP_L__
+ 1740 0ca8 DEB7      		in r29,__SP_H__
+ 1741 0caa 2A97      		sbiw r28,10
+ 1742 0cac 0FB6      		in __tmp_reg__,__SREG__
+ 1743 0cae F894      		cli
+ 1744 0cb0 DEBF      		out __SP_H__,r29
+ 1745 0cb2 0FBE      		out __SREG__,__tmp_reg__
+ 1746 0cb4 CDBF      		out __SP_L__,r28
+ 1747               	/* prologue: function */
+ 1748               	/* frame size = 10 */
+ 1749 0cb6 5C01      		movw r10,r24
+ 1750 0cb8 21E1      		ldi r18,hi8(4372)
+ 1751 0cba 6431      		cpi r22,lo8(4372)
+ 1752 0cbc 7207      		cpc r23,r18
+ 1753 0cbe 01F4      		brne .+2
+ 1754 0cc0 00C0      		rjmp .L131
+ 1755 0cc2 31E1      		ldi r19,hi8(4373)
+ 1756 0cc4 6531      		cpi r22,lo8(4373)
+ 1757 0cc6 7307      		cpc r23,r19
+ 1758 0cc8 04F4      		brge .L136
+ 1759 0cca 81E1      		ldi r24,hi8(4369)
+ 1760 0ccc 6131      		cpi r22,lo8(4369)
+ 1761 0cce 7807      		cpc r23,r24
+ 1762 0cd0 01F4      		brne .+2
+ 1763 0cd2 00C0      		rjmp .L128
+ 1764 0cd4 A1E1      		ldi r26,hi8(4370)
+ 1765 0cd6 6231      		cpi r22,lo8(4370)
+ 1766 0cd8 7A07      		cpc r23,r26
+ 1767 0cda 04F4      		brge .L137
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 32
+
+
+ 1768 0cdc 6150      		subi r22,lo8(4353)
+ 1769 0cde 7141      		sbci r23,hi8(4353)
+ 1770 0ce0 01F0      		breq .+2
+ 1771 0ce2 00C0      		rjmp .L126
+ 1772 0ce4 00C0      		rjmp .L162
+ 1773               	.L137:
+ 1774 0ce6 E1E1      		ldi r30,hi8(4370)
+ 1775 0ce8 6231      		cpi r22,lo8(4370)
+ 1776 0cea 7E07      		cpc r23,r30
+ 1777 0cec 01F4      		brne .+2
+ 1778 0cee 00C0      		rjmp .L134
+ 1779 0cf0 6351      		subi r22,lo8(4371)
+ 1780 0cf2 7141      		sbci r23,hi8(4371)
+ 1781 0cf4 01F0      		breq .+2
+ 1782 0cf6 00C0      		rjmp .L126
+ 1783 0cf8 00C0      		rjmp .L163
+ 1784               	.L136:
+ 1785 0cfa 21E1      		ldi r18,hi8(4385)
+ 1786 0cfc 6132      		cpi r22,lo8(4385)
+ 1787 0cfe 7207      		cpc r23,r18
+ 1788 0d00 01F4      		brne .+2
+ 1789 0d02 00C0      		rjmp .L133
+ 1790 0d04 31E1      		ldi r19,hi8(4386)
+ 1791 0d06 6232      		cpi r22,lo8(4386)
+ 1792 0d08 7307      		cpc r23,r19
+ 1793 0d0a 04F4      		brge .L138
+ 1794 0d0c 6551      		subi r22,lo8(4373)
+ 1795 0d0e 7141      		sbci r23,hi8(4373)
+ 1796 0d10 01F0      		breq .+2
+ 1797 0d12 00C0      		rjmp .L126
+ 1798 0d14 00C0      		rjmp .L164
+ 1799               	.L138:
+ 1800 0d16 A1E1      		ldi r26,hi8(4386)
+ 1801 0d18 6232      		cpi r22,lo8(4386)
+ 1802 0d1a 7A07      		cpc r23,r26
+ 1803 0d1c 01F4      		brne .+2
+ 1804 0d1e 00C0      		rjmp .L134
+ 1805 0d20 6352      		subi r22,lo8(4387)
+ 1806 0d22 7141      		sbci r23,hi8(4387)
+ 1807 0d24 01F0      		breq .+2
+ 1808 0d26 00C0      		rjmp .L126
+ 1809 0d28 00C0      		rjmp .L165
+ 1810               	.L162:
+ 1811 0d2a FA01      		movw r30,r20
+ 1812 0d2c 0281      		ldd r16,Z+2
+ 1813 0d2e 1381      		ldd r17,Z+3
+ 1814 0d30 6081      		ld r22,Z
+ 1815 0d32 7181      		ldd r23,Z+1
+ 1816 0d34 8091 0000 		lds r24,root
+ 1817 0d38 9091 0000 		lds r25,(root)+1
+ 1818 0d3c AE01      		movw r20,r28
+ 1819 0d3e 4B5F      		subi r20,lo8(-(5))
+ 1820 0d40 5F4F      		sbci r21,hi8(-(5))
+ 1821 0d42 0E94 0000 		call PnutDirFindPath
+ 1822 0d46 7C01      		movw r14,r24
+ 1823 0d48 0097      		sbiw r24,0
+ 1824 0d4a 01F0      		breq .+2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 33
+
+
+ 1825 0d4c 00C0      		rjmp .L139
+ 1826 0d4e 8D81      		ldd r24,Y+5
+ 1827 0d50 9E81      		ldd r25,Y+6
+ 1828 0d52 0E94 0000 		call BankNodePointer
+ 1829 0d56 FC01      		movw r30,r24
+ 1830 0d58 8081      		ld r24,Z
+ 1831 0d5a F801      		movw r30,r16
+ 1832 0d5c 8283      		std Z+2,r24
+ 1833 0d5e 8D81      		ldd r24,Y+5
+ 1834 0d60 9E81      		ldd r25,Y+6
+ 1835 0d62 9183      		std Z+1,r25
+ 1836 0d64 8083      		st Z,r24
+ 1837 0d66 8D81      		ldd r24,Y+5
+ 1838 0d68 9E81      		ldd r25,Y+6
+ 1839 0d6a 0E94 0000 		call BankNodePointer
+ 1840 0d6e DC01      		movw r26,r24
+ 1841 0d70 1296      		adiw r26,2
+ 1842 0d72 8D91      		ld r24,X+
+ 1843 0d74 9C91      		ld r25,X
+ 1844 0d76 1397      		sbiw r26,2+1
+ 1845 0d78 F801      		movw r30,r16
+ 1846 0d7a 9483      		std Z+4,r25
+ 1847 0d7c 8383      		std Z+3,r24
+ 1848 0d7e 8D81      		ldd r24,Y+5
+ 1849 0d80 9E81      		ldd r25,Y+6
+ 1850 0d82 0E94 0000 		call BankNodePointer
+ 1851 0d86 FC01      		movw r30,r24
+ 1852 0d88 8481      		ldd r24,Z+4
+ 1853 0d8a 9581      		ldd r25,Z+5
+ 1854 0d8c A681      		ldd r26,Z+6
+ 1855 0d8e B781      		ldd r27,Z+7
+ 1856 0d90 F801      		movw r30,r16
+ 1857 0d92 8583      		std Z+5,r24
+ 1858 0d94 9683      		std Z+6,r25
+ 1859 0d96 A783      		std Z+7,r26
+ 1860 0d98 B087      		std Z+8,r27
+ 1861 0d9a 8D81      		ldd r24,Y+5
+ 1862 0d9c 9E81      		ldd r25,Y+6
+ 1863 0d9e 0E94 0000 		call BankNodePointer
+ 1864 0da2 FC01      		movw r30,r24
+ 1865 0da4 8085      		ldd r24,Z+8
+ 1866 0da6 9185      		ldd r25,Z+9
+ 1867 0da8 A285      		ldd r26,Z+10
+ 1868 0daa B385      		ldd r27,Z+11
+ 1869 0dac F801      		movw r30,r16
+ 1870 0dae 8187      		std Z+9,r24
+ 1871 0db0 9287      		std Z+10,r25
+ 1872 0db2 A387      		std Z+11,r26
+ 1873 0db4 B487      		std Z+12,r27
+ 1874 0db6 00C0      		rjmp .L139
+ 1875               	.L128:
+ 1876 0db8 8091 0000 		lds r24,root
+ 1877 0dbc 9091 0000 		lds r25,(root)+1
+ 1878 0dc0 BA01      		movw r22,r20
+ 1879 0dc2 AE01      		movw r20,r28
+ 1880 0dc4 4B5F      		subi r20,lo8(-(5))
+ 1881 0dc6 5F4F      		sbci r21,hi8(-(5))
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 34
+
+
+ 1882 0dc8 0E94 0000 		call PnutDirFindPath
+ 1883 0dcc 8C01      		movw r16,r24
+ 1884 0dce 0097      		sbiw r24,0
+ 1885 0dd0 01F4      		brne .L140
+ 1886 0dd2 01E1      		ldi r16,lo8(17)
+ 1887 0dd4 10E0      		ldi r17,hi8(17)
+ 1888 0dd6 00C0      		rjmp .L141
+ 1889               	.L140:
+ 1890 0dd8 8230      		cpi r24,2
+ 1891 0dda 9105      		cpc r25,__zero_reg__
+ 1892 0ddc 01F4      		brne .L141
+ 1893 0dde 8985      		ldd r24,Y+9
+ 1894 0de0 9A85      		ldd r25,Y+10
+ 1895 0de2 892B      		or r24,r25
+ 1896 0de4 01F0      		breq .L141
+ 1897 0de6 81E0      		ldi r24,lo8(1)
+ 1898 0de8 0E94 0000 		call PnutNodeAlloc
+ 1899 0dec 7C01      		movw r14,r24
+ 1900 0dee 97FD      		sbrc r25,7
+ 1901 0df0 00C0      		rjmp .L142
+ 1902 0df2 60E0      		ldi r22,lo8(.LC0)
+ 1903 0df4 70E0      		ldi r23,hi8(.LC0)
+ 1904 0df6 A701      		movw r20,r14
+ 1905 0df8 0E94 0000 		call PnutDirAddEntry
+ 1906 0dfc 8C01      		movw r16,r24
+ 1907 0dfe 0097      		sbiw r24,0
+ 1908 0e00 01F4      		brne .L145
+ 1909               	.L143:
+ 1910 0e02 4F81      		ldd r20,Y+7
+ 1911 0e04 5885      		ldd r21,Y+8
+ 1912 0e06 C701      		movw r24,r14
+ 1913 0e08 60E0      		ldi r22,lo8(.LC1)
+ 1914 0e0a 70E0      		ldi r23,hi8(.LC1)
+ 1915 0e0c 0E94 0000 		call PnutDirAddEntry
+ 1916 0e10 8C01      		movw r16,r24
+ 1917 0e12 0097      		sbiw r24,0
+ 1918 0e14 01F4      		brne .L145
+ 1919               	.L144:
+ 1920 0e16 6985      		ldd r22,Y+9
+ 1921 0e18 7A85      		ldd r23,Y+10
+ 1922 0e1a 8F81      		ldd r24,Y+7
+ 1923 0e1c 9885      		ldd r25,Y+8
+ 1924 0e1e A701      		movw r20,r14
+ 1925 0e20 0E94 0000 		call PnutDirAddEntry
+ 1926 0e24 8C01      		movw r16,r24
+ 1927 0e26 0097      		sbiw r24,0
+ 1928 0e28 01F4      		brne .+2
+ 1929 0e2a 00C0      		rjmp .L161
+ 1930               	.L145:
+ 1931 0e2c C701      		movw r24,r14
+ 1932 0e2e 0E94 0000 		call PnutNodeRelease
+ 1933               	.L141:
+ 1934 0e32 1093 0000 		sts (errno)+1,r17
+ 1935 0e36 0093 0000 		sts errno,r16
+ 1936 0e3a 00C0      		rjmp .L126
+ 1937               	.L163:
+ 1938 0e3c 6A01      		movw r12,r20
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 35
+
+
+ 1939 0e3e DA01      		movw r26,r20
+ 1940 0e40 1296      		adiw r26,2
+ 1941 0e42 6D91      		ld r22,X+
+ 1942 0e44 7C91      		ld r23,X
+ 1943 0e46 1397      		sbiw r26,2+1
+ 1944 0e48 8091 0000 		lds r24,root
+ 1945 0e4c 9091 0000 		lds r25,(root)+1
+ 1946 0e50 AE01      		movw r20,r28
+ 1947 0e52 4B5F      		subi r20,lo8(-(5))
+ 1948 0e54 5F4F      		sbci r21,hi8(-(5))
+ 1949 0e56 0E94 0000 		call PnutDirFindPath
+ 1950 0e5a 7C01      		movw r14,r24
+ 1951 0e5c 0097      		sbiw r24,0
+ 1952 0e5e 01F0      		breq .L146
+ 1953 0e60 9093 0000 		sts (errno)+1,r25
+ 1954 0e64 8093 0000 		sts errno,r24
+ 1955 0e68 00C0      		rjmp .L126
+ 1956               	.L146:
+ 1957 0e6a 8D81      		ldd r24,Y+5
+ 1958 0e6c 9E81      		ldd r25,Y+6
+ 1959 0e6e 0E94 0000 		call BankNodePointer
+ 1960 0e72 FC01      		movw r30,r24
+ 1961 0e74 8081      		ld r24,Z
+ 1962 0e76 8130      		cpi r24,lo8(1)
+ 1963 0e78 01F0      		breq .L147
+ 1964 0e7a 84E1      		ldi r24,lo8(20)
+ 1965 0e7c 90E0      		ldi r25,hi8(20)
+ 1966 0e7e 9093 0000 		sts (errno)+1,r25
+ 1967 0e82 8093 0000 		sts errno,r24
+ 1968 0e86 00C0      		rjmp .L126
+ 1969               	.L147:
+ 1970 0e88 88E0      		ldi r24,lo8(8)
+ 1971 0e8a 90E0      		ldi r25,hi8(8)
+ 1972 0e8c 0E94 0000 		call malloc
+ 1973 0e90 8C01      		movw r16,r24
+ 1974 0e92 0097      		sbiw r24,0
+ 1975 0e94 01F4      		brne .+2
+ 1976 0e96 00C0      		rjmp .L126
+ 1977 0e98 8D81      		ldd r24,Y+5
+ 1978 0e9a 9E81      		ldd r25,Y+6
+ 1979 0e9c F801      		movw r30,r16
+ 1980 0e9e 9183      		std Z+1,r25
+ 1981 0ea0 8083      		st Z,r24
+ 1982 0ea2 D801      		movw r26,r16
+ 1983 0ea4 1296      		adiw r26,2
+ 1984 0ea6 1D92      		st X+,__zero_reg__
+ 1985 0ea8 1D92      		st X+,__zero_reg__
+ 1986 0eaa 1D92      		st X+,__zero_reg__
+ 1987 0eac 1C92      		st X,__zero_reg__
+ 1988 0eae 1597      		sbiw r26,2+3
+ 1989 0eb0 86E0      		ldi r24,lo8(6)
+ 1990 0eb2 90E0      		ldi r25,hi8(6)
+ 1991 0eb4 0E94 0000 		call malloc
+ 1992 0eb8 FC01      		movw r30,r24
+ 1993 0eba D601      		movw r26,r12
+ 1994 0ebc 8D93      		st X+,r24
+ 1995 0ebe 9C93      		st X,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 36
+
+
+ 1996 0ec0 0097      		sbiw r24,0
+ 1997 0ec2 01F4      		brne .L148
+ 1998 0ec4 C801      		movw r24,r16
+ 1999 0ec6 0E94 0000 		call free
+ 2000 0eca 00C0      		rjmp .L126
+ 2001               	.L148:
+ 2002 0ecc 86E0      		ldi r24,lo8(6)
+ 2003 0ece DF01      		movw r26,r30
+ 2004 0ed0 1D92      		st X+,__zero_reg__
+ 2005 0ed2 8A95      	        dec r24
+ 2006 0ed4 01F4      		brne .-6
+ 2007 0ed6 D601      		movw r26,r12
+ 2008 0ed8 ED91      		ld r30,X+
+ 2009 0eda FC91      		ld r31,X
+ 2010 0edc B382      		std Z+3,r11
+ 2011 0ede A282      		std Z+2,r10
+ 2012 0ee0 1583      		std Z+5,r17
+ 2013 0ee2 0483      		std Z+4,r16
+ 2014 0ee4 F801      		movw r30,r16
+ 2015 0ee6 8081      		ld r24,Z
+ 2016 0ee8 9181      		ldd r25,Z+1
+ 2017 0eea 0E94 0000 		call BankNodePointer
+ 2018 0eee FC01      		movw r30,r24
+ 2019 0ef0 8181      		ldd r24,Z+1
+ 2020 0ef2 8F5F      		subi r24,lo8(-(1))
+ 2021 0ef4 8183      		std Z+1,r24
+ 2022 0ef6 00C0      		rjmp .L139
+ 2023               	.L131:
+ 2024 0ef8 8A01      		movw r16,r20
+ 2025 0efa 4115      		cp r20,__zero_reg__
+ 2026 0efc 5105      		cpc r21,__zero_reg__
+ 2027 0efe 01F4      		brne .+2
+ 2028 0f00 00C0      		rjmp .L149
+ 2029 0f02 DA01      		movw r26,r20
+ 2030 0f04 ED91      		ld r30,X+
+ 2031 0f06 FC91      		ld r31,X
+ 2032 0f08 3097      		sbiw r30,0
+ 2033 0f0a 01F4      		brne .+2
+ 2034 0f0c 00C0      		rjmp .L149
+ 2035 0f0e E480      		ldd r14,Z+4
+ 2036 0f10 F580      		ldd r15,Z+5
+ 2037 0f12 E114      		cp r14,__zero_reg__
+ 2038 0f14 F104      		cpc r15,__zero_reg__
+ 2039 0f16 01F0      		breq .L150
+ 2040 0f18 F701      		movw r30,r14
+ 2041 0f1a 8081      		ld r24,Z
+ 2042 0f1c 9181      		ldd r25,Z+1
+ 2043 0f1e 0E94 0000 		call BankNodePointer
+ 2044 0f22 FC01      		movw r30,r24
+ 2045 0f24 8181      		ldd r24,Z+1
+ 2046 0f26 8150      		subi r24,lo8(-(-1))
+ 2047 0f28 8183      		std Z+1,r24
+ 2048 0f2a C701      		movw r24,r14
+ 2049 0f2c 0E94 0000 		call free
+ 2050               	.L150:
+ 2051 0f30 D801      		movw r26,r16
+ 2052 0f32 8D91      		ld r24,X+
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 37
+
+
+ 2053 0f34 9C91      		ld r25,X
+ 2054 0f36 0E94 0000 		call free
+ 2055 0f3a 00C0      		rjmp .L161
+ 2056               	.L164:
+ 2057 0f3c FA01      		movw r30,r20
+ 2058 0f3e A081      		ld r26,Z
+ 2059 0f40 B181      		ldd r27,Z+1
+ 2060 0f42 1496      		adiw r26,4
+ 2061 0f44 8D90      		ld r8,X+
+ 2062 0f46 9C90      		ld r9,X
+ 2063 0f48 1597      		sbiw r26,4+1
+ 2064 0f4a 6280      		ldd r6,Z+2
+ 2065 0f4c 7380      		ldd r7,Z+3
+ 2066 0f4e F301      		movw r30,r6
+ 2067 0f50 1086      		std Z+8,__zero_reg__
+ 2068 0f52 D401      		movw r26,r8
+ 2069 0f54 1296      		adiw r26,2
+ 2070 0f56 AD90      		ld r10,X+
+ 2071 0f58 BD90      		ld r11,X+
+ 2072 0f5a CD90      		ld r12,X+
+ 2073 0f5c DC90      		ld r13,X
+ 2074 0f5e 1597      		sbiw r26,2+3
+ 2075 0f60 00E0      		ldi r16,lo8(0)
+ 2076 0f62 10E0      		ldi r17,hi8(0)
+ 2077 0f64 EE24      		clr r14
+ 2078 0f66 EA94      		dec r14
+ 2079 0f68 FE2C      		mov r15,r14
+ 2080 0f6a 83E0      		ldi r24,lo8(3)
+ 2081 0f6c 282E      		mov r2,r24
+ 2082 0f6e 312C      		mov r3,__zero_reg__
+ 2083 0f70 2C0E      		add r2,r28
+ 2084 0f72 3D1E      		adc r3,r29
+ 2085 0f74 2E01      		movw r4,r28
+ 2086 0f76 0894      		sec
+ 2087 0f78 411C      		adc r4,__zero_reg__
+ 2088 0f7a 511C      		adc r5,__zero_reg__
+ 2089 0f7c 00C0      		rjmp .L159
+ 2090               	.L152:
+ 2091 0f7e 1C83      		std Y+4,r17
+ 2092 0f80 0B83      		std Y+3,r16
+ 2093 0f82 F401      		movw r30,r8
+ 2094 0f84 8081      		ld r24,Z
+ 2095 0f86 9181      		ldd r25,Z+1
+ 2096 0f88 B601      		movw r22,r12
+ 2097 0f8a A501      		movw r20,r10
+ 2098 0f8c 9101      		movw r18,r2
+ 2099 0f8e 8201      		movw r16,r4
+ 2100 0f90 EE24      		clr r14
+ 2101 0f92 FF24      		clr r15
+ 2102 0f94 0E94 0000 		call PnutNodeGetDataPtr
+ 2103 0f98 7C01      		movw r14,r24
+ 2104 0f9a 0097      		sbiw r24,0
+ 2105 0f9c 01F0      		breq .+2
+ 2106 0f9e 00C0      		rjmp .L126
+ 2107 0fa0 8981      		ldd r24,Y+1
+ 2108 0fa2 9A81      		ldd r25,Y+2
+ 2109 0fa4 0097      		sbiw r24,0
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 38
+
+
+ 2110 0fa6 01F4      		brne .+2
+ 2111 0fa8 00C0      		rjmp .L126
+ 2112 0faa 0B81      		ldd r16,Y+3
+ 2113 0fac 1C81      		ldd r17,Y+4
+ 2114 0fae 20E2      		ldi r18,lo8(32)
+ 2115 0fb0 30E0      		ldi r19,hi8(32)
+ 2116 0fb2 40E0      		ldi r20,hlo8(32)
+ 2117 0fb4 50E0      		ldi r21,hhi8(32)
+ 2118 0fb6 A20E      		add r10,r18
+ 2119 0fb8 B31E      		adc r11,r19
+ 2120 0fba C41E      		adc r12,r20
+ 2121 0fbc D51E      		adc r13,r21
+ 2122 0fbe D401      		movw r26,r8
+ 2123 0fc0 1296      		adiw r26,2
+ 2124 0fc2 AD92      		st X+,r10
+ 2125 0fc4 BD92      		st X+,r11
+ 2126 0fc6 CD92      		st X+,r12
+ 2127 0fc8 DC92      		st X,r13
+ 2128 0fca 1597      		sbiw r26,2+3
+ 2129 0fcc 8097      		sbiw r24,32
+ 2130 0fce 00F0      		brlo .L159
+ 2131 0fd0 F801      		movw r30,r16
+ 2132 0fd2 8281      		ldd r24,Z+2
+ 2133 0fd4 8823      		tst r24
+ 2134 0fd6 01F0      		breq .L159
+ 2135 0fd8 88E0      		ldi r24,lo8(264)
+ 2136 0fda 91E0      		ldi r25,hi8(264)
+ 2137 0fdc D301      		movw r26,r6
+ 2138 0fde FC01      		movw r30,r24
+ 2139 0fe0 1D92      		st X+,__zero_reg__
+ 2140 0fe2 3197      		sbiw r30,1
+ 2141 0fe4 01F4      		brne .-6
+ 2142 0fe6 D801      		movw r26,r16
+ 2143 0fe8 8D91      		ld r24,X+
+ 2144 0fea 9C91      		ld r25,X
+ 2145 0fec AA27      		clr r26
+ 2146 0fee 97FD      		sbrc r25,7
+ 2147 0ff0 A095      		com r26
+ 2148 0ff2 BA2F      		mov r27,r26
+ 2149 0ff4 F301      		movw r30,r6
+ 2150 0ff6 8083      		st Z,r24
+ 2151 0ff8 9183      		std Z+1,r25
+ 2152 0ffa A283      		std Z+2,r26
+ 2153 0ffc B383      		std Z+3,r27
+ 2154 0ffe B801      		movw r22,r16
+ 2155 1000 6D5F      		subi r22,lo8(-(3))
+ 2156 1002 7F4F      		sbci r23,hi8(-(3))
+ 2157 1004 FB01      		movw r30,r22
+ 2158 1006 0190      		ld __tmp_reg__,Z+
+ 2159 1008 0020      		tst __tmp_reg__
+ 2160 100a 01F4      		brne .-6
+ 2161 100c 3197      		sbiw r30,1
+ 2162 100e E61B      		sub r30,r22
+ 2163 1010 F70B      		sbc r31,r23
+ 2164 1012 D301      		movw r26,r6
+ 2165 1014 1796      		adiw r26,7
+ 2166 1016 EC93      		st X,r30
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 39
+
+
+ 2167 1018 C301      		movw r24,r6
+ 2168 101a 0896      		adiw r24,8
+ 2169 101c 0E94 0000 		call strcpy
+ 2170 1020 00C0      		rjmp .L139
+ 2171               	.L159:
+ 2172 1022 F401      		movw r30,r8
+ 2173 1024 8081      		ld r24,Z
+ 2174 1026 9181      		ldd r25,Z+1
+ 2175 1028 0E94 0000 		call BankNodePointer
+ 2176 102c FC01      		movw r30,r24
+ 2177 102e 8481      		ldd r24,Z+4
+ 2178 1030 9581      		ldd r25,Z+5
+ 2179 1032 A681      		ldd r26,Z+6
+ 2180 1034 B781      		ldd r27,Z+7
+ 2181 1036 A816      		cp r10,r24
+ 2182 1038 B906      		cpc r11,r25
+ 2183 103a CA06      		cpc r12,r26
+ 2184 103c DB06      		cpc r13,r27
+ 2185 103e 00F4      		brsh .+2
+ 2186 1040 00C0      		rjmp .L152
+ 2187 1042 00C0      		rjmp .L139
+ 2188               	.L133:
+ 2189 1044 FA01      		movw r30,r20
+ 2190 1046 0081      		ld r16,Z
+ 2191 1048 1181      		ldd r17,Z+1
+ 2192 104a E280      		ldd r14,Z+2
+ 2193 104c F380      		ldd r15,Z+3
+ 2194 104e D801      		movw r26,r16
+ 2195 1050 8D91      		ld r24,X+
+ 2196 1052 9C91      		ld r25,X
+ 2197 1054 0E94 0000 		call BankNodePointer
+ 2198 1058 FC01      		movw r30,r24
+ 2199 105a 8081      		ld r24,Z
+ 2200 105c F701      		movw r30,r14
+ 2201 105e 8283      		std Z+2,r24
+ 2202 1060 D801      		movw r26,r16
+ 2203 1062 8D91      		ld r24,X+
+ 2204 1064 9C91      		ld r25,X
+ 2205 1066 1197      		sbiw r26,1
+ 2206 1068 9183      		std Z+1,r25
+ 2207 106a 8083      		st Z,r24
+ 2208 106c 8D91      		ld r24,X+
+ 2209 106e 9C91      		ld r25,X
+ 2210 1070 0E94 0000 		call BankNodePointer
+ 2211 1074 FC01      		movw r30,r24
+ 2212 1076 8281      		ldd r24,Z+2
+ 2213 1078 9381      		ldd r25,Z+3
+ 2214 107a D701      		movw r26,r14
+ 2215 107c 1496      		adiw r26,3+1
+ 2216 107e 9C93      		st X,r25
+ 2217 1080 8E93      		st -X,r24
+ 2218 1082 1397      		sbiw r26,3
+ 2219 1084 F801      		movw r30,r16
+ 2220 1086 8081      		ld r24,Z
+ 2221 1088 9181      		ldd r25,Z+1
+ 2222 108a 0E94 0000 		call BankNodePointer
+ 2223 108e FC01      		movw r30,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 40
+
+
+ 2224 1090 8481      		ldd r24,Z+4
+ 2225 1092 9581      		ldd r25,Z+5
+ 2226 1094 A681      		ldd r26,Z+6
+ 2227 1096 B781      		ldd r27,Z+7
+ 2228 1098 F701      		movw r30,r14
+ 2229 109a 8583      		std Z+5,r24
+ 2230 109c 9683      		std Z+6,r25
+ 2231 109e A783      		std Z+7,r26
+ 2232 10a0 B087      		std Z+8,r27
+ 2233 10a2 D801      		movw r26,r16
+ 2234 10a4 8D91      		ld r24,X+
+ 2235 10a6 9C91      		ld r25,X
+ 2236 10a8 0E94 0000 		call BankNodePointer
+ 2237 10ac FC01      		movw r30,r24
+ 2238 10ae 8085      		ldd r24,Z+8
+ 2239 10b0 9185      		ldd r25,Z+9
+ 2240 10b2 A285      		ldd r26,Z+10
+ 2241 10b4 B385      		ldd r27,Z+11
+ 2242 10b6 F701      		movw r30,r14
+ 2243 10b8 8187      		std Z+9,r24
+ 2244 10ba 9287      		std Z+10,r25
+ 2245 10bc A387      		std Z+11,r26
+ 2246 10be B487      		std Z+12,r27
+ 2247               	.L161:
+ 2248 10c0 EE24      		clr r14
+ 2249 10c2 FF24      		clr r15
+ 2250 10c4 00C0      		rjmp .L139
+ 2251               	.L134:
+ 2252 10c6 CA01      		movw r24,r20
+ 2253 10c8 0E94 0000 		call PnutDelete
+ 2254 10cc 7C01      		movw r14,r24
+ 2255 10ce 00C0      		rjmp .L139
+ 2256               	.L165:
+ 2257 10d0 FA01      		movw r30,r20
+ 2258 10d2 C080      		ld r12,Z
+ 2259 10d4 D180      		ldd r13,Z+1
+ 2260 10d6 A280      		ldd r10,Z+2
+ 2261 10d8 B380      		ldd r11,Z+3
+ 2262 10da D501      		movw r26,r10
+ 2263 10dc ED90      		ld r14,X+
+ 2264 10de FD90      		ld r15,X+
+ 2265 10e0 0D91      		ld r16,X+
+ 2266 10e2 1C91      		ld r17,X
+ 2267 10e4 8481      		ldd r24,Z+4
+ 2268 10e6 9581      		ldd r25,Z+5
+ 2269 10e8 8130      		cpi r24,1
+ 2270 10ea 9105      		cpc r25,__zero_reg__
+ 2271 10ec 01F0      		breq .L154
+ 2272 10ee 0297      		sbiw r24,2
+ 2273 10f0 01F4      		brne .L153
+ 2274 10f2 00C0      		rjmp .L166
+ 2275               	.L154:
+ 2276 10f4 F601      		movw r30,r12
+ 2277 10f6 8281      		ldd r24,Z+2
+ 2278 10f8 9381      		ldd r25,Z+3
+ 2279 10fa A481      		ldd r26,Z+4
+ 2280 10fc B581      		ldd r27,Z+5
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 41
+
+
+ 2281 10fe 00C0      		rjmp .L160
+ 2282               	.L166:
+ 2283 1100 D601      		movw r26,r12
+ 2284 1102 8D91      		ld r24,X+
+ 2285 1104 9C91      		ld r25,X
+ 2286 1106 0E94 0000 		call BankNodePointer
+ 2287 110a FC01      		movw r30,r24
+ 2288 110c 8481      		ldd r24,Z+4
+ 2289 110e 9581      		ldd r25,Z+5
+ 2290 1110 A681      		ldd r26,Z+6
+ 2291 1112 B781      		ldd r27,Z+7
+ 2292               	.L160:
+ 2293 1114 E80E      		add r14,r24
+ 2294 1116 F91E      		adc r15,r25
+ 2295 1118 0A1F      		adc r16,r26
+ 2296 111a 1B1F      		adc r17,r27
+ 2297               	.L153:
+ 2298 111c 17FD      		sbrc r17,7
+ 2299 111e 00C0      		rjmp .L126
+ 2300 1120 D601      		movw r26,r12
+ 2301 1122 8D91      		ld r24,X+
+ 2302 1124 9C91      		ld r25,X
+ 2303 1126 0E94 0000 		call BankNodePointer
+ 2304 112a FC01      		movw r30,r24
+ 2305 112c 8481      		ldd r24,Z+4
+ 2306 112e 9581      		ldd r25,Z+5
+ 2307 1130 A681      		ldd r26,Z+6
+ 2308 1132 B781      		ldd r27,Z+7
+ 2309 1134 8E15      		cp r24,r14
+ 2310 1136 9F05      		cpc r25,r15
+ 2311 1138 A007      		cpc r26,r16
+ 2312 113a B107      		cpc r27,r17
+ 2313 113c 04F0      		brlt .L126
+ 2314 113e D601      		movw r26,r12
+ 2315 1140 1296      		adiw r26,2
+ 2316 1142 ED92      		st X+,r14
+ 2317 1144 FD92      		st X+,r15
+ 2318 1146 0D93      		st X+,r16
+ 2319 1148 1C93      		st X,r17
+ 2320 114a 1597      		sbiw r26,2+3
+ 2321 114c F501      		movw r30,r10
+ 2322 114e E082      		st Z,r14
+ 2323 1150 F182      		std Z+1,r15
+ 2324 1152 0283      		std Z+2,r16
+ 2325 1154 1383      		std Z+3,r17
+ 2326               	.L126:
+ 2327 1156 EE24      		clr r14
+ 2328 1158 EA94      		dec r14
+ 2329 115a FE2C      		mov r15,r14
+ 2330 115c 00C0      		rjmp .L139
+ 2331               	.L149:
+ 2332 115e B6E1      		ldi r27,lo8(22)
+ 2333 1160 EB2E      		mov r14,r27
+ 2334 1162 F12C      		mov r15,__zero_reg__
+ 2335               	.L139:
+ 2336 1164 C701      		movw r24,r14
+ 2337               	/* epilogue start */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 42
+
+
+ 2338 1166 2A96      		adiw r28,10
+ 2339 1168 0FB6      		in __tmp_reg__,__SREG__
+ 2340 116a F894      		cli
+ 2341 116c DEBF      		out __SP_H__,r29
+ 2342 116e 0FBE      		out __SREG__,__tmp_reg__
+ 2343 1170 CDBF      		out __SP_L__,r28
+ 2344 1172 CF91      		pop r28
+ 2345 1174 DF91      		pop r29
+ 2346 1176 1F91      		pop r17
+ 2347 1178 0F91      		pop r16
+ 2348 117a FF90      		pop r15
+ 2349 117c EF90      		pop r14
+ 2350 117e DF90      		pop r13
+ 2351 1180 CF90      		pop r12
+ 2352 1182 BF90      		pop r11
+ 2353 1184 AF90      		pop r10
+ 2354 1186 9F90      		pop r9
+ 2355 1188 8F90      		pop r8
+ 2356 118a 7F90      		pop r7
+ 2357 118c 6F90      		pop r6
+ 2358 118e 5F90      		pop r5
+ 2359 1190 4F90      		pop r4
+ 2360 1192 3F90      		pop r3
+ 2361 1194 2F90      		pop r2
+ 2362 1196 0895      		ret
+ 2363               	.L142:
+ 2364 1198 0CE1      		ldi r16,lo8(28)
+ 2365 119a 10E0      		ldi r17,hi8(28)
+ 2366 119c 00C0      		rjmp .L141
+ 2367               		.size	PnutIOCtl, .-PnutIOCtl
+ 2368               	.global	devPnut
+ 2369               		.data
+ 2370               		.type	devPnut, @object
+ 2371               		.size	devPnut, 35
+ 2372               	devPnut:
+ 2373 0005 0000      		.word	0
+ 2374 0007 50        		.byte	80
+ 2375 0008 4E        		.byte	78
+ 2376 0009 55        		.byte	85
+ 2377 000a 54        		.byte	84
+ 2378 000b 00        		.byte	0
+ 2379 000c 00        		.byte	0
+ 2380 000d 00        		.byte	0
+ 2381 000e 00        		.byte	0
+ 2382 000f 00        		.byte	0
+ 2383 0010 00        		.byte	0
+ 2384 0011 0000      		.word	0
+ 2385 0013 00        		.byte	0
+ 2386 0014 0000      		.word	0
+ 2387 0016 0000      		.word	0
+ 2388 0018 0000      		.word	gs(PnutInit)
+ 2389 001a 0000      		.word	gs(PnutIOCtl)
+ 2390 001c 0000      		.word	gs(PnutFileRead)
+ 2391 001e 0000      		.word	gs(PnutFileWrite)
+ 2392 0020 0000      		.word	gs(PnutFileWrite_P)
+ 2393 0022 0000      		.word	gs(PnutFileOpen)
+ 2394 0024 0000      		.word	gs(PnutFileClose)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 43
+
+
+ 2395 0026 0000      		.word	gs(PnutFileSize)
+ 2396               		.type	blockFreeList, @object
+ 2397               		.size	blockFreeList, 2
+ 2398               	blockFreeList:
+ 2399 0028 FFFF      		.word	-1
+ 2400               		.lcomm root,2
+ 2401               	.global __do_copy_data
+ 2402               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s 			page 44
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pnutfs.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:11     .text:00000000 BankSelect
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:26     .text:00000012 BankNodePointer
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:55     .text:0000003e PnutBlockRelease
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:2398   .data:00000028 blockFreeList
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:75     .text:00000064 PnutFileWrite_P
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:84     .text:0000006a PnutFileSize
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:104    .text:00000088 PnutFileClose
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:149    .text:000000d6 PnutBlockAlloc
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:181    .text:00000112 PnutNodeGetDataPtr
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:299    .text:000001ee PnutDirFindEntry
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:444    .text:000002f8 PnutDirFindPath
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:603    .text:00000412 PnutNodeDataRelease
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:685    .text:000004b4 PnutNodeRelease
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:700    .text:000004ca PnutNodeAlloc
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:747    .text:0000051e PnutDirAddEntry
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:893    .text:0000063a PnutFileOpen
+                             .bss:00000000 root
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:1081   .text:000007a4 PnutInit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:1137   .text:00000816 PnutFileWrite
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:1313   .text:00000966 PnutFileRead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:1484   .text:00000aac PnutDelete
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:1720   .text:00000c82 PnutIOCtl
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccm7OvRB.s:2372   .data:00000005 devPnut
+
+UNDEFINED SYMBOLS
+__divmodhi4
+free
+strncmp
+time
+strcpy
+errno
+malloc
+memcpy
+strcmp
+__do_copy_data
+__do_clear_bss

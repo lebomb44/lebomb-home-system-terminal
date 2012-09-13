@@ -1,0 +1,254 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s 			page 1
+
+
+   1               		.file	"ih_int5.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	AvrInterrupt5Ctl, @function
+  10               	AvrInterrupt5Ctl:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 9C01      		movw r18,r24
+  14 0002 FB01      		movw r30,r22
+  15 0004 49B7      		in r20,89-32
+  16 0006 4072      		andi r20,lo8(32)
+  17 0008 89B7      		in r24,89-32
+  18 000a 8F7D      		andi r24,lo8(-33)
+  19 000c 89BF      		out 89-32,r24
+  20 000e 2131      		cpi r18,17
+  21 0010 3105      		cpc r19,__zero_reg__
+  22 0012 01F0      		breq .L24
+  23 0014 2231      		cpi r18,18
+  24 0016 3105      		cpc r19,__zero_reg__
+  25 0018 04F4      		brge .L11
+  26 001a 2130      		cpi r18,1
+  27 001c 3105      		cpc r19,__zero_reg__
+  28 001e 01F0      		breq .L4
+  29 0020 2031      		cpi r18,16
+  30 0022 3105      		cpc r19,__zero_reg__
+  31 0024 01F0      		breq .L5
+  32 0026 232B      		or r18,r19
+  33 0028 01F0      		breq .L3
+  34 002a 00C0      		rjmp .L2
+  35               	.L11:
+  36 002c 2831      		cpi r18,24
+  37 002e 3105      		cpc r19,__zero_reg__
+  38 0030 01F0      		breq .L8
+  39 0032 2931      		cpi r18,25
+  40 0034 3105      		cpc r19,__zero_reg__
+  41 0036 04F4      		brge .L12
+  42 0038 2231      		cpi r18,18
+  43 003a 3105      		cpc r19,__zero_reg__
+  44 003c 01F0      		breq .+2
+  45 003e 00C0      		rjmp .L2
+  46 0040 00C0      		rjmp .L7
+  47               	.L12:
+  48 0042 2931      		cpi r18,25
+  49 0044 3105      		cpc r19,__zero_reg__
+  50 0046 01F0      		breq .L9
+  51 0048 2032      		cpi r18,32
+  52 004a 3105      		cpc r19,__zero_reg__
+  53 004c 01F0      		breq .+2
+  54 004e 00C0      		rjmp .L2
+  55 0050 00C0      		rjmp .L10
+  56               	.L3:
+  57 0052 8AB7      		in r24,90-32
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s 			page 2
+
+
+  58 0054 8B7F      		andi r24,lo8(-5)
+  59 0056 8ABF      		out 90-32,r24
+  60 0058 8AB7      		in r24,90-32
+  61 005a 877F      		andi r24,lo8(-9)
+  62 005c 8ABF      		out 90-32,r24
+  63               	.L4:
+  64 005e 80E2      		ldi r24,lo8(32)
+  65 0060 88BF      		out 88-32,r24
+  66 0062 00C0      		rjmp .L23
+  67               	.L5:
+  68 0064 08B6      		in __tmp_reg__,88-32
+  69 0066 05FE      		sbrs __tmp_reg__,5
+  70 0068 00C0      		rjmp .L15
+  71 006a 81E0      		ldi r24,lo8(1)
+  72 006c 90E0      		ldi r25,hi8(1)
+  73 006e 9183      		std Z+1,r25
+  74 0070 8083      		st Z,r24
+  75 0072 00C0      		rjmp .L16
+  76               	.L15:
+  77 0074 1182      		std Z+1,__zero_reg__
+  78 0076 1082      		st Z,__zero_reg__
+  79               	.L16:
+  80 0078 4423      		tst r20
+  81 007a 01F0      		breq .L7
+  82 007c 8081      		ld r24,Z
+  83 007e 9181      		ldd r25,Z+1
+  84 0080 8068      		ori r24,lo8(128)
+  85 0082 9183      		std Z+1,r25
+  86 0084 8083      		st Z,r24
+  87               	.L24:
+  88 0086 20E0      		ldi r18,lo8(0)
+  89 0088 30E0      		ldi r19,hi8(0)
+  90 008a 00C0      		rjmp .L13
+  91               	.L8:
+  92 008c 0AB6      		in __tmp_reg__,90-32
+  93 008e 03FC      		sbrc __tmp_reg__,3
+  94 0090 00C0      		rjmp .L10
+  95               	.L17:
+  96 0092 81E0      		ldi r24,lo8(1)
+  97 0094 90E0      		ldi r25,hi8(1)
+  98 0096 00C0      		rjmp .L25
+  99               	.L9:
+ 100 0098 6081      		ld r22,Z
+ 101 009a 7181      		ldd r23,Z+1
+ 102 009c 6130      		cpi r22,1
+ 103 009e 7105      		cpc r23,__zero_reg__
+ 104 00a0 01F4      		brne .L18
+ 105 00a2 8AB7      		in r24,90-32
+ 106 00a4 8B7F      		andi r24,lo8(-5)
+ 107 00a6 00C0      		rjmp .L28
+ 108               	.L18:
+ 109 00a8 6730      		cpi r22,7
+ 110 00aa 7105      		cpc r23,__zero_reg__
+ 111 00ac 01F4      		brne .L19
+ 112 00ae 8AB7      		in r24,90-32
+ 113 00b0 8460      		ori r24,lo8(4)
+ 114               	.L28:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s 			page 3
+
+
+ 115 00b2 8ABF      		out 90-32,r24
+ 116 00b4 8AB7      		in r24,90-32
+ 117 00b6 877F      		andi r24,lo8(-9)
+ 118 00b8 00C0      		rjmp .L26
+ 119               	.L19:
+ 120 00ba 6530      		cpi r22,5
+ 121 00bc 7105      		cpc r23,__zero_reg__
+ 122 00be 01F4      		brne .L20
+ 123 00c0 8AB7      		in r24,90-32
+ 124 00c2 8B7F      		andi r24,lo8(-5)
+ 125               	.L27:
+ 126 00c4 8ABF      		out 90-32,r24
+ 127 00c6 8AB7      		in r24,90-32
+ 128 00c8 8860      		ori r24,lo8(8)
+ 129               	.L26:
+ 130 00ca 8ABF      		out 90-32,r24
+ 131               	.L23:
+ 132 00cc 20E0      		ldi r18,lo8(0)
+ 133 00ce 30E0      		ldi r19,hi8(0)
+ 134 00d0 00C0      		rjmp .L14
+ 135               	.L20:
+ 136 00d2 6630      		cpi r22,6
+ 137 00d4 7105      		cpc r23,__zero_reg__
+ 138 00d6 01F4      		brne .L2
+ 139 00d8 8AB7      		in r24,90-32
+ 140 00da 8460      		ori r24,lo8(4)
+ 141 00dc 00C0      		rjmp .L27
+ 142               	.L10:
+ 143 00de 85E0      		ldi r24,lo8(5)
+ 144 00e0 90E0      		ldi r25,hi8(5)
+ 145               	.L25:
+ 146 00e2 9183      		std Z+1,r25
+ 147 00e4 8083      		st Z,r24
+ 148 00e6 00C0      		rjmp .L23
+ 149               	.L2:
+ 150 00e8 2FEF      		ldi r18,lo8(-1)
+ 151 00ea 3FEF      		ldi r19,hi8(-1)
+ 152               	.L14:
+ 153 00ec 4423      		tst r20
+ 154 00ee 01F0      		breq .L21
+ 155               	.L13:
+ 156 00f0 89B7      		in r24,89-32
+ 157 00f2 8062      		ori r24,lo8(32)
+ 158 00f4 89BF      		out 89-32,r24
+ 159 00f6 00C0      		rjmp .L21
+ 160               	.L7:
+ 161 00f8 20E0      		ldi r18,lo8(0)
+ 162 00fa 30E0      		ldi r19,hi8(0)
+ 163               	.L21:
+ 164 00fc C901      		movw r24,r18
+ 165               	/* epilogue start */
+ 166 00fe 0895      		ret
+ 167               		.size	AvrInterrupt5Ctl, .-AvrInterrupt5Ctl
+ 168               	.global	__vector_6
+ 169               		.type	__vector_6, @function
+ 170               	__vector_6:
+ 171 0100 1F92      		push __zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s 			page 4
+
+
+ 172 0102 0F92      		push r0
+ 173 0104 0FB6      		in r0,__SREG__
+ 174 0106 0F92      		push r0
+ 175 0108 0BB6      		in r0,91-32
+ 176 010a 0F92      		push r0
+ 177 010c 1124      		clr __zero_reg__
+ 178 010e 2F93      		push r18
+ 179 0110 3F93      		push r19
+ 180 0112 4F93      		push r20
+ 181 0114 5F93      		push r21
+ 182 0116 6F93      		push r22
+ 183 0118 7F93      		push r23
+ 184 011a 8F93      		push r24
+ 185 011c 9F93      		push r25
+ 186 011e AF93      		push r26
+ 187 0120 BF93      		push r27
+ 188 0122 EF93      		push r30
+ 189 0124 FF93      		push r31
+ 190               	/* prologue: Signal */
+ 191               	/* frame size = 0 */
+ 192 0126 80E0      		ldi r24,lo8(sig_INTERRUPT5)
+ 193 0128 90E0      		ldi r25,hi8(sig_INTERRUPT5)
+ 194 012a 0E94 0000 		call CallHandler
+ 195               	/* epilogue start */
+ 196 012e FF91      		pop r31
+ 197 0130 EF91      		pop r30
+ 198 0132 BF91      		pop r27
+ 199 0134 AF91      		pop r26
+ 200 0136 9F91      		pop r25
+ 201 0138 8F91      		pop r24
+ 202 013a 7F91      		pop r23
+ 203 013c 6F91      		pop r22
+ 204 013e 5F91      		pop r21
+ 205 0140 4F91      		pop r20
+ 206 0142 3F91      		pop r19
+ 207 0144 2F91      		pop r18
+ 208 0146 0F90      		pop r0
+ 209 0148 0BBE      		out 91-32,r0
+ 210 014a 0F90      		pop r0
+ 211 014c 0FBE      		out __SREG__,r0
+ 212 014e 0F90      		pop r0
+ 213 0150 1F90      		pop __zero_reg__
+ 214 0152 1895      		reti
+ 215               		.size	__vector_6, .-__vector_6
+ 216               	.global	sig_INTERRUPT5
+ 217               		.data
+ 218               		.type	sig_INTERRUPT5, @object
+ 219               		.size	sig_INTERRUPT5, 6
+ 220               	sig_INTERRUPT5:
+ 221 0000 0000      		.word	0
+ 222 0002 0000      		.word	0
+ 223 0004 0000      		.word	gs(AvrInterrupt5Ctl)
+ 224               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ih_int5.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s:10     .text:00000000 AvrInterrupt5Ctl
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s:170    .text:00000100 __vector_6
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cct2uB6S.s:220    .data:00000000 sig_INTERRUPT5
+
+UNDEFINED SYMBOLS
+CallHandler
+__do_copy_data

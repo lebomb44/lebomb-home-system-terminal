@@ -1,0 +1,185 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s 			page 1
+
+
+   1               		.file	"ih_usart1_tx.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	AvrUart1TxIrqCtl, @function
+  10               	AvrUart1TxIrqCtl:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 9C01      		movw r18,r24
+  14 0002 FB01      		movw r30,r22
+  15 0004 4091 9A00 		lds r20,154
+  16 0008 4074      		andi r20,lo8(64)
+  17 000a 8091 9A00 		lds r24,154
+  18 000e 8F7B      		andi r24,lo8(-65)
+  19 0010 8093 9A00 		sts 154,r24
+  20 0014 2031      		cpi r18,16
+  21 0016 3105      		cpc r19,__zero_reg__
+  22 0018 01F0      		breq .L5
+  23 001a 2131      		cpi r18,17
+  24 001c 3105      		cpc r19,__zero_reg__
+  25 001e 04F4      		brge .L9
+  26 0020 2115      		cp r18,__zero_reg__
+  27 0022 3105      		cpc r19,__zero_reg__
+  28 0024 01F0      		breq .L3
+  29 0026 2130      		cpi r18,1
+  30 0028 3105      		cpc r19,__zero_reg__
+  31 002a 01F4      		brne .L2
+  32 002c 00C0      		rjmp .L4
+  33               	.L9:
+  34 002e 2231      		cpi r18,18
+  35 0030 3105      		cpc r19,__zero_reg__
+  36 0032 01F0      		breq .L7
+  37 0034 2231      		cpi r18,18
+  38 0036 3105      		cpc r19,__zero_reg__
+  39 0038 04F0      		brlt .L17
+  40 003a 2032      		cpi r18,32
+  41 003c 3105      		cpc r19,__zero_reg__
+  42 003e 01F0      		breq .L18
+  43               	.L2:
+  44 0040 2FEF      		ldi r18,lo8(-1)
+  45 0042 3FEF      		ldi r19,hi8(-1)
+  46 0044 00C0      		rjmp .L11
+  47               	.L3:
+  48 0046 40E0      		ldi r20,lo8(0)
+  49               	.L4:
+  50 0048 8091 9B00 		lds r24,155
+  51 004c 8064      		ori r24,lo8(64)
+  52 004e 8093 9B00 		sts 155,r24
+  53 0052 00C0      		rjmp .L16
+  54               	.L5:
+  55 0054 8091 9B00 		lds r24,155
+  56 0058 86FF      		sbrs r24,6
+  57 005a 00C0      		rjmp .L12
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s 			page 2
+
+
+  58 005c 81E0      		ldi r24,lo8(1)
+  59 005e 90E0      		ldi r25,hi8(1)
+  60 0060 9183      		std Z+1,r25
+  61 0062 8083      		st Z,r24
+  62 0064 00C0      		rjmp .L13
+  63               	.L12:
+  64 0066 1182      		std Z+1,__zero_reg__
+  65 0068 1082      		st Z,__zero_reg__
+  66               	.L13:
+  67 006a 4423      		tst r20
+  68 006c 01F0      		breq .L7
+  69 006e 8081      		ld r24,Z
+  70 0070 9181      		ldd r25,Z+1
+  71 0072 8068      		ori r24,lo8(128)
+  72 0074 9183      		std Z+1,r25
+  73 0076 8083      		st Z,r24
+  74               	.L17:
+  75 0078 20E0      		ldi r18,lo8(0)
+  76 007a 30E0      		ldi r19,hi8(0)
+  77 007c 00C0      		rjmp .L10
+  78               	.L18:
+  79 007e 80E1      		ldi r24,lo8(16)
+  80 0080 90E0      		ldi r25,hi8(16)
+  81 0082 9183      		std Z+1,r25
+  82 0084 8083      		st Z,r24
+  83               	.L16:
+  84 0086 20E0      		ldi r18,lo8(0)
+  85 0088 30E0      		ldi r19,hi8(0)
+  86               	.L11:
+  87 008a 4423      		tst r20
+  88 008c 01F0      		breq .L14
+  89               	.L10:
+  90 008e 8091 9A00 		lds r24,154
+  91 0092 8064      		ori r24,lo8(64)
+  92 0094 8093 9A00 		sts 154,r24
+  93 0098 00C0      		rjmp .L14
+  94               	.L7:
+  95 009a 20E0      		ldi r18,lo8(0)
+  96 009c 30E0      		ldi r19,hi8(0)
+  97               	.L14:
+  98 009e C901      		movw r24,r18
+  99               	/* epilogue start */
+ 100 00a0 0895      		ret
+ 101               		.size	AvrUart1TxIrqCtl, .-AvrUart1TxIrqCtl
+ 102               	.global	__vector_32
+ 103               		.type	__vector_32, @function
+ 104               	__vector_32:
+ 105 00a2 1F92      		push __zero_reg__
+ 106 00a4 0F92      		push r0
+ 107 00a6 0FB6      		in r0,__SREG__
+ 108 00a8 0F92      		push r0
+ 109 00aa 0BB6      		in r0,91-32
+ 110 00ac 0F92      		push r0
+ 111 00ae 1124      		clr __zero_reg__
+ 112 00b0 2F93      		push r18
+ 113 00b2 3F93      		push r19
+ 114 00b4 4F93      		push r20
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s 			page 3
+
+
+ 115 00b6 5F93      		push r21
+ 116 00b8 6F93      		push r22
+ 117 00ba 7F93      		push r23
+ 118 00bc 8F93      		push r24
+ 119 00be 9F93      		push r25
+ 120 00c0 AF93      		push r26
+ 121 00c2 BF93      		push r27
+ 122 00c4 EF93      		push r30
+ 123 00c6 FF93      		push r31
+ 124               	/* prologue: Signal */
+ 125               	/* frame size = 0 */
+ 126 00c8 80E0      		ldi r24,lo8(sig_UART1_TRANS)
+ 127 00ca 90E0      		ldi r25,hi8(sig_UART1_TRANS)
+ 128 00cc 0E94 0000 		call CallHandler
+ 129               	/* epilogue start */
+ 130 00d0 FF91      		pop r31
+ 131 00d2 EF91      		pop r30
+ 132 00d4 BF91      		pop r27
+ 133 00d6 AF91      		pop r26
+ 134 00d8 9F91      		pop r25
+ 135 00da 8F91      		pop r24
+ 136 00dc 7F91      		pop r23
+ 137 00de 6F91      		pop r22
+ 138 00e0 5F91      		pop r21
+ 139 00e2 4F91      		pop r20
+ 140 00e4 3F91      		pop r19
+ 141 00e6 2F91      		pop r18
+ 142 00e8 0F90      		pop r0
+ 143 00ea 0BBE      		out 91-32,r0
+ 144 00ec 0F90      		pop r0
+ 145 00ee 0FBE      		out __SREG__,r0
+ 146 00f0 0F90      		pop r0
+ 147 00f2 1F90      		pop __zero_reg__
+ 148 00f4 1895      		reti
+ 149               		.size	__vector_32, .-__vector_32
+ 150               	.global	sig_UART1_TRANS
+ 151               		.data
+ 152               		.type	sig_UART1_TRANS, @object
+ 153               		.size	sig_UART1_TRANS, 6
+ 154               	sig_UART1_TRANS:
+ 155 0000 0000      		.word	0
+ 156 0002 0000      		.word	0
+ 157 0004 0000      		.word	gs(AvrUart1TxIrqCtl)
+ 158               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ih_usart1_tx.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s:10     .text:00000000 AvrUart1TxIrqCtl
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s:104    .text:000000a2 __vector_32
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccpSfqpt.s:154    .data:00000000 sig_UART1_TRANS
+
+UNDEFINED SYMBOLS
+CallHandler
+__do_copy_data

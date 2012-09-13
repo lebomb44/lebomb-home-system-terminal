@@ -1,0 +1,591 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s 			page 1
+
+
+   1               		.file	"discover.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	NutRegisterDiscoveryCallback
+  10               		.type	NutRegisterDiscoveryCallback, @function
+  11               	NutRegisterDiscoveryCallback:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 2091 0000 		lds r18,discovery_callback
+  15 0004 3091 0000 		lds r19,discovery_callback+1
+  16 0008 9093 0000 		sts (discovery_callback)+1,r25
+  17 000c 8093 0000 		sts discovery_callback,r24
+  18 0010 C901      		movw r24,r18
+  19               	/* epilogue start */
+  20 0012 0895      		ret
+  21               		.size	NutRegisterDiscoveryCallback, .-NutRegisterDiscoveryCallback
+  22               		.data
+  23               	.LC0:
+  24 0000 7564 6973 		.string	"udisc"
+  24      6300 
+  25               		.text
+  26               	.global	NutRegisterDiscovery
+  27               		.type	NutRegisterDiscovery, @function
+  28               	NutRegisterDiscovery:
+  29 0014 EF92      		push r14
+  30 0016 FF92      		push r15
+  31 0018 0F93      		push r16
+  32 001a 1F93      		push r17
+  33               	/* prologue: function */
+  34               	/* frame size = 0 */
+  35 001c 7B01      		movw r14,r22
+  36 001e 8C01      		movw r16,r24
+  37 0020 8091 0000 		lds r24,tid.2293
+  38 0024 9091 0000 		lds r25,(tid.2293)+1
+  39 0028 892B      		or r24,r25
+  40 002a 01F4      		brne .L4
+  41 002c E092 0000 		sts disopt,r14
+  42 0030 F092 0000 		sts (disopt)+1,r15
+  43 0034 0093 0000 		sts (disopt)+2,r16
+  44 0038 1093 0000 		sts (disopt)+3,r17
+  45 003c 4115      		cp r20,__zero_reg__
+  46 003e 5105      		cpc r21,__zero_reg__
+  47 0040 01F4      		brne .L5
+  48 0042 4EE4      		ldi r20,lo8(9806)
+  49 0044 56E2      		ldi r21,hi8(9806)
+  50               	.L5:
+  51 0046 5093 0000 		sts (disopt+4)+1,r21
+  52 004a 4093 0000 		sts disopt+4,r20
+  53 004e 3093 0000 		sts (disopt+6)+1,r19
+  54 0052 2093 0000 		sts disopt+6,r18
+  55 0056 80E0      		ldi r24,lo8(.LC0)
+  56 0058 90E0      		ldi r25,hi8(.LC0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s 			page 2
+
+
+  57 005a 60E0      		ldi r22,lo8(gs(DiscoveryResponder))
+  58 005c 70E0      		ldi r23,hi8(gs(DiscoveryResponder))
+  59 005e 40E0      		ldi r20,lo8(0)
+  60 0060 50E0      		ldi r21,hi8(0)
+  61 0062 20EE      		ldi r18,lo8(224)
+  62 0064 30E0      		ldi r19,hi8(224)
+  63 0066 0E94 0000 		call NutThreadCreate
+  64 006a 9093 0000 		sts (tid.2293)+1,r25
+  65 006e 8093 0000 		sts tid.2293,r24
+  66 0072 892B      		or r24,r25
+  67 0074 01F0      		breq .L4
+  68 0076 20E0      		ldi r18,lo8(0)
+  69 0078 30E0      		ldi r19,hi8(0)
+  70 007a 00C0      		rjmp .L6
+  71               	.L4:
+  72 007c 2FEF      		ldi r18,lo8(-1)
+  73 007e 3FEF      		ldi r19,hi8(-1)
+  74               	.L6:
+  75 0080 C901      		movw r24,r18
+  76               	/* epilogue start */
+  77 0082 1F91      		pop r17
+  78 0084 0F91      		pop r16
+  79 0086 FF90      		pop r15
+  80 0088 EF90      		pop r14
+  81 008a 0895      		ret
+  82               		.size	NutRegisterDiscovery, .-NutRegisterDiscovery
+  83               	.global	NutDiscoveryAnnTele
+  84               		.type	NutDiscoveryAnnTele, @function
+  85               	NutDiscoveryAnnTele:
+  86 008c CF93      		push r28
+  87 008e DF93      		push r29
+  88               	/* prologue: function */
+  89               	/* frame size = 0 */
+  90 0090 FC01      		movw r30,r24
+  91 0092 80E8      		ldi r24,lo8(-128)
+  92 0094 DF01      		movw r26,r30
+  93 0096 1D92      		st X+,__zero_reg__
+  94 0098 8A95      	        dec r24
+  95 009a 01F4      		brne .-6
+  96 009c 8091 0000 		lds r24,xid
+  97 00a0 9091 0000 		lds r25,(xid)+1
+  98 00a4 A091 0000 		lds r26,(xid)+2
+  99 00a8 B091 0000 		lds r27,(xid)+3
+ 100 00ac 8083      		st Z,r24
+ 101 00ae 9183      		std Z+1,r25
+ 102 00b0 A283      		std Z+2,r26
+ 103 00b2 B383      		std Z+3,r27
+ 104 00b4 81E0      		ldi r24,lo8(1)
+ 105 00b6 8483      		std Z+4,r24
+ 106 00b8 80E1      		ldi r24,lo8(16)
+ 107 00ba 8583      		std Z+5,r24
+ 108 00bc EF01      		movw r28,r30
+ 109 00be 2696      		adiw r28,6
+ 110 00c0 A0E0      		ldi r26,lo8(confnet+10)
+ 111 00c2 B0E0      		ldi r27,hi8(confnet+10)
+ 112 00c4 86E0      		ldi r24,lo8(6)
+ 113               	.L9:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s 			page 3
+
+
+ 114 00c6 0D90      		ld r0,X+
+ 115 00c8 0992      		st Y+,r0
+ 116 00ca 8150      		subi r24,lo8(-(-1))
+ 117 00cc 01F4      		brne .L9
+ 118 00ce 8091 0000 		lds r24,confnet+16
+ 119 00d2 9091 0000 		lds r25,(confnet+16)+1
+ 120 00d6 A091 0000 		lds r26,(confnet+16)+2
+ 121 00da B091 0000 		lds r27,(confnet+16)+3
+ 122 00de 8487      		std Z+12,r24
+ 123 00e0 9587      		std Z+13,r25
+ 124 00e2 A687      		std Z+14,r26
+ 125 00e4 B787      		std Z+15,r27
+ 126 00e6 8091 0000 		lds r24,confnet+20
+ 127 00ea 9091 0000 		lds r25,(confnet+20)+1
+ 128 00ee A091 0000 		lds r26,(confnet+20)+2
+ 129 00f2 B091 0000 		lds r27,(confnet+20)+3
+ 130 00f6 808B      		std Z+16,r24
+ 131 00f8 918B      		std Z+17,r25
+ 132 00fa A28B      		std Z+18,r26
+ 133 00fc B38B      		std Z+19,r27
+ 134 00fe 8091 0000 		lds r24,confnet+24
+ 135 0102 9091 0000 		lds r25,(confnet+24)+1
+ 136 0106 A091 0000 		lds r26,(confnet+24)+2
+ 137 010a B091 0000 		lds r27,(confnet+24)+3
+ 138 010e 848B      		std Z+20,r24
+ 139 0110 958B      		std Z+21,r25
+ 140 0112 A68B      		std Z+22,r26
+ 141 0114 B78B      		std Z+23,r27
+ 142 0116 8091 0000 		lds r24,confnet+28
+ 143 011a 9091 0000 		lds r25,(confnet+28)+1
+ 144 011e A091 0000 		lds r26,(confnet+28)+2
+ 145 0122 B091 0000 		lds r27,(confnet+28)+3
+ 146 0126 808F      		std Z+24,r24
+ 147 0128 918F      		std Z+25,r25
+ 148 012a A28F      		std Z+26,r26
+ 149 012c B38F      		std Z+27,r27
+ 150 012e DF01      		movw r26,r30
+ 151 0130 5C96      		adiw r26,28
+ 152 0132 E0E0      		ldi r30,lo8(confos+3)
+ 153 0134 F0E0      		ldi r31,hi8(confos+3)
+ 154 0136 88E0      		ldi r24,lo8(8)
+ 155               	.L10:
+ 156 0138 0190      		ld r0,Z+
+ 157 013a 0D92      		st X+,r0
+ 158 013c 8150      		subi r24,lo8(-(-1))
+ 159 013e 01F4      		brne .L10
+ 160 0140 84E2      		ldi r24,lo8(36)
+ 161 0142 90E0      		ldi r25,hi8(36)
+ 162               	/* epilogue start */
+ 163 0144 DF91      		pop r29
+ 164 0146 CF91      		pop r28
+ 165 0148 0895      		ret
+ 166               		.size	NutDiscoveryAnnTele, .-NutDiscoveryAnnTele
+ 167               	.global	DiscoveryResponder
+ 168               		.type	DiscoveryResponder, @function
+ 169               	DiscoveryResponder:
+ 170 014a DF93      		push r29
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s 			page 4
+
+
+ 171 014c CF93      		push r28
+ 172 014e CDB7      		in r28,__SP_L__
+ 173 0150 DEB7      		in r29,__SP_H__
+ 174 0152 2897      		sbiw r28,8
+ 175 0154 0FB6      		in __tmp_reg__,__SREG__
+ 176 0156 F894      		cli
+ 177 0158 DEBF      		out __SP_H__,r29
+ 178 015a 0FBE      		out __SREG__,__tmp_reg__
+ 179 015c CDBF      		out __SP_L__,r28
+ 180               	/* prologue: function */
+ 181               	/* frame size = 8 */
+ 182 015e 00C0      		rjmp .L15
+ 183               	.L16:
+ 184 0160 68EE      		ldi r22,lo8(1000)
+ 185 0162 73E0      		ldi r23,hi8(1000)
+ 186 0164 80E0      		ldi r24,hlo8(1000)
+ 187 0166 90E0      		ldi r25,hhi8(1000)
+ 188 0168 0E94 0000 		call NutSleep
+ 189               	.L15:
+ 190 016c 80E8      		ldi r24,lo8(128)
+ 191 016e 90E0      		ldi r25,hi8(128)
+ 192 0170 0E94 0000 		call malloc
+ 193 0174 5C01      		movw r10,r24
+ 194 0176 0097      		sbiw r24,0
+ 195 0178 01F0      		breq .L16
+ 196 017a 00C0      		rjmp .L23
+ 197               	.L18:
+ 198 017c 68EE      		ldi r22,lo8(1000)
+ 199 017e 73E0      		ldi r23,hi8(1000)
+ 200 0180 80E0      		ldi r24,hlo8(1000)
+ 201 0182 90E0      		ldi r25,hhi8(1000)
+ 202 0184 0E94 0000 		call NutSleep
+ 203               	.L23:
+ 204 0188 8091 0000 		lds r24,disopt+4
+ 205 018c 9091 0000 		lds r25,(disopt+4)+1
+ 206 0190 0E94 0000 		call NutUdpCreateSocket
+ 207 0194 4C01      		movw r8,r24
+ 208 0196 0097      		sbiw r24,0
+ 209 0198 01F0      		breq .L18
+ 210 019a 80E8      		ldi r24,lo8(384)
+ 211 019c 91E0      		ldi r25,hi8(384)
+ 212 019e 9C83      		std Y+4,r25
+ 213 01a0 8B83      		std Y+3,r24
+ 214 01a2 C401      		movw r24,r8
+ 215 01a4 62E0      		ldi r22,lo8(4098)
+ 216 01a6 70E1      		ldi r23,hi8(4098)
+ 217 01a8 AE01      		movw r20,r28
+ 218 01aa 4D5F      		subi r20,lo8(-(3))
+ 219 01ac 5F4F      		sbci r21,hi8(-(3))
+ 220 01ae 22E0      		ldi r18,lo8(2)
+ 221 01b0 30E0      		ldi r19,hi8(2)
+ 222 01b2 0E94 0000 		call NutUdpSetSockOpt
+ 223 01b6 E090 0000 		lds r14,confnet+12
+ 224 01ba F090 0000 		lds r15,(confnet+12)+1
+ 225 01be 0091 0000 		lds r16,(confnet+12)+2
+ 226 01c2 1091 0000 		lds r17,(confnet+12)+3
+ 227 01c6 E092 0000 		sts xid,r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s 			page 5
+
+
+ 228 01ca F092 0000 		sts (xid)+1,r15
+ 229 01ce 0093 0000 		sts (xid)+2,r16
+ 230 01d2 1093 0000 		sts (xid)+3,r17
+ 231 01d6 0E94 0000 		call NutGetTickCount
+ 232 01da 9B01      		movw r18,r22
+ 233 01dc AC01      		movw r20,r24
+ 234 01de 2E0D      		add r18,r14
+ 235 01e0 3F1D      		adc r19,r15
+ 236 01e2 401F      		adc r20,r16
+ 237 01e4 511F      		adc r21,r17
+ 238 01e6 2093 0000 		sts xid,r18
+ 239 01ea 3093 0000 		sts (xid)+1,r19
+ 240 01ee 4093 0000 		sts (xid)+2,r20
+ 241 01f2 5093 0000 		sts (xid)+3,r21
+ 242 01f6 8091 0000 		lds r24,disopt+6
+ 243 01fa 80FF      		sbrs r24,0
+ 244 01fc 00C0      		rjmp .L19
+ 245 01fe 3770      		andi r19,hi8(2047)
+ 246 0200 4070      		andi r20,hlo8(2047)
+ 247 0202 5070      		andi r21,hhi8(2047)
+ 248 0204 2C50      		subi r18,lo8(-(500))
+ 249 0206 3E4F      		sbci r19,hi8(-(500))
+ 250 0208 4F4F      		sbci r20,hlo8(-(500))
+ 251 020a 5F4F      		sbci r21,hhi8(-(500))
+ 252 020c CA01      		movw r24,r20
+ 253 020e B901      		movw r22,r18
+ 254 0210 0E94 0000 		call NutSleep
+ 255 0214 C501      		movw r24,r10
+ 256 0216 0E94 0000 		call NutDiscoveryAnnTele
+ 257 021a 7C01      		movw r14,r24
+ 258 021c 1816      		cp __zero_reg__,r24
+ 259 021e 1906      		cpc __zero_reg__,r25
+ 260 0220 04F4      		brge .L19
+ 261 0222 2091 0000 		lds r18,disopt+4
+ 262 0226 3091 0000 		lds r19,(disopt+4)+1
+ 263 022a C401      		movw r24,r8
+ 264 022c 4FEF      		ldi r20,lo8(-1)
+ 265 022e 5FEF      		ldi r21,hi8(-1)
+ 266 0230 6FEF      		ldi r22,hlo8(-1)
+ 267 0232 7FEF      		ldi r23,hhi8(-1)
+ 268 0234 8501      		movw r16,r10
+ 269 0236 0E94 0000 		call NutUdpSendTo
+ 270               	.L19:
+ 271 023a 1E01      		movw r2,r28
+ 272 023c 0894      		sec
+ 273 023e 211C      		adc r2,__zero_reg__
+ 274 0240 311C      		adc r3,__zero_reg__
+ 275 0242 4424      		clr r4
+ 276 0244 4A94      		dec r4
+ 277 0246 542C      		mov r5,r4
+ 278 0248 3201      		movw r6,r4
+ 279               	.L24:
+ 280 024a C401      		movw r24,r8
+ 281 024c BE01      		movw r22,r28
+ 282 024e 6B5F      		subi r22,lo8(-(5))
+ 283 0250 7F4F      		sbci r23,hi8(-(5))
+ 284 0252 A101      		movw r20,r2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s 			page 6
+
+
+ 285 0254 9501      		movw r18,r10
+ 286 0256 00E8      		ldi r16,lo8(128)
+ 287 0258 10E0      		ldi r17,hi8(128)
+ 288 025a CC24      		clr r12
+ 289 025c DD24      		clr r13
+ 290 025e 7601      		movw r14,r12
+ 291 0260 0E94 0000 		call NutUdpReceiveFrom
+ 292 0264 8C01      		movw r16,r24
+ 293 0266 8D81      		ldd r24,Y+5
+ 294 0268 9E81      		ldd r25,Y+6
+ 295 026a AF81      		ldd r26,Y+7
+ 296 026c B885      		ldd r27,Y+8
+ 297 026e C090 0000 		lds r12,disopt
+ 298 0272 D090 0000 		lds r13,(disopt)+1
+ 299 0276 E090 0000 		lds r14,(disopt)+2
+ 300 027a F090 0000 		lds r15,(disopt)+3
+ 301 027e C822      		and r12,r24
+ 302 0280 D922      		and r13,r25
+ 303 0282 EA22      		and r14,r26
+ 304 0284 FB22      		and r15,r27
+ 305 0286 C816      		cp r12,r24
+ 306 0288 D906      		cpc r13,r25
+ 307 028a EA06      		cpc r14,r26
+ 308 028c FB06      		cpc r15,r27
+ 309 028e 01F0      		breq .+2
+ 310 0290 00C0      		rjmp .L20
+ 311 0292 1016      		cp __zero_reg__,r16
+ 312 0294 1106      		cpc __zero_reg__,r17
+ 313 0296 04F0      		brlt .+2
+ 314 0298 00C0      		rjmp .L20
+ 315 029a E091 0000 		lds r30,discovery_callback
+ 316 029e F091 0000 		lds r31,(discovery_callback)+1
+ 317 02a2 3097      		sbiw r30,0
+ 318 02a4 01F0      		breq .L20
+ 319 02a6 4981      		ldd r20,Y+1
+ 320 02a8 5A81      		ldd r21,Y+2
+ 321 02aa C701      		movw r24,r14
+ 322 02ac B601      		movw r22,r12
+ 323 02ae 9501      		movw r18,r10
+ 324 02b0 0995      		icall
+ 325 02b2 7C01      		movw r14,r24
+ 326 02b4 1816      		cp __zero_reg__,r24
+ 327 02b6 1906      		cpc __zero_reg__,r25
+ 328 02b8 04F4      		brge .L20
+ 329 02ba 8091 0000 		lds r24,confnet+16
+ 330 02be 9091 0000 		lds r25,(confnet+16)+1
+ 331 02c2 A091 0000 		lds r26,(confnet+16)+2
+ 332 02c6 B091 0000 		lds r27,(confnet+16)+3
+ 333 02ca 2D81      		ldd r18,Y+5
+ 334 02cc 3E81      		ldd r19,Y+6
+ 335 02ce 4F81      		ldd r20,Y+7
+ 336 02d0 5885      		ldd r21,Y+8
+ 337 02d2 8227      		eor r24,r18
+ 338 02d4 9327      		eor r25,r19
+ 339 02d6 A427      		eor r26,r20
+ 340 02d8 B527      		eor r27,r21
+ 341 02da 2091 0000 		lds r18,confnet+20
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s 			page 7
+
+
+ 342 02de 3091 0000 		lds r19,(confnet+20)+1
+ 343 02e2 4091 0000 		lds r20,(confnet+20)+2
+ 344 02e6 5091 0000 		lds r21,(confnet+20)+3
+ 345 02ea 8223      		and r24,r18
+ 346 02ec 9323      		and r25,r19
+ 347 02ee A423      		and r26,r20
+ 348 02f0 B523      		and r27,r21
+ 349 02f2 0097      		sbiw r24,0
+ 350 02f4 A105      		cpc r26,__zero_reg__
+ 351 02f6 B105      		cpc r27,__zero_reg__
+ 352 02f8 01F0      		breq .L21
+ 353 02fa 4D82      		std Y+5,r4
+ 354 02fc 5E82      		std Y+6,r5
+ 355 02fe 6F82      		std Y+7,r6
+ 356 0300 7886      		std Y+8,r7
+ 357               	.L21:
+ 358 0302 4D81      		ldd r20,Y+5
+ 359 0304 5E81      		ldd r21,Y+6
+ 360 0306 6F81      		ldd r22,Y+7
+ 361 0308 7885      		ldd r23,Y+8
+ 362 030a 2091 0000 		lds r18,disopt+4
+ 363 030e 3091 0000 		lds r19,(disopt+4)+1
+ 364 0312 C401      		movw r24,r8
+ 365 0314 8501      		movw r16,r10
+ 366 0316 0E94 0000 		call NutUdpSendTo
+ 367               	.L20:
+ 368 031a 64E6      		ldi r22,lo8(100)
+ 369 031c 70E0      		ldi r23,hi8(100)
+ 370 031e 80E0      		ldi r24,hlo8(100)
+ 371 0320 90E0      		ldi r25,hhi8(100)
+ 372 0322 0E94 0000 		call NutSleep
+ 373 0326 00C0      		rjmp .L24
+ 374               		.size	DiscoveryResponder, .-DiscoveryResponder
+ 375               	.global	NutDiscoveryAppConf
+ 376               		.type	NutDiscoveryAppConf, @function
+ 377               	NutDiscoveryAppConf:
+ 378 0328 CF93      		push r28
+ 379 032a DF93      		push r29
+ 380               	/* prologue: function */
+ 381               	/* frame size = 0 */
+ 382 032c EC01      		movw r28,r24
+ 383 032e E0E0      		ldi r30,lo8(confos+3)
+ 384 0330 F0E0      		ldi r31,hi8(confos+3)
+ 385 0332 80E1      		ldi r24,lo8(16)
+ 386 0334 DF01      		movw r26,r30
+ 387 0336 1D92      		st X+,__zero_reg__
+ 388 0338 8A95      	        dec r24
+ 389 033a 01F4      		brne .-6
+ 390 033c BE01      		movw r22,r28
+ 391 033e 645E      		subi r22,lo8(-(28))
+ 392 0340 7F4F      		sbci r23,hi8(-(28))
+ 393 0342 CF01      		movw r24,r30
+ 394 0344 4FE0      		ldi r20,lo8(15)
+ 395 0346 50E0      		ldi r21,hi8(15)
+ 396 0348 0E94 0000 		call strncpy
+ 397 034c 0E94 0000 		call NutSaveConfig
+ 398 0350 A0E0      		ldi r26,lo8(confnet+10)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s 			page 8
+
+
+ 399 0352 B0E0      		ldi r27,hi8(confnet+10)
+ 400 0354 FE01      		movw r30,r28
+ 401 0356 3696      		adiw r30,6
+ 402 0358 86E0      		ldi r24,lo8(6)
+ 403               	.L26:
+ 404 035a 0190      		ld r0,Z+
+ 405 035c 0D92      		st X+,r0
+ 406 035e 8150      		subi r24,lo8(-(-1))
+ 407 0360 01F4      		brne .L26
+ 408 0362 8C85      		ldd r24,Y+12
+ 409 0364 9D85      		ldd r25,Y+13
+ 410 0366 AE85      		ldd r26,Y+14
+ 411 0368 BF85      		ldd r27,Y+15
+ 412 036a 8093 0000 		sts confnet+16,r24
+ 413 036e 9093 0000 		sts (confnet+16)+1,r25
+ 414 0372 A093 0000 		sts (confnet+16)+2,r26
+ 415 0376 B093 0000 		sts (confnet+16)+3,r27
+ 416 037a 8889      		ldd r24,Y+16
+ 417 037c 9989      		ldd r25,Y+17
+ 418 037e AA89      		ldd r26,Y+18
+ 419 0380 BB89      		ldd r27,Y+19
+ 420 0382 8093 0000 		sts confnet+20,r24
+ 421 0386 9093 0000 		sts (confnet+20)+1,r25
+ 422 038a A093 0000 		sts (confnet+20)+2,r26
+ 423 038e B093 0000 		sts (confnet+20)+3,r27
+ 424 0392 8C89      		ldd r24,Y+20
+ 425 0394 9D89      		ldd r25,Y+21
+ 426 0396 AE89      		ldd r26,Y+22
+ 427 0398 BF89      		ldd r27,Y+23
+ 428 039a 8093 0000 		sts confnet+24,r24
+ 429 039e 9093 0000 		sts (confnet+24)+1,r25
+ 430 03a2 A093 0000 		sts (confnet+24)+2,r26
+ 431 03a6 B093 0000 		sts (confnet+24)+3,r27
+ 432 03aa 888D      		ldd r24,Y+24
+ 433 03ac 998D      		ldd r25,Y+25
+ 434 03ae AA8D      		ldd r26,Y+26
+ 435 03b0 BB8D      		ldd r27,Y+27
+ 436 03b2 8093 0000 		sts confnet+28,r24
+ 437 03b6 9093 0000 		sts (confnet+28)+1,r25
+ 438 03ba A093 0000 		sts (confnet+28)+2,r26
+ 439 03be B093 0000 		sts (confnet+28)+3,r27
+ 440 03c2 0E94 0000 		call NutNetSaveConfig
+ 441               	/* epilogue start */
+ 442 03c6 DF91      		pop r29
+ 443 03c8 CF91      		pop r28
+ 444 03ca 0895      		ret
+ 445               		.size	NutDiscoveryAppConf, .-NutDiscoveryAppConf
+ 446               		.type	NutDiscoveryHandler, @function
+ 447               	NutDiscoveryHandler:
+ 448 03cc EF92      		push r14
+ 449 03ce FF92      		push r15
+ 450 03d0 0F93      		push r16
+ 451 03d2 1F93      		push r17
+ 452 03d4 CF93      		push r28
+ 453 03d6 DF93      		push r29
+ 454               	/* prologue: function */
+ 455               	/* frame size = 0 */
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s 			page 9
+
+
+ 456 03d8 E901      		movw r28,r18
+ 457 03da 0432      		cpi r16,36
+ 458 03dc 1105      		cpc r17,__zero_reg__
+ 459 03de 00F0      		brlo .L30
+ 460 03e0 8C81      		ldd r24,Y+4
+ 461 03e2 8823      		tst r24
+ 462 03e4 01F4      		brne .L31
+ 463 03e6 C901      		movw r24,r18
+ 464 03e8 0E94 0000 		call NutDiscoveryAnnTele
+ 465 03ec 00C0      		rjmp .L34
+ 466               	.L31:
+ 467 03ee 8230      		cpi r24,lo8(2)
+ 468 03f0 01F4      		brne .L30
+ 469 03f2 E880      		ld r14,Y
+ 470 03f4 F980      		ldd r15,Y+1
+ 471 03f6 0A81      		ldd r16,Y+2
+ 472 03f8 1B81      		ldd r17,Y+3
+ 473 03fa 8091 0000 		lds r24,xid
+ 474 03fe 9091 0000 		lds r25,(xid)+1
+ 475 0402 A091 0000 		lds r26,(xid)+2
+ 476 0406 B091 0000 		lds r27,(xid)+3
+ 477 040a E816      		cp r14,r24
+ 478 040c F906      		cpc r15,r25
+ 479 040e 0A07      		cpc r16,r26
+ 480 0410 1B07      		cpc r17,r27
+ 481 0412 01F4      		brne .L30
+ 482 0414 8D81      		ldd r24,Y+5
+ 483 0416 8031      		cpi r24,lo8(16)
+ 484 0418 01F4      		brne .L30
+ 485 041a 0E94 0000 		call NutGetTickCount
+ 486 041e E60E      		add r14,r22
+ 487 0420 F71E      		adc r15,r23
+ 488 0422 081F      		adc r16,r24
+ 489 0424 191F      		adc r17,r25
+ 490 0426 E092 0000 		sts xid,r14
+ 491 042a F092 0000 		sts (xid)+1,r15
+ 492 042e 0093 0000 		sts (xid)+2,r16
+ 493 0432 1093 0000 		sts (xid)+3,r17
+ 494 0436 CE01      		movw r24,r28
+ 495 0438 0E94 0000 		call NutDiscoveryAppConf
+ 496               	.L34:
+ 497 043c 9C01      		movw r18,r24
+ 498 043e 00C0      		rjmp .L32
+ 499               	.L30:
+ 500 0440 2FEF      		ldi r18,lo8(-1)
+ 501 0442 3FEF      		ldi r19,hi8(-1)
+ 502               	.L32:
+ 503 0444 C901      		movw r24,r18
+ 504               	/* epilogue start */
+ 505 0446 DF91      		pop r29
+ 506 0448 CF91      		pop r28
+ 507 044a 1F91      		pop r17
+ 508 044c 0F91      		pop r16
+ 509 044e FF90      		pop r15
+ 510 0450 EF90      		pop r14
+ 511 0452 0895      		ret
+ 512               		.size	NutDiscoveryHandler, .-NutDiscoveryHandler
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s 			page 10
+
+
+ 513               		.lcomm tid.2293,2
+ 514               		.data
+ 515               		.type	discovery_callback, @object
+ 516               		.size	discovery_callback, 2
+ 517               	discovery_callback:
+ 518 0006 0000      		.word	gs(NutDiscoveryHandler)
+ 519               		.lcomm disopt,8
+ 520               		.lcomm xid,4
+ 521               	.global __do_copy_data
+ 522               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 discover.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:11     .text:00000000 NutRegisterDiscoveryCallback
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:517    .data:00000006 discovery_callback
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:28     .text:00000014 NutRegisterDiscovery
+                             .bss:00000000 tid.2293
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:513    .bss:00000002 disopt
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:169    .text:0000014a DiscoveryResponder
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:85     .text:0000008c NutDiscoveryAnnTele
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:519    .bss:0000000a xid
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:377    .text:00000328 NutDiscoveryAppConf
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccRA2BDA.s:447    .text:000003cc NutDiscoveryHandler
+
+UNDEFINED SYMBOLS
+NutThreadCreate
+confnet
+confos
+NutSleep
+malloc
+NutUdpCreateSocket
+NutUdpSetSockOpt
+NutGetTickCount
+NutUdpSendTo
+NutUdpReceiveFrom
+strncpy
+NutSaveConfig
+NutNetSaveConfig
+__do_copy_data
+__do_clear_bss

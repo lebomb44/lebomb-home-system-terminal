@@ -1,0 +1,393 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s 			page 1
+
+
+   1               		.file	"uromfs.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	UromWrite, @function
+  10               	UromWrite:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13 0000 8FEF      		ldi r24,lo8(-1)
+  14 0002 9FEF      		ldi r25,hi8(-1)
+  15               	/* epilogue start */
+  16 0004 0895      		ret
+  17               		.size	UromWrite, .-UromWrite
+  18               		.type	UromWrite_P, @function
+  19               	UromWrite_P:
+  20               	/* prologue: function */
+  21               	/* frame size = 0 */
+  22 0006 8FEF      		ldi r24,lo8(-1)
+  23 0008 9FEF      		ldi r25,hi8(-1)
+  24               	/* epilogue start */
+  25 000a 0895      		ret
+  26               		.size	UromWrite_P, .-UromWrite_P
+  27               		.type	UromSize, @function
+  28               	UromSize:
+  29               	/* prologue: function */
+  30               	/* frame size = 0 */
+  31 000c DC01      		movw r26,r24
+  32 000e 1496      		adiw r26,4
+  33 0010 ED91      		ld r30,X+
+  34 0012 FC91      		ld r31,X
+  35 0014 1597      		sbiw r26,4+1
+  36 0016 0190      		ld __tmp_reg__,Z+
+  37 0018 F081      		ld r31,Z
+  38 001a E02D      		mov r30,__tmp_reg__
+  39 001c 8481      		ldd r24,Z+4
+  40 001e 9581      		ldd r25,Z+5
+  41 0020 BC01      		movw r22,r24
+  42 0022 80E0      		ldi r24,lo8(0)
+  43 0024 90E0      		ldi r25,lo8(0)
+  44               	/* epilogue start */
+  45 0026 0895      		ret
+  46               		.size	UromSize, .-UromSize
+  47               	.global	UromIOCtl
+  48               		.type	UromIOCtl, @function
+  49               	UromIOCtl:
+  50 0028 0F93      		push r16
+  51 002a 1F93      		push r17
+  52 002c CF93      		push r28
+  53 002e DF93      		push r29
+  54               	/* prologue: function */
+  55               	/* frame size = 0 */
+  56 0030 6352      		subi r22,lo8(4387)
+  57 0032 7141      		sbci r23,hi8(4387)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s 			page 2
+
+
+  58 0034 01F4      		brne .L8
+  59 0036 FA01      		movw r30,r20
+  60 0038 0281      		ldd r16,Z+2
+  61 003a 1381      		ldd r17,Z+3
+  62 003c A081      		ld r26,Z
+  63 003e B181      		ldd r27,Z+1
+  64 0040 1496      		adiw r26,4
+  65 0042 CD91      		ld r28,X+
+  66 0044 DC91      		ld r29,X
+  67 0046 1597      		sbiw r26,4+1
+  68 0048 6881      		ld r22,Y
+  69 004a 7981      		ldd r23,Y+1
+  70 004c D801      		movw r26,r16
+  71 004e 2D91      		ld r18,X+
+  72 0050 3D91      		ld r19,X+
+  73 0052 4D91      		ld r20,X+
+  74 0054 5C91      		ld r21,X
+  75 0056 8481      		ldd r24,Z+4
+  76 0058 9581      		ldd r25,Z+5
+  77 005a 8130      		cpi r24,1
+  78 005c 9105      		cpc r25,__zero_reg__
+  79 005e 01F0      		breq .L11
+  80 0060 0297      		sbiw r24,2
+  81 0062 01F4      		brne .L10
+  82 0064 00C0      		rjmp .L15
+  83               	.L11:
+  84 0066 8A81      		ldd r24,Y+2
+  85 0068 9B81      		ldd r25,Y+3
+  86 006a 00C0      		rjmp .L14
+  87               	.L15:
+  88 006c FB01      		movw r30,r22
+  89 006e 8481      		ldd r24,Z+4
+  90 0070 9581      		ldd r25,Z+5
+  91               	.L14:
+  92 0072 A0E0      		ldi r26,lo8(0)
+  93 0074 B0E0      		ldi r27,hi8(0)
+  94 0076 280F      		add r18,r24
+  95 0078 391F      		adc r19,r25
+  96 007a 4A1F      		adc r20,r26
+  97 007c 5B1F      		adc r21,r27
+  98               	.L10:
+  99 007e 57FD      		sbrc r21,7
+ 100 0080 00C0      		rjmp .L8
+ 101 0082 DB01      		movw r26,r22
+ 102 0084 1496      		adiw r26,4
+ 103 0086 8D91      		ld r24,X+
+ 104 0088 9C91      		ld r25,X
+ 105 008a 1597      		sbiw r26,4+1
+ 106 008c A0E0      		ldi r26,lo8(0)
+ 107 008e B0E0      		ldi r27,hi8(0)
+ 108 0090 8217      		cp r24,r18
+ 109 0092 9307      		cpc r25,r19
+ 110 0094 A407      		cpc r26,r20
+ 111 0096 B507      		cpc r27,r21
+ 112 0098 04F0      		brlt .L8
+ 113 009a 3B83      		std Y+3,r19
+ 114 009c 2A83      		std Y+2,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s 			page 3
+
+
+ 115 009e F801      		movw r30,r16
+ 116 00a0 2083      		st Z,r18
+ 117 00a2 3183      		std Z+1,r19
+ 118 00a4 4283      		std Z+2,r20
+ 119 00a6 5383      		std Z+3,r21
+ 120               	.L8:
+ 121 00a8 8FEF      		ldi r24,lo8(-1)
+ 122 00aa 9FEF      		ldi r25,hi8(-1)
+ 123               	/* epilogue start */
+ 124 00ac DF91      		pop r29
+ 125 00ae CF91      		pop r28
+ 126 00b0 1F91      		pop r17
+ 127 00b2 0F91      		pop r16
+ 128 00b4 0895      		ret
+ 129               		.size	UromIOCtl, .-UromIOCtl
+ 130               		.type	UromClose, @function
+ 131               	UromClose:
+ 132 00b6 CF93      		push r28
+ 133 00b8 DF93      		push r29
+ 134               	/* prologue: function */
+ 135               	/* frame size = 0 */
+ 136 00ba EC01      		movw r28,r24
+ 137 00bc 0197      		sbiw r24,1
+ 138 00be 8E5F      		subi r24,lo8(-2)
+ 139 00c0 9F4F      		sbci r25,hi8(-2)
+ 140 00c2 00F4      		brsh .L17
+ 141 00c4 8C81      		ldd r24,Y+4
+ 142 00c6 9D81      		ldd r25,Y+5
+ 143 00c8 0097      		sbiw r24,0
+ 144 00ca 01F0      		breq .L18
+ 145 00cc 0E94 0000 		call free
+ 146               	.L18:
+ 147 00d0 CE01      		movw r24,r28
+ 148 00d2 0E94 0000 		call free
+ 149               	.L17:
+ 150 00d6 80E0      		ldi r24,lo8(0)
+ 151 00d8 90E0      		ldi r25,hi8(0)
+ 152               	/* epilogue start */
+ 153 00da DF91      		pop r29
+ 154 00dc CF91      		pop r28
+ 155 00de 0895      		ret
+ 156               		.size	UromClose, .-UromClose
+ 157               		.type	UromOpen, @function
+ 158               	UromOpen:
+ 159 00e0 AF92      		push r10
+ 160 00e2 BF92      		push r11
+ 161 00e4 CF92      		push r12
+ 162 00e6 DF92      		push r13
+ 163 00e8 EF92      		push r14
+ 164 00ea FF92      		push r15
+ 165 00ec 0F93      		push r16
+ 166 00ee 1F93      		push r17
+ 167 00f0 CF93      		push r28
+ 168 00f2 DF93      		push r29
+ 169               	/* prologue: function */
+ 170               	/* frame size = 0 */
+ 171 00f4 5C01      		movw r10,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s 			page 4
+
+
+ 172 00f6 6B01      		movw r12,r22
+ 173 00f8 86E0      		ldi r24,lo8(6)
+ 174 00fa 90E0      		ldi r25,hi8(6)
+ 175 00fc 0E94 0000 		call malloc
+ 176 0100 EC01      		movw r28,r24
+ 177 0102 7C01      		movw r14,r24
+ 178 0104 0097      		sbiw r24,0
+ 179 0106 01F4      		brne .L21
+ 180 0108 8CE0      		ldi r24,lo8(12)
+ 181 010a 90E0      		ldi r25,hi8(12)
+ 182 010c 9093 0000 		sts (errno)+1,r25
+ 183 0110 8093 0000 		sts errno,r24
+ 184 0114 00C0      		rjmp .L32
+ 185               	.L21:
+ 186 0116 0091 0000 		lds r16,romEntryList
+ 187 011a 1091 0000 		lds r17,(romEntryList)+1
+ 188 011e 00C0      		rjmp .L23
+ 189               	.L25:
+ 190 0120 F801      		movw r30,r16
+ 191 0122 6281      		ldd r22,Z+2
+ 192 0124 7381      		ldd r23,Z+3
+ 193 0126 C601      		movw r24,r12
+ 194 0128 0E94 0000 		call strcmp_P
+ 195 012c 892B      		or r24,r25
+ 196 012e 01F0      		breq .L24
+ 197 0130 F801      		movw r30,r16
+ 198 0132 0081      		ld r16,Z
+ 199 0134 1181      		ldd r17,Z+1
+ 200               	.L23:
+ 201 0136 0115      		cp r16,__zero_reg__
+ 202 0138 1105      		cpc r17,__zero_reg__
+ 203 013a 01F4      		brne .L25
+ 204 013c 00C0      		rjmp .L33
+ 205               	.L24:
+ 206 013e 81E0      		ldi r24,lo8(1)
+ 207 0140 90E0      		ldi r25,hi8(1)
+ 208 0142 64E0      		ldi r22,lo8(4)
+ 209 0144 70E0      		ldi r23,hi8(4)
+ 210 0146 0E94 0000 		call calloc
+ 211 014a FC01      		movw r30,r24
+ 212 014c 0097      		sbiw r24,0
+ 213 014e 01F0      		breq .L27
+ 214 0150 1183      		std Z+1,r17
+ 215 0152 0083      		st Z,r16
+ 216 0154 1982      		std Y+1,__zero_reg__
+ 217 0156 1882      		st Y,__zero_reg__
+ 218 0158 BB82      		std Y+3,r11
+ 219 015a AA82      		std Y+2,r10
+ 220 015c 9D83      		std Y+5,r25
+ 221 015e 8C83      		std Y+4,r24
+ 222 0160 00C0      		rjmp .L22
+ 223               	.L27:
+ 224 0162 8CE0      		ldi r24,lo8(12)
+ 225 0164 90E0      		ldi r25,hi8(12)
+ 226               	.L31:
+ 227 0166 9093 0000 		sts (errno)+1,r25
+ 228 016a 8093 0000 		sts errno,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s 			page 5
+
+
+ 229 016e CE01      		movw r24,r28
+ 230 0170 0E94 0000 		call free
+ 231               	.L32:
+ 232 0174 EE24      		clr r14
+ 233 0176 EA94      		dec r14
+ 234 0178 FE2C      		mov r15,r14
+ 235               	.L22:
+ 236 017a C701      		movw r24,r14
+ 237               	/* epilogue start */
+ 238 017c DF91      		pop r29
+ 239 017e CF91      		pop r28
+ 240 0180 1F91      		pop r17
+ 241 0182 0F91      		pop r16
+ 242 0184 FF90      		pop r15
+ 243 0186 EF90      		pop r14
+ 244 0188 DF90      		pop r13
+ 245 018a CF90      		pop r12
+ 246 018c BF90      		pop r11
+ 247 018e AF90      		pop r10
+ 248 0190 0895      		ret
+ 249               	.L33:
+ 250 0192 82E0      		ldi r24,lo8(2)
+ 251 0194 90E0      		ldi r25,hi8(2)
+ 252 0196 00C0      		rjmp .L31
+ 253               		.size	UromOpen, .-UromOpen
+ 254               		.type	UromRead, @function
+ 255               	UromRead:
+ 256 0198 EF92      		push r14
+ 257 019a FF92      		push r15
+ 258 019c 0F93      		push r16
+ 259 019e 1F93      		push r17
+ 260 01a0 CF93      		push r28
+ 261 01a2 DF93      		push r29
+ 262               	/* prologue: function */
+ 263               	/* frame size = 0 */
+ 264 01a4 7B01      		movw r14,r22
+ 265 01a6 EA01      		movw r28,r20
+ 266 01a8 DC01      		movw r26,r24
+ 267 01aa 1496      		adiw r26,4
+ 268 01ac 0D91      		ld r16,X+
+ 269 01ae 1C91      		ld r17,X
+ 270 01b0 1597      		sbiw r26,4+1
+ 271 01b2 D801      		movw r26,r16
+ 272 01b4 ED91      		ld r30,X+
+ 273 01b6 FC91      		ld r31,X
+ 274 01b8 1197      		sbiw r26,1
+ 275 01ba 1296      		adiw r26,2
+ 276 01bc 2D91      		ld r18,X+
+ 277 01be 3C91      		ld r19,X
+ 278 01c0 1397      		sbiw r26,2+1
+ 279 01c2 8481      		ldd r24,Z+4
+ 280 01c4 9581      		ldd r25,Z+5
+ 281 01c6 821B      		sub r24,r18
+ 282 01c8 930B      		sbc r25,r19
+ 283 01ca 8417      		cp r24,r20
+ 284 01cc 9507      		cpc r25,r21
+ 285 01ce 00F4      		brsh .L35
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s 			page 6
+
+
+ 286 01d0 EC01      		movw r28,r24
+ 287               	.L35:
+ 288 01d2 2097      		sbiw r28,0
+ 289 01d4 01F0      		breq .L36
+ 290 01d6 6681      		ldd r22,Z+6
+ 291 01d8 7781      		ldd r23,Z+7
+ 292 01da 620F      		add r22,r18
+ 293 01dc 731F      		adc r23,r19
+ 294 01de C701      		movw r24,r14
+ 295 01e0 AE01      		movw r20,r28
+ 296 01e2 0E94 0000 		call memcpy_P
+ 297 01e6 F801      		movw r30,r16
+ 298 01e8 8281      		ldd r24,Z+2
+ 299 01ea 9381      		ldd r25,Z+3
+ 300 01ec 8C0F      		add r24,r28
+ 301 01ee 9D1F      		adc r25,r29
+ 302 01f0 9383      		std Z+3,r25
+ 303 01f2 8283      		std Z+2,r24
+ 304               	.L36:
+ 305 01f4 CE01      		movw r24,r28
+ 306               	/* epilogue start */
+ 307 01f6 DF91      		pop r29
+ 308 01f8 CF91      		pop r28
+ 309 01fa 1F91      		pop r17
+ 310 01fc 0F91      		pop r16
+ 311 01fe FF90      		pop r15
+ 312 0200 EF90      		pop r14
+ 313 0202 0895      		ret
+ 314               		.size	UromRead, .-UromRead
+ 315               	.global	devUrom
+ 316               		.data
+ 317               		.type	devUrom, @object
+ 318               		.size	devUrom, 35
+ 319               	devUrom:
+ 320 0000 0000      		.word	0
+ 321 0002 55        		.byte	85
+ 322 0003 52        		.byte	82
+ 323 0004 4F        		.byte	79
+ 324 0005 4D        		.byte	77
+ 325 0006 00        		.byte	0
+ 326 0007 00        		.byte	0
+ 327 0008 00        		.byte	0
+ 328 0009 00        		.byte	0
+ 329 000a 00        		.byte	0
+ 330 000b 01        		.byte	1
+ 331 000c 0000      		.word	0
+ 332 000e 00        		.byte	0
+ 333 000f 0000      		.word	0
+ 334 0011 0000      		.word	0
+ 335 0013 0000      		.word	0
+ 336 0015 0000      		.word	gs(UromIOCtl)
+ 337 0017 0000      		.word	gs(UromRead)
+ 338 0019 0000      		.word	gs(UromWrite)
+ 339 001b 0000      		.word	gs(UromWrite_P)
+ 340 001d 0000      		.word	gs(UromOpen)
+ 341 001f 0000      		.word	gs(UromClose)
+ 342 0021 0000      		.word	gs(UromSize)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s 			page 7
+
+
+ 343               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 uromfs.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:10     .text:00000000 UromWrite
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:19     .text:00000006 UromWrite_P
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:28     .text:0000000c UromSize
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:49     .text:00000028 UromIOCtl
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:131    .text:000000b6 UromClose
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:158    .text:000000e0 UromOpen
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:255    .text:00000198 UromRead
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3hvB6S.s:319    .data:00000000 devUrom
+
+UNDEFINED SYMBOLS
+free
+malloc
+errno
+romEntryList
+strcmp_P
+calloc
+memcpy_P
+__do_copy_data

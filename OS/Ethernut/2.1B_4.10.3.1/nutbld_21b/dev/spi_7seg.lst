@@ -1,0 +1,848 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 1
+
+
+   1               		.file	"spi_7seg.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	disp7segCommand, @function
+  10               	disp7segCommand:
+  11 0000 CF92      		push r12
+  12 0002 DF92      		push r13
+  13 0004 EF92      		push r14
+  14 0006 FF92      		push r15
+  15 0008 0F93      		push r16
+  16 000a 1F93      		push r17
+  17 000c DF93      		push r29
+  18 000e CF93      		push r28
+  19 0010 00D0      		rcall .
+  20 0012 CDB7      		in r28,__SP_L__
+  21 0014 DEB7      		in r29,__SP_H__
+  22               	/* prologue: function */
+  23               	/* frame size = 2 */
+  24 0016 7C01      		movw r14,r24
+  25 0018 FA01      		movw r30,r20
+  26 001a DC01      		movw r26,r24
+  27 001c CD90      		ld r12,X+
+  28 001e DC90      		ld r13,X
+  29 0020 6983      		std Y+1,r22
+  30 0022 8081      		ld r24,Z
+  31 0024 8A83      		std Y+2,r24
+  32 0026 D601      		movw r26,r12
+  33 0028 1A96      		adiw r26,10
+  34 002a ED91      		ld r30,X+
+  35 002c FC91      		ld r31,X
+  36 002e 1B97      		sbiw r26,10+1
+  37 0030 C701      		movw r24,r14
+  38 0032 48EE      		ldi r20,lo8(1000)
+  39 0034 53E0      		ldi r21,hi8(1000)
+  40 0036 60E0      		ldi r22,hlo8(1000)
+  41 0038 70E0      		ldi r23,hhi8(1000)
+  42 003a 0995      		icall
+  43 003c 8C01      		movw r16,r24
+  44 003e 0097      		sbiw r24,0
+  45 0040 01F4      		brne .L2
+  46 0042 D601      		movw r26,r12
+  47 0044 1E96      		adiw r26,14
+  48 0046 ED91      		ld r30,X+
+  49 0048 FC91      		ld r31,X
+  50 004a 1F97      		sbiw r26,14+1
+  51 004c C701      		movw r24,r14
+  52 004e BE01      		movw r22,r28
+  53 0050 6F5F      		subi r22,lo8(-(1))
+  54 0052 7F4F      		sbci r23,hi8(-(1))
+  55 0054 40E0      		ldi r20,lo8(0)
+  56 0056 50E0      		ldi r21,hi8(0)
+  57 0058 22E0      		ldi r18,lo8(2)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 2
+
+
+  58 005a 30E0      		ldi r19,hi8(2)
+  59 005c 0995      		icall
+  60 005e 8C01      		movw r16,r24
+  61 0060 D601      		movw r26,r12
+  62 0062 1C96      		adiw r26,12
+  63 0064 ED91      		ld r30,X+
+  64 0066 FC91      		ld r31,X
+  65 0068 1D97      		sbiw r26,12+1
+  66 006a C701      		movw r24,r14
+  67 006c 0995      		icall
+  68               	.L2:
+  69 006e C801      		movw r24,r16
+  70               	/* epilogue start */
+  71 0070 0F90      		pop __tmp_reg__
+  72 0072 0F90      		pop __tmp_reg__
+  73 0074 CF91      		pop r28
+  74 0076 DF91      		pop r29
+  75 0078 1F91      		pop r17
+  76 007a 0F91      		pop r16
+  77 007c FF90      		pop r15
+  78 007e EF90      		pop r14
+  79 0080 DF90      		pop r13
+  80 0082 CF90      		pop r12
+  81 0084 0895      		ret
+  82               		.size	disp7segCommand, .-disp7segCommand
+  83               	.global	Spi7SegPush
+  84               		.type	Spi7SegPush, @function
+  85               	Spi7SegPush:
+  86 0086 AF92      		push r10
+  87 0088 BF92      		push r11
+  88 008a CF92      		push r12
+  89 008c DF92      		push r13
+  90 008e FF92      		push r15
+  91 0090 0F93      		push r16
+  92 0092 1F93      		push r17
+  93 0094 CF93      		push r28
+  94 0096 DF93      		push r29
+  95               	/* prologue: function */
+  96               	/* frame size = 0 */
+  97 0098 FC01      		movw r30,r24
+  98 009a A188      		ldd r10,Z+17
+  99 009c B288      		ldd r11,Z+18
+ 100 009e C784      		ldd r12,Z+15
+ 101 00a0 D088      		ldd r13,Z+16
+ 102 00a2 C0E0      		ldi r28,lo8(0)
+ 103 00a4 D0E0      		ldi r29,hi8(0)
+ 104 00a6 84E0      		ldi r24,lo8(4)
+ 105 00a8 F82E      		mov r15,r24
+ 106               	.L5:
+ 107 00aa A501      		movw r20,r10
+ 108 00ac 4C0F      		add r20,r28
+ 109 00ae 5D1F      		adc r21,r29
+ 110 00b0 C601      		movw r24,r12
+ 111 00b2 6F2D      		mov r22,r15
+ 112 00b4 20E0      		ldi r18,lo8(0)
+ 113 00b6 30E0      		ldi r19,hi8(0)
+ 114 00b8 01E0      		ldi r16,lo8(1)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 3
+
+
+ 115 00ba 10E0      		ldi r17,hi8(1)
+ 116 00bc 0E94 0000 		call disp7segCommand
+ 117 00c0 2196      		adiw r28,1
+ 118 00c2 FA94      		dec r15
+ 119 00c4 01F4      		brne .L5
+ 120               	/* epilogue start */
+ 121 00c6 DF91      		pop r29
+ 122 00c8 CF91      		pop r28
+ 123 00ca 1F91      		pop r17
+ 124 00cc 0F91      		pop r16
+ 125 00ce FF90      		pop r15
+ 126 00d0 DF90      		pop r13
+ 127 00d2 CF90      		pop r12
+ 128 00d4 BF90      		pop r11
+ 129 00d6 AF90      		pop r10
+ 130 00d8 0895      		ret
+ 131               		.size	Spi7SegPush, .-Spi7SegPush
+ 132               		.type	Spi7SegIOCtl, @function
+ 133               	Spi7SegIOCtl:
+ 134               	/* prologue: function */
+ 135               	/* frame size = 0 */
+ 136 00da 80E0      		ldi r24,lo8(0)
+ 137 00dc 90E0      		ldi r25,hi8(0)
+ 138               	/* epilogue start */
+ 139 00de 0895      		ret
+ 140               		.size	Spi7SegIOCtl, .-Spi7SegIOCtl
+ 141               	.global	Spi7segDot
+ 142               		.type	Spi7segDot, @function
+ 143               	Spi7segDot:
+ 144               	/* prologue: function */
+ 145               	/* frame size = 0 */
+ 146 00e0 DC01      		movw r26,r24
+ 147 00e2 5196      		adiw r26,17
+ 148 00e4 2C91      		ld r18,X
+ 149 00e6 5197      		sbiw r26,17
+ 150 00e8 5296      		adiw r26,18
+ 151 00ea 3C91      		ld r19,X
+ 152 00ec 5297      		sbiw r26,18
+ 153 00ee 6430      		cpi r22,lo8(4)
+ 154 00f0 00F4      		brsh .L16
+ 155 00f2 C901      		movw r24,r18
+ 156 00f4 4130      		cpi r20,lo8(1)
+ 157 00f6 01F0      		breq .L14
+ 158 00f8 4130      		cpi r20,lo8(1)
+ 159 00fa 00F0      		brlo .L13
+ 160 00fc 4230      		cpi r20,lo8(2)
+ 161 00fe 01F4      		brne .L12
+ 162 0100 FC01      		movw r30,r24
+ 163 0102 E60F      		add r30,r22
+ 164 0104 F11D      		adc r31,__zero_reg__
+ 165 0106 8081      		ld r24,Z
+ 166 0108 8058      		subi r24,lo8(-(-128))
+ 167 010a 00C0      		rjmp .L17
+ 168               	.L14:
+ 169 010c FC01      		movw r30,r24
+ 170 010e E60F      		add r30,r22
+ 171 0110 F11D      		adc r31,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 4
+
+
+ 172 0112 8081      		ld r24,Z
+ 173 0114 8068      		ori r24,lo8(-128)
+ 174 0116 00C0      		rjmp .L17
+ 175               	.L13:
+ 176 0118 FC01      		movw r30,r24
+ 177 011a E60F      		add r30,r22
+ 178 011c F11D      		adc r31,__zero_reg__
+ 179 011e 8081      		ld r24,Z
+ 180 0120 8F77      		andi r24,lo8(127)
+ 181               	.L17:
+ 182 0122 8083      		st Z,r24
+ 183               	.L12:
+ 184 0124 CD01      		movw r24,r26
+ 185 0126 0E94 0000 		call Spi7SegPush
+ 186               	.L16:
+ 187 012a 0895      		ret
+ 188               		.size	Spi7segDot, .-Spi7segDot
+ 189               		.type	Spi7SegClose, @function
+ 190               	Spi7SegClose:
+ 191               	/* prologue: function */
+ 192               	/* frame size = 0 */
+ 193 012c 0097      		sbiw r24,0
+ 194 012e 01F4      		brne .L19
+ 195 0130 2FEF      		ldi r18,lo8(-1)
+ 196 0132 3FEF      		ldi r19,hi8(-1)
+ 197 0134 00C0      		rjmp .L20
+ 198               	.L19:
+ 199 0136 0E94 0000 		call free
+ 200 013a 20E0      		ldi r18,lo8(0)
+ 201 013c 30E0      		ldi r19,hi8(0)
+ 202               	.L20:
+ 203 013e C901      		movw r24,r18
+ 204               	/* epilogue start */
+ 205 0140 0895      		ret
+ 206               		.size	Spi7SegClose, .-Spi7SegClose
+ 207               	.global	Spi7SegOpen
+ 208               		.type	Spi7SegOpen, @function
+ 209               	Spi7SegOpen:
+ 210 0142 CF93      		push r28
+ 211 0144 DF93      		push r29
+ 212               	/* prologue: function */
+ 213               	/* frame size = 0 */
+ 214 0146 EC01      		movw r28,r24
+ 215 0148 86E0      		ldi r24,lo8(6)
+ 216 014a 90E0      		ldi r25,hi8(6)
+ 217 014c 0E94 0000 		call malloc
+ 218 0150 FC01      		movw r30,r24
+ 219 0152 9C01      		movw r18,r24
+ 220 0154 0097      		sbiw r24,0
+ 221 0156 01F4      		brne .L23
+ 222 0158 2FEF      		ldi r18,lo8(-1)
+ 223 015a 3FEF      		ldi r19,hi8(-1)
+ 224 015c 00C0      		rjmp .L24
+ 225               	.L23:
+ 226 015e 1582      		std Z+5,__zero_reg__
+ 227 0160 1482      		std Z+4,__zero_reg__
+ 228 0162 D383      		std Z+3,r29
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 5
+
+
+ 229 0164 C283      		std Z+2,r28
+ 230 0166 1182      		std Z+1,__zero_reg__
+ 231 0168 1082      		st Z,__zero_reg__
+ 232               	.L24:
+ 233 016a C901      		movw r24,r18
+ 234               	/* epilogue start */
+ 235 016c DF91      		pop r29
+ 236 016e CF91      		pop r28
+ 237 0170 0895      		ret
+ 238               		.size	Spi7SegOpen, .-Spi7SegOpen
+ 239               	.global	Spi7segInit
+ 240               		.type	Spi7segInit, @function
+ 241               	Spi7segInit:
+ 242 0172 AF92      		push r10
+ 243 0174 BF92      		push r11
+ 244 0176 CF92      		push r12
+ 245 0178 DF92      		push r13
+ 246 017a EF92      		push r14
+ 247 017c FF92      		push r15
+ 248 017e 0F93      		push r16
+ 249 0180 1F93      		push r17
+ 250 0182 DF93      		push r29
+ 251 0184 CF93      		push r28
+ 252 0186 0F92      		push __tmp_reg__
+ 253 0188 CDB7      		in r28,__SP_L__
+ 254 018a DEB7      		in r29,__SP_H__
+ 255               	/* prologue: function */
+ 256               	/* frame size = 1 */
+ 257 018c 8C01      		movw r16,r24
+ 258 018e FC01      		movw r30,r24
+ 259 0190 B784      		ldd r11,Z+15
+ 260 0192 A088      		ldd r10,Z+16
+ 261 0194 87E0      		ldi r24,lo8(7)
+ 262 0196 90E0      		ldi r25,hi8(7)
+ 263 0198 0E94 0000 		call malloc
+ 264 019c 6C01      		movw r12,r24
+ 265 019e 0097      		sbiw r24,0
+ 266 01a0 01F4      		brne .L27
+ 267 01a2 2FEF      		ldi r18,lo8(-1)
+ 268 01a4 3FEF      		ldi r19,hi8(-1)
+ 269 01a6 00C0      		rjmp .L28
+ 270               	.L27:
+ 271 01a8 87E0      		ldi r24,lo8(7)
+ 272 01aa F601      		movw r30,r12
+ 273 01ac 1192      		st Z+,__zero_reg__
+ 274 01ae 8A95      	        dec r24
+ 275 01b0 01F4      		brne .-6
+ 276 01b2 F801      		movw r30,r16
+ 277 01b4 D28A      		std Z+18,r13
+ 278 01b6 C18A      		std Z+17,r12
+ 279 01b8 1982      		std Y+1,__zero_reg__
+ 280 01ba 8B2D      		mov r24,r11
+ 281 01bc 9A2D      		mov r25,r10
+ 282 01be 6FE0      		ldi r22,lo8(15)
+ 283 01c0 7E01      		movw r14,r28
+ 284 01c2 0894      		sec
+ 285 01c4 E11C      		adc r14,__zero_reg__
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 6
+
+
+ 286 01c6 F11C      		adc r15,__zero_reg__
+ 287 01c8 A701      		movw r20,r14
+ 288 01ca 20E0      		ldi r18,lo8(0)
+ 289 01cc 30E0      		ldi r19,hi8(0)
+ 290 01ce 01E0      		ldi r16,lo8(1)
+ 291 01d0 10E0      		ldi r17,hi8(1)
+ 292 01d2 0E94 0000 		call disp7segCommand
+ 293 01d6 8B2D      		mov r24,r11
+ 294 01d8 9A2D      		mov r25,r10
+ 295 01da 6FE0      		ldi r22,lo8(15)
+ 296 01dc A701      		movw r20,r14
+ 297 01de 20E0      		ldi r18,lo8(0)
+ 298 01e0 30E0      		ldi r19,hi8(0)
+ 299 01e2 0E94 0000 		call disp7segCommand
+ 300 01e6 8B2D      		mov r24,r11
+ 301 01e8 9A2D      		mov r25,r10
+ 302 01ea 6FE0      		ldi r22,lo8(15)
+ 303 01ec A701      		movw r20,r14
+ 304 01ee 20E0      		ldi r18,lo8(0)
+ 305 01f0 30E0      		ldi r19,hi8(0)
+ 306 01f2 0E94 0000 		call disp7segCommand
+ 307 01f6 81E0      		ldi r24,lo8(1)
+ 308 01f8 8983      		std Y+1,r24
+ 309 01fa 8B2D      		mov r24,r11
+ 310 01fc 9A2D      		mov r25,r10
+ 311 01fe 6CE0      		ldi r22,lo8(12)
+ 312 0200 A701      		movw r20,r14
+ 313 0202 20E0      		ldi r18,lo8(0)
+ 314 0204 30E0      		ldi r19,hi8(0)
+ 315 0206 0E94 0000 		call disp7segCommand
+ 316 020a 84E0      		ldi r24,lo8(4)
+ 317 020c 8983      		std Y+1,r24
+ 318 020e 8B2D      		mov r24,r11
+ 319 0210 9A2D      		mov r25,r10
+ 320 0212 6BE0      		ldi r22,lo8(11)
+ 321 0214 A701      		movw r20,r14
+ 322 0216 20E0      		ldi r18,lo8(0)
+ 323 0218 30E0      		ldi r19,hi8(0)
+ 324 021a 0E94 0000 		call disp7segCommand
+ 325 021e F601      		movw r30,r12
+ 326 0220 1582      		std Z+5,__zero_reg__
+ 327 0222 85E0      		ldi r24,lo8(5)
+ 328 0224 90E0      		ldi r25,hi8(5)
+ 329 0226 C80E      		add r12,r24
+ 330 0228 D91E      		adc r13,r25
+ 331 022a 8B2D      		mov r24,r11
+ 332 022c 9A2D      		mov r25,r10
+ 333 022e 69E0      		ldi r22,lo8(9)
+ 334 0230 A601      		movw r20,r12
+ 335 0232 20E0      		ldi r18,lo8(0)
+ 336 0234 30E0      		ldi r19,hi8(0)
+ 337 0236 0E94 0000 		call disp7segCommand
+ 338 023a 8FE0      		ldi r24,lo8(15)
+ 339 023c 8983      		std Y+1,r24
+ 340 023e 8B2D      		mov r24,r11
+ 341 0240 9A2D      		mov r25,r10
+ 342 0242 6AE0      		ldi r22,lo8(10)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 7
+
+
+ 343 0244 A701      		movw r20,r14
+ 344 0246 20E0      		ldi r18,lo8(0)
+ 345 0248 30E0      		ldi r19,hi8(0)
+ 346 024a 0E94 0000 		call disp7segCommand
+ 347 024e 1982      		std Y+1,__zero_reg__
+ 348 0250 8B2D      		mov r24,r11
+ 349 0252 9A2D      		mov r25,r10
+ 350 0254 61E0      		ldi r22,lo8(1)
+ 351 0256 A701      		movw r20,r14
+ 352 0258 20E0      		ldi r18,lo8(0)
+ 353 025a 30E0      		ldi r19,hi8(0)
+ 354 025c 0E94 0000 		call disp7segCommand
+ 355 0260 8B2D      		mov r24,r11
+ 356 0262 9A2D      		mov r25,r10
+ 357 0264 62E0      		ldi r22,lo8(2)
+ 358 0266 A701      		movw r20,r14
+ 359 0268 20E0      		ldi r18,lo8(0)
+ 360 026a 30E0      		ldi r19,hi8(0)
+ 361 026c 0E94 0000 		call disp7segCommand
+ 362 0270 8B2D      		mov r24,r11
+ 363 0272 9A2D      		mov r25,r10
+ 364 0274 63E0      		ldi r22,lo8(3)
+ 365 0276 A701      		movw r20,r14
+ 366 0278 20E0      		ldi r18,lo8(0)
+ 367 027a 30E0      		ldi r19,hi8(0)
+ 368 027c 0E94 0000 		call disp7segCommand
+ 369 0280 20E0      		ldi r18,lo8(0)
+ 370 0282 30E0      		ldi r19,hi8(0)
+ 371               	.L28:
+ 372 0284 C901      		movw r24,r18
+ 373               	/* epilogue start */
+ 374 0286 0F90      		pop __tmp_reg__
+ 375 0288 CF91      		pop r28
+ 376 028a DF91      		pop r29
+ 377 028c 1F91      		pop r17
+ 378 028e 0F91      		pop r16
+ 379 0290 FF90      		pop r15
+ 380 0292 EF90      		pop r14
+ 381 0294 DF90      		pop r13
+ 382 0296 CF90      		pop r12
+ 383 0298 BF90      		pop r11
+ 384 029a AF90      		pop r10
+ 385 029c 0895      		ret
+ 386               		.size	Spi7segInit, .-Spi7segInit
+ 387               	.global	Spi7segPutc
+ 388               		.type	Spi7segPutc, @function
+ 389               	Spi7segPutc:
+ 390 029e 0F93      		push r16
+ 391 02a0 1F93      		push r17
+ 392 02a2 DF93      		push r29
+ 393 02a4 CF93      		push r28
+ 394 02a6 0F92      		push __tmp_reg__
+ 395 02a8 CDB7      		in r28,__SP_L__
+ 396 02aa DEB7      		in r29,__SP_H__
+ 397               	/* prologue: function */
+ 398               	/* frame size = 1 */
+ 399 02ac 8C01      		movw r16,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 8
+
+
+ 400 02ae 6983      		std Y+1,r22
+ 401 02b0 DC01      		movw r26,r24
+ 402 02b2 5196      		adiw r26,17
+ 403 02b4 2D91      		ld r18,X+
+ 404 02b6 3C91      		ld r19,X
+ 405 02b8 5297      		sbiw r26,17+1
+ 406 02ba 1F96      		adiw r26,15
+ 407 02bc 6D91      		ld r22,X+
+ 408 02be 7C91      		ld r23,X
+ 409 02c0 5097      		sbiw r26,15+1
+ 410 02c2 F901      		movw r30,r18
+ 411 02c4 8681      		ldd r24,Z+6
+ 412 02c6 87FF      		sbrs r24,7
+ 413 02c8 00C0      		rjmp .L31
+ 414 02ca 482F      		mov r20,r24
+ 415 02cc 4F77      		andi r20,lo8(127)
+ 416 02ce 4683      		std Z+6,r20
+ 417 02d0 8981      		ldd r24,Y+1
+ 418 02d2 8836      		cpi r24,lo8(104)
+ 419 02d4 01F4      		brne .+2
+ 420 02d6 00C0      		rjmp .L54
+ 421 02d8 8936      		cpi r24,lo8(105)
+ 422 02da 04F4      		brge .L40
+ 423 02dc 8336      		cpi r24,lo8(99)
+ 424 02de 01F0      		breq .L34
+ 425 02e0 8636      		cpi r24,lo8(102)
+ 426 02e2 01F0      		breq .L35
+ 427 02e4 8236      		cpi r24,lo8(98)
+ 428 02e6 01F0      		breq .+2
+ 429 02e8 00C0      		rjmp .L32
+ 430 02ea 00C0      		rjmp .L57
+ 431               	.L40:
+ 432 02ec 8E36      		cpi r24,lo8(110)
+ 433 02ee 01F0      		breq .L38
+ 434 02f0 8437      		cpi r24,lo8(116)
+ 435 02f2 01F0      		breq .L39
+ 436 02f4 8936      		cpi r24,lo8(105)
+ 437 02f6 01F0      		breq .+2
+ 438 02f8 00C0      		rjmp .L32
+ 439 02fa 00C0      		rjmp .L58
+ 440               	.L57:
+ 441 02fc D901      		movw r26,r18
+ 442 02fe 1596      		adiw r26,5
+ 443 0300 8C91      		ld r24,X
+ 444 0302 1597      		sbiw r26,5
+ 445 0304 8063      		ori r24,lo8(48)
+ 446 0306 00C0      		rjmp .L56
+ 447               	.L35:
+ 448 0308 F901      		movw r30,r18
+ 449 030a 8581      		ldd r24,Z+5
+ 450 030c 8F7C      		andi r24,lo8(-49)
+ 451 030e 8061      		ori r24,lo8(16)
+ 452 0310 8583      		std Z+5,r24
+ 453               	.L53:
+ 454 0312 2B5F      		subi r18,lo8(-(5))
+ 455 0314 3F4F      		sbci r19,hi8(-(5))
+ 456 0316 CB01      		movw r24,r22
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 9
+
+
+ 457 0318 6EE0      		ldi r22,lo8(14)
+ 458 031a A901      		movw r20,r18
+ 459               	.L55:
+ 460 031c 20E0      		ldi r18,lo8(0)
+ 461 031e 30E0      		ldi r19,hi8(0)
+ 462 0320 01E0      		ldi r16,lo8(1)
+ 463 0322 10E0      		ldi r17,hi8(1)
+ 464 0324 0E94 0000 		call disp7segCommand
+ 465 0328 00C0      		rjmp .L41
+ 466               	.L38:
+ 467 032a D901      		movw r26,r18
+ 468 032c 1596      		adiw r26,5
+ 469 032e 8C91      		ld r24,X
+ 470 0330 1597      		sbiw r26,5
+ 471 0332 8F7C      		andi r24,lo8(-49)
+ 472               	.L56:
+ 473 0334 1596      		adiw r26,5
+ 474 0336 8C93      		st X,r24
+ 475 0338 00C0      		rjmp .L53
+ 476               	.L34:
+ 477 033a D901      		movw r26,r18
+ 478 033c 1D92      		st X+,__zero_reg__
+ 479 033e 1D92      		st X+,__zero_reg__
+ 480 0340 1D92      		st X+,__zero_reg__
+ 481 0342 1C92      		st X,__zero_reg__
+ 482 0344 1397      		sbiw r26,3
+ 483 0346 4160      		ori r20,lo8(1)
+ 484 0348 1696      		adiw r26,6
+ 485 034a 4C93      		st X,r20
+ 486 034c 00C0      		rjmp .L32
+ 487               	.L39:
+ 488 034e 8FEF      		ldi r24,lo8(-1)
+ 489 0350 9FEF      		ldi r25,hi8(-1)
+ 490 0352 AFEF      		ldi r26,hlo8(-1)
+ 491 0354 BFEF      		ldi r27,hhi8(-1)
+ 492 0356 F901      		movw r30,r18
+ 493 0358 8083      		st Z,r24
+ 494 035a 9183      		std Z+1,r25
+ 495 035c A283      		std Z+2,r26
+ 496 035e B383      		std Z+3,r27
+ 497 0360 4160      		ori r20,lo8(1)
+ 498 0362 4683      		std Z+6,r20
+ 499 0364 00C0      		rjmp .L32
+ 500               	.L58:
+ 501 0366 4260      		ori r20,lo8(2)
+ 502 0368 D901      		movw r26,r18
+ 503 036a 1696      		adiw r26,6
+ 504 036c 4C93      		st X,r20
+ 505 036e 00C0      		rjmp .L41
+ 506               	.L31:
+ 507 0370 4981      		ldd r20,Y+1
+ 508 0372 4B31      		cpi r20,lo8(27)
+ 509 0374 01F4      		brne .L42
+ 510 0376 8068      		ori r24,lo8(-128)
+ 511 0378 F901      		movw r30,r18
+ 512 037a 8683      		std Z+6,r24
+ 513 037c 00C0      		rjmp .L41
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 10
+
+
+ 514               	.L42:
+ 515 037e 81FF      		sbrs r24,1
+ 516 0380 00C0      		rjmp .L43
+ 517 0382 8D7F      		andi r24,lo8(-3)
+ 518 0384 D901      		movw r26,r18
+ 519 0386 1696      		adiw r26,6
+ 520 0388 8C93      		st X,r24
+ 521 038a 4A33      		cpi r20,lo8(58)
+ 522 038c 04F0      		brlt .L44
+ 523 038e 842F      		mov r24,r20
+ 524 0390 8753      		subi r24,lo8(-(-55))
+ 525 0392 00C0      		rjmp .L45
+ 526               	.L44:
+ 527 0394 842F      		mov r24,r20
+ 528 0396 8053      		subi r24,lo8(-(-48))
+ 529               	.L45:
+ 530 0398 8983      		std Y+1,r24
+ 531 039a CB01      		movw r24,r22
+ 532 039c 6AE0      		ldi r22,lo8(10)
+ 533 039e AE01      		movw r20,r28
+ 534 03a0 4F5F      		subi r20,lo8(-(1))
+ 535 03a2 5F4F      		sbci r21,hi8(-(1))
+ 536 03a4 00C0      		rjmp .L55
+ 537               	.L43:
+ 538 03a6 4A30      		cpi r20,lo8(10)
+ 539 03a8 01F4      		brne .L46
+ 540               	.L54:
+ 541 03aa F901      		movw r30,r18
+ 542 03ac 1482      		std Z+4,__zero_reg__
+ 543 03ae 00C0      		rjmp .L41
+ 544               	.L46:
+ 545 03b0 4E32      		cpi r20,lo8(46)
+ 546 03b2 01F4      		brne .L47
+ 547 03b4 D901      		movw r26,r18
+ 548 03b6 1496      		adiw r26,4
+ 549 03b8 EC91      		ld r30,X
+ 550 03ba EE23      		tst r30
+ 551 03bc 01F0      		breq .L48
+ 552 03be F0E0      		ldi r31,lo8(0)
+ 553 03c0 3197      		sbiw r30,1
+ 554 03c2 E20F      		add r30,r18
+ 555 03c4 F31F      		adc r31,r19
+ 556 03c6 8081      		ld r24,Z
+ 557 03c8 8068      		ori r24,lo8(-128)
+ 558 03ca 8083      		st Z,r24
+ 559               	.L48:
+ 560 03cc F901      		movw r30,r18
+ 561 03ce 00C0      		rjmp .L52
+ 562               	.L47:
+ 563 03d0 4032      		cpi r20,lo8(32)
+ 564 03d2 04F0      		brlt .L32
+ 565 03d4 D901      		movw r26,r18
+ 566 03d6 1496      		adiw r26,4
+ 567 03d8 9C91      		ld r25,X
+ 568 03da 9430      		cpi r25,lo8(4)
+ 569 03dc 00F4      		brsh .L32
+ 570 03de 4036      		cpi r20,lo8(96)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 11
+
+
+ 571 03e0 04F0      		brlt .L49
+ 572 03e2 4052      		subi r20,lo8(-(-32))
+ 573 03e4 4983      		std Y+1,r20
+ 574               	.L49:
+ 575 03e6 D901      		movw r26,r18
+ 576 03e8 A90F      		add r26,r25
+ 577 03ea B11D      		adc r27,__zero_reg__
+ 578 03ec E981      		ldd r30,Y+1
+ 579 03ee F0E0      		ldi r31,lo8(0)
+ 580 03f0 E050      		subi r30,lo8(-(Seg7CharTab-32))
+ 581 03f2 F040      		sbci r31,hi8(-(Seg7CharTab-32))
+ 582 03f4 8081      		ld r24,Z
+ 583 03f6 8C93      		st X,r24
+ 584 03f8 9F5F      		subi r25,lo8(-(1))
+ 585 03fa F901      		movw r30,r18
+ 586 03fc 9483      		std Z+4,r25
+ 587               	.L52:
+ 588 03fe 8681      		ldd r24,Z+6
+ 589 0400 8160      		ori r24,lo8(1)
+ 590 0402 8683      		std Z+6,r24
+ 591               	.L32:
+ 592 0404 D901      		movw r26,r18
+ 593 0406 1496      		adiw r26,4
+ 594 0408 8C91      		ld r24,X
+ 595 040a 1497      		sbiw r26,4
+ 596 040c 8530      		cpi r24,lo8(5)
+ 597 040e 00F0      		brlo .L50
+ 598 0410 84E0      		ldi r24,lo8(4)
+ 599 0412 1496      		adiw r26,4
+ 600 0414 8C93      		st X,r24
+ 601               	.L50:
+ 602 0416 F901      		movw r30,r18
+ 603 0418 8681      		ldd r24,Z+6
+ 604 041a 80FF      		sbrs r24,0
+ 605 041c 00C0      		rjmp .L41
+ 606 041e 8E7F      		andi r24,lo8(-2)
+ 607 0420 8683      		std Z+6,r24
+ 608 0422 C801      		movw r24,r16
+ 609 0424 0E94 0000 		call Spi7SegPush
+ 610               	.L41:
+ 611 0428 80E0      		ldi r24,lo8(0)
+ 612 042a 90E0      		ldi r25,hi8(0)
+ 613               	/* epilogue start */
+ 614 042c 0F90      		pop __tmp_reg__
+ 615 042e CF91      		pop r28
+ 616 0430 DF91      		pop r29
+ 617 0432 1F91      		pop r17
+ 618 0434 0F91      		pop r16
+ 619 0436 0895      		ret
+ 620               		.size	Spi7segPutc, .-Spi7segPutc
+ 621               	.global	Spi7segWrite
+ 622               		.type	Spi7segWrite, @function
+ 623               	Spi7segWrite:
+ 624 0438 CF92      		push r12
+ 625 043a DF92      		push r13
+ 626 043c EF92      		push r14
+ 627 043e FF92      		push r15
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 12
+
+
+ 628 0440 0F93      		push r16
+ 629 0442 1F93      		push r17
+ 630 0444 CF93      		push r28
+ 631 0446 DF93      		push r29
+ 632               	/* prologue: function */
+ 633               	/* frame size = 0 */
+ 634 0448 7C01      		movw r14,r24
+ 635 044a D42E      		mov r13,r20
+ 636 044c C52E      		mov r12,r21
+ 637 044e 8B01      		movw r16,r22
+ 638 0450 242F      		mov r18,r20
+ 639 0452 352F      		mov r19,r21
+ 640 0454 C901      		movw r24,r18
+ 641 0456 EC01      		movw r28,r24
+ 642 0458 00C0      		rjmp .L60
+ 643               	.L61:
+ 644 045a F801      		movw r30,r16
+ 645 045c 6191      		ld r22,Z+
+ 646 045e 8F01      		movw r16,r30
+ 647 0460 F701      		movw r30,r14
+ 648 0462 8281      		ldd r24,Z+2
+ 649 0464 9381      		ldd r25,Z+3
+ 650 0466 0E94 0000 		call Spi7segPutc
+ 651               	.L60:
+ 652 046a 2197      		sbiw r28,1
+ 653 046c FFEF      		ldi r31,hi8(-1)
+ 654 046e CF3F      		cpi r28,lo8(-1)
+ 655 0470 DF07      		cpc r29,r31
+ 656 0472 01F4      		brne .L61
+ 657 0474 8D2D      		mov r24,r13
+ 658 0476 9C2D      		mov r25,r12
+ 659               	/* epilogue start */
+ 660 0478 DF91      		pop r29
+ 661 047a CF91      		pop r28
+ 662 047c 1F91      		pop r17
+ 663 047e 0F91      		pop r16
+ 664 0480 FF90      		pop r15
+ 665 0482 EF90      		pop r14
+ 666 0484 DF90      		pop r13
+ 667 0486 CF90      		pop r12
+ 668 0488 0895      		ret
+ 669               		.size	Spi7segWrite, .-Spi7segWrite
+ 670               	.global	nodeSpi7SEG
+ 671               		.data
+ 672               		.type	nodeSpi7SEG, @object
+ 673               		.size	nodeSpi7SEG, 14
+ 674               	nodeSpi7SEG:
+ 675 0000 0000      		.word	0
+ 676 0002 0000      		.word	0
+ 677 0004 80        		.byte	-128
+ 678 0005 1A        		.byte	26
+ 679 0006 06        		.byte	6
+ 680 0007 00        		.byte	0
+ 681 0008 0300      		.word	3
+ 682 000a 08        		.byte	8
+ 683 000b 00        		.byte	0
+ 684 000c 0000      		.skip 2,0
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 13
+
+
+ 685               	.global	devSpi7SEG
+ 686               		.type	devSpi7SEG, @object
+ 687               		.size	devSpi7SEG, 35
+ 688               	devSpi7SEG:
+ 689 000e 0000      		.word	0
+ 690 0010 37        		.byte	55
+ 691 0011 53        		.byte	83
+ 692 0012 45        		.byte	69
+ 693 0013 47        		.byte	71
+ 694 0014 00        		.byte	0
+ 695 0015 00        		.byte	0
+ 696 0016 00        		.byte	0
+ 697 0017 0000      		.skip 2,0
+ 698 0019 05        		.byte	5
+ 699 001a 0000      		.word	0
+ 700 001c 00        		.byte	0
+ 701 001d 0000      		.word	nodeSpi7SEG
+ 702 001f 0000      		.word	0
+ 703 0021 0000      		.word	gs(Spi7segInit)
+ 704 0023 0000      		.word	gs(Spi7SegIOCtl)
+ 705 0025 0000      		.word	0
+ 706 0027 0000      		.word	gs(Spi7segWrite)
+ 707 0029 0000      		.word	0
+ 708 002b 0000      		.word	gs(Spi7SegOpen)
+ 709 002d 0000      		.word	gs(Spi7SegClose)
+ 710 002f 0000      		.word	0
+ 711               		.type	Seg7CharTab, @object
+ 712               		.size	Seg7CharTab, 64
+ 713               	Seg7CharTab:
+ 714 0031 00        		.byte	0
+ 715 0032 28        		.byte	40
+ 716 0033 22        		.byte	34
+ 717 0034 00        		.byte	0
+ 718 0035 5B        		.byte	91
+ 719 0036 00        		.byte	0
+ 720 0037 6F        		.byte	111
+ 721 0038 20        		.byte	32
+ 722 0039 4E        		.byte	78
+ 723 003a 78        		.byte	120
+ 724 003b 00        		.byte	0
+ 725 003c 31        		.byte	49
+ 726 003d 20        		.byte	32
+ 727 003e 01        		.byte	1
+ 728 003f 01        		.byte	1
+ 729 0040 15        		.byte	21
+ 730 0041 7E        		.byte	126
+ 731 0042 30        		.byte	48
+ 732 0043 6D        		.byte	109
+ 733 0044 79        		.byte	121
+ 734 0045 33        		.byte	51
+ 735 0046 5B        		.byte	91
+ 736 0047 5F        		.byte	95
+ 737 0048 70        		.byte	112
+ 738 0049 7F        		.byte	127
+ 739 004a 7B        		.byte	123
+ 740 004b 00        		.byte	0
+ 741 004c 00        		.byte	0
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 14
+
+
+ 742 004d 00        		.byte	0
+ 743 004e 09        		.byte	9
+ 744 004f 00        		.byte	0
+ 745 0050 65        		.byte	101
+ 746 0051 00        		.byte	0
+ 747 0052 77        		.byte	119
+ 748 0053 1F        		.byte	31
+ 749 0054 0D        		.byte	13
+ 750 0055 3D        		.byte	61
+ 751 0056 4F        		.byte	79
+ 752 0057 47        		.byte	71
+ 753 0058 5F        		.byte	95
+ 754 0059 37        		.byte	55
+ 755 005a 10        		.byte	16
+ 756 005b 3C        		.byte	60
+ 757 005c 0F        		.byte	15
+ 758 005d 0E        		.byte	14
+ 759 005e 76        		.byte	118
+ 760 005f 15        		.byte	21
+ 761 0060 1D        		.byte	29
+ 762 0061 67        		.byte	103
+ 763 0062 73        		.byte	115
+ 764 0063 05        		.byte	5
+ 765 0064 5B        		.byte	91
+ 766 0065 0F        		.byte	15
+ 767 0066 3E        		.byte	62
+ 768 0067 1C        		.byte	28
+ 769 0068 3F        		.byte	63
+ 770 0069 37        		.byte	55
+ 771 006a 3B        		.byte	59
+ 772 006b 6D        		.byte	109
+ 773 006c 4E        		.byte	78
+ 774 006d 13        		.byte	19
+ 775 006e 78        		.byte	120
+ 776 006f 42        		.byte	66
+ 777 0070 01        		.byte	1
+ 778               	.global __do_copy_data
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 spi_7seg.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:10     .text:00000000 disp7segCommand
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:85     .text:00000086 Spi7SegPush
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:133    .text:000000da Spi7SegIOCtl
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:143    .text:000000e0 Spi7segDot
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:190    .text:0000012c Spi7SegClose
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:209    .text:00000142 Spi7SegOpen
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:241    .text:00000172 Spi7segInit
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:389    .text:0000029e Spi7segPutc
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:713    .data:00000031 Seg7CharTab
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:623    .text:00000438 Spi7segWrite
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:674    .data:00000000 nodeSpi7SEG
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccK7DUo5.s:688    .data:0000000e devSpi7SEG
+
+UNDEFINED SYMBOLS
+free
+malloc
+__do_copy_data

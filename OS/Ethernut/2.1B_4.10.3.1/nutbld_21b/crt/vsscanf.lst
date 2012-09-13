@@ -1,0 +1,94 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccfRszZe.s 			page 1
+
+
+   1               		.file	"vsscanf.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	_sgetb, @function
+  10               	_sgetb:
+  11 0000 CF93      		push r28
+  12 0002 DF93      		push r29
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15 0004 EC01      		movw r28,r24
+  16 0006 20E0      		ldi r18,lo8(0)
+  17 0008 30E0      		ldi r19,hi8(0)
+  18 000a 00C0      		rjmp .L2
+  19               	.L4:
+  20 000c FB01      		movw r30,r22
+  21 000e E20F      		add r30,r18
+  22 0010 F31F      		adc r31,r19
+  23 0012 8083      		st Z,r24
+  24 0014 1196      		adiw r26,1
+  25 0016 B983      		std Y+1,r27
+  26 0018 A883      		st Y,r26
+  27 001a 2F5F      		subi r18,lo8(-(1))
+  28 001c 3F4F      		sbci r19,hi8(-(1))
+  29               	.L2:
+  30 001e 4217      		cp r20,r18
+  31 0020 5307      		cpc r21,r19
+  32 0022 01F0      		breq .L3
+  33 0024 A881      		ld r26,Y
+  34 0026 B981      		ldd r27,Y+1
+  35 0028 8C91      		ld r24,X
+  36 002a 8823      		tst r24
+  37 002c 01F4      		brne .L4
+  38               	.L3:
+  39 002e C901      		movw r24,r18
+  40               	/* epilogue start */
+  41 0030 DF91      		pop r29
+  42 0032 CF91      		pop r28
+  43 0034 0895      		ret
+  44               		.size	_sgetb, .-_sgetb
+  45               	.global	vsscanf
+  46               		.type	vsscanf, @function
+  47               	vsscanf:
+  48 0036 DF93      		push r29
+  49 0038 CF93      		push r28
+  50 003a 00D0      		rcall .
+  51 003c CDB7      		in r28,__SP_L__
+  52 003e DEB7      		in r29,__SP_H__
+  53               	/* prologue: function */
+  54               	/* frame size = 2 */
+  55 0040 FB01      		movw r30,r22
+  56 0042 9A01      		movw r18,r20
+  57 0044 9A83      		std Y+2,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccfRszZe.s 			page 2
+
+
+  58 0046 8983      		std Y+1,r24
+  59 0048 80E0      		ldi r24,lo8(gs(_sgetb))
+  60 004a 90E0      		ldi r25,hi8(gs(_sgetb))
+  61 004c BE01      		movw r22,r28
+  62 004e 6F5F      		subi r22,lo8(-(1))
+  63 0050 7F4F      		sbci r23,hi8(-(1))
+  64 0052 AF01      		movw r20,r30
+  65 0054 0E94 0000 		call _getf
+  66               	/* epilogue start */
+  67 0058 0F90      		pop __tmp_reg__
+  68 005a 0F90      		pop __tmp_reg__
+  69 005c CF91      		pop r28
+  70 005e DF91      		pop r29
+  71 0060 0895      		ret
+  72               		.size	vsscanf, .-vsscanf
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccfRszZe.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 vsscanf.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccfRszZe.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccfRszZe.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccfRszZe.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccfRszZe.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccfRszZe.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccfRszZe.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccfRszZe.s:10     .text:00000000 _sgetb
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccfRszZe.s:47     .text:00000036 vsscanf
+
+UNDEFINED SYMBOLS
+_getf

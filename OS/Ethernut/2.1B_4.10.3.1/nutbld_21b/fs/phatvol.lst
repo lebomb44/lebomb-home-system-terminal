@@ -1,0 +1,847 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 1
+
+
+   1               		.file	"phatvol.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	PhatClusterSector
+  10               		.type	PhatClusterSector, @function
+  11               	PhatClusterSector:
+  12 0000 EF92      		push r14
+  13 0002 FF92      		push r15
+  14 0004 0F93      		push r16
+  15 0006 1F93      		push r17
+  16 0008 CF93      		push r28
+  17 000a DF93      		push r29
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 000c DC01      		movw r26,r24
+  21 000e 7A01      		movw r14,r20
+  22 0010 8B01      		movw r16,r22
+  23 0012 1296      		adiw r26,2
+  24 0014 ED91      		ld r30,X+
+  25 0016 FC91      		ld r31,X
+  26 0018 1397      		sbiw r26,2+1
+  27 001a C189      		ldd r28,Z+17
+  28 001c D289      		ldd r29,Z+18
+  29 001e 0E94 0000 		call IsFixedRootDir
+  30 0022 892B      		or r24,r25
+  31 0024 01F0      		breq .L2
+  32 0026 28A5      		ldd r18,Y+40
+  33 0028 39A5      		ldd r19,Y+41
+  34 002a 4AA5      		ldd r20,Y+42
+  35 002c 5BA5      		ldd r21,Y+43
+  36 002e 00C0      		rjmp .L3
+  37               	.L2:
+  38 0030 82E0      		ldi r24,lo8(2)
+  39 0032 E816      		cp r14,r24
+  40 0034 F104      		cpc r15,__zero_reg__
+  41 0036 0105      		cpc r16,__zero_reg__
+  42 0038 1105      		cpc r17,__zero_reg__
+  43 003a 00F0      		brlo .L4
+  44 003c 8EEF      		ldi r24,lo8(-2)
+  45 003e 9FEF      		ldi r25,hi8(-2)
+  46 0040 AFEF      		ldi r26,hlo8(-2)
+  47 0042 BFEF      		ldi r27,hhi8(-2)
+  48 0044 E80E      		add r14,r24
+  49 0046 F91E      		adc r15,r25
+  50 0048 0A1F      		adc r16,r26
+  51 004a 1B1F      		adc r17,r27
+  52               	.L4:
+  53 004c 288D      		ldd r18,Y+24
+  54 004e 398D      		ldd r19,Y+25
+  55 0050 40E0      		ldi r20,lo8(0)
+  56 0052 50E0      		ldi r21,hi8(0)
+  57 0054 C801      		movw r24,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 2
+
+
+  58 0056 B701      		movw r22,r14
+  59 0058 0E94 0000 		call __mulsi3
+  60 005c 9B01      		movw r18,r22
+  61 005e AC01      		movw r20,r24
+  62 0060 8CA9      		ldd r24,Y+52
+  63 0062 9DA9      		ldd r25,Y+53
+  64 0064 AEA9      		ldd r26,Y+54
+  65 0066 BFA9      		ldd r27,Y+55
+  66 0068 280F      		add r18,r24
+  67 006a 391F      		adc r19,r25
+  68 006c 4A1F      		adc r20,r26
+  69 006e 5B1F      		adc r21,r27
+  70               	.L3:
+  71 0070 B901      		movw r22,r18
+  72 0072 CA01      		movw r24,r20
+  73               	/* epilogue start */
+  74 0074 DF91      		pop r29
+  75 0076 CF91      		pop r28
+  76 0078 1F91      		pop r17
+  77 007a 0F91      		pop r16
+  78 007c FF90      		pop r15
+  79 007e EF90      		pop r14
+  80 0080 0895      		ret
+  81               		.size	PhatClusterSector, .-PhatClusterSector
+  82               	.global	PhatVolUnmount
+  83               		.type	PhatVolUnmount, @function
+  84               	PhatVolUnmount:
+  85               	/* prologue: function */
+  86               	/* frame size = 0 */
+  87 0082 FC01      		movw r30,r24
+  88 0084 8189      		ldd r24,Z+17
+  89 0086 9289      		ldd r25,Z+18
+  90 0088 0097      		sbiw r24,0
+  91 008a 01F0      		breq .L7
+  92 008c 0E94 0000 		call free
+  93               	.L7:
+  94 0090 80E0      		ldi r24,lo8(0)
+  95 0092 90E0      		ldi r25,hi8(0)
+  96               	/* epilogue start */
+  97 0094 0895      		ret
+  98               		.size	PhatVolUnmount, .-PhatVolUnmount
+  99               	.global	PhatVolMount
+ 100               		.type	PhatVolMount, @function
+ 101               	PhatVolMount:
+ 102 0096 2F92      		push r2
+ 103 0098 3F92      		push r3
+ 104 009a 4F92      		push r4
+ 105 009c 5F92      		push r5
+ 106 009e 6F92      		push r6
+ 107 00a0 7F92      		push r7
+ 108 00a2 8F92      		push r8
+ 109 00a4 9F92      		push r9
+ 110 00a6 AF92      		push r10
+ 111 00a8 BF92      		push r11
+ 112 00aa CF92      		push r12
+ 113 00ac DF92      		push r13
+ 114 00ae EF92      		push r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 3
+
+
+ 115 00b0 FF92      		push r15
+ 116 00b2 0F93      		push r16
+ 117 00b4 1F93      		push r17
+ 118 00b6 DF93      		push r29
+ 119 00b8 CF93      		push r28
+ 120 00ba CDB7      		in r28,__SP_L__
+ 121 00bc DEB7      		in r29,__SP_H__
+ 122 00be 6097      		sbiw r28,16
+ 123 00c0 0FB6      		in __tmp_reg__,__SREG__
+ 124 00c2 F894      		cli
+ 125 00c4 DEBF      		out __SP_H__,r29
+ 126 00c6 0FBE      		out __SREG__,__tmp_reg__
+ 127 00c8 CDBF      		out __SP_L__,r28
+ 128               	/* prologue: function */
+ 129               	/* frame size = 16 */
+ 130 00ca 2C01      		movw r4,r24
+ 131 00cc 6B01      		movw r12,r22
+ 132 00ce 142F      		mov r17,r20
+ 133 00d0 DB01      		movw r26,r22
+ 134 00d2 1296      		adiw r26,2
+ 135 00d4 ED90      		ld r14,X+
+ 136 00d6 FC90      		ld r15,X
+ 137 00d8 1397      		sbiw r26,2+1
+ 138 00da 88E3      		ldi r24,lo8(56)
+ 139 00dc 90E0      		ldi r25,hi8(56)
+ 140 00de 0E94 0000 		call malloc
+ 141 00e2 FC01      		movw r30,r24
+ 142 00e4 D201      		movw r26,r4
+ 143 00e6 5296      		adiw r26,17+1
+ 144 00e8 9C93      		st X,r25
+ 145 00ea 8E93      		st -X,r24
+ 146 00ec 5197      		sbiw r26,17
+ 147 00ee 0097      		sbiw r24,0
+ 148 00f0 01F0      		breq .L53
+ 149               	.L10:
+ 150 00f2 88E3      		ldi r24,lo8(56)
+ 151 00f4 DF01      		movw r26,r30
+ 152 00f6 1D92      		st X+,__zero_reg__
+ 153 00f8 8A95      	        dec r24
+ 154 00fa 01F4      		brne .-6
+ 155 00fc 8E2E      		mov r8,r30
+ 156 00fe 992E      		mov r9,r25
+ 157 0100 1630      		cpi r17,lo8(6)
+ 158 0102 01F0      		breq .L14
+ 159 0104 1730      		cpi r17,lo8(7)
+ 160 0106 00F4      		brsh .L16
+ 161 0108 1130      		cpi r17,lo8(1)
+ 162 010a 01F0      		breq .L13
+ 163 010c 1430      		cpi r17,lo8(4)
+ 164 010e 01F4      		brne .L12
+ 165 0110 00C0      		rjmp .L14
+ 166               	.L16:
+ 167 0112 1B30      		cpi r17,lo8(11)
+ 168 0114 00F0      		brlo .L12
+ 169 0116 1D30      		cpi r17,lo8(13)
+ 170 0118 00F0      		brlo .L15
+ 171 011a 1E30      		cpi r17,lo8(14)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 4
+
+
+ 172 011c 01F4      		brne .L12
+ 173 011e 00C0      		rjmp .L14
+ 174               	.L15:
+ 175 0120 80E2      		ldi r24,lo8(32)
+ 176 0122 90E0      		ldi r25,hi8(32)
+ 177 0124 00C0      		rjmp .L50
+ 178               	.L14:
+ 179 0126 80E1      		ldi r24,lo8(16)
+ 180 0128 90E0      		ldi r25,hi8(16)
+ 181 012a D401      		movw r26,r8
+ 182 012c 8D93      		st X+,r24
+ 183 012e 9C93      		st X,r25
+ 184 0130 00C0      		rjmp .L12
+ 185               	.L13:
+ 186 0132 8CE0      		ldi r24,lo8(12)
+ 187 0134 90E0      		ldi r25,hi8(12)
+ 188               	.L50:
+ 189 0136 F401      		movw r30,r8
+ 190 0138 9183      		std Z+1,r25
+ 191 013a 8083      		st Z,r24
+ 192               	.L12:
+ 193 013c DE82      		std Y+6,r13
+ 194 013e CD82      		std Y+5,r12
+ 195 0140 D701      		movw r26,r14
+ 196 0142 5596      		adiw r26,21
+ 197 0144 ED91      		ld r30,X+
+ 198 0146 FC91      		ld r31,X
+ 199 0148 5697      		sbiw r26,21+1
+ 200 014a C701      		movw r24,r14
+ 201 014c 62E0      		ldi r22,lo8(4610)
+ 202 014e 72E1      		ldi r23,hi8(4610)
+ 203 0150 AE01      		movw r20,r28
+ 204 0152 4B5F      		subi r20,lo8(-(5))
+ 205 0154 5F4F      		sbci r21,hi8(-(5))
+ 206 0156 0995      		icall
+ 207 0158 892B      		or r24,r25
+ 208 015a 01F0      		breq .L17
+ 209 015c C401      		movw r24,r8
+ 210 015e 0E94 0000 		call free
+ 211               	.L54:
+ 212 0162 83E1      		ldi r24,lo8(19)
+ 213 0164 90E0      		ldi r25,hi8(19)
+ 214 0166 9093 0000 		sts (errno)+1,r25
+ 215 016a 8093 0000 		sts errno,r24
+ 216               	.L53:
+ 217 016e 2FEF      		ldi r18,lo8(-1)
+ 218 0170 3FEF      		ldi r19,hi8(-1)
+ 219 0172 00C0      		rjmp .L11
+ 220               	.L17:
+ 221 0174 2F85      		ldd r18,Y+15
+ 222 0176 3889      		ldd r19,Y+16
+ 223 0178 F401      		movw r30,r8
+ 224 017a 3387      		std Z+11,r19
+ 225 017c 2287      		std Z+10,r18
+ 226 017e C601      		movw r24,r12
+ 227 0180 40E0      		ldi r20,lo8(0)
+ 228 0182 50E0      		ldi r21,hi8(0)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 5
+
+
+ 229 0184 60E0      		ldi r22,hlo8(0)
+ 230 0186 70E0      		ldi r23,hhi8(0)
+ 231 0188 0E94 0000 		call PhatSectorRead
+ 232 018c 892B      		or r24,r25
+ 233 018e 01F0      		breq .L18
+ 234 0190 C201      		movw r24,r4
+ 235 0192 0E94 0000 		call PhatVolUnmount
+ 236 0196 00C0      		rjmp .L53
+ 237               	.L18:
+ 238 0198 D401      		movw r26,r8
+ 239 019a 1C96      		adiw r26,12
+ 240 019c 1D92      		st X+,__zero_reg__
+ 241 019e 1D92      		st X+,__zero_reg__
+ 242 01a0 1D92      		st X+,__zero_reg__
+ 243 01a2 1C92      		st X,__zero_reg__
+ 244 01a4 1F97      		sbiw r26,12+3
+ 245 01a6 1A96      		adiw r26,10
+ 246 01a8 0D91      		ld r16,X+
+ 247 01aa 1C91      		ld r17,X
+ 248 01ac 1B97      		sbiw r26,10+1
+ 249 01ae 8D91      		ld r24,X+
+ 250 01b0 9C91      		ld r25,X
+ 251 01b2 1197      		sbiw r26,1
+ 252 01b4 892B      		or r24,r25
+ 253 01b6 01F4      		brne .L19
+ 254 01b8 F801      		movw r30,r16
+ 255 01ba 8189      		ldd r24,Z+17
+ 256 01bc 9289      		ldd r25,Z+18
+ 257 01be 892B      		or r24,r25
+ 258 01c0 01F4      		brne .L19
+ 259 01c2 80E2      		ldi r24,lo8(32)
+ 260 01c4 90E0      		ldi r25,hi8(32)
+ 261 01c6 8D93      		st X+,r24
+ 262 01c8 9C93      		st X,r25
+ 263               	.L19:
+ 264 01ca D401      		movw r26,r8
+ 265 01cc 8D91      		ld r24,X+
+ 266 01ce 9C91      		ld r25,X
+ 267 01d0 8097      		sbiw r24,32
+ 268 01d2 01F0      		breq .L20
+ 269 01d4 9801      		movw r18,r16
+ 270 01d6 2C5D      		subi r18,lo8(-(36))
+ 271 01d8 3F4F      		sbci r19,hi8(-(36))
+ 272 01da D801      		movw r26,r16
+ 273 01dc A05C      		subi r26,lo8(-(64))
+ 274 01de BF4F      		sbci r27,hi8(-(64))
+ 275 01e0 F901      		movw r30,r18
+ 276 01e2 8AE1      		ldi r24,lo8(26)
+ 277               	.L21:
+ 278 01e4 0190      		ld r0,Z+
+ 279 01e6 0D92      		st X+,r0
+ 280 01e8 8150      		subi r24,lo8(-(-1))
+ 281 01ea 01F4      		brne .L21
+ 282 01ec 8CE1      		ldi r24,lo8(28)
+ 283 01ee F901      		movw r30,r18
+ 284 01f0 1192      		st Z+,__zero_reg__
+ 285 01f2 8A95      	        dec r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 6
+
+
+ 286 01f4 01F4      		brne .-6
+ 287               	.L20:
+ 288 01f6 D401      		movw r26,r8
+ 289 01f8 1A96      		adiw r26,10
+ 290 01fa ED91      		ld r30,X+
+ 291 01fc FC91      		ld r31,X
+ 292 01fe 1B97      		sbiw r26,10+1
+ 293 0200 E250      		subi r30,lo8(-(510))
+ 294 0202 FE4F      		sbci r31,hi8(-(510))
+ 295 0204 8081      		ld r24,Z
+ 296 0206 EE5F      		subi r30,lo8(-(-510))
+ 297 0208 F140      		sbci r31,hi8(-(-510))
+ 298 020a 8535      		cpi r24,lo8(85)
+ 299 020c 01F4      		brne .L55
+ 300 020e E150      		subi r30,lo8(-(511))
+ 301 0210 FE4F      		sbci r31,hi8(-(511))
+ 302 0212 8081      		ld r24,Z
+ 303 0214 8A3A      		cpi r24,lo8(-86)
+ 304 0216 01F4      		brne .L55
+ 305               	.L23:
+ 306 0218 F801      		movw r30,r16
+ 307 021a 8589      		ldd r24,Z+21
+ 308 021c 803F      		cpi r24,lo8(-16)
+ 309 021e 01F0      		breq .L24
+ 310 0220 883F      		cpi r24,lo8(-8)
+ 311 0222 00F0      		brlo .L55
+ 312               	.L24:
+ 313 0224 D801      		movw r26,r16
+ 314 0226 1B96      		adiw r26,11
+ 315 0228 8D91      		ld r24,X+
+ 316 022a 9C91      		ld r25,X
+ 317 022c 1C97      		sbiw r26,11+1
+ 318 022e F401      		movw r30,r8
+ 319 0230 978B      		std Z+23,r25
+ 320 0232 868B      		std Z+22,r24
+ 321 0234 F2E0      		ldi r31,hi8(512)
+ 322 0236 8030      		cpi r24,lo8(512)
+ 323 0238 9F07      		cpc r25,r31
+ 324 023a 00F0      		brlo .L55
+ 325 023c 8823      		tst r24
+ 326 023e 01F4      		brne .L55
+ 327               	.L26:
+ 328 0240 D801      		movw r26,r16
+ 329 0242 1D96      		adiw r26,13
+ 330 0244 8C91      		ld r24,X
+ 331 0246 90E0      		ldi r25,lo8(0)
+ 332 0248 F401      		movw r30,r8
+ 333 024a 918F      		std Z+25,r25
+ 334 024c 808F      		std Z+24,r24
+ 335 024e 892B      		or r24,r25
+ 336 0250 01F4      		brne .L27
+ 337               	.L55:
+ 338 0252 C201      		movw r24,r4
+ 339 0254 0E94 0000 		call PhatVolUnmount
+ 340 0258 00C0      		rjmp .L54
+ 341               	.L27:
+ 342 025a D801      		movw r26,r16
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 7
+
+
+ 343 025c 5696      		adiw r26,22
+ 344 025e 8D91      		ld r24,X+
+ 345 0260 9C91      		ld r25,X
+ 346 0262 5797      		sbiw r26,22+1
+ 347 0264 0097      		sbiw r24,0
+ 348 0266 01F0      		breq .L28
+ 349 0268 A0E0      		ldi r26,lo8(0)
+ 350 026a B0E0      		ldi r27,hi8(0)
+ 351 026c 00C0      		rjmp .L51
+ 352               	.L28:
+ 353 026e F801      		movw r30,r16
+ 354 0270 84A1      		ldd r24,Z+36
+ 355 0272 95A1      		ldd r25,Z+37
+ 356 0274 A6A1      		ldd r26,Z+38
+ 357 0276 B7A1      		ldd r27,Z+39
+ 358               	.L51:
+ 359 0278 F401      		movw r30,r8
+ 360 027a 828F      		std Z+26,r24
+ 361 027c 938F      		std Z+27,r25
+ 362 027e A48F      		std Z+28,r26
+ 363 0280 B58F      		std Z+29,r27
+ 364 0282 D801      		movw r26,r16
+ 365 0284 1E96      		adiw r26,14
+ 366 0286 8D91      		ld r24,X+
+ 367 0288 9C91      		ld r25,X
+ 368 028a 1F97      		sbiw r26,14+1
+ 369 028c 9C01      		movw r18,r24
+ 370 028e 40E0      		ldi r20,lo8(0)
+ 371 0290 50E0      		ldi r21,hi8(0)
+ 372 0292 F401      		movw r30,r8
+ 373 0294 268F      		std Z+30,r18
+ 374 0296 378F      		std Z+31,r19
+ 375 0298 40A3      		std Z+32,r20
+ 376 029a 51A3      		std Z+33,r21
+ 377 029c 5096      		adiw r26,16
+ 378 029e 8C91      		ld r24,X
+ 379 02a0 8230      		cpi r24,lo8(2)
+ 380 02a2 00F0      		brlo .L30
+ 381 02a4 828D      		ldd r24,Z+26
+ 382 02a6 938D      		ldd r25,Z+27
+ 383 02a8 A48D      		ldd r26,Z+28
+ 384 02aa B58D      		ldd r27,Z+29
+ 385 02ac 280F      		add r18,r24
+ 386 02ae 391F      		adc r19,r25
+ 387 02b0 4A1F      		adc r20,r26
+ 388 02b2 5B1F      		adc r21,r27
+ 389 02b4 D401      		movw r26,r8
+ 390 02b6 9296      		adiw r26,34
+ 391 02b8 2D93      		st X+,r18
+ 392 02ba 3D93      		st X+,r19
+ 393 02bc 4D93      		st X+,r20
+ 394 02be 5C93      		st X,r21
+ 395 02c0 9597      		sbiw r26,34+3
+ 396               	.L30:
+ 397 02c2 F401      		movw r30,r8
+ 398 02c4 6689      		ldd r22,Z+22
+ 399 02c6 7789      		ldd r23,Z+23
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 8
+
+
+ 400 02c8 CB01      		movw r24,r22
+ 401 02ca 0197      		sbiw r24,1
+ 402 02cc D801      		movw r26,r16
+ 403 02ce 5196      		adiw r26,17
+ 404 02d0 2D91      		ld r18,X+
+ 405 02d2 3C91      		ld r19,X
+ 406 02d4 5297      		sbiw r26,17+1
+ 407 02d6 45E0      		ldi r20,5
+ 408 02d8 220F      	1:	lsl r18
+ 409 02da 331F      		rol r19
+ 410 02dc 4A95      		dec r20
+ 411 02de 01F4      		brne 1b
+ 412 02e0 820F      		add r24,r18
+ 413 02e2 931F      		adc r25,r19
+ 414 02e4 0E94 0000 		call __udivmodhi4
+ 415 02e8 77A3      		std Z+39,r23
+ 416 02ea 66A3      		std Z+38,r22
+ 417 02ec F801      		movw r30,r16
+ 418 02ee 6089      		ldd r22,Z+16
+ 419 02f0 70E0      		ldi r23,lo8(0)
+ 420 02f2 80E0      		ldi r24,lo8(0)
+ 421 02f4 90E0      		ldi r25,hi8(0)
+ 422 02f6 D401      		movw r26,r8
+ 423 02f8 5A96      		adiw r26,26
+ 424 02fa 2D91      		ld r18,X+
+ 425 02fc 3D91      		ld r19,X+
+ 426 02fe 4D91      		ld r20,X+
+ 427 0300 5C91      		ld r21,X
+ 428 0302 5D97      		sbiw r26,26+3
+ 429 0304 0E94 0000 		call __mulsi3
+ 430 0308 F801      		movw r30,r16
+ 431 030a 2685      		ldd r18,Z+14
+ 432 030c 3785      		ldd r19,Z+15
+ 433 030e 40E0      		ldi r20,lo8(0)
+ 434 0310 50E0      		ldi r21,hi8(0)
+ 435 0312 260F      		add r18,r22
+ 436 0314 371F      		adc r19,r23
+ 437 0316 481F      		adc r20,r24
+ 438 0318 591F      		adc r21,r25
+ 439 031a D401      		movw r26,r8
+ 440 031c 9896      		adiw r26,40
+ 441 031e 2D93      		st X+,r18
+ 442 0320 3D93      		st X+,r19
+ 443 0322 4D93      		st X+,r20
+ 444 0324 5C93      		st X,r21
+ 445 0326 9B97      		sbiw r26,40+3
+ 446 0328 8D91      		ld r24,X+
+ 447 032a 9C91      		ld r25,X
+ 448 032c 8097      		sbiw r24,32
+ 449 032e 01F4      		brne .L31
+ 450 0330 84A5      		ldd r24,Z+44
+ 451 0332 95A5      		ldd r25,Z+45
+ 452 0334 A6A5      		ldd r26,Z+46
+ 453 0336 B7A5      		ldd r27,Z+47
+ 454 0338 F401      		movw r30,r8
+ 455 033a 84A7      		std Z+44,r24
+ 456 033c 95A7      		std Z+45,r25
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 9
+
+
+ 457 033e A6A7      		std Z+46,r26
+ 458 0340 B7A7      		std Z+47,r27
+ 459               	.L31:
+ 460 0342 D401      		movw r26,r8
+ 461 0344 9696      		adiw r26,38
+ 462 0346 8D91      		ld r24,X+
+ 463 0348 9C91      		ld r25,X
+ 464 034a 9797      		sbiw r26,38+1
+ 465 034c 9C01      		movw r18,r24
+ 466 034e 40E0      		ldi r20,lo8(0)
+ 467 0350 50E0      		ldi r21,hi8(0)
+ 468 0352 9896      		adiw r26,40
+ 469 0354 8D91      		ld r24,X+
+ 470 0356 9D91      		ld r25,X+
+ 471 0358 0D90      		ld __tmp_reg__,X+
+ 472 035a BC91      		ld r27,X
+ 473 035c A02D      		mov r26,__tmp_reg__
+ 474 035e 280F      		add r18,r24
+ 475 0360 391F      		adc r19,r25
+ 476 0362 4A1F      		adc r20,r26
+ 477 0364 5B1F      		adc r21,r27
+ 478 0366 F401      		movw r30,r8
+ 479 0368 24AB      		std Z+52,r18
+ 480 036a 35AB      		std Z+53,r19
+ 481 036c 46AB      		std Z+54,r20
+ 482 036e 57AB      		std Z+55,r21
+ 483 0370 D801      		movw r26,r16
+ 484 0372 5396      		adiw r26,19
+ 485 0374 8D91      		ld r24,X+
+ 486 0376 9C91      		ld r25,X
+ 487 0378 5497      		sbiw r26,19+1
+ 488 037a 0097      		sbiw r24,0
+ 489 037c 01F0      		breq .L32
+ 490 037e A0E0      		ldi r26,lo8(0)
+ 491 0380 B0E0      		ldi r27,hi8(0)
+ 492 0382 821B      		sub r24,r18
+ 493 0384 930B      		sbc r25,r19
+ 494 0386 A40B      		sbc r26,r20
+ 495 0388 B50B      		sbc r27,r21
+ 496 038a 00C0      		rjmp .L52
+ 497               	.L32:
+ 498 038c F801      		movw r30,r16
+ 499 038e 80A1      		ldd r24,Z+32
+ 500 0390 91A1      		ldd r25,Z+33
+ 501 0392 A2A1      		ldd r26,Z+34
+ 502 0394 B3A1      		ldd r27,Z+35
+ 503 0396 821B      		sub r24,r18
+ 504 0398 930B      		sbc r25,r19
+ 505 039a A40B      		sbc r26,r20
+ 506 039c B50B      		sbc r27,r21
+ 507 039e F401      		movw r30,r8
+ 508               	.L52:
+ 509 03a0 80AB      		std Z+48,r24
+ 510 03a2 91AB      		std Z+49,r25
+ 511 03a4 A2AB      		std Z+50,r26
+ 512 03a6 B3AB      		std Z+51,r27
+ 513 03a8 D401      		movw r26,r8
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 10
+
+
+ 514 03aa 5896      		adiw r26,24
+ 515 03ac 2D91      		ld r18,X+
+ 516 03ae 3C91      		ld r19,X
+ 517 03b0 5997      		sbiw r26,24+1
+ 518 03b2 40E0      		ldi r20,lo8(0)
+ 519 03b4 50E0      		ldi r21,hi8(0)
+ 520 03b6 D096      		adiw r26,48
+ 521 03b8 6D91      		ld r22,X+
+ 522 03ba 7D91      		ld r23,X+
+ 523 03bc 8D91      		ld r24,X+
+ 524 03be 9C91      		ld r25,X
+ 525 03c0 D397      		sbiw r26,48+3
+ 526 03c2 0E94 0000 		call __udivmodsi4
+ 527 03c6 2E5F      		subi r18,lo8(-(2))
+ 528 03c8 3F4F      		sbci r19,hi8(-(2))
+ 529 03ca 4F4F      		sbci r20,hlo8(-(2))
+ 530 03cc 5F4F      		sbci r21,hhi8(-(2))
+ 531 03ce F401      		movw r30,r8
+ 532 03d0 20AB      		std Z+48,r18
+ 533 03d2 31AB      		std Z+49,r19
+ 534 03d4 42AB      		std Z+50,r20
+ 535 03d6 53AB      		std Z+51,r21
+ 536 03d8 8081      		ld r24,Z
+ 537 03da 9181      		ldd r25,Z+1
+ 538 03dc 892B      		or r24,r25
+ 539 03de 01F4      		brne .L34
+ 540 03e0 275F      		subi r18,lo8(4087)
+ 541 03e2 3F40      		sbci r19,hi8(4087)
+ 542 03e4 4040      		sbci r20,hlo8(4087)
+ 543 03e6 5040      		sbci r21,hhi8(4087)
+ 544 03e8 00F0      		brlo .L35
+ 545 03ea 80E1      		ldi r24,lo8(16)
+ 546 03ec 90E0      		ldi r25,hi8(16)
+ 547 03ee D401      		movw r26,r8
+ 548 03f0 8D93      		st X+,r24
+ 549 03f2 9C93      		st X,r25
+ 550 03f4 00C0      		rjmp .L34
+ 551               	.L35:
+ 552 03f6 8CE0      		ldi r24,lo8(12)
+ 553 03f8 90E0      		ldi r25,hi8(12)
+ 554 03fa F401      		movw r30,r8
+ 555 03fc 9183      		std Z+1,r25
+ 556 03fe 8083      		st Z,r24
+ 557               	.L34:
+ 558 0400 D201      		movw r26,r4
+ 559 0402 5096      		adiw r26,15+1
+ 560 0404 DC92      		st X,r13
+ 561 0406 CE92      		st -X,r12
+ 562 0408 1F97      		sbiw r26,15
+ 563 040a C401      		movw r24,r8
+ 564 040c 4296      		adiw r24,18
+ 565 040e 0E94 0000 		call NutEventPost
+ 566 0412 C401      		movw r24,r8
+ 567 0414 4496      		adiw r24,20
+ 568 0416 0E94 0000 		call NutEventPost
+ 569 041a F201      		movw r30,r4
+ 570 041c 6188      		ldd r6,Z+17
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 11
+
+
+ 571 041e 7288      		ldd r7,Z+18
+ 572 0420 D301      		movw r26,r6
+ 573 0422 8D91      		ld r24,X+
+ 574 0424 9C91      		ld r25,X
+ 575 0426 8032      		cpi r24,32
+ 576 0428 9105      		cpc r25,__zero_reg__
+ 577 042a 01F4      		brne .L36
+ 578 042c 22E0      		ldi r18,lo8(2)
+ 579 042e E22E      		mov r14,r18
+ 580 0430 F12C      		mov r15,__zero_reg__
+ 581 0432 012D      		mov r16,__zero_reg__
+ 582 0434 112D      		mov r17,__zero_reg__
+ 583 0436 AA24      		clr r10
+ 584 0438 BB24      		clr r11
+ 585 043a 6501      		movw r12,r10
+ 586 043c 1E01      		movw r2,r28
+ 587 043e 0894      		sec
+ 588 0440 211C      		adc r2,__zero_reg__
+ 589 0442 311C      		adc r3,__zero_reg__
+ 590 0444 00C0      		rjmp .L37
+ 591               	.L40:
+ 592 0446 C201      		movw r24,r4
+ 593 0448 B801      		movw r22,r16
+ 594 044a A701      		movw r20,r14
+ 595 044c 9101      		movw r18,r2
+ 596 044e 0E94 0000 		call Phat32GetClusterLink
+ 597 0452 892B      		or r24,r25
+ 598 0454 01F0      		breq .+2
+ 599 0456 00C0      		rjmp .L38
+ 600 0458 8981      		ldd r24,Y+1
+ 601 045a 9A81      		ldd r25,Y+2
+ 602 045c AB81      		ldd r26,Y+3
+ 603 045e BC81      		ldd r27,Y+4
+ 604 0460 0097      		sbiw r24,0
+ 605 0462 A105      		cpc r26,__zero_reg__
+ 606 0464 B105      		cpc r27,__zero_reg__
+ 607 0466 01F4      		brne .L39
+ 608 0468 0894      		sec
+ 609 046a A11C      		adc r10,__zero_reg__
+ 610 046c B11C      		adc r11,__zero_reg__
+ 611 046e C11C      		adc r12,__zero_reg__
+ 612 0470 D11C      		adc r13,__zero_reg__
+ 613               	.L39:
+ 614 0472 0894      		sec
+ 615 0474 E11C      		adc r14,__zero_reg__
+ 616 0476 F11C      		adc r15,__zero_reg__
+ 617 0478 011D      		adc r16,__zero_reg__
+ 618 047a 111D      		adc r17,__zero_reg__
+ 619               	.L37:
+ 620 047c F301      		movw r30,r6
+ 621 047e 80A9      		ldd r24,Z+48
+ 622 0480 91A9      		ldd r25,Z+49
+ 623 0482 A2A9      		ldd r26,Z+50
+ 624 0484 B3A9      		ldd r27,Z+51
+ 625 0486 E816      		cp r14,r24
+ 626 0488 F906      		cpc r15,r25
+ 627 048a 0A07      		cpc r16,r26
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 12
+
+
+ 628 048c 1B07      		cpc r17,r27
+ 629 048e 00F0      		brlo .L40
+ 630 0490 00C0      		rjmp .L38
+ 631               	.L36:
+ 632 0492 4097      		sbiw r24,16
+ 633 0494 01F0      		breq .L41
+ 634 0496 92E0      		ldi r25,lo8(2)
+ 635 0498 E92E      		mov r14,r25
+ 636 049a F12C      		mov r15,__zero_reg__
+ 637 049c 012D      		mov r16,__zero_reg__
+ 638 049e 112D      		mov r17,__zero_reg__
+ 639 04a0 AA24      		clr r10
+ 640 04a2 BB24      		clr r11
+ 641 04a4 6501      		movw r12,r10
+ 642 04a6 1E01      		movw r2,r28
+ 643 04a8 0894      		sec
+ 644 04aa 211C      		adc r2,__zero_reg__
+ 645 04ac 311C      		adc r3,__zero_reg__
+ 646 04ae 00C0      		rjmp .L42
+ 647               	.L41:
+ 648 04b0 82E0      		ldi r24,lo8(2)
+ 649 04b2 E82E      		mov r14,r24
+ 650 04b4 F12C      		mov r15,__zero_reg__
+ 651 04b6 012D      		mov r16,__zero_reg__
+ 652 04b8 112D      		mov r17,__zero_reg__
+ 653 04ba AA24      		clr r10
+ 654 04bc BB24      		clr r11
+ 655 04be 6501      		movw r12,r10
+ 656 04c0 1E01      		movw r2,r28
+ 657 04c2 0894      		sec
+ 658 04c4 211C      		adc r2,__zero_reg__
+ 659 04c6 311C      		adc r3,__zero_reg__
+ 660 04c8 00C0      		rjmp .L43
+ 661               	.L45:
+ 662 04ca C201      		movw r24,r4
+ 663 04cc B801      		movw r22,r16
+ 664 04ce A701      		movw r20,r14
+ 665 04d0 9101      		movw r18,r2
+ 666 04d2 0E94 0000 		call Phat16GetClusterLink
+ 667 04d6 892B      		or r24,r25
+ 668 04d8 01F0      		breq .+2
+ 669 04da 00C0      		rjmp .L38
+ 670 04dc 8981      		ldd r24,Y+1
+ 671 04de 9A81      		ldd r25,Y+2
+ 672 04e0 AB81      		ldd r26,Y+3
+ 673 04e2 BC81      		ldd r27,Y+4
+ 674 04e4 0097      		sbiw r24,0
+ 675 04e6 A105      		cpc r26,__zero_reg__
+ 676 04e8 B105      		cpc r27,__zero_reg__
+ 677 04ea 01F4      		brne .L44
+ 678 04ec 0894      		sec
+ 679 04ee A11C      		adc r10,__zero_reg__
+ 680 04f0 B11C      		adc r11,__zero_reg__
+ 681 04f2 C11C      		adc r12,__zero_reg__
+ 682 04f4 D11C      		adc r13,__zero_reg__
+ 683               	.L44:
+ 684 04f6 0894      		sec
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 13
+
+
+ 685 04f8 E11C      		adc r14,__zero_reg__
+ 686 04fa F11C      		adc r15,__zero_reg__
+ 687 04fc 011D      		adc r16,__zero_reg__
+ 688 04fe 111D      		adc r17,__zero_reg__
+ 689               	.L43:
+ 690 0500 F301      		movw r30,r6
+ 691 0502 80A9      		ldd r24,Z+48
+ 692 0504 91A9      		ldd r25,Z+49
+ 693 0506 A2A9      		ldd r26,Z+50
+ 694 0508 B3A9      		ldd r27,Z+51
+ 695 050a E816      		cp r14,r24
+ 696 050c F906      		cpc r15,r25
+ 697 050e 0A07      		cpc r16,r26
+ 698 0510 1B07      		cpc r17,r27
+ 699 0512 00F0      		brlo .L45
+ 700 0514 00C0      		rjmp .L38
+ 701               	.L47:
+ 702 0516 C201      		movw r24,r4
+ 703 0518 B801      		movw r22,r16
+ 704 051a A701      		movw r20,r14
+ 705 051c 9101      		movw r18,r2
+ 706 051e 0E94 0000 		call Phat12GetClusterLink
+ 707 0522 892B      		or r24,r25
+ 708 0524 01F4      		brne .L38
+ 709 0526 8981      		ldd r24,Y+1
+ 710 0528 9A81      		ldd r25,Y+2
+ 711 052a AB81      		ldd r26,Y+3
+ 712 052c BC81      		ldd r27,Y+4
+ 713 052e 0097      		sbiw r24,0
+ 714 0530 A105      		cpc r26,__zero_reg__
+ 715 0532 B105      		cpc r27,__zero_reg__
+ 716 0534 01F4      		brne .L46
+ 717 0536 0894      		sec
+ 718 0538 A11C      		adc r10,__zero_reg__
+ 719 053a B11C      		adc r11,__zero_reg__
+ 720 053c C11C      		adc r12,__zero_reg__
+ 721 053e D11C      		adc r13,__zero_reg__
+ 722               	.L46:
+ 723 0540 0894      		sec
+ 724 0542 E11C      		adc r14,__zero_reg__
+ 725 0544 F11C      		adc r15,__zero_reg__
+ 726 0546 011D      		adc r16,__zero_reg__
+ 727 0548 111D      		adc r17,__zero_reg__
+ 728               	.L42:
+ 729 054a F301      		movw r30,r6
+ 730 054c 80A9      		ldd r24,Z+48
+ 731 054e 91A9      		ldd r25,Z+49
+ 732 0550 A2A9      		ldd r26,Z+50
+ 733 0552 B3A9      		ldd r27,Z+51
+ 734 0554 E816      		cp r14,r24
+ 735 0556 F906      		cpc r15,r25
+ 736 0558 0A07      		cpc r16,r26
+ 737 055a 1B07      		cpc r17,r27
+ 738 055c 00F0      		brlo .L47
+ 739               	.L38:
+ 740 055e D401      		movw r26,r8
+ 741 0560 1296      		adiw r26,2
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 14
+
+
+ 742 0562 AD92      		st X+,r10
+ 743 0564 BD92      		st X+,r11
+ 744 0566 CD92      		st X+,r12
+ 745 0568 DC92      		st X,r13
+ 746 056a 1597      		sbiw r26,2+3
+ 747 056c 20E0      		ldi r18,lo8(0)
+ 748 056e 30E0      		ldi r19,hi8(0)
+ 749               	.L11:
+ 750 0570 C901      		movw r24,r18
+ 751               	/* epilogue start */
+ 752 0572 6096      		adiw r28,16
+ 753 0574 0FB6      		in __tmp_reg__,__SREG__
+ 754 0576 F894      		cli
+ 755 0578 DEBF      		out __SP_H__,r29
+ 756 057a 0FBE      		out __SREG__,__tmp_reg__
+ 757 057c CDBF      		out __SP_L__,r28
+ 758 057e CF91      		pop r28
+ 759 0580 DF91      		pop r29
+ 760 0582 1F91      		pop r17
+ 761 0584 0F91      		pop r16
+ 762 0586 FF90      		pop r15
+ 763 0588 EF90      		pop r14
+ 764 058a DF90      		pop r13
+ 765 058c CF90      		pop r12
+ 766 058e BF90      		pop r11
+ 767 0590 AF90      		pop r10
+ 768 0592 9F90      		pop r9
+ 769 0594 8F90      		pop r8
+ 770 0596 7F90      		pop r7
+ 771 0598 6F90      		pop r6
+ 772 059a 5F90      		pop r5
+ 773 059c 4F90      		pop r4
+ 774 059e 3F90      		pop r3
+ 775 05a0 2F90      		pop r2
+ 776 05a2 0895      		ret
+ 777               		.size	PhatVolMount, .-PhatVolMount
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 phatvol.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s:11     .text:00000000 PhatClusterSector
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s:84     .text:00000082 PhatVolUnmount
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccBicTSV.s:101    .text:00000096 PhatVolMount
+
+UNDEFINED SYMBOLS
+IsFixedRootDir
+__mulsi3
+free
+malloc
+errno
+PhatSectorRead
+__udivmodhi4
+__udivmodsi4
+NutEventPost
+Phat32GetClusterLink
+Phat16GetClusterLink
+Phat12GetClusterLink

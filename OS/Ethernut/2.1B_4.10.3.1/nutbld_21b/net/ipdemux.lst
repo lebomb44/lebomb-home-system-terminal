@@ -1,0 +1,170 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc5MRMkU.s 			page 1
+
+
+   1               		.file	"ipdemux.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               		.type	NutIpDemux, @function
+  10               	NutIpDemux:
+  11 0000 DF92      		push r13
+  12 0002 EF92      		push r14
+  13 0004 FF92      		push r15
+  14 0006 0F93      		push r16
+  15 0008 1F93      		push r17
+  16 000a CF93      		push r28
+  17 000c DF93      		push r29
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20 000e 7C01      		movw r14,r24
+  21 0010 8B01      		movw r16,r22
+  22 0012 DB01      		movw r26,r22
+  23 0014 1796      		adiw r26,7
+  24 0016 ED91      		ld r30,X+
+  25 0018 FC91      		ld r31,X
+  26 001a 1897      		sbiw r26,7+1
+  27 001c D184      		ldd r13,Z+9
+  28 001e C091 0000 		lds r28,in_prots
+  29 0022 D091 0000 		lds r29,(in_prots)+1
+  30 0026 00C0      		rjmp .L2
+  31               	.L5:
+  32 0028 8A81      		ldd r24,Y+2
+  33 002a D816      		cp r13,r24
+  34 002c 01F4      		brne .L3
+  35 002e EB81      		ldd r30,Y+3
+  36 0030 FC81      		ldd r31,Y+4
+  37 0032 3097      		sbiw r30,0
+  38 0034 01F0      		breq .L3
+  39 0036 C701      		movw r24,r14
+  40 0038 B801      		movw r22,r16
+  41 003a 0995      		icall
+  42 003c 892B      		or r24,r25
+  43 003e 01F4      		brne .L3
+  44 0040 20E0      		ldi r18,lo8(0)
+  45 0042 30E0      		ldi r19,hi8(0)
+  46 0044 00C0      		rjmp .L4
+  47               	.L3:
+  48 0046 0990      		ld __tmp_reg__,Y+
+  49 0048 D881      		ld r29,Y
+  50 004a C02D      		mov r28,__tmp_reg__
+  51               	.L2:
+  52 004c 2097      		sbiw r28,0
+  53 004e 01F4      		brne .L5
+  54 0050 2FEF      		ldi r18,lo8(-1)
+  55 0052 3FEF      		ldi r19,hi8(-1)
+  56               	.L4:
+  57 0054 C901      		movw r24,r18
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc5MRMkU.s 			page 2
+
+
+  58               	/* epilogue start */
+  59 0056 DF91      		pop r29
+  60 0058 CF91      		pop r28
+  61 005a 1F91      		pop r17
+  62 005c 0F91      		pop r16
+  63 005e FF90      		pop r15
+  64 0060 EF90      		pop r14
+  65 0062 DF90      		pop r13
+  66 0064 0895      		ret
+  67               		.size	NutIpDemux, .-NutIpDemux
+  68               	.global	NutRegisterIpHandler
+  69               		.type	NutRegisterIpHandler, @function
+  70               	NutRegisterIpHandler:
+  71 0066 1F93      		push r17
+  72 0068 CF93      		push r28
+  73 006a DF93      		push r29
+  74               	/* prologue: function */
+  75               	/* frame size = 0 */
+  76 006c 182F      		mov r17,r24
+  77 006e EB01      		movw r28,r22
+  78 0070 A091 0000 		lds r26,in_prots
+  79 0074 B091 0000 		lds r27,(in_prots)+1
+  80 0078 00C0      		rjmp .L8
+  81               	.L10:
+  82 007a 1296      		adiw r26,2
+  83 007c 8C91      		ld r24,X
+  84 007e 1297      		sbiw r26,2
+  85 0080 8117      		cp r24,r17
+  86 0082 01F0      		breq .L9
+  87 0084 0D90      		ld __tmp_reg__,X+
+  88 0086 BC91      		ld r27,X
+  89 0088 A02D      		mov r26,__tmp_reg__
+  90               	.L8:
+  91 008a 1097      		sbiw r26,0
+  92 008c 01F4      		brne .L10
+  93 008e 00C0      		rjmp .L17
+  94               	.L13:
+  95 0090 1283      		std Z+2,r17
+  96 0092 8091 0000 		lds r24,in_prots
+  97 0096 9091 0000 		lds r25,(in_prots)+1
+  98 009a 0097      		sbiw r24,0
+  99 009c 01F4      		brne .L12
+ 100 009e B093 0000 		sts (in_prots)+1,r27
+ 101 00a2 A093 0000 		sts in_prots,r26
+ 102 00a6 80E0      		ldi r24,lo8(gs(NutIpDemux))
+ 103 00a8 90E0      		ldi r25,hi8(gs(NutIpDemux))
+ 104 00aa 9093 0000 		sts (ip_demux)+1,r25
+ 105 00ae 8093 0000 		sts ip_demux,r24
+ 106 00b2 00C0      		rjmp .L9
+ 107               	.L12:
+ 108 00b4 1196      		adiw r26,1
+ 109 00b6 9C93      		st X,r25
+ 110 00b8 8E93      		st -X,r24
+ 111 00ba B093 0000 		sts (in_prots)+1,r27
+ 112 00be A093 0000 		sts in_prots,r26
+ 113               	.L9:
+ 114 00c2 1496      		adiw r26,3+1
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc5MRMkU.s 			page 3
+
+
+ 115 00c4 DC93      		st X,r29
+ 116 00c6 CE93      		st -X,r28
+ 117 00c8 1397      		sbiw r26,3
+ 118 00ca 20E0      		ldi r18,lo8(0)
+ 119 00cc 30E0      		ldi r19,hi8(0)
+ 120               	.L14:
+ 121 00ce C901      		movw r24,r18
+ 122               	/* epilogue start */
+ 123 00d0 DF91      		pop r29
+ 124 00d2 CF91      		pop r28
+ 125 00d4 1F91      		pop r17
+ 126 00d6 0895      		ret
+ 127               	.L17:
+ 128 00d8 81E0      		ldi r24,lo8(1)
+ 129 00da 90E0      		ldi r25,hi8(1)
+ 130 00dc 65E0      		ldi r22,lo8(5)
+ 131 00de 70E0      		ldi r23,hi8(5)
+ 132 00e0 0E94 0000 		call calloc
+ 133 00e4 FC01      		movw r30,r24
+ 134 00e6 DC01      		movw r26,r24
+ 135 00e8 0097      		sbiw r24,0
+ 136 00ea 01F4      		brne .L13
+ 137 00ec 2FEF      		ldi r18,lo8(-1)
+ 138 00ee 3FEF      		ldi r19,hi8(-1)
+ 139 00f0 00C0      		rjmp .L14
+ 140               		.size	NutRegisterIpHandler, .-NutRegisterIpHandler
+ 141               		.lcomm in_prots,2
+ 142               	.global __do_clear_bss
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc5MRMkU.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ipdemux.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc5MRMkU.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc5MRMkU.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc5MRMkU.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc5MRMkU.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc5MRMkU.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc5MRMkU.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc5MRMkU.s:10     .text:00000000 NutIpDemux
+                             .bss:00000000 in_prots
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc5MRMkU.s:70     .text:00000066 NutRegisterIpHandler
+
+UNDEFINED SYMBOLS
+ip_demux
+calloc
+__do_clear_bss

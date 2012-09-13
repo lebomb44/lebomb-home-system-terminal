@@ -1,0 +1,489 @@
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s 			page 1
+
+
+   1               		.file	"pathops.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	lseek
+  10               		.type	lseek, @function
+  11               	lseek:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14 0000 6FEF      		ldi r22,lo8(-1)
+  15 0002 7FEF      		ldi r23,hi8(-1)
+  16 0004 8FEF      		ldi r24,hlo8(-1)
+  17 0006 9FEF      		ldi r25,hhi8(-1)
+  18               	/* epilogue start */
+  19 0008 0895      		ret
+  20               		.size	lseek, .-lseek
+  21               	.global	fstat
+  22               		.type	fstat, @function
+  23               	fstat:
+  24               	/* prologue: function */
+  25               	/* frame size = 0 */
+  26 000a 8FEF      		ldi r24,lo8(-1)
+  27 000c 9FEF      		ldi r25,hi8(-1)
+  28               	/* epilogue start */
+  29 000e 0895      		ret
+  30               		.size	fstat, .-fstat
+  31               	.global	rename
+  32               		.type	rename, @function
+  33               	rename:
+  34 0010 0F93      		push r16
+  35 0012 1F93      		push r17
+  36 0014 DF93      		push r29
+  37 0016 CF93      		push r28
+  38 0018 CDB7      		in r28,__SP_L__
+  39 001a DEB7      		in r29,__SP_H__
+  40 001c 6697      		sbiw r28,22
+  41 001e 0FB6      		in __tmp_reg__,__SREG__
+  42 0020 F894      		cli
+  43 0022 DEBF      		out __SP_H__,r29
+  44 0024 0FBE      		out __SREG__,__tmp_reg__
+  45 0026 CDBF      		out __SP_L__,r28
+  46               	/* prologue: function */
+  47               	/* frame size = 22 */
+  48 0028 582F      		mov r21,r24
+  49 002a FE01      		movw r30,r28
+  50 002c 3596      		adiw r30,5
+  51 002e 282F      		mov r18,r24
+  52 0030 392F      		mov r19,r25
+  53 0032 D901      		movw r26,r18
+  54 0034 9E01      		movw r18,r28
+  55 0036 235F      		subi r18,lo8(-(13))
+  56 0038 3F4F      		sbci r19,hi8(-(13))
+  57 003a 00C0      		rjmp .L6
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s 			page 2
+
+
+  58               	.L8:
+  59 003c 8193      		st Z+,r24
+  60 003e 1196      		adiw r26,1
+  61               	.L6:
+  62 0040 9A2F      		mov r25,r26
+  63 0042 951B      		sub r25,r21
+  64 0044 8C91      		ld r24,X
+  65 0046 8823      		tst r24
+  66 0048 01F0      		breq .L7
+  67 004a 8A33      		cpi r24,lo8(58)
+  68 004c 01F0      		breq .L7
+  69 004e E217      		cp r30,r18
+  70 0050 F307      		cpc r31,r19
+  71 0052 01F4      		brne .L8
+  72               	.L7:
+  73 0054 FE01      		movw r30,r28
+  74 0056 E90F      		add r30,r25
+  75 0058 F11D      		adc r31,__zero_reg__
+  76 005a 1582      		std Z+5,__zero_reg__
+  77 005c 8C91      		ld r24,X
+  78 005e 8A33      		cpi r24,lo8(58)
+  79 0060 01F0      		breq .+2
+  80 0062 00C0      		rjmp .L9
+  81 0064 1196      		adiw r26,1
+  82 0066 BA83      		std Y+2,r27
+  83 0068 A983      		std Y+1,r26
+  84 006a FE01      		movw r30,r28
+  85 006c 3E96      		adiw r30,14
+  86 006e DB01      		movw r26,r22
+  87 0070 9E01      		movw r18,r28
+  88 0072 2A5E      		subi r18,lo8(-(22))
+  89 0074 3F4F      		sbci r19,hi8(-(22))
+  90 0076 00C0      		rjmp .L10
+  91               	.L12:
+  92 0078 8193      		st Z+,r24
+  93 007a 1196      		adiw r26,1
+  94               	.L10:
+  95 007c 9A2F      		mov r25,r26
+  96 007e 961B      		sub r25,r22
+  97 0080 8C91      		ld r24,X
+  98 0082 8823      		tst r24
+  99 0084 01F0      		breq .L11
+ 100 0086 8A33      		cpi r24,lo8(58)
+ 101 0088 01F0      		breq .L11
+ 102 008a E217      		cp r30,r18
+ 103 008c F307      		cpc r31,r19
+ 104 008e 01F4      		brne .L12
+ 105               	.L11:
+ 106 0090 9E01      		movw r18,r28
+ 107 0092 225F      		subi r18,lo8(-(14))
+ 108 0094 3F4F      		sbci r19,hi8(-(14))
+ 109 0096 F901      		movw r30,r18
+ 110 0098 E90F      		add r30,r25
+ 111 009a F11D      		adc r31,__zero_reg__
+ 112 009c 1082      		st Z,__zero_reg__
+ 113 009e 8C91      		ld r24,X
+ 114 00a0 8A33      		cpi r24,lo8(58)
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s 			page 3
+
+
+ 115 00a2 01F4      		brne .L9
+ 116 00a4 1196      		adiw r26,1
+ 117 00a6 BC83      		std Y+4,r27
+ 118 00a8 AB83      		std Y+3,r26
+ 119 00aa 8E01      		movw r16,r28
+ 120 00ac 0B5F      		subi r16,lo8(-(5))
+ 121 00ae 1F4F      		sbci r17,hi8(-(5))
+ 122 00b0 C901      		movw r24,r18
+ 123 00b2 B801      		movw r22,r16
+ 124 00b4 0E94 0000 		call strcmp
+ 125 00b8 0097      		sbiw r24,0
+ 126 00ba 01F4      		brne .L9
+ 127 00bc C801      		movw r24,r16
+ 128 00be 0E94 0000 		call NutDeviceLookup
+ 129 00c2 DC01      		movw r26,r24
+ 130 00c4 0097      		sbiw r24,0
+ 131 00c6 01F4      		brne .L13
+ 132 00c8 82E0      		ldi r24,lo8(2)
+ 133 00ca 90E0      		ldi r25,hi8(2)
+ 134 00cc 9093 0000 		sts (errno)+1,r25
+ 135 00d0 8093 0000 		sts errno,r24
+ 136 00d4 00C0      		rjmp .L9
+ 137               	.L13:
+ 138 00d6 5596      		adiw r26,21
+ 139 00d8 ED91      		ld r30,X+
+ 140 00da FC91      		ld r31,X
+ 141 00dc 5697      		sbiw r26,21+1
+ 142 00de 62E3      		ldi r22,lo8(4402)
+ 143 00e0 71E1      		ldi r23,hi8(4402)
+ 144 00e2 AE01      		movw r20,r28
+ 145 00e4 4F5F      		subi r20,lo8(-(1))
+ 146 00e6 5F4F      		sbci r21,hi8(-(1))
+ 147 00e8 0995      		icall
+ 148 00ea 9C01      		movw r18,r24
+ 149 00ec 00C0      		rjmp .L14
+ 150               	.L9:
+ 151 00ee 2FEF      		ldi r18,lo8(-1)
+ 152 00f0 3FEF      		ldi r19,hi8(-1)
+ 153               	.L14:
+ 154 00f2 C901      		movw r24,r18
+ 155               	/* epilogue start */
+ 156 00f4 6696      		adiw r28,22
+ 157 00f6 0FB6      		in __tmp_reg__,__SREG__
+ 158 00f8 F894      		cli
+ 159 00fa DEBF      		out __SP_H__,r29
+ 160 00fc 0FBE      		out __SREG__,__tmp_reg__
+ 161 00fe CDBF      		out __SP_L__,r28
+ 162 0100 CF91      		pop r28
+ 163 0102 DF91      		pop r29
+ 164 0104 1F91      		pop r17
+ 165 0106 0F91      		pop r16
+ 166 0108 0895      		ret
+ 167               		.size	rename, .-rename
+ 168               		.type	PathOperation, @function
+ 169               	PathOperation:
+ 170 010a DF92      		push r13
+ 171 010c EF92      		push r14
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s 			page 4
+
+
+ 172 010e FF92      		push r15
+ 173 0110 0F93      		push r16
+ 174 0112 1F93      		push r17
+ 175 0114 DF93      		push r29
+ 176 0116 CF93      		push r28
+ 177 0118 CDB7      		in r28,__SP_L__
+ 178 011a DEB7      		in r29,__SP_H__
+ 179 011c 2997      		sbiw r28,9
+ 180 011e 0FB6      		in __tmp_reg__,__SREG__
+ 181 0120 F894      		cli
+ 182 0122 DEBF      		out __SP_H__,r29
+ 183 0124 0FBE      		out __SREG__,__tmp_reg__
+ 184 0126 CDBF      		out __SP_L__,r28
+ 185               	/* prologue: function */
+ 186               	/* frame size = 9 */
+ 187 0128 D82E      		mov r13,r24
+ 188 012a 7B01      		movw r14,r22
+ 189 012c FE01      		movw r30,r28
+ 190 012e 3196      		adiw r30,1
+ 191 0130 282F      		mov r18,r24
+ 192 0132 392F      		mov r19,r25
+ 193 0134 8901      		movw r16,r18
+ 194 0136 AE01      		movw r20,r28
+ 195 0138 475F      		subi r20,lo8(-(9))
+ 196 013a 5F4F      		sbci r21,hi8(-(9))
+ 197 013c 00C0      		rjmp .L17
+ 198               	.L19:
+ 199 013e 8193      		st Z+,r24
+ 200 0140 0F5F      		subi r16,lo8(-(1))
+ 201 0142 1F4F      		sbci r17,hi8(-(1))
+ 202               	.L17:
+ 203 0144 202F      		mov r18,r16
+ 204 0146 2D19      		sub r18,r13
+ 205 0148 D801      		movw r26,r16
+ 206 014a 8C91      		ld r24,X
+ 207 014c 8823      		tst r24
+ 208 014e 01F0      		breq .L18
+ 209 0150 8A33      		cpi r24,lo8(58)
+ 210 0152 01F0      		breq .L18
+ 211 0154 E417      		cp r30,r20
+ 212 0156 F507      		cpc r31,r21
+ 213 0158 01F4      		brne .L19
+ 214               	.L18:
+ 215 015a CE01      		movw r24,r28
+ 216 015c 0196      		adiw r24,1
+ 217 015e FC01      		movw r30,r24
+ 218 0160 E20F      		add r30,r18
+ 219 0162 F11D      		adc r31,__zero_reg__
+ 220 0164 1082      		st Z,__zero_reg__
+ 221 0166 0E94 0000 		call NutDeviceLookup
+ 222 016a DC01      		movw r26,r24
+ 223 016c 0097      		sbiw r24,0
+ 224 016e 01F4      		brne .L20
+ 225 0170 82E0      		ldi r24,lo8(2)
+ 226 0172 90E0      		ldi r25,hi8(2)
+ 227 0174 9093 0000 		sts (errno)+1,r25
+ 228 0178 8093 0000 		sts errno,r24
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s 			page 5
+
+
+ 229 017c 2FEF      		ldi r18,lo8(-1)
+ 230 017e 3FEF      		ldi r19,hi8(-1)
+ 231 0180 00C0      		rjmp .L21
+ 232               	.L20:
+ 233 0182 0F5F      		subi r16,lo8(-(1))
+ 234 0184 1F4F      		sbci r17,hi8(-(1))
+ 235 0186 5596      		adiw r26,21
+ 236 0188 ED91      		ld r30,X+
+ 237 018a FC91      		ld r31,X
+ 238 018c 5697      		sbiw r26,21+1
+ 239 018e B701      		movw r22,r14
+ 240 0190 A801      		movw r20,r16
+ 241 0192 0995      		icall
+ 242 0194 9C01      		movw r18,r24
+ 243               	.L21:
+ 244 0196 C901      		movw r24,r18
+ 245               	/* epilogue start */
+ 246 0198 2996      		adiw r28,9
+ 247 019a 0FB6      		in __tmp_reg__,__SREG__
+ 248 019c F894      		cli
+ 249 019e DEBF      		out __SP_H__,r29
+ 250 01a0 0FBE      		out __SREG__,__tmp_reg__
+ 251 01a2 CDBF      		out __SP_L__,r28
+ 252 01a4 CF91      		pop r28
+ 253 01a6 DF91      		pop r29
+ 254 01a8 1F91      		pop r17
+ 255 01aa 0F91      		pop r16
+ 256 01ac FF90      		pop r15
+ 257 01ae EF90      		pop r14
+ 258 01b0 DF90      		pop r13
+ 259 01b2 0895      		ret
+ 260               		.size	PathOperation, .-PathOperation
+ 261               	.global	mkdir
+ 262               		.type	mkdir, @function
+ 263               	mkdir:
+ 264               	/* prologue: function */
+ 265               	/* frame size = 0 */
+ 266 01b4 61E1      		ldi r22,lo8(4369)
+ 267 01b6 71E1      		ldi r23,hi8(4369)
+ 268 01b8 0E94 0000 		call PathOperation
+ 269               	/* epilogue start */
+ 270 01bc 0895      		ret
+ 271               		.size	mkdir, .-mkdir
+ 272               	.global	unlink
+ 273               		.type	unlink, @function
+ 274               	unlink:
+ 275               	/* prologue: function */
+ 276               	/* frame size = 0 */
+ 277 01be 62E2      		ldi r22,lo8(4386)
+ 278 01c0 71E1      		ldi r23,hi8(4386)
+ 279 01c2 0E94 0000 		call PathOperation
+ 280               	/* epilogue start */
+ 281 01c6 0895      		ret
+ 282               		.size	unlink, .-unlink
+ 283               	.global	rmdir
+ 284               		.type	rmdir, @function
+ 285               	rmdir:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s 			page 6
+
+
+ 286               	/* prologue: function */
+ 287               	/* frame size = 0 */
+ 288 01c8 62E1      		ldi r22,lo8(4370)
+ 289 01ca 71E1      		ldi r23,hi8(4370)
+ 290 01cc 0E94 0000 		call PathOperation
+ 291               	/* epilogue start */
+ 292 01d0 0895      		ret
+ 293               		.size	rmdir, .-rmdir
+ 294               	.global	stat
+ 295               		.type	stat, @function
+ 296               	stat:
+ 297 01d2 CF92      		push r12
+ 298 01d4 DF92      		push r13
+ 299 01d6 EF92      		push r14
+ 300 01d8 FF92      		push r15
+ 301 01da 0F93      		push r16
+ 302 01dc 1F93      		push r17
+ 303 01de DF93      		push r29
+ 304 01e0 CF93      		push r28
+ 305 01e2 CDB7      		in r28,__SP_L__
+ 306 01e4 DEB7      		in r29,__SP_H__
+ 307 01e6 2D97      		sbiw r28,13
+ 308 01e8 0FB6      		in __tmp_reg__,__SREG__
+ 309 01ea F894      		cli
+ 310 01ec DEBF      		out __SP_H__,r29
+ 311 01ee 0FBE      		out __SREG__,__tmp_reg__
+ 312 01f0 CDBF      		out __SP_L__,r28
+ 313               	/* prologue: function */
+ 314               	/* frame size = 13 */
+ 315 01f2 F82E      		mov r15,r24
+ 316 01f4 6B01      		movw r12,r22
+ 317 01f6 FE01      		movw r30,r28
+ 318 01f8 3596      		adiw r30,5
+ 319 01fa 282F      		mov r18,r24
+ 320 01fc 392F      		mov r19,r25
+ 321 01fe 8901      		movw r16,r18
+ 322 0200 AE01      		movw r20,r28
+ 323 0202 435F      		subi r20,lo8(-(13))
+ 324 0204 5F4F      		sbci r21,hi8(-(13))
+ 325 0206 00C0      		rjmp .L30
+ 326               	.L32:
+ 327 0208 8193      		st Z+,r24
+ 328 020a 0F5F      		subi r16,lo8(-(1))
+ 329 020c 1F4F      		sbci r17,hi8(-(1))
+ 330               	.L30:
+ 331 020e 202F      		mov r18,r16
+ 332 0210 2F19      		sub r18,r15
+ 333 0212 D801      		movw r26,r16
+ 334 0214 8C91      		ld r24,X
+ 335 0216 8823      		tst r24
+ 336 0218 01F0      		breq .L31
+ 337 021a 8A33      		cpi r24,lo8(58)
+ 338 021c 01F0      		breq .L31
+ 339 021e E417      		cp r30,r20
+ 340 0220 F507      		cpc r31,r21
+ 341 0222 01F4      		brne .L32
+ 342               	.L31:
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s 			page 7
+
+
+ 343 0224 7801      		movw r14,r16
+ 344 0226 CE01      		movw r24,r28
+ 345 0228 0596      		adiw r24,5
+ 346 022a FC01      		movw r30,r24
+ 347 022c E20F      		add r30,r18
+ 348 022e F11D      		adc r31,__zero_reg__
+ 349 0230 1082      		st Z,__zero_reg__
+ 350 0232 0E94 0000 		call NutDeviceLookup
+ 351 0236 DC01      		movw r26,r24
+ 352 0238 0097      		sbiw r24,0
+ 353 023a 01F4      		brne .L33
+ 354 023c 2FEF      		ldi r18,lo8(-1)
+ 355 023e 3FEF      		ldi r19,hi8(-1)
+ 356 0240 00C0      		rjmp .L34
+ 357               	.L33:
+ 358 0242 F801      		movw r30,r16
+ 359 0244 8081      		ld r24,Z
+ 360 0246 8A33      		cpi r24,lo8(58)
+ 361 0248 01F4      		brne .L35
+ 362 024a 0894      		sec
+ 363 024c E11C      		adc r14,__zero_reg__
+ 364 024e F11C      		adc r15,__zero_reg__
+ 365               	.L35:
+ 366 0250 FA82      		std Y+2,r15
+ 367 0252 E982      		std Y+1,r14
+ 368 0254 DC82      		std Y+4,r13
+ 369 0256 CB82      		std Y+3,r12
+ 370 0258 5596      		adiw r26,21
+ 371 025a ED91      		ld r30,X+
+ 372 025c FC91      		ld r31,X
+ 373 025e 5697      		sbiw r26,21+1
+ 374 0260 CD01      		movw r24,r26
+ 375 0262 61E0      		ldi r22,lo8(4353)
+ 376 0264 71E1      		ldi r23,hi8(4353)
+ 377 0266 AE01      		movw r20,r28
+ 378 0268 4F5F      		subi r20,lo8(-(1))
+ 379 026a 5F4F      		sbci r21,hi8(-(1))
+ 380 026c 0995      		icall
+ 381 026e 9C01      		movw r18,r24
+ 382               	.L34:
+ 383 0270 C901      		movw r24,r18
+ 384               	/* epilogue start */
+ 385 0272 2D96      		adiw r28,13
+ 386 0274 0FB6      		in __tmp_reg__,__SREG__
+ 387 0276 F894      		cli
+ 388 0278 DEBF      		out __SP_H__,r29
+ 389 027a 0FBE      		out __SREG__,__tmp_reg__
+ 390 027c CDBF      		out __SP_L__,r28
+ 391 027e CF91      		pop r28
+ 392 0280 DF91      		pop r29
+ 393 0282 1F91      		pop r17
+ 394 0284 0F91      		pop r16
+ 395 0286 FF90      		pop r15
+ 396 0288 EF90      		pop r14
+ 397 028a DF90      		pop r13
+ 398 028c CF90      		pop r12
+ 399 028e 0895      		ret
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s 			page 8
+
+
+ 400               		.size	stat, .-stat
+ 401               	.global	access
+ 402               		.type	access, @function
+ 403               	access:
+ 404 0290 DF93      		push r29
+ 405 0292 CF93      		push r28
+ 406 0294 CDB7      		in r28,__SP_L__
+ 407 0296 DEB7      		in r29,__SP_H__
+ 408 0298 2D97      		sbiw r28,13
+ 409 029a 0FB6      		in __tmp_reg__,__SREG__
+ 410 029c F894      		cli
+ 411 029e DEBF      		out __SP_H__,r29
+ 412 02a0 0FBE      		out __SREG__,__tmp_reg__
+ 413 02a2 CDBF      		out __SP_L__,r28
+ 414               	/* prologue: function */
+ 415               	/* frame size = 13 */
+ 416 02a4 BE01      		movw r22,r28
+ 417 02a6 6F5F      		subi r22,lo8(-(1))
+ 418 02a8 7F4F      		sbci r23,hi8(-(1))
+ 419 02aa 0E94 0000 		call stat
+ 420 02ae 892B      		or r24,r25
+ 421 02b0 01F4      		brne .L38
+ 422 02b2 20E0      		ldi r18,lo8(0)
+ 423 02b4 30E0      		ldi r19,hi8(0)
+ 424 02b6 00C0      		rjmp .L39
+ 425               	.L38:
+ 426 02b8 2FEF      		ldi r18,lo8(-1)
+ 427 02ba 3FEF      		ldi r19,hi8(-1)
+ 428               	.L39:
+ 429 02bc C901      		movw r24,r18
+ 430               	/* epilogue start */
+ 431 02be 2D96      		adiw r28,13
+ 432 02c0 0FB6      		in __tmp_reg__,__SREG__
+ 433 02c2 F894      		cli
+ 434 02c4 DEBF      		out __SP_H__,r29
+ 435 02c6 0FBE      		out __SREG__,__tmp_reg__
+ 436 02c8 CDBF      		out __SP_L__,r28
+ 437 02ca CF91      		pop r28
+ 438 02cc DF91      		pop r29
+ 439 02ce 0895      		ret
+ 440               		.size	access, .-access
+GAS LISTING C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pathops.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:11     .text:00000000 lseek
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:23     .text:0000000a fstat
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:33     .text:00000010 rename
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:169    .text:0000010a PathOperation
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:263    .text:000001b4 mkdir
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:274    .text:000001be unlink
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:285    .text:000001c8 rmdir
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:296    .text:000001d2 stat
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccINEWva.s:403    .text:00000290 access
+
+UNDEFINED SYMBOLS
+strcmp
+NutDeviceLookup
+errno
