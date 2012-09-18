@@ -1,0 +1,15 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_semaphore.html#ga7c04b857983464fba7861c29e94afc41" title="Unlock a sempahore." alt="" coords="185,30,277,55"/>
+<area shape="rect" id="node30" href="$group__xg_semaphore.html#ga6dd15ac31f844b79bd987caa2223f37c" title="Lock a semaphore." alt="" coords="185,79,276,105"/>
+<area shape="rect" id="node5" href="$group__xg_event.html#gad519c6b1469621d2b3909fe58d1ac40b" title="Post an event to a specified queue." alt="" coords="325,30,421,55"/>
+<area shape="rect" id="node7" href="$group__xg_event.html#ga129d2de44ddf083f252d0754fc45d9d3" title="Asynchronously post an event to a specified queue." alt="" coords="853,5,981,30"/>
+<area shape="rect" id="node15" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="469,81,576,106"/>
+<area shape="rect" id="node9" href="$group__xg_timer.html#gafb23f6965312663a72d41fefc574dc00" title="Stop a specified timer." alt="" coords="1076,5,1175,30"/>
+<area shape="rect" id="node13" href="$group__xg_thread.html#ga4d2458fb9ec9d926a6f87706b19e7e06" title="Add a thread to a prioritiy ordered queue." alt="" coords="1049,54,1202,79"/>
+<area shape="rect" id="node11" href="$group__xg_timer.html#ga681ca3c989be2bdeb5f0cc97e11d6e06" title="Insert a new timer in the global timer list." alt="" coords="1251,55,1355,81"/>
+<area shape="rect" id="node17" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="624,155,787,181"/>
+<area shape="rect" id="node20" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="641,106,769,131"/>
+<area shape="rect" id="node23" href="$group__xg_timer.html#gaf719e88403b4ccc78f071ce5c85a5a71" title="Process elapsed timers." alt="" coords="835,106,1000,131"/>
+<area shape="rect" id="node28" href="$group__xg_nut_arch_arm_os_context.html#gad63408e1c4ef1c03d9f979ad2d31b7e0" title="Switch to another thread." alt="" coords="859,155,975,181"/>
+<area shape="rect" id="node25" href="$group__xg_timer.html#ga940f66286dcf28b8280e41b605064446" title="Return the number of system timer ticks." alt="" coords="1068,155,1183,181"/>
+</map>

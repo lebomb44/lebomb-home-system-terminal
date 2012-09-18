@@ -1,0 +1,37 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$os_8h.html" title="cfg/os.h" alt="" coords="538,155,603,181"/>
+<area shape="rect" id="node5" href="$cfg_2arch_2avr_8h.html" title="AVR hardware configuration." alt="" coords="17,81,111,106"/>
+<area shape="rect" id="node9" href="$dev_8h.html" title="cfg/dev.h" alt="" coords="1105,230,1175,255"/>
+<area shape="rect" id="node13" href="$sys_2atom_8h.html" title="sys/atom.h" alt="" coords="608,81,691,106"/>
+<area shape="rect" id="node24" href="$heap_8h.html" title="Heap management definitions." alt="" coords="304,305,387,330"/>
+<area shape="rect" id="node29" href="$thread_8h.html" title="Thread management definitions." alt="" coords="190,305,279,330"/>
+<area shape="rect" id="node35" href="$event_8h.html" title="Event management definitions." alt="" coords="329,81,412,106"/>
+<area shape="rect" id="node38" href="$sys_2timer_8h.html" title="Timer management definitions." alt="" coords="1404,230,1487,255"/>
+<area shape="rect" id="node45" href="$confnet_8h.html" title="Header file for network configuration." alt="" coords="646,305,740,330"/>
+<area shape="rect" id="node51" href="$ether_8h.html" title="Ethernet protocol definitions." alt="" coords="1647,155,1727,181"/>
+<area shape="rect" id="node58" href="$if__var_8h.html" title="Network interface structure." alt="" coords="1631,230,1712,255"/>
+<area shape="rect" id="node72" href="$dev_2irqreg_8h.html" title="Interrupt management definitions." alt="" coords="1198,81,1284,106"/>
+<area shape="rect" id="node81" href="$nicrtl_8h.html" title="Network interface controller definitions." alt="" coords="1492,155,1572,181"/>
+<area shape="rect" id="node85" href="$rtlregs_8h.html" title="rtlregs.h" alt="" coords="1505,81,1572,106"/>
+<area shape="rect" id="node87" href="$osdebug_8h.html" title="sys/osdebug.h" alt="" coords="191,230,293,255"/>
+<area shape="rect" id="node96" href="$netdebug_8h.html" title="net/netdebug.h" alt="" coords="741,81,845,106"/>
+<area shape="rect" id="node7" href="$avrpio_8h.html" title="AVR port configuration." alt="" coords="5,155,115,181"/>
+<area shape="rect" id="node16" href="$types_8h.html" title="Nut/OS type declarations." alt="" coords="843,454,925,479"/>
+<area shape="rect" id="node22" href="$stdint_8h.html" title="stdint.h" alt="" coords="1153,379,1215,405"/>
+<area shape="rect" id="node18" href="$compiler_8h.html" title="compiler.h" alt="" coords="471,529,551,554"/>
+<area shape="rect" id="node26" href="$memory_8h.html" title="Default memory layout." alt="" coords="236,379,332,405"/>
+<area shape="rect" id="node41" href="$arch_2timer_8h.html" title="arch/timer.h" alt="" coords="1273,305,1359,330"/>
+<area shape="rect" id="node48" href="$cfg_2eeprom_8h.html" title="cfg/eeprom.h" alt="" coords="701,379,795,405"/>
+<area shape="rect" id="node54" href="$netbuf_8h.html" title="Network buffer definitions." alt="" coords="1548,305,1636,330"/>
+<area shape="rect" id="node62" href="$device_8h.html" title="Nut/OS device definitions." alt="" coords="1383,305,1472,330"/>
+<area shape="rect" id="node69" href="$if__types_8h.html" title="Network interface type definitions." alt="" coords="1711,305,1805,330"/>
+<area shape="rect" id="node64" href="$file_8h.html" title="sys/file.h" alt="" coords="1317,379,1387,405"/>
+<area shape="rect" id="node74" href="$arch_8h.html" title="cfg/arch.h" alt="" coords="1204,155,1279,181"/>
+<area shape="rect" id="node78" href="$irqstack_8h.html" title="dev/irqstack.h" alt="" coords="1082,155,1179,181"/>
+<area shape="rect" id="node89" href="$stdio_8h.html" title="C Standard I/O." alt="" coords="411,305,469,330"/>
+<area shape="rect" id="node99" href="$socket_8h.html" title="UDP and TCP socket interface definitions." alt="" coords="831,155,921,181"/>
+<area shape="rect" id="node113" href="$netinet_2tcp_8h.html" title="TCP protocol definitions." alt="" coords="765,305,853,330"/>
+<area shape="rect" id="node101" href="$cfg_2udp_8h.html" title="UDP configuration." alt="" coords="1008,230,1080,255"/>
+<area shape="rect" id="node104" href="$sock__var_8h.html" title="UDP and TCP socket interface definitions." alt="" coords="881,230,983,255"/>
+<area shape="rect" id="node111" href="$tcp__fsm_8h.html" title="TCP state machine definitions." alt="" coords="1030,305,1145,330"/>
+</map>

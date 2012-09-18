@@ -1,0 +1,24 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$cfg_2ip_8h.html" title="IP configuration." alt="" coords="151,81,212,106"/>
+<area shape="rect" id="node5" href="$route_8h.html" title="Routing information definitions." alt="" coords="479,81,559,106"/>
+<area shape="rect" id="node29" href="$in_8h.html" title="Internet definitions." alt="" coords="893,379,976,405"/>
+<area shape="rect" id="node32" href="$netinet_2ip_8h.html" title="Definitions for internet protocol version 4." alt="" coords="388,155,471,181"/>
+<area shape="rect" id="node40" href="$icmp_8h.html" title="ICMP protocol definitions." alt="" coords="265,155,364,181"/>
+<area shape="rect" id="node46" href="$ip__icmp_8h.html" title="Interface control message protocol definitions." alt="" coords="237,81,352,106"/>
+<area shape="rect" id="node51" href="$igmp_8h.html" title="IGMP protocol definitions." alt="" coords="546,155,645,181"/>
+<area shape="rect" id="node56" href="$netinet_2udp_8h.html" title="UDP protocol definitions." alt="" coords="715,230,808,255"/>
+<area shape="rect" id="node60" href="$socket_8h.html" title="UDP and TCP socket interface definitions." alt="" coords="1063,155,1153,181"/>
+<area shape="rect" id="node74" href="$inet_8h.html" title="Internet address conversion." alt="" coords="744,305,824,330"/>
+<area shape="rect" id="node7" href="$if__var_8h.html" title="Network interface structure." alt="" coords="389,230,469,255"/>
+<area shape="rect" id="node9" href="$types_8h.html" title="Nut/OS type declarations." alt="" coords="628,454,711,479"/>
+<area shape="rect" id="node15" href="$stdint_8h.html" title="stdint.h" alt="" coords="511,379,573,405"/>
+<area shape="rect" id="node17" href="$device_8h.html" title="Nut/OS device definitions." alt="" coords="579,305,668,330"/>
+<area shape="rect" id="node23" href="$netbuf_8h.html" title="Network buffer definitions." alt="" coords="467,305,555,330"/>
+<area shape="rect" id="node27" href="$if__types_8h.html" title="Network interface type definitions." alt="" coords="297,305,391,330"/>
+<area shape="rect" id="node11" href="$compiler_8h.html" title="compiler.h" alt="" coords="1165,529,1245,554"/>
+<area shape="rect" id="node19" href="$file_8h.html" title="sys/file.h" alt="" coords="598,379,668,405"/>
+<area shape="rect" id="node34" href="$if__arp_8h.html" title="ARP protocol header." alt="" coords="139,230,221,255"/>
+<area shape="rect" id="node62" href="$cfg_2udp_8h.html" title="UDP configuration." alt="" coords="1128,230,1200,255"/>
+<area shape="rect" id="node65" href="$sock__var_8h.html" title="UDP and TCP socket interface definitions." alt="" coords="1001,230,1103,255"/>
+<area shape="rect" id="node72" href="$tcp__fsm_8h.html" title="TCP state machine definitions." alt="" coords="1051,305,1167,330"/>
+</map>

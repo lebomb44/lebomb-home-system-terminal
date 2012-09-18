@@ -1,0 +1,26 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$os_8h.html" title="cfg/os.h" alt="" coords="5,230,69,255"/>
+<area shape="rect" id="node5" href="$clock_8h.html" title="Nut/OS Clock Configuration." alt="" coords="738,155,816,181"/>
+<area shape="rect" id="node7" href="$arch_8h.html" title="cfg/arch.h" alt="" coords="936,230,1011,255"/>
+<area shape="rect" id="node9" href="$cfg_2uart_8h.html" title="UART configuration." alt="" coords="1019,81,1091,106"/>
+<area shape="rect" id="node11" href="$cfg_2arch_2gpio_8h.html" title="Port configuration." alt="" coords="841,155,943,181"/>
+<area shape="rect" id="node15" href="$sys_2atom_8h.html" title="sys/atom.h" alt="" coords="181,155,264,181"/>
+<area shape="rect" id="node26" href="$event_8h.html" title="Event management definitions." alt="" coords="288,155,371,181"/>
+<area shape="rect" id="node35" href="$sys_2timer_8h.html" title="Timer management definitions." alt="" coords="389,305,472,330"/>
+<area shape="rect" id="node42" href="$dev_2irqreg_8h.html" title="Interrupt management definitions." alt="" coords="627,155,713,181"/>
+<area shape="rect" id="node56" href="$dev_2gpio_8h.html" title="General purpose I/O." alt="" coords="661,81,739,106"/>
+<area shape="rect" id="node60" href="$usartat91_8h.html" title="Synchronous/asynchronous serial device definitions." alt="" coords="496,155,603,181"/>
+<area shape="rect" id="node69" href="$usartat91_8c.html" title="usartat91.c" alt="" coords="452,81,535,106"/>
+<area shape="rect" id="node18" href="$types_8h.html" title="Nut/OS type declarations." alt="" coords="209,529,292,554"/>
+<area shape="rect" id="node24" href="$stdint_8h.html" title="stdint.h" alt="" coords="466,454,528,479"/>
+<area shape="rect" id="node20" href="$compiler_8h.html" title="compiler.h" alt="" coords="289,603,369,629"/>
+<area shape="rect" id="node28" href="$thread_8h.html" title="Thread management definitions." alt="" coords="193,379,281,405"/>
+<area shape="rect" id="node32" href="$memory_8h.html" title="Default memory layout." alt="" coords="145,454,241,479"/>
+<area shape="rect" id="node38" href="$arch_2timer_8h.html" title="arch/timer.h" alt="" coords="418,379,504,405"/>
+<area shape="rect" id="node46" href="$device_8h.html" title="Nut/OS device definitions." alt="" coords="581,379,669,405"/>
+<area shape="rect" id="node52" href="$irqstack_8h.html" title="dev/irqstack.h" alt="" coords="755,230,852,255"/>
+<area shape="rect" id="node48" href="$file_8h.html" title="sys/file.h" alt="" coords="571,454,641,479"/>
+<area shape="rect" id="node54" href="$dev_8h.html" title="cfg/dev.h" alt="" coords="769,305,839,330"/>
+<area shape="rect" id="node63" href="$dev_2uart_8h.html" title="UART I/O function prototypes." alt="" coords="588,305,663,330"/>
+<area shape="rect" id="node66" href="$usart_8h.html" title="Synchronous/asynchronous serial device definitions." alt="" coords="597,230,680,255"/>
+</map>

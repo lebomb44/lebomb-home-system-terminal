@@ -1,0 +1,46 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_heap.html#ga9f850d0608418aea291e4c0fdab93826" title="Return a block to heap memory." alt="" coords="435,55,477,81"/>
+<area shape="rect" id="node5" href="$group__xg_heap.html#ga381d0a123dbf80ca3efe2614aa826e08" title="Allocate a block from heap memory." alt="" coords="235,258,293,283"/>
+<area shape="rect" id="node7" href="$group__xg_udp_socket.html#gae3f0a4c71eecf9a01920852dd0f0592d" title="Create a UDP socket." alt="" coords="195,157,333,182"/>
+<area shape="rect" id="node75" href="$group__xg_udp_socket.html#ga73efaff2acbe9b93f6a27a643471ef63" title="Close UDP socket." alt="" coords="193,5,335,30"/>
+<area shape="rect" id="node79" href="$group__xg_udp_socket.html#ga6b8b9b8ddce0e1024f75c7575d8c9e3b" title="Receive a UDP datagram." alt="" coords="387,627,525,653"/>
+<area shape="rect" id="node108" href="$group__xg_udp_socket.html#ga10191929e17f17de9f49c5b1f8822154" title="Send a UDP datagram." alt="" coords="757,157,864,182"/>
+<area shape="rect" id="node9" href="$group__xg_i_p.html#ga7606caeb3d5b7bdacaa52b35de179685" title="Register an additional Ethernet protocol handler." alt="" coords="385,157,527,182"/>
+<area shape="rect" id="node11" href="$group__xg_u_d_p.html#ga3057f4a4a81e80d7d7c024a5e0db73c5" title="Handle incoming UDP packets." alt="" coords="411,207,501,233"/>
+<area shape="rect" id="node13" href="$group__xgnetbuf.html#ga2e14a135152823a816388f50bdb3ea3f" title="Release a network buffer structure." alt="" coords="1574,251,1677,277"/>
+<area shape="rect" id="node16" href="$group__xg_udp_socket.html#ga2680591101bc19cee587830f217aeff6" title="Find a matching socket." alt="" coords="577,207,703,233"/>
+<area shape="rect" id="node18" href="$group__xg_i_c_m_p.html#ga387c1b71bb0ec69aa6467bdcedefbe26" title="Send an ICMP message as a response to a given destination." alt="" coords="577,258,703,283"/>
+<area shape="rect" id="node50" href="$group__xg_event.html#gad519c6b1469621d2b3909fe58d1ac40b" title="Post an event to a specified queue." alt="" coords="592,957,688,982"/>
+<area shape="rect" id="node20" href="$group__xgnetbuf.html#ga7a733aed1e6c15aaabb6657abe5f4e39" title="Allocate or re&#45;allocate a network buffer part." alt="" coords="1380,251,1484,277"/>
+<area shape="rect" id="node23" href="$group__xg_crt_string.html#ga09a4c3953e2e41a212a73cf3df4c8c8e" title="memcpy" alt="" coords="1591,830,1660,855"/>
+<area shape="rect" id="node25" href="$group__xg_i_c_m_p.html#gaa1a3c8e2fce88cb2ed41e6bf106e49be" title="Send an ICMP message to a given destination." alt="" coords="761,258,860,283"/>
+<area shape="rect" id="node28" href="$group__xg_i_c_m_p.html#ga66717aa9878b74c9e5801996b7de7431" title="Send an ICMP datagram." alt="" coords="947,647,1051,673"/>
+<area shape="rect" id="node30" href="$group__xg_i_p.html#ga0586b4cd0a06f9e87f216037f937fab1" title="Calculate a partial IP checksum of a buffer." alt="" coords="1558,554,1693,579"/>
+<area shape="rect" id="node32" href="$group__xg_i_p.html#gacbd7636c68dcc06dd37e2fae11472278" title="Calculates an the final IP checksum over a block of data." alt="" coords="1383,703,1481,729"/>
+<area shape="rect" id="node35" href="$group__xg_i_p.html#gaa1d170f1dc44c4292480d40990483d85" title="Send IP datagram." alt="" coords="1174,562,1261,587"/>
+<area shape="rect" id="node38" href="$group__xg_crt_string.html#gaa4075a014de11292d9105188ddbeb216" title="Fill memory region with a specific byte value." alt="" coords="1398,605,1466,630"/>
+<area shape="rect" id="node40" href="$group__xgnetbuf.html#ga3619cbf40ea5786bc0241c1e2e8e955a" title="Create a referencing copy of an existing network buffer structure." alt="" coords="1365,654,1499,679"/>
+<area shape="rect" id="node46" href="$group__xg_i_p.html#ga2534f1918ba2a63523659fc005344b25" title="Find a device associated with a particular IP route." alt="" coords="1374,454,1490,479"/>
+<area shape="rect" id="node48" href="$if__ether_8h.html#ad1273e0893b714b62384c38dcc443beb" title="NutArpCacheQuery" alt="" coords="1369,555,1495,581"/>
+<area shape="rect" id="node52" href="$group__xg_event.html#ga129d2de44ddf083f252d0754fc45d9d3" title="Asynchronously post an event to a specified queue." alt="" coords="1153,957,1281,982"/>
+<area shape="rect" id="node60" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="757,1007,864,1033"/>
+<area shape="rect" id="node54" href="$group__xg_timer.html#gafb23f6965312663a72d41fefc574dc00" title="Stop a specified timer." alt="" coords="1383,957,1481,982"/>
+<area shape="rect" id="node58" href="$group__xg_thread.html#ga4d2458fb9ec9d926a6f87706b19e7e06" title="Add a thread to a prioritiy ordered queue." alt="" coords="1355,1082,1509,1107"/>
+<area shape="rect" id="node56" href="$group__xg_timer.html#ga681ca3c989be2bdeb5f0cc97e11d6e06" title="Insert a new timer in the global timer list." alt="" coords="1573,1258,1677,1283"/>
+<area shape="rect" id="node62" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="917,1058,1080,1083"/>
+<area shape="rect" id="node65" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="935,1107,1063,1133"/>
+<area shape="rect" id="node68" href="$group__xg_timer.html#gaf719e88403b4ccc78f071ce5c85a5a71" title="Process elapsed timers." alt="" coords="1135,1259,1300,1285"/>
+<area shape="rect" id="node73" href="$group__xg_nut_arch_arm_os_context.html#gad63408e1c4ef1c03d9f979ad2d31b7e0" title="Switch to another thread." alt="" coords="1159,1107,1275,1133"/>
+<area shape="rect" id="node70" href="$group__xg_timer.html#ga940f66286dcf28b8280e41b605064446" title="Return the number of system timer ticks." alt="" coords="1375,1309,1489,1334"/>
+<area shape="rect" id="node81" href="$group__xg_event.html#ga79af18e0842286182af7c5b647526ce5" title="Wait for an event in a specified queue." alt="" coords="593,1109,687,1134"/>
+<area shape="rect" id="node86" href="$group__xg_timer.html#ga91b42f5fd833e1b72c27b3bfb0ed0af7" title="Start a system timer." alt="" coords="761,1322,860,1347"/>
+<area shape="rect" id="node102" href="$group__xg_event.html#gaaa944c4484d068bdacd8220b7e081302" title="Timer callback in case of event timeout." alt="" coords="753,1210,869,1235"/>
+<area shape="rect" id="node88" href="$group__xg_timer.html#gaf104e0c3660b2a77bd0d7b00c4fd741c" title="Start a system timer." alt="" coords="935,1322,1062,1347"/>
+<area shape="rect" id="node94" href="$group__xg_nut_arch_arm_os_timer_at91.html#gabb52a4e7f513a7c586898065e0a0c81a" title="Calculate system ticks for a given number of milliseconds." alt="" coords="927,1397,1071,1422"/>
+<area shape="rect" id="node90" href="$group__xg_timer.html#ga1e47b683a996583386ebef7e7c92501e" title="Create a new system timer." alt="" coords="1162,1309,1273,1334"/>
+<area shape="rect" id="node96" href="$group__xg_nut_arch_arm_os_timer_at91.html#ga2724f52da15ed45123a32c1ed7e148f0" title="Return the number of system ticks per second." alt="" coords="1161,1410,1274,1435"/>
+<area shape="rect" id="node98" href="$group__xg_timer.html#ga784a7f52b5167c777149fd1d874c99f0" title="Return the CPU clock frequency." alt="" coords="1375,1410,1489,1435"/>
+<area shape="rect" id="node100" href="$group__xg_nut_arch_arm_os_timer_gba.html#ga7d11c53224db0028ad4838f8b9df9872" title="Return the CPU clock in Hertz." alt="" coords="1568,1410,1683,1435"/>
+<area shape="rect" id="node112" href="$group__xg_u_d_p.html#ga518b1cc25e7c2e16bb631d0d143007a0" title="Send a UDP packet." alt="" coords="949,461,1049,486"/>
+<area shape="rect" id="node116" href="$group__xg_i_p.html#ga9ddc8d97c6179d3b2c562a78b2131632" title="Calculates the partial IP pseudo checksum." alt="" coords="1129,410,1306,435"/>
+</map>

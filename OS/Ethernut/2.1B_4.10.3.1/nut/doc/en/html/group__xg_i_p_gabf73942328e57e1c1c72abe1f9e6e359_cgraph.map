@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_i_p.html#gadbce564458332a83ab871b91a54269dd" title="Convert decimal dotted ASCII representation into numeric IP address." alt="" coords="176,103,251,129"/>
+<area shape="rect" id="node5" href="$group__xg_crt_string.html#ga09a4c3953e2e41a212a73cf3df4c8c8e" title="memcpy" alt="" coords="880,330,949,355"/>
+<area shape="rect" id="node7" href="$group__xg_i_p.html#gaeb3b4f86e57db7d3e047b0c53aa94e60" title="Add a new entry to the IP routing table." alt="" coords="325,1239,430,1265"/>
+<area shape="rect" id="node11" href="$group__xg_conf_net.html#gacd0c3f2b073732af821661964eae34b4" title="Save network configuration in non&#45;volatile memory." alt="" coords="152,438,275,463"/>
+<area shape="rect" id="node9" href="$group__xg_heap.html#ga381d0a123dbf80ca3efe2614aa826e08" title="Allocate a block from heap memory." alt="" coords="885,1114,944,1139"/>
+<area shape="rect" id="node13" href="$group__xg_nut_nv_mem.html#ga2eb04b74f80407950b723c4978594b41" title="Save data in non&#45;volatile memory." alt="" coords="323,962,432,987"/>
+<area shape="rect" id="node15" href="$x12rtc_8h.html#abee38edf014cf9a82b94c2e0a52d895e" title="Store buffer contents in non&#45;volatile EEPROM." alt="" coords="677,1063,792,1089"/>
+<area shape="rect" id="node53" href="$nvmem__at45d_8h.html#af4070fbe96bc548a132c126be392c6ac" title="Store configuration parameters in flash memory." alt="" coords="481,1266,615,1291"/>
+<area shape="rect" id="node69" href="$at45db_8h.html#a403ccfda94df744eee47d85e6d35ef7d" title="Store configuration parameters in flash memory." alt="" coords="485,911,611,937"/>
+<area shape="rect" id="node93" href="$at49bv_8h.html#a2511e9c522d75d7ae41837cd7d274d7b" title="Store configuration parameters in flash memory." alt="" coords="487,531,609,557"/>
+<area shape="rect" id="node106" href="$group__xg_arch_avr_dev_eeprom.html#ga1ec3533d0514cbbe9b6d7fa63dcc00b9" title="Save data in AVR EEPROM." alt="" coords="482,1567,614,1593"/>
+<area shape="rect" id="node112" href="$group__xg_at91_efc.html#ga4a417f5fa6cb2544033200d4c16c40e0" title="Store configuration parameters in embedded flash memory." alt="" coords="484,255,612,281"/>
+<area shape="rect" id="node134" href="$dev_2eeprom_8h.html#aa650034d1a595707b25ca9f07270a23e" title="EEWriteData" alt="" coords="502,1641,594,1666"/>
+<area shape="rect" id="node17" href="$group__xg_heap.html#ga9f850d0608418aea291e4c0fdab93826" title="Return a block to heap memory." alt="" coords="893,886,936,911"/>
+<area shape="rect" id="node21" href="$group__xg_nut_arch_arm_at91_twi.html#gabe6654261c61050f912f4ad48458d7d2" title="Transmit and/or receive data as a master." alt="" coords="853,1026,976,1051"/>
+<area shape="rect" id="node23" href="$group__xg_event.html#ga79af18e0842286182af7c5b647526ce5" title="Wait for an event in a specified queue." alt="" coords="1193,1077,1287,1102"/>
+<area shape="rect" id="node41" href="$group__xg_event.html#gad519c6b1469621d2b3909fe58d1ac40b" title="Post an event to a specified queue." alt="" coords="1192,975,1288,1001"/>
+<area shape="rect" id="node44" href="$group__xg_timer.html#gafefcf81d05019a8134b49fa44d8c114a" title="Temporarily suspends the current thread." alt="" coords="1203,925,1277,950"/>
+<area shape="rect" id="node50" href="$group__xg_nut_arch_arm_at91_twi.html#gaa4c8ead7d93be00c8a12be08e64f1666" title="Initialize TWI interface." alt="" coords="1057,1026,1111,1051"/>
+<area shape="rect" id="node25" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="1341,975,1448,1001"/>
+<area shape="rect" id="node27" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="1501,951,1664,977"/>
+<area shape="rect" id="node29" href="$group__xg_thread.html#ga4d2458fb9ec9d926a6f87706b19e7e06" title="Add a thread to a prioritiy ordered queue." alt="" coords="1506,1177,1659,1202"/>
+<area shape="rect" id="node31" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="1519,1001,1647,1026"/>
+<area shape="rect" id="node35" href="$group__xg_timer.html#ga91b42f5fd833e1b72c27b3bfb0ed0af7" title="Start a system timer." alt="" coords="1345,1025,1444,1050"/>
+<area shape="rect" id="node37" href="$group__xg_event.html#gaaa944c4484d068bdacd8220b7e081302" title="Timer callback in case of event timeout." alt="" coords="1337,1227,1453,1253"/>
+<area shape="rect" id="node57" href="$group__xg_crt_string.html#ga135578e5537357b84cf147e3b352902d" title="Compare memory regions." alt="" coords="697,607,772,633"/>
+<area shape="rect" id="node60" href="$nvmem__at45d_8h.html#ad70b1387cb350d5a438b9fd287b3eff9" title="Get size of configuration area." alt="" coords="669,1518,800,1543"/>
+<area shape="rect" id="node62" href="$spi__at45d_8h.html#aa0c27889cf7245d2266c92c32bd0fdee" title="Return the page size." alt="" coords="853,1493,976,1518"/>
+<area shape="rect" id="node64" href="$spi__at45d_8h.html#a25cb2b6fad5064288ec0d52a86a9421d" title="Read data from DataFlash memory." alt="" coords="669,1317,800,1342"/>
+<area shape="rect" id="node67" href="$spi__at45d_8h.html#a7363f4646087da35b082f2bc61e5948e" title="Write data to DataFlash memory." alt="" coords="671,1366,799,1391"/>
+<area shape="rect" id="node71" href="$at45db_8h.html#af036226b4496d4a5ef631aea8e0ca040" title="Read data from flash memory." alt="" coords="675,709,794,734"/>
+<area shape="rect" id="node75" href="$at45db_8h.html#ab8b1a2c994f2806c76fcfc9403191c3d" title="Write data into flash memory." alt="" coords="676,810,793,835"/>
+<area shape="rect" id="node83" href="$at45db_8c.html#a712914d4f7478975637e66239aeb6188" title="At45dbParamPage" alt="" coords="671,962,798,987"/>
+<area shape="rect" id="node85" href="$at45db_8c.html#a80cb1be0b87102fdd01809ae50d631c6" title="Get size of configuration area." alt="" coords="675,1215,795,1241"/>
+<area shape="rect" id="node73" href="$at45db_8h.html#a9e6270c72f15f1b345488425ee00c2e1" title="Send DataFlash command." alt="" coords="857,759,973,785"/>
+<area shape="rect" id="node78" href="$at45db_8h.html#a717e106697b405acaf04f86a18d4ad4b" title="Wait until flash memory cycle finished." alt="" coords="1025,849,1143,874"/>
+<area shape="rect" id="node87" href="$at45db_8h.html#a4d2d2251e369a16d00756e25fc308f63" title="Initialize dataflash at specified interface and chip select." alt="" coords="877,1215,953,1241"/>
+<area shape="rect" id="node95" href="$at49bv_8h.html#a243ead0301d1af4db802c993a002771f" title="Erase sector at the specified offset." alt="" coords="671,457,798,482"/>
+<area shape="rect" id="node97" href="$at49bv_8h.html#a97ffdcc6578d05c3f547ea1bdc1c63a3" title="Read data from flash memory." alt="" coords="673,305,796,330"/>
+<area shape="rect" id="node100" href="$at49bv_8h.html#abd54940655c8650bfcaa838bd2577707" title="Write data into flash memory." alt="" coords="674,506,795,531"/>
+<area shape="rect" id="node108" href="$mweeprom_8h.html#a8df99a73dbaebb10cf000bb8fe058aea" title="eeprom_read_byte" alt="" coords="671,1617,798,1642"/>
+<area shape="rect" id="node110" href="$mweeprom_8h.html#ae340d9f2f905095903ed88a427280f12" title="eeprom_write_byte" alt="" coords="671,1567,798,1593"/>
+<area shape="rect" id="node115" href="$group__xg_at91_efc.html#ga2d623df273e1ea7cf78f106452d34ba3" title="Read data from flash memory." alt="" coords="671,255,799,281"/>
+<area shape="rect" id="node120" href="$group__xg_at91_efc.html#ga88dd492ad5906d8775958dfa32ace2a5" title="Unlock specified region." alt="" coords="664,103,805,129"/>
+<area shape="rect" id="node126" href="$group__xg_at91_efc.html#gadc029df0303c39750db82268a4f69d82" title="Write data into flash memory." alt="" coords="671,5,798,30"/>
+<area shape="rect" id="node130" href="$group__xg_at91_efc.html#gadf838420be2862f0cc0967678b6a851a" title="Lock specified region." alt="" coords="670,54,799,79"/>
+<area shape="rect" id="node122" href="$group__xg_at91_efc.html#gaa023dac60c83ca0a115a78a09d1d7503" title="Execute flash controller command." alt="" coords="869,55,960,81"/>
+<area shape="rect" id="node124" href="$group__xg_at91_efc.html#ga6315a1e14f08e327ae62aa2c98ab0049" title="Execute flash controller command." alt="" coords="1033,30,1135,55"/>
+<area shape="rect" id="node136" href="$at24c_8h.html#affea09cf2374464a6c0cc3be05616798" title="Write data into eeprom memory." alt="" coords="695,1666,775,1691"/>
+</map>

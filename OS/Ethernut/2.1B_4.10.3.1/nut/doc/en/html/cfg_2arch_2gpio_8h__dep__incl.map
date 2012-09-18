@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$dev_2gpio_8h.html" title="General purpose I/O." alt="" coords="2191,81,2312,106"/>
+<area shape="rect" id="node17" href="$usart0at91_8c.html" title="arch/arm/dev/atmel/usart0at91.c" alt="" coords="5,155,203,181"/>
+<area shape="rect" id="node19" href="$usart1at91_8c.html" title="arch/arm/dev/atmel/usart1at91.c" alt="" coords="227,155,425,181"/>
+<area shape="rect" id="node41" href="$macb_8c.html" title="arch/avr32/dev/macb.c" alt="" coords="3397,155,3541,181"/>
+<area shape="rect" id="node43" href="$usart0_8c.html" title="arch/avr32/dev/usart0.c" alt="" coords="3566,155,3713,181"/>
+<area shape="rect" id="node45" href="$usart1_8c.html" title="arch/avr32/dev/usart1.c" alt="" coords="3738,155,3885,181"/>
+<area shape="rect" id="node47" href="$usart2_8c.html" title="arch/avr32/dev/usart2.c" alt="" coords="3910,155,4057,181"/>
+<area shape="rect" id="node49" href="$spibus0gpio_8c.html" title="dev/spibus0gpio.c" alt="" coords="4083,155,4205,181"/>
+<area shape="rect" id="node51" href="$sbbif0_8h.html" title="Serial bit banged interface 0." alt="" coords="3799,81,3929,106"/>
+<area shape="rect" id="node53" href="$sbbif1_8h.html" title="Serial bit banged interface 1." alt="" coords="3953,81,4084,106"/>
+<area shape="rect" id="node55" href="$sbbif2_8h.html" title="Serial bit banged interface 2." alt="" coords="4108,81,4239,106"/>
+<area shape="rect" id="node57" href="$sbbif3_8h.html" title="Serial bit banged interface 3." alt="" coords="4263,81,4393,106"/>
+<area shape="rect" id="node59" href="$sppif0_8h.html" title="Serial bit banged interface 0." alt="" coords="4417,81,4548,106"/>
+<area shape="rect" id="node61" href="$at91__emac_8c.html" title="arch/arm/dev/atmel/at91_emac.c" alt="" coords="4573,81,4773,106"/>
+<area shape="rect" id="node63" href="$at91__mci_8c.html" title="arch/arm/dev/atmel/at91_mci.c" alt="" coords="4798,81,4988,106"/>
+<area shape="rect" id="node65" href="$charlcd__at91_8c.html" title="arch/arm/dev/atmel/charlcd_at91.c" alt="" coords="5013,81,5224,106"/>
+<area shape="rect" id="node67" href="$spibus0at91_8c.html" title="arch/arm/dev/atmel/spibus0at91.c" alt="" coords="5248,81,5456,106"/>
+<area shape="rect" id="node69" href="$spibus1at91_8c.html" title="arch/arm/dev/atmel/spibus1at91.c" alt="" coords="5480,81,5688,106"/>
+<area shape="rect" id="node71" href="$spimmc__at91_8c.html" title="arch/arm/dev/atmel/spimmc_at91.c" alt="" coords="5713,81,5927,106"/>
+<area shape="rect" id="node73" href="$st7036__at91_8c.html" title="arch/arm/dev/atmel/st7036_at91.c" alt="" coords="5952,81,6160,106"/>
+<area shape="rect" id="node77" href="$spibus0avr_8c.html" title="AVR SPI bus 0 driver." alt="" coords="6184,81,6344,106"/>
+<area shape="rect" id="node83" href="$hxcodec_8c.html" title="dev/hxcodec.c" alt="" coords="6368,81,6467,106"/>
+<area shape="rect" id="node85" href="$jtag__gpio0_8c.html" title="Primary JTAG cable driver." alt="" coords="6491,81,6601,106"/>
+<area shape="rect" id="node87" href="$lan91_8c.html" title="dev/lan91.c" alt="" coords="6626,81,6709,106"/>
+<area shape="rect" id="node89" href="$sbi0mmc0_8c.html" title="dev/sbi0mmc0.c" alt="" coords="6735,81,6847,106"/>
+<area shape="rect" id="node91" href="$sbi0mmc1_8c.html" title="dev/sbi0mmc1.c" alt="" coords="6871,81,6983,106"/>
+<area shape="rect" id="node93" href="$sbi1mmc0_8c.html" title="dev/sbi1mmc0.c" alt="" coords="7007,81,7119,106"/>
+<area shape="rect" id="node95" href="$sbi1mmc1_8c.html" title="dev/sbi1mmc1.c" alt="" coords="7143,81,7255,106"/>
+<area shape="rect" id="node97" href="$sbimmc_8c.html" title="dev/sbimmc.c" alt="" coords="7279,81,7377,106"/>
+<area shape="rect" id="node99" href="$spi__7seg_8c.html" title="Routines for 7 segment display." alt="" coords="7402,81,7507,106"/>
+<area shape="rect" id="node102" href="$twbbif_8c.html" title="Bit banging two wire interface." alt="" coords="7532,81,7617,106"/>
+<area shape="rect" id="node104" href="$vs10xx_8c.html" title="dev/vs10xx.c" alt="" coords="7642,81,7731,106"/>
+<area shape="rect" id="node106" href="$vscodec_8c.html" title="dev/vscodec.c" alt="" coords="7756,81,7855,106"/>
+<area shape="rect" id="node5" href="$portdio_8c.html" title="app/portdio/portdio.c" alt="" coords="2439,155,2573,181"/>
+<area shape="rect" id="node7" href="$tcps_8c.html" title="app/tcps/tcps.c" alt="" coords="2599,155,2703,181"/>
+<area shape="rect" id="node9" href="$gpio__at91_8c.html" title="arch/arm/dev/atmel/gpio_at91.c" alt="" coords="2727,155,2921,181"/>
+<area shape="rect" id="node11" href="$gpioa__at91_8c.html" title="arch/arm/dev/atmel/gpioa_at91.c" alt="" coords="2946,155,3147,181"/>
+<area shape="rect" id="node13" href="$gpiob__at91_8c.html" title="arch/arm/dev/atmel/gpiob_at91.c" alt="" coords="3171,155,3372,181"/>
+<area shape="rect" id="node15" href="$gpioc__at91_8c.html" title="arch/arm/dev/atmel/gpioc_at91.c" alt="" coords="451,155,651,181"/>
+<area shape="rect" id="node21" href="$gpio__avr_8c.html" title="arch/avr/dev/gpio_avr.c" alt="" coords="675,155,821,181"/>
+<area shape="rect" id="node23" href="$debug_8c.html" title="arch/avr32/dev/debug.c" alt="" coords="846,155,993,181"/>
+<area shape="rect" id="node25" href="$gpio__nutos_8c.html" title="arch/avr32/dev/gpio_nutos.c" alt="" coords="1018,155,1192,181"/>
+<area shape="rect" id="node27" href="$ih__irq0_8c.html" title="arch/avr32/dev/ih_irq0.c" alt="" coords="1217,155,1367,181"/>
+<area shape="rect" id="node29" href="$ih__irq1_8c.html" title="arch/avr32/dev/ih_irq1.c" alt="" coords="1391,155,1541,181"/>
+<area shape="rect" id="node31" href="$ih__irq2_8c.html" title="arch/avr32/dev/ih_irq2.c" alt="" coords="1566,155,1716,181"/>
+<area shape="rect" id="node33" href="$ih__irq3_8c.html" title="arch/avr32/dev/ih_irq3.c" alt="" coords="1741,155,1891,181"/>
+<area shape="rect" id="node35" href="$ih__irq4_8c.html" title="arch/avr32/dev/ih_irq4.c" alt="" coords="1915,155,2065,181"/>
+<area shape="rect" id="node37" href="$ih__irq5_8c.html" title="arch/avr32/dev/ih_irq5.c" alt="" coords="2090,155,2240,181"/>
+<area shape="rect" id="node39" href="$ih__irq6_8c.html" title="arch/avr32/dev/ih_irq6.c" alt="" coords="2265,155,2415,181"/>
+</map>

@@ -1,0 +1,25 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$os_8h.html" title="cfg/os.h" alt="" coords="5,81,69,106"/>
+<area shape="rect" id="node5" href="$arch_8h.html" title="cfg/arch.h" alt="" coords="655,305,729,330"/>
+<area shape="rect" id="node7" href="$compiler_8h.html" title="compiler.h" alt="" coords="313,529,393,554"/>
+<area shape="rect" id="node13" href="$nutdebug_8h.html" title="sys/nutdebug.h" alt="" coords="196,305,303,330"/>
+<area shape="rect" id="node15" href="$memory_8h.html" title="Default memory layout." alt="" coords="220,379,316,405"/>
+<area shape="rect" id="node22" href="$sys_2timer_8h.html" title="Timer management definitions." alt="" coords="463,230,545,255"/>
+<area shape="rect" id="node30" href="$stdio_8h.html" title="C Standard I/O." alt="" coords="1176,81,1235,106"/>
+<area shape="rect" id="node36" href="$blockdev_8h.html" title="Block device driver definitions." alt="" coords="1002,230,1104,255"/>
+<area shape="rect" id="node47" href="$cfg_2spi__7seg_8h.html" title="cfg/spi_7seg.h" alt="" coords="870,81,972,106"/>
+<area shape="rect" id="node49" href="$dev_2spi__7seg_8h.html" title="ntrx" alt="" coords="739,81,845,106"/>
+<area shape="rect" id="node72" href="$cfg_2arch_2gpio_8h.html" title="Port configuration." alt="" coords="1049,81,1151,106"/>
+<area shape="rect" id="node74" href="$spibus__at91_8h.html" title="AT91 specific SPI bus declarations." alt="" coords="592,81,715,106"/>
+<area shape="rect" id="node17" href="$types_8h.html" title="Nut/OS type declarations." alt="" coords="413,454,496,479"/>
+<area shape="rect" id="node25" href="$arch_2timer_8h.html" title="arch/timer.h" alt="" coords="543,305,629,330"/>
+<area shape="rect" id="node27" href="$stdint_8h.html" title="stdint.h" alt="" coords="643,379,705,405"/>
+<area shape="rect" id="node40" href="$device_8h.html" title="Nut/OS device definitions." alt="" coords="926,305,1015,330"/>
+<area shape="rect" id="node42" href="$file_8h.html" title="sys/file.h" alt="" coords="935,379,1005,405"/>
+<area shape="rect" id="node52" href="$spibus_8h.html" title="SPI bus declarations." alt="" coords="733,155,824,181"/>
+<area shape="rect" id="node54" href="$dev_2irqreg_8h.html" title="Interrupt management definitions." alt="" coords="735,230,821,255"/>
+<area shape="rect" id="node64" href="$event_8h.html" title="Event management definitions." alt="" coords="356,230,439,255"/>
+<area shape="rect" id="node59" href="$irqstack_8h.html" title="dev/irqstack.h" alt="" coords="805,305,901,330"/>
+<area shape="rect" id="node61" href="$dev_8h.html" title="cfg/dev.h" alt="" coords="818,379,888,405"/>
+<area shape="rect" id="node66" href="$thread_8h.html" title="Thread management definitions." alt="" coords="327,305,416,330"/>
+</map>

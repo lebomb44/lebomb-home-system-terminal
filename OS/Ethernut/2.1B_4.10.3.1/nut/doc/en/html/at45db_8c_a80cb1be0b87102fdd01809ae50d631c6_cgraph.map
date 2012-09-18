@@ -1,0 +1,37 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$at45db_8h.html#a4d2d2251e369a16d00756e25fc308f63" title="Initialize dataflash at specified interface and chip select." alt="" coords="174,229,250,254"/>
+<area shape="rect" id="node5" href="$dev_2at91__spi_8h.html#ad25e1dedf00fbbde2042887bafe2946c" title="Initialize serial peripheral interface on the AT91 MCU." alt="" coords="332,102,412,127"/>
+<area shape="rect" id="node15" href="$dev_2at91__spi_8h.html#aeaa739e238e4201669c822900c64e81a" title="Reset serial peripheral interface on the AT91 MCU." alt="" coords="721,153,818,178"/>
+<area shape="rect" id="node22" href="$dev_2at91__spi_8h.html#a209d8f29f513839c385b3fead7184d6f" title="Initialize specified SPI chip selects on the AT91 MCU." alt="" coords="299,203,445,229"/>
+<area shape="rect" id="node26" href="$dev_2at91__spi_8h.html#a8a279aaa9d0d19381be5f9eba2c6760c" title="Configure the SPI rate." alt="" coords="318,253,426,278"/>
+<area shape="rect" id="node28" href="$dev_2at91__spi_8h.html#ad9fd0c864725b61ca739d50edc40d4fb" title="Configure the SPI operation mode." alt="" coords="301,302,443,327"/>
+<area shape="rect" id="node32" href="$at45db_8h.html#a6c5d01b8aadfc21eaa9469c211bcf082" title="At45dbGetStatus" alt="" coords="315,363,429,389"/>
+<area shape="rect" id="node7" href="$dev_2at91__spi_8h.html#ae1b5e7fe097aa4db314a84cd314b6592" title="Initialize the first serial peripheral interface on the AT91 MCU." alt="" coords="527,102,614,127"/>
+<area shape="rect" id="node9" href="$dev_2at91__spi_8h.html#ad3375cfcc24bb71b146337f416e6937d" title="Initialize the second serial peripheral interface on the AT91 MCU." alt="" coords="714,103,825,129"/>
+<area shape="rect" id="node11" href="$group__xg_interrupt.html#gaa459696030a9cdf621ce3df7b3ac939d" title="Register an interrupt handler." alt="" coords="696,5,843,30"/>
+<area shape="rect" id="node13" href="$group__xg_interrupt.html#ga9d27f5ecdebd2acd835df5d3d2af02f5" title="Enable a specified interrupt." alt="" coords="722,54,817,79"/>
+<area shape="rect" id="node17" href="$at91__spi_8c.html#a402b35c597da754cc262dcd6f44261e8" title="At91SpiDisable" alt="" coords="891,103,997,129"/>
+<area shape="rect" id="node19" href="$at91__spi_8c.html#a7867c40b6055c46806e7dc97965ace42" title="At91SpiEnable" alt="" coords="893,153,995,178"/>
+<area shape="rect" id="node24" href="$dev_2at91__spi_8h.html#aaef2c2fc5c770fca47c6faf8893812f5" title="Initialize specified SPI0 chip selects on the AT91 MCU." alt="" coords="493,203,648,229"/>
+<area shape="rect" id="node30" href="$dev_2at91__spi_8h.html#ac408fd920011fffbfd3b572e0a6c5778" title="At91SpiGetModeFlags" alt="" coords="499,302,643,327"/>
+<area shape="rect" id="node34" href="$dev_2at91__spi_8h.html#ac9ceb06366390229ddd232cb07e0087d" title="Transfer two SPI buffers." alt="" coords="512,370,629,395"/>
+<area shape="rect" id="node36" href="$group__xg_event.html#ga79af18e0842286182af7c5b647526ce5" title="Wait for an event in a specified queue." alt="" coords="722,394,817,419"/>
+<area shape="rect" id="node38" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="891,445,997,470"/>
+<area shape="rect" id="node40" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="1045,495,1208,521"/>
+<area shape="rect" id="node42" href="$group__xg_thread.html#ga4d2458fb9ec9d926a6f87706b19e7e06" title="Add a thread to a prioritiy ordered queue." alt="" coords="1470,419,1623,445"/>
+<area shape="rect" id="node44" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="1063,343,1191,369"/>
+<area shape="rect" id="node62" href="$group__xg_timer.html#ga91b42f5fd833e1b72c27b3bfb0ed0af7" title="Start a system timer." alt="" coords="895,202,993,227"/>
+<area shape="rect" id="node78" href="$group__xg_event.html#gaaa944c4484d068bdacd8220b7e081302" title="Timer callback in case of event timeout." alt="" coords="1069,545,1185,570"/>
+<area shape="rect" id="node46" href="$group__xg_event.html#ga129d2de44ddf083f252d0754fc45d9d3" title="Asynchronously post an event to a specified queue." alt="" coords="1275,343,1403,369"/>
+<area shape="rect" id="node53" href="$group__xg_timer.html#gaf719e88403b4ccc78f071ce5c85a5a71" title="Process elapsed timers." alt="" coords="1256,245,1421,270"/>
+<area shape="rect" id="node58" href="$group__xg_nut_arch_arm_os_context.html#gad63408e1c4ef1c03d9f979ad2d31b7e0" title="Switch to another thread." alt="" coords="1281,294,1397,319"/>
+<area shape="rect" id="node48" href="$group__xg_timer.html#gafb23f6965312663a72d41fefc574dc00" title="Stop a specified timer." alt="" coords="1497,319,1596,345"/>
+<area shape="rect" id="node50" href="$group__xg_timer.html#ga681ca3c989be2bdeb5f0cc97e11d6e06" title="Insert a new timer in the global timer list." alt="" coords="1677,246,1781,271"/>
+<area shape="rect" id="node55" href="$group__xg_timer.html#ga940f66286dcf28b8280e41b605064446" title="Return the number of system timer ticks." alt="" coords="1489,195,1604,221"/>
+<area shape="rect" id="node64" href="$group__xg_timer.html#gaf104e0c3660b2a77bd0d7b00c4fd741c" title="Start a system timer." alt="" coords="1063,195,1190,221"/>
+<area shape="rect" id="node70" href="$group__xg_nut_arch_arm_os_timer_at91.html#gabb52a4e7f513a7c586898065e0a0c81a" title="Calculate system ticks for a given number of milliseconds." alt="" coords="1055,121,1199,146"/>
+<area shape="rect" id="node66" href="$group__xg_timer.html#ga1e47b683a996583386ebef7e7c92501e" title="Create a new system timer." alt="" coords="1283,195,1394,221"/>
+<area shape="rect" id="node72" href="$group__xg_nut_arch_arm_os_timer_at91.html#ga2724f52da15ed45123a32c1ed7e148f0" title="Return the number of system ticks per second." alt="" coords="1282,94,1395,119"/>
+<area shape="rect" id="node74" href="$group__xg_timer.html#ga784a7f52b5167c777149fd1d874c99f0" title="Return the CPU clock frequency." alt="" coords="1489,94,1604,119"/>
+<area shape="rect" id="node76" href="$group__xg_nut_arch_arm_os_timer_gba.html#ga7d11c53224db0028ad4838f8b9df9872" title="Return the CPU clock in Hertz." alt="" coords="1672,94,1787,119"/>
+</map>

@@ -1,0 +1,19 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$ftpserv_8c.html" title="app/ftpd/ftpserv.c" alt="" coords="5,81,120,106"/>
+<area shape="rect" id="node5" href="$httpserv_8c.html" title="app/httpd/httpserv.c" alt="" coords="144,81,272,106"/>
+<area shape="rect" id="node7" href="$upnp_2httpserv_8c.html" title="app/httpd_upnp/httpserv.c" alt="" coords="296,81,459,106"/>
+<area shape="rect" id="node9" href="$icmp-udp_8c.html" title="app/icmp&#45;udp/icmp&#45;udp.c" alt="" coords="483,81,645,106"/>
+<area shape="rect" id="node11" href="$inetq_8c.html" title="app/inetq/inetq.c" alt="" coords="669,81,781,106"/>
+<area shape="rect" id="node13" href="$logtime_8c.html" title="app/logtime/logtime.c" alt="" coords="806,81,945,106"/>
+<area shape="rect" id="node15" href="$portdio_8c.html" title="app/portdio/portdio.c" alt="" coords="970,81,1104,106"/>
+<area shape="rect" id="node17" href="$pppc_8c.html" title="app/pppc/pppc.c" alt="" coords="1129,81,1241,106"/>
+<area shape="rect" id="node19" href="$snmpd_8c.html" title="app/snmpd/snmpd.c" alt="" coords="1265,81,1401,106"/>
+<area shape="rect" id="node21" href="$ifconfig_8c.html" title="net/ifconfig.c" alt="" coords="1425,81,1516,106"/>
+<area shape="rect" id="node23" href="$ipin_8c.html" title="net/ipin.c" alt="" coords="1541,81,1611,106"/>
+<area shape="rect" id="node25" href="$ipout_8c.html" title="net/ipout.c" alt="" coords="1635,81,1713,106"/>
+<area shape="rect" id="node27" href="$route_8c.html" title="net/route.c" alt="" coords="1738,81,1816,106"/>
+<area shape="rect" id="node29" href="$tcpsm_8c.html" title="net/tcpsm.c" alt="" coords="1841,81,1927,106"/>
+<area shape="rect" id="node31" href="$tcpsock_8c.html" title="net/tcpsock.c" alt="" coords="1951,81,2044,106"/>
+<area shape="rect" id="node33" href="$udpout_8c.html" title="net/udpout.c" alt="" coords="2069,81,2157,106"/>
+<area shape="rect" id="node35" href="$dhcpc_8c.html" title="DHCP client." alt="" coords="2183,81,2268,106"/>
+</map>

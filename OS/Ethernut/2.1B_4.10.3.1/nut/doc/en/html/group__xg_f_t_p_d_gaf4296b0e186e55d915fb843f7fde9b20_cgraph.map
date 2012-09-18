@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_f_t_p_d.html#ga8048da8373cec681730f81e25269948f" title="Process an FTP client&#39;s LIST or NLST command." alt="" coords="205,507,400,533"/>
+<area shape="rect" id="node5" href="$group__xg_crt_stdio.html#ga907a98011e3468d951740abecb768685" title="Open a stream associated with a file, device or socket descriptor." alt="" coords="480,55,547,81"/>
+<area shape="rect" id="node9" href="$group__xg_heap.html#ga381d0a123dbf80ca3efe2614aa826e08" title="Allocate a block from heap memory." alt="" coords="1235,481,1293,506"/>
+<area shape="rect" id="node11" href="$group__xg_f_s_dir.html#gac0258906f9453b8abf03e945aa9c9676" title="Close a directory stream." alt="" coords="1084,1107,1151,1133"/>
+<area shape="rect" id="node13" href="$group__xg_heap.html#ga9f850d0608418aea291e4c0fdab93826" title="Return a block to heap memory." alt="" coords="1243,1107,1285,1133"/>
+<area shape="rect" id="node15" href="$group__xg_crt_stdio.html#ga76370407f9ab0402564c2bb9bc9664e0" title="Close a stream." alt="" coords="486,158,541,183"/>
+<area shape="rect" id="node20" href="$group__xg_crt_stdio.html#gabe6299d5823dd023e610aaa619735a3f" title="Write a character to a stream." alt="" coords="884,258,932,283"/>
+<area shape="rect" id="node24" href="$group__xg_crt_stdio.html#ga14acfae1988535199b72df91e18f72f3" title="Write a string to a stream." alt="" coords="489,507,538,533"/>
+<area shape="rect" id="node27" href="$group__xg_crt_string.html#ga7b9fc4834c90ac78977b5fbb3076c5ac" title="Compute the length of a NUL terminated string." alt="" coords="668,407,721,433"/>
+<area shape="rect" id="node30" href="$group__xg_crt_time.html#ga4bf5c1b09409b70880b839f0ff9aeb9a" title="Convert a time value to a structure." alt="" coords="481,355,545,381"/>
+<area shape="rect" id="node35" href="$group__xg_f_t_p_d.html#ga78bc9b7d484569dce570bf8eef609eb1" title="Establish an FTP connection for data transfer." alt="" coords="448,657,579,682"/>
+<area shape="rect" id="node41" href="$group__xg_tcp_socket.html#ga09d94fd887683a0837e06c2cc08fc7ba" title="Close TCP socket." alt="" coords="629,905,760,930"/>
+<area shape="rect" id="node89" href="$group__xg_f_t_p_d.html#ga8a198e099aa073c08ae2203233bce632" title="Send a negative response." alt="" coords="448,306,579,331"/>
+<area shape="rect" id="node94" href="$group__xg_f_t_p_d.html#gaedf4862063aad8c80cf50025318e25de" title="Send a positive response." alt="" coords="451,207,575,233"/>
+<area shape="rect" id="node97" href="$group__xg_f_t_p_d.html#ga7a2c08102e2c52355561453fcb15eb5e" title="Send a response including the specified transfer mode." alt="" coords="455,257,572,282"/>
+<area shape="rect" id="node101" href="$group__xg_f_s_dir.html#ga10116e941a8dfaf7e3dd345f8963fdd0" title="Open a directory stream." alt="" coords="481,1133,545,1158"/>
+<area shape="rect" id="node110" href="$group__xg_crt_string.html#ga5f9abaa6c5ffa26025ca901c14cb1056" title="Copy a string." alt="" coords="667,1258,722,1283"/>
+<area shape="rect" id="node112" href="$group__xg_f_s_dir.html#gae4d263c5a1d3825c9511a898762513b2" title="Get the next directory entry." alt="" coords="483,1283,544,1309"/>
+<area shape="rect" id="node114" href="$group__xg_f_s.html#ga91b48d99128dd507e20c8adcc22deeb2" title="Get information about a specified file." alt="" coords="492,1234,535,1259"/>
+<area shape="rect" id="node117" href="$group__xg_crt_string.html#gae96d8d456d5360ebbe0d588475bd6381" title="Concatenate two strings." alt="" coords="487,1409,539,1434"/>
+<area shape="rect" id="node7" href="$group__xg_crt_stdio.html#ga6abcc06d7a67fdf4029ec5dc3e06cdcd" title="_fmode" alt="" coords="663,5,727,30"/>
+<area shape="rect" id="node17" href="$group__xg_crt_lowio.html#ga58a559c63748012aab165d5f82af766d" title="Close a file, device or socket." alt="" coords="665,207,724,233"/>
+<area shape="rect" id="node22" href="$io_8h.html#a901fa187b164dd6faaac1b62c88614b5" title="_write" alt="" coords="1090,283,1145,309"/>
+<area shape="rect" id="node32" href="$group__xg_crt_time.html#gaaa7031886dc783f76006ff1b370406b3" title="Convert a time value to a structure." alt="" coords="657,306,732,331"/>
+<area shape="rect" id="node37" href="$group__xg_tcp_socket.html#ga3859b3c38665aedc32608827f931498a" title="Wait for incoming connect from a remote socket." alt="" coords="646,657,743,682"/>
+<area shape="rect" id="node53" href="$group__xg_tcp_socket.html#ga48ff1e877483a0833cf38e428eac6457" title="Connect to a remote socket." alt="" coords="641,706,748,731"/>
+<area shape="rect" id="node59" href="$group__xg_tcp_socket.html#ga6bf8ec59828c5a0e38423293b4dfe8e6" title="Create a TCP socket." alt="" coords="627,755,762,781"/>
+<area shape="rect" id="node77" href="$group__xg_tcp_socket.html#ga3953f713369f008979d738b32d8fc255" title="Return specific code of the last error." alt="" coords="651,805,739,830"/>
+<area shape="rect" id="node79" href="$group__xg_tcp_socket.html#gab3bd1c81e2046e53cde6973b9c6bf6f4" title="Set value of a TCP socket option." alt="" coords="632,558,757,583"/>
+<area shape="rect" id="node81" href="$group__xg_crt_stdio.html#ga30b0c3fa763cfd9c65416be0c3956aa1" title="Print formatted output to the standard output stream." alt="" coords="663,607,727,633"/>
+<area shape="rect" id="node86" href="$group__xg_crt_stdio.html#ga8263f041e271555a786c93572c45bb81" title="Write a string from program memory to stdout." alt="" coords="664,457,725,482"/>
+<area shape="rect" id="node39" href="$group__xg_t_c_p.html#gac5d18facd9bf6a983652d415fc806083" title="Initiated by the application." alt="" coords="811,409,1005,434"/>
+<area shape="rect" id="node43" href="$group__xg_tcp_socket.html#ga9e0cdc2012de837e6b81006b9b32ca12" title="Write to a socket." alt="" coords="1054,905,1181,930"/>
+<area shape="rect" id="node49" href="$group__xg_t_c_p.html#gae64ae871579ec8252d41240a947f1a5e" title="Socket close by application." alt="" coords="832,1006,984,1031"/>
+<area shape="rect" id="node47" href="$group__xg_crt_string.html#ga09a4c3953e2e41a212a73cf3df4c8c8e" title="memcpy" alt="" coords="1229,905,1299,930"/>
+<area shape="rect" id="node51" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="1064,1006,1171,1031"/>
+<area shape="rect" id="node55" href="$group__xg_i_p.html#ga2534f1918ba2a63523659fc005344b25" title="Find a device associated with a particular IP route." alt="" coords="850,507,966,533"/>
+<area shape="rect" id="node57" href="$group__xg_t_c_p.html#ga77edd214cf89e11aebfc556b6879e487" title="Initiated by the application." alt="" coords="818,458,998,483"/>
+<area shape="rect" id="node61" href="$group__xg_i_p.html#ga7606caeb3d5b7bdacaa52b35de179685" title="Register an additional Ethernet protocol handler." alt="" coords="837,557,979,582"/>
+<area shape="rect" id="node63" href="$group__xg_t_c_p.html#gae07d8163a48c288273133b44e1aa1cee" title="Process incoming TCP segments from IP layer." alt="" coords="864,606,952,631"/>
+<area shape="rect" id="node65" href="$group__xg_t_c_p.html#gaf4276abdc9e3a9912632c592769eb13a" title="Start TCP state machine." alt="" coords="833,655,983,681"/>
+<area shape="rect" id="node67" href="$group__xg_tcp_socket.html#gac4ab675d039b53314b37b12b70afefd5" title="Read from virtual socket device." alt="" coords="844,705,972,730"/>
+<area shape="rect" id="node70" href="$group__xg_tcp_socket.html#ga71f2a257f72723170c19ad7b5d9f991f" title="Write to device." alt="" coords="837,905,979,930"/>
+<area shape="rect" id="node73" href="$group__xg_tcp_socket.html#gaceb6b4b842cb85f48f6ca163c7aa1ce0" title="Driver control function." alt="" coords="845,754,971,779"/>
+<area shape="rect" id="node75" href="$group__xg_timer.html#ga940f66286dcf28b8280e41b605064446" title="Return the number of system timer ticks." alt="" coords="851,803,965,829"/>
+<area shape="rect" id="node83" href="$group__xg_crt_stdio.html#ga695a74f3f80d1922259905472d7a4863" title="Write argument list to a stream using a given format." alt="" coords="872,359,944,385"/>
+<area shape="rect" id="node91" href="$group__xg_crt_stdio.html#gadb974f28765a31026ee6bf71d5175951" title="Flush a stream." alt="" coords="669,257,721,282"/>
+<area shape="rect" id="node103" href="$group__xg_device.html#ga913130771bea4118ae58e2a0ccb50a4d" title="Find device entry by name." alt="" coords="635,1307,754,1333"/>
+<area shape="rect" id="node106" href="$group__xg_crt_string.html#gaa4075a014de11292d9105188ddbeb216" title="Fill memory region with a specific byte value." alt="" coords="661,1209,729,1234"/>
+</map>

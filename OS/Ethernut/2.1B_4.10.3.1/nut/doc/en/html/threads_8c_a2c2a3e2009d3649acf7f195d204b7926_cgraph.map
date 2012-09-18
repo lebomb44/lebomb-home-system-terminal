@@ -1,0 +1,27 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_timer.html#gafefcf81d05019a8134b49fa44d8c114a" title="Temporarily suspends the current thread." alt="" coords="123,330,197,355"/>
+<area shape="rect" id="node48" href="$group__xg_thread.html#ga8ebe134e9c404072584e80fb8d7e8985" title="Set the current thread&#39;s priority." alt="" coords="246,482,381,507"/>
+<area shape="rect" id="node57" href="$group__xg_crt_stdio.html#gaf4de2514b7778805db3815e8dd6cf09a" title="Write a character to standard output." alt="" coords="129,551,191,577"/>
+<area shape="rect" id="node5" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="429,406,592,431"/>
+<area shape="rect" id="node7" href="$group__xg_timer.html#ga91b42f5fd833e1b72c27b3bfb0ed0af7" title="Start a system timer." alt="" coords="264,93,363,118"/>
+<area shape="rect" id="node25" href="$group__xg_thread.html#ga8730ce8319ffcb5e14a413458125e41a" title="Resume a previously suspended thread." alt="" coords="258,305,369,330"/>
+<area shape="rect" id="node29" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="447,254,575,279"/>
+<area shape="rect" id="node43" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="260,355,367,381"/>
+<area shape="rect" id="node9" href="$group__xg_timer.html#gaf104e0c3660b2a77bd0d7b00c4fd741c" title="Start a system timer." alt="" coords="447,93,574,118"/>
+<area shape="rect" id="node17" href="$group__xg_nut_arch_arm_os_timer_at91.html#gabb52a4e7f513a7c586898065e0a0c81a" title="Calculate system ticks for a given number of milliseconds." alt="" coords="439,18,583,43"/>
+<area shape="rect" id="node11" href="$group__xg_timer.html#ga1e47b683a996583386ebef7e7c92501e" title="Create a new system timer." alt="" coords="667,106,778,131"/>
+<area shape="rect" id="node15" href="$group__xg_timer.html#ga681ca3c989be2bdeb5f0cc97e11d6e06" title="Insert a new timer in the global timer list." alt="" coords="1061,157,1165,182"/>
+<area shape="rect" id="node13" href="$group__xg_timer.html#ga940f66286dcf28b8280e41b605064446" title="Return the number of system timer ticks." alt="" coords="873,106,988,131"/>
+<area shape="rect" id="node19" href="$group__xg_nut_arch_arm_os_timer_at91.html#ga2724f52da15ed45123a32c1ed7e148f0" title="Return the number of system ticks per second." alt="" coords="666,5,779,30"/>
+<area shape="rect" id="node21" href="$group__xg_timer.html#ga784a7f52b5167c777149fd1d874c99f0" title="Return the CPU clock frequency." alt="" coords="873,5,988,30"/>
+<area shape="rect" id="node23" href="$group__xg_nut_arch_arm_os_timer_gba.html#ga7d11c53224db0028ad4838f8b9df9872" title="Return the CPU clock in Hertz." alt="" coords="1056,5,1171,30"/>
+<area shape="rect" id="node27" href="$group__xg_thread.html#ga4d2458fb9ec9d926a6f87706b19e7e06" title="Add a thread to a prioritiy ordered queue." alt="" coords="854,330,1007,355"/>
+<area shape="rect" id="node31" href="$group__xg_event.html#ga129d2de44ddf083f252d0754fc45d9d3" title="Asynchronously post an event to a specified queue." alt="" coords="659,205,787,230"/>
+<area shape="rect" id="node37" href="$group__xg_timer.html#gaf719e88403b4ccc78f071ce5c85a5a71" title="Process elapsed timers." alt="" coords="640,155,805,181"/>
+<area shape="rect" id="node41" href="$group__xg_nut_arch_arm_os_context.html#gad63408e1c4ef1c03d9f979ad2d31b7e0" title="Switch to another thread." alt="" coords="665,254,781,279"/>
+<area shape="rect" id="node33" href="$group__xg_timer.html#gafb23f6965312663a72d41fefc574dc00" title="Stop a specified timer." alt="" coords="881,207,980,233"/>
+<area shape="rect" id="node52" href="$group__xg_thread.html#gaf8e9b69ee0082bcdb00fd6cdb68f4136" title="Kill the running thread." alt="" coords="462,558,559,583"/>
+<area shape="rect" id="node54" href="$group__xg_thread.html#gaba085dddcb4bf80a0b246bd06618d740" title="Free a thread that was previously killed and release memory back to the OS." alt="" coords="661,558,784,583"/>
+<area shape="rect" id="node59" href="$group__xg_crt_stdio.html#gabe6299d5823dd023e610aaa619735a3f" title="Write a character to a stream." alt="" coords="289,589,337,614"/>
+<area shape="rect" id="node61" href="$io_8h.html#a901fa187b164dd6faaac1b62c88614b5" title="_write" alt="" coords="483,607,538,633"/>
+</map>

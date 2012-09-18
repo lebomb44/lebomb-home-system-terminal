@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$sock__var_8h.html" title="UDP and TCP socket interface definitions." alt="" coords="4727,81,4873,106"/>
+<area shape="rect" id="node5" href="$socket_8h.html" title="UDP and TCP socket interface definitions." alt="" coords="2936,155,3069,181"/>
+<area shape="rect" id="node104" href="$wins_8c.html" title="pro/wins.c" alt="" coords="4778,230,4856,255"/>
+<area shape="rect" id="node106" href="$tcputil_8h.html" title="TCP utility function prototypes." alt="" coords="4837,155,4984,181"/>
+<area shape="rect" id="node7" href="$ftpserv_8c.html" title="app/ftpd/ftpserv.c" alt="" coords="863,230,977,255"/>
+<area shape="rect" id="node9" href="$httpserv_8c.html" title="app/httpd/httpserv.c" alt="" coords="5,305,133,330"/>
+<area shape="rect" id="node11" href="$netdebug_8h.html" title="include/net/netdebug.h" alt="" coords="1103,230,1249,255"/>
+<area shape="rect" id="node22" href="$netdebug_8c.html" title="net/netdebug.c" alt="" coords="158,305,260,330"/>
+<area shape="rect" id="node32" href="$tcpin_8c.html" title="net/tcpin.c" alt="" coords="1407,305,1484,330"/>
+<area shape="rect" id="node34" href="$tcpout_8c.html" title="net/tcpout.c" alt="" coords="1509,305,1592,330"/>
+<area shape="rect" id="node36" href="$tcpsm_8c.html" title="net/tcpsm.c" alt="" coords="1844,305,1929,330"/>
+<area shape="rect" id="node38" href="$tcpsock_8c.html" title="net/tcpsock.c" alt="" coords="1617,305,1711,330"/>
+<area shape="rect" id="node40" href="$dhcpc_8c.html" title="DHCP client." alt="" coords="1735,305,1820,330"/>
+<area shape="rect" id="node44" href="$httpd__simple_8c.html" title="app/httpd_simple/httpd_simple.c" alt="" coords="1632,230,1835,255"/>
+<area shape="rect" id="node46" href="$upnp_2httpserv_8c.html" title="app/httpd_upnp/httpserv.c" alt="" coords="1859,230,2021,255"/>
+<area shape="rect" id="node48" href="$upnp_8c.html" title="app/httpd_upnp/upnp.c" alt="" coords="2046,230,2193,255"/>
+<area shape="rect" id="node50" href="$icmp-udp_8c.html" title="app/icmp&#45;udp/icmp&#45;udp.c" alt="" coords="2219,230,2381,255"/>
+<area shape="rect" id="node52" href="$inetq_8c.html" title="app/inetq/inetq.c" alt="" coords="2405,230,2517,255"/>
+<area shape="rect" id="node54" href="$portdio_8c.html" title="app/portdio/portdio.c" alt="" coords="2542,230,2676,255"/>
+<area shape="rect" id="node56" href="$rs232d_8c.html" title="app/rs232d/rs232d.c" alt="" coords="2701,230,2837,255"/>
+<area shape="rect" id="node58" href="$snmp__agent_8h.html" title="SNMP agent functions." alt="" coords="2855,305,3021,330"/>
+<area shape="rect" id="node64" href="$snmp__session_8h.html" title="SNMP client functions." alt="" coords="2913,230,3092,255"/>
+<area shape="rect" id="node67" href="$tcps_8c.html" title="app/tcps/tcps.c" alt="" coords="3117,230,3221,255"/>
+<area shape="rect" id="node69" href="$smtpc_8h.html" title="SMTP client functions." alt="" coords="3245,230,3376,255"/>
+<area shape="rect" id="node71" href="$smtpc_8c.html" title="pro/smtpc.c" alt="" coords="3318,305,3404,330"/>
+<area shape="rect" id="node73" href="$icmpin_8c.html" title="net/icmpin.c" alt="" coords="3451,230,3539,255"/>
+<area shape="rect" id="node75" href="$igmpin_8c.html" title="net/igmpin.c" alt="" coords="3563,230,3652,255"/>
+<area shape="rect" id="node77" href="$ipin_8c.html" title="net/ipin.c" alt="" coords="3677,230,3747,255"/>
+<area shape="rect" id="node84" href="$udpin_8c.html" title="net/udpin.c" alt="" coords="3772,230,3855,255"/>
+<area shape="rect" id="node86" href="$udpout_8c.html" title="net/udpout.c" alt="" coords="3879,230,3968,255"/>
+<area shape="rect" id="node88" href="$udpsock_8c.html" title="net/udpsock.c" alt="" coords="3993,230,4092,255"/>
+<area shape="rect" id="node90" href="$confdns_8c.html" title="pro/confdns.c" alt="" coords="4116,230,4212,255"/>
+<area shape="rect" id="node93" href="$discover_8c.html" title="pro/discover.c" alt="" coords="4236,230,4335,255"/>
+<area shape="rect" id="node95" href="$ftpd_8c.html" title="FTP server." alt="" coords="4359,230,4431,255"/>
+<area shape="rect" id="node97" href="$resolv_8c.html" title="pro/resolv.c" alt="" coords="4455,230,4540,255"/>
+<area shape="rect" id="node100" href="$sntp_8c.html" title="Simple Network Time Protocol Client." alt="" coords="4565,230,4640,255"/>
+<area shape="rect" id="node102" href="$syslog_8c.html" title="Syslog Client." alt="" coords="4665,230,4753,255"/>
+<area shape="rect" id="node14" href="$cs8900_8c.html" title="arch/avr/dev/cs8900.c" alt="" coords="285,305,424,330"/>
+<area shape="rect" id="node16" href="$nicrtl_8c.html" title="arch/avr/dev/nicrtl.c" alt="" coords="449,305,575,330"/>
+<area shape="rect" id="node18" href="$arpcache_8c.html" title="ARP cache." alt="" coords="599,305,701,330"/>
+<area shape="rect" id="node20" href="$ifconfig_8c.html" title="net/ifconfig.c" alt="" coords="727,305,817,330"/>
+<area shape="rect" id="node24" href="$pppdebug_8c.html" title="net/pppdebug.c" alt="" coords="841,305,948,330"/>
+<area shape="rect" id="node26" href="$pppin_8c.html" title="net/pppin.c" alt="" coords="972,305,1055,330"/>
+<area shape="rect" id="node28" href="$pppout_8c.html" title="net/pppout.c" alt="" coords="1079,305,1168,330"/>
+<area shape="rect" id="node30" href="$pppsm_8c.html" title="net/pppsm.c" alt="" coords="1193,305,1284,330"/>
+<area shape="rect" id="node42" href="$ppp_8c.html" title="dev/ppp.c" alt="" coords="1308,305,1383,330"/>
+<area shape="rect" id="node60" href="$snmpd_8c.html" title="app/snmpd/snmpd.c" alt="" coords="2784,379,2920,405"/>
+<area shape="rect" id="node62" href="$snmp__auth_8h.html" title="SNMP authentication." alt="" coords="2945,379,3103,405"/>
+<area shape="rect" id="node109" href="$tcputil_8c.html" title="net/tcputil.c" alt="" coords="4932,230,5015,255"/>
+</map>

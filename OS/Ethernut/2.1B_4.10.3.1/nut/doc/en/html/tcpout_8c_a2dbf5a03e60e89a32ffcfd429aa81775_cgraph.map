@@ -1,0 +1,29 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_crt_string.html#ga09a4c3953e2e41a212a73cf3df4c8c8e" title="memcpy" alt="" coords="593,15,663,40"/>
+<area shape="rect" id="node5" href="$netdebug_8h.html#a13243e59b9857a6c4ee17e4cee73af51" title="NutDumpTcpHeader" alt="" coords="173,543,309,568"/>
+<area shape="rect" id="node29" href="$group__xg_timer.html#gac1887264221d66b13d1e86d034227f1c" title="Return the milliseconds counter value." alt="" coords="197,643,285,668"/>
+<area shape="rect" id="node39" href="$group__xg_i_p.html#gacbd7636c68dcc06dd37e2fae11472278" title="Calculates an the final IP checksum over a block of data." alt="" coords="396,391,495,416"/>
+<area shape="rect" id="node41" href="$group__xg_i_p.html#ga0586b4cd0a06f9e87f216037f937fab1" title="Calculate a partial IP checksum of a buffer." alt="" coords="561,441,695,467"/>
+<area shape="rect" id="node44" href="$group__xg_i_p.html#gaa1d170f1dc44c4292480d40990483d85" title="Send IP datagram." alt="" coords="198,228,285,253"/>
+<area shape="rect" id="node46" href="$group__xgnetbuf.html#ga7a733aed1e6c15aaabb6657abe5f4e39" title="Allocate or re&#45;allocate a network buffer part." alt="" coords="393,89,497,115"/>
+<area shape="rect" id="node48" href="$group__xgnetbuf.html#ga2e14a135152823a816388f50bdb3ea3f" title="Release a network buffer structure." alt="" coords="577,140,679,165"/>
+<area shape="rect" id="node53" href="$group__xgnetbuf.html#ga3619cbf40ea5786bc0241c1e2e8e955a" title="Create a referencing copy of an existing network buffer structure." alt="" coords="379,40,512,65"/>
+<area shape="rect" id="node63" href="$group__xg_i_p.html#ga9ddc8d97c6179d3b2c562a78b2131632" title="Calculates the partial IP pseudo checksum." alt="" coords="153,492,330,517"/>
+<area shape="rect" id="node7" href="$group__xg_crt_stdio.html#ga2f7351ee13f3f4c465c65e849a12a3fd" title="Print formatted data to a stream." alt="" coords="419,593,471,619"/>
+<area shape="rect" id="node25" href="$group__xg_crt_stdio.html#ga14acfae1988535199b72df91e18f72f3" title="Write a string to a stream." alt="" coords="603,543,653,568"/>
+<area shape="rect" id="node9" href="$group__xg_crt_stdio.html#ga50c4b673b1d86ab16f2a46aff7122c5c" title="Write argument list to a stream using a given format." alt="" coords="599,593,657,619"/>
+<area shape="rect" id="node11" href="$group__xg_crt_stdio.html#ga651a41ea9a05d4294a58c1ec83e13f18" title="Write formatted data using a given output function." alt="" coords="777,593,826,619"/>
+<area shape="rect" id="node23" href="$io_8h.html#a901fa187b164dd6faaac1b62c88614b5" title="_write" alt="" coords="774,544,829,569"/>
+<area shape="rect" id="node13" href="$group__xg_heap.html#ga381d0a123dbf80ca3efe2614aa826e08" title="Allocate a block from heap memory." alt="" coords="912,592,971,617"/>
+<area shape="rect" id="node15" href="$group__xg_crt_string.html#ga9d0726a46ae033e7755fd1313da76ab1" title="Locate byte in a memory region." alt="" coords="907,641,975,667"/>
+<area shape="rect" id="node17" href="$group__xg_crt_string.html#ga7b9fc4834c90ac78977b5fbb3076c5ac" title="Compute the length of a NUL terminated string." alt="" coords="915,493,968,519"/>
+<area shape="rect" id="node19" href="$group__xg_crt_string.html#ga5f9abaa6c5ffa26025ca901c14cb1056" title="Copy a string." alt="" coords="914,691,969,716"/>
+<area shape="rect" id="node21" href="$group__xg_heap.html#ga9f850d0608418aea291e4c0fdab93826" title="Return a block to heap memory." alt="" coords="920,543,963,568"/>
+<area shape="rect" id="node31" href="$group__xg_timer.html#ga940f66286dcf28b8280e41b605064446" title="Return the number of system timer ticks." alt="" coords="388,692,503,717"/>
+<area shape="rect" id="node33" href="$group__xg_nut_arch_arm_os_timer_at91.html#ga2724f52da15ed45123a32c1ed7e148f0" title="Return the number of system ticks per second." alt="" coords="389,643,502,668"/>
+<area shape="rect" id="node35" href="$group__xg_timer.html#ga784a7f52b5167c777149fd1d874c99f0" title="Return the CPU clock frequency." alt="" coords="571,643,685,668"/>
+<area shape="rect" id="node37" href="$group__xg_nut_arch_arm_os_timer_gba.html#ga7d11c53224db0028ad4838f8b9df9872" title="Return the CPU clock in Hertz." alt="" coords="744,643,859,668"/>
+<area shape="rect" id="node51" href="$group__xg_crt_string.html#gaa4075a014de11292d9105188ddbeb216" title="Fill memory region with a specific byte value." alt="" coords="411,240,479,265"/>
+<area shape="rect" id="node59" href="$group__xg_i_p.html#ga2534f1918ba2a63523659fc005344b25" title="Find a device associated with a particular IP route." alt="" coords="387,289,503,315"/>
+<area shape="rect" id="node61" href="$if__ether_8h.html#ad1273e0893b714b62384c38dcc443beb" title="NutArpCacheQuery" alt="" coords="382,139,509,164"/>
+</map>

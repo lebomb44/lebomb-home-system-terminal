@@ -1,0 +1,27 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_h_t_t_p_d.html#ga18a0b5eaf3f7287a01d3c42edf0ad0ed" title="Send a HTTP error response." alt="" coords="209,273,327,298"/>
+<area shape="rect" id="node5" href="$group__xg_h_t_t_p_d.html#gaed5086307a607fe09117ea1c25be43be" title="Send bottom lines of a standard HTML header." alt="" coords="377,223,549,249"/>
+<area shape="rect" id="node7" href="$group__xg_h_t_t_p_d.html#gacec92512e7b76d44b2cbd026340cf60e" title="Send top lines of a standard HTML header." alt="" coords="385,273,540,298"/>
+<area shape="rect" id="node53" href="$group__xg_crt_string.html#gaf8adfe0dbc4a2fe911d1385883279000" title="Locate the last occurrence of a character in a NUL terminated string." alt="" coords="434,322,491,347"/>
+<area shape="rect" id="node9" href="$group__xg_crt_stdio.html#ga2f7351ee13f3f4c465c65e849a12a3fd" title="Print formatted data to a stream." alt="" coords="635,153,687,178"/>
+<area shape="rect" id="node27" href="$group__xg_crt_time.html#ga4bf5c1b09409b70880b839f0ff9aeb9a" title="Convert a time value to a structure." alt="" coords="629,273,693,298"/>
+<area shape="rect" id="node31" href="$group__xg_nut_version.html#gafc224f8837d06742cb90826cdf1dea12" title="Return Nut/OS version string." alt="" coords="604,322,719,347"/>
+<area shape="rect" id="node33" href="$rfctime_8h.html#a4c9b4f497dc1389439566e8e94ed51c9" title="Create RFC 1123 date and time string." alt="" coords="597,371,725,397"/>
+<area shape="rect" id="node35" href="$group__xg_crt_time.html#ga26c7d1dbf93fa8c23c5effbacec91f8c" title="Get the system time." alt="" coords="901,234,947,259"/>
+<area shape="rect" id="node11" href="$group__xg_crt_stdio.html#ga50c4b673b1d86ab16f2a46aff7122c5c" title="Write argument list to a stream using a given format." alt="" coords="782,129,839,154"/>
+<area shape="rect" id="node13" href="$group__xg_crt_stdio.html#ga651a41ea9a05d4294a58c1ec83e13f18" title="Write formatted data using a given output function." alt="" coords="899,129,949,154"/>
+<area shape="rect" id="node25" href="$io_8h.html#a901fa187b164dd6faaac1b62c88614b5" title="_write" alt="" coords="897,79,951,105"/>
+<area shape="rect" id="node15" href="$group__xg_heap.html#ga381d0a123dbf80ca3efe2614aa826e08" title="Allocate a block from heap memory." alt="" coords="1025,153,1084,178"/>
+<area shape="rect" id="node17" href="$group__xg_crt_string.html#ga9d0726a46ae033e7755fd1313da76ab1" title="Locate byte in a memory region." alt="" coords="1021,5,1089,30"/>
+<area shape="rect" id="node19" href="$group__xg_crt_string.html#ga7b9fc4834c90ac78977b5fbb3076c5ac" title="Compute the length of a NUL terminated string." alt="" coords="1028,54,1081,79"/>
+<area shape="rect" id="node21" href="$group__xg_crt_string.html#ga5f9abaa6c5ffa26025ca901c14cb1056" title="Copy a string." alt="" coords="1027,103,1082,129"/>
+<area shape="rect" id="node23" href="$group__xg_heap.html#ga9f850d0608418aea291e4c0fdab93826" title="Return a block to heap memory." alt="" coords="1033,202,1076,227"/>
+<area shape="rect" id="node29" href="$group__xg_crt_time.html#gaaa7031886dc783f76006ff1b370406b3" title="Convert a time value to a structure." alt="" coords="773,273,848,298"/>
+<area shape="rect" id="node37" href="$group__xg_timer.html#ga8bc858a1ca645b9e0cf9d03d7c9adfb3" title="Return the seconds counter value." alt="" coords="1000,251,1109,277"/>
+<area shape="rect" id="node48" href="$rtc_8h.html#af7b0f9657f58b47b8d7c84ff581e1fed" title="Get date and time from the registered RTC." alt="" coords="1001,301,1108,326"/>
+<area shape="rect" id="node50" href="$group__xg_crt_time.html#gada9feb24e45d91e9e56774ef223abe9b" title="_mkgmtime" alt="" coords="1011,350,1099,375"/>
+<area shape="rect" id="node39" href="$group__xg_timer.html#ga940f66286dcf28b8280e41b605064446" title="Return the number of system timer ticks." alt="" coords="1157,226,1272,251"/>
+<area shape="rect" id="node41" href="$group__xg_nut_arch_arm_os_timer_at91.html#ga2724f52da15ed45123a32c1ed7e148f0" title="Return the number of system ticks per second." alt="" coords="1158,275,1271,301"/>
+<area shape="rect" id="node43" href="$group__xg_timer.html#ga784a7f52b5167c777149fd1d874c99f0" title="Return the CPU clock frequency." alt="" coords="1320,275,1435,301"/>
+<area shape="rect" id="node45" href="$group__xg_nut_arch_arm_os_timer_gba.html#ga7d11c53224db0028ad4838f8b9df9872" title="Return the CPU clock in Hertz." alt="" coords="1483,275,1597,301"/>
+</map>

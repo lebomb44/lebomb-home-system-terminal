@@ -1,0 +1,35 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_crt_string.html#gaa4075a014de11292d9105188ddbeb216" title="Fill memory region with a specific byte value." alt="" coords="177,295,245,321"/>
+<area shape="rect" id="node5" href="$x12rtc_8h.html#acbf1e224a503e167647b2bf7aea745fe" title="Write to RTC registers." alt="" coords="166,345,255,370"/>
+<area shape="rect" id="node7" href="$group__xg_nut_arch_arm_at91_twi.html#gabe6654261c61050f912f4ad48458d7d2" title="Transmit and/or receive data as a master." alt="" coords="304,307,427,333"/>
+<area shape="rect" id="node80" href="$group__xg_crt_stdio.html#gaf4de2514b7778805db3815e8dd6cf09a" title="Write a character to standard output." alt="" coords="334,382,397,407"/>
+<area shape="rect" id="node9" href="$group__xg_event.html#ga79af18e0842286182af7c5b647526ce5" title="Wait for an event in a specified queue." alt="" coords="605,309,699,334"/>
+<area shape="rect" id="node55" href="$group__xg_event.html#gad519c6b1469621d2b3909fe58d1ac40b" title="Post an event to a specified queue." alt="" coords="604,359,700,385"/>
+<area shape="rect" id="node59" href="$group__xg_timer.html#gafefcf81d05019a8134b49fa44d8c114a" title="Temporarily suspends the current thread." alt="" coords="615,207,689,233"/>
+<area shape="rect" id="node68" href="$group__xg_nut_arch_arm_at91_twi.html#gaa4c8ead7d93be00c8a12be08e64f1666" title="Initialize TWI interface." alt="" coords="475,145,530,170"/>
+<area shape="rect" id="node11" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="779,359,885,385"/>
+<area shape="rect" id="node13" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="939,259,1101,285"/>
+<area shape="rect" id="node15" href="$group__xg_thread.html#ga4d2458fb9ec9d926a6f87706b19e7e06" title="Add a thread to a prioritiy ordered queue." alt="" coords="1363,410,1517,435"/>
+<area shape="rect" id="node17" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="956,309,1084,334"/>
+<area shape="rect" id="node35" href="$group__xg_timer.html#ga91b42f5fd833e1b72c27b3bfb0ed0af7" title="Start a system timer." alt="" coords="783,57,881,82"/>
+<area shape="rect" id="node51" href="$group__xg_event.html#gaaa944c4484d068bdacd8220b7e081302" title="Timer callback in case of event timeout." alt="" coords="774,461,890,486"/>
+<area shape="rect" id="node19" href="$group__xg_event.html#ga129d2de44ddf083f252d0754fc45d9d3" title="Asynchronously post an event to a specified queue." alt="" coords="1168,511,1296,537"/>
+<area shape="rect" id="node26" href="$group__xg_timer.html#gaf719e88403b4ccc78f071ce5c85a5a71" title="Process elapsed timers." alt="" coords="1149,207,1315,233"/>
+<area shape="rect" id="node31" href="$group__xg_nut_arch_arm_os_context.html#gad63408e1c4ef1c03d9f979ad2d31b7e0" title="Switch to another thread." alt="" coords="1174,309,1290,334"/>
+<area shape="rect" id="node21" href="$group__xg_timer.html#gafb23f6965312663a72d41fefc574dc00" title="Stop a specified timer." alt="" coords="1391,485,1489,510"/>
+<area shape="rect" id="node23" href="$group__xg_timer.html#ga681ca3c989be2bdeb5f0cc97e11d6e06" title="Insert a new timer in the global timer list." alt="" coords="1571,209,1675,234"/>
+<area shape="rect" id="node28" href="$group__xg_timer.html#ga940f66286dcf28b8280e41b605064446" title="Return the number of system timer ticks." alt="" coords="1383,158,1497,183"/>
+<area shape="rect" id="node37" href="$group__xg_timer.html#gaf104e0c3660b2a77bd0d7b00c4fd741c" title="Start a system timer." alt="" coords="957,107,1083,133"/>
+<area shape="rect" id="node43" href="$group__xg_nut_arch_arm_os_timer_at91.html#gabb52a4e7f513a7c586898065e0a0c81a" title="Calculate system ticks for a given number of milliseconds." alt="" coords="948,57,1092,82"/>
+<area shape="rect" id="node39" href="$group__xg_timer.html#ga1e47b683a996583386ebef7e7c92501e" title="Create a new system timer." alt="" coords="1177,158,1287,183"/>
+<area shape="rect" id="node45" href="$group__xg_nut_arch_arm_os_timer_at91.html#ga2724f52da15ed45123a32c1ed7e148f0" title="Return the number of system ticks per second." alt="" coords="1175,57,1289,82"/>
+<area shape="rect" id="node47" href="$group__xg_timer.html#ga784a7f52b5167c777149fd1d874c99f0" title="Return the CPU clock frequency." alt="" coords="1383,31,1497,57"/>
+<area shape="rect" id="node49" href="$group__xg_nut_arch_arm_os_timer_gba.html#ga7d11c53224db0028ad4838f8b9df9872" title="Return the CPU clock in Hertz." alt="" coords="1565,31,1680,57"/>
+<area shape="rect" id="node63" href="$group__xg_thread.html#ga8730ce8319ffcb5e14a413458125e41a" title="Resume a previously suspended thread." alt="" coords="777,106,887,131"/>
+<area shape="rect" id="node70" href="$group__xg_interrupt.html#gaa459696030a9cdf621ce3df7b3ac939d" title="Register an interrupt handler." alt="" coords="579,59,725,85"/>
+<area shape="rect" id="node72" href="$group__xg_nut_arch_arm_at91_twi.html#gaf49042cc4abc3b12378155db4af11924" title="Perform TWI control functions." alt="" coords="799,6,865,31"/>
+<area shape="rect" id="node75" href="$group__xg_interrupt.html#gaab80f74dedb50b849fdfa92ca1f5558a" title="Modify the interrupt mode." alt="" coords="601,109,703,134"/>
+<area shape="rect" id="node77" href="$group__xg_interrupt.html#ga9d27f5ecdebd2acd835df5d3d2af02f5" title="Enable a specified interrupt." alt="" coords="605,158,699,183"/>
+<area shape="rect" id="node82" href="$group__xg_crt_stdio.html#gabe6299d5823dd023e610aaa619735a3f" title="Write a character to a stream." alt="" coords="479,409,527,434"/>
+<area shape="rect" id="node84" href="$io_8h.html#a901fa187b164dd6faaac1b62c88614b5" title="_write" alt="" coords="625,409,679,434"/>
+</map>

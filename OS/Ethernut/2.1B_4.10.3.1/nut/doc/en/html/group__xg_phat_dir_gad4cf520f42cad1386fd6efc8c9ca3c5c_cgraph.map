@@ -1,0 +1,29 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_phat_util.html#gae5d9710a8d3d5561eccd84268bec6d58" title="Create a DOS timestamp of the current time and date." alt="" coords="659,178,787,203"/>
+<area shape="rect" id="node33" href="$group__xg_phat_dbg.html#ga8b498add6cde6ee3e88711e4cb3a5a9b" title="PhatDbgFileInfo" alt="" coords="182,273,293,298"/>
+<area shape="rect" id="node5" href="$group__xg_crt_time.html#ga26c7d1dbf93fa8c23c5effbacec91f8c" title="Get the system time." alt="" coords="847,178,894,203"/>
+<area shape="rect" id="node25" href="$group__xg_crt_time.html#ga7a9f8811ccb83dee7960cbd77dc133e9" title="Convert a time value and correct for the local time zone." alt="" coords="835,79,907,105"/>
+<area shape="rect" id="node7" href="$group__xg_timer.html#ga8bc858a1ca645b9e0cf9d03d7c9adfb3" title="Return the seconds counter value." alt="" coords="955,129,1064,154"/>
+<area shape="rect" id="node17" href="$group__xg_heap.html#ga381d0a123dbf80ca3efe2614aa826e08" title="Allocate a block from heap memory." alt="" coords="980,277,1039,302"/>
+<area shape="rect" id="node19" href="$rtc_8h.html#af7b0f9657f58b47b8d7c84ff581e1fed" title="Get date and time from the registered RTC." alt="" coords="956,178,1063,203"/>
+<area shape="rect" id="node21" href="$group__xg_crt_time.html#gada9feb24e45d91e9e56774ef223abe9b" title="_mkgmtime" alt="" coords="965,79,1053,105"/>
+<area shape="rect" id="node23" href="$group__xg_heap.html#ga9f850d0608418aea291e4c0fdab93826" title="Return a block to heap memory." alt="" coords="988,227,1031,253"/>
+<area shape="rect" id="node9" href="$group__xg_timer.html#ga940f66286dcf28b8280e41b605064446" title="Return the number of system timer ticks." alt="" coords="1112,115,1227,141"/>
+<area shape="rect" id="node11" href="$group__xg_nut_arch_arm_os_timer_at91.html#ga2724f52da15ed45123a32c1ed7e148f0" title="Return the number of system ticks per second." alt="" coords="1113,165,1226,190"/>
+<area shape="rect" id="node13" href="$group__xg_timer.html#ga784a7f52b5167c777149fd1d874c99f0" title="Return the CPU clock frequency." alt="" coords="1275,165,1389,190"/>
+<area shape="rect" id="node15" href="$group__xg_nut_arch_arm_os_timer_gba.html#ga7d11c53224db0028ad4838f8b9df9872" title="Return the CPU clock in Hertz." alt="" coords="1437,165,1552,190"/>
+<area shape="rect" id="node27" href="$group__xg_crt_time.html#ga35785f4de9013a460456443a18117291" title="Convert a time value and correct for the local time zone." alt="" coords="968,30,1051,55"/>
+<area shape="rect" id="node29" href="$group__xg_crt_time.html#gaaa7031886dc783f76006ff1b370406b3" title="Convert a time value to a structure." alt="" coords="1132,5,1207,30"/>
+<area shape="rect" id="node31" href="$ctime_8h.html#a07d21800053bc8fdcffffc4a92b7ebab" title="_isindst" alt="" coords="1136,54,1203,79"/>
+<area shape="rect" id="node35" href="$group__xg_crt_stdio.html#ga2f7351ee13f3f4c465c65e849a12a3fd" title="Print formatted data to a stream." alt="" coords="531,273,583,298"/>
+<area shape="rect" id="node51" href="$group__xg_phat_dbg.html#ga5f85cf69cb129bf2cb5e1eef197e4446" title="PhatDbgDirEntry" alt="" coords="342,323,455,349"/>
+<area shape="rect" id="node37" href="$group__xg_crt_stdio.html#ga50c4b673b1d86ab16f2a46aff7122c5c" title="Write argument list to a stream using a given format." alt="" coords="694,325,751,350"/>
+<area shape="rect" id="node39" href="$group__xg_crt_stdio.html#ga651a41ea9a05d4294a58c1ec83e13f18" title="Write formatted data using a given output function." alt="" coords="846,325,895,350"/>
+<area shape="rect" id="node49" href="$io_8h.html#a901fa187b164dd6faaac1b62c88614b5" title="_write" alt="" coords="843,374,898,399"/>
+<area shape="rect" id="node42" href="$group__xg_crt_string.html#ga9d0726a46ae033e7755fd1313da76ab1" title="Locate byte in a memory region." alt="" coords="975,375,1043,401"/>
+<area shape="rect" id="node44" href="$group__xg_crt_string.html#ga7b9fc4834c90ac78977b5fbb3076c5ac" title="Compute the length of a NUL terminated string." alt="" coords="983,425,1036,450"/>
+<area shape="rect" id="node46" href="$group__xg_crt_string.html#ga5f9abaa6c5ffa26025ca901c14cb1056" title="Copy a string." alt="" coords="982,326,1037,351"/>
+<area shape="rect" id="node54" href="$group__xg_crt_stdio.html#ga14acfae1988535199b72df91e18f72f3" title="Write a string to a stream." alt="" coords="698,425,747,450"/>
+<area shape="rect" id="node58" href="$group__xg_phat_dbg.html#ga19586d337c041f9945eeed96918341a1" title="PhatDbgAttrList" alt="" coords="504,374,611,399"/>
+<area shape="rect" id="node60" href="$group__xg_crt_stdio.html#gabe6299d5823dd023e610aaa619735a3f" title="Write a character to a stream." alt="" coords="699,374,747,399"/>
+</map>

@@ -1,0 +1,47 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_p_p_p.html#gaa747a8f57f95db217b0709c9b1c483b9" title="IpcpLowerDown" alt="" coords="305,270,415,295"/>
+<area shape="rect" id="node38" href="$group__xg_i_p_c_p.html#gae455b993454ba143c2a12de176b35ce9" title="Send a IPCP packet." alt="" coords="155,762,255,787"/>
+<area shape="rect" id="node5" href="$group__xg_crt_stdio.html#ga14acfae1988535199b72df91e18f72f3" title="Write a string to a stream." alt="" coords="1045,610,1094,635"/>
+<area shape="rect" id="node11" href="$group__xg_crt_lowio.html#ga6b356746f1f26fb46f2afe4357ab3534" title="Perform device specific control functions." alt="" coords="491,182,541,207"/>
+<area shape="rect" id="node13" href="$group__xg_event.html#gad519c6b1469621d2b3909fe58d1ac40b" title="Post an event to a specified queue." alt="" coords="468,79,564,105"/>
+<area shape="rect" id="node7" href="$io_8h.html#a901fa187b164dd6faaac1b62c88614b5" title="_write" alt="" coords="1433,753,1487,778"/>
+<area shape="rect" id="node9" href="$group__xg_crt_string.html#ga7b9fc4834c90ac78977b5fbb3076c5ac" title="Compute the length of a NUL terminated string." alt="" coords="1573,647,1627,673"/>
+<area shape="rect" id="node15" href="$group__xg_event.html#ga129d2de44ddf083f252d0754fc45d9d3" title="Asynchronously post an event to a specified queue." alt="" coords="1005,5,1133,30"/>
+<area shape="rect" id="node23" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="619,79,725,105"/>
+<area shape="rect" id="node17" href="$group__xg_timer.html#gafb23f6965312663a72d41fefc574dc00" title="Stop a specified timer." alt="" coords="1228,6,1327,31"/>
+<area shape="rect" id="node21" href="$group__xg_thread.html#ga4d2458fb9ec9d926a6f87706b19e7e06" title="Add a thread to a prioritiy ordered queue." alt="" coords="1201,55,1354,81"/>
+<area shape="rect" id="node19" href="$group__xg_timer.html#ga681ca3c989be2bdeb5f0cc97e11d6e06" title="Insert a new timer in the global timer list." alt="" coords="1408,206,1512,231"/>
+<area shape="rect" id="node25" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="776,106,939,131"/>
+<area shape="rect" id="node28" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="793,207,921,233"/>
+<area shape="rect" id="node31" href="$group__xg_timer.html#gaf719e88403b4ccc78f071ce5c85a5a71" title="Process elapsed timers." alt="" coords="987,207,1152,233"/>
+<area shape="rect" id="node36" href="$group__xg_nut_arch_arm_os_context.html#gad63408e1c4ef1c03d9f979ad2d31b7e0" title="Switch to another thread." alt="" coords="1011,158,1127,183"/>
+<area shape="rect" id="node33" href="$group__xg_timer.html#ga940f66286dcf28b8280e41b605064446" title="Return the number of system timer ticks." alt="" coords="1220,257,1335,282"/>
+<area shape="rect" id="node40" href="$group__xgnetbuf.html#ga7a733aed1e6c15aaabb6657abe5f4e39" title="Allocate or re&#45;allocate a network buffer part." alt="" coords="464,811,568,837"/>
+<area shape="rect" id="node42" href="$group__xgnetbuf.html#ga2e14a135152823a816388f50bdb3ea3f" title="Release a network buffer structure." alt="" coords="621,961,723,986"/>
+<area shape="rect" id="node45" href="$group__xg_p_p_p.html#ga8d1655e849d0e2d32de4275084500e2b" title="Send PPP frame." alt="" coords="311,723,409,749"/>
+<area shape="rect" id="node49" href="$netdebug_8h.html#a193563d0f87a894ea370610b6ed8eb54" title="NutDumpPpp" alt="" coords="467,710,565,735"/>
+<area shape="rect" id="node97" href="$group__xg_timer.html#gafefcf81d05019a8134b49fa44d8c114a" title="Temporarily suspends the current thread." alt="" coords="479,231,553,257"/>
+<area shape="rect" id="node51" href="$group__xg_crt_stdio.html#ga2f7351ee13f3f4c465c65e849a12a3fd" title="Print formatted data to a stream." alt="" coords="1043,810,1095,835"/>
+<area shape="rect" id="node68" href="$pppdebug_8c.html#a923aa88aa0f39b66695c29edf826a949" title="NutDumpIpcp" alt="" coords="623,710,721,735"/>
+<area shape="rect" id="node78" href="$netdebug_8h.html#ae0449206b4435023085ad5b8b6445bd2" title="NutDumpLcp" alt="" coords="625,661,719,686"/>
+<area shape="rect" id="node86" href="$pppdebug_8c.html#ad1d7d4230e4f4f517fbafd2c406bcf8d" title="NutDumpPap" alt="" coords="623,759,721,785"/>
+<area shape="rect" id="node53" href="$group__xg_crt_stdio.html#ga50c4b673b1d86ab16f2a46aff7122c5c" title="Write argument list to a stream using a given format." alt="" coords="1249,802,1306,827"/>
+<area shape="rect" id="node55" href="$group__xg_crt_stdio.html#ga651a41ea9a05d4294a58c1ec83e13f18" title="Write formatted data using a given output function." alt="" coords="1435,802,1485,827"/>
+<area shape="rect" id="node57" href="$group__xg_heap.html#ga381d0a123dbf80ca3efe2614aa826e08" title="Allocate a block from heap memory." alt="" coords="1571,777,1629,802"/>
+<area shape="rect" id="node59" href="$group__xg_crt_string.html#ga9d0726a46ae033e7755fd1313da76ab1" title="Locate byte in a memory region." alt="" coords="1566,826,1634,851"/>
+<area shape="rect" id="node62" href="$group__xg_crt_string.html#ga5f9abaa6c5ffa26025ca901c14cb1056" title="Copy a string." alt="" coords="1573,875,1627,901"/>
+<area shape="rect" id="node64" href="$group__xg_heap.html#ga9f850d0608418aea291e4c0fdab93826" title="Return a block to heap memory." alt="" coords="1579,727,1621,753"/>
+<area shape="rect" id="node72" href="$pppdebug_8c.html#a94554e696f4c9e11c8bd53e3e54afc0f" title="NutDumpIpcpOption" alt="" coords="790,710,925,735"/>
+<area shape="rect" id="node76" href="$group__xg_i_p.html#ga9daa3cef32d6bcb76a95d0e869fd8b7a" title="Convert numeric IP address into decimal dotted ASCII representation." alt="" coords="1033,709,1106,734"/>
+<area shape="rect" id="node82" href="$netdebug_8h.html#ac95b9045033a8e16d4b5de378dc4129b" title="NutDumpLcpOption" alt="" coords="792,661,923,686"/>
+<area shape="rect" id="node90" href="$pppdebug_8c.html#a83cdfd28419696833ea95ade2a0ad7c0" title="NutDumpPapOption" alt="" coords="791,759,924,785"/>
+<area shape="rect" id="node93" href="$group__xg_crt_stdio.html#gabe6299d5823dd023e610aaa619735a3f" title="Write a character to a stream." alt="" coords="1253,753,1301,778"/>
+<area shape="rect" id="node100" href="$group__xg_timer.html#ga91b42f5fd833e1b72c27b3bfb0ed0af7" title="Start a system timer." alt="" coords="623,282,721,307"/>
+<area shape="rect" id="node116" href="$group__xg_thread.html#ga8730ce8319ffcb5e14a413458125e41a" title="Resume a previously suspended thread." alt="" coords="617,181,727,206"/>
+<area shape="rect" id="node102" href="$group__xg_timer.html#gaf104e0c3660b2a77bd0d7b00c4fd741c" title="Start a system timer." alt="" coords="794,257,921,282"/>
+<area shape="rect" id="node108" href="$group__xg_nut_arch_arm_os_timer_at91.html#gabb52a4e7f513a7c586898065e0a0c81a" title="Calculate system ticks for a given number of milliseconds." alt="" coords="785,306,929,331"/>
+<area shape="rect" id="node104" href="$group__xg_timer.html#ga1e47b683a996583386ebef7e7c92501e" title="Create a new system timer." alt="" coords="1014,257,1125,282"/>
+<area shape="rect" id="node110" href="$group__xg_nut_arch_arm_os_timer_at91.html#ga2724f52da15ed45123a32c1ed7e148f0" title="Return the number of system ticks per second." alt="" coords="1013,358,1126,383"/>
+<area shape="rect" id="node112" href="$group__xg_timer.html#ga784a7f52b5167c777149fd1d874c99f0" title="Return the CPU clock frequency." alt="" coords="1220,358,1335,383"/>
+<area shape="rect" id="node114" href="$group__xg_nut_arch_arm_os_timer_gba.html#ga7d11c53224db0028ad4838f8b9df9872" title="Return the CPU clock in Hertz." alt="" coords="1403,358,1517,383"/>
+</map>

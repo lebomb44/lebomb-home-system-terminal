@@ -1,0 +1,30 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$os_8h.html" title="cfg/os.h" alt="" coords="94,155,159,181"/>
+<area shape="rect" id="node5" href="$compiler_8h.html" title="compiler.h" alt="" coords="359,529,439,554"/>
+<area shape="rect" id="node7" href="$board_8h.html" title="dev/board.h" alt="" coords="591,81,677,106"/>
+<area shape="rect" id="node34" href="$dev_2gpio_8h.html" title="General purpose I/O." alt="" coords="730,81,808,106"/>
+<area shape="rect" id="node51" href="$heap_8h.html" title="Heap management definitions." alt="" coords="224,305,307,330"/>
+<area shape="rect" id="node56" href="$event_8h.html" title="Event management definitions." alt="" coords="336,155,419,181"/>
+<area shape="rect" id="node64" href="$sys_2timer_8h.html" title="Timer management definitions." alt="" coords="1032,230,1115,255"/>
+<area shape="rect" id="node71" href="$sys_2atom_8h.html" title="sys/atom.h" alt="" coords="175,81,257,106"/>
+<area shape="rect" id="node76" href="$nutdebug_8h.html" title="sys/nutdebug.h" alt="" coords="43,305,149,330"/>
+<area shape="rect" id="node80" href="$cfg_2pca9555_8h.html" title="cfg/pca9555.h" alt="" coords="1109,81,1208,106"/>
+<area shape="rect" id="node82" href="$cfg_2led_8h.html" title="cfg/led.h" alt="" coords="1233,81,1300,106"/>
+<area shape="rect" id="node84" href="$dev_2led_8h.html" title="LED handler definitions." alt="" coords="1094,155,1164,181"/>
+<area shape="rect" id="node9" href="$arch_8h.html" title="cfg/arch.h" alt="" coords="709,230,784,255"/>
+<area shape="rect" id="node11" href="$cfg_2uart_8h.html" title="UART configuration." alt="" coords="493,155,565,181"/>
+<area shape="rect" id="node13" href="$debug_8h.html" title="Debug device definitions." alt="" coords="590,155,679,181"/>
+<area shape="rect" id="node31" href="$null__ether_8h.html" title="dev/null_ether.h" alt="" coords="376,230,485,255"/>
+<area shape="rect" id="node16" href="$device_8h.html" title="Nut/OS device definitions." alt="" coords="537,305,625,330"/>
+<area shape="rect" id="node25" href="$stdint_8h.html" title="stdint.h" alt="" coords="647,379,709,405"/>
+<area shape="rect" id="node27" href="$dev_2uart_8h.html" title="UART I/O function prototypes." alt="" coords="509,230,584,255"/>
+<area shape="rect" id="node18" href="$file_8h.html" title="sys/file.h" alt="" coords="542,379,612,405"/>
+<area shape="rect" id="node20" href="$types_8h.html" title="Nut/OS type declarations." alt="" coords="445,454,528,479"/>
+<area shape="rect" id="node36" href="$cfg_2arch_2gpio_8h.html" title="Port configuration." alt="" coords="866,155,968,181"/>
+<area shape="rect" id="node38" href="$dev_2irqreg_8h.html" title="Interrupt management definitions." alt="" coords="755,155,841,181"/>
+<area shape="rect" id="node43" href="$irqstack_8h.html" title="dev/irqstack.h" alt="" coords="910,230,1007,255"/>
+<area shape="rect" id="node45" href="$dev_8h.html" title="cfg/dev.h" alt="" coords="857,305,927,330"/>
+<area shape="rect" id="node53" href="$memory_8h.html" title="Default memory layout." alt="" coords="275,379,371,405"/>
+<area shape="rect" id="node58" href="$thread_8h.html" title="Thread management definitions." alt="" coords="331,305,420,330"/>
+<area shape="rect" id="node67" href="$arch_2timer_8h.html" title="arch/timer.h" alt="" coords="1003,305,1089,330"/>
+</map>

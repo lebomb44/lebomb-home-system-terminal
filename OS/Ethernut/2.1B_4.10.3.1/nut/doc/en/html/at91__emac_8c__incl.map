@@ -1,0 +1,32 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$os_8h.html" title="cfg/os.h" alt="" coords="1337,155,1401,181"/>
+<area shape="rect" id="node5" href="$dev_8h.html" title="cfg/dev.h" alt="" coords="5,230,75,255"/>
+<area shape="rect" id="node7" href="$arm_8h.html" title="arch/arm.h" alt="" coords="147,81,228,106"/>
+<area shape="rect" id="node15" href="$cfg_2arch_2gpio_8h.html" title="Port configuration." alt="" coords="449,81,551,106"/>
+<area shape="rect" id="node19" href="$sys_2atom_8h.html" title="sys/atom.h" alt="" coords="1180,81,1263,106"/>
+<area shape="rect" id="node29" href="$heap_8h.html" title="Heap management definitions." alt="" coords="1512,230,1595,255"/>
+<area shape="rect" id="node34" href="$thread_8h.html" title="Thread management definitions." alt="" coords="1670,230,1759,255"/>
+<area shape="rect" id="node40" href="$event_8h.html" title="Event management definitions." alt="" coords="1720,155,1803,181"/>
+<area shape="rect" id="node43" href="$sys_2timer_8h.html" title="Timer management definitions." alt="" coords="1060,155,1143,181"/>
+<area shape="rect" id="node50" href="$confnet_8h.html" title="Header file for network configuration." alt="" coords="1393,230,1487,255"/>
+<area shape="rect" id="node56" href="$if__ether_8h.html" title="Ethernet interface definitions." alt="" coords="959,81,1072,106"/>
+<area shape="rect" id="node58" href="$if__var_8h.html" title="Network interface structure." alt="" coords="774,155,855,181"/>
+<area shape="rect" id="node78" href="$ether_8h.html" title="Ethernet protocol definitions." alt="" coords="663,81,743,106"/>
+<area shape="rect" id="node84" href="$dev_2irqreg_8h.html" title="Interrupt management definitions." alt="" coords="338,81,424,106"/>
+<area shape="rect" id="node92" href="$dev_2at91__emac_8h.html" title="dev/at91_emac.h" alt="" coords="767,81,883,106"/>
+<area shape="rect" id="node96" href="$stdio_8h.html" title="C Standard I/O." alt="" coords="1532,81,1591,106"/>
+<area shape="rect" id="node9" href="$arch_8h.html" title="cfg/arch.h" alt="" coords="151,155,225,181"/>
+<area shape="rect" id="node11" href="$mweeprom_8h.html" title="dev/mweeprom.h" alt="" coords="535,379,652,405"/>
+<area shape="rect" id="node22" href="$types_8h.html" title="Nut/OS type declarations." alt="" coords="1156,379,1239,405"/>
+<area shape="rect" id="node27" href="$stdint_8h.html" title="stdint.h" alt="" coords="1015,305,1077,330"/>
+<area shape="rect" id="node24" href="$compiler_8h.html" title="compiler.h" alt="" coords="1332,454,1412,479"/>
+<area shape="rect" id="node31" href="$memory_8h.html" title="Default memory layout." alt="" coords="1507,305,1603,330"/>
+<area shape="rect" id="node46" href="$arch_2timer_8h.html" title="arch/timer.h" alt="" coords="971,230,1057,255"/>
+<area shape="rect" id="node53" href="$cfg_2eeprom_8h.html" title="cfg/eeprom.h" alt="" coords="1286,305,1380,330"/>
+<area shape="rect" id="node74" href="$if__arp_8h.html" title="ARP protocol header." alt="" coords="1235,230,1317,255"/>
+<area shape="rect" id="node62" href="$device_8h.html" title="Nut/OS device definitions." alt="" coords="525,230,613,255"/>
+<area shape="rect" id="node68" href="$netbuf_8h.html" title="Network buffer definitions." alt="" coords="639,230,727,255"/>
+<area shape="rect" id="node72" href="$if__types_8h.html" title="Network interface type definitions." alt="" coords="853,230,947,255"/>
+<area shape="rect" id="node64" href="$file_8h.html" title="sys/file.h" alt="" coords="555,305,625,330"/>
+<area shape="rect" id="node89" href="$irqstack_8h.html" title="dev/irqstack.h" alt="" coords="250,155,347,181"/>
+</map>

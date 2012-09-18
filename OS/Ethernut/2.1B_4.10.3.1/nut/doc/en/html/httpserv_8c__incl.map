@@ -1,0 +1,49 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$os_8h.html" title="cfg/os.h" alt="" coords="5,81,69,106"/>
+<area shape="rect" id="node7" href="$io_8h.html" title="io.h" alt="" coords="623,155,665,181"/>
+<area shape="rect" id="node13" href="$fcntl_8h.html" title="File control flags." alt="" coords="239,81,293,106"/>
+<area shape="rect" id="node15" href="$time_8h.html" title="Standard C time handling functions." alt="" coords="181,379,237,405"/>
+<area shape="rect" id="node19" href="$board_8h.html" title="dev/board.h" alt="" coords="1414,155,1500,181"/>
+<area shape="rect" id="node39" href="$urom_8h.html" title="dev/urom.h" alt="" coords="1171,155,1253,181"/>
+<area shape="rect" id="node42" href="$nplmmc_8h.html" title="Header file for CPLD based multimedia card interface." alt="" coords="947,155,1045,181"/>
+<area shape="rect" id="node45" href="$sbimmc_8h.html" title="Header file for bit banging multimedia card interface." alt="" coords="1055,81,1153,106"/>
+<area shape="rect" id="node48" href="$phatfs_8h.html" title="PHAT file system." alt="" coords="722,230,800,255"/>
+<area shape="rect" id="node61" href="$version_8h.html" title="sys/version.h" alt="" coords="1067,305,1161,330"/>
+<area shape="rect" id="node66" href="$thread_8h.html" title="Thread management definitions." alt="" coords="2241,305,2329,330"/>
+<area shape="rect" id="node73" href="$sys_2timer_8h.html" title="Timer management definitions." alt="" coords="1628,230,1711,255"/>
+<area shape="rect" id="node80" href="$heap_8h.html" title="Heap management definitions." alt="" coords="2133,305,2216,330"/>
+<area shape="rect" id="node84" href="$confnet_8h.html" title="Header file for network configuration." alt="" coords="2354,305,2448,330"/>
+<area shape="rect" id="node90" href="$socket_8h.html" title="UDP and TCP socket interface definitions." alt="" coords="1847,155,1937,181"/>
+<area shape="rect" id="node101" href="$inet_8h.html" title="Internet address conversion." alt="" coords="2029,305,2109,330"/>
+<area shape="rect" id="node105" href="$route_8h.html" title="Routing information definitions." alt="" coords="1664,81,1744,106"/>
+<area shape="rect" id="node112" href="$httpd_8h.html" title="HTTP protocol definitions for daemons." alt="" coords="369,230,449,255"/>
+<area shape="rect" id="node120" href="$pro_2dhcp_8h.html" title="DHCP protocol definitions." alt="" coords="2651,305,2731,330"/>
+<area shape="rect" id="node127" href="$ssi_8h.html" title="SSI extension for HTTP daemons." alt="" coords="2166,81,2236,106"/>
+<area shape="rect" id="node129" href="$asp_8h.html" title="pro/asp.h" alt="" coords="799,81,873,106"/>
+<area shape="rect" id="node132" href="$pro_2discover_8h.html" title="Responds to UDP discovery broadcasts." alt="" coords="283,305,381,330"/>
+<area shape="rect" id="node138" href="$osdebug_8h.html" title="sys/osdebug.h" alt="" coords="2313,230,2415,255"/>
+<area shape="rect" id="node143" href="$netdebug_8h.html" title="net/netdebug.h" alt="" coords="1256,81,1360,106"/>
+<area shape="rect" id="node9" href="$types_8h.html" title="Nut/OS type declarations." alt="" coords="1748,454,1831,479"/>
+<area shape="rect" id="node11" href="$compiler_8h.html" title="compiler.h" alt="" coords="2200,529,2280,554"/>
+<area shape="rect" id="node21" href="$arch_8h.html" title="cfg/arch.h" alt="" coords="1515,305,1589,330"/>
+<area shape="rect" id="node23" href="$cfg_2uart_8h.html" title="UART configuration." alt="" coords="1367,230,1439,255"/>
+<area shape="rect" id="node25" href="$debug_8h.html" title="Debug device definitions." alt="" coords="1463,230,1552,255"/>
+<area shape="rect" id="node36" href="$null__ether_8h.html" title="dev/null_ether.h" alt="" coords="1183,230,1292,255"/>
+<area shape="rect" id="node28" href="$device_8h.html" title="Nut/OS device definitions." alt="" coords="1238,305,1327,330"/>
+<area shape="rect" id="node33" href="$stdint_8h.html" title="stdint.h" alt="" coords="1647,379,1709,405"/>
+<area shape="rect" id="node30" href="$file_8h.html" title="sys/file.h" alt="" coords="1247,379,1317,405"/>
+<area shape="rect" id="node53" href="$phatdir_8h.html" title="PHAT file system." alt="" coords="507,305,589,330"/>
+<area shape="rect" id="node55" href="$phat12_8h.html" title="PHAT12 specific definitions." alt="" coords="613,305,696,330"/>
+<area shape="rect" id="node57" href="$phat16_8h.html" title="PHAT16 specific definitions." alt="" coords="720,305,803,330"/>
+<area shape="rect" id="node59" href="$phat32_8h.html" title="PHAT32 specific definitions." alt="" coords="827,305,909,330"/>
+<area shape="rect" id="node70" href="$memory_8h.html" title="Default memory layout." alt="" coords="2056,379,2152,405"/>
+<area shape="rect" id="node76" href="$arch_2timer_8h.html" title="arch/timer.h" alt="" coords="1665,305,1751,330"/>
+<area shape="rect" id="node87" href="$cfg_2eeprom_8h.html" title="cfg/eeprom.h" alt="" coords="2329,379,2423,405"/>
+<area shape="rect" id="node92" href="$cfg_2udp_8h.html" title="UDP configuration." alt="" coords="1968,230,2040,255"/>
+<area shape="rect" id="node95" href="$sock__var_8h.html" title="UDP and TCP socket interface definitions." alt="" coords="1841,230,1943,255"/>
+<area shape="rect" id="node107" href="$if__var_8h.html" title="Network interface structure." alt="" coords="1735,230,1816,255"/>
+<area shape="rect" id="node115" href="$stdio_8h.html" title="C Standard I/O." alt="" coords="984,305,1043,330"/>
+<area shape="rect" id="node122" href="$cfg_2dhcp_8h.html" title="DHCP configuration." alt="" coords="2651,379,2729,405"/>
+<area shape="rect" id="node135" href="$cfg_2discover_8h.html" title="cfg/discover.h" alt="" coords="262,379,359,405"/>
+<area shape="rect" id="node147" href="$netinet_2tcp_8h.html" title="TCP protocol definitions." alt="" coords="1352,305,1440,330"/>
+</map>

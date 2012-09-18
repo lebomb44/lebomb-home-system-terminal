@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_heap.html#ga9f850d0608418aea291e4c0fdab93826" title="Return a block to heap memory." alt="" coords="1496,213,1539,238"/>
+<area shape="rect" id="node5" href="$group__xg_heap.html#ga381d0a123dbf80ca3efe2614aa826e08" title="Allocate a block from heap memory." alt="" coords="1488,626,1547,652"/>
+<area shape="rect" id="node7" href="$group__xg_phat_dir.html#gac54c4da3eb7a99e9839d835f75633076" title="Find a directory entry with a specified name." alt="" coords="559,528,673,553"/>
+<area shape="rect" id="node13" href="$group__xg_phat_dir.html#gac1b0cbea3eb7b9842608e06564066525" title="Open parent directory of a given path." alt="" coords="170,458,299,484"/>
+<area shape="rect" id="node67" href="$group__xg_phat_dir.html#ga054a857b1c7c295c44d306823cbb505f" title="Release a cluster chain of a specified directory entry." alt="" coords="163,804,306,829"/>
+<area shape="rect" id="node126" href="$group__xg_phat_fs.html#ga8d1fd9e79e3bb572e6d44877473f3143" title="Close a file." alt="" coords="375,48,475,73"/>
+<area shape="rect" id="node10" href="$group__xg_phat_util.html#ga3ac06e687a0ad471beaf7a25a48730f0" title="Set file pointer back to zero." alt="" coords="736,426,867,452"/>
+<area shape="rect" id="node15" href="$group__xg_phat_util.html#ga7d3877a760e62215db139eed631a71ad" title="Chop off the last component of a path." alt="" coords="1273,528,1375,553"/>
+<area shape="rect" id="node24" href="$group__xg_phat_dir.html#ga76c33dbcfa5ac6188e054409429f5333" title="Open a directory." alt="" coords="379,452,472,477"/>
+<area shape="rect" id="node17" href="$group__xg_crt_string.html#gaf8adfe0dbc4a2fe911d1385883279000" title="Locate the last occurrence of a character in a NUL terminated string." alt="" coords="1489,528,1546,553"/>
+<area shape="rect" id="node19" href="$group__xg_crt_string.html#ga7b9fc4834c90ac78977b5fbb3076c5ac" title="Compute the length of a NUL terminated string." alt="" coords="1491,429,1544,454"/>
+<area shape="rect" id="node22" href="$group__xg_crt_string.html#ga09a4c3953e2e41a212a73cf3df4c8c8e" title="memcpy" alt="" coords="1483,577,1552,602"/>
+<area shape="rect" id="node28" href="$group__xg_crt_string.html#gaa4075a014de11292d9105188ddbeb216" title="Fill memory region with a specific byte value." alt="" coords="582,478,650,504"/>
+<area shape="rect" id="node31" href="$group__xg_phat_vol.html#gaaf0b8da0234a73af6a22e011bf39a116" title="PhatClusterSector" alt="" coords="555,377,677,402"/>
+<area shape="rect" id="node35" href="$group__xg_phat_dbg.html#ga8b498add6cde6ee3e88711e4cb3a5a9b" title="PhatDbgFileInfo" alt="" coords="561,250,671,276"/>
+<area shape="rect" id="node33" href="$group__xg_phat_util.html#gadeebffe4cccf50aee555551e8e90ee13" title="Test for PHAT12/PHAT16 root directory." alt="" coords="750,377,853,402"/>
+<area shape="rect" id="node37" href="$group__xg_crt_stdio.html#ga2f7351ee13f3f4c465c65e849a12a3fd" title="Print formatted data to a stream." alt="" coords="946,301,998,326"/>
+<area shape="rect" id="node52" href="$group__xg_phat_dbg.html#ga5f85cf69cb129bf2cb5e1eef197e4446" title="PhatDbgDirEntry" alt="" coords="745,225,858,250"/>
+<area shape="rect" id="node39" href="$group__xg_crt_stdio.html#ga50c4b673b1d86ab16f2a46aff7122c5c" title="Write argument list to a stream using a given format." alt="" coords="1107,301,1165,326"/>
+<area shape="rect" id="node41" href="$group__xg_crt_stdio.html#ga651a41ea9a05d4294a58c1ec83e13f18" title="Write formatted data using a given output function." alt="" coords="1299,478,1349,504"/>
+<area shape="rect" id="node50" href="$io_8h.html#a901fa187b164dd6faaac1b62c88614b5" title="_write" alt="" coords="1297,250,1351,276"/>
+<area shape="rect" id="node44" href="$group__xg_crt_string.html#ga9d0726a46ae033e7755fd1313da76ab1" title="Locate byte in a memory region." alt="" coords="1483,380,1551,405"/>
+<area shape="rect" id="node47" href="$group__xg_crt_string.html#ga5f9abaa6c5ffa26025ca901c14cb1056" title="Copy a string." alt="" coords="1490,478,1545,504"/>
+<area shape="rect" id="node55" href="$group__xg_crt_stdio.html#ga14acfae1988535199b72df91e18f72f3" title="Write a string to a stream." alt="" coords="1111,250,1161,276"/>
+<area shape="rect" id="node59" href="$group__xg_phat_dbg.html#ga19586d337c041f9945eeed96918341a1" title="PhatDbgAttrList" alt="" coords="919,200,1025,225"/>
+<area shape="rect" id="node61" href="$group__xg_crt_stdio.html#gabe6299d5823dd023e610aaa619735a3f" title="Write a character to a stream." alt="" coords="1112,200,1160,225"/>
+<area shape="rect" id="node69" href="$group__xg_phat32.html#gafe7a32b7baf78a8d2c02779139b38ef4" title="Release a cluster chain." alt="" coords="355,928,496,953"/>
+<area shape="rect" id="node110" href="$group__xg_phat16.html#ga678e3c870d78566a8b6363a7e8141774" title="Release a cluster chain." alt="" coords="355,780,496,805"/>
+<area shape="rect" id="node118" href="$group__xg_phat12.html#ga7078825413937c6d1be9474eef18c6bd" title="Release a cluster chain." alt="" coords="355,829,496,854"/>
+<area shape="rect" id="node71" href="$group__xg_phat32.html#ga064d8e8ad32e7d6bef57d8223df41757" title="Get link value of a specified cluster." alt="" coords="545,928,687,953"/>
+<area shape="rect" id="node107" href="$group__xg_phat32.html#ga9e14a22bf2e69bde94e7d6a5a9536c87" title="Set link value of a specified cluster." alt="" coords="545,977,687,1002"/>
+<area shape="rect" id="node73" href="$group__xg_phat_io.html#gabcf9fe7d5cf300725e1ac2a0f3c14d47" title="PhatSectorLoad" alt="" coords="746,842,857,868"/>
+<area shape="rect" id="node75" href="$group__xg_event.html#ga79af18e0842286182af7c5b647526ce5" title="Wait for an event in a specified queue." alt="" coords="925,956,1019,981"/>
+<area shape="rect" id="node85" href="$group__xg_event.html#ga129d2de44ddf083f252d0754fc45d9d3" title="Asynchronously post an event to a specified queue." alt="" coords="1453,905,1581,930"/>
+<area shape="rect" id="node103" href="$group__xg_phat_io.html#gab0aaf4369fa72e21c2f814278ffd030b" title="Flush sector buffers." alt="" coords="915,754,1029,780"/>
+<area shape="rect" id="node105" href="$group__xg_phat_io.html#gab8da97287a50ce7b536e8d11cbce5fbe" title="Read sector." alt="" coords="916,804,1028,829"/>
+<area shape="rect" id="node77" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="1083,956,1189,981"/>
+<area shape="rect" id="node79" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="1243,1006,1405,1032"/>
+<area shape="rect" id="node81" href="$group__xg_thread.html#ga4d2458fb9ec9d926a6f87706b19e7e06" title="Add a thread to a prioritiy ordered queue." alt="" coords="1630,1006,1783,1032"/>
+<area shape="rect" id="node83" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="1260,905,1388,930"/>
+<area shape="rect" id="node92" href="$group__xg_timer.html#ga91b42f5fd833e1b72c27b3bfb0ed0af7" title="Start a system timer." alt="" coords="1087,804,1185,829"/>
+<area shape="rect" id="node98" href="$group__xg_event.html#gaaa944c4484d068bdacd8220b7e081302" title="Timer callback in case of event timeout." alt="" coords="1078,1057,1194,1082"/>
+<area shape="rect" id="node87" href="$group__xg_timer.html#gafb23f6965312663a72d41fefc574dc00" title="Stop a specified timer." alt="" coords="1657,905,1756,930"/>
+<area shape="rect" id="node94" href="$group__xg_timer.html#gaf104e0c3660b2a77bd0d7b00c4fd741c" title="Start a system timer." alt="" coords="1261,754,1387,780"/>
+<area shape="rect" id="node96" href="$group__xg_nut_arch_arm_os_timer_at91.html#gabb52a4e7f513a7c586898065e0a0c81a" title="Calculate system ticks for a given number of milliseconds." alt="" coords="1252,804,1396,829"/>
+<area shape="rect" id="node112" href="$group__xg_phat16.html#ga8f1f8acd729587a5d76e36feb613db6f" title="Get link value of a specified cluster." alt="" coords="545,730,687,756"/>
+<area shape="rect" id="node115" href="$group__xg_phat16.html#gae69238851fe1b553bf2d0f1044a4d258" title="Set link value of a specified cluster." alt="" coords="545,780,687,805"/>
+<area shape="rect" id="node120" href="$group__xg_phat12.html#ga8e75c834a8873fe1dbcdbb10060365c9" title="Get link value of a specified cluster." alt="" coords="545,829,687,854"/>
+<area shape="rect" id="node123" href="$group__xg_phat12.html#gab9832f30dc6012c428700089cc7c3ffd" title="Set link value of a specified cluster." alt="" coords="545,878,687,904"/>
+</map>

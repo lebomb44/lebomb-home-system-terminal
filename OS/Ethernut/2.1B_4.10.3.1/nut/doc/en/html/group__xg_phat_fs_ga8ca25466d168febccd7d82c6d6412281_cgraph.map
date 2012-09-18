@@ -1,0 +1,30 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_phat_util.html#gadeebffe4cccf50aee555551e8e90ee13" title="Test for PHAT12/PHAT16 root directory." alt="" coords="349,82,451,107"/>
+<area shape="rect" id="node5" href="$group__xg_crt_string.html#ga09a4c3953e2e41a212a73cf3df4c8c8e" title="memcpy" alt="" coords="189,158,259,183"/>
+<area shape="rect" id="node7" href="$group__xg_phat12.html#ga8e75c834a8873fe1dbcdbb10060365c9" title="Get link value of a specified cluster." alt="" coords="153,207,295,233"/>
+<area shape="rect" id="node9" href="$group__xg_phat_io.html#gabcf9fe7d5cf300725e1ac2a0f3c14d47" title="PhatSectorLoad" alt="" coords="345,281,455,306"/>
+<area shape="rect" id="node62" href="$group__xg_phat16.html#ga8f1f8acd729587a5d76e36feb613db6f" title="Get link value of a specified cluster." alt="" coords="153,257,295,282"/>
+<area shape="rect" id="node65" href="$group__xg_phat32.html#ga064d8e8ad32e7d6bef57d8223df41757" title="Get link value of a specified cluster." alt="" coords="153,306,295,331"/>
+<area shape="rect" id="node68" href="$group__xg_phat_vol.html#gaaf0b8da0234a73af6a22e011bf39a116" title="PhatClusterSector" alt="" coords="163,57,285,82"/>
+<area shape="rect" id="node11" href="$group__xg_event.html#ga79af18e0842286182af7c5b647526ce5" title="Wait for an event in a specified queue." alt="" coords="514,255,609,281"/>
+<area shape="rect" id="node21" href="$group__xg_event.html#ga129d2de44ddf083f252d0754fc45d9d3" title="Asynchronously post an event to a specified queue." alt="" coords="1061,206,1189,231"/>
+<area shape="rect" id="node58" href="$group__xg_phat_io.html#gab0aaf4369fa72e21c2f814278ffd030b" title="Flush sector buffers." alt="" coords="505,305,618,330"/>
+<area shape="rect" id="node60" href="$group__xg_phat_io.html#gab8da97287a50ce7b536e8d11cbce5fbe" title="Read sector." alt="" coords="505,354,617,379"/>
+<area shape="rect" id="node13" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="672,306,779,331"/>
+<area shape="rect" id="node15" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="832,206,995,231"/>
+<area shape="rect" id="node17" href="$group__xg_thread.html#ga4d2458fb9ec9d926a6f87706b19e7e06" title="Add a thread to a prioritiy ordered queue." alt="" coords="1257,331,1410,357"/>
+<area shape="rect" id="node19" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="849,255,977,281"/>
+<area shape="rect" id="node37" href="$group__xg_timer.html#ga91b42f5fd833e1b72c27b3bfb0ed0af7" title="Start a system timer." alt="" coords="676,91,775,117"/>
+<area shape="rect" id="node53" href="$group__xg_event.html#gaaa944c4484d068bdacd8220b7e081302" title="Timer callback in case of event timeout." alt="" coords="667,355,783,381"/>
+<area shape="rect" id="node28" href="$group__xg_timer.html#gaf719e88403b4ccc78f071ce5c85a5a71" title="Process elapsed timers." alt="" coords="1043,157,1208,182"/>
+<area shape="rect" id="node33" href="$group__xg_nut_arch_arm_os_context.html#gad63408e1c4ef1c03d9f979ad2d31b7e0" title="Switch to another thread." alt="" coords="1067,255,1183,281"/>
+<area shape="rect" id="node23" href="$group__xg_timer.html#gafb23f6965312663a72d41fefc574dc00" title="Stop a specified timer." alt="" coords="1284,209,1383,234"/>
+<area shape="rect" id="node25" href="$group__xg_timer.html#ga681ca3c989be2bdeb5f0cc97e11d6e06" title="Insert a new timer in the global timer list." alt="" coords="1464,158,1568,183"/>
+<area shape="rect" id="node30" href="$group__xg_timer.html#ga940f66286dcf28b8280e41b605064446" title="Return the number of system timer ticks." alt="" coords="1276,107,1391,133"/>
+<area shape="rect" id="node39" href="$group__xg_timer.html#gaf104e0c3660b2a77bd0d7b00c4fd741c" title="Start a system timer." alt="" coords="850,91,977,117"/>
+<area shape="rect" id="node45" href="$group__xg_nut_arch_arm_os_timer_at91.html#gabb52a4e7f513a7c586898065e0a0c81a" title="Calculate system ticks for a given number of milliseconds." alt="" coords="841,18,985,43"/>
+<area shape="rect" id="node41" href="$group__xg_timer.html#ga1e47b683a996583386ebef7e7c92501e" title="Create a new system timer." alt="" coords="1070,107,1181,133"/>
+<area shape="rect" id="node47" href="$group__xg_nut_arch_arm_os_timer_at91.html#ga2724f52da15ed45123a32c1ed7e148f0" title="Return the number of system ticks per second." alt="" coords="1069,6,1182,31"/>
+<area shape="rect" id="node49" href="$group__xg_timer.html#ga784a7f52b5167c777149fd1d874c99f0" title="Return the CPU clock frequency." alt="" coords="1276,6,1391,31"/>
+<area shape="rect" id="node51" href="$group__xg_nut_arch_arm_os_timer_gba.html#ga7d11c53224db0028ad4838f8b9df9872" title="Return the CPU clock in Hertz." alt="" coords="1459,6,1573,31"/>
+</map>

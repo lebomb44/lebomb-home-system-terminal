@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_crt_stdio.html#ga14acfae1988535199b72df91e18f72f3" title="Write a string to a stream." alt="" coords="1479,371,1529,396"/>
+<area shape="rect" id="node9" href="$group__xg_l_c_p.html#ga4cec4cbedc07263d7833563d6f6616b1" title="LcpTxProtRej" alt="" coords="451,1088,546,1114"/>
+<area shape="rect" id="node13" href="$group__xgnetbuf.html#ga2e14a135152823a816388f50bdb3ea3f" title="Release a network buffer structure." alt="" coords="1111,1392,1214,1418"/>
+<area shape="rect" id="node26" href="$netdebug_8h.html#a193563d0f87a894ea370610b6ed8eb54" title="NutDumpPpp" alt="" coords="958,320,1055,346"/>
+<area shape="rect" id="node58" href="$group__xg_timer.html#gafefcf81d05019a8134b49fa44d8c114a" title="Temporarily suspends the current thread." alt="" coords="970,2100,1043,2126"/>
+<area shape="rect" id="node75" href="$group__xg_i_p_c_p.html#ga3bdc9bae074b7e83f66272f741de6712" title="Handle incoming IPCP packets." alt="" coords="144,1671,235,1696"/>
+<area shape="rect" id="node113" href="$group__xg_i_p.html#gad39556943c0a832c68035050b02afc34" title="Process incoming IP datagrams." alt="" coords="459,860,538,886"/>
+<area shape="rect" id="node140" href="$group__xg_l_c_p.html#ga1718f239d7c176af8663ef842bfc28da" title="Handle incoming LCP packets." alt="" coords="145,1416,233,1442"/>
+<area shape="rect" id="node144" href="$group__xg_p_a_p.html#ga50a42c17a4a3a48c6cd8acfc8b007675" title="Handle incoming PAP packets." alt="" coords="144,1240,235,1266"/>
+<area shape="rect" id="node5" href="$io_8h.html#a901fa187b164dd6faaac1b62c88614b5" title="_write" alt="" coords="1686,290,1741,315"/>
+<area shape="rect" id="node7" href="$group__xg_crt_string.html#ga7b9fc4834c90ac78977b5fbb3076c5ac" title="Compute the length of a NUL terminated string." alt="" coords="1581,320,1635,346"/>
+<area shape="rect" id="node11" href="$group__xgnetbuf.html#ga7a733aed1e6c15aaabb6657abe5f4e39" title="Allocate or re&#45;allocate a network buffer part." alt="" coords="955,1342,1059,1367"/>
+<area shape="rect" id="node16" href="$group__xg_crt_string.html#ga09a4c3953e2e41a212a73cf3df4c8c8e" title="memcpy" alt="" coords="808,936,877,962"/>
+<area shape="rect" id="node19" href="$group__xg_l_c_p.html#ga82efe54cd16e07de0f04592d8c2c625f" title="Send a LCP packet." alt="" coords="618,1215,715,1240"/>
+<area shape="rect" id="node22" href="$group__xg_p_p_p.html#ga8d1655e849d0e2d32de4275084500e2b" title="Send PPP frame." alt="" coords="793,1544,892,1570"/>
+<area shape="rect" id="node28" href="$group__xg_crt_stdio.html#ga2f7351ee13f3f4c465c65e849a12a3fd" title="Print formatted data to a stream." alt="" coords="1478,144,1530,170"/>
+<area shape="rect" id="node34" href="$pppdebug_8c.html#a923aa88aa0f39b66695c29edf826a949" title="NutDumpIpcp" alt="" coords="1113,144,1212,170"/>
+<area shape="rect" id="node42" href="$netdebug_8h.html#ae0449206b4435023085ad5b8b6445bd2" title="NutDumpLcp" alt="" coords="1115,320,1210,346"/>
+<area shape="rect" id="node50" href="$pppdebug_8c.html#ad1d7d4230e4f4f517fbafd2c406bcf8d" title="NutDumpPap" alt="" coords="1114,271,1211,296"/>
+<area shape="rect" id="node30" href="$group__xg_crt_stdio.html#ga50c4b673b1d86ab16f2a46aff7122c5c" title="Write argument list to a stream using a given format." alt="" coords="1579,208,1637,234"/>
+<area shape="rect" id="node38" href="$pppdebug_8c.html#a94554e696f4c9e11c8bd53e3e54afc0f" title="NutDumpIpcpOption" alt="" coords="1281,68,1415,94"/>
+<area shape="rect" id="node46" href="$netdebug_8h.html#ac95b9045033a8e16d4b5de378dc4129b" title="NutDumpLcpOption" alt="" coords="1283,320,1413,346"/>
+<area shape="rect" id="node54" href="$pppdebug_8c.html#a83cdfd28419696833ea95ade2a0ad7c0" title="NutDumpPapOption" alt="" coords="1281,271,1415,296"/>
+<area shape="rect" id="node60" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="1267,2176,1429,2202"/>
+<area shape="rect" id="node62" href="$group__xg_timer.html#ga91b42f5fd833e1b72c27b3bfb0ed0af7" title="Start a system timer." alt="" coords="1113,2051,1212,2076"/>
+<area shape="rect" id="node64" href="$group__xg_thread.html#ga8730ce8319ffcb5e14a413458125e41a" title="Resume a previously suspended thread." alt="" coords="1107,2100,1218,2126"/>
+<area shape="rect" id="node66" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="1284,2051,1412,2076"/>
+<area shape="rect" id="node68" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="1109,2202,1216,2227"/>
+<area shape="rect" id="node78" href="$group__xg_i_p_c_p.html#gad388edf39c7a8d3041dfc6832375124d" title="IpcpRxConfReq" alt="" coords="285,1772,393,1798"/>
+<area shape="rect" id="node97" href="$group__xg_i_p_c_p.html#ga6da116e34d2685ee8fac15e81cb3ee7b" title="IpcpRxConfAck" alt="" coords="287,1884,391,1910"/>
+<area shape="rect" id="node104" href="$group__xg_i_p_c_p.html#gaebab98735d80f2c34d5afbf43b4ceb85" title="IpcpRxTermReq" alt="" coords="283,1646,394,1671"/>
+<area shape="rect" id="node109" href="$group__xg_i_p_c_p.html#gabc44efcee43c05489a694c984a57aa2a" title="IpcpRxTermAck" alt="" coords="285,1696,392,1722"/>
+<area shape="rect" id="node80" href="$group__xg_p_p_p.html#gaa747a8f57f95db217b0709c9b1c483b9" title="IpcpLowerDown" alt="" coords="443,1848,554,1874"/>
+<area shape="rect" id="node83" href="$group__xg_event.html#gad519c6b1469621d2b3909fe58d1ac40b" title="Post an event to a specified queue." alt="" coords="619,2000,715,2026"/>
+<area shape="rect" id="node86" href="$group__xg_i_p_c_p.html#gab6d5eb41463fde00e2820185a57e2d24" title="IpcpTxConfReq" alt="" coords="445,1696,552,1722"/>
+<area shape="rect" id="node89" href="$group__xg_i_p_c_p.html#gae455b993454ba143c2a12de176b35ce9" title="Send a IPCP packet." alt="" coords="617,1696,717,1722"/>
+<area shape="rect" id="node116" href="$group__xg_i_p.html#gabf73942328e57e1c1c72abe1f9e6e359" title="Network interface setup." alt="" coords="617,684,716,710"/>
+<area shape="rect" id="node125" href="$group__xg_i_c_m_p.html#ga39892eead0894298fcbacab426715720" title="Handle incoming ICMP packets." alt="" coords="959,835,1054,860"/>
+<area shape="rect" id="node128" href="$group__xg_i_g_m_p.html#gacfbfc48d28eeb5eb7999b6055ea54172" title="Process incoming IGMP packets." alt="" coords="619,784,715,810"/>
+<area shape="rect" id="node133" href="$group__xg_i_c_m_p.html#ga387c1b71bb0ec69aa6467bdcedefbe26" title="Send an ICMP message as a response to a given destination." alt="" coords="603,987,730,1012"/>
+<area shape="rect" id="node118" href="$group__xg_i_p.html#gadbce564458332a83ab871b91a54269dd" title="Convert decimal dotted ASCII representation into numeric IP address." alt="" coords="805,684,880,710"/>
+<area shape="rect" id="node120" href="$group__xg_i_p.html#gaeb3b4f86e57db7d3e047b0c53aa94e60" title="Add a new entry to the IP routing table." alt="" coords="790,586,895,611"/>
+<area shape="rect" id="node123" href="$group__xg_conf_net.html#gacd0c3f2b073732af821661964eae34b4" title="Save network configuration in non&#45;volatile memory." alt="" coords="781,635,904,660"/>
+<area shape="rect" id="node130" href="$group__xg_i_g_m_p.html#ga2c19876202ab2cde84568af323766231" title="NutIgmpJoinGroup" alt="" coords="779,734,906,759"/>
+<area shape="rect" id="node137" href="$group__xg_i_c_m_p.html#gaa1a3c8e2fce88cb2ed41e6bf106e49be" title="Send an ICMP message to a given destination." alt="" coords="793,1038,892,1063"/>
+<area shape="rect" id="node147" href="$group__xg_p_a_p.html#ga1a06875fecbb5fd2cfd81ae1a9b751bf" title="PapRxAuthReq" alt="" coords="446,1406,551,1431"/>
+<area shape="rect" id="node154" href="$group__xg_p_a_p.html#ga0acc40df5ae9548e0fdf5572dcbb0104" title="PapRxAuthAck" alt="" coords="288,1240,389,1266"/>
+<area shape="rect" id="node156" href="$group__xg_p_a_p.html#gab871237662023f6c4544cad9403f1875" title="PapRxAuthNak" alt="" coords="287,1835,391,1860"/>
+<area shape="rect" id="node149" href="$group__xg_p_a_p.html#gadfd4376c859fc0669047201d6a28ee32" title="Send a PAP packet." alt="" coords="617,1431,716,1456"/>
+</map>

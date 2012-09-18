@@ -1,0 +1,36 @@
+<map id="G" name="G">
+<area shape="rect" id="node5" href="$stdio_8h.html" title="C Standard I/O." alt="" coords="197,81,256,106"/>
+<area shape="rect" id="node15" href="$board_8h.html" title="dev/board.h" alt="" coords="691,81,777,106"/>
+<area shape="rect" id="node38" href="$dev_2gpio_8h.html" title="General purpose I/O." alt="" coords="518,81,596,106"/>
+<area shape="rect" id="node51" href="$heap_8h.html" title="Heap management definitions." alt="" coords="36,305,119,330"/>
+<area shape="rect" id="node56" href="$thread_8h.html" title="Thread management definitions." alt="" coords="197,305,285,330"/>
+<area shape="rect" id="node62" href="$sys_2timer_8h.html" title="Timer management definitions." alt="" coords="1148,230,1231,255"/>
+<area shape="rect" id="node69" href="$socket_8h.html" title="UDP and TCP socket interface definitions." alt="" coords="1447,155,1537,181"/>
+<area shape="rect" id="node86" href="$inet_8h.html" title="Internet address conversion." alt="" coords="311,305,391,330"/>
+<area shape="rect" id="node90" href="$route_8h.html" title="Routing information definitions." alt="" coords="892,81,972,106"/>
+<area shape="rect" id="node100" href="$netdb_8h.html" title="netdb.h" alt="" coords="1325,305,1387,330"/>
+<area shape="rect" id="node105" href="$pro_2dhcp_8h.html" title="DHCP protocol definitions." alt="" coords="1704,305,1784,330"/>
+<area shape="rect" id="node7" href="$types_8h.html" title="Nut/OS type declarations." alt="" coords="837,454,920,479"/>
+<area shape="rect" id="node9" href="$compiler_8h.html" title="compiler.h" alt="" coords="1496,529,1576,554"/>
+<area shape="rect" id="node17" href="$arch_8h.html" title="cfg/arch.h" alt="" coords="609,230,684,255"/>
+<area shape="rect" id="node19" href="$cfg_2uart_8h.html" title="UART configuration." alt="" coords="625,155,697,181"/>
+<area shape="rect" id="node21" href="$debug_8h.html" title="Debug device definitions." alt="" coords="773,155,861,181"/>
+<area shape="rect" id="node35" href="$null__ether_8h.html" title="dev/null_ether.h" alt="" coords="857,230,967,255"/>
+<area shape="rect" id="node24" href="$device_8h.html" title="Nut/OS device definitions." alt="" coords="562,305,651,330"/>
+<area shape="rect" id="node29" href="$stdint_8h.html" title="stdint.h" alt="" coords="919,379,981,405"/>
+<area shape="rect" id="node31" href="$dev_2uart_8h.html" title="UART I/O function prototypes." alt="" coords="708,230,783,255"/>
+<area shape="rect" id="node26" href="$file_8h.html" title="sys/file.h" alt="" coords="577,379,647,405"/>
+<area shape="rect" id="node40" href="$cfg_2arch_2gpio_8h.html" title="Port configuration." alt="" coords="387,155,489,181"/>
+<area shape="rect" id="node42" href="$dev_2irqreg_8h.html" title="Interrupt management definitions." alt="" coords="514,155,600,181"/>
+<area shape="rect" id="node47" href="$irqstack_8h.html" title="dev/irqstack.h" alt="" coords="386,230,483,255"/>
+<area shape="rect" id="node49" href="$dev_8h.html" title="cfg/dev.h" alt="" coords="415,305,485,330"/>
+<area shape="rect" id="node53" href="$memory_8h.html" title="Default memory layout." alt="" coords="193,379,289,405"/>
+<area shape="rect" id="node65" href="$arch_2timer_8h.html" title="arch/timer.h" alt="" coords="949,305,1035,330"/>
+<area shape="rect" id="node71" href="$cfg_2udp_8h.html" title="UDP configuration." alt="" coords="1512,230,1584,255"/>
+<area shape="rect" id="node74" href="$sock__var_8h.html" title="UDP and TCP socket interface definitions." alt="" coords="1385,230,1487,255"/>
+<area shape="rect" id="node80" href="$netbuf_8h.html" title="Network buffer definitions." alt="" coords="1111,305,1199,330"/>
+<area shape="rect" id="node84" href="$tcp__fsm_8h.html" title="TCP state machine definitions." alt="" coords="1411,305,1527,330"/>
+<area shape="rect" id="node92" href="$if__var_8h.html" title="Network interface structure." alt="" coords="1042,230,1123,255"/>
+<area shape="rect" id="node98" href="$if__types_8h.html" title="Network interface type definitions." alt="" coords="778,305,872,330"/>
+<area shape="rect" id="node107" href="$cfg_2dhcp_8h.html" title="DHCP configuration." alt="" coords="1806,379,1884,405"/>
+</map>

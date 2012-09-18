@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$board_8h.html" title="include/dev/board.h" alt="" coords="655,155,784,181"/>
+<area shape="rect" id="node15" href="$threads_8c.html" title="app/threads/threads.c" alt="" coords="5,230,147,255"/>
+<area shape="rect" id="node17" href="$timers_8c.html" title="app/timers/timers.c" alt="" coords="172,230,300,255"/>
+<area shape="rect" id="node19" href="$at91__spi_8c.html" title="arch/arm/dev/atmel/at91_spi.c" alt="" coords="3311,230,3497,255"/>
+<area shape="rect" id="node21" href="$arch_2arm_2os_2nutinit_8c.html" title="arch/arm/os/nutinit.c" alt="" coords="324,230,457,255"/>
+<area shape="rect" id="node23" href="$arch_2avr_2os_2nutinit_8c.html" title="arch/avr/os/nutinit.c" alt="" coords="1171,230,1297,255"/>
+<area shape="rect" id="node25" href="$spi_8c.html" title="arch/avr32/dev/spi.c" alt="" coords="1485,230,1616,255"/>
+<area shape="rect" id="node27" href="$debug_8h.html" title="Debug device definitions." alt="" coords="903,81,1035,106"/>
+<area shape="rect" id="node31" href="$usart_dat91_8c.html" title="arch/arm/dev/atmel/usartDat91.c" alt="" coords="911,155,1111,181"/>
+<area shape="rect" id="node33" href="$dev_2irqreg_8h.html" title="Interrupt management definitions." alt="" coords="2559,81,2688,106"/>
+<area shape="rect" id="node36" href="$usart0at91_8c.html" title="arch/arm/dev/atmel/usart0at91.c" alt="" coords="1410,155,1608,181"/>
+<area shape="rect" id="node38" href="$usart1at91_8c.html" title="arch/arm/dev/atmel/usart1at91.c" alt="" coords="1633,155,1831,181"/>
+<area shape="rect" id="node41" href="$ostimer__gba_8c.html" title="arch/arm/dev/gba/ostimer_gba.c" alt="" coords="1135,155,1333,181"/>
+<area shape="rect" id="node43" href="$ostimer__lpc2xxx_8c.html" title="arch/arm/dev/nxp/ostimer_lpc2xxx.c" alt="" coords="1855,155,2069,181"/>
+<area shape="rect" id="node46" href="$usart0_8c.html" title="arch/avr32/dev/usart0.c" alt="" coords="2094,155,2241,181"/>
+<area shape="rect" id="node48" href="$usart1_8c.html" title="arch/avr32/dev/usart1.c" alt="" coords="2266,155,2413,181"/>
+<area shape="rect" id="node50" href="$usart2_8c.html" title="arch/avr32/dev/usart2.c" alt="" coords="2438,155,2585,181"/>
+<area shape="rect" id="node52" href="$sbi0mmc0_8c.html" title="dev/sbi0mmc0.c" alt="" coords="2712,155,2824,181"/>
+<area shape="rect" id="node54" href="$sbi0mmc1_8c.html" title="dev/sbi0mmc1.c" alt="" coords="2848,155,2960,181"/>
+<area shape="rect" id="node56" href="$sbi1mmc0_8c.html" title="dev/sbi1mmc0.c" alt="" coords="2984,155,3096,181"/>
+<area shape="rect" id="node58" href="$sbi1mmc1_8c.html" title="dev/sbi1mmc1.c" alt="" coords="3120,155,3232,181"/>
+<area shape="rect" id="node60" href="$sbimmc_8c.html" title="dev/sbimmc.c" alt="" coords="3256,155,3355,181"/>
+<area shape="rect" id="node62" href="$usart0sc16is752_8c.html" title="dev/usart0sc16is752.c" alt="" coords="3379,155,3525,181"/>
+<area shape="rect" id="node64" href="$usart1sc16is752_8c.html" title="dev/usart1sc16is752.c" alt="" coords="3549,155,3696,181"/>
+<area shape="rect" id="node66" href="$usart2sc16is752_8c.html" title="dev/usart2sc16is752.c" alt="" coords="3720,155,3867,181"/>
+<area shape="rect" id="node68" href="$usart3sc16is752_8c.html" title="dev/usart3sc16is752.c" alt="" coords="3891,155,4037,181"/>
+<area shape="rect" id="node72" href="$arm_8h.html" title="include/arch/arm.h" alt="" coords="1210,81,1333,106"/>
+<area shape="rect" id="node75" href="$arch_2avr32_8h.html" title="Compiler file for AVR32." alt="" coords="3221,81,3352,106"/>
+<area shape="rect" id="node77" href="$porttran_8h.html" title="Port translations." alt="" coords="3377,81,3540,106"/>
+<area shape="rect" id="node79" href="$xnut_8h.html" title="include/cfg/xnut.h" alt="" coords="3565,81,3680,106"/>
+<area shape="rect" id="node81" href="$dev_2at91__spi_8h.html" title="AT91 peripherals." alt="" coords="4062,155,4207,181"/>
+<area shape="rect" id="node84" href="$at91__mci_8c.html" title="arch/arm/dev/atmel/at91_mci.c" alt="" coords="3757,81,3947,106"/>
+<area shape="rect" id="node87" href="$charlcd__at91_8c.html" title="arch/arm/dev/atmel/charlcd_at91.c" alt="" coords="3972,81,4183,106"/>
+<area shape="rect" id="node89" href="$hd44780__at91_8c.html" title="arch/arm/dev/atmel/hd44780_at91.c" alt="" coords="4207,81,4425,106"/>
+<area shape="rect" id="node91" href="$spimmc__at91_8c.html" title="arch/arm/dev/atmel/spimmc_at91.c" alt="" coords="4450,81,4664,106"/>
+<area shape="rect" id="node93" href="$st7036__at91_8c.html" title="arch/arm/dev/atmel/st7036_at91.c" alt="" coords="4689,81,4897,106"/>
+<area shape="rect" id="node100" href="$ostimer__s3c4510b_8c.html" title="arch/arm/dev/ostimer_s3c4510b.c" alt="" coords="4922,81,5131,106"/>
+<area shape="rect" id="node108" href="$arch_2avr32_2os_2nutinit_8c.html" title="arch/avr32/os/nutinit.c" alt="" coords="5156,81,5297,106"/>
+<area shape="rect" id="node110" href="$fwrite_8c.html" title="crt/fwrite.c" alt="" coords="5322,81,5397,106"/>
+<area shape="rect" id="node112" href="$confos_8c.html" title="os/confos.c" alt="" coords="5423,81,5508,106"/>
+<area shape="rect" id="node114" href="$httpd_8c.html" title="HTTP server support routines." alt="" coords="5533,81,5611,106"/>
+<area shape="rect" id="node116" href="$httpopt_8c.html" title="Optional HTTP routines." alt="" coords="5635,81,5724,106"/>
+<area shape="rect" id="node118" href="$ssi_8c.html" title="pro/ssi.c" alt="" coords="5749,81,5819,106"/>
+<area shape="rect" id="node125" href="$spi__7seg_8c.html" title="Routines for 7 segment display." alt="" coords="5843,81,5948,106"/>
+<area shape="rect" id="node5" href="$caltime_8c.html" title="app/caltime/caltime.c" alt="" coords="1323,230,1461,255"/>
+<area shape="rect" id="node7" href="$cppdemo_8cc.html" title="app/cppdemo/cppdemo.cc" alt="" coords="636,230,804,255"/>
+<area shape="rect" id="node9" href="$editconf_8c.html" title="app/editconf/editconf.c" alt="" coords="828,230,972,255"/>
+<area shape="rect" id="node11" href="$meminfo_8c.html" title="app/editconf/meminfo.c" alt="" coords="997,230,1147,255"/>
+<area shape="rect" id="node13" href="$events_8c.html" title="app/events/events.c" alt="" coords="481,230,612,255"/>
+</map>

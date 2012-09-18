@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_crt_stdio.html#gab5ec3b6c064aca1b990c342a82e64aae" title="Get the file descriptor associated with a stream." alt="" coords="367,16,425,41"/>
+<area shape="rect" id="node5" href="$group__xg_crt_lowio.html#ga6b356746f1f26fb46f2afe4357ab3534" title="Perform device specific control functions." alt="" coords="169,188,220,213"/>
+<area shape="rect" id="node7" href="$if__ether_8h.html#a27d53f77a1f342b46a70082c4ec519d1" title="Convert an ASCII string to a binary Ethernet address." alt="" coords="355,315,437,340"/>
+<area shape="rect" id="node11" href="$if__ether_8h.html#a0a77d3c145778e41cb9230d368c8d02b" title="Convert a binary Ethernet address to an ASCII string." alt="" coords="154,1188,235,1213"/>
+<area shape="rect" id="node13" href="$group__xg_crt_stdio.html#ga76767cc4b7500920d83e53caad264189" title="Reassign a stream." alt="" coords="163,289,227,315"/>
+<area shape="rect" id="node27" href="$group__xg_crt_stdio.html#ga3e29caa20f7cffe18f410f01278905a8" title="Read a character from a standard input." alt="" coords="163,1237,226,1263"/>
+<area shape="rect" id="node33" href="$group__xg_i_p.html#gadbce564458332a83ab871b91a54269dd" title="Convert decimal dotted ASCII representation into numeric IP address." alt="" coords="359,1037,433,1063"/>
+<area shape="rect" id="node35" href="$group__xg_i_p.html#ga9daa3cef32d6bcb76a95d0e869fd8b7a" title="Convert numeric IP address into decimal dotted ASCII representation." alt="" coords="158,1287,231,1312"/>
+<area shape="rect" id="node37" href="$stdio_8h.html#a97e9b1fe8d4c010474637a654aad6566" title="kbhit" alt="" coords="171,67,219,92"/>
+<area shape="rect" id="node42" href="$group__xg_crt_string.html#ga09a4c3953e2e41a212a73cf3df4c8c8e" title="memcpy" alt="" coords="724,839,793,864"/>
+<area shape="rect" id="node44" href="$group__xg_conf_net.html#ga1b658703cf61dd0152f312a59989bed0" title="Load network configuration from non&#45;volatile memory." alt="" coords="133,491,257,516"/>
+<area shape="rect" id="node87" href="$group__xg_conf_net.html#gacd0c3f2b073732af821661964eae34b4" title="Save network configuration in non&#45;volatile memory." alt="" coords="133,839,256,864"/>
+<area shape="rect" id="node127" href="$group__xg_device.html#ga0d73e3153bf9f210194bd862d9b91c61" title="Register and initialize a device." alt="" coords="333,115,459,140"/>
+<area shape="rect" id="node130" href="$meminfo_8c.html#ac40230a0b4450570655a6b5671f466de" title="ShowHardwareConfiguration" alt="" coords="104,1139,285,1164"/>
+<area shape="rect" id="node135" href="$group__xg_crt_string.html#ga5f9abaa6c5ffa26025ca901c14cb1056" title="Copy a string." alt="" coords="167,1336,222,1361"/>
+<area shape="rect" id="node9" href="$group__xg_crt_string.html#gaa4075a014de11292d9105188ddbeb216" title="Fill memory region with a specific byte value." alt="" coords="542,241,610,267"/>
+<area shape="rect" id="node15" href="$group__xg_crt_stdio.html#ga6abcc06d7a67fdf4029ec5dc3e06cdcd" title="_fmode" alt="" coords="364,213,428,239"/>
+<area shape="rect" id="node17" href="$group__xg_heap.html#ga381d0a123dbf80ca3efe2614aa826e08" title="Allocate a block from heap memory." alt="" coords="729,740,788,765"/>
+<area shape="rect" id="node19" href="$group__xg_crt_lowio.html#gaa5b9fe6f8778481971c2e23a38348bb1" title="Open a file." alt="" coords="367,164,425,189"/>
+<area shape="rect" id="node25" href="$group__xg_heap.html#ga9f850d0608418aea291e4c0fdab93826" title="Return a block to heap memory." alt="" coords="737,789,780,815"/>
+<area shape="rect" id="node21" href="$group__xg_device.html#ga913130771bea4118ae58e2a0ccb50a4d" title="Find device entry by name." alt="" coords="517,140,635,165"/>
+<area shape="rect" id="node23" href="$group__xg_crt_string.html#gaafa356ff1e215725834bc57e8e4fae60" title="Compare two strings." alt="" coords="729,216,789,241"/>
+<area shape="rect" id="node29" href="$group__xg_crt_stdio.html#gab11a990e4f8863a1e7736e3c1d430092" title="Read a character from a stream." alt="" coords="372,1240,420,1265"/>
+<area shape="rect" id="node31" href="$io_8h.html#aa7278892ff16de3dd3d00ff4a89d11e4" title="_read" alt="" coords="549,1240,603,1265"/>
+<area shape="rect" id="node39" href="$group__xg_crt_lowio.html#gadc168332e669e274acd6482c4926ec9e" title="Return the length of a file." alt="" coords="357,65,435,91"/>
+<area shape="rect" id="node50" href="$group__xg_nut_nv_mem.html#ga83a8fa6e7f9c1d90cca22c5c9840f05c" title="Read data from non&#45;volatile memory." alt="" coords="341,491,451,516"/>
+<area shape="rect" id="node52" href="$x12rtc_8h.html#a8236fbe59011df5bc9db072de31128c3" title="Read contents from non&#45;volatile EEPROM." alt="" coords="517,343,635,368"/>
+<area shape="rect" id="node56" href="$nvmem__at45d_8h.html#a4dfe8d76a63e3f0379039bbcf74e7760" title="Load configuration parameters from flash memory." alt="" coords="507,888,645,913"/>
+<area shape="rect" id="node67" href="$at45db_8h.html#a12d29529ff4814c36394f96b683866cc" title="Load configuration parameters from flash memory." alt="" coords="513,392,639,417"/>
+<area shape="rect" id="node78" href="$at49bv_8h.html#a7a1d192aeca94aafd12bdd3d1c01354a" title="Load configuration parameters from flash memory." alt="" coords="513,540,639,565"/>
+<area shape="rect" id="node80" href="$group__xg_arch_avr_dev_eeprom.html#ga1578e8b8c97c03990d1fe43e0c960ee1" title="Load data from AVR EEPROM." alt="" coords="509,589,643,615"/>
+<area shape="rect" id="node82" href="$group__xg_at91_efc.html#gade437bc357f6a11778bb746aad15ab73" title="Load configuration parameters from embedded flash memory." alt="" coords="511,441,641,467"/>
+<area shape="rect" id="node84" href="$dev_2eeprom_8h.html#a6c6a3d95afc65d60d12921f0bd23c5a4" title="EEReadData" alt="" coords="529,491,623,516"/>
+<area shape="rect" id="node54" href="$group__xg_nut_arch_arm_at91_twi.html#gabe6654261c61050f912f4ad48458d7d2" title="Transmit and/or receive data as a master." alt="" coords="697,416,820,441"/>
+<area shape="rect" id="node58" href="$nvmem__at45d_8h.html#ad70b1387cb350d5a438b9fd287b3eff9" title="Get size of configuration area." alt="" coords="693,1063,824,1088"/>
+<area shape="rect" id="node63" href="$spi__at45d_8h.html#a25cb2b6fad5064288ec0d52a86a9421d" title="Read data from DataFlash memory." alt="" coords="693,951,824,976"/>
+<area shape="rect" id="node60" href="$spi__at45d_8h.html#aa0c27889cf7245d2266c92c32bd0fdee" title="Return the page size." alt="" coords="872,1088,995,1113"/>
+<area shape="rect" id="node69" href="$at45db_8c.html#a80cb1be0b87102fdd01809ae50d631c6" title="Get size of configuration area." alt="" coords="699,571,819,596"/>
+<area shape="rect" id="node71" href="$at45db_8c.html#a712914d4f7478975637e66239aeb6188" title="At45dbParamPage" alt="" coords="695,629,822,655"/>
+<area shape="rect" id="node74" href="$at45db_8h.html#af036226b4496d4a5ef631aea8e0ca040" title="Read data from flash memory." alt="" coords="699,484,818,509"/>
+<area shape="rect" id="node89" href="$group__xg_nut_nv_mem.html#ga2eb04b74f80407950b723c4978594b41" title="Save data in non&#45;volatile memory." alt="" coords="341,839,451,864"/>
+<area shape="rect" id="node91" href="$x12rtc_8h.html#abee38edf014cf9a82b94c2e0a52d895e" title="Store buffer contents in non&#45;volatile EEPROM." alt="" coords="519,740,633,765"/>
+<area shape="rect" id="node97" href="$nvmem__at45d_8h.html#af4070fbe96bc548a132c126be392c6ac" title="Store configuration parameters in flash memory." alt="" coords="509,1088,643,1113"/>
+<area shape="rect" id="node105" href="$at45db_8h.html#a403ccfda94df744eee47d85e6d35ef7d" title="Store configuration parameters in flash memory." alt="" coords="513,639,639,664"/>
+<area shape="rect" id="node113" href="$at49bv_8h.html#a2511e9c522d75d7ae41837cd7d274d7b" title="Store configuration parameters in flash memory." alt="" coords="515,789,637,815"/>
+<area shape="rect" id="node118" href="$group__xg_arch_avr_dev_eeprom.html#ga1ec3533d0514cbbe9b6d7fa63dcc00b9" title="Save data in AVR EEPROM." alt="" coords="510,987,642,1012"/>
+<area shape="rect" id="node120" href="$group__xg_at91_efc.html#ga4a417f5fa6cb2544033200d4c16c40e0" title="Store configuration parameters in embedded flash memory." alt="" coords="512,839,640,864"/>
+<area shape="rect" id="node125" href="$dev_2eeprom_8h.html#aa650034d1a595707b25ca9f07270a23e" title="EEWriteData" alt="" coords="530,937,622,963"/>
+<area shape="rect" id="node133" href="$at45db_8h.html#aa33340a7a840d40c901d904c1c1542b9" title="At45dbPageSize" alt="" coords="340,1139,452,1164"/>
+</map>

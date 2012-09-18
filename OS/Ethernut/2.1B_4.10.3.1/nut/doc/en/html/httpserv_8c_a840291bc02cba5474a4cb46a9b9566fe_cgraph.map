@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_crt_stdio.html#gab5ec3b6c064aca1b990c342a82e64aae" title="Get the file descriptor associated with a stream." alt="" coords="153,5,212,30"/>
+<area shape="rect" id="node5" href="$group__xg_crt_lowio.html#ga6b356746f1f26fb46f2afe4357ab3534" title="Perform device specific control functions." alt="" coords="544,471,595,497"/>
+<area shape="rect" id="node7" href="$group__xg_crt_lowio.html#gaa5b9fe6f8778481971c2e23a38348bb1" title="Open a file." alt="" coords="357,813,414,838"/>
+<area shape="rect" id="node13" href="$group__xg_crt_stdio.html#ga76767cc4b7500920d83e53caad264189" title="Reassign a stream." alt="" coords="151,1366,215,1391"/>
+<area shape="rect" id="node22" href="$group__xg_i_p.html#gadbce564458332a83ab871b91a54269dd" title="Convert decimal dotted ASCII representation into numeric IP address." alt="" coords="693,106,768,131"/>
+<area shape="rect" id="node24" href="$group__xg_i_p.html#ga9daa3cef32d6bcb76a95d0e869fd8b7a" title="Convert numeric IP address into decimal dotted ASCII representation." alt="" coords="349,358,422,383"/>
+<area shape="rect" id="node26" href="$group__xg_d_h_c_p_c.html#ga23fddfde13e6e0581258ac7f0fc1d025" title="Automatically configure an Ethernet network interface." alt="" coords="127,610,239,635"/>
+<area shape="rect" id="node35" href="$group__xg_conf_net.html#ga1b658703cf61dd0152f312a59989bed0" title="Load network configuration from non&#45;volatile memory." alt="" coords="323,206,447,231"/>
+<area shape="rect" id="node46" href="$group__xg_timer.html#gafefcf81d05019a8134b49fa44d8c114a" title="Temporarily suspends the current thread." alt="" coords="533,1062,606,1087"/>
+<area shape="rect" id="node57" href="$group__xg_i_p.html#gaeb3b4f86e57db7d3e047b0c53aa94e60" title="Add a new entry to the IP routing table." alt="" coords="678,1159,783,1185"/>
+<area shape="rect" id="node76" href="$group__xg_i_p.html#ga3d6e30d2a89522f9166d59cde5c85b94" title="Configure a network interface." alt="" coords="131,710,234,735"/>
+<area shape="rect" id="node80" href="$group__xg_h_t_t_p_d.html#gab458b2370fd69e44acbc51d64690cd81" title="Register ASP handler for asp files." alt="" coords="128,1813,237,1838"/>
+<area shape="rect" id="node88" href="$group__xg_h_t_t_p_d.html#ga22b0e0d9087d6a9d34ee5e2544f9222e" title="NutRegisterAspCallback" alt="" coords="104,1011,261,1037"/>
+<area shape="rect" id="node90" href="$group__xg_h_t_t_p_d.html#gacfe3cc1dfdf96256b54a257d6e9dd4a8" title="Register an authorization entry." alt="" coords="329,1362,441,1387"/>
+<area shape="rect" id="node95" href="$group__xg_h_t_t_p_d.html#ga1483598a87f2cc35dde1cdbd52888985" title="Register a CGI function." alt="" coords="332,1214,439,1239"/>
+<area shape="rect" id="node100" href="$group__xg_h_t_t_p_d.html#gacfd53fbbc1f4cd4fef8cc00a60646e4b" title="Register a new cgi&#45;bin path." alt="" coords="310,1313,461,1338"/>
+<area shape="rect" id="node104" href="$group__xg_device.html#ga0d73e3153bf9f210194bd862d9b91c61" title="Register and initialize a device." alt="" coords="120,307,245,333"/>
+<area shape="rect" id="node107" href="$group__xg_discover.html#ga3f55b5d8b0a31ec0edd0948639ea9a9e" title="Register discovery telegram responder." alt="" coords="112,962,253,987"/>
+<area shape="rect" id="node109" href="$group__xg_nut_arch_arm_os_context.html#ga8357f2631f0c0a9444844e5ea64be50d" title="Create a new thread." alt="" coords="327,911,444,937"/>
+<area shape="rect" id="node118" href="$group__xg_h_t_t_p_d.html#gad74503c37c194ac861486d67c919ac47" title="Register the HTTP server&#39;s root directory." alt="" coords="317,1513,453,1538"/>
+<area shape="rect" id="node123" href="$group__xg_h_t_t_p_d.html#ga2af9671bd38cbbba5ba2d269458c4604" title="Register SSI handler for shtml files." alt="" coords="129,1763,236,1789"/>
+<area shape="rect" id="node128" href="$group__xg_thread.html#ga8ebe134e9c404072584e80fb8d7e8985" title="Set the current thread&#39;s priority." alt="" coords="115,1467,250,1493"/>
+<area shape="rect" id="node130" href="$osdebug_8h.html#a961812fcd15ef623842cd2149471b664" title="Control dynamic memory tracing." alt="" coords="131,1517,234,1542"/>
+<area shape="rect" id="node132" href="$osdebug_8h.html#ae62d75845acb540259f973aa5a60b352" title="Control OS tracing." alt="" coords="139,1566,227,1591"/>
+<area shape="rect" id="node134" href="$netdebug_8h.html#aea8e2e8e1d5d0fa86af3021d4f069f48" title="Control PPP tracing." alt="" coords="135,1615,231,1641"/>
+<area shape="rect" id="node136" href="$netdebug_8h.html#ae309aed230630b648fa875f196c24432" title="Control TCP tracing." alt="" coords="137,1665,229,1690"/>
+<area shape="rect" id="node138" href="$group__xg_nut_version.html#gafc224f8837d06742cb90826cdf1dea12" title="Return Nut/OS version string." alt="" coords="125,1714,240,1739"/>
+<area shape="rect" id="node140" href="$httpserv_8c.html#ab30d71ddf953fb065740555c68aa2801" title="HTTP service thread." alt="" coords="151,1113,214,1138"/>
+<area shape="rect" id="node143" href="$httpserv_8c.html#a4145a5f7775596fcfae43a1f39f0b55f" title="ShowForm" alt="" coords="344,862,427,887"/>
+<area shape="rect" id="node9" href="$group__xg_device.html#ga913130771bea4118ae58e2a0ccb50a4d" title="Find device entry by name." alt="" coords="510,546,629,571"/>
+<area shape="rect" id="node11" href="$group__xg_crt_string.html#gaafa356ff1e215725834bc57e8e4fae60" title="Compare two strings." alt="" coords="701,546,761,571"/>
+<area shape="rect" id="node15" href="$group__xg_crt_stdio.html#ga6abcc06d7a67fdf4029ec5dc3e06cdcd" title="_fmode" alt="" coords="353,1411,417,1437"/>
+<area shape="rect" id="node17" href="$group__xg_heap.html#ga381d0a123dbf80ca3efe2614aa826e08" title="Allocate a block from heap memory." alt="" coords="832,1362,891,1387"/>
+<area shape="rect" id="node20" href="$group__xg_heap.html#ga9f850d0608418aea291e4c0fdab93826" title="Return a block to heap memory." alt="" coords="548,1461,591,1486"/>
+<area shape="rect" id="node29" href="$group__xg_crt_string.html#gaa4075a014de11292d9105188ddbeb216" title="Fill memory region with a specific byte value." alt="" coords="697,257,765,282"/>
+<area shape="rect" id="node31" href="$group__xg_crt_string.html#ga135578e5537357b84cf147e3b352902d" title="Compare memory regions." alt="" coords="348,559,423,585"/>
+<area shape="rect" id="node33" href="$group__xg_crt_string.html#ga09a4c3953e2e41a212a73cf3df4c8c8e" title="memcpy" alt="" coords="696,711,765,737"/>
+<area shape="rect" id="node48" href="$group__xg_d_h_c_p_c.html#ga2efa947f8718bb11f6674cb3011aa520" title="Relinguish our DHCP lease." alt="" coords="327,510,444,535"/>
+<area shape="rect" id="node50" href="$group__xg_i_p.html#gaa7092b805dccd43209f32ad437dc2a3f" title="Configure a network interface including the default gateway." alt="" coords="331,661,440,686"/>
+<area shape="rect" id="node54" href="$group__xg_i_p.html#gabf73942328e57e1c1c72abe1f9e6e359" title="Network interface setup." alt="" coords="520,711,619,737"/>
+<area shape="rect" id="node62" href="$group__xg_crt_stdio.html#ga2f7351ee13f3f4c465c65e849a12a3fd" title="Print formatted data to a stream." alt="" coords="543,859,595,885"/>
+<area shape="rect" id="node66" href="$group__xg_d_n_s.html#gac3f37bb5099633796580e35bb3cd0913" title="Set DNS configuration." alt="" coords="332,1263,439,1289"/>
+<area shape="rect" id="node39" href="$if__ether_8h.html#a27d53f77a1f342b46a70082c4ec519d1" title="Convert an ASCII string to a binary Ethernet address." alt="" coords="529,157,610,182"/>
+<area shape="rect" id="node43" href="$group__xg_nut_nv_mem.html#ga83a8fa6e7f9c1d90cca22c5c9840f05c" title="Read data from non&#45;volatile memory." alt="" coords="514,206,625,231"/>
+<area shape="rect" id="node69" href="$group__xg_crt_string.html#ga608db5821b635f6a719ecb7f76d4a5da" title="Create a copy of a string." alt="" coords="541,1311,598,1337"/>
+<area shape="rect" id="node71" href="$group__xg_crt_string.html#ga7b9fc4834c90ac78977b5fbb3076c5ac" title="Compute the length of a NUL terminated string." alt="" coords="704,1362,757,1387"/>
+<area shape="rect" id="node82" href="$group__xg_h_t_t_p_d.html#ga5130dc0e13097d99666b787e2e90e1b6" title="Set the mime type handler for a specified file extension." alt="" coords="319,1563,452,1589"/>
+<area shape="rect" id="node84" href="$group__xg_h_t_t_p_d.html#ga9f671e027663229bdb658e7ac95824d9" title="NutHttpProcessAsp" alt="" coords="320,1613,451,1638"/>
+<area shape="rect" id="node113" href="$group__xg_discover.html#ga7720363ce2770cdc9db1596b19402d9c" title="DiscoveryResponder" alt="" coords="317,961,454,986"/>
+</map>

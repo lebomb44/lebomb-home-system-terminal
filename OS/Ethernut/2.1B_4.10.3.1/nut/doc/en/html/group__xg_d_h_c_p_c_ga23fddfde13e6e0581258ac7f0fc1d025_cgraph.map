@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_crt_stdio.html#ga2f7351ee13f3f4c465c65e849a12a3fd" title="Print formatted data to a stream." alt="" coords="202,86,254,111"/>
+<area shape="rect" id="node17" href="$group__xg_i_p.html#ga9daa3cef32d6bcb76a95d0e869fd8b7a" title="Convert numeric IP address into decimal dotted ASCII representation." alt="" coords="191,954,265,979"/>
+<area shape="rect" id="node19" href="$group__xg_crt_string.html#ga135578e5537357b84cf147e3b352902d" title="Compare memory regions." alt="" coords="191,1003,265,1029"/>
+<area shape="rect" id="node21" href="$group__xg_crt_string.html#ga09a4c3953e2e41a212a73cf3df4c8c8e" title="memcpy" alt="" coords="748,601,817,626"/>
+<area shape="rect" id="node23" href="$group__xg_crt_string.html#gaa4075a014de11292d9105188ddbeb216" title="Fill memory region with a specific byte value." alt="" coords="550,205,618,230"/>
+<area shape="rect" id="node25" href="$group__xg_device.html#ga913130771bea4118ae58e2a0ccb50a4d" title="Find device entry by name." alt="" coords="343,701,462,726"/>
+<area shape="rect" id="node29" href="$group__xg_d_h_c_p_c.html#ga2efa947f8718bb11f6674cb3011aa520" title="Relinguish our DHCP lease." alt="" coords="169,1053,287,1078"/>
+<area shape="rect" id="node31" href="$group__xg_d_n_s.html#gac3f37bb5099633796580e35bb3cd0913" title="Set DNS configuration." alt="" coords="349,155,456,181"/>
+<area shape="rect" id="node39" href="$group__xg_i_p.html#gaa7092b805dccd43209f32ad437dc2a3f" title="Configure a network interface including the default gateway." alt="" coords="173,853,283,878"/>
+<area shape="rect" id="node43" href="$group__xg_i_p.html#gabf73942328e57e1c1c72abe1f9e6e359" title="Network interface setup." alt="" coords="353,827,452,853"/>
+<area shape="rect" id="node93" href="$group__xg_conf_net.html#ga1b658703cf61dd0152f312a59989bed0" title="Load network configuration from non&#45;volatile memory." alt="" coords="166,549,290,574"/>
+<area shape="rect" id="node124" href="$group__xg_timer.html#gafefcf81d05019a8134b49fa44d8c114a" title="Temporarily suspends the current thread." alt="" coords="366,1081,439,1106"/>
+<area shape="rect" id="node5" href="$group__xg_crt_stdio.html#ga50c4b673b1d86ab16f2a46aff7122c5c" title="Write argument list to a stream using a given format." alt="" coords="374,54,431,79"/>
+<area shape="rect" id="node7" href="$group__xg_crt_stdio.html#ga651a41ea9a05d4294a58c1ec83e13f18" title="Write formatted data using a given output function." alt="" coords="559,54,609,79"/>
+<area shape="rect" id="node15" href="$io_8h.html#a901fa187b164dd6faaac1b62c88614b5" title="_write" alt="" coords="557,5,611,30"/>
+<area shape="rect" id="node9" href="$group__xg_heap.html#ga381d0a123dbf80ca3efe2614aa826e08" title="Allocate a block from heap memory." alt="" coords="753,254,812,279"/>
+<area shape="rect" id="node11" href="$group__xg_crt_string.html#ga7b9fc4834c90ac78977b5fbb3076c5ac" title="Compute the length of a NUL terminated string." alt="" coords="756,81,809,106"/>
+<area shape="rect" id="node13" href="$group__xg_heap.html#ga9f850d0608418aea291e4c0fdab93826" title="Return a block to heap memory." alt="" coords="761,155,804,181"/>
+<area shape="rect" id="node27" href="$group__xg_crt_string.html#gaafa356ff1e215725834bc57e8e4fae60" title="Compare two strings." alt="" coords="554,651,614,677"/>
+<area shape="rect" id="node34" href="$group__xg_crt_string.html#ga608db5821b635f6a719ecb7f76d4a5da" title="Create a copy of a string." alt="" coords="555,155,613,181"/>
+<area shape="rect" id="node55" href="$group__xg_event.html#ga575628f89864beb575a161f10f3de62c" title="Broadcast an event to a specified queue." alt="" coords="339,1309,466,1334"/>
+<area shape="rect" id="node75" href="$group__xg_crt_lowio.html#ga6b356746f1f26fb46f2afe4357ab3534" title="Perform device specific control functions." alt="" coords="377,954,428,979"/>
+<area shape="rect" id="node77" href="$group__xg_event.html#ga79af18e0842286182af7c5b647526ce5" title="Wait for an event in a specified queue." alt="" coords="355,1258,450,1283"/>
+<area shape="rect" id="node45" href="$group__xg_i_p.html#gadbce564458332a83ab871b91a54269dd" title="Convert decimal dotted ASCII representation into numeric IP address." alt="" coords="547,753,621,778"/>
+<area shape="rect" id="node47" href="$group__xg_i_p.html#gaeb3b4f86e57db7d3e047b0c53aa94e60" title="Add a new entry to the IP routing table." alt="" coords="531,802,637,827"/>
+<area shape="rect" id="node51" href="$group__xg_conf_net.html#gacd0c3f2b073732af821661964eae34b4" title="Save network configuration in non&#45;volatile memory." alt="" coords="523,954,645,979"/>
+<area shape="rect" id="node53" href="$group__xg_nut_nv_mem.html#ga2eb04b74f80407950b723c4978594b41" title="Save data in non&#45;volatile memory." alt="" coords="728,954,837,979"/>
+<area shape="rect" id="node57" href="$group__xg_event.html#ga21d9c3cc7ae2c9bddfb130b54b081076" title="Asynchronously broadcast an event to a specified queue." alt="" coords="703,1359,862,1385"/>
+<area shape="rect" id="node63" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="531,1309,637,1334"/>
+<area shape="rect" id="node59" href="$group__xg_event.html#ga129d2de44ddf083f252d0754fc45d9d3" title="Asynchronously post an event to a specified queue." alt="" coords="931,1359,1059,1385"/>
+<area shape="rect" id="node61" href="$group__xg_thread.html#ga4d2458fb9ec9d926a6f87706b19e7e06" title="Add a thread to a prioritiy ordered queue." alt="" coords="1126,1359,1279,1385"/>
+<area shape="rect" id="node65" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="701,1258,864,1283"/>
+<area shape="rect" id="node68" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="719,1183,847,1209"/>
+<area shape="rect" id="node71" href="$group__xg_timer.html#gaf719e88403b4ccc78f071ce5c85a5a71" title="Process elapsed timers." alt="" coords="912,1209,1077,1234"/>
+<area shape="rect" id="node73" href="$group__xg_nut_arch_arm_os_context.html#gad63408e1c4ef1c03d9f979ad2d31b7e0" title="Switch to another thread." alt="" coords="937,1159,1053,1185"/>
+<area shape="rect" id="node82" href="$group__xg_timer.html#ga91b42f5fd833e1b72c27b3bfb0ed0af7" title="Start a system timer." alt="" coords="535,1055,633,1081"/>
+<area shape="rect" id="node88" href="$group__xg_event.html#gaaa944c4484d068bdacd8220b7e081302" title="Timer callback in case of event timeout." alt="" coords="937,1409,1053,1434"/>
+<area shape="rect" id="node84" href="$group__xg_timer.html#gaf104e0c3660b2a77bd0d7b00c4fd741c" title="Start a system timer." alt="" coords="719,1055,846,1081"/>
+<area shape="rect" id="node86" href="$group__xg_nut_arch_arm_os_timer_at91.html#gabb52a4e7f513a7c586898065e0a0c81a" title="Calculate system ticks for a given number of milliseconds." alt="" coords="711,1105,855,1130"/>
+<area shape="rect" id="node97" href="$if__ether_8h.html#a27d53f77a1f342b46a70082c4ec519d1" title="Convert an ASCII string to a binary Ethernet address." alt="" coords="362,395,443,421"/>
+<area shape="rect" id="node101" href="$group__xg_nut_nv_mem.html#ga83a8fa6e7f9c1d90cca22c5c9840f05c" title="Read data from non&#45;volatile memory." alt="" coords="347,449,458,474"/>
+<area shape="rect" id="node103" href="$x12rtc_8h.html#a8236fbe59011df5bc9db072de31128c3" title="Read contents from non&#45;volatile EEPROM." alt="" coords="525,451,643,477"/>
+<area shape="rect" id="node105" href="$nvmem__at45d_8h.html#a4dfe8d76a63e3f0379039bbcf74e7760" title="Load configuration parameters from flash memory." alt="" coords="515,550,653,575"/>
+<area shape="rect" id="node110" href="$at45db_8h.html#a12d29529ff4814c36394f96b683866cc" title="Load configuration parameters from flash memory." alt="" coords="521,254,647,279"/>
+<area shape="rect" id="node115" href="$at49bv_8h.html#a7a1d192aeca94aafd12bdd3d1c01354a" title="Load configuration parameters from flash memory." alt="" coords="521,501,647,526"/>
+<area shape="rect" id="node117" href="$group__xg_arch_avr_dev_eeprom.html#ga1578e8b8c97c03990d1fe43e0c960ee1" title="Load data from AVR EEPROM." alt="" coords="517,303,651,329"/>
+<area shape="rect" id="node119" href="$group__xg_at91_efc.html#gade437bc357f6a11778bb746aad15ab73" title="Load configuration parameters from embedded flash memory." alt="" coords="519,353,649,378"/>
+<area shape="rect" id="node121" href="$dev_2eeprom_8h.html#a6c6a3d95afc65d60d12921f0bd23c5a4" title="EEReadData" alt="" coords="537,402,631,427"/>
+<area shape="rect" id="node128" href="$group__xg_thread.html#ga8730ce8319ffcb5e14a413458125e41a" title="Resume a previously suspended thread." alt="" coords="939,1033,1050,1058"/>
+</map>

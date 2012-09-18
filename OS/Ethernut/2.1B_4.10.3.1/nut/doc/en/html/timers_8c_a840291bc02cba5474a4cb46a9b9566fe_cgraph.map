@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$group__xg_crt_stdio.html#gab5ec3b6c064aca1b990c342a82e64aae" title="Get the file descriptor associated with a stream." alt="" coords="132,51,191,77"/>
+<area shape="rect" id="node5" href="$group__xg_crt_lowio.html#ga6b356746f1f26fb46f2afe4357ab3534" title="Perform device specific control functions." alt="" coords="136,101,187,126"/>
+<area shape="rect" id="node7" href="$group__xg_crt_stdio.html#ga76767cc4b7500920d83e53caad264189" title="Reassign a stream." alt="" coords="129,202,193,227"/>
+<area shape="rect" id="node21" href="$group__xg_timer.html#ga784a7f52b5167c777149fd1d874c99f0" title="Return the CPU clock frequency." alt="" coords="104,251,219,277"/>
+<area shape="rect" id="node25" href="$group__xg_device.html#ga0d73e3153bf9f210194bd862d9b91c61" title="Register and initialize a device." alt="" coords="272,5,397,30"/>
+<area shape="rect" id="node28" href="$group__xg_timer.html#gafefcf81d05019a8134b49fa44d8c114a" title="Temporarily suspends the current thread." alt="" coords="298,539,371,565"/>
+<area shape="rect" id="node32" href="$group__xg_timer.html#ga91b42f5fd833e1b72c27b3bfb0ed0af7" title="Start a system timer." alt="" coords="461,918,560,943"/>
+<area shape="rect" id="node48" href="$group__xg_timer.html#gafb23f6965312663a72d41fefc574dc00" title="Stop a specified timer." alt="" coords="1047,338,1145,363"/>
+<area shape="rect" id="node62" href="$group__xg_nut_arch_arm_os_context.html#ga8357f2631f0c0a9444844e5ea64be50d" title="Create a new thread." alt="" coords="641,1019,759,1045"/>
+<area shape="rect" id="node80" href="$group__xg_thread.html#ga8ebe134e9c404072584e80fb8d7e8985" title="Set the current thread&#39;s priority." alt="" coords="267,665,402,690"/>
+<area shape="rect" id="node91" href="$osdebug_8h.html#a961812fcd15ef623842cd2149471b664" title="Control dynamic memory tracing." alt="" coords="110,1019,213,1045"/>
+<area shape="rect" id="node93" href="$osdebug_8h.html#ae62d75845acb540259f973aa5a60b352" title="Control OS tracing." alt="" coords="117,1069,205,1094"/>
+<area shape="rect" id="node95" href="$timers_8c.html#af8ccbc97f92daa38d6bd08716caf1763" title="Sleeper1" alt="" coords="125,503,197,529"/>
+<area shape="rect" id="node99" href="$timers_8c.html#a7096ed82c53a81b507d7b76ace1293ba" title="Sleeper2" alt="" coords="125,553,197,578"/>
+<area shape="rect" id="node103" href="$timers_8c.html#a13b4a1603eb33629d4b6de34707b5054" title="Sleeper3" alt="" coords="125,602,197,627"/>
+<area shape="rect" id="node107" href="$timers_8c.html#a71615cba7b5ecbbf704c2c286c8c50fe" title="Sleeper4" alt="" coords="125,454,197,479"/>
+<area shape="rect" id="node111" href="$timers_8c.html#a5c7a4a7c2d586ce71b88f6dc2f1e87f3" title="TimerCallback" alt="" coords="459,313,562,338"/>
+<area shape="rect" id="node114" href="$timers_8c.html#a9bf357b7e17e502c64725675aff1d859" title="TimerEvent1" alt="" coords="116,802,207,827"/>
+<area shape="rect" id="node124" href="$timers_8c.html#a5cbd15ac344c7f4d1a292a99918ce95a" title="TimerEvent2" alt="" coords="116,753,207,778"/>
+<area shape="rect" id="node128" href="$timers_8c.html#a061526c234025676fd7753b3436e58a6" title="TimerEvent3" alt="" coords="116,851,207,877"/>
+<area shape="rect" id="node132" href="$timers_8c.html#ac3e147a0f7d5bf7cfcba11a5e1de4f93" title="TimerEvent4" alt="" coords="116,703,207,729"/>
+<area shape="rect" id="node9" href="$group__xg_crt_stdio.html#ga6abcc06d7a67fdf4029ec5dc3e06cdcd" title="_fmode" alt="" coords="303,103,367,129"/>
+<area shape="rect" id="node11" href="$group__xg_heap.html#ga381d0a123dbf80ca3efe2614aa826e08" title="Allocate a block from heap memory." alt="" coords="305,153,364,178"/>
+<area shape="rect" id="node13" href="$group__xg_crt_lowio.html#gaa5b9fe6f8778481971c2e23a38348bb1" title="Open a file." alt="" coords="306,54,363,79"/>
+<area shape="rect" id="node19" href="$group__xg_heap.html#ga9f850d0608418aea291e4c0fdab93826" title="Return a block to heap memory." alt="" coords="313,202,356,227"/>
+<area shape="rect" id="node15" href="$group__xg_device.html#ga913130771bea4118ae58e2a0ccb50a4d" title="Find device entry by name." alt="" coords="451,30,570,55"/>
+<area shape="rect" id="node17" href="$group__xg_crt_string.html#gaafa356ff1e215725834bc57e8e4fae60" title="Compare two strings." alt="" coords="670,30,730,55"/>
+<area shape="rect" id="node23" href="$group__xg_nut_arch_arm_os_timer_gba.html#ga7d11c53224db0028ad4838f8b9df9872" title="Return the CPU clock in Hertz." alt="" coords="277,251,392,277"/>
+<area shape="rect" id="node30" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="619,653,781,678"/>
+<area shape="rect" id="node40" href="$group__xg_thread.html#ga8730ce8319ffcb5e14a413458125e41a" title="Resume a previously suspended thread." alt="" coords="455,362,566,387"/>
+<area shape="rect" id="node44" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="636,513,764,538"/>
+<area shape="rect" id="node57" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="457,563,564,589"/>
+<area shape="rect" id="node34" href="$group__xg_timer.html#gaf104e0c3660b2a77bd0d7b00c4fd741c" title="Start a system timer." alt="" coords="834,918,961,943"/>
+<area shape="rect" id="node38" href="$group__xg_nut_arch_arm_os_timer_at91.html#gabb52a4e7f513a7c586898065e0a0c81a" title="Calculate system ticks for a given number of milliseconds." alt="" coords="628,918,772,943"/>
+<area shape="rect" id="node36" href="$group__xg_timer.html#ga681ca3c989be2bdeb5f0cc97e11d6e06" title="Insert a new timer in the global timer list." alt="" coords="1227,513,1331,538"/>
+<area shape="rect" id="node42" href="$group__xg_thread.html#ga4d2458fb9ec9d926a6f87706b19e7e06" title="Add a thread to a prioritiy ordered queue." alt="" coords="1019,658,1173,683"/>
+<area shape="rect" id="node46" href="$group__xg_event.html#ga129d2de44ddf083f252d0754fc45d9d3" title="Asynchronously post an event to a specified queue." alt="" coords="833,338,961,363"/>
+<area shape="rect" id="node52" href="$group__xg_timer.html#gaf719e88403b4ccc78f071ce5c85a5a71" title="Process elapsed timers." alt="" coords="1013,513,1179,538"/>
+<area shape="rect" id="node55" href="$group__xg_nut_arch_arm_os_context.html#gad63408e1c4ef1c03d9f979ad2d31b7e0" title="Switch to another thread." alt="" coords="839,766,955,791"/>
+<area shape="rect" id="node64" href="$group__xg_crt_string.html#ga09a4c3953e2e41a212a73cf3df4c8c8e" title="memcpy" alt="" coords="863,1069,932,1094"/>
+<area shape="rect" id="node68" href="$group__xg_crt_stdio.html#ga2f7351ee13f3f4c465c65e849a12a3fd" title="Print formatted data to a stream." alt="" coords="871,1019,923,1045"/>
+<area shape="rect" id="node72" href="$osdebug_8h.html#acc9b4c9e94b94936592ec3b84625b1fb" title="Dump system thread list." alt="" coords="830,1118,965,1143"/>
+<area shape="rect" id="node70" href="$group__xg_crt_stdio.html#ga50c4b673b1d86ab16f2a46aff7122c5c" title="Write argument list to a stream using a given format." alt="" coords="1067,1019,1125,1045"/>
+<area shape="rect" id="node74" href="$thread_8h.html#ad3d53c8f90bef732dd044b78c55f801c" title="NutThreadStackAvailable" alt="" coords="1017,1118,1175,1143"/>
+<area shape="rect" id="node76" href="$group__xg_crt_stdio.html#ga14acfae1988535199b72df91e18f72f3" title="Write a string to a stream." alt="" coords="1071,1167,1121,1193"/>
+<area shape="rect" id="node78" href="$group__xg_crt_stdio.html#gabe6299d5823dd023e610aaa619735a3f" title="Write a character to a stream." alt="" coords="1072,1069,1120,1094"/>
+<area shape="rect" id="node84" href="$group__xg_thread.html#gaf8e9b69ee0082bcdb00fd6cdb68f4136" title="Kill the running thread." alt="" coords="462,411,559,437"/>
+<area shape="rect" id="node86" href="$group__xg_thread.html#gaba085dddcb4bf80a0b246bd06618d740" title="Free a thread that was previously killed and release memory back to the OS." alt="" coords="639,439,761,465"/>
+<area shape="rect" id="node116" href="$group__xg_event.html#ga79af18e0842286182af7c5b647526ce5" title="Wait for an event in a specified queue." alt="" coords="287,753,382,778"/>
+</map>

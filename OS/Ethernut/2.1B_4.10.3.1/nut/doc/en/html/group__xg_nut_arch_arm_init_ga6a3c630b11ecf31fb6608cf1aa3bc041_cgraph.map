@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$at91_8h.html#ad763f7676a304cf00dc295fc3cc3c733" title="AT91 specific initialization." alt="" coords="127,5,187,30"/>
+<area shape="rect" id="node5" href="$board_8h.html#a24444c5740b35350deba614ef6e4d4fb" title="Early AT91SAM7X&#45;EK hardware initialization." alt="" coords="112,54,203,79"/>
+<area shape="rect" id="node7" href="$group__xg_timer.html#ga784a7f52b5167c777149fd1d874c99f0" title="Return the CPU clock frequency." alt="" coords="672,105,787,130"/>
+<area shape="rect" id="node11" href="$group__xg_nut_arch_arm_init.html#gae0d80557ad7151f89d27b93267f49aba" title="Idle thread." alt="" coords="127,675,188,701"/>
+<area shape="rect" id="node50" href="$group__xg_nut_arch_arm_os_context.html#ga8357f2631f0c0a9444844e5ea64be50d" title="Create a new thread." alt="" coords="260,1175,377,1201"/>
+<area shape="rect" id="node9" href="$group__xg_nut_arch_arm_os_timer_gba.html#ga7d11c53224db0028ad4838f8b9df9872" title="Return the CPU clock in Hertz." alt="" coords="881,105,996,130"/>
+<area shape="rect" id="node13" href="$group__xg_nut_arch_arm_dev_irq_gba.html#ga4f036095f2cf6dc3fd541690d2089b6d" title="InitIrqHandler" alt="" coords="271,523,367,549"/>
+<area shape="rect" id="node19" href="$board_8h.html#a1d86645e1b5e4e410f046661a3cf3f0c" title="NutIdleInit" alt="" coords="280,774,357,799"/>
+<area shape="rect" id="node21" href="$group__xg_conf_os.html#gabca7504d210e24288104af136b2b6968" title="Load Nut/OS configuration from non&#45;volatile memory." alt="" coords="266,926,371,951"/>
+<area shape="rect" id="node48" href="$board_8h.html#ae4a03ec4870063a68375ed24dd362bc7" title="NutMainInit" alt="" coords="277,975,360,1001"/>
+<area shape="rect" id="node70" href="$group__xg_thread.html#gaba085dddcb4bf80a0b246bd06618d740" title="Free a thread that was previously killed and release memory back to the OS." alt="" coords="668,713,791,738"/>
+<area shape="rect" id="node72" href="$group__xg_thread.html#ga8ebe134e9c404072584e80fb8d7e8985" title="Set the current thread&#39;s priority." alt="" coords="251,725,386,750"/>
+<area shape="rect" id="node81" href="$group__xg_thread.html#ga075836f9a2596c5983b7ba88420afd11" title="Give up the CPU." alt="" coords="265,599,372,625"/>
+<area shape="rect" id="node95" href="$group__xg_timer.html#ga063e0628286de93e67e90fd168681aae" title="Initialize system timer." alt="" coords="274,305,363,330"/>
+<area shape="rect" id="node15" href="$group__xg_nut_arch_arm_dev_irq_gba.html#ga05dcab28e610faf1c43fafc2c2dd7172" title="IrqHandler" alt="" coords="476,498,556,523"/>
+<area shape="rect" id="node17" href="$group__xg_interrupt.html#ga11b89e20df7c10d74c1d2c85ded08da9" title="Call a registered interrupt handler." alt="" coords="685,502,773,527"/>
+<area shape="rect" id="node23" href="$group__xg_crt_string.html#ga135578e5537357b84cf147e3b352902d" title="Compare memory regions." alt="" coords="479,902,553,927"/>
+<area shape="rect" id="node25" href="$group__xg_nut_nv_mem.html#ga83a8fa6e7f9c1d90cca22c5c9840f05c" title="Read data from non&#45;volatile memory." alt="" coords="461,1053,571,1078"/>
+<area shape="rect" id="node44" href="$group__xg_crt_string.html#ga5f9abaa6c5ffa26025ca901c14cb1056" title="Copy a string." alt="" coords="489,951,543,977"/>
+<area shape="rect" id="node46" href="$group__xg_crt_string.html#ga7b9fc4834c90ac78977b5fbb3076c5ac" title="Compute the length of a NUL terminated string." alt="" coords="912,1351,965,1377"/>
+<area shape="rect" id="node27" href="$x12rtc_8h.html#a8236fbe59011df5bc9db072de31128c3" title="Read contents from non&#45;volatile EEPROM." alt="" coords="671,977,788,1002"/>
+<area shape="rect" id="node29" href="$nvmem__at45d_8h.html#a4dfe8d76a63e3f0379039bbcf74e7760" title="Load configuration parameters from flash memory." alt="" coords="661,1226,798,1251"/>
+<area shape="rect" id="node33" href="$at45db_8h.html#a12d29529ff4814c36394f96b683866cc" title="Load configuration parameters from flash memory." alt="" coords="666,1125,793,1150"/>
+<area shape="rect" id="node36" href="$at49bv_8h.html#a7a1d192aeca94aafd12bdd3d1c01354a" title="Load configuration parameters from flash memory." alt="" coords="667,1026,792,1051"/>
+<area shape="rect" id="node38" href="$group__xg_arch_avr_dev_eeprom.html#ga1578e8b8c97c03990d1fe43e0c960ee1" title="Load data from AVR EEPROM." alt="" coords="663,1075,796,1101"/>
+<area shape="rect" id="node40" href="$group__xg_at91_efc.html#gade437bc357f6a11778bb746aad15ab73" title="Load configuration parameters from embedded flash memory." alt="" coords="664,878,795,903"/>
+<area shape="rect" id="node42" href="$dev_2eeprom_8h.html#a6c6a3d95afc65d60d12921f0bd23c5a4" title="EEReadData" alt="" coords="682,927,777,953"/>
+<area shape="rect" id="node31" href="$group__xg_crt_string.html#ga09a4c3953e2e41a212a73cf3df4c8c8e" title="memcpy" alt="" coords="904,1226,973,1251"/>
+<area shape="rect" id="node53" href="$group__xg_thread.html#ga4d2458fb9ec9d926a6f87706b19e7e06" title="Add a thread to a prioritiy ordered queue." alt="" coords="862,742,1015,767"/>
+<area shape="rect" id="node55" href="$group__xg_nut_arch_arm_os_context.html#gad63408e1c4ef1c03d9f979ad2d31b7e0" title="Switch to another thread." alt="" coords="671,777,787,802"/>
+<area shape="rect" id="node57" href="$group__xg_crt_stdio.html#ga2f7351ee13f3f4c465c65e849a12a3fd" title="Print formatted data to a stream." alt="" coords="490,1378,542,1403"/>
+<area shape="rect" id="node61" href="$osdebug_8h.html#acc9b4c9e94b94936592ec3b84625b1fb" title="Dump system thread list." alt="" coords="449,1453,583,1478"/>
+<area shape="rect" id="node59" href="$group__xg_crt_stdio.html#ga50c4b673b1d86ab16f2a46aff7122c5c" title="Write argument list to a stream using a given format." alt="" coords="701,1378,758,1403"/>
+<area shape="rect" id="node63" href="$group__xg_crt_stdio.html#gabe6299d5823dd023e610aaa619735a3f" title="Write a character to a stream." alt="" coords="705,1477,753,1502"/>
+<area shape="rect" id="node65" href="$group__xg_crt_stdio.html#ga14acfae1988535199b72df91e18f72f3" title="Write a string to a stream." alt="" coords="705,1427,754,1453"/>
+<area shape="rect" id="node68" href="$thread_8h.html#ad3d53c8f90bef732dd044b78c55f801c" title="NutThreadStackAvailable" alt="" coords="650,1526,809,1551"/>
+<area shape="rect" id="node74" href="$group__xg_thread.html#gae45ebad9f604755d5c5ba8adaf9e4f89" title="Remove a thread from a specified queue." alt="" coords="435,701,597,726"/>
+<area shape="rect" id="node77" href="$group__xg_thread.html#gaf8e9b69ee0082bcdb00fd6cdb68f4136" title="Kill the running thread." alt="" coords="467,750,565,775"/>
+<area shape="rect" id="node85" href="$group__xg_thread.html#gaabfac60c4d51b57c2dc422d09a69df5b" title="Continue with the highest priority thread, which is ready to run." alt="" coords="452,599,580,625"/>
+<area shape="rect" id="node87" href="$group__xg_event.html#ga129d2de44ddf083f252d0754fc45d9d3" title="Asynchronously post an event to a specified queue." alt="" coords="665,657,793,682"/>
+<area shape="rect" id="node90" href="$group__xg_timer.html#gaf719e88403b4ccc78f071ce5c85a5a71" title="Process elapsed timers." alt="" coords="647,551,812,577"/>
+<area shape="rect" id="node92" href="$group__xg_timer.html#ga940f66286dcf28b8280e41b605064446" title="Return the number of system timer ticks." alt="" coords="881,354,996,379"/>
+<area shape="rect" id="node97" href="$group__xg_nut_arch_arm_os_timer_at91.html#gac7e686d436923a2bdf4d9a2dedefdcc0" title="Initialize system timer." alt="" coords="456,305,576,330"/>
+<area shape="rect" id="node100" href="$ih__at91sys_8c.html#ad84b350053ab5356e2fbe1c56fd902a4" title="Register a system interrupt handler." alt="" coords="646,305,813,330"/>
+<area shape="rect" id="node102" href="$ih__at91sys_8c.html#ad3928632efe4f5a3c043039e7f93c018" title="Enable a specified system interrupt." alt="" coords="672,354,787,379"/>
+<area shape="rect" id="node104" href="$group__xg_interrupt.html#gaa459696030a9cdf621ce3df7b3ac939d" title="Register an interrupt handler." alt="" coords="656,403,803,429"/>
+<area shape="rect" id="node106" href="$group__xg_interrupt.html#ga76b12f975b20be92e9d30d75a4d8177c" title="Modify the priority level of an interrupt." alt="" coords="674,453,785,478"/>
+<area shape="rect" id="node108" href="$group__xg_interrupt.html#ga9d27f5ecdebd2acd835df5d3d2af02f5" title="Enable a specified interrupt." alt="" coords="682,206,777,231"/>
+<area shape="rect" id="node110" href="$group__xg_nut_arch_arm_os_timer_gba.html#gac10a2e77495852c01c29c925b11e70ee" title="Timer 0 interrupt entry." alt="" coords="685,255,773,281"/>
+</map>
