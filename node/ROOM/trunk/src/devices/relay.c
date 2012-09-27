@@ -3,9 +3,21 @@
 
 #define RELAY_NB 6
 
-u08 * relay_cmd_ddr[RELAY_NB] = { (u08*)&DDRB, (u08*)&DDRB, (u08*)&DDRD, (u08*)&DDRD, (u08*)&DDRD, (u08*)&DDRD };
-u08 * relay_cmd_port[RELAY_NB] = { (u08*)&PORTB, (u08*)&PORTB, (u08*)&PORTD, (u08*)&PORTD, (u08*)&PORTD, (u08*)&PORTD };
-u08 relay_cmd_bit[RELAY_NB] = { 0, 1, 6, 7, 0, 1 };
+#ifdef QUARTZ_USED
+#define RELAY_DDR_4 (NULL)
+#define RELAY_DDR_5 (NULL)
+#else
+#define RELAY_DDR_4 ((u08*)&DDRB)
+#define RELAY_DDR_5 ((u08*)&DDRB)
+#endif
+
+//u08 * relay_cmd_ddr[RELAY_NB] = { (u08*)&DDRB, (u08*)&DDRB, (u08*)&DDRD, (u08*)&DDRD, (u08*)&DDRD, (u08*)&DDRD };
+//u08 * relay_cmd_port[RELAY_NB] = { (u08*)&PORTB, (u08*)&PORTB, (u08*)&PORTD, (u08*)&PORTD, (u08*)&PORTD, (u08*)&PORTD };
+//u08 relay_cmd_bit[RELAY_NB] = { 0, 1, 6, 7, 0, 1 };
+
+u08 * relay_cmd_ddr[RELAY_NB] = { (u08*)&DDRB, (u08*)&DDRB, (u08*)&DDRD, (u08*)&DDRD, RELAY_DDR_4, RELAY_DDR_5 };
+u08 * relay_cmd_port[RELAY_NB] = { (u08*)&PORTB, (u08*)&PORTB, (u08*)&PORTD, (u08*)&PORTD, (u08*)&PORTB, (u08*)&PORTB };
+u08 relay_cmd_bit[RELAY_NB] = { 0, 1, 0, 1, 6, 7 };
 
 u08 * relay_st_ddr[RELAY_NB] = { NULL, NULL, NULL, NULL, NULL, NULL };
 u08 * relay_st_port[RELAY_NB] = { NULL, NULL, NULL, NULL, NULL, NULL };
