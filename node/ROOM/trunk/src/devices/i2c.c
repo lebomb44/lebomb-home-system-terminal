@@ -70,7 +70,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
         }
         else
         {
-          if(tw_sr_idx <= NODE_REG_MAX)
+          if((tw_sm_adr+tw_sr_idx-1) < NODE_REG_MAX)
           {
             node[tw_sm_adr+tw_sr_idx-1] = TWDR;
 //uart_printf((u08*)"TW SR data=0x%x\n",node[tw_sm_adr+tw_sr_idx-1]);
@@ -80,7 +80,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
 //uart_puts((u08*)"TW SR over\n");
           }
         }
-        if(tw_sr_idx <= NODE_REG_MAX)
+        if((tw_sm_adr+tw_sr_idx) <= NODE_REG_MAX)
         {
           tw_sr_idx++;
         }
@@ -131,7 +131,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
         /* Reset transmit index and fall through for outgoing data. */
         tw_sm_sla = TWDR;
         tw_st_idx = 0;
-        if(tw_st_idx < NODE_REG_MAX)
+        if((tw_sm_adr+tw_st_idx) < NODE_REG_MAX)
         {
           TWDR = node[tw_sm_adr+tw_st_idx];
         }
@@ -140,7 +140,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
           /* No more data. Continue sending dummies. */
           TWDR = 0;
         }
-        if(tw_st_idx < NODE_REG_MAX)
+        if((tw_sm_adr+tw_st_idx) < NODE_REG_MAX)
         {
           tw_st_idx++;
         }
@@ -157,7 +157,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
          * If outgoing data left to send, put the next byte in the
          * data register. Otherwise transmit a dummy byte.
          */
-        if(tw_st_idx < NODE_REG_MAX)
+        if((tw_sm_adr+tw_st_idx) < NODE_REG_MAX)
         {
           TWDR = node[tw_sm_adr+tw_st_idx];
 //uart_printf((u08*)"TW ST data=0x%x\n",node[tw_sm_adr+tw_st_idx]);
@@ -168,7 +168,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
           /* No more data. Continue sending dummies. */
           TWDR = 0;
         }
-        if(tw_st_idx < NODE_REG_MAX)
+        if((tw_sm_adr+tw_st_idx) < NODE_REG_MAX)
         {
           tw_st_idx++;
         }
