@@ -52,7 +52,11 @@ u08 relay_get(u08 ch)
   }
   else
   {
-    if(bit_is_set((*relay_cmd_port[ch]), relay_cmd_bit[ch])) { return RELAY_ON; }
+    if((relay_cmd_ddr[ch] != NULL) && (relay_cmd_port[ch] != NULL))
+    {
+      if(bit_is_set((*relay_cmd_port[ch]), relay_cmd_bit[ch])) { return RELAY_ON; }
+      else { return RELAY_OFF; }
+    }
     else { return RELAY_OFF; }
   }
 }
