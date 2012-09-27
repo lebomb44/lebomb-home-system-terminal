@@ -47,8 +47,33 @@ void shutter_set(u08 shutter, u08 pos)
   }
 }
 
+u08 shutter_but_state_get(u08 shutter)
+{
+  if((button_get(shutter_but_up[i]) == BUTTON_ON ) && (button_get(shutter_but_down[i]) == BUTTON_OFF))
+  {
+    but_state_new = SHUTTER_UP;
+  }
+  else
+  {
+    if((button_get(shutter_but_up[i]) == BUTTON_OFF) && (button_get(shutter_but_down[i]) == BUTTON_ON ))
+    {
+      but_state_new = SHUTTER_DOWN;
+    }
+    else
+    {
+      but_state_new = SHUTTER_STOP;
+    }
+  }
+}
+
 void shutter_init(void)
 {
+  u08 i = 0;
+
+  for(i=0; i<SHUTTER_NB; i++)
+  {
+    shutter_but_state_old[i] = shutter_but_state_get(i);
+  }
 }
 
 void shutter_cycle(void)
@@ -58,9 +83,7 @@ void shutter_cycle(void)
 
   for(i=0; i<SHUTTER_NB; i++)
   {
-           if(button_get(shutter_but_up[i]) && !button_get(shutter_but_down[i])) { but_state_new = SHUTTER_UP;   }
-    else { if(!button_get(shutter_but_up[i]) && button_get(shutter_but_down[i])) { but_state_new = SHUTTER_DOWN; }
-    else                                                                         { but_state_new = SHUTTER_STOP; } }
+    but_state_new = shutter_but_state_get(i);
     if(!alarm_control_shutters())
     {
       if(but_state_new != shutter_but_state_old[i])
