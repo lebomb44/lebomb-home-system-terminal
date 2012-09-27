@@ -51,17 +51,17 @@ u08 shutter_but_state_get(u08 shutter)
 {
   if((button_get(shutter_but_up[shutter]) == BUTTON_ON ) && (button_get(shutter_but_down[shutter]) == BUTTON_OFF))
   {
-    but_state_new = SHUTTER_UP;
+    return SHUTTER_UP;
   }
   else
   {
     if((button_get(shutter_but_up[shutter]) == BUTTON_OFF) && (button_get(shutter_but_down[shutter]) == BUTTON_ON ))
     {
-      but_state_new = SHUTTER_DOWN;
+      return SHUTTER_DOWN;
     }
     else
     {
-      but_state_new = SHUTTER_STOP;
+      return SHUTTER_STOP;
     }
   }
 }
