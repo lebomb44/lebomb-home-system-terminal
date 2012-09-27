@@ -2,6 +2,12 @@
 #include "../config.h"
 #include "ir.h"
 
+#ifndef QUARTZ_USED
+#ifdef IR_USED
+#error "Impossible configuration : IR without Quartz"
+#endif
+#endif
+
 #define IR_LED_DDR  DDRB
 #define IR_LED_PORT PORTB
 #define IR_LED_BIT  2
