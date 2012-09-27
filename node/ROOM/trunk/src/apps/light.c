@@ -33,6 +33,8 @@ void light_set(u08 light, u08 pos)
 
 u08 light_get(u08 light)
 {
+  if(light >= LIGHT_NB) { return LIGHT_OFF; }
+
   if(relay_get(light_relay[light]) == RELAY_ON) { return LIGHT_ON; }
   else { return LIGHT_OFF; }
 }
@@ -72,6 +74,8 @@ void light_cycle(void)
       node[NODE_REG_LIGHT+i] = LIGHT_OFF;
     }
     light_set(i, node[NODE_REG_LIGHT+i]);
+    /* Update the register using the real feedback status */
+    //node[NODE_REG_LIGHT+i] = light_get(i);
 
     light_but_state_old[i] = but_state_new;
   }

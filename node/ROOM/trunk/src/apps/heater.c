@@ -33,6 +33,8 @@ void heater_set(u08 heater, u08 pos)
 
 u08 heater_get(u08 heater)
 {
+  if(heater >= HEATER_NB) { return HEATER_OFF; }
+
   if(relay_get(heater_relay[heater]) == RELAY_ON) { return HEATER_ON; }
   else { return HEATER_OFF; }
 }

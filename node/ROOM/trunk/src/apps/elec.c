@@ -33,6 +33,8 @@ void elec_set(u08 elec, u08 pos)
 
 u08 elec_get(u08 elec)
 {
+  if(elec >= ELEC_NB) { return ELEC_OFF; }
+
   if(relay_get(elec_relay[elec]) == RELAY_ON) { return ELEC_ON; }
   else { return ELEC_OFF; }
 }

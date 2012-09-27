@@ -49,6 +49,8 @@ void shutter_set(u08 shutter, u08 pos)
 
 u08 shutter_but_state_get(u08 shutter)
 {
+  if(shutter >= SHUTTER_NB) { return SHUTTER_STOP; }
+
   if((button_get(shutter_but_up[shutter]) == BUTTON_ON ) && (button_get(shutter_but_down[shutter]) == BUTTON_OFF))
   {
     return SHUTTER_UP;
