@@ -49,13 +49,13 @@ void shutter_set(u08 shutter, u08 pos)
 
 u08 shutter_but_state_get(u08 shutter)
 {
-  if((button_get(shutter_but_up[i]) == BUTTON_ON ) && (button_get(shutter_but_down[i]) == BUTTON_OFF))
+  if((button_get(shutter_but_up[shutter]) == BUTTON_ON ) && (button_get(shutter_but_down[shutter]) == BUTTON_OFF))
   {
     but_state_new = SHUTTER_UP;
   }
   else
   {
-    if((button_get(shutter_but_up[i]) == BUTTON_OFF) && (button_get(shutter_but_down[i]) == BUTTON_ON ))
+    if((button_get(shutter_but_up[shutter]) == BUTTON_OFF) && (button_get(shutter_but_down[shutter]) == BUTTON_ON ))
     {
       but_state_new = SHUTTER_DOWN;
     }
