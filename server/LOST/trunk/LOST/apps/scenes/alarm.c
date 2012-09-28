@@ -107,7 +107,7 @@ THREAD(AlarmD, arg)
     if(alarm_control.perimeter == 1)
     {
       /* Step : Alarm trig watchdog is going to finish */
-      if(alarm_trig.perimeter == 2) { alarm_action_with_buzzer("Alarm-Perimeter"); }
+      if(alarm_trig.perimeter == 2) { alarm_action_with_buzzer("Alarme-Perimetre"); }
       /* Step : Alarm trig during watchdog */
       if(alarm_trig.perimeter > 1)  { alarm_trig.perimeter--; }
       /* Step : Alarm did not triggered. Check to status */
@@ -136,7 +136,7 @@ THREAD(AlarmD, arg)
       /* Check if all the shutters are closed else send alert message */
       if(rooms_perimeter_status_get())
       {
-        alarm_action("Impossible-to-activate-Alarm-Perimeter");
+        alarm_action("Impossible-d-activer-Alarme-Perimetre");
       }
     }
     /* Force all shutters down when enabling alarm perimeter */
@@ -148,7 +148,7 @@ THREAD(AlarmD, arg)
     if(alarm_control.volume == 1)
     {
       /* Step : Alarm trig watchdog is going to finish */
-      if(alarm_trig.volume == 2) { alarm_action_with_buzzer("Alarm-Volume"); }
+      if(alarm_trig.volume == 2) { alarm_action_with_buzzer("Alarme-Volume"); }
       /* Step : Alarm trig during watchdog */
       if(alarm_trig.volume > 1)  { alarm_trig.volume--; }
       /* Step : Alarm did not triggered. Check to status */
@@ -170,7 +170,7 @@ THREAD(AlarmD, arg)
       /* Check if all the shutters are closed else send alert message */
       if(rooms_volume_status_get() || volume_status_get())
       {
-        alarm_action("Impossible to activate Alarm-Volume");
+        alarm_action("Impossible-d-activer-Alarme-Volume");
       }
     }
     /* Step : Alarm control during watchdog for being enabled */
