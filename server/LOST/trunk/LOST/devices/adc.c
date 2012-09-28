@@ -33,7 +33,7 @@ uint16_t adc_get(uint8_t channel)
   ADCSRA=0xD7; //0b11010111
   /* Wait for the end of the acquisition */
   /* But do not block the complete system */
-  while(!bit_is_set(ADCSRA,4)) { NutSleep(10); } //0b00010000
+  while(bit_is_set(ADCSRA, ADSC));
   /* Build the returned value with Low and High register */
   temp_ADC = (uint16_t) ADCL;
   temp_ADC += (((uint16_t) ADCH) << 8);
