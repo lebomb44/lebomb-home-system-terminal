@@ -75,7 +75,7 @@ void light_cycle(void)
     }
     light_set(i, node[NODE_REG_LIGHT+i]);
     /* Update the register using the real feedback status */
-    //node[NODE_REG_LIGHT+i] = light_get(i);
+    node[NODE_REG_LIGHT+i] = light_get(i);
 
     light_but_state_old[i] = but_state_new;
   }
