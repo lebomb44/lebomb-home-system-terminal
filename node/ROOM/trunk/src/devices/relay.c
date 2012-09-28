@@ -25,7 +25,7 @@ u08 * relay_cmd_ddr[RELAY_NB] = { (u08*)&DDRB, (u08*)&DDRB, (u08*)&DDRD, (u08*)&
 u08 * relay_cmd_port[RELAY_NB] = { (u08*)&PORTB, (u08*)&PORTB, (u08*)&PORTD, (u08*)&PORTD, (u08*)&PORTB, (u08*)&PORTB };
 u08 relay_cmd_bit[RELAY_NB] = { 0, 1, 0, 1, 6, 7 };
 
-u08 * relay_st_ddr[RELAY_NB] = { NULL, NULL, NULL, NULL, NULL, NULL };
+u08 * relay_st_ddr[RELAY_NB] = { RELAY_ST_DDR_0, NULL, NULL, NULL, NULL, NULL };
 u08 * relay_st_port[RELAY_NB] = { (u08*)&PORTB, NULL, NULL, NULL, NULL, NULL };
 u08 * relay_st_pin[RELAY_NB] = { (u08*)&PINB, NULL, NULL, NULL, NULL, NULL };
 u08 relay_st_bit[RELAY_NB] = { 2, 0, 0, 0, 0, 0 };
