@@ -4,10 +4,10 @@
 
 #define BUTTON_NB 6
 
-#ifdef IR_USED
-#define BUT_DDR_5 (NULL)
-#else
+#if(PB2_USAGE == PB2_BUTTON_USED)
 #define BUT_DDR_5 ((u08*)&DDRB)
+#else
+#define BUT_DDR_5 (NULL)
 #endif
 //u08 * but_ddr[BUTTON_NB] = { (u08*)&DDRD, (u08*)&DDRB, (u08*)&DDRC, (u08*)&DDRC, (u08*)&DDRC, BUT_DDR_5 };
 //u08 * but_port[BUTTON_NB] = { (u08*)&PORTD, (u08*)&PORTB, (u08*)&PORTC, (u08*)&PORTC, (u08*)&PORTC, (u08*)&PORTB };

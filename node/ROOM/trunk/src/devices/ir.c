@@ -3,7 +3,7 @@
 #include "ir.h"
 
 #ifndef QUARTZ_USED
-#ifdef IR_USED
+#if(PB2_USAGE == PB2_IR_USED)
 #error "Impossible configuration : IR without Quartz"
 #endif
 #endif
@@ -14,7 +14,7 @@
 
 void ir_init(void)
 {
-#ifdef IR_USED
+#if(PB2_USAGE == PB2_IR_USED)
   cbi(IR_LED_PORT, IR_LED_BIT);
   sbi(IR_LED_DDR , IR_LED_BIT);
 #endif
@@ -22,7 +22,7 @@ void ir_init(void)
 
 u08 ir_set(u08 channel)
 {
-#ifdef IR_USED
+#if(PB2_USAGE == PB2_IR_USED)
 
 #endif
 
