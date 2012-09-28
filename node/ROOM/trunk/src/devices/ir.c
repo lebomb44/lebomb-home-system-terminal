@@ -3,7 +3,7 @@
 #include "ir.h"
 
 #ifndef QUARTZ_USED
-#if(PB2_USAGE == PB2_IR_USED)
+#ifdef PB2_IR_USED
 #error "Impossible configuration : IR without Quartz"
 #endif
 #endif
