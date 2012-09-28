@@ -14,7 +14,7 @@
 
 void ir_init(void)
 {
-#if(PB2_USAGE == PB2_IR_USED)
+#ifdef PB2_IR_USED
   cbi(IR_LED_PORT, IR_LED_BIT);
   sbi(IR_LED_DDR , IR_LED_BIT);
 #endif
@@ -22,7 +22,7 @@ void ir_init(void)
 
 u08 ir_set(u08 channel)
 {
-#if(PB2_USAGE == PB2_IR_USED)
+#ifdef PB2_IR_USED
 
 #endif
 

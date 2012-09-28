@@ -4,7 +4,7 @@
 
 #define BUTTON_NB 6
 
-#if(PB2_USAGE == PB2_BUTTON_USED)
+#ifdef PB2_BUTTON_USED
 #define BUT_DDR_5 ((u08*)&DDRB)
 #else
 #define BUT_DDR_5 (NULL)
