@@ -133,6 +133,7 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
     }
     NutSleep(5);
   }
+  NutSleep(1);
   /* Before to exit, free the allocated area */
   free(buff);
 
