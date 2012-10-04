@@ -9,16 +9,17 @@ __BEGIN_DECLS
 
 typedef enum _ROOM_N_T
 {
-  ROOM_C1 = 0,
-  ROOM_C2,
-  ROOM_C3,
-  ROOM_C4,
-  ROOM_SDB,
-  ROOM_BUREAU,
-  ROOM_SALON,
-  ROOM_CUISINE,
-  ROOM_COULOIR,
-  ROOM_TERRASSE,
+  ROOM_C1 = 0,   /* Marine */
+  ROOM_C2,       /* M&M */
+  ROOM_C3,       /* Amis */
+  ROOM_C4,       /* Dressing */
+  ROOM_COMBLES,  /* Combles */
+  ROOM_BUREAU,   /* Bureau */
+  ROOM_SALON,    /* Salon */
+  ROOM_CUISINE,  /* Cuisine */
+  ROOM_COULOIR,  /* Couloir */
+  ROOM_SALON2,   /* Salon2 */
+  ROOM_TERRASSE, /* Terrasse */
   ROOM_MAX
 } ROOM_N_T;
 

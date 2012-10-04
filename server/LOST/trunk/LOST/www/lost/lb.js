@@ -672,13 +672,14 @@ var ROOM_C1       = 0;
 var ROOM_C2       = 1;
 var ROOM_C3       = 2;
 var ROOM_C4       = 3;
-var ROOM_SDB      = 4;
+var ROOM_COMBLES  = 4;
 var ROOM_BUREAU   = 5;
 var ROOM_SALON    = 6;
 var ROOM_CUISINE  = 7;
-var ROOM_COULOIR  = 8
-var ROOM_TERRASSE = 9;
-var ROOM_MAX      = 10;
+var ROOM_COULOIR  = 8;
+var ROOM_SALON2   = 9;
+var ROOM_TERRASSE = 10;
+var ROOM_MAX      = 11;
 var ROOM_LIGHT_MAX   = 10;
 var ROOM_SHUTTER_MAX = 10;
 var ROOM_HEATER_MAX  = 10;
@@ -1202,7 +1203,8 @@ document.write("\
             <li id=\"Room"+String(ROOM_C2)+"_bg\"><a href=\"#_C2\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre M&M</a></li>\
             <li id=\"Room"+String(ROOM_C3)+"_bg\"><a href=\"#_C3\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre Amis</a></li>\
             <li id=\"Room"+String(ROOM_C4)+"_bg\"><a href=\"#_C4\"><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\">Dressing</a></li>\
-            <li id=\"Room"+String(ROOM_SDB)+"_bg\"><a href=\"#_Sdb\"><img class=\"picto\" src=\""+lost_icons_path+"water.jpg\">Salle de Bain</a></li>\
+            <li id=\"Room"+String(ROOM_COMBLES)+"_bg\"><a href=\"#_Combles\"><img class=\"picto\" src=\""+lost_icons_path+"water.jpg\">Combles</a></li>\
+            <li id=\"Room"+String(ROOM_SALON2)+"_bg\"><a href=\"#_Salon2\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Salon2</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
             <li><a href=\"http://lebomb.free.fr/LOST/charts/index_mms.php\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Courbes de temperature</a></li>\
@@ -1436,32 +1438,39 @@ document.write("\
 </div>\
 ");
 document.write("\
-<div class=\"iLayer\" id=\"waSdb\" title=\"Salle de Bain\">\
+<div class=\"iLayer\" id=\"waCombles\" title=\"Combles\">\
     <div class=\"iMenu\">\
     <div class=\"iPanel\">\
         <fieldset>\
             <legend>Lumieres</legend>\
             <ul>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_SDB)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_SDB,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_SDB)+"_Light0\">Plafond</label></li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Ouvertures</legend>\
-            <ul>\
-                <li><a href=\"javascript:lost_room_shutter_set(ROOM_SDB,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_SDB,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_SDB,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
-                <li><a href=\"javascript:lost_room_shutter_set(ROOM_SDB,1,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_SDB,1,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_SDB,1,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
+                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_COMBLES)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_COMBLES,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_COMBLES)+"_Light0\">Plafond</label></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
             <legend>Info</legend>\
             <ul class=\"iArrow\">\
-                <li><a href=\"#_SDBInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
+                <li><a href=\"#_ComblesInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
             </ul>\
         </fieldset>\
     </div>\
     </div>\
 </div>\
 ");
+document.write("\
+		<div class=\"iLayer\" id=\"waSalon2\" title=\"Salon2\">\
+		    <div class=\"iMenu\">\
+		    <div class=\"iPanel\">\
+		        <fieldset>\
+		            <legend>Info</legend>\
+		            <ul class=\"iArrow\">\
+		                <li><a href=\"#_Salon2Info\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
+		            </ul>\
+		        </fieldset>\
+		    </div>\
+		    </div>\
+		</div>\
+		");
 document.write("\
 <div class=\"iLayer\" id=\"waCameras\" title=\"Cameras\">\
     <div class=\"iMenu\">\
@@ -1535,7 +1544,8 @@ printRoomInfo(ROOM_C1      , "Chambre Marine");
 printRoomInfo(ROOM_C2      , "Chambre M&M"   );
 printRoomInfo(ROOM_C3      , "Chambre Amis"  );
 printRoomInfo(ROOM_C4      , "Dressing"      );
-printRoomInfo(ROOM_SDB     , "SDB"           );
+printRoomInfo(ROOM_COMBLES , "Combles"       );
+printRoomInfo(ROOM_SALON2  , "Salon2"        );
 document.write("\
 <div class=\"iLayer\" id=\"waEvenements\" title=\"Evenements\">\
     <div class=\"iPanel\">\
