@@ -1,4 +1,5 @@
 #include "../global.h"
+#include "../config.h"
 #include "relay.h"
 
 #define RELAY_NB 6
@@ -11,7 +12,7 @@
 #define RELAY_DDR_5 ((u08*)&DDRB)
 #endif
 
-#ifdef PB2_LIGHT_ST_USE
+#ifdef PB2_LIGHT_ST_USED
 #define RELAY_ST_DDR_0 ((u08*)&DDRB)
 #else
 #define RELAY_ST_DDR_0 (NULL)
@@ -37,7 +38,7 @@ void relay_init(void)
   {
     if((relay_cmd_ddr[i] != NULL) && (relay_cmd_port[i] != NULL))
     {
-      relay_set(i, RELAY_OFF); /* Set OFF */
+      sbi((*relay_cmd_port[i]), relay_cmd_bit[i]); /* Set OFF */
       sbi((*relay_cmd_ddr[i]), relay_cmd_bit[i]); /* Set as OUTPUT */
     }
     if((relay_st_ddr[i] != NULL) && (relay_st_port[i] != NULL) && (relay_st_pin[i] != NULL))
