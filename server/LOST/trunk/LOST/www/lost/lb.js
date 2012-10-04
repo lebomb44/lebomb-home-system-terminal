@@ -1205,6 +1205,7 @@ document.write("\
             <li id=\"Room"+String(ROOM_C4)+"_bg\"><a href=\"#_C4\"><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\">Dressing</a></li>\
             <li id=\"Room"+String(ROOM_COMBLES)+"_bg\"><a href=\"#_Combles\"><img class=\"picto\" src=\""+lost_icons_path+"water.jpg\">Combles</a></li>\
             <li id=\"Room"+String(ROOM_SALON2)+"_bg\"><a href=\"#_Salon2\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Salon2</a></li>\
+            <li id=\"Room"+String(ROOM_COULOIR)+"_bg\"><a href=\"#_Couloir\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Couloir</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
             <li><a href=\"http://lebomb.free.fr/LOST/charts/index_mms.php\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Courbes de temperature</a></li>\
@@ -1472,6 +1473,20 @@ document.write("\
 		</div>\
 		");
 document.write("\
+		<div class=\"iLayer\" id=\"waCouloir\" title=\"Couloir\">\
+		    <div class=\"iMenu\">\
+		    <div class=\"iPanel\">\
+		        <fieldset>\
+		            <legend>Info</legend>\
+		            <ul class=\"iArrow\">\
+		                <li><a href=\"#_CouloirInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
+		            </ul>\
+		        </fieldset>\
+		    </div>\
+		    </div>\
+		</div>\
+		");
+document.write("\
 <div class=\"iLayer\" id=\"waCameras\" title=\"Cameras\">\
     <div class=\"iMenu\">\
         <ul>\
@@ -1546,6 +1561,7 @@ printRoomInfo(ROOM_C3      , "Chambre Amis"  );
 printRoomInfo(ROOM_C4      , "Dressing"      );
 printRoomInfo(ROOM_COMBLES , "Combles"       );
 printRoomInfo(ROOM_SALON2  , "Salon2"        );
+printRoomInfo(ROOM_COULOIR , "Couloir"       );
 document.write("\
 <div class=\"iLayer\" id=\"waEvenements\" title=\"Evenements\">\
     <div class=\"iPanel\">\
