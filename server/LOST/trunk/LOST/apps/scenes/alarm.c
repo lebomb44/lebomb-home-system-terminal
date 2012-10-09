@@ -23,6 +23,7 @@ typedef struct ALARM_T
 } ALARM_T;
 
 ALARM_T alarm_status;
+ALARM_T alarm_type;
 ALARM_T alarm_control;
 ALARM_T alarm_trig;
 
@@ -31,6 +32,10 @@ uint8_t alarm_init(void)
   alarm_status.perimeter  = 0;
   alarm_status.volume     = 0;
   alarm_status.simulation = 0;
+
+  alarm_type.perimeter  = ALARM_TYPE_OFF_AUTO;
+  alarm_type.volume     = ALARM_TYPE_OFF_AUTO;
+  alarm_type.simulation = ALARM_TYPE_OFF_AUTO;
 
   alarm_control.perimeter  = 0; // TODO
   alarm_control.volume     = 0; // TODO
@@ -42,6 +47,10 @@ uint8_t alarm_init(void)
 
   NutThreadCreate("AlarmD", AlarmD, 0, 512);
   NutRegisterCgi("alarm.cgi", alarm_form);
+
+  /* Set alarm ON in case of reset */
+  /* alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); TODO */
+  /* alarm_volume_set(ALARM_TYPE_ON_MANUAL); TODO */
 
   return 0;
 }
@@ -64,30 +73,72 @@ uint8_t alarm_action_with_buzzer(char* msg)
   return 0;
 }
 
-void alarm_perimeter_set(uint8_t control)
+void alarm_perimeter_set(ALARM_TYPE_T type)
 {
-  if(control > 0) { alarm_control.perimeter = 30; } else { alarm_control.perimeter = 0; }
+  /* Check the argument */
+  if(type >= ALARM_TYPE_MAX) { return; }
+
+  /* Mode OFF AUTO can only be done if alarm was already in mode ON AUTO */
+  if(type == ALARM_TYPE_OFF_AUTO)   { if(alarm_type.perimeter == ALARM_TYPE_ON_AUTO) { alarm_control.perimeter = 0; } else { return; } }
+  /* In any case, user can force OFF manually */
+  if(type == ALARM_TYPE_OFF_MANUAL) { alarm_control.perimeter = 0; }
+  /* Mode ON AUTO can only be done if alarm was NOT already set ON manually */
+  if(type == ALARM_TYPE_ON_AUTO)    { if(alarm_type.perimeter != ALARM_TYPE_ON_MANUAL) { alarm_control.perimeter = 30; } else { return; } }
+  /* In any case, user can force ON manually */
+  if(type == ALARM_TYPE_ON_MANUAL)  { alarm_control.perimeter = 30; }
+  /* Save the new mode set */
+  alarm_type.perimeter = type;
+  /* Reset the trigger status */
   alarm_trig.perimeter = 0;
+  /* Stop the buzzer */
   buzzer_stop();
+  /* Stop the alarm monitoring in every rooms */
   rooms_perimeter_control_set(0);
   NutSleep(100);
+  /* Reset the alarm trigger status in every rooms */
   rooms_perimeter_trig_set(0);
 }
 
-void alarm_volume_set(uint8_t control)
+void alarm_volume_set(ALARM_TYPE_T type)
 {
-  if(control > 0) { alarm_control.volume = 30; } else { alarm_control.volume = 0; }
+  /* Check the argument */
+  if(type >= ALARM_TYPE_MAX) { return; }
+
+  /* Mode OFF AUTO can only be done if alarm was already in mode ON AUTO */
+  if(type == ALARM_TYPE_OFF_AUTO)   { if(alarm_type.volume == ALARM_TYPE_ON_AUTO) { alarm_control.volume = 0; } else { return; } }
+  /* In any case, user can force OFF manually */
+  if(type == ALARM_TYPE_OFF_MANUAL) { alarm_control.volume = 0; }
+  /* Mode ON AUTO can only be done if alarm was NOT already set ON manually */
+  if(type == ALARM_TYPE_ON_AUTO)    { if(alarm_type.volume != ALARM_TYPE_ON_MANUAL) { alarm_control.volume = 30; } else { return; } }
+  /* In any case, user can force ON manually */
+  if(type == ALARM_TYPE_ON_MANUAL)  { alarm_control.volume = 30; }
+  /* Save the new mode set */
+  alarm_type.volume = type;
+  /* Reset the trigger status */
   alarm_trig.volume = 0;
+  /* Stop the buzzer */
   buzzer_stop();
+  /* Stop the alarm monitoring in every rooms */
   rooms_volume_control_set(0);
   NutSleep(100);
+  /* Reset the alarm trigger status in every rooms */
   rooms_volume_trig_set(0);
 }
 
-void alarm_simulation_set(uint8_t control)
+void alarm_simulation_set(ALARM_TYPE_T type)
 {
+  /* Check the argument */
+  if(type >= ALARM_TYPE_MAX) { return; }
+
+  /* Mode OFF in any case */
+  if((type == ALARM_TYPE_OFF_MANUAL) || (type == ALARM_TYPE_OFF_AUTO)) { alarm_control.simulation = 0; }
+  /* Mode ON in any case */
+  if((type == ALARM_TYPE_ON_MANUAL ) || (type == ALARM_TYPE_ON_AUTO )) { alarm_control.simulation = 1; }
+  /* Save the new mode set */
+  alarm_type.simulation = type;
+  /* Reset the trigger status */
   alarm_trig.simulation = 0;
-  alarm_control.simulation = control;
+  /* Stop the simulation in every rooms */
   rooms_simulation_control_set(alarm_control.simulation);
 }
 
@@ -193,19 +244,19 @@ int alarm_form(FILE * stream, REQUEST * req)
     if(arg_s)
     {
       if(arg_s[0] == '?') { fprintf(stream, "%d", alarm_control.perimeter); }
-      else { alarm_perimeter_set(strtoul(arg_s, NULL, 10)); }
+      else { if(strtoul(arg_s, NULL, 10) > 0) { alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); } else { alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); } }
     }
     arg_s = NutHttpGetParameter(req, "volume_ctrl");
     if(arg_s)
     {
       if(arg_s[0] == '?') { fprintf(stream, "%d", alarm_control.volume); }
-      else { alarm_volume_set(strtoul(arg_s, NULL, 10)); }
+      else { if(strtoul(arg_s, NULL, 10) > 0) { alarm_volume_set(ALARM_TYPE_ON_MANUAL); } else { alarm_volume_set(ALARM_TYPE_OFF_MANUAL); } }
     }
     arg_s = NutHttpGetParameter(req, "simulation_ctrl");
     if(arg_s)
     {
       if(arg_s[0] == '?') { fprintf(stream, "%d", alarm_control.simulation); }
-      else { alarm_simulation_set(strtoul(arg_s, NULL, 10)); }
+      else { if(strtoul(arg_s, NULL, 10) > 0) { alarm_simulation_set(ALARM_TYPE_ON_MANUAL); } else { alarm_simulation_set(ALARM_TYPE_OFF_MANUAL); } }
     }
 
     fflush(stream);
