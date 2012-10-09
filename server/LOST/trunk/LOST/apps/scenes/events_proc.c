@@ -29,16 +29,16 @@ void event_proc_shutters_friends_end(void)      { room_shutters_set(ROOM_C3, ROO
 void event_proc_shutters_dressing_start(void)   { room_shutters_set(ROOM_C4, ROOM_SHUTTER_UP); }
 void event_proc_shutters_dressing_end(void)     { room_shutters_set(ROOM_C4, ROOM_SHUTTER_DOWN); }
 
-void event_proc_alarm_all_start(void)             { alarm_perimeter_set(1); alarm_volume_set(1); }
-void event_proc_alarm_all_end(void)               { alarm_perimeter_set(0); alarm_volume_set(0); }
-void event_proc_alarm_perimeter_start(void)       { alarm_perimeter_set(1);  }
-void event_proc_alarm_perimeter_end(void)         { alarm_perimeter_set(0);  }
-void event_proc_alarm_perimeter_check_start(void) { if(!rooms_perimeter_status_get()) { alarm_perimeter_set(1); } }
-void event_proc_alarm_perimeter_check_end(void)   { if(!rooms_perimeter_status_get()) { alarm_perimeter_set(0); } }
-void event_proc_alarm_volume_start(void)          { alarm_volume_set(1);     }
-void event_proc_alarm_volume_end(void)            { alarm_volume_set(0);     }
-void event_proc_alarm_simulation_start(void)      { alarm_simulation_set(1); }
-void event_proc_alarm_simulation_end(void)        { alarm_simulation_set(0); }
+void event_proc_alarm_all_start(void)             { alarm_perimeter_set(ALARM_TYPE_ON_AUTO); alarm_volume_set(ALARM_TYPE_ON_AUTO); }
+void event_proc_alarm_all_end(void)               { alarm_perimeter_set(ALARM_TYPE_OFF_AUTO); alarm_volume_set(ALARM_TYPE_OFF_AUTO); }
+void event_proc_alarm_perimeter_start(void)       { alarm_perimeter_set(ALARM_TYPE_ON_AUTO); }
+void event_proc_alarm_perimeter_end(void)         { alarm_perimeter_set(ALARM_TYPE_OFF_AUTO); }
+void event_proc_alarm_perimeter_check_start(void) { if(!rooms_perimeter_status_get()) { alarm_perimeter_set(ALARM_TYPE_ON_AUTO); } }
+void event_proc_alarm_perimeter_check_end(void)   { if(!rooms_perimeter_status_get()) { alarm_perimeter_set(ALARM_TYPE_OFF_AUTO); } }
+void event_proc_alarm_volume_start(void)          { alarm_volume_set(ALARM_TYPE_ON_AUTO); }
+void event_proc_alarm_volume_end(void)            { alarm_volume_set(ALARM_TYPE_OFF_AUTO); }
+void event_proc_alarm_simulation_start(void)      { alarm_simulation_set(ALARM_TYPE_ON_AUTO); }
+void event_proc_alarm_simulation_end(void)        { alarm_simulation_set(ALARM_TYPE_OFF_AUTO); }
 
 void event_proc_wifi_start(void)    { power_set(POWER_0, 1); }
 void event_proc_wifi_end(void)      { power_set(POWER_0, 0); }
