@@ -192,7 +192,7 @@ THREAD(AlarmD, arg)
     }
     /* Force all shutters down when enabling alarm perimeter */
     /* Step : Alarm control during watchdog for being enabled */
-    if(alarm_control.perimeter >  2) { alarm_control.perimeter--; /*rooms_shutters_set(ROOM_SHUTTER_DOWN);*/ }
+    if(alarm_control.perimeter >  2) { alarm_control.perimeter--; rooms_shutters_set(ROOM_SHUTTER_DOWN); }
 
     /* Manage the watchdog ENABLE / DISABLE for the alarm VOLUME */
     /* Step : Alarm enabled */
