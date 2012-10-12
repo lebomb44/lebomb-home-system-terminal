@@ -1459,33 +1459,40 @@ document.write("\
 </div>\
 ");
 document.write("\
-		<div class=\"iLayer\" id=\"waSalon2\" title=\"Salon2\">\
-		    <div class=\"iMenu\">\
-		    <div class=\"iPanel\">\
-		        <fieldset>\
-		            <legend>Info</legend>\
-		            <ul class=\"iArrow\">\
-		                <li><a href=\"#_Salon2Info\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-		            </ul>\
-		        </fieldset>\
-		    </div>\
-		    </div>\
-		</div>\
-		");
+<div class=\"iLayer\" id=\"waSalon2\" title=\"Salon2\">\
+    <div class=\"iMenu\">\
+    <div class=\"iPanel\">\
+        <fieldset>\
+            <legend>Info</legend>\
+            <ul class=\"iArrow\">\
+                <li><a href=\"#_Salon2Info\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
+            </ul>\
+        </fieldset>\
+    </div>\
+    </div>\
+</div>\
+");
 document.write("\
-		<div class=\"iLayer\" id=\"waCouloir\" title=\"Couloir\">\
-		    <div class=\"iMenu\">\
-		    <div class=\"iPanel\">\
-		        <fieldset>\
-		            <legend>Info</legend>\
-		            <ul class=\"iArrow\">\
-		                <li><a href=\"#_CouloirInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-		            </ul>\
-		        </fieldset>\
-		    </div>\
-		    </div>\
-		</div>\
-		");
+<div class=\"iLayer\" id=\"waCouloir\" title=\"Couloir\">\
+    <div class=\"iMenu\">\
+    <div class=\"iPanel\">\
+      <fieldset>\
+          <legend>Lumieres</legend>\
+          <ul>\
+              <li><input type=\"checkbox\" id=\"Room"+String(ROOM_COULOIR)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_COULOIR,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_COULOIR)+"_Light0\">Led Verte</label></li>\
+              <li><input type=\"checkbox\" id=\"Room"+String(ROOM_COULOIR)+"_Light1\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_COULOIR,1);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_COULOIR)+"_Light1\">Led Rouge</label></li>\
+          </ul>\
+      </fieldset>\
+        <fieldset>\
+            <legend>Info</legend>\
+            <ul class=\"iArrow\">\
+                <li><a href=\"#_CouloirInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
+            </ul>\
+        </fieldset>\
+    </div>\
+    </div>\
+</div>\
+");
 document.write("\
 <div class=\"iLayer\" id=\"waCameras\" title=\"Cameras\">\
     <div class=\"iMenu\">\
