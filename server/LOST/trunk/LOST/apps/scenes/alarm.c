@@ -45,6 +45,9 @@ uint8_t alarm_init(void)
   alarm_trig.volume     = 0;
   alarm_trig.simulation = 0;
 
+  /* Clear Green and Red LEDs */
+  room_light_set(ROOM_COULOIR, 0, 0); room_light_set(ROOM_COULOIR, 1, 0);
+
   NutThreadCreate("AlarmD", AlarmD, 0, 512);
   NutRegisterCgi("alarm.cgi", alarm_form);
 
@@ -83,9 +86,9 @@ void alarm_perimeter_set(ALARM_TYPE_T type)
   /* In any case, user can force OFF manually */
   if(type == ALARM_TYPE_OFF_MANUAL) { alarm_control.perimeter = 0; }
   /* Mode ON AUTO can only be done if alarm was NOT already set ON manually */
-  if(type == ALARM_TYPE_ON_AUTO)    { if(alarm_type.perimeter != ALARM_TYPE_ON_MANUAL) { alarm_control.perimeter = 30; } else { return; } }
+  if(type == ALARM_TYPE_ON_AUTO)    { if(alarm_type.perimeter != ALARM_TYPE_ON_MANUAL) { alarm_control.perimeter = 60; } else { return; } }
   /* In any case, user can force ON manually */
-  if(type == ALARM_TYPE_ON_MANUAL)  { alarm_control.perimeter = 30; }
+  if(type == ALARM_TYPE_ON_MANUAL)  { alarm_control.perimeter = 60; }
   /* Save the new mode set */
   alarm_type.perimeter = type;
   /* Reset the trigger status */
@@ -97,6 +100,8 @@ void alarm_perimeter_set(ALARM_TYPE_T type)
   NutSleep(100);
   /* Reset the alarm trigger status in every rooms */
   rooms_perimeter_trig_set(0);
+  /* Clear Green and Red LEDs */
+  room_light_set(ROOM_COULOIR, 0, 0); room_light_set(ROOM_COULOIR, 1, 0);
 }
 
 void alarm_volume_set(ALARM_TYPE_T type)
@@ -109,9 +114,9 @@ void alarm_volume_set(ALARM_TYPE_T type)
   /* In any case, user can force OFF manually */
   if(type == ALARM_TYPE_OFF_MANUAL) { alarm_control.volume = 0; }
   /* Mode ON AUTO can only be done if alarm was NOT already set ON manually */
-  if(type == ALARM_TYPE_ON_AUTO)    { if(alarm_type.volume != ALARM_TYPE_ON_MANUAL) { alarm_control.volume = 30; } else { return; } }
+  if(type == ALARM_TYPE_ON_AUTO)    { if(alarm_type.volume != ALARM_TYPE_ON_MANUAL) { alarm_control.volume = 60; } else { return; } }
   /* In any case, user can force ON manually */
-  if(type == ALARM_TYPE_ON_MANUAL)  { alarm_control.volume = 30; }
+  if(type == ALARM_TYPE_ON_MANUAL)  { alarm_control.volume = 60; }
   /* Save the new mode set */
   alarm_type.volume = type;
   /* Reset the trigger status */
@@ -123,6 +128,8 @@ void alarm_volume_set(ALARM_TYPE_T type)
   NutSleep(100);
   /* Reset the alarm trigger status in every rooms */
   rooms_volume_trig_set(0);
+  /* Clear Green and Red LEDs */
+  room_light_set(ROOM_COULOIR, 0, 0); room_light_set(ROOM_COULOIR, 1, 0);
 }
 
 void alarm_simulation_set(ALARM_TYPE_T type)
@@ -159,10 +166,27 @@ THREAD(AlarmD, arg)
     {
       /* Step : Alarm trig watchdog is going to finish */
       if(alarm_trig.perimeter == 2) { alarm_action_with_buzzer("Alarme-Perimetre"); }
+      /* Step : Alarm trig watchdog finished : Set Red LED */
+      if(alarm_trig.perimeter == 1) { room_light_set(ROOM_COULOIR, 1, 1); }
       /* Step : Alarm trig during watchdog */
-      if(alarm_trig.perimeter > 1)  { alarm_trig.perimeter--; }
+      if(alarm_trig.perimeter > 1)
+      {
+        alarm_trig.perimeter--;
+        /* Toggle Red LED */
+        room_light_set(ROOM_COULOIR, 1, (alarm_trig.perimeter) & 0x01);
+      }
       /* Step : Alarm did not triggered. Check to status */
-      if(alarm_trig.perimeter == 0) { if(alarm_status.perimeter) { alarm_trig.perimeter = 30; } }
+      if(alarm_trig.perimeter == 0)
+      {
+        /* Detection */
+        if(alarm_status.perimeter)
+        {
+          /* Start timer */
+          alarm_trig.perimeter = 30;
+          /* Clear Green LED */
+          room_light_set(ROOM_COULOIR, 0, 0);
+        }
+      }
     }
     /* Step : Alarm control is going to be enabled */
     if(alarm_control.perimeter == 2)
@@ -170,10 +194,12 @@ THREAD(AlarmD, arg)
       /* Only activate the alarm if all the shutters are closed */
       if(!rooms_perimeter_status_get())
       {
+        alarm_control.perimeter--;
         rooms_perimeter_control_set(0x01); /* FIXME Perimeter control only available on the first input in ROOM Nodes */
         room_perimeter_control_set(ROOM_SALON, 0x07); /* FIXME But we have the 3 shutters of the SALON available */
         room_perimeter_control_set(ROOM_BUREAU, 0x07); /* FIXME But we have the 1 shutter and 2 doors of the BUREAU available */
-        alarm_control.perimeter--;
+        /* Set Green LED */
+        room_light_set(ROOM_COULOIR, 0, 1);
       }
       /* If the shutters are not closed try to close them */
       else
@@ -192,7 +218,13 @@ THREAD(AlarmD, arg)
     }
     /* Force all shutters down when enabling alarm perimeter */
     /* Step : Alarm control during watchdog for being enabled */
-    if(alarm_control.perimeter >  2) { alarm_control.perimeter--; rooms_shutters_set(ROOM_SHUTTER_DOWN); }
+    if(alarm_control.perimeter >  2)
+    {
+      alarm_control.perimeter--;
+      rooms_shutters_set(ROOM_SHUTTER_DOWN);
+      /* Toggle Green LED */
+      room_light_set(ROOM_COULOIR, 0, (alarm_control.perimeter+1) & 0x01);
+    }
 
     /* Manage the watchdog ENABLE / DISABLE for the alarm VOLUME */
     /* Step : Alarm enabled */
@@ -200,10 +232,25 @@ THREAD(AlarmD, arg)
     {
       /* Step : Alarm trig watchdog is going to finish */
       if(alarm_trig.volume == 2) { alarm_action_with_buzzer("Alarme-Volume"); }
+      /* Step : Alarm trig watchdog finished : Set Red LED */
+      if(alarm_trig.volume == 1) { room_light_set(ROOM_COULOIR, 1, 1); }
       /* Step : Alarm trig during watchdog */
-      if(alarm_trig.volume > 1)  { alarm_trig.volume--; }
+      if(alarm_trig.volume > 1)
+      {
+        alarm_trig.volume--;
+        /* Toggle Red LED */
+        room_light_set(ROOM_COULOIR, 1, (alarm_trig.volume) & 0x01);
+      }
       /* Step : Alarm did not triggered. Check to status */
-      if(alarm_trig.volume == 0) { if(alarm_status.volume) { alarm_trig.volume = 30; } }
+      if(alarm_trig.volume == 0)
+      {
+        if(alarm_status.volume)
+        {
+          alarm_trig.volume = 30;
+          /* Clear Green LED */
+          room_light_set(ROOM_COULOIR, 0, 0);
+        }
+      }
     }
     /* Step : Alarm control is going to be enabled */
     if(alarm_control.volume == 2)
@@ -211,8 +258,10 @@ THREAD(AlarmD, arg)
       /* Only activate the alarm if nothing is moving */
       if((!rooms_volume_status_get()) && (!volume_status_get()))
       {
-        rooms_volume_control_set(0x00); /* FIXME Volume not yet available in ROOM Nodes */
         alarm_control.volume--;
+        rooms_volume_control_set(0x00); /* FIXME Volume not yet available in ROOM Nodes */
+        /* Set Green LED */
+        room_light_set(ROOM_COULOIR, 0, 1);
       }
     }
     /* Step before enabling the alarm */
@@ -225,9 +274,14 @@ THREAD(AlarmD, arg)
       }
     }
     /* Step : Alarm control during watchdog for being enabled */
-    if(alarm_control.volume >  2) { alarm_control.volume--; }
+    if(alarm_control.volume >  2)
+    {
+      alarm_control.volume--;
+      /* Toggle Green LED */
+      room_light_set(ROOM_COULOIR, 0, (alarm_control.volume+1) & 0x01);
+    }
 
-    NutSleep(1000);
+    NutSleep(500);
   }
 }
 
