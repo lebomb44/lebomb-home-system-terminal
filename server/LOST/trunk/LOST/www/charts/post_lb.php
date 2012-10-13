@@ -4,7 +4,7 @@
 </head>
 <body>
 <FORM method=post action="http://lebomb.free.fr/LOST/charts/insert_lb.php">
-MnM Insert POST Form
+LB Insert POST Form
 <TABLE>
 <?php
 for($i=0; $i<10; $i++)
