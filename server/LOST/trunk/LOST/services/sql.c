@@ -47,7 +47,7 @@ uint8_t sql_send_once(uint8_t start)
   char* out = NULL;
 
   /* Connect and send the HTTP header */
-  if(http_request_header_start("212.27.63.157", 80, METHOD_POST, &sock, &stream) == 0)
+  if(http_request_header_start("212.27.63.116", 80, METHOD_POST, &sock, &stream) == 0)
   {
     /* Send the URL */
     fputs(LOST_INSERT, stream);
