@@ -102,6 +102,13 @@ void alarm_perimeter_set(ALARM_TYPE_T type)
   rooms_perimeter_trig_set(0);
   /* Clear Green and Red LEDs */
   room_light_set(ROOM_COULOIR, 0, 0); room_light_set(ROOM_COULOIR, 1, 0);
+  if(type == ALARM_TYPE_OFF_MANUAL) { room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0); }
+  if(type == ALARM_TYPE_ON_MANUAL )
+  {
+    room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0); NutSleep(100); 
+	room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0); NutSleep(100); 
+	room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0);
+  }
 }
 
 void alarm_volume_set(ALARM_TYPE_T type)
@@ -221,9 +228,9 @@ THREAD(AlarmD, arg)
     if(alarm_control.perimeter >  2)
     {
       alarm_control.perimeter--;
-      rooms_shutters_set(ROOM_SHUTTER_DOWN);
       /* Toggle Green LED */
       room_light_set(ROOM_COULOIR, 0, (alarm_control.perimeter+1) & 0x01);
+      rooms_shutters_set(ROOM_SHUTTER_DOWN);
     }
 
     /* Manage the watchdog ENABLE / DISABLE for the alarm VOLUME */
