@@ -255,7 +255,7 @@ document.write("\
         <fieldset>\
             <legend>Lumieres</legend>\
             <ul>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_COMBLES)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_COMBLES,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_COMBLES)+"_Light0\">Plafond</label></li>\
+                <li><input type=\"checkbox\" disabled=\"disabled\" id=\"Room"+String(ROOM_COMBLES)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_COMBLES,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_COMBLES)+"_Light0\">Plafond</label></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
