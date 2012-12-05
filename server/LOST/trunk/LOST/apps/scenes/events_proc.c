@@ -33,8 +33,8 @@ void event_proc_alarm_all_start(void)             { alarm_perimeter_set(ALARM_TY
 void event_proc_alarm_all_end(void)               { alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); alarm_volume_set(ALARM_TYPE_OFF_MANUAL); }
 void event_proc_alarm_perimeter_start(void)       { alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); }
 void event_proc_alarm_perimeter_end(void)         { alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); }
-void event_proc_alarm_perimeter_check_start(void) { if(!rooms_perimeter_status_get()) { alarm_perimeter_set(ALARM_TYPE_ON_AUTO); } }
-void event_proc_alarm_perimeter_check_end(void)   { if(!rooms_perimeter_status_get()) { alarm_perimeter_set(ALARM_TYPE_OFF_AUTO); } }
+void event_proc_alarm_perimeter_check_start(void) { if(!rooms_perimeter_status_get(NULL)) { alarm_perimeter_set(ALARM_TYPE_ON_AUTO); } }
+void event_proc_alarm_perimeter_check_end(void)   { if(!rooms_perimeter_status_get(NULL)) { alarm_perimeter_set(ALARM_TYPE_OFF_AUTO); } }
 void event_proc_alarm_volume_start(void)          { alarm_volume_set(ALARM_TYPE_ON_MANUAL); }
 void event_proc_alarm_volume_end(void)            { alarm_volume_set(ALARM_TYPE_OFF_MANUAL); }
 void event_proc_alarm_simulation_start(void)      { alarm_simulation_set(ALARM_TYPE_ON_AUTO); }
