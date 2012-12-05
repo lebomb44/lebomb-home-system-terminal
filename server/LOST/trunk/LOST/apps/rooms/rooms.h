@@ -41,42 +41,44 @@ extern uint8_t room_version_get           (ROOM_N_T room);
 extern uint8_t room_addr_get              (ROOM_N_T room);
 
 extern uint8_t room_error_status_get      (ROOM_N_T room);
-extern uint8_t rooms_error_status_get     (void);
+extern uint8_t rooms_error_status_get     (ROOM_N_T* room);
 
 extern uint8_t room_temp_value_get        (ROOM_N_T room);
+extern uint8_t rooms_temp_max_value_get   (ROOM_N_T* room);
 extern uint8_t room_temp_max_th_get       (ROOM_N_T room);
 extern uint8_t room_temp_max_control_get  (ROOM_N_T room);
 extern uint8_t room_temp_max_trig_get     (ROOM_N_T room);
-extern uint8_t rooms_temp_max_trig_get    (void);
+extern uint8_t rooms_temp_max_trig_get    (ROOM_N_T* room);
+extern uint8_t rooms_temp_min_value_get   (ROOM_N_T* room);
 extern uint8_t room_temp_min_th_get       (ROOM_N_T room);
 extern uint8_t room_temp_min_control_get  (ROOM_N_T room);
 extern uint8_t room_temp_min_trig_get     (ROOM_N_T room);
-extern uint8_t rooms_temp_min_trig_get    (void);
+extern uint8_t rooms_temp_min_trig_get    (ROOM_N_T* room);
 
 extern uint8_t room_hum_status_get        (ROOM_N_T room);
-extern uint8_t rooms_hum_status_get       (void);
+extern uint8_t rooms_hum_status_get       (ROOM_N_T* room);
 extern uint8_t room_hum_control_get       (ROOM_N_T room);
 extern uint8_t room_hum_trig_get          (ROOM_N_T room);
-extern uint8_t rooms_hum_trig_get         (void);
+extern uint8_t rooms_hum_trig_get         (ROOM_N_T* room);
 
 extern uint8_t room_smoke_status_get      (ROOM_N_T room);
-extern uint8_t rooms_smoke_status_get     (void);
+extern uint8_t rooms_smoke_status_get     (ROOM_N_T* room);
 extern uint8_t room_smoke_control_get     (ROOM_N_T room);
 extern uint8_t room_smoke_trig_get        (ROOM_N_T room);
-extern uint8_t rooms_smoke_trig_get       (void);
+extern uint8_t rooms_smoke_trig_get       (ROOM_N_T* room);
 
 extern uint8_t room_perimeter_status_get  (ROOM_N_T room);
-extern uint8_t rooms_perimeter_status_get (void);
+extern uint8_t rooms_perimeter_status_get (ROOM_N_T* room);
 extern uint8_t room_perimeter_control_get (ROOM_N_T room);
 extern uint8_t room_perimeter_trig_get    (ROOM_N_T room);
 
 extern uint8_t room_volume_status_get     (ROOM_N_T room);
-extern uint8_t rooms_volume_status_get    (void);
+extern uint8_t rooms_volume_status_get    (ROOM_N_T* room);
 extern uint8_t room_volume_control_get    (ROOM_N_T room);
 extern uint8_t room_volume_trig_get       (ROOM_N_T room);
 
 extern uint8_t room_simulation_status_get (ROOM_N_T room);
-extern uint8_t rooms_simulation_status_get(void);
+extern uint8_t rooms_simulation_status_get(ROOM_N_T* room);
 extern uint8_t room_simulation_control_get(ROOM_N_T room);
 
 extern uint8_t room_light_get             (ROOM_N_T room, uint8_t no);
@@ -111,13 +113,13 @@ extern void room_perimeter_control_set  (ROOM_N_T room, uint8_t control);
 extern void rooms_perimeter_control_set (               uint8_t control);
 extern void room_perimeter_trig_set     (ROOM_N_T room, uint8_t trig   );
 extern void rooms_perimeter_trig_set    (               uint8_t trig   );
-extern uint8_t rooms_perimeter_trig_get (void);
+extern uint8_t rooms_perimeter_trig_get (ROOM_N_T* room);
 
 extern void room_volume_control_set     (ROOM_N_T room, uint8_t control);
 extern void rooms_volume_control_set    (               uint8_t control);
 extern void room_volume_trig_set        (ROOM_N_T room, uint8_t trig   );
 extern void rooms_volume_trig_set       (               uint8_t trig   );
-extern uint8_t rooms_volume_trig_get    (void);
+extern uint8_t rooms_volume_trig_get    (ROOM_N_T* room);
 
 extern void room_simulation_control_set (ROOM_N_T room, uint8_t control);
 extern void rooms_simulation_control_set(               uint8_t control);
@@ -132,9 +134,6 @@ extern void room_heater_set             (ROOM_N_T room, uint8_t no, uint8_t valu
 extern void rooms_heater_set            (               uint8_t no, uint8_t value);
 extern void room_elec_set               (ROOM_N_T room, uint8_t no, uint8_t value);
 extern void rooms_elec_set              (               uint8_t no, uint8_t value);
-
-extern uint8_t rooms_temp_max_value_get(void);
-extern uint8_t rooms_temp_min_value_get(void);
 
 extern void RoomD(void *arg) __attribute__ ((noreturn));
 extern int rooms_form(FILE * stream, REQUEST * req);
