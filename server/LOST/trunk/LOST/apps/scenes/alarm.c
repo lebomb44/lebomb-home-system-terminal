@@ -15,17 +15,25 @@
 #include "../rooms/rooms.h"
 #include "alarm.h"
 
-typedef struct ALARM_T
+typedef struct _ALARM_T
 {
   uint8_t perimeter;
   uint8_t volume;
   uint8_t simulation;
 } ALARM_T;
 
+typedef struct _ALARM_ROOM_T
+{
+  ROOM_N_T perimeter;
+  ROOM_N_T volume;
+  ROOM_N_T simulation;
+} ALARM_ROOM_T;
+
 ALARM_T alarm_status;
 ALARM_T alarm_type;
 ALARM_T alarm_control;
 ALARM_T alarm_trig;
+ALARM_ROOM_T alarm_room;
 
 uint8_t alarm_init(void)
 {
@@ -44,6 +52,10 @@ uint8_t alarm_init(void)
   alarm_trig.perimeter  = 0;
   alarm_trig.volume     = 0;
   alarm_trig.simulation = 0;
+
+  alarm_room.perimeter  = ROOM_MAX;
+  alarm_room.volume     = ROOM_MAX;
+  alarm_room.simulation = ROOM_MAX;
 
   /* Clear Green and Red LEDs */
   room_light_set(ROOM_COULOIR, 0, 0); room_light_set(ROOM_COULOIR, 1, 0);
@@ -158,21 +170,45 @@ void alarm_simulation_set(ALARM_TYPE_T type)
 
 THREAD(AlarmD, arg)
 {
+  char msg[60];
   arg = arg;
   NutThreadSetPriority(105);
 
   while(1)
   {
-    alarm_status.perimeter  = rooms_perimeter_trig_get();
-    alarm_status.volume     = rooms_volume_trig_get() | volume_status_get();
-    alarm_status.simulation = rooms_simulation_status_get();
+    /* Only update the status if the alarm did not trigger */
+    if(alarm_trig.perimeter == 0)
+    {
+      /* If alarm is enabled */
+      if(alarm_control.perimeter == 1) { alarm_status.perimeter = rooms_perimeter_trig_get(&(alarm_room.perimeter)); }
+      /* If alarm is NOT enabled */
+      else { alarm_status.perimeter  = rooms_perimeter_status_get(&(alarm_room.perimeter)); }
+    }
+    if(alarm_trig.volume == 0)
+    {
+      /* If alarm is enabled */
+      if(alarm_control.volume == 1) { alarm_status.volume = rooms_volume_trig_get(&(alarm_room.volume)) | volume_status_get(); }
+      /* If alarm is NOT enabled */
+      else { alarm_status.volume  = rooms_volume_status_get(&(alarm_room.volume)) | volume_status_get(); }
+    }
+    if(alarm_trig.simulation == 0)
+    {
+      /* If alarm is enabled */
+      if(alarm_control.simulation == 1) { alarm_status.simulation = rooms_simulation_status_get(&(alarm_room.simulation)); }
+      /* If alarm is NOT enabled */
+      else { alarm_status.simulation  = rooms_simulation_status_get(&(alarm_room.simulation)); }
+    }
 
     /* Manage the watchdog ENABLE / DISABLE for the alarm PERIMETER */
     /* Step : Alarm enabled */
     if(alarm_control.perimeter == 1)
     {
       /* Step : Alarm trig watchdog is going to finish */
-      if(alarm_trig.perimeter == 2) { alarm_action_with_buzzer("Alarme-Perimetre"); }
+      if(alarm_trig.perimeter == 2)
+      {
+        sprintf(msg, "Alarme-Perimetre-%d-R%d", alarm_status.perimeter, alarm_room.perimeter);
+        alarm_action_with_buzzer(msg);
+      }
       /* Step : Alarm trig watchdog finished : Set Red LED */
       if(alarm_trig.perimeter == 1) { room_light_set(ROOM_COULOIR, 1, 1); }
       /* Step : Alarm trig during watchdog */
@@ -199,7 +235,7 @@ THREAD(AlarmD, arg)
     if(alarm_control.perimeter == 2)
     {
       /* Only activate the alarm if all the shutters are closed */
-      if(!rooms_perimeter_status_get())
+      if(rooms_perimeter_status_get(NULL) == 0)
       {
         alarm_control.perimeter--;
         rooms_perimeter_control_set(0x01); /* FIXME Perimeter control only available on the first input in ROOM Nodes */
@@ -218,9 +254,10 @@ THREAD(AlarmD, arg)
     if(alarm_control.perimeter == 3)
     {
       /* Check if all the shutters are closed else send alert message */
-      if(rooms_perimeter_status_get())
+      if(alarm_status.perimeter != 0)
       {
-        alarm_action("Impossible-d-activer-Alarme-Perimetre");
+        sprintf(msg, "Impossible-d-activer-Alarme-Perimetre-%d-R%d", alarm_status.perimeter, alarm_room.perimeter);
+        alarm_action(msg);
       }
     }
     /* Force all shutters down when enabling alarm perimeter */
@@ -238,7 +275,11 @@ THREAD(AlarmD, arg)
     if(alarm_control.volume == 1)
     {
       /* Step : Alarm trig watchdog is going to finish */
-      if(alarm_trig.volume == 2) { alarm_action_with_buzzer("Alarme-Volume"); }
+      if(alarm_trig.volume == 2)
+      {
+        sprintf(msg, "Alarme-Volume-%d-R%d", alarm_status.volume, alarm_room.volume);
+        alarm_action_with_buzzer(msg);
+      }
       /* Step : Alarm trig watchdog finished : Set Red LED */
       if(alarm_trig.volume == 1) { room_light_set(ROOM_COULOIR, 1, 1); }
       /* Step : Alarm trig during watchdog */
@@ -263,7 +304,7 @@ THREAD(AlarmD, arg)
     if(alarm_control.volume == 2)
     {
       /* Only activate the alarm if nothing is moving */
-      if((!rooms_volume_status_get()) && (!volume_status_get()))
+      if((rooms_volume_status_get(NULL) == 0) && (!volume_status_get()))
       {
         alarm_control.volume--;
         rooms_volume_control_set(0x00); /* FIXME Volume not yet available in ROOM Nodes */
@@ -275,9 +316,10 @@ THREAD(AlarmD, arg)
     if(alarm_control.volume == 3)
     {
       /* Check if all the shutters are closed else send alert message */
-      if(rooms_volume_status_get() || volume_status_get())
+      if((alarm_status.volume != 0) || volume_status_get())
       {
-        alarm_action("Impossible-d-activer-Alarme-Volume");
+        sprintf(msg, "Impossible-d-activer-Alarme-Volume-%d-R%d", alarm_status.perimeter, alarm_room.perimeter);
+        alarm_action(msg);
       }
     }
     /* Step : Alarm control during watchdog for being enabled */
@@ -340,6 +382,10 @@ int alarm_xml_get(FILE * stream)
   fprintf_XML_elt_int("Perimeter_Trig" , alarm_trig.perimeter , stream);
   fprintf_XML_elt_int("Volume_Trig"    , alarm_trig.volume    , stream);
   fprintf_XML_elt_int("Simulation_Trig", alarm_trig.simulation, stream);
+
+  fprintf_XML_elt_int("Perimeter_Room" , alarm_room.perimeter , stream);
+  fprintf_XML_elt_int("Volume_Room"    , alarm_room.volume    , stream);
+  fprintf_XML_elt_int("Simulation_Room", alarm_room.simulation, stream);
   fprintf_XML_elt_trailer("Alarm", stream);
 
   return 0;
