@@ -19,13 +19,13 @@
 
 typedef struct _SAFETY_T
 { /* 0 if no error else error code */
-  uint8_t rooms_error;
-  uint8_t rooms_temp_max;
-  uint8_t rooms_temp_min;
-  uint8_t rooms_hum;
-  uint8_t rooms_smoke;
   uint8_t http;
   uint8_t gsm;
+  uint8_t rooms_error;
+  uint8_t rooms_hum;
+  uint8_t rooms_smoke;
+  uint8_t rooms_temp_max :1;
+  uint8_t rooms_temp_min :1;
   uint8_t ups_temp       :1;
   uint8_t ups_power      :1;
   uint8_t rack_temp      :1;
@@ -34,10 +34,15 @@ typedef struct _SAFETY_T
 
 typedef struct _SAFETY_VALUE_T
 {
+  ROOM_N_T room_error_nb;
+  ROOM_N_T room_hum_nb;
+  ROOM_N_T room_smoke_nb;
   uint16_t rooms_temp_max;
   uint16_t rooms_temp_max_th;
+  ROOM_N_T room_temp_max_nb;
   uint16_t rooms_temp_min;
   uint16_t rooms_temp_min_th;
+  ROOM_N_T room_temp_min_nb;
   uint16_t ups_temp;
   uint16_t ups_temp_th;
   uint16_t rack_temp;
@@ -51,50 +56,55 @@ SAFETY_VALUE_T safety_value;
 
 uint8_t safety_init(void)
 {
+  safety_status.http           = 0;
+  safety_status.gsm            = 0;
   safety_status.rooms_error    = 0;
-  safety_status.rooms_temp_max = 0;
-  safety_status.rooms_temp_min = 0;
   safety_status.rooms_hum      = 0;
   safety_status.rooms_smoke    = 0;
+  safety_status.rooms_temp_max = 0;
+  safety_status.rooms_temp_min = 0;
   safety_status.ups_temp       = 0;
   safety_status.ups_power      = 0;
   safety_status.rack_temp      = 0;
   safety_status.rack_alarm     = 0;
-  safety_status.http           = 0;
-  safety_status.gsm            = 0;
 
+  safety_control.http           = 1;
+  safety_control.gsm            = 1;
   safety_control.rooms_error    = 0; // TODO
-  safety_control.rooms_temp_max = 0; // TODO
-  safety_control.rooms_temp_min = 0; // TODO
   safety_control.rooms_hum      = 0; // TODO
-  safety_control.rooms_smoke    = 0; // TODO
+  safety_control.rooms_smoke    = 1;
+  safety_control.rooms_temp_max = 1;
+  safety_control.rooms_temp_min = 0; // TODO
   safety_control.ups_temp       = 1;
   safety_control.ups_power      = 1;
   safety_control.rack_temp      = 1;
-  safety_control.rack_alarm     = 0; // Do not watch at the rack alarm when stating because the door is open !
-  safety_control.http           = 1;
-  safety_control.gsm            = 0; // TODO
+  safety_control.rack_alarm     = 0; // Do not watch at the rack alarm when starting because the door is open !
 
+  safety_trig.http           = 0;
+  safety_trig.gsm            = 0;
   safety_trig.rooms_error    = 0;
-  safety_trig.rooms_temp_max = 0;
-  safety_trig.rooms_temp_min = 0;
   safety_trig.rooms_hum      = 0;
   safety_trig.rooms_smoke    = 0;
+  safety_trig.rooms_temp_max = 0;
+  safety_trig.rooms_temp_min = 0;
   safety_trig.ups_temp       = 0;
   safety_trig.ups_power      = 0;
   safety_trig.rack_temp      = 0;
   safety_trig.rack_alarm     = 0;
-  safety_trig.http           = 0;
-  safety_trig.gsm            = 0;
 
+  safety_value.room_error_nb     = ROOM_MAX;
+  safety_value.room_hum_nb       = ROOM_MAX;
+  safety_value.room_smoke_nb     = ROOM_MAX;
   safety_value.rooms_temp_max    = 213;
   safety_value.rooms_temp_max_th = 213;
+  safety_value.room_temp_max_nb  = ROOM_MAX;
   safety_value.rooms_temp_min    = 213;
   safety_value.rooms_temp_min_th = 213;
-  safety_value.ups_temp = 0;
-  safety_value.ups_temp_th = 213; /* 40°C */
-  safety_value.rack_temp = 0;
-  safety_value.rack_temp_th = 213; /* 40°C */
+  safety_value.room_temp_min_nb  = ROOM_MAX;
+  safety_value.ups_temp          = 0;
+  safety_value.ups_temp_th       = 213; /* 40°C */
+  safety_value.rack_temp         = 0;
+  safety_value.rack_temp_th      = 213; /* 40°C */
 
   NutThreadCreate("SafetyUnRD"  , SafetyUpsRackD  , 0, 512);
   NutThreadCreate("SafetyRoomsD", SafetyRoomsD, 0, 512);
@@ -142,6 +152,8 @@ THREAD(SafetyUpsRackD, arg)
   uint32_t temp_sum = 0;
   uint8_t i = 0;
 
+  char msg[40];
+
   arg = arg;
   NutThreadSetPriority(100);
 
@@ -153,17 +165,49 @@ THREAD(SafetyUpsRackD, arg)
 
     temp_sum = 0;
     for(i=0; i<TEMP_NB; i++) { temp_sum = temp_sum + ups_temp[i]; }
-    safety_value.ups_temp = temp_sum / TEMP_NB;
-    safety_status.ups_power = ups_power_status_get();
-    if(safety_control.ups_temp ) { if((!(safety_trig.ups_temp )) && (safety_value.ups_temp>=safety_value.ups_temp_th)) { safety_action_with_buzzer("Temperature-Alimentation-Elevee" ); safety_trig.ups_temp  = 1; } }
-    if(safety_control.ups_power) { if((!(safety_trig.ups_power)) && (safety_status.ups_power                        )) { safety_action("Alerte-Coupure-Courant"); safety_trig.ups_power = 1; } }
+    if(!(safety_trig.ups_temp )) { safety_value.ups_temp = temp_sum / TEMP_NB; }
+    if(!(safety_trig.ups_power)) { safety_status.ups_power = ups_power_status_get(); }
+
+    if(safety_control.ups_temp )
+    {
+      if((!(safety_trig.ups_temp )) && (safety_value.ups_temp>=safety_value.ups_temp_th))
+      {
+        sprintf(msg, "Temperature-Alimentation-Elevee-%d", safety_value.ups_temp);
+        safety_action_with_buzzer(msg);
+        safety_trig.ups_temp  = 1;
+      }
+    }
+    if(safety_control.ups_power)
+    {
+      if((!(safety_trig.ups_power)) && (safety_status.ups_power))
+      {
+        safety_action("Alerte-Coupure-Courant");
+        safety_trig.ups_power = 1;
+      }
+    }
 
     temp_sum = 0;
     for(i=0; i<TEMP_NB; i++) { temp_sum = temp_sum + rack_temp[i]; }
-    safety_value.rack_temp = temp_sum / TEMP_NB;
-    safety_status.rack_alarm = rack_alarm_status_get();
-    if(safety_control.rack_temp ) { if((!(safety_trig.rack_temp )) && (safety_value.rack_temp>=safety_value.rack_temp_th)) { safety_action_with_buzzer("Temperature-Boitier-Elevee" ); safety_trig.rack_temp  = 1; } }
-    if(safety_control.rack_alarm) { if((!(safety_trig.rack_alarm)) && (safety_status.rack_alarm                         )) { safety_action_with_buzzer("Alerte-Boitier-Ouvert"); safety_trig.rack_alarm = 1; } }
+    if(!(safety_trig.rack_temp )) { safety_value.rack_temp = temp_sum / TEMP_NB; }
+    if(!(safety_trig.rack_alarm)) { safety_status.rack_alarm = rack_alarm_status_get(); }
+
+    if(safety_control.rack_temp )
+    {
+      if((!(safety_trig.rack_temp )) && (safety_value.rack_temp>=safety_value.rack_temp_th))
+      {
+        sprintf(msg, "Temperature-Boitier-Elevee-%d", safety_value.rack_temp);
+        safety_action_with_buzzer(msg);
+        safety_trig.rack_temp = 1;
+      }
+    }
+    if(safety_control.rack_alarm)
+    {
+      if((!(safety_trig.rack_alarm)) && (safety_status.rack_alarm))
+      {
+        safety_action_with_buzzer("Alerte-Boitier-Ouvert");
+        safety_trig.rack_alarm = 1;
+      }
+    }
 
     buzzer_update();
 
@@ -173,21 +217,64 @@ THREAD(SafetyUpsRackD, arg)
 
 THREAD(SafetyRoomsD, arg)
 {
+  char msg[40];
+
   arg = arg;
   NutThreadSetPriority(101);
 
   while(1)
   {
-    safety_status.rooms_error   = rooms_error_status_get();
-    safety_value.rooms_temp_max = rooms_temp_max_value_get();
-    safety_value.rooms_temp_min = rooms_temp_min_value_get();
-    safety_status.rooms_hum     = rooms_hum_status_get();
-    safety_status.rooms_smoke   = rooms_smoke_status_get();
-    if(safety_control.rooms_error   ) { if((!(safety_trig.rooms_error   )) && (safety_status.rooms_error)) { safety_action("Probleme-Acces-Module"    ); safety_trig.rooms_error    = 1; } }
-    if(safety_control.rooms_temp_max) { if((!(safety_trig.rooms_temp_max)) && (rooms_temp_max_trig_get())) { safety_action_with_buzzer("Temperature-Piece-Elevee" ); safety_trig.rooms_temp_max = 1; } }
-    if(safety_control.rooms_temp_min) { if((!(safety_trig.rooms_temp_min)) && (rooms_temp_min_trig_get())) { safety_action("Temperature-Piece-Basse"  ); safety_trig.rooms_temp_min = 1; } }
-    if(safety_control.rooms_hum     ) { if((!(safety_trig.rooms_hum     )) && (rooms_hum_trig_get()     )) { safety_action("Humidite-Piece"           ); safety_trig.rooms_hum      = 1; } }
-    if(safety_control.rooms_smoke   ) { if((!(safety_trig.rooms_smoke   )) && (rooms_smoke_trig_get()   )) { safety_action_with_buzzer("Fumee-Piece"  ); safety_trig.rooms_smoke    = 1; } }
+    if(!(safety_trig.rooms_error   )) { safety_status.rooms_error   = rooms_error_status_get  (&(safety_value.room_error_nb));    }
+    if(!(safety_trig.rooms_hum     )) { safety_status.rooms_hum     = rooms_hum_status_get    (&(safety_value.room_hum_nb));      }
+    if(!(safety_trig.rooms_smoke   )) { safety_status.rooms_smoke   = rooms_smoke_status_get  (&(safety_value.room_smoke_nb));    }
+    if(!(safety_trig.rooms_temp_max)) { safety_value.rooms_temp_max = rooms_temp_max_value_get(&(safety_value.room_temp_max_nb)); }
+    if(!(safety_trig.rooms_temp_min)) { safety_value.rooms_temp_min = rooms_temp_min_value_get(&(safety_value.room_temp_min_nb)); }
+
+    if(safety_control.rooms_error)
+    {
+      if((!(safety_trig.rooms_error)) && (safety_status.rooms_error))
+      {
+        sprintf(msg, "Probleme-Acces-Module-%d-E%d", safety_value.room_error_nb, safety_status.rooms_error);
+        safety_action(msg);
+        safety_trig.rooms_error = 1;
+      }
+    }
+    if(safety_control.rooms_hum)
+    {
+      if((!(safety_trig.rooms_hum)) && (rooms_hum_trig_get(&(safety_value.room_hum_nb))))
+      {
+        sprintf(msg, "Humidite-Piece-%d", safety_value.room_hum_nb);
+        safety_action(msg);
+        safety_trig.rooms_hum = 1;
+      }
+    }
+    if(safety_control.rooms_smoke)
+    {
+      if((!(safety_trig.rooms_smoke)) && (rooms_smoke_trig_get(&(safety_value.room_smoke_nb))))
+      {
+        sprintf(msg, "Fumee-Piece-%d", safety_value.room_smoke_nb);
+        safety_action_with_buzzer(msg);
+        safety_trig.rooms_smoke = 1;
+      }
+    }
+    if(safety_control.rooms_temp_max)
+    {
+      if((!(safety_trig.rooms_temp_max)) && (rooms_temp_max_trig_get(&(safety_value.room_temp_max_nb))))
+      {
+        sprintf(msg, "Temperature-Piece-%d-Elevee-%d", safety_value.room_temp_max_nb, safety_value.rooms_temp_max);
+        safety_action_with_buzzer(msg);
+        safety_trig.rooms_temp_max = 1;
+      }
+    }
+    if(safety_control.rooms_temp_min)
+    {
+      if((!(safety_trig.rooms_temp_min)) && (rooms_temp_min_trig_get(&(safety_value.room_temp_min_nb))))
+      {
+        sprintf(msg, "Temperature-Piece-%d-Basse-%d" , safety_value.room_temp_min_nb, safety_value.rooms_temp_min);
+        safety_action(msg);
+        safety_trig.rooms_temp_min = 1;
+      }
+    }
 
     NutSleep(1000);
   }
@@ -209,7 +296,15 @@ THREAD(SafetyGsmD, arg)
     ret = gsm_status_get();
     if(ret != 0) { if(gsm_nb < 0xFF) { gsm_nb++; } } else { gsm_nb = 0; }
     if(gsm_nb > 10) { safety_status.gsm = ret; } else { safety_status.gsm = 0; }
-    if(safety_control.gsm) { if((!(safety_trig.gsm)) && (safety_status.gsm)) { sprintf(msg, "Probleme-GSM-%d", safety_control.gsm); safety_action(msg); safety_trig.gsm = 1; } }
+    if(safety_control.gsm)
+    {
+      if((!(safety_trig.gsm)) && (safety_status.gsm))
+      {
+        sprintf(msg, "Probleme-GSM-E%d", safety_status.gsm);
+        safety_action(msg);
+        safety_trig.gsm = 1;
+      }
+    }
 
     NutSleep(30000);
   }
@@ -229,7 +324,15 @@ THREAD(SafetyHttpD, arg)
     ret = http_status_get();
     if(ret != 0) { if(http_nb < 0xFF) { http_nb++; } } else { http_nb = 0; }
     if(http_nb > 10) { safety_status.http = ret; } else { safety_status.http = 0; }
-    if(safety_control.http) { if((!(safety_trig.http)) && (safety_status.http)) { sprintf(msg, "Probleme-Internet-%d", safety_control.http); safety_action(msg); safety_trig.http = 1; } }
+    if(safety_control.http)
+    {
+      if((!(safety_trig.http)) && (safety_status.http))
+      {
+        sprintf(msg, "Probleme-Internet-E%d", safety_status.http);
+        safety_action(msg);
+        safety_trig.http = 1;
+      }
+    }
 
     NutSleep(30000);
   }
@@ -345,12 +448,17 @@ int safety_xml_get(FILE * stream)
 {
   fprintf_XML_elt_header("Safety" , stream);
   fprintf_XML_elt_int("Rooms_Error"      , safety_status.rooms_error     , stream);
+  fprintf_XML_elt_int("Rooms_Error_Nb"   , safety_value.room_error_nb    , stream);
   fprintf_XML_elt_int("Rooms_Temp_Max"   , safety_value.rooms_temp_max   , stream);
   fprintf_XML_elt_int("Rooms_Temp_Max_Th", safety_value.rooms_temp_max_th, stream);
+  fprintf_XML_elt_int("Rooms_Temp_Max_Nb", safety_value.room_temp_max_nb , stream);
   fprintf_XML_elt_int("Rooms_Temp_Min"   , safety_value.rooms_temp_min   , stream);
   fprintf_XML_elt_int("Rooms_Temp_Min_Th", safety_value.rooms_temp_min_th, stream);
+  fprintf_XML_elt_int("Rooms_Temp_Min_Nb", safety_value.room_temp_min_nb , stream);
   fprintf_XML_elt_int("Rooms_Hum"        , safety_status.rooms_hum       , stream);
+  fprintf_XML_elt_int("Rooms_Hum_Nb"     , safety_value.room_hum_nb      , stream);
   fprintf_XML_elt_int("Rooms_Smoke"      , safety_status.rooms_smoke     , stream);
+  fprintf_XML_elt_int("Rooms_Smoke_Nb"   , safety_value.room_smoke_nb    , stream);
   fprintf_XML_elt_int("UPS_Temp"         , safety_value.ups_temp         , stream);
   fprintf_XML_elt_int("UPS_Temp_Th"      , safety_value.ups_temp_th      , stream);
   fprintf_XML_elt_int("UPS_Power"        , safety_status.ups_power       , stream);
