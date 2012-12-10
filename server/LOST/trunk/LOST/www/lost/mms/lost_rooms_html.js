@@ -42,6 +42,7 @@ document.write("\
                 <li><input type=\"checkbox\" id=\"Room"+String(ROOM_CUISINE)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_CUISINE,0);\"><img class=\"picto\" src=\""+lost_icons_path+"diode.jpg\"><label for=\"Room"+String(ROOM_CUISINE)+"_Light0\">Gauche</label></li>\
                 <li><input type=\"checkbox\" id=\"Room"+String(ROOM_CUISINE)+"_Light1\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_CUISINE,1);\"><img class=\"picto\" src=\""+lost_icons_path+"diode.jpg\"><label for=\"Room"+String(ROOM_CUISINE)+"_Light1\">Centre</label></li>\
                 <li><input type=\"checkbox\" id=\"Room"+String(ROOM_CUISINE)+"_Light2\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_CUISINE,2);\"><img class=\"picto\" src=\""+lost_icons_path+"diode.jpg\"><label for=\"Room"+String(ROOM_CUISINE)+"_Light2\">Droite</label></li>\
+                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_CUISINE)+"_Light3\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_CUISINE,3);\"><img class=\"picto\" src=\""+lost_icons_path+"diode.jpg\"><label for=\"Room"+String(ROOM_CUISINE)+"_Light3\">TV</label></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
