@@ -6,13 +6,13 @@
 #include "node.h"
 #include "light.h"
 
-#define LIGHT_NB 3
-#define LIGHT_PUSH_NB 3
+#define LIGHT_NB 6
+#define LIGHT_PUSH_NB 6
 
 #define LIGHT_OFF 0
 #define LIGHT_ON  1
 
-u08 light_but_state_old[LIGHT_NB] = { LIGHT_OFF, LIGHT_OFF, LIGHT_OFF };
+u08 light_but_state_old[LIGHT_NB] = { LIGHT_OFF, LIGHT_OFF, LIGHT_OFF, LIGHT_OFF, LIGHT_OFF, LIGHT_OFF };
 
 u08 light_but[LIGHT_NB]     = NODE_ROOM_CONFIG_LIGHT_BUT;
 u08 light_relay[LIGHT_NB]   = NODE_ROOM_CONFIG_LIGHT_RELAY;

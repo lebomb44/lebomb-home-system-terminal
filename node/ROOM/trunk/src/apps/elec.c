@@ -6,13 +6,13 @@
 #include "node.h"
 #include "elec.h"
 
-#define ELEC_NB 3
-#define ELEC_PUSH_NB 3
+#define ELEC_NB 6
+#define ELEC_PUSH_NB 6
 
 #define ELEC_OFF 0
 #define ELEC_ON  1
 
-u08 elec_but_state_old[ELEC_NB]  = { ELEC_OFF, ELEC_OFF, ELEC_OFF };
+u08 elec_but_state_old[ELEC_NB]  = { ELEC_OFF, ELEC_OFF, ELEC_OFF, ELEC_OFF, ELEC_OFF, ELEC_OFF };
 
 u08 elec_but[ELEC_NB]     = NODE_ROOM_CONFIG_ELEC_BUT;
 u08 elec_relay[ELEC_NB]   = NODE_ROOM_CONFIG_ELEC_RELAY;

@@ -6,13 +6,13 @@
 #include "node.h"
 #include "heater.h"
 
-#define HEATER_NB 3
-#define HEATER_PUSH_NB 3
+#define HEATER_NB 6
+#define HEATER_PUSH_NB 6
 
 #define HEATER_OFF 0
 #define HEATER_ON  1
 
-u08 heater_but_state_old[HEATER_NB]  = { HEATER_OFF, HEATER_OFF, HEATER_OFF };
+u08 heater_but_state_old[HEATER_NB]  = { HEATER_OFF, HEATER_OFF, HEATER_OFF, HEATER_OFF, HEATER_OFF, HEATER_OFF };
 
 u08 heater_but[HEATER_NB]     = NODE_ROOM_CONFIG_HEATER_BUT;
 u08 heater_relay[HEATER_NB]   = NODE_ROOM_CONFIG_HEATER_RELAY;
