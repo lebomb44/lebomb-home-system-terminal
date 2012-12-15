@@ -13,11 +13,9 @@ void event_proc_shutters_upstairs_start(void)   { room_shutters_set(ROOM_C1, ROO
 void event_proc_shutters_upstairs_end(void)     { room_shutters_set(ROOM_C1, ROOM_SHUTTER_DOWN); room_shutters_set(ROOM_C2, ROOM_SHUTTER_DOWN);
                                                   room_shutters_set(ROOM_C3, ROOM_SHUTTER_DOWN); room_shutters_set(ROOM_C4, ROOM_SHUTTER_DOWN); }
 void event_proc_shutters_downstairs_start(void) { room_shutters_set(ROOM_BUREAU  , ROOM_SHUTTER_UP); room_shutters_set(ROOM_SALON  , ROOM_SHUTTER_UP);
-                                                  room_shutters_set(ROOM_CUISINE , ROOM_SHUTTER_UP); room_shutters_set(ROOM_COULOIR, ROOM_SHUTTER_UP);
-                                                  room_shutters_set(ROOM_TERRASSE, ROOM_SHUTTER_UP); }
+                                                  room_shutters_set(ROOM_CUISINE , ROOM_SHUTTER_UP); room_shutters_set(ROOM_COULOIR, ROOM_SHUTTER_UP); }
 void event_proc_shutters_downstairs_end(void)   { room_shutters_set(ROOM_BUREAU  , ROOM_SHUTTER_DOWN); room_shutters_set(ROOM_SALON  , ROOM_SHUTTER_DOWN);
-                                                  room_shutters_set(ROOM_CUISINE , ROOM_SHUTTER_DOWN); room_shutters_set(ROOM_COULOIR, ROOM_SHUTTER_DOWN);
-                                                  room_shutters_set(ROOM_TERRASSE, ROOM_SHUTTER_DOWN); }
+                                                  room_shutters_set(ROOM_CUISINE , ROOM_SHUTTER_DOWN); room_shutters_set(ROOM_COULOIR, ROOM_SHUTTER_DOWN); }
 void event_proc_shutters_all_start(void)        { event_proc_shutters_upstairs_start(); event_proc_shutters_downstairs_start(); }
 void event_proc_shutters_all_end(void)          { event_proc_shutters_upstairs_end(); event_proc_shutters_downstairs_end(); }
 void event_proc_shutters_marine_start(void)     { room_shutters_set(ROOM_C1, ROOM_SHUTTER_UP); }

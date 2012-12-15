@@ -19,7 +19,6 @@ typedef enum _ROOM_N_T
   ROOM_CUISINE,  /* Cuisine */
   ROOM_COULOIR,  /* Couloir */
   ROOM_SALON2,   /* Salon2 */
-  ROOM_TERRASSE, /* Terrasse */
   ROOM_MAX
 } ROOM_N_T;
 
