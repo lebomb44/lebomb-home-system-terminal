@@ -61,6 +61,7 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   /* Wait for the hardware interface to be free */
   ret = 10;
   while(ret > 0) { if(i2c_mutex == 0) { i2c_mutex = 1; break; } else { NutSleep(10); ret--; } }
+  /* Clear data if impossible to take the semaphore */
   if(ret == 0) { for(nb_rec=0; nb_rec<nb; nb_rec++) { data[nb_rec] = 0; } return 7; }
 
   /* Do the exchange and check the returned number of data */
