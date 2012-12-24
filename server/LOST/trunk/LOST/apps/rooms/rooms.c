@@ -4,6 +4,7 @@
 
 #include <sys/thread.h>
 #include <sys/timer.h>
+#include <dev/reset.h>
 
 #include <pro/httpd.h>
 
@@ -255,6 +256,13 @@ THREAD(RoomD, arg)
       room_error[i] = i2c_get(ROOM_SLA+i, 0, ROOM_REG_MAX, &room_list[i][0]);
       NutSleep(1);
     }
+    /* FIXME : Check that all nodes are available */
+    for(i=0; i<ROOM_MAX; i++)
+    {
+      if(room_error[i] == 0) { break; }
+    }
+    /* FIXME Only reset if none of the nodes are accessible */
+    if(i == ROOM_MAX) { NutSleep(60000); NutReset(); }
     NutSleep(10000);
   }
 }
