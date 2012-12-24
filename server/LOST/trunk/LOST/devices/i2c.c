@@ -48,6 +48,8 @@ void i2c_reset(void)
   NutSleep(1);
   /* Start the I2C core component */
   TWCR = (1<<TWEA) | (1<<TWEN) | (1<<TWIE);
+  /* Initialize TWI */
+  i2c_init();
 }
 
 uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
