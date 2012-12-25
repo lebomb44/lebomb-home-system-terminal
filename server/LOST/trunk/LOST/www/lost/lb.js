@@ -1003,6 +1003,7 @@ document.write("\
 <div class=\"iLayer\" id=\"waHome\" title=\"Home\">\
     <div class=\"iMenu\">\
         <ul class=\"iArrow\">\
+            <li id=\"Event"+String(EVENT_POWER_0)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"Event"+String(EVENT_POWER_0)+"_Status\">Unknown</span>Disque Dur</li>\
             <li id=\"Event"+String(EVENT_POWER_1)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"Event"+String(EVENT_POWER_1)+"_Status\">Unknown</span>Reseau</li>\
             <li id=\"Alarm_bg\"><a href=\"#_Alarmes\"><img class=\"picto\" src=\""+lost_icons_path+"detector.jpg\"/>Alarmes</a></li>\
         </ul>\
