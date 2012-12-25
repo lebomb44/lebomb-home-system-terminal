@@ -62,7 +62,8 @@ $(document).ready(function() {
   mysql_select_db(BASE,$link);
 
   if(isset($_GET["year"])) { $year = $_GET["year"]; } else { $year = date("Y"); }
-  $requete  = "SELECT * FROM lb WHERE `DATE` BETWEEN '".$year."-01-01 00:00:00' AND '".$year."-12-31 23:59:59' ORDER BY DATE";
+  if(isset($_GET["month"])) { $month = $_GET["month"]; } else { $month = date("m"); }
+  $requete  = "SELECT * FROM lb WHERE `DATE` BETWEEN '".$year."-".$month."-01 00:00:00' AND '".$year."-".$month."-31 23:59:59' ORDER BY DATE";
   $result=mysql_query($requete, $link) or die("Echec de lecture".mysql_error());
 
   //$first = 1;
