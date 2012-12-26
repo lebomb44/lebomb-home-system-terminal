@@ -33,7 +33,7 @@ uint8_t volume_init(void)
 
 uint8_t volume_status_get(void)
 {
-  return (/* FIXME (GpioPinGet(VOLUME0_PORT, VOLUME0_BIT) << 0 ) |*/ \
+  return ((GpioPinGet(VOLUME0_PORT, VOLUME0_BIT) << 0 ) | \
           (GpioPinGet(VOLUME1_PORT, VOLUME1_BIT) << 1 ) | \
           (GpioPinGet(VOLUME2_PORT, VOLUME2_BIT) << 2 ) | \
           (GpioPinGet(VOLUME3_PORT, VOLUME3_BIT) << 3 ) | \
