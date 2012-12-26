@@ -187,9 +187,9 @@ THREAD(AlarmD, arg)
     if(alarm_trig.volume == 0)
     {
       /* If alarm is enabled */
-      if(alarm_control.volume == 1) { alarm_status.volume = rooms_volume_trig_get(&(alarm_room.volume)) | volume_status_get(); }
+      if(alarm_control.volume == 1) { alarm_status.volume = /* FIXME rooms_volume_trig_get(&(alarm_room.volume)) |*/ volume_status_get(); }
       /* If alarm is NOT enabled */
-      else { alarm_status.volume  = rooms_volume_status_get(&(alarm_room.volume)) | volume_status_get(); }
+      else { alarm_status.volume  = /* FIXME rooms_volume_status_get(&(alarm_room.volume)) |*/ volume_status_get(); }
     }
     if(alarm_trig.simulation == 0)
     {
@@ -304,10 +304,10 @@ THREAD(AlarmD, arg)
     if(alarm_control.volume == 2)
     {
       /* Only activate the alarm if nothing is moving */
-      if((rooms_volume_status_get(NULL) == 0) && (!volume_status_get()))
+      if(/* FIXME (rooms_volume_status_get(NULL) == 0) &&*/ (!volume_status_get()))
       {
         alarm_control.volume--;
-        rooms_volume_control_set(0x00); /* FIXME Volume not yet available in ROOM Nodes */
+        /* FIXME rooms_volume_control_set(0x00); Volume not yet available in ROOM Nodes */
         /* Set Green LED */
         room_light_set(ROOM_COULOIR, 0, 1);
       }
@@ -315,7 +315,7 @@ THREAD(AlarmD, arg)
     /* Step before enabling the alarm */
     if(alarm_control.volume == 3)
     {
-      /* Check if all the shutters are closed else send alert message */
+      /* Check if nothing is moving else send alert message */
       if((alarm_status.volume != 0) || volume_status_get())
       {
         sprintf(msg, "Impossible-d-activer-Alarme-Volume-%d-R%d", alarm_status.perimeter, alarm_room.perimeter);
