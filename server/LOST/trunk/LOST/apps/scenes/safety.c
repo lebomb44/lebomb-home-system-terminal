@@ -72,8 +72,8 @@ uint8_t safety_init(void)
   safety_control.gsm            = 1;
   safety_control.rooms_error    = 0; // TODO
   safety_control.rooms_hum      = 0; // TODO
-  safety_control.rooms_smoke    = 1;
-  safety_control.rooms_temp_max = 1;
+  safety_control.rooms_smoke    = 0; // TODO
+  safety_control.rooms_temp_max = 0; // TODO
   safety_control.rooms_temp_min = 0; // TODO
   safety_control.ups_temp       = 1;
   safety_control.ups_power      = 1;
