@@ -243,6 +243,7 @@ void rooms_elec_set              (               uint8_t no, uint8_t value) { if
 
 THREAD(RoomD, arg)
 {
+  uint8_t trig_reset = 0;
   uint8_t i = 0;
 
   arg = arg;
@@ -262,7 +263,8 @@ THREAD(RoomD, arg)
       if(room_error[i] == 0) { break; }
     }
     /* FIXME Only reset if none of the nodes are accessible */
-    if(i == ROOM_MAX) { NutSleep(60000); NutReset(); }
+    if(i == ROOM_MAX) { trig_reset++; } else { trig_reset = 0; }
+    if(trig_reset > 10) { NutReset(); }
     NutSleep(10000);
   }
 }
