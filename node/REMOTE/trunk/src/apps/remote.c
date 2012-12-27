@@ -1,6 +1,7 @@
 #include "../global.h"
 #include "../devices/uart.h"
 #include "node.h"
+#include "../config.h"
 #include "remote.h"
 
 void remote_init(void)
@@ -22,27 +23,6 @@ void remote_init(void)
 
 #define REMOTE_CMD_SCENE 1
 
-typedef enum _EVENT_T
-{
-  EVENT_SHUTTERS_ALL = 0,
-  EVENT_SHUTTERS_UPSTAIRS,
-  EVENT_SHUTTERS_DOWNSTAIRS,
-  EVENT_SHUTTERS_MARINE,
-  EVENT_SHUTTERS_MM,
-  EVENT_SHUTTERS_FRIENDS,
-  EVENT_SHUTTERS_DRESSING,
-  EVENT_ALARM_ALL,
-  EVENT_ALARM_PERIMETER,
-  EVENT_ALARM_VOLUME,
-  EVENT_SIMU,
-  EVENT_POWER_0,
-  EVENT_POWER_1,
-  EVENT_POWER_2,
-  EVENT_POWER_3,
-  EVENT_ALARM_PERIMETER_CHECK,
-  EVENT_MAX
-} EVENT_T;
-
 void remote_cycle(void)
 {
   u08 scene = 0;
@@ -52,43 +32,22 @@ void remote_cycle(void)
 
   /* Get the pressed button */
 
-#define NODE_REMOTE_TYPE_1
-#ifdef NODE_REMOTE_TYPE_1
   /* Button 1 ON */
-  if(!bit_is_set(PINC,0)) { /* SCENE 0 */ scene = 0xCA + EVENT_SHUTTERS_ALL;   /* STATE ON */  state = 0xCA + 1; }
+  if(!bit_is_set(PINC,0)) { /* SCENE 0 */ scene = 0xCA + NODE_REMOTE_BUTTON1_ON_CMD;   /* STATE ON */  state = 0xCA + NODE_REMOTE_BUTTON1_ON_DATA; }
   /* Button 1 OFF */
-  if(!bit_is_set(PIND,6)) { /* SCENE 1 */ scene = 0xCA + EVENT_SHUTTERS_ALL;   /* STATE OFF */  state = 0xCA + 0; }
+  if(!bit_is_set(PIND,6)) { /* SCENE 1 */ scene = 0xCA + NODE_REMOTE_BUTTON1_OFF_CMD;   /* STATE OFF */  state = 0xCA + NODE_REMOTE_BUTTON1_OFF_DATA; }
   /* Button 2 ON */
-  if(!bit_is_set(PINC,1)) { /* SCENE 2 */ scene = 0xCA + EVENT_SHUTTERS_DOWNSTAIRS;   /* STATE ON */  state = 0xCA + 1; }
+  if(!bit_is_set(PINC,1)) { /* SCENE 2 */ scene = 0xCA + NODE_REMOTE_BUTTON2_ON_CMD;   /* STATE ON */  state = 0xCA + NODE_REMOTE_BUTTON2_ON_DATA; }
   /* Button 2 OFF */
-  if(!bit_is_set(PIND,5)) { /* SCENE 2 */ scene = 0xCA + EVENT_SHUTTERS_DOWNSTAIRS;   /* STATE OFF */  state = 0xCA + 0; }
+  if(!bit_is_set(PIND,5)) { /* SCENE 2 */ scene = 0xCA + NODE_REMOTE_BUTTON2_OFF_CMD;   /* STATE OFF */  state = 0xCA + NODE_REMOTE_BUTTON2_OFF_DATA; }
   /* Button 3 ON */
-  if(!bit_is_set(PINC,2)) { /* SCENE 3 */ scene = 0xCA + EVENT_POWER_1;   /* STATE ON */  state = 0xCA + 1; }
+  if(!bit_is_set(PINC,2)) { /* SCENE 3 */ scene = 0xCA + NODE_REMOTE_BUTTON3_ON_CMD;   /* STATE ON */  state = 0xCA + NODE_REMOTE_BUTTON3_ON_DATA; }
   /* Button 3 OFF */
-  if(!bit_is_set(PINB,0)) { /* SCENE 3 */ scene = 0xCA + EVENT_POWER_1;   /* STATE OFF */  state = 0xCA + 0; }
+  if(!bit_is_set(PINB,0)) { /* SCENE 3 */ scene = 0xCA + NODE_REMOTE_BUTTON3_OFF_CMD;   /* STATE OFF */  state = 0xCA + NODE_REMOTE_BUTTON3_OFF_DATA; }
   /* Button 4 ON */
-  if(!bit_is_set(PINC,4)) { /* SCENE 4 */ scene = 0xCA + EVENT_ALARM_PERIMETER;   /* STATE ON */  state = 0xCA + 1; }
+  if(!bit_is_set(PINC,4)) { /* SCENE 4 */ scene = 0xCA + NODE_REMOTE_BUTTON4_ON_CMD;   /* STATE ON */  state = 0xCA + NODE_REMOTE_BUTTON4_ON_DATA; }
   /* Button 4 OFF */
-  if(!bit_is_set(PINB,1)) { /* SCENE 4 */ scene = 0xCA + EVENT_ALARM_PERIMETER;   /* STATE OFF */  state = 0xCA + 0; }
-#endif
-#ifdef NODE_REMOTE_TYPE_2
-  /* Button 1 ON */
-  if(!bit_is_set(PINC,0)) { /* SCENE 0 */ scene = 0xCA + EVENT_SHUTTERS_MM;   /* STATE ON */  state = 0xCA + 1; }
-  /* Button 1 OFF */
-  if(!bit_is_set(PIND,6)) { /* SCENE 1 */ scene = 0xCA + EVENT_SHUTTERS_MM;   /* STATE OFF */  state = 0xCA + 0; }
-  /* Button 2 ON */
-  if(!bit_is_set(PINC,1)) { /* SCENE 2 */ scene = 0xCA + EVENT_SHUTTERS_MARINE;   /* STATE ON */  state = 0xCA + 1; }
-  /* Button 2 OFF */
-  if(!bit_is_set(PIND,5)) { /* SCENE 2 */ scene = 0xCA + EVENT_SHUTTERS_MARINE;   /* STATE OFF */  state = 0xCA + 0; }
-  /* Button 3 ON */
-  if(!bit_is_set(PINC,2)) { /* SCENE 3 */ scene = 0xCA + EVENT_SHUTTERS_DOWNSTAIRS;   /* STATE ON */  state = 0xCA + 1; }
-  /* Button 3 OFF */
-  if(!bit_is_set(PINB,0)) { /* SCENE 3 */ scene = 0xCA + EVENT_SHUTTERS_DOWNSTAIRS;   /* STATE OFF */  state = 0xCA + 0; }
-  /* Button 4 ON */
-  if(!bit_is_set(PINC,4)) { /* SCENE 4 */ scene = 0xCA + EVENT_SHUTTERS_ALL;   /* STATE ON */  state = 0xCA + 1; }
-  /* Button 4 OFF */
-  if(!bit_is_set(PINB,1)) { /* SCENE 4 */ scene = 0xCA + EVENT_SHUTTERS_ALL;   /* STATE OFF */  state = 0xCA + 0; }
-#endif
+  if(!bit_is_set(PINB,1)) { /* SCENE 4 */ scene = 0xCA + NODE_REMOTE_BUTTON4_OFF_CMD;   /* STATE OFF */  state = 0xCA + NODE_REMOTE_BUTTON4_OFF_DATA; }
 
   /* Set synchro word */
   buff[0] = 0xAA;

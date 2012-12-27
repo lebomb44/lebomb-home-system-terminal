@@ -41,6 +41,7 @@ ASRC =
 # Optional compiler flags.
 CFLAGS = -g -O$(OPT) -funsigned-char -funsigned-bitfields -fpack-struct \
 -fshort-enums -Wall -Wstrict-prototypes -Wa,-ahlms=$(<:.c=.lst)
+CFLAGS += -DNODE_REMOTE_CONFIG_$(NODE_REMOTE_CONFIG)
 
 # Optional assembler flags.
 ASFLAGS = -Wa,-ahlms=$(<:.S=.lst),-gstabs 
