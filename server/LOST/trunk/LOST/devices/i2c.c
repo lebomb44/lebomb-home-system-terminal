@@ -38,18 +38,14 @@ uint8_t i2c_init(void)
 
 void i2c_reset(void)
 {
-  /* Clear the interrupt */
-  TWCR = (1<<TWINT) | (1<<TWEN);
-  /* Generate a STOP */
-  TWCR = (1<<TWSTO) | (1<<TWEN);
-  /* Stop the I2C core component */
-  TWCR = 0;
+  /* Disable the I2C core component */
+  TWCR &= ~(( 1 << TWSTO ) + ( 1 << TWEN ));
   /* Wait a little bit */
   NutSleep(1);
-  /* Start the I2C core component */
-  TWCR = (1<<TWEA) | (1<<TWEN) | (1<<TWIE);
-  /* Initialize TWI */
-  i2c_init();
+  /* Enable the I2C core component */
+  TWCR |= ( 1 << TWEN );
+  /* Wait a little bit */
+  NutSleep(1);
 }
 
 uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
@@ -84,6 +80,9 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   /* Clear the data if not received */
   if(nb_rec < 0) { nb_rec = 0; }
   while(nb_rec < nb ) { data[nb_rec] = 0; nb_rec++; }
+
+  /* Wait a little bit */
+  NutSleep(1);
 
   return ret;
 }
@@ -136,9 +135,10 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
     }
     NutSleep(5);
   }
-  NutSleep(1);
   /* Before to exit, free the allocated area */
   free(buff);
+  /* Wait a little bit */
+  NutSleep(1);
 
   return ret;
 }
