@@ -29,6 +29,7 @@ uint8_t i2c_init(void)
   TwInit(1);
   /* Set the bus speed */
   val = 50000; /* MAX = 409582 */
+  TwIOCtl(TWI_SETSPEED, &val);
 
   /* Authorize the use of the hardware interface */
   i2c_mutex = 0;
