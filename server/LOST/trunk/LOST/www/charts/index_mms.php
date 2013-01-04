@@ -12,18 +12,18 @@
   <script type="text/javascript">
 var myDate = new Date();
 <?php
-if(isset($_GET["year"]))
+if(isset($_GET["year"]) && isset($_GET["month"]))
 {
-  echo "myDate.setUTCFullYear(".$_GET["year"].");";
-  echo "myDate.setUTCMonth(0);";
-  echo "myDate.setUTCDate(1);";
-  echo "myDate.setUTCHours(0);";
+  echo "myDate.setUTCFullYear(".(intval($_GET["year"])).");";
+  echo "myDate.setUTCMonth(".(intval($_GET["month"])-1).");";
 }
 ?>
+myDate.setUTCDate(1);
+myDate.setUTCHours(0);
 myDate.setUTCMinutes(0);
 myDate.setUTCSeconds(0);
 myDate.setUTCMilliseconds(0);
-var chart; // globally available
+var chart;
 $(document).ready(function() {
       chart = new Highcharts.StockChart({
          chart: {
@@ -43,8 +43,8 @@ $(document).ready(function() {
 						{type: 'all',text: 'All'}]
 		},
 		series: [
-			{name: 'Marine', data:[]},{name: 'M&M', data:[]},{name: 'Amis', data:[]},{name: 'Dressing', data:[]},{name: 'SdB', data:[]},
-			{name: 'Bureau', data:[]},{name: 'Salon', data:[]},{name: 'Cuisine', data:[]},{name: 'Couloir', data:[]},{name: 'Terrasse', data:[]},
+			{name: 'Marine', data:[]},{name: 'M&M', data:[]},{name: 'Amis', data:[]},{name: 'Dressing', data:[]},{name: 'Combles', data:[]},
+			{name: 'Bureau', data:[]},{name: 'Cuisine', data:[]},{name: 'Celier', data:[]},{name: 'Couloir', data:[]},{name: 'Salon', data:[]},
 			{name: 'UPS', data:[]},{name: 'Rack', data:[]},{type: 'flags', name: 'Start', data:[]}
 		]
       });
@@ -61,11 +61,10 @@ $(document).ready(function() {
   //--Connexion ? la base
   mysql_select_db(BASE,$link);
 
-  if(isset($_GET["year"])) { $year = $_GET["year"]; } else { $year = date("Y"); }
-  if(isset($_GET["month"])) { $month = $_GET["month"]; } else { $month = date("m"); }
-  $requete  = "SELECT * FROM mms WHERE `DATE` BETWEEN '".$year."-".$month."-01 00:00:00' AND '".$year."-".$month."-31 23:59:59' ORDER BY DATE";
+  if(isset($_GET["year"]) && isset($_GET["month"])) { $year = intval($_GET["year"]); $month = intval($_GET["month"]); } else { $year = intval(date("Y")); $month = intval(date("m")); }
+  $requete  = "SELECT * FROM mms WHERE `DATE` BETWEEN '".$year."-".sprintf('%02d',$month)."-01 00:00:00' AND '".$year."-".sprintf('%02d',$month)."-31 23:59:59' ORDER BY DATE";
   $result=mysql_query($requete, $link) or die("Echec de lecture".mysql_error());
-
+echo "//".$requete."\n";
   //$first = 1;
   while($r=mysql_fetch_array($result, MYSQL_ASSOC))
     //{echo "DATE: $r[DATE] TEMP0: $r[TEMP0] TEMP1: $r[TEMP1] TEMP2: $r[TEMP2] TEMP3: $r[TEMP3]<br>";}
@@ -102,37 +101,44 @@ function chart_setInterval(date, interval)
 }
 function previousYear()
 {
-  window.location = "<?php if(isset($_GET["year"])) { $year = $_GET["year"]; } else { $year = date("Y"); } echo "?year=".(intval($year)-1); ?>";
+  window.location = "<?php if(isset($_GET["year"]) && isset($_GET["month"])) { $year = intval($_GET["year"]); $month = intval($_GET["month"]); }
+  							else { $year = intval(date("Y")); $month = intval(date("m")); }
+  							echo "?year=".($year-1)."&month=".$month; ?>";
 }
 function nextYear()
 {
-  window.location = "<?php if(isset($_GET["year"])) { $year = $_GET["year"]; } else { $year = date("Y"); } echo "?year=".(intval($year)+1); ?>";
+  window.location = "<?php if(isset($_GET["year"]) && isset($_GET["month"])) { $year = intval($_GET["year"]); $month = intval($_GET["month"]); }
+  							else { $year = intval(date("Y")); $month = intval(date("m")); }
+  							echo "?year=".($year+1)."&month=".$month; ?>";
 }
 function previousMonth()
 {
-  myDate.setUTCMonth(myDate.getUTCMonth()-1);
-  myDate.setUTCDate(1);
-
-  chart_setInterval(myDate, 1000*3600*24*31);
+  window.location = "<?php if(isset($_GET["month"]) && isset($_GET["month"])) { $year = intval($_GET["year"]); $month = intval($_GET["month"]); }
+  							else { $year = intval(date("Y")); $month = intval(date("m")); }
+							if($month == 1) { $month = 12; $year = $year - 1; }
+							else { $month = $month - 1; } 
+							echo "?year=".$year."&month=".$month; ?>";
 }
 function nextMonth()
 {
-  myDate.setUTCMonth(myDate.getUTCMonth()+1);
-  myDate.setUTCDate(1);
-
-  chart_setInterval(myDate, 1000*3600*24*31);
+  window.location = "<?php if(isset($_GET["month"]) && isset($_GET["month"])) { $year = intval($_GET["year"]); $month = intval($_GET["month"]); }
+							else { $year = intval(date("Y")); $month = intval(date("m")); }
+							if($month == 12) { $month = 0; $year = $year + 1; }
+							else { $month = $month + 1; } 
+							echo "?year=".$year."&month=".$month; ?>";
 }
 function previousDay()
 {
-  myDate.setUTCDate(myDate.getUTCDate()-1);
-  myDate.setUTCHours(0);
+  myDate.setUTCDate(Math.max(myDate.getUTCDate()-1,1));
 
   chart_setInterval(myDate, 1000*3600*24);
 }
 function nextDay()
 {
-  myDate.setUTCDate(myDate.getUTCDate()+1);
-  myDate.setUTCHours(0);
+  myDate.setUTCDate(Math.min(myDate.getUTCDate()+1,<?php
+  	if(isset($_GET["month"]) && isset($_GET["month"])) { $year = intval($_GET["year"]); $month = intval($_GET["month"]); }
+  	else { $year = intval(date("Y")); $month = intval(date("m")); }
+  	echo cal_days_in_month(CAL_GREGORIAN, $month, $year); ?>));
 
   chart_setInterval(myDate, 1000*3600*24);
 }
