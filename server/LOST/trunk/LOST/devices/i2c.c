@@ -39,12 +39,22 @@ uint8_t i2c_init(void)
 
 void i2c_reset(void)
 {
-  /* Disable the I2C core component */
-  TWCR &= ~(( 1 << TWSTO ) + ( 1 << TWEN ));
+  /* Clear the interrupt */
+  TWCR = (1<<TWINT);
   /* Wait a little bit */
   NutSleep(1);
-  /* Enable the I2C core component */
-  TWCR |= ( 1 << TWEN );
+  /* Generate a STOP */
+  TWCR = (1<<TWSTO) | (1<<TWEN);
+  /* Wait a little bit */
+  NutSleep(1);
+  /* Stop the I2C core component */
+  TWCR = 0;
+  /* Wait a little bit */
+  NutSleep(1);
+  /* Start the I2C core component */
+  TWCR = (1<<TWEA) | (1<<TWEN) | (1<<TWIE);
+  /* Initialize TWI */
+  i2c_init();
   /* Wait a little bit */
   NutSleep(1);
 }
