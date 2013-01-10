@@ -44,7 +44,13 @@ void i2c_reset(void)
   /* Wait a little bit */
   NutSleep(1);
   /* Generate a STOP */
-  TWCR = (1<<TWSTO) | (1<<TWEN);
+  TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWSTO) | (1<<TWEN);
+  NutSleep(100); TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWSTA) | (1<<TWEN);
+  NutSleep(100); TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWSTO) | (1<<TWEN);
+  NutSleep(100); TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWSTA) | (1<<TWEN);
+  NutSleep(100); TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWSTO) | (1<<TWEN);
+  NutSleep(100); TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWSTA) | (1<<TWEN);
+  NutSleep(100); TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWSTO) | (1<<TWEN);
   /* Wait a little bit */
   NutSleep(1);
   /* Stop the I2C core component */
@@ -52,7 +58,7 @@ void i2c_reset(void)
   /* Wait a little bit */
   NutSleep(1);
   /* Start the I2C core component */
-  TWCR = (1<<TWEA) | (1<<TWEN) | (1<<TWIE);
+  TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWEN) | (1<<TWIE);
   /* Initialize TWI */
   i2c_init();
   /* Wait a little bit */
