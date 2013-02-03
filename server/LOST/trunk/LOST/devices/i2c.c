@@ -295,9 +295,9 @@ int i2c_transact(uint8_t sla, uint8_t adr, uint16_t txlen, uint8_t *txdata, uint
   i2c_mr_buf = rxdata;
 
   /* Check the good health of the bus */
-  //tmo = 4; while(tmo > 0) { if((inb(TWSR) & 0xF8) == 0) { break; } else { i2c_reset(); NutSleep(1); tmo--; } }
+  tmo = 4; while(tmo > 0) { if((inb(TWSR) & 0xF8) == 0xF8) { break; } else { i2c_reset(); NutSleep(1); tmo--; } }
   /* Return if impossible to force initialization of the bus */
-  //if(tmo == 0) { i2c_mutex = 0; return I2C_ERR_BUS; }
+  if(tmo == 0) { i2c_mutex = 0; return I2C_ERR_BUS; }
 
   /* Send a START*/
   outb(TWCR, _BV(TWINT) | _BV(TWEA) | _BV(TWSTA) | _BV(TWEN) | _BV(TWIE));
