@@ -30,16 +30,14 @@ uint8_t i2c_mm_sla = 0;
 uint8_t i2c_mm_adr = 0;
 uint8_t i2c_mm_err = 0;
 
-uint8_t i2c_mt_len = 0;
-uint8_t i2c_mt_idx = 0;
+uint16_t i2c_mt_len = 0;
+uint16_t i2c_mt_idx = 0;
 uint8_t *i2c_mt_buf = NULL;
 
-uint8_t i2c_mr_len = 0;
-uint8_t i2c_mr_idx = 0;
+uint16_t i2c_mr_len = 0;
+uint16_t i2c_mr_idx = 0;
 uint8_t *i2c_mr_buf = NULL;
 
-// http://www.nerdkits.com/forum/thread/972/
-// http://playground.arduino.cc/Code/ATMELTWI#twi_signal
 static void I2C_Interrupt(void *arg)
 {
     uint8_t twsr;
@@ -53,11 +51,11 @@ static void I2C_Interrupt(void *arg)
     /*
      * 0x08: Start condition has been transmitted.
      */
-    case 0x08: //TW_START:
+    case TW_START:
         /* We are entering the master mode. Mark the interface busy. */
         i2c_mt_idx = 0;
         i2c_mr_idx = 0;
-printf("Start\n");
+//printf("Start\n");
         /* Send the slave address in SLA+T */
         TWDR = i2c_mm_sla;
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
@@ -66,11 +64,11 @@ printf("Start\n");
     /*
      * 0x10: Repeated start condition has been transmitted.
      */
-    case 0x10: //TW_REP_START:
+    case TW_REP_START:
        /* We are entering the master mode. Mark the interface busy. */
         i2c_mt_idx = 0;
         i2c_mr_idx = 0;
-printf("Rep Start\n");
+//printf("Rep Start\n");
 
         /*
          * If in data are necessary, transmit SLA+R. Logic will
@@ -90,9 +88,9 @@ printf("Rep Start\n");
     /*
      * 0x18: SLA+W has been transmitted and ACK has been received.
      */
-    case 0x18: //TW_MT_SLA_ACK:
+    case TW_MT_SLA_ACK:
         /* Send the address register */
-printf("MT SLA ACK\n");
+//printf("MT SLA ACK\n");
         TWDR = i2c_mm_adr;
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
 
@@ -101,7 +99,7 @@ printf("MT SLA ACK\n");
     /*
      * 0x20: SLA+W has been transmitted, but not acknowledged.
      */
-    case 0x20: //TW_MT_SLA_NACK:
+    case TW_MT_SLA_NACK:
         /* Set error code */
         i2c_mm_err = I2C_ERR_MT_SLA_NACK;
 //printf("MT SLA NACK\n");
@@ -113,8 +111,8 @@ printf("MT SLA ACK\n");
     /*
      * 0x28: Data byte has been transmitted and ACK has been received.
      */
-    case 0x28: //TW_MT_DATA_ACK:
-printf("MT DATA ACK\n");
+    case TW_MT_DATA_ACK:
+//printf("MT DATA ACK\n");
     	/* If we have to receive data, send a new REPEATED START */
         if (i2c_mr_len) {
             TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTA) | _BV(TWEN) | _BV(TWIE);
@@ -136,8 +134,8 @@ printf("MT DATA ACK\n");
     /*
      * 0x30: Data byte has been transmitted, but not acknowledged.
      */
-    case 0x30: //TW_MT_DATA_NACK:
-printf("MT_DATA_NACK\n");
+    case TW_MT_DATA_NACK:
+//printf("MT_DATA_NACK\n");
         /* Set error code */
         i2c_mm_err = I2C_ERR_MT_DATA_NACK;
 
@@ -149,7 +147,7 @@ printf("MT_DATA_NACK\n");
      * 0x40: SLA+R has been transmitted and ACK has been received.
      */
     case TW_MR_SLA_ACK:
-printf("MR_SLA_ACK\n");
+//printf("MR_SLA_ACK\n");
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
         break;
 
@@ -157,7 +155,7 @@ printf("MR_SLA_ACK\n");
      * 0x48: SLA+R has been transmitted, but not acknowledged.
      */
     case TW_MR_SLA_NACK:
-printf("MR_SLA_NACK\n");
+//printf("MR_SLA_NACK\n");
         /* Set unique error code. */
         i2c_mm_err = I2C_ERR_MR_SLA_NACK;
 
@@ -169,7 +167,7 @@ printf("MR_SLA_NACK\n");
      * 0x50: Data byte has been received and acknowledged.
      */
     case TW_MR_DATA_ACK:
-printf("MR_DATA_ACK\n");
+//printf("MR_DATA_ACK\n");
         /*
          * Store the data byte in the master receive buffer.
          */
@@ -190,7 +188,7 @@ printf("MR_DATA_ACK\n");
      * 0x58: Data byte has been received, but not acknowledged.
      */
     case TW_MR_DATA_NACK:
-printf("MR_DATA_NACK\n");
+//printf("MR_DATA_NACK\n");
         /* Set error code */
         i2c_mm_err = I2C_ERR_MR_DATA_NACK;
 
@@ -202,7 +200,7 @@ printf("MR_DATA_NACK\n");
      * Default.
      */
     default:
-printf("Default\n");
+//printf("Default\n");
     	i2c_mm_err = I2C_ERR_BUS;
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE);
 
@@ -274,7 +272,7 @@ void i2c_reset(void)
   NutSleep(1);
 }
 
-int i2c_transact(uint8_t sla, uint8_t adr, uint16_t txlen, uint8_t *txdata, uint16_t rxlen, uint8_t *rxdata)
+uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, uint8_t rxlen, uint8_t *rxdata)
 {
   uint32_t tmo=0;
 
@@ -287,61 +285,76 @@ int i2c_transact(uint8_t sla, uint8_t adr, uint16_t txlen, uint8_t *txdata, uint
   /* Return if impossible to take the semaphore : do nothing */
   if(tmo == 0) { return I2C_ERR_IF_LOCKED; }
 
-  /* Set all parameters for master mode */
-  i2c_mm_sla = sla << 1;
-  i2c_mm_adr = adr;
-  i2c_mm_err = I2C_ERR_OK;
-  if(i2c_mr_len > 0) { i2c_mt_len = 0;     i2c_mr_len = rxlen; }
-  else               { i2c_mt_len = txlen; i2c_mr_len = 0;     }
-  i2c_mt_buf = txdata;
-  i2c_mr_buf = rxdata;
-
   /* Check the good health of the bus */
   tmo = 4; while(tmo > 0) { if(((TWSR & 0xF8) == 0xF8) && ((TWCR & (1<<TWSTO)) == 0x00)) { break; } else { i2c_reset(); NutSleep(1); tmo--; } }
   /* Return if impossible to force initialization of the bus */
   if(tmo == 0) { i2c_mutex = 0; return I2C_ERR_BUS; }
 
+  /* Set all parameters for master mode */
+  i2c_mm_sla = sla << 1;
+  i2c_mm_adr = adr;
+  i2c_mm_err = I2C_ERR_OK;
+  if(rxlen > 0) { i2c_mt_len = 0;     i2c_mr_len = rxlen; }
+  else          { i2c_mt_len = txlen; i2c_mr_len = 0;     }
+  i2c_mt_idx = 0;
+  i2c_mr_idx = 0;
+  i2c_mt_buf = txdata;
+  i2c_mr_buf = rxdata;
+
   /* Send a START*/
   TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTA) | _BV(TWEN) | _BV(TWIE);
   /* Wait for the data to be received or sent */
-  if(i2c_mr_len > 0) { tmo = 300; while(tmo > 0) { if(i2c_mr_idx == rxlen) { break; } else { NutSleep(1); tmo--; } } }
-  else               { tmo = 300; while(tmo > 0) { if(i2c_mt_idx == txlen) { break; } else { NutSleep(1); tmo--; } } }
+  if(i2c_mr_len > 0) { tmo = 30; while(tmo > 0) { if(i2c_mr_idx == rxlen) { break; } else { NutSleep(1); tmo--; } } }
+  else               { tmo = 30; while(tmo > 0) { if(i2c_mt_idx == txlen) { break; } else { NutSleep(1); tmo--; } } }
   /* Return if time-out */
   if(tmo == 0)
   {
     i2c_reset();
     i2c_mutex = 0;
-printf("Timeout TWSR=%02X, TWCR=%02X\n", TWSR, TWCR);
     if(i2c_mm_err > 0) { return i2c_mm_err; } else { return I2C_ERR_TIMEOUT; }
   }
 
-printf("OK TWSR=%02X, TWCR=%02X\n", TWSR, TWCR);
   i2c_mutex = 0;
   return I2C_ERR_OK;
 }
 
 uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
 {
-  uint8_t ret = 0;
+  uint8_t ret = I2C_ERR_BUS;
+  uint8_t try = 3;
 
-  /* Do the exchange and check the returned code */
-  ret = i2c_transact(sla, addr, 0, NULL, (uint16_t) nb, data);
+  while((try > 0 ) && (ret != I2C_ERR_OK))
+  {
+    /* Do the exchange and check the returned code */
+    ret = i2c_transact(sla, addr, 0, NULL, nb, data);
 
-  /* Wait a little bit */
-  NutSleep(1);
+    /* Wait a little bit */
+    NutSleep(1);
 
+    /* Next step */
+    try--;
+  }
+
+if(ret != I2C_ERR_OK) { printf("%d on sla %d\n",try,sla); }
   return ret;
 }
 
 uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
 {
-  uint8_t ret = 0;
+  uint8_t ret = I2C_ERR_BUS;
+  uint8_t try = 3;
 
-  /* Do the exchange and check the returned code */
-  ret = i2c_transact(sla, addr, (uint16_t) nb, data, 0, NULL);
+  while((try > 0 ) && (ret != I2C_ERR_OK))
+  {
+    /* Do the exchange and check the returned code */
+    ret = i2c_transact(sla, addr, nb, data, 0, NULL);
 
-  /* Wait a little bit */
-  NutSleep(1);
+    /* Wait a little bit */
+    NutSleep(1);
+
+    /* Next step */
+    try--;
+  }
 
   return ret;
 }
