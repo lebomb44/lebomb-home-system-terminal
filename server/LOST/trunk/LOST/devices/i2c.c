@@ -23,6 +23,7 @@
 #define I2C_ERR_MR_DATA_NACK 7
 #define I2C_ERR_BAD_TX_ARG   8
 #define I2C_ERR_BAD_RX_ARG   9
+#define I2C_ERR_BAD_TRX_ARG  10
 
 volatile uint8_t i2c_mutex;
 
@@ -253,11 +254,11 @@ uint8_t i2c_init(void)
 void i2c_reset(void)
 {
   /* Clear the interrupt */
-  TWCR = (1<<TWINT);
+  TWCR = _BV(TWINT);
   /* Wait a little bit */
   NutSleep(1);
   /* Generate a STOP */
-  TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWSTO) | (1<<TWEN);
+  TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN);
   /* Wait a little bit */
   NutSleep(1);
   /* Stop the I2C core component */
@@ -265,7 +266,7 @@ void i2c_reset(void)
   /* Wait a little bit */
   NutSleep(1);
   /* Start the I2C core component */
-  TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWEN) | (1<<TWIE);
+  TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
   /* Initialize TWI */
   i2c_init();
   /* Wait a little bit */
@@ -279,6 +280,7 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
   /* Check arguments */
   if(txlen > 0) { if(txdata == NULL) { return I2C_ERR_BAD_TX_ARG; } }
   if(rxlen > 0) { if(rxdata == NULL) { return I2C_ERR_BAD_RX_ARG; } }
+  if(!((txlen == 0) ^ (rxlen == 0))) { return I2C_ERR_BAD_TRX_ARG; }
 
   /* Wait for the hardware interface to be free */
   tmo = 100; while(tmo > 0) { if(i2c_mutex == 0) { i2c_mutex = 1; break; } else { NutSleep(1); tmo--; } }
@@ -286,7 +288,7 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
   if(tmo == 0) { return I2C_ERR_IF_LOCKED; }
 
   /* Check the good health of the bus */
-  tmo = 4; while(tmo > 0) { if(((TWSR & 0xF8) == 0xF8) && ((TWCR & (1<<TWSTO)) == 0x00)) { break; } else { i2c_reset(); NutSleep(1); tmo--; } }
+  tmo = 4; while(tmo > 0) { if(((TWSR & 0xF8) == 0xF8) && ((TWCR & _BV(TWSTO)) == 0x00)) { break; } else { i2c_reset(); NutSleep(1); tmo--; } }
   /* Return if impossible to force initialization of the bus */
   if(tmo == 0) { i2c_mutex = 0; return I2C_ERR_BUS; }
 
