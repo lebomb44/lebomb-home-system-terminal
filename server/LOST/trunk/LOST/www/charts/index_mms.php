@@ -10,6 +10,74 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
   <script type="text/javascript">
+  var chart;
+function lost_getXHR()
+{
+  var xhr = null;
+  if(window.XMLHttpRequest) // Firefox et autres
+  {
+    xhr = new XMLHttpRequest();
+  }
+  else
+  {
+    if(window.ActiveXObject)
+    { // Internet Explorer 
+      try
+      {
+        xhr = new ActiveXObject("Msxml2.XMLHTTP");
+      }
+      catch (e)
+      {
+        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+    }
+    else
+    { // XMLHttpRequest non supporte par le navigateur
+      alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest..."); 
+      xhr = false;
+    }
+  }
+  return xhr;
+}
+function indexLoading(evt)
+{
+  var xhr = lost_getXHR();
+  var xml;
+  var i;
+  xhr.onreadystatechange = function()
+  {
+    if((xhr.readyState == 4))
+    {
+      if(xhr.status == 200)
+      {
+        xml=xhr.responseXML;
+        if(xml)
+        {
+      for(i=0; i<10; i++)
+      {
+	    console.debug(xml.getElementsByTagName("sample0")[0].getElementsByTagName("date")[0].firstChild.nodeValue);
+        chart.series[i].addPoint([Date.UTC(xml.getElementsByTagName("sample0")[0].getElementsByTagName("date")[0].firstChild.nodeValue),xml.getElementsByTagName("sample0")[0].getElementsByTagName("room0")[0].firstChild.nodeValue],false);
+      }
+      //chart.series[i].addPoint([Date.UTC(".$temp."),".$r['safety_ups_temp']."],false);\n";
+	  //$i = $i + 1;
+      //chart.series[i].addPoint([Date.UTC(".$temp."),".$r['safety_rack_temp']."],false);\n";
+      //$i = $i + 1;
+      //if($r['start'] == "1") { echo "chart.series[".$i."].addPoint({x: Date.UTC(".$temp."),title: 'S',text: 'Start'},false);\n"; }
+      chart.redraw();
+        }
+      }
+      else
+      {
+        xhr.abort();
+      }
+    }
+  };
+  xhr.open("GET","get_mms.php?year=2013&month=1",true);
+  //xhr.setTimeouts(4000);
+  xhr.send("");
+
+  //setTimeout("indexLoading()", 10000);
+}
 var myDate = new Date();
 <?php
 if(isset($_GET["year"]) && isset($_GET["month"]))
@@ -23,7 +91,7 @@ myDate.setUTCHours(0);
 myDate.setUTCMinutes(0);
 myDate.setUTCSeconds(0);
 myDate.setUTCMilliseconds(0);
-var chart;
+
 $(document).ready(function() {
       chart = new Highcharts.StockChart({
          chart: {
@@ -48,52 +116,10 @@ $(document).ready(function() {
 			{name: 'UPS', data:[]},{name: 'Rack', data:[]},{type: 'flags', name: 'Start', data:[]}
 		]
       });
-<?php
-  define("NOM","lebomb");         //monnom = login chez free
-  define("PASSE","genesis");     // monpasse=votre mot de passe free
-  define("SERVEUR","sql.free.fr");// adresse du serveur free
-  define("BASE","lebomb");       //nombase = login chez free
-
-  //--Connexion au serveur
-  $link = mysql_connect(SERVEUR,NOM,PASSE);
-
-  if(!$link) {echo "Impossible de se connecter au serveur".mysql_error();exit;}
-  //--Connexion ? la base
-  mysql_select_db(BASE,$link);
-
-  if(isset($_GET["year"]) && isset($_GET["month"])) { $year = intval($_GET["year"]); $month = intval($_GET["month"]); } else { $year = intval(date("Y")); $month = intval(date("m")); }
-  $requete  = "SELECT * FROM mms WHERE `DATE` BETWEEN '".$year."-".sprintf('%02d',$month)."-01 00:00:00' AND '".$year."-".sprintf('%02d',$month)."-31 23:59:59' ORDER BY DATE";
-  $result=mysql_query($requete, $link) or die("Echec de lecture".mysql_error());
-echo "//".$requete."\n";
-  //$first = 1;
-  while($r=mysql_fetch_array($result, MYSQL_ASSOC))
-    //{echo "DATE: $r[DATE] TEMP0: $r[TEMP0] TEMP1: $r[TEMP1] TEMP2: $r[TEMP2] TEMP3: $r[TEMP3]<br>";}
-    {
-      //if($first==1) {$first=0;} else {echo ",";}
-      $fullDate = $r[DATE];
-      $temp = substr($fullDate, 0, 4).","; // Annee
-      $temp .= ((string)(((int)substr($fullDate, 5, 2))-1)).","; // Mois
-      $temp .= substr($fullDate, 8, 2).","; // Jour
-      $temp .= substr($fullDate, 11, 2).","; // Heure
-      $temp .= substr($fullDate, 14, 2).","; // Minute
-      $temp .= substr($fullDate, 17, 2); // Second
-
-      for($i=0; $i<10; $i++)
-      {
-        echo "chart.series[".$i."].addPoint([Date.UTC(".$temp."),".$r['room'.sprintf('%02d',$i).'_temp_value']."],false);\n";
-      	//echo $r['room'.sprintf('%02d',$i).'_temp_value'].",";
-      }
-      echo "chart.series[".$i."].addPoint([Date.UTC(".$temp."),".$r['safety_ups_temp']."],false);\n";
-      //echo $r['safety_ups_temp'].",";
-	  $i = $i + 1;
-      echo "chart.series[".$i."].addPoint([Date.UTC(".$temp."),".$r['safety_rack_temp']."],false);\n";
-      //echo $r['safety_rack_temp']."]";
-      $i = $i + 1;
-      if($r['start'] == "1") { echo "chart.series[".$i."].addPoint({x: Date.UTC(".$temp."),title: 'S',text: 'Start'},false);\n"; }
-    }
-    echo "chart.redraw();\n";
-?>
+      //chart.redraw();
+      indexLoading();
    });
+
 function chart_setInterval(date, interval)
 {
   var current_date = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours());
