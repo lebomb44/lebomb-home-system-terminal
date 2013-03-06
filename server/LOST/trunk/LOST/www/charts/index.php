@@ -5,8 +5,8 @@
   <title>Suivi des temperatures</title>
 </head>
 <body>
-<a href="index_mms.php">M&M</a><br>
-<a href="index_lb.php">LeBomb</a><br>
-<a href="index_bt.php">Bourdilot</a><br>
+<a href="mms_index.php">M&M</a><br>
+<a href="lb_index.php">LeBomb</a><br>
+<a href="bt_index.php">Bourdilot</a><br>
 </body>
 </html>
