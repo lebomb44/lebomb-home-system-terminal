@@ -216,7 +216,7 @@ uint8_t http_status_get(void)
   if(http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream) == 0)
   {
     /* Send the URL */
-    fputs("status.txt", stream);
+    fputs(LOST_STATUS, stream);
     /* Send the host target */
     http_request_header_end("www.lebomb.fr", 0, stream);
     /* Catch the answer */
