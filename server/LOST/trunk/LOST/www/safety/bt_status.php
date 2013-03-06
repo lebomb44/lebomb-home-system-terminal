@@ -1,5 +1,5 @@
 <?
-$fp = fopen ("lb_ip.txt", "w");
+$fp = fopen ("bt_ip.txt", "w");
 if($fp === false)
 {
   echo "Impossible to open file";
