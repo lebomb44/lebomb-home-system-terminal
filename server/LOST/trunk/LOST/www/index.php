@@ -3,13 +3,13 @@
 <head><title>LOST Main page</title></head>
 <body>
 <a href="http://lebomb.no-ip.org">LOST LeBomb</a><br>
-<a href="charts/index_lb.php">LOST LeBomb Chart</a><br>
+<a href="charts/lb_index.php">LOST LeBomb Chart</a><br>
 <br>
 <a href="http://mmms.no-ip.org">LOST MM's</a><br>
-<a href="charts/index_mms.php">LOST MM's Chart</a><br>
+<a href="charts/mms_index.php">LOST MM's Chart</a><br>
 <br>
 <a href="http://bourdilot.no-ip.info">LOST Bourdilot</a><br>
-<a href="charts/index_bt.php">LOST Bourdilot Chart</a><br>
+<a href="charts/bt_index.php">LOST Bourdilot Chart</a><br>
 <a href="cams/bt.html">Bourdilot cameras</a><br>
 <br>
 <a href="http://82.66.83.150">Frenes cameras</a><br>
