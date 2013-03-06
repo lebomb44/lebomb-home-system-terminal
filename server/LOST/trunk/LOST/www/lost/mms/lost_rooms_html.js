@@ -18,7 +18,7 @@ document.write("\
             <li id=\"Room"+String(ROOM_COULOIR)+"_bg\"><a href=\"#_Couloir\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Couloir</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
-            <li><a href=\"http://lebomb.free.fr/LOST/charts/index_mms.php\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Courbes de temperature</a></li>\
+            <li><a href=\"http://lebomb.free.fr/LOST/charts/mms_index.php\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Courbes de temperature</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
             <li><a href=\"#_Cameras\"><img class=\"picto\" src=\""+lost_icons_path+"cam.jpg\">Cameras</a></li>\
