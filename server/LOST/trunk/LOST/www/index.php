@@ -26,7 +26,7 @@ echo "<a href=\"http://".get_ip("mms")."\">LOST MM's by IP</a><br>\n";
 echo "<a href=\"http://".get_ip("bt")."\">LOST Bourdilot by IP</a><br>\n";
 ?>
 <a href="charts/bt_index.php">LOST Bourdilot Chart</a><br>
-<a href="cams/bt.html">Bourdilot cameras</a><br>
+<a href="cams/bt.php">Bourdilot cameras</a><br>
 <br>
 <a href="http://82.66.83.150">Frenes cameras</a><br>
 
