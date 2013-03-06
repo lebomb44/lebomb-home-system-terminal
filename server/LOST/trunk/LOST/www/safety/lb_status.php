@@ -1,4 +1,4 @@
-<?
+<?php
 $fp = fopen ("lb_ip.txt", "w");
 if($fp === false)
 {

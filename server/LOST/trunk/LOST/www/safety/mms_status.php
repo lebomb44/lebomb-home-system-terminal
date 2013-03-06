@@ -1,4 +1,4 @@
-<?
+<?php
 $fp = fopen ("mms_ip.txt", "w");
 if($fp === false)
 {
