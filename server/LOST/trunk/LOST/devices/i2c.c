@@ -42,6 +42,7 @@ uint8_t *i2c_mr_buf = NULL;
 static void I2C_Interrupt(void *arg)
 {
     uint8_t twsr;
+    volatile uint8_t temp;
 
     /*
      * Read the status and interpret its contents.
@@ -173,7 +174,17 @@ static void I2C_Interrupt(void *arg)
          * Store the data byte in the master receive buffer.
          */
         if (i2c_mr_idx < i2c_mr_len) {
-            i2c_mr_buf[i2c_mr_idx] = TWDR;
+            if(i2c_mr_idx > 2) {
+            	if((i2c_mm_adr==0) && (i2c_mr_buf[0]==1) && (i2c_mr_buf[1]==1) && (i2c_mr_buf[2]==i2c_mm_sla)) {
+            		i2c_mr_buf[i2c_mr_idx] = TWDR;
+            	}
+            	else {
+            		temp = TWDR;
+            	}
+            }
+            else {
+            	i2c_mr_buf[i2c_mr_idx] = TWDR;
+            }
             i2c_mr_idx++;
         }
         if (i2c_mr_idx < i2c_mr_len) {
