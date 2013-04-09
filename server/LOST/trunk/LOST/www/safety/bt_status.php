@@ -1,4 +1,6 @@
 <?php
+header('Content-type: text/html');
+
 $fp = fopen ("bt_ip.txt", "w");
 if($fp === false)
 {

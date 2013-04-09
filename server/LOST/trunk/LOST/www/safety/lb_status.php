@@ -1,4 +1,6 @@
 <?php
+header('Content-type: text/html');
+
 $fp = fopen ("lb_ip.txt", "w");
 if($fp === false)
 {
@@ -25,3 +27,4 @@ if(fclose($fp) === false)
 
 echo "LOST safety.http_status OK";
 ?>
+
