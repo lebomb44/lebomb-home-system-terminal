@@ -1,3 +1,5 @@
+#define __PROG_TYPES_COMPAT__ 1
+#include <avr/pgmspace.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
