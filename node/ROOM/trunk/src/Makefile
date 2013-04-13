@@ -2,6 +2,7 @@
 # make all = Make software.
 # make clean = Clean out built project files.
 # make coff = Convert ELF to COFF using objtool.
+# make burn = Burn the target.
 #
 # To rebuild project do "make clean" then "make all".
 #
@@ -9,6 +10,8 @@
 
 # MCU name
 MCU = atmega8
+# MCU to burn with avrdude 
+BURNTARGET=m8
 
 # Output format. (can be srec, ihex)
 FORMAT = ihex
@@ -175,11 +178,10 @@ coff: $(TARGET).cof end
 	$(CC) -c $(ALL_ASFLAGS) $< -o $@
 
 
-# Target: burn project.
+# Burn tool.
 BURN=avrdude
-BURNPORT=com1
-BURNTARGET=$(MCU)
-#BURNFLAGS=-dprog=stk500 -dserial=$(BURNPORT) -dspeed=115200 -dpart=$(BURNTARGET) --erase --upload if=$(TARG)
+# Burn serial port for avrdude (defined in env.*)
+#BURNPORT=/dev/ttyS0
 
 # Programming support using avrdude. Settings and variables.
 
@@ -189,7 +191,7 @@ BURNTARGET=$(MCU)
 # Type: avrdude -c ?
 # to get a full listing.
 #
-AVRDUDE_PROGRAMMER = ponyser
+AVRDUDE_PROGRAMMER = stk500v2
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 #AVRDUDE_WRITE_EEPROM = -U eeprom:w:$(TARGET).eep
@@ -203,7 +205,7 @@ AVRDUDE_FLAGS = -p $(BURNTARGET) -P $(BURNPORT) -c $(AVRDUDE_PROGRAMMER)
 
 # Uncomment the following if you do /not/ wish a verification to be
 # performed after programming the device.
-AVRDUDE_FLAGS += -V
+#AVRDUDE_FLAGS += -V
 
 # Increase verbosity level.  Please use this when submitting bug
 # reports about avrdude. See <http://savannah.nongnu.org/projects/avrdude>
