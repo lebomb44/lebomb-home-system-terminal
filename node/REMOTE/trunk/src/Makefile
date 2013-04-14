@@ -2,7 +2,7 @@
 # make all = Make software.
 # make clean = Clean out built project files.
 # make coff = Convert ELF to COFF using objtool.
-# make burn = Burn the target
+# make burn = Burn the target.
 #
 # To rebuild project do "make clean" then "make all".
 #
