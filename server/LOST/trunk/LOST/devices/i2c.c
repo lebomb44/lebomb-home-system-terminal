@@ -242,7 +242,7 @@ uint8_t i2c_init(void)
    */
   TWAR = 0x02;
   /* Set the bus speed */
-  val = 50000; /* MAX = 409582 */
+  val = 5000; /* MAX = 409582 */
   TwIOCtl(TWI_SETSPEED, &val);
   TWCR = _BV(TWINT);
   TWCR = _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
@@ -348,7 +348,6 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
     try--;
   }
 
-if(ret != I2C_ERR_OK) { printf("%d on sla %d\n",try,sla); }
   return ret;
 }
 
