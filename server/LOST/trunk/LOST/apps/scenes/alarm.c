@@ -121,6 +121,10 @@ void alarm_perimeter_set(ALARM_TYPE_T type)
 	room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0); NutSleep(100); 
 	room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0);
   }
+  /* Set bipper OFF again ! */
+  NutSleep(1); room_elec_set(ROOM_COULOIR, 0, 0);
+  /* ... and again ! */
+  NutSleep(1); room_elec_set(ROOM_COULOIR, 0, 0);
 }
 
 void alarm_volume_set(ALARM_TYPE_T type)
@@ -267,6 +271,7 @@ THREAD(AlarmD, arg)
       alarm_control.perimeter--;
       /* Toggle Green LED */
       room_light_set(ROOM_COULOIR, 0, (alarm_control.perimeter+1) & 0x01);
+      /* Close all shutters */
       rooms_shutters_set(ROOM_SHUTTER_DOWN);
     }
 
