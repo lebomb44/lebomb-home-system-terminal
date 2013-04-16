@@ -4,27 +4,27 @@ header('Content-type: text/html');
 $fp = fopen ("lb_ip.txt", "w");
 if($fp === false)
 {
-  echo "Impossible to open file";
+  print("Impossible to open file\r\n");
   return;
 }
 if(ftruncate($fp,0) === false)
 {
-  echo "Impossible to trunc file";
+  print("Impossible to trunc file\r\n");
   fclose($fp);
   return;
 }
 if(fputs($fp, $_SERVER["REMOTE_ADDR"]) === false)
 {
-  echo "Impossible to write in file";
+  print("Impossible to write in file\r\n");
   fclose($fp);
   return;
 }
 if(fclose($fp) === false)
 {
-  echo "Impossible to close file";
+  print("Impossible to close file\r\n");
   return;
 }
 
-echo "LOST safety.http_status OK";
+print("LOST safety.http_status OK\r\n");
 ?>
 
