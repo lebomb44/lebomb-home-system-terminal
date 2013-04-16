@@ -57,7 +57,7 @@ uint8_t uart_init(void)
   _ioctl(_fileno(uart1_fd), UART_SETPARITY  , &uart_data);
   uart_data = 1;
   _ioctl(_fileno(uart1_fd), UART_SETSTOPBITS, &uart_data);
-  uart_data = 2000;
+  uart_data = 3000;
   _ioctl(_fileno(uart1_fd), UART_SETREADTIMEOUT, &uart_data);
 /*
   uart_data = 2048;
