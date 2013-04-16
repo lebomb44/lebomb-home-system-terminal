@@ -232,7 +232,7 @@ uint8_t i2c_init(void)
    */
   TWAR = 0x02;
   /* Set the bus speed */
-  val = 5000; /* MAX = 409582 */
+  val = 50000; /* MAX = 409582 */
   TwIOCtl(TWI_SETSPEED, &val);
   TWCR = _BV(TWINT);
   TWCR = _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
@@ -284,12 +284,12 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
   if(!((txlen == 0) ^ (rxlen == 0))) { return I2C_ERR_BAD_TRX_ARG; }
 
   /* Wait for the hardware interface to be free */
-  tmo = 1000; while(tmo > 0) { if(i2c_mutex == 0) { i2c_mutex = 1; break; } else { NutSleep(1); tmo--; } }
+  tmo = 100; while(tmo > 0) { if(i2c_mutex == 0) { i2c_mutex = 1; break; } else { NutSleep(1); tmo--; } }
   /* Return if impossible to take the semaphore : do nothing */
   if(tmo == 0) { return I2C_ERR_IF_LOCKED; }
 
   /* Check the good health of the bus */
-  tmo = 40; while(tmo > 0) { if(((TWSR & 0xF8) == 0xF8) && ((TWCR & _BV(TWSTO)) == 0x00)) { break; } else { i2c_reset(); NutSleep(1); tmo--; } }
+  tmo = 4; while(tmo > 0) { if(((TWSR & 0xF8) == 0xF8) && ((TWCR & _BV(TWSTO)) == 0x00)) { break; } else { i2c_reset(); NutSleep(1); tmo--; } }
   /* Return if impossible to force initialization of the bus */
   if(tmo == 0) { i2c_mutex = 0; return I2C_ERR_BUS; }
 
@@ -307,8 +307,8 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
   /* Send a START*/
   TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTA) | _BV(TWEN) | _BV(TWIE);
   /* Wait for the data to be received or sent */
-  if(i2c_mr_len > 0) { tmo = 300; while(tmo > 0) { if(i2c_mr_idx == rxlen) { break; } else { NutSleep(1); tmo--; } } }
-  else               { tmo = 300; while(tmo > 0) { if(i2c_mt_idx == txlen) { break; } else { NutSleep(1); tmo--; } } }
+  if(i2c_mr_len > 0) { tmo = 30; while(tmo > 0) { if(i2c_mr_idx == rxlen) { break; } else { NutSleep(1); tmo--; } } }
+  else               { tmo = 30; while(tmo > 0) { if(i2c_mt_idx == txlen) { break; } else { NutSleep(1); tmo--; } } }
   /* Return if time-out */
   if(tmo == 0)
   {
