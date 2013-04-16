@@ -223,7 +223,7 @@ uint8_t http_status_get(void)
     buff = malloc(400);
     if(buff != NULL)
     {
-      while(fgets(buff, 399, stream))
+      while(fgets(buff, 400, stream))
       {
         /* Force the end of the string */
         buff[399] = '\0';
