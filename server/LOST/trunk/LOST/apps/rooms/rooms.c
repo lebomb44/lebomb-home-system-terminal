@@ -161,7 +161,7 @@ uint8_t rooms_perimeter_trig_get   (ROOM_N_T* room) { uint8_t i = 0; for(i=0; i<
 uint8_t room_volume_status_get     (ROOM_N_T room ) { if(room < ROOM_MAX) { return room_list[room][ROOM_REG_VOL_STATUS      ]; } else { return 0; } }
 uint8_t rooms_volume_status_get    (ROOM_N_T* room) { uint8_t i = 0; for(i=0; i<ROOM_MAX; i++) { if(room_volume_status_get(i)) { if(room != NULL) { *room = i; } return room_volume_status_get(i); } } return 0; }
 uint8_t room_volume_control_get    (ROOM_N_T room ) { if(room < ROOM_MAX) { return room_list[room][ROOM_REG_VOL_CONTROL     ]; } else { return 0; } }
-uint8_t room_volume_trig_get       (ROOM_N_T room ) { uint8_t trig = 0; if(room < ROOM_MAX) { ret = room_list[room][ROOM_REG_VOL_TRIG]; if(trig & 0xFE) { return 0; } else { return trig; } } else { return 0; } }
+uint8_t room_volume_trig_get       (ROOM_N_T room ) { uint8_t trig = 0; if(room < ROOM_MAX) { trig = room_list[room][ROOM_REG_VOL_TRIG]; if(trig & 0xFE) { return 0; } else { return trig; } } else { return 0; } }
 uint8_t rooms_volume_trig_get      (ROOM_N_T* room) { uint8_t i = 0; for(i=0; i<ROOM_MAX; i++) { if(room_volume_trig_get(i)) { if(room != NULL) { *room = i; } return room_volume_trig_get(i); } } return 0; }
 
 uint8_t room_simulation_status_get (ROOM_N_T room ) { if(room < ROOM_MAX) { return room_list[room][ROOM_REG_SIM_STATUS      ]; } else { return 0; } }
