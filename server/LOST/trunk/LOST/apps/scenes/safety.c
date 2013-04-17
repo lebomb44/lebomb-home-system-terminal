@@ -295,7 +295,7 @@ THREAD(SafetyGsmD, arg)
   {
     ret = gsm_status_get();
     if(ret != 0) { if(gsm_nb < 0xFF) { gsm_nb++; } } else { gsm_nb = 0; }
-    if(gsm_nb > 10) { safety_status.gsm = ret; } else { safety_status.gsm = 0; }
+    if(gsm_nb > 20) { safety_status.gsm = ret; } else { safety_status.gsm = 0; }
     if(safety_control.gsm)
     {
       if((!(safety_trig.gsm)) && (safety_status.gsm))
@@ -306,7 +306,7 @@ THREAD(SafetyGsmD, arg)
       }
     }
 
-    NutSleep(30000);
+    NutSleep(60000);
   }
 }
 
