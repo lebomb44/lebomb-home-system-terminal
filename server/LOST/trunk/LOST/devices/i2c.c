@@ -42,7 +42,6 @@ uint8_t *i2c_mr_buf = NULL;
 static void I2C_Interrupt(void *arg)
 {
     uint8_t twsr;
-    volatile uint8_t temp;
 
     /*
      * Read the status and interpret its contents.
