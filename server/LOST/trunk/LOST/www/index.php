@@ -21,7 +21,7 @@ echo "<a href=\"http://".get_ip("mms")."\">LOST MM's by IP</a><br>\n";
 ?>
 <a href="charts/mms_index.php">LOST MM's Chart</a><br>
 <br>
-<a href="http://bourdilot.no-ip.info">LOST Bourdilot</a><br>
+<a href="http://bourdilot.no-ip.org">LOST Bourdilot</a><br>
 <?php
 echo "<a href=\"http://".get_ip("bt")."\">LOST Bourdilot by IP</a><br>\n";
 ?>

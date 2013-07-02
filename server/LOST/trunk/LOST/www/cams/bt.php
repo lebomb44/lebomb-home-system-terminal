@@ -14,13 +14,15 @@ function openCams(adr, name, top, left, height, width)
 
 function openAllCams()
 {
-  openCams("http://bourdilot.no-ip.info:81", "Salon"  , 0,0,(screen.availHeight)/2-50,(screen.availWidth)/2);
-  openCams("http://bourdilot.no-ip.info:82", "Couloir", 0,(screen.availWidth)/2,(screen.availHeight)/2-50,(screen.availWidth)/2);
-  openCams("http://bourdilot.no-ip.info:83", "Cuisine", (screen.availHeight)/2,0,(screen.availHeight)/2-50,(screen.availWidth)/2);
-  openCams("http://bourdilot.no-ip.info:84", "Arriere", (screen.availHeight)/2,(screen.availWidth)/2,(screen.availHeight)/2-50,(screen.availWidth)/2);
+  openCams("http://bourdilot.no-ip.org:81", "Salon"  , 0,0,(screen.availHeight)/2-50,(screen.availWidth)/2);
+  openCams("http://bourdilot.no-ip.org:82", "Couloir", 0,(screen.availWidth)/2,(screen.availHeight)/2-50,(screen.availWidth)/2);
+  openCams("http://bourdilot.no-ip.org:83", "Cuisine", (screen.availHeight)/2,0,(screen.availHeight)/2-50,(screen.availWidth)/2);
+  openCams("http://bourdilot.no-ip.org:84", "Arriere", (screen.availHeight)/2,(screen.availWidth)/2,(screen.availHeight)/2-50,(screen.availWidth)/2);
+  openCams("http://bourdilot.no-ip.org:85", "Facade"  , 0,0,(screen.availHeight)/2-50,(screen.availWidth)/2);
 }
 
 document.onReady=openAllCams();
 </SCRIPT>
 </body>
 </html>
+
