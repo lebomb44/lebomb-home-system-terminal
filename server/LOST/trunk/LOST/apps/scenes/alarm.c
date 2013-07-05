@@ -203,7 +203,7 @@ THREAD(AlarmD, arg)
       /* Step : Alarm trig watchdog is going to finish */
       if(alarm_perimeter.trig == 2)
       {
-        sprintf(msg, "Alarme-Perimetre-%d-R%d", alarm_perimeter.status, alarm_perimeter.room);
+        sprintf(msg, "Alarme-Perimetre-%d-%s", alarm_perimeter.status, room_name_get(alarm_perimeter.room));
         alarm_action_with_buzzer(msg);
       }
       /* Step : Alarm trig watchdog finished : Set Red LED */
@@ -253,7 +253,7 @@ THREAD(AlarmD, arg)
       /* Check if all the shutters are closed else send alert message */
       if(alarm_perimeter.status != 0)
       {
-        sprintf(msg, "Impossible-d-activer-Alarme-Perimetre-%d-R%d", alarm_perimeter.status, alarm_perimeter.room);
+        sprintf(msg, "Impossible-d-activer-Alarme-Perimetre-%d-%s", alarm_perimeter.status, room_name_get(alarm_perimeter.room));
         alarm_action(msg);
       }
     }
@@ -277,7 +277,7 @@ THREAD(AlarmD, arg)
       /* Step : Alarm trig watchdog is going to finish */
       if(alarm_volume.trig == 2)
       {
-        sprintf(msg, "Alarme-Volume-%d-R%d", alarm_volume.status, alarm_volume.room);
+        sprintf(msg, "Alarme-Volume-%d-%s", alarm_volume.status, room_name_get(alarm_volume.room));
         alarm_action_with_buzzer(msg);
       }
       /* Step : Alarm trig watchdog finished : Set Red LED */
@@ -318,7 +318,7 @@ THREAD(AlarmD, arg)
       /* Check if nothing is moving else send alert message */
       if((alarm_volume.status != 0) || volume_status_get())
       {
-        sprintf(msg, "Impossible-d-activer-Alarme-Volume-%d-R%d", alarm_volume.status, alarm_volume.room);
+        sprintf(msg, "Impossible-d-activer-Alarme-Volume-%d-%s", alarm_volume.status, room_name_get(alarm_volume.room));
         alarm_action(msg);
       }
     }
