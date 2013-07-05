@@ -42,6 +42,7 @@ uint8_t *i2c_mr_buf = NULL;
 static void I2C_Interrupt(void *arg)
 {
     uint8_t twsr;
+    arg = arg;
 
     /*
      * Read the status and interpret its contents.
