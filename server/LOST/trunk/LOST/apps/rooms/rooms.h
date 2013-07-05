@@ -22,6 +22,20 @@ typedef enum _ROOM_N_T
   ROOM_MAX
 } ROOM_N_T;
 
+#define ROOM_NAMES \
+{ \
+  "Marine", \
+  "Max", \
+  "Amis", \
+  "Dressing", \
+  "Combles", \
+  "Bureau", \
+  "Salon", \
+  "Cuisine", \
+  "Couloir", \
+  "Salon2", \
+}
+
 #define ROOM_LIGHT_MAX 10
 #define ROOM_SHUTTER_MAX 10
 #define ROOM_HEATER_MAX 10
@@ -34,6 +48,8 @@ typedef enum _ROOM_N_T
 #define ROOM_SHUTTER_DOWN 1
 
 extern uint8_t rooms_init(void);
+
+const char* room_name_get(ROOM_N_T room);
 
 extern uint8_t room_type_get              (ROOM_N_T room);
 extern uint8_t room_version_get           (ROOM_N_T room);

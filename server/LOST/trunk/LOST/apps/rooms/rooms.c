@@ -100,6 +100,7 @@ enum ROOM_REG_T
 
 uint8_t room_list[ROOM_MAX][ROOM_REG_MAX];
 uint8_t room_error[ROOM_MAX];
+const char* room_name[ROOM_MAX] = ROOM_NAMES;
 
 uint8_t rooms_init(void)
 {
@@ -119,6 +120,12 @@ uint8_t rooms_init(void)
   NutRegisterCgi("rooms.cgi", rooms_form);
 
   return 0;
+}
+
+const char* room_name_get(ROOM_N_T room)
+{
+  if(room < ROOM_MAX) { return room_name[room]; }
+  else { return NULL; }
 }
 
 uint8_t room_type_get              (ROOM_N_T room ) { if(room < ROOM_MAX) { return room_list[room][ROOM_REG_TYPE            ]; } else { return 0; } }
