@@ -7,10 +7,10 @@ document.write("\
                 <li><a href=\"#_Event"+EVENT_SHUTTERS_ALL+"\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Tous</a></li>\
                 <li><a href=\"#_Event"+EVENT_SHUTTERS_UPSTAIRS+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Etage</a></li>\
                 <li><a href=\"#_Event"+EVENT_SHUTTERS_DOWNSTAIRS+"\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Rez de Chaussé</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_MARINE+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Marine</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_MM+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">M&M</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_FRIENDS+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Amis</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_DRESSING+"\"><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\">Dressing</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_C1+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Marine</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_C2+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">M&M</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_C3+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Amis</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_C4+"\"><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\">Dressing</a></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
@@ -83,10 +83,10 @@ document.write("\
 printEventInfo(EVENT_SHUTTERS_ALL         , "Tous"               );
 printEventInfo(EVENT_SHUTTERS_UPSTAIRS    , "Etage"              );
 printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS  , "Rez de Chaussé"     );
-printEventInfo(EVENT_SHUTTERS_MARINE      , "Marine"             );
-printEventInfo(EVENT_SHUTTERS_MM          , "M&M"                );
-printEventInfo(EVENT_SHUTTERS_FRIENDS     , "Amis"               );
-printEventInfo(EVENT_SHUTTERS_DRESSING    , "Dressing"           );
+printEventInfo(EVENT_SHUTTERS_C1          , "Marine"             );
+printEventInfo(EVENT_SHUTTERS_C2          , "M&M"                );
+printEventInfo(EVENT_SHUTTERS_C3          , "Amis"               );
+printEventInfo(EVENT_SHUTTERS_C4          , "Dressing"           );
 printEventInfo(EVENT_ALARM_ALL            , "Toutes"             );
 printEventInfo(EVENT_ALARM_PERIMETER_CHECK, "Perimetrique"       );
 printEventInfo(EVENT_ALARM_PERIMETER      , "Perimetrique Auto"  );

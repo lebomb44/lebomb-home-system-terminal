@@ -17,10 +17,7 @@ document.write("\
 <div class=\"iLayer\" id=\"waCameras\" title=\"Cameras\">\
     <div class=\"iMenu\">\
         <ul>\
-            <li><a href=\"http://bourdilot.no-ip.info:81\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"heden_V5_5.jpg\">Salle a manger</a></li>\
-            <li><a href=\"http://bourdilot.no-ip.info:82\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"heden_V2_2.jpg\">Couloir</a></li>\
-            <li><a href=\"http://bourdilot.no-ip.info:83\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"heden_V5_5.jpg\">Cuisine</a></li>\
-            <li><a href=\"http://bourdilot.no-ip.info:84\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"heden_V3_3.jpg\">Exterieur</a></li>\
+            <li><a href=\"http://cambon.no-ip.info:81\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"heden_V5_5.jpg\">Salle a manger</a></li>\
         </ul>\
     </div>\
 </div>\

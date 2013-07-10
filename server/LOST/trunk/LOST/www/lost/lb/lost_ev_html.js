@@ -5,12 +5,9 @@ document.write("\
             <legend>Volets</legend>\
             <ul class=\"iArrow\">\
                 <li><a href=\"#_Event"+EVENT_SHUTTERS_ALL+"\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Tous</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_UPSTAIRS+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Etage</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_DOWNSTAIRS+"\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Rez de Chaussé</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_MARINE+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Marine</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_MM+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">M&M</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_FRIENDS+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Amis</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_DRESSING+"\"><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\">Dressing</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_C1+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre 1</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_C2+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre 2</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_C3+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre 3</a></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
