@@ -6,11 +6,57 @@
 <?php
 // http://www.highcharts.com/stock/demo/
 // http://dygraphs.com/tests/range-selector.html
+// stock/highstock
 ?>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js" type="text/javascript"></script>
 <script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
-  <script type="text/javascript">
-  var chart;
+<script type="text/javascript">
+
+var chart;
+var myDate = new Date();
+var firstDate = new Date();
+var lastDate = new Date();
+var firstDateV = new Date();
+var lastDateV = new Date();
+<?php
+if(isset($_GET["nmonth"]))
+{
+  echo "var nmonth = ".intval($_GET["nmonth"]).";";
+}
+else
+{
+  echo "var nmonth = 1;";
+}
+if(isset($_GET["year"]) && isset($_GET["month"]) && isset($_GET["day"]))
+{
+  echo "myDate.setUTCFullYear(".(intval($_GET["year"])).");";
+  echo "myDate.setUTCMonth(".(intval($_GET["month"])-1).");";
+  echo "myDate.setUTCDate(".(intval($_GET["day"])).");";
+}
+else
+{
+  $myDate = date("Y-m-d");
+  echo "myDate.setUTCFullYear(".intval(substr($myDate,0,4)).");";
+  echo "myDate.setUTCMonth(".(intval(substr($myDate,5,2))-1)."-nmonth);";
+  echo "myDate.setUTCDate(".intval(substr($myDate,8,2)).");";
+}
+?>
+myDate.setUTCHours(0);
+myDate.setUTCMinutes(0);
+myDate.setUTCSeconds(0);
+myDate.setUTCMilliseconds(0);
+firstDate.setTime(myDate.getTime());
+firstDateV.setTime(firstDate.getTime());
+lastDate.setTime(firstDate.getTime());
+lastDate.setUTCMonth(lastDate.getUTCMonth() + nmonth);
+lastDate.setUTCHours(23);
+lastDate.setUTCMinutes(59);
+lastDate.setUTCSeconds(59);
+lastDate.setUTCMilliseconds(999);
+lastDateV.setTime(lastDate.getTime());
+
+console.debug("Date = "+myDate);
+
 function lost_getXHR()
 {
   var xhr = null;
@@ -39,151 +85,209 @@ function lost_getXHR()
   }
   return xhr;
 }
+
 function indexLoading(evt)
 {
   var xhr = lost_getXHR();
   var xml;
+  var sample;
+  var date;
+  var dateI;
+  var value;
+  var nb = 0;
   var i;
+
   xhr.onreadystatechange = function()
   {
     if((xhr.readyState == 4))
     {
       if(xhr.status == 200)
       {
-        xml=xhr.responseXML;
+        xml = xhr.responseXML;
         if(xml)
         {
-      for(i=0; i<10; i++)
-      {
-	    console.debug(xml.getElementsByTagName("sample0")[0].getElementsByTagName("date")[0].firstChild.nodeValue);
-        chart.series[i].addPoint([Date.UTC(xml.getElementsByTagName("sample0")[0].getElementsByTagName("date")[0].firstChild.nodeValue),xml.getElementsByTagName("sample0")[0].getElementsByTagName("room0")[0].firstChild.nodeValue],false);
-      }
-      //chart.series[i].addPoint([Date.UTC(".$temp."),".$r['safety_ups_temp']."],false);\n";
-	  //$i = $i + 1;
-      //chart.series[i].addPoint([Date.UTC(".$temp."),".$r['safety_rack_temp']."],false);\n";
-      //$i = $i + 1;
-      //if($r['start'] == "1") { echo "chart.series[".$i."].addPoint({x: Date.UTC(".$temp."),title: 'S',text: 'Start'},false);\n"; }
-      chart.redraw();
+          while(1)
+          {
+            sample = xml.getElementsByTagName("sample"+String(nb))[0];
+            if(sample)
+            {
+              nb++;
+              date = new Date(String(sample.getElementsByTagName("date")[0].firstChild.nodeValue));
+              dateI = date.getTime();
+
+              for(i=0; i<10; i++)
+              {
+                value = sample.getElementsByTagName("room"+String(i));
+                if(value) { chart.series[i].addPoint([dateI,parseInt(value[0].firstChild.nodeValue)],false); }
+              }
+              value = sample.getElementsByTagName("safety_ups");
+              if(value) { chart.series[i].addPoint([dateI,parseInt(value[0].firstChild.nodeValue)],false); } i++;
+              value = sample.getElementsByTagName("safety_rack");
+              if(value) { chart.series[i].addPoint([dateI,parseInt(value[0].firstChild.nodeValue)],false); } i++;
+              //if(sample.getElementsByTagName("start")) { chart.series[i].addPoint({x: dateI,title: 'S',text: 'Start'},false); }
+            }
+            else
+            {
+              //chart.redraw();
+              //chart.xAxis[0].setExtremes(firstDate.getTime(), lastDate.getTime());
+              break;
+            }
+          }
         }
       }
       else
       {
         xhr.abort();
       }
+      myDate.setUTCDate(myDate.getUTCDate()+1);
+      if(myDate.getTime() < lastDate.getTime())
+      {
+        setTimeout("indexLoading()", 1);
+      }
+      else
+      {
+        chart.redraw();
+        chart.xAxis[0].setExtremes(firstDate.getTime(), lastDate.getTime());
+      }
     }
   };
-  xhr.open("GET","get_mms.php?year=2013&month=1",true);
+  xhr.open("GET","mms_get.php?table=mms&year="+myDate.getUTCFullYear()+"&month="+(myDate.getUTCMonth()+1)+"&day="+myDate.getUTCDate(),true);
   //xhr.setTimeouts(4000);
   xhr.send("");
 
-  //setTimeout("indexLoading()", 10000);
+
 }
-var myDate = new Date();
-<?php
-if(isset($_GET["year"]) && isset($_GET["month"]))
-{
-  echo "myDate.setUTCFullYear(".(intval($_GET["year"])).");";
-  echo "myDate.setUTCMonth(".(intval($_GET["month"])-1).");";
-}
-?>
-myDate.setUTCDate(1);
-myDate.setUTCHours(0);
-myDate.setUTCMinutes(0);
-myDate.setUTCSeconds(0);
-myDate.setUTCMilliseconds(0);
+
 
 $(document).ready(function() {
-      chart = new Highcharts.StockChart({
-         chart: {
-            renderTo: 'container',
-            type: 'line'
-         },
-        xAxis: {
-            ordinal: false 
-        },
-		rangeSelector: {
-			buttons: [{type: 'day',count: 1,text: '1d'},
-						{type: 'month',count: 1,text: '1m'},
-						{type: 'month',count: 3,text: '3m'},
-						{type: 'month',count: 6,text: '6m'},
-						{type: 'ytd',text: 'YTD'},
-						{type: 'year',count: 1,text: '1y'},
-						{type: 'all',text: 'All'}]
-		},
-		series: [
-			{name: 'Marine', data:[]},{name: 'M&M', data:[]},{name: 'Amis', data:[]},{name: 'Dressing', data:[]},{name: 'Combles', data:[]},
-			{name: 'Bureau', data:[]},{name: 'Cuisine', data:[]},{name: 'Celier', data:[]},{name: 'Couloir', data:[]},{name: 'Salon', data:[]},
-			{name: 'UPS', data:[]},{name: 'Rack', data:[]},{type: 'flags', name: 'Start', data:[]}
-		]
-      });
-      //chart.redraw();
-      indexLoading();
-   });
+  chart = new Highcharts.StockChart({
+    chart: {
+      renderTo: 'container',
+      type: 'line'
+    },
+    xAxis: {
+      ordinal: false
+    },
+    rangeSelector: {
+      buttons: [{type: 'day',count: 1,text: '1d'},
+                {type: 'month',count: 1,text: '1m'},
+                {type: 'month',count: 3,text: '3m'},
+                {type: 'month',count: 6,text: '6m'},
+                {type: 'ytd',text: 'YTD'},
+                {type: 'year',count: 1,text: '1y'},
+                {type: 'all',text: 'All'}],
+      selected: 1
+    },
+    series: [
+      {name: 'Marine', data:[]},{name: 'M&M', data:[]},{name: 'Amis', data:[]},{name: 'Dressing', data:[]},{name: 'Combles', data:[]},
+      {name: 'Bureau', data:[]},{name: 'Cuisine', data:[]},{name: 'Celier', data:[]},{name: 'Couloir', data:[]},{name: 'Salon', data:[]},
+      {name: 'UPS', data:[]},{name: 'Rack', data:[]},{type: 'flags', name: 'Start', data:[]}
+    ]
+  });
+  chart.redraw();
+  indexLoading();
+});
 
-function chart_setInterval(date, interval)
+function chart_setInterval(f,l)
 {
-  var current_date = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours());
-  chart.xAxis[0].setExtremes(current_date, current_date + interval);
+  chart.xAxis[0].setExtremes(f.getTime(),l.getTime(),true);
+}
+function build_url(date)
+{
+  return "mms_index.php?table=mms&year="+date.getUTCFullYear()+"&month="+(date.getUTCMonth()+1)+"&day="+date.getUTCDate()+"&nmonth="+nmonth;
 }
 function previousYear()
 {
-  window.location = "<?php if(isset($_GET["year"]) && isset($_GET["month"])) { $year = intval($_GET["year"]); $month = intval($_GET["month"]); }
-  							else { $year = intval(date("Y")); $month = intval(date("m")); }
-  							echo "?year=".($year-1)."&month=".$month; ?>";
+  var date = new Date();
+  date.setTime(firstDate.getTime());
+  date.setUTCFullYear(date.getUTCFullYear()-1);
+  window.location = build_url(date);
 }
 function nextYear()
 {
-  window.location = "<?php if(isset($_GET["year"]) && isset($_GET["month"])) { $year = intval($_GET["year"]); $month = intval($_GET["month"]); }
-  							else { $year = intval(date("Y")); $month = intval(date("m")); }
-  							echo "?year=".($year+1)."&month=".$month; ?>";
+  var date = new Date();
+  date.setTime(firstDate.getTime());
+  date.setUTCFullYear(date.getUTCFullYear()+1);
+  window.location = build_url(date);
 }
 function previousMonth()
 {
-  window.location = "<?php if(isset($_GET["month"]) && isset($_GET["month"])) { $year = intval($_GET["year"]); $month = intval($_GET["month"]); }
-  							else { $year = intval(date("Y")); $month = intval(date("m")); }
-							if($month == 1) { $month = 12; $year = $year - 1; }
-							else { $month = $month - 1; } 
-							echo "?year=".$year."&month=".$month; ?>";
+  var date = new Date();
+  date.setTime(firstDate.getTime());
+  date.setUTCMonth(date.getUTCMonth()-1);
+  window.location = build_url(date);
 }
 function nextMonth()
 {
-  window.location = "<?php if(isset($_GET["month"]) && isset($_GET["month"])) { $year = intval($_GET["year"]); $month = intval($_GET["month"]); }
-							else { $year = intval(date("Y")); $month = intval(date("m")); }
-							if($month == 12) { $month = 0; $year = $year + 1; }
-							else { $month = $month + 1; } 
-							echo "?year=".$year."&month=".$month; ?>";
+  var date = new Date();
+  date.setTime(firstDate.getTime());
+  date.setUTCMonth(date.getUTCMonth()+1);
+  window.location = build_url(date);
 }
 function previousDay()
 {
-  myDate.setUTCDate(Math.max(myDate.getUTCDate()-1,1));
+  var date = new Date();
+  date.setTime(firstDateV.getTime());
+  date.setUTCDate(date.getUTCDate()-1);
+  date.setUTCHours(0);
 
-  chart_setInterval(myDate, 1000*3600*24);
+  if(date.getTime() < firstDate.getTime())
+  {
+    date.setTime(firstDate.getTime());
+  }
+  firstDateV.setTime(date.getTime());
+  lastDateV.setTime(firstDateV.getTime());
+  lastDateV.setUTCDate(lastDateV.getUTCDate()+1);
+  chart_setInterval(firstDateV, lastDateV);
 }
 function nextDay()
 {
-  myDate.setUTCDate(Math.min(myDate.getUTCDate()+1,<?php
-  	if(isset($_GET["month"]) && isset($_GET["month"])) { $year = intval($_GET["year"]); $month = intval($_GET["month"]); }
-  	else { $year = intval(date("Y")); $month = intval(date("m")); }
-  	echo cal_days_in_month(CAL_GREGORIAN, $month, $year); ?>));
+  var date = new Date();
+  date.setTime(firstDateV.getTime());
+  date.setUTCDate(date.getUTCDate()+1);
+  date.setUTCHours(0);
 
-  chart_setInterval(myDate, 1000*3600*24);
+  if(date.getTime() <= lastDate.getTime())
+  {
+    firstDateV.setTime(date.getTime());
+    lastDateV.setTime(firstDateV.getTime());
+    lastDateV.setUTCDate(lastDateV.getUTCDate()+1);
+    chart_setInterval(firstDateV, lastDateV);
+  }
 }
 function previousHour()
 {
-  myDate.setUTCHours(myDate.getUTCHours()-1);
+  var date = new Date();
+  date.setTime(firstDateV.getTime());
+  date.setUTCHours(date.getUTCHours()-1);
 
-  chart_setInterval(myDate, 1000*3600);
+  if(date.getTime() < firstDate.getTime())
+  {
+    date.setTime(firstDate.getTime());
+  }
+  firstDateV.setTime(date.getTime());
+  lastDateV.setTime(firstDateV.getTime());
+  lastDateV.setUTCHours(lastDateV.getUTCHours()+1);
+  chart_setInterval(firstDateV, lastDateV);
 }
 function nextHour()
 {
-  myDate.setUTCHours(myDate.getUTCHours()+1);
+  var date = new Date();
+  date.setTime(firstDateV.getTime());
+  date.setUTCHours(date.getUTCHours()+1);
 
-  chart_setInterval(myDate, 1000*3600);
+  if(date.getTime() <= lastDate.getTime())
+  {
+    firstDateV.setTime(date.getTime());
+    lastDateV.setTime(firstDateV.getTime());
+    lastDateV.setUTCHours(firstDateV.getUTCHours()+1);
+    chart_setInterval(firstDateV, lastDateV);
+  }
 }
    </script>
 </head>
 <body style="font-family: Arial;border: 0 none;">
-<div id="container" style="width: 100%; height: 400px"></div>
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 <table width="100%">
  <tr>
   <td align="left"><input type="button" onClick="previousYear()" value="Annee Precedente"></td>
