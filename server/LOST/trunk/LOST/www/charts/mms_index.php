@@ -3,21 +3,19 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <title>Temperature des Chambres</title>
-<?php
-// http://www.highcharts.com/stock/demo/
-// http://dygraphs.com/tests/range-selector.html
-// stock/highstock
-?>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 <script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
+</head>
+<body style="font-family: Arial;border: 0 none;">
 <script type="text/javascript">
 
 var chart;
-var myDate = new Date();
-var firstDate = new Date();
-var lastDate = new Date();
-var firstDateV = new Date();
-var lastDateV = new Date();
+var myDate = new Date(0);
+var firstDate = new Date(0);
+var lastDate = new Date(0);
+var firstDateV = new Date(0);
+var lastDateV = new Date(0);
+var toto;
 <?php
 if(isset($_GET["nmonth"]))
 {
@@ -29,16 +27,17 @@ else
 }
 if(isset($_GET["year"]) && isset($_GET["month"]) && isset($_GET["day"]))
 {
-  echo "myDate.setUTCFullYear(".(intval($_GET["year"])).");";
-  echo "myDate.setUTCMonth(".(intval($_GET["month"])-1).");";
-  echo "myDate.setUTCDate(".(intval($_GET["day"])).");";
+  echo "myDate.setUTCDate(".(intval($_GET["day"])).");\n";
+  echo "myDate.setUTCFullYear(".(intval($_GET["year"])).");\n";
+  echo "myDate.setUTCMonth(".(intval($_GET["month"])-1).");\n";
+  echo "myDate.setUTCDate(".(intval($_GET["day"])).");\n";
 }
 else
 {
-  $myDate = date("Y-m-d");
-  echo "myDate.setUTCFullYear(".intval(substr($myDate,0,4)).");";
-  echo "myDate.setUTCMonth(".(intval(substr($myDate,5,2))-1)."-nmonth);";
-  echo "myDate.setUTCDate(".intval(substr($myDate,8,2)).");";
+  $myDate = date("Ymd");
+  echo "myDate.setUTCFullYear(".intval(substr($myDate,0,4)).");\n";
+  echo "myDate.setUTCMonth(".(intval(substr($myDate,4,2))-1)."-nmonth);\n";
+  echo "myDate.setUTCDate(".intval(substr($myDate,6,2)).");\n";
 }
 ?>
 myDate.setUTCHours(0);
@@ -54,8 +53,6 @@ lastDate.setUTCMinutes(59);
 lastDate.setUTCSeconds(59);
 lastDate.setUTCMilliseconds(999);
 lastDateV.setTime(lastDate.getTime());
-
-console.debug("Date = "+myDate);
 
 function lost_getXHR()
 {
@@ -117,14 +114,15 @@ function indexLoading(evt)
 
               for(i=0; i<10; i++)
               {
-                value = sample.getElementsByTagName("room"+String(i));
-                if(value) { chart.series[i].addPoint([dateI,parseInt(value[0].firstChild.nodeValue)],false); }
+                value = sample.getElementsByTagName("room"+String(i))[0];
+                if(value) { chart.series[i].addPoint([dateI,parseInt(value.firstChild.nodeValue)],false); }
               }
-              value = sample.getElementsByTagName("safety_ups");
-              if(value) { chart.series[i].addPoint([dateI,parseInt(value[0].firstChild.nodeValue)],false); } i++;
-              value = sample.getElementsByTagName("safety_rack");
-              if(value) { chart.series[i].addPoint([dateI,parseInt(value[0].firstChild.nodeValue)],false); } i++;
-              //if(sample.getElementsByTagName("start")) { chart.series[i].addPoint({x: dateI,title: 'S',text: 'Start'},false); }
+              value = sample.getElementsByTagName("safety_ups")[0];
+              if(value) { chart.series[i].addPoint([dateI,parseInt(value.firstChild.nodeValue)],false); } i++;
+              value = sample.getElementsByTagName("safety_rack")[0];
+              if(value) { chart.series[i].addPoint([dateI,parseInt(value.firstChild.nodeValue)],false); } i++;
+              value = sample.getElementsByTagName("start")[0];
+              if(value) { { chart.series[i].addPoint({x: dateI,title: 'S',text: 'Start'},false); } }
             }
             else
             {
@@ -285,8 +283,7 @@ function nextHour()
   }
 }
    </script>
-</head>
-<body style="font-family: Arial;border: 0 none;">
+
 <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 <table width="100%">
  <tr>

@@ -9,12 +9,12 @@
     exit();
   }
 
-  // define("NOM","lebomb");         //monnom = login chez free
-  define("NOM","root");         //monnom = login chez free
-  // define("PASSE","genesis");     // monpasse=votre mot de passe free
-  define("PASSE","qwerty");     // monpasse=votre mot de passe free
-  // FIXME define("SERVEUR","sql.free.fr");// adresse du serveur free
-  define("SERVEUR","127.0.0.1");// adresse du serveur free
+  define("NOM","lebomb");         //monnom = login chez free
+  // define("NOM","root");         //monnom = login chez free
+  define("PASSE","genesis");     // monpasse=votre mot de passe free
+  // define("PASSE","qwerty");     // monpasse=votre mot de passe free
+  define("SERVEUR","sql.free.fr");// adresse du serveur free
+  // define("SERVEUR","127.0.0.1");// adresse du serveur free
   define("BASE","lebomb");       //nombase = login chez free
 
   //--Connexion au serveur
@@ -35,7 +35,7 @@
     //{echo "DATE: $r[DATE] TEMP0: $r[TEMP0] TEMP1: $r[TEMP1] TEMP2: $r[TEMP2] TEMP3: $r[TEMP3]<br>";}
     {
       echo "<sample".$nb.">";
-      echo "<date>".str_replace(" ", "T", $r[DATE])."</date>";
+      echo "<date>".str_replace(" ", "T", $r[DATE])."+00:00</date>";
       for($i=0; $i<10; $i++)
       {
         echo "<room".$i.">".$r['room'.sprintf('%02d',$i).'_temp_value']."</room".$i.">";
