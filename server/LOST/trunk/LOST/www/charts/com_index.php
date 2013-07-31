@@ -15,15 +15,22 @@ var firstDate = new Date(0);
 var lastDate = new Date(0);
 var firstDateV = new Date(0);
 var lastDateV = new Date(0);
-var toto;
 <?php
-if(isset($_GET["nmonth"]))
+if(isset($_GET["tab"]))
 {
-  echo "var nmonth = ".intval($_GET["nmonth"]).";";
+  echo "var tab = \"".intval($_GET["tab"])."\";\n";
 }
 else
 {
-  echo "var nmonth = 1;";
+  echo "var tab = \"lb\";\n";
+}
+if(isset($_GET["nmonth"]))
+{
+  echo "var nmonth = ".intval($_GET["nmonth"]).";\n";
+}
+else
+{
+  echo "var nmonth = 1;\n";
 }
 if(isset($_GET["year"]) && isset($_GET["month"]) && isset($_GET["day"]))
 {
@@ -149,7 +156,7 @@ function indexLoading(evt)
       }
     }
   };
-  xhr.open("GET","mms_get.php?table=mms&year="+myDate.getUTCFullYear()+"&month="+(myDate.getUTCMonth()+1)+"&day="+myDate.getUTCDate(),true);
+  xhr.open("GET","com_get.php?tab="+tab+"&year="+myDate.getUTCFullYear()+"&month="+(myDate.getUTCMonth()+1)+"&day="+myDate.getUTCDate(),true);
   //xhr.setTimeouts(4000);
   xhr.send("");
 
@@ -192,7 +199,7 @@ function chart_setInterval(f,l)
 }
 function build_url(date)
 {
-  return "mms_index.php?table=mms&year="+date.getUTCFullYear()+"&month="+(date.getUTCMonth()+1)+"&day="+date.getUTCDate()+"&nmonth="+nmonth;
+  return "com_index.php?tab="+tab+"&year="+date.getUTCFullYear()+"&month="+(date.getUTCMonth()+1)+"&day="+date.getUTCDate()+"&nmonth="+nmonth;
 }
 function previousYear()
 {
@@ -282,7 +289,7 @@ function nextHour()
     chart_setInterval(firstDateV, lastDateV);
   }
 }
-   </script>
+</script>
 
 <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 <table width="100%">
