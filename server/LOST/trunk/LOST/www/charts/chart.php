@@ -156,7 +156,7 @@ function indexLoading(evt)
       }
     }
   };
-  xhr.open("GET","com_get.php?tab="+tab+"&year="+myDate.getUTCFullYear()+"&month="+(myDate.getUTCMonth()+1)+"&day="+myDate.getUTCDate(),true);
+  xhr.open("GET","get.php?tab="+tab+"&year="+myDate.getUTCFullYear()+"&month="+(myDate.getUTCMonth()+1)+"&day="+myDate.getUTCDate(),true);
   //xhr.setTimeouts(4000);
   xhr.send("");
 
@@ -199,7 +199,7 @@ function chart_setInterval(f,l)
 }
 function build_url(date)
 {
-  return "com_index.php?tab="+tab+"&year="+date.getUTCFullYear()+"&month="+(date.getUTCMonth()+1)+"&day="+date.getUTCDate()+"&nmonth="+nmonth;
+  return "chart.php?tab="+tab+"&year="+date.getUTCFullYear()+"&month="+(date.getUTCMonth()+1)+"&day="+date.getUTCDate()+"&nmonth="+nmonth;
 }
 function previousYear()
 {

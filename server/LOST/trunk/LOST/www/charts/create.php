@@ -1,4 +1,10 @@
 <?php
+  if(!isset($_GET["tab"]))
+  {
+    echo "ERROR : Arguments tab not set";
+    exit();
+  }
+
   define("NOM","lebomb");         //monnom = login chez free
   define("PASSE","genesis");     // monpasse=votre mot de passe free
   define("SERVEUR","sql.free.fr");// adresse du serveur free
@@ -15,7 +21,7 @@ if(!mysql_select_db(BASE,$link)) { echo "Impossible to select the DB".mysql_erro
 
 // Build the SQL request
 // Build the header
-$requete = "CREATE TABLE `mms` (";
+$requete = "CREATE TABLE `".$_GET["tab"]."` (";
 // Add the names of the parameters
 $requete .= "`DATE` DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,";
 for($i=0; $i<10; $i++)

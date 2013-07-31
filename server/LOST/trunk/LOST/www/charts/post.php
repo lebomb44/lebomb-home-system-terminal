@@ -3,10 +3,22 @@
 <head>
 </head>
 <body>
-<FORM method=post action="http://lebomb.free.fr/LOST/charts/insert_mms.php">
+<?php
+  if(!isset($_GET["tab"]))
+  {
+    echo "ERROR : Arguments tab not set";
+    exit();
+  }
+  echo "<FORM method=post action=\"http://lebomb.free.fr/LOST/charts/insert.php?tab=".$_GET["tab"]."\">";
+?>
 MnM Insert POST Form
 <TABLE>
 <?php
+  if(!isset($_GET["tab"]))
+  {
+    echo "ERROR : Arguments tab not set";
+    exit();
+  }
 for($i=0; $i<10; $i++)
 {
   echo "<TR><TD>room".$i."_temp_value</TD><TD><INPUT type=text name='room".sprintf('%02d',$i)."_temp_value' value='".$i."'></TD></TR>";
