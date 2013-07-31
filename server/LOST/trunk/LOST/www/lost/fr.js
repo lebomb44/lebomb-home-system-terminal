@@ -1003,48 +1003,15 @@ document.write("\
 <div class=\"iLayer\" id=\"waHome\" title=\"Home\">\
     <div class=\"iMenu\">\
         <ul class=\"iArrow\">\
-            <li id=\"Event"+String(EVENT_POWER_0)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"Event"+String(EVENT_POWER_0)+"_Status\">Unknown</span>Disque Dur</li>\
-            <li id=\"Event"+String(EVENT_POWER_1)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"Event"+String(EVENT_POWER_1)+"_Status\">Unknown</span>Reseau</li>\
-            <li id=\"Alarm_bg\"><a href=\"#_Alarmes\"><img class=\"picto\" src=\""+lost_icons_path+"detector.jpg\"/>Alarmes</a></li>\
-        </ul>\
-        <ul class=\"iArrow\">\
-            <li id=\"Event"+String(EVENT_SHUTTERS_ALL)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_ALL        , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_ALL        , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\"><span id=\"Event"+String(EVENT_SHUTTERS_ALL)+"_Status\">Unknown</span>Tous les Volets</li>\
-        </ul>\
-        <ul class=\"iArrow\">\
-            <li id=\"Room"+String(ROOM_SALON)+"_Shutter0_Status_bg\"><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter0_Status\">Unknown</span>Salon Grande Baie</li>\
-            <li id=\"Room"+String(ROOM_SALON)+"_Shutter1_Status_bg\"><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,1,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,1,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,1,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter1_Status\">Unknown</span>Salon Petite Baie</li>\
-            <li id=\"Room"+String(ROOM_SALON)+"_Shutter2_Status_bg\"><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,2,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,2,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,2,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_SALON)+"_Shutter2_Status\">Unknown</span>Fenetre</li>\
-            <li id=\"Room"+String(ROOM_CUISINE)+"_Shutter0_Status_bg\"><a href=\"javascript:lost_room_shutter_set(ROOM_CUISINE,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_CUISINE,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_CUISINE,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_CUISINE)+"_Shutter0_Status\">Unknown</span>Cuisine</li>\
-            <li id=\"Room"+String(ROOM_C1)+"_Shutter0_Status_bg\"><a href=\"javascript:lost_room_shutter_set(ROOM_C1,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_C1,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_C1,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_C1)+"_Shutter0_Status\">Unknown</span>Chambre 1</li>\
-            <li id=\"Room"+String(ROOM_C2)+"_Shutter0_Status_bg\"><a href=\"javascript:lost_room_shutter_set(ROOM_C2,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_C2,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_C2,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_C2)+"_Shutter0_Status\">Unknown</span>Chambre 2</li>\
-            <li id=\"Room"+String(ROOM_C3)+"_Shutter0_Status_bg\"><a href=\"javascript:lost_room_shutter_set(ROOM_C3,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_C3,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_C3,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\" alt=\"Volet\"><span id=\"Room"+String(ROOM_C3)+"_Shutter0_Status\">Unknown</span>Chambre 3</li>\
-        </ul>\
-        <ul class=\"iArrow\">\
-            <li id=\"Scenes_bg\"><a href=\"#_Scenes\"><img class=\"picto\" src=\""+lost_icons_path+"scenes.jpg\" alt=\"Scenes\">Scenes</a></li>\
-            <li><a href=\"#_Evenements\"><img class=\"picto\" src=\""+lost_icons_path+"wakeup.jpg\"/>Evenements</a></li>\
             <li id=\"Rooms_bg\"><a href=\"#_Rooms\"><img class=\"picto\" src=\""+lost_icons_path+"home.jpg\" alt=\"Home\">Rooms</a></li>\
-            <li id=\"Media_bg\"><a href=\"#_Media\"><img class=\"picto\" src=\""+lost_icons_path+"media.jpg\" alt=\"Media\">Media</a></li>\
-            <li class=\"iRadio\"><img class=\"picto\" src=\""+lost_icons_path+"ambiance.jpg\"/>Ambiances\
-                <label><input type=\"radio\" name=\"radioAmbiances\" onClick=\"lost_atm_set(ATM_CINEMA);\">Cinema</label>\
-                <label><input type=\"radio\" name=\"radioAmbiances\" onClick=\"lost_atm_set(ATM_ROMANTIQUE);\">Romantique</label>\
-                <label><input type=\"radio\" name=\"radioAmbiances\" onClick=\"lost_atm_set(ATM_ECO);\">Economie d\"energie</label>\
+            <li id=\"Scenes_bg\"><a href=\"#_Scenes\"><img class=\"picto\" src=\""+lost_icons_path+"scenes.jpg\" alt=\"Scenes\">Scenes</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
             <li id=\"Safety_bg\"><a href=\"#_Surveillances\"><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"/>Surveillances</a></li>\
-            <li><a href=\"cgi/monitor.cgi\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"system.jpg\" alt=\"System\">System</a></li>\
+            <li id=\"Alarm_bg\"><a href=\"#_Alarmes\"><img class=\"picto\" src=\""+lost_icons_path+"detector.jpg\"/>Alarmes</a></li>\
         </ul>\
-    </div>\
-</div>\
-");
-
-document.write("\
-<div class=\"iLayer\" id=\"waMedia\" title=\"Media\">\
-    <div class=\"iMenu\">\
         <ul class=\"iArrow\">\
-            <li><a href=\"tv.asp\"><img class=\"picto\" src=\""+lost_icons_path+"tv.jpg\" alt=\"TV\">TV</a></li>\
-            <li><a href=\"freebox.asp\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"fb.jpg\" alt=\"FB\">Freebox</a></li>\
-            <li><a href=\"sat.asp\"><img class=\"picto\" src=\""+lost_icons_path+"sat.jpg\" alt=\"Sat\">Satellite</a></li>\
-            <li><a href=\"hifi.asp\"><img class=\"picto\" src=\""+lost_icons_path+"hifi.jpg\" alt=\"Hifi\">Hifi</a></li>\
+            <li><a href=\"cgi/monitor.cgi\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"system.jpg\" alt=\"System\">System</a></li>\
         </ul>\
     </div>\
 </div>\
@@ -1088,27 +1055,12 @@ document.write("\
 document.write("\
 <div class=\"iLayer\" id=\"waScenes\" title=\"Scenes\">\
     <div class=\"iMenu\">\
-        <legend>Volets</legend>\
-        <ul class=\"iArrow\">\
-            <li id=\"Scene"+String(EVENT_SHUTTERS_ALL)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_ALL , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_ALL , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_ALL)+"_Status\">Unknown</span>Tous</li>\
-            <li id=\"Scene"+String(EVENT_SHUTTERS_C1)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C1   , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C1  , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_MARINE)+"_Status\">Unknown</span>Chambre 1</li>\
-            <li id=\"Scene"+String(EVENT_SHUTTERS_C2)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C2   , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C2  , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_MM)+"_Status\">Unknown</span>Chambre 2</li>\
-            <li id=\"Scene"+String(EVENT_SHUTTERS_C3)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C3   , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C3  , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_FRIENDS)+"_Status\">Unknown</span>Chambre 3</li>\
-        </ul>\
-        <legend>Alarme</legend>\
-        <ul class=\"iArrow\">\
-            <li id=\"Scene"+String(EVENT_ALARM_ALL)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_ALL                        , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_ALL            , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\"><span id=\"Scene"+String(EVENT_ALARM_ALL)+"_Status\">Unknown</span>Toutes</li>\
-            <li id=\"Scene"+String(EVENT_ALARM_PERIMETER)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER            , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER      , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\"><span id=\"Scene"+String(EVENT_ALARM_PERIMETER)+"_Status\">Unknown</span>Périmétrique</li>\
-            <li id=\"Scene"+String(EVENT_ALARM_PERIMETER_CHECK)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER_CHECK, EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER_CHECK, EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\"><span id=\"Scene"+String(EVENT_ALARM_PERIMETER_CHECK)+"_Status\">Unknown</span>Périmétrique Auto</li>\
-            <li id=\"Scene"+String(EVENT_ALARM_VOLUME)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_ALARM_VOLUME                  , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_VOLUME         , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\"><span id=\"Scene"+String(EVENT_ALARM_VOLUME)+"_Status\">Unknown</span>Volumétrique</li>\
-            <li id=\"Scene"+String(EVENT_SIMU)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SIMU                                  , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SIMU                 , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\"><span id=\"Scene"+String(EVENT_SIMU)+"_Status\">Unknown</span>Simulation Présence</li>\
-        </ul>\
         <legend>Power</legend>\
         <ul class=\"iArrow\">\
-            <li id=\"Scene"+String(EVENT_POWER_0)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"Scene"+String(EVENT_POWER_0)+"_Status\">Unknown</span>Wifi</li>\
-            <li id=\"Scene"+String(EVENT_POWER_1)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"Scene"+String(EVENT_POWER_1)+"_Status\">Unknown</span>Reseau</li>\
-            <li id=\"Scene"+String(EVENT_POWER_2)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_2, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_2, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\"><span id=\"Scene"+String(EVENT_POWER_2)+"_Status\">Unknown</span>POWER 2</li>\
-            <li id=\"Scene"+String(EVENT_POWER_3)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\"><span id=\"Scene"+String(EVENT_POWER_3)+"_Status\">Unknown</span>POWER 3</li>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">Wifi</li>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">Ethernet</li>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_POWER_2, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_2, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">POWER 2</li>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">POWER 3</li>\
         </ul>\
     </div>\
 </div>\
@@ -1186,24 +1138,6 @@ document.write("\
 <div class=\"iLayer\" id=\"waRooms\" title=\"Rooms\">\
     <div class=\"iMenu\">\
         <ul class=\"iArrow\">\
-            <li><a href=\""+lost_icons_path+"plan.jpg\"><img class=\"picto\" src=\""+lost_icons_path+"loc.jpg\">Plan</a></li>\
-        </ul>\
-        <ul class=\"iArrow\">\
-            <li id=\"Room"+String(ROOM_SALON)+"_bg\"><a href=\"#_Salon\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Salon</a></li>\
-            <li id=\"Room"+String(ROOM_CUISINE)+"_bg\"><a href=\"#_Cuisine\"><img class=\"picto\" src=\""+lost_icons_path+"cuisine.jpg\">Cuisine</a></li>\
-            <li id=\"Room"+String(ROOM_TERRASSE)+"_bg\"><a href=\"#_Terrasse\"><img class=\"picto\" src=\""+lost_icons_path+"terrasse.jpg\">Terrasse</a></li>\
-            <li id=\"Room"+String(ROOM_C1)+"_bg\"><a href=\"#_C1\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre Marine</a></li>\
-            <li id=\"Room"+String(ROOM_C2)+"_bg\"><a href=\"#_C2\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre M&M</a></li>\
-            <li id=\"Room"+String(ROOM_C3)+"_bg\"><a href=\"#_C3\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre Amis</a></li>\
-            <li id=\"Room"+String(ROOM_C4)+"_bg\"><a href=\"#_C4\"><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\">Dressing</a></li>\
-            <li id=\"Room"+String(ROOM_COMBLES)+"_bg\"><a href=\"#_Combles\"><img class=\"picto\" src=\""+lost_icons_path+"water.jpg\">Combles</a></li>\
-            <li id=\"Room"+String(ROOM_SALON2)+"_bg\"><a href=\"#_Salon2\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Salon2</a></li>\
-            <li id=\"Room"+String(ROOM_COULOIR)+"_bg\"><a href=\"#_Couloir\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Couloir</a></li>\
-        </ul>\
-        <ul class=\"iArrow\">\
-            <li><a href=\"http://lebomb.free.fr/LOST/charts/chart.php?tab=lb\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Courbes de temperature</a></li>\
-        </ul>\
-        <ul class=\"iArrow\">\
             <li><a href=\"#_Cameras\"><img class=\"picto\" src=\""+lost_icons_path+"cam.jpg\">Cameras</a></li>\
         </ul>\
         <ul>\
@@ -1212,278 +1146,9 @@ document.write("\
             <li><a href=\"javascript:lost_scene_set(EVENT_MAX+3, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_MAX+3, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"radiateur.jpg\">Chauffage</li>\
             <li><a href=\"javascript:lost_room_elec_all_set(0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_room_elec_all_set(1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">Eqpts Electriques</li>\
         </ul>\
-    </div>\
-</div>\
-");
-document.write("\
-<div class=\"iLayer\" id=\"waSalon\" title=\"Salon\">\
-    <div class=\"iMenu\">\
-    <div class=\"iPanel\">\
-        <fieldset>\
-            <legend>LEDs</legend>\
-            <ul>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_CUISINE)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_CUISINE,0);\"><img class=\"picto\" src=\""+lost_icons_path+"diode.jpg\"><label for=\"Room"+String(ROOM_CUISINE)+"_Light0\">Gauche</label></li>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_CUISINE)+"_Light1\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_CUISINE,1);\"><img class=\"picto\" src=\""+lost_icons_path+"diode.jpg\"><label for=\"Room"+String(ROOM_CUISINE)+"_Light1\">Centre</label></li>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_CUISINE)+"_Light2\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_CUISINE,2);\"><img class=\"picto\" src=\""+lost_icons_path+"diode.jpg\"><label for=\"Room"+String(ROOM_CUISINE)+"_Light2\">Droite</label></li>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_CUISINE)+"_Light3\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_CUISINE,3);\"><img class=\"picto\" src=\""+lost_icons_path+"diode.jpg\"><label for=\"Room"+String(ROOM_CUISINE)+"_Light3\">TV</label></li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Ouvertures</legend>\
-            <ul>\
-                <li><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Grande Baie</li>\
-                <li><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,1,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,1,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,1,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Petite Baie</li>\
-                <li><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,2,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,2,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_SALON,2,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Simple</li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Info</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_SalonInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-            </ul>\
-        </fieldset>\
-    </div>\
-    </div>\
-</div>\
-");
-document.write("\
-		<div class=\"iLayer\" id=\"waCuisine\" title=\"Cuisine\">\
-		    <div class=\"iMenu\">\
-		    <div class=\"iPanel\">\
-		        <fieldset>\
-		            <legend>Lumieres</legend>\
-		            <ul>\
-		                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_COULOIR)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_COULOIR,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_COULOIR)+"_Light0\">Plafond</label></li>\
-		            </ul>\
-		        </fieldset>\
-		        <fieldset>\
-		            <legend>Ouvertures</legend>\
-		            <ul>\
-		                <li><a href=\"javascript:lost_room_shutter_set(ROOM_CUISINE,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_CUISINE,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_CUISINE,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
-		            </ul>\
-		        </fieldset>\
-		        <fieldset>\
-		            <legend>Info</legend>\
-		            <ul class=\"iArrow\">\
-		                <li><a href=\"#_CuisineInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-		            </ul>\
-		        </fieldset>\
-		    </div>\
-		    </div>\
-		</div>\
-		");
-document.write("\
-<div class=\"iLayer\" id=\"waBureau\" title=\"Bureau\">\
-    <div class=\"iMenu\">\
-    <div class=\"iPanel\">\
-        <fieldset>\
-            <legend>Lumieres</legend>\
-            <ul>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_COULOIR)+"_Light1\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_COULOIR,1);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_COULOIR)+"_Light1\">Plafond</label></li>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_COULOIR)+"_Light2\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_COULOIR,2);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_COULOIR)+"_Light2\">Plafond</label></li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Ouvertures</legend>\
-            <ul>\
-                <li><a href=\"javascript:lost_room_shutter_set(ROOM_BUREAU,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_BUREAU,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_BUREAU,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Info</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_BureauInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-            </ul>\
-        </fieldset>\
-    </div>\
-    </div>\
-</div>\
-");
-document.write("\
-<div class=\"iLayer\" id=\"waTerrasse\" title=\"Terrasse\">\
-		    <div class=\"iMenu\">\
-    <div class=\"iPanel\">\
-        <fieldset>\
-            <legend>Lumieres</legend>\
-            <ul>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_TERRASSE)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_TERRASSE,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_TERRASSE)+"_Light0\">Phare</label></li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Info</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_TerrasseInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-            </ul>\
-        </fieldset>\
-    </div>\
-    </div>\
-</div>\
-");
-document.write("\
-<div class=\"iLayer\" id=\"waC1\" title=\"Chambre Marine\">\
-    <div class=\"iMenu\">\
-    <div class=\"iPanel\">\
-        <fieldset>\
-            <legend>Lumieres</legend>\
-            <ul>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_C1)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_C1,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_C1)+"_Light0\">Plafond</label></li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Ouvertures</legend>\
-            <ul>\
-                <li><a href=\"javascript:lost_room_shutter_set(ROOM_C1,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_C1,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_C1,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Climatisation</legend>\
-            <ul>\
-                <li>Temperature\
-                <SELECT id=\"Room"+String(ROOM_C1)+"_Clim_Temp\"><script language=\"Javascript\">printSelectOption(\"Room"+String(ROOM_C1)+"_Clim_Temp\",99);</script></SELECT>\
-                </li>\
-                <li><a href=\"javascript:lost_room_clim_set(ROOM_C1,ROOM_CLIM_ON);\" class=\"iButton iBAction\" style=\"width:60px\">ON</a><a href=\"javascript:lost_room_clim_set(ROOM_C1,ROOM_CLIM_OFF);\" class=\"iButton iBWarn\" style=\"width:60px\">OFF</a><img class=\"picto\" src=\""+lost_icons_path+"clim.jpg\">Commande</li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Info</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_Chambre MarineInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-            </ul>\
-        </fieldset>\
-    </div>\
-    </div>\
-</div>\
-");
-document.write("\
-<div class=\"iLayer\" id=\"waC2\" title=\"Chambre M&M\">\
-    <div class=\"iMenu\">\
-    <div class=\"iPanel\">\
-        <fieldset>\
-            <legend>Lumieres</legend>\
-            <ul>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_C2)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_C2,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_C2)+"_Light0\">Plafond</label></li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Ouvertures</legend>\
-            <ul>\
-                <li><a href=\"javascript:lost_room_shutter_set(ROOM_C2,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_C2,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_C2,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Info</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_Chambre M&MInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-            </ul>\
-        </fieldset>\
-    </div>\
-    </div>\
-</div>\
-");
-document.write("\
-<div class=\"iLayer\" id=\"waC3\" title=\"Chambre Amis\">\
-    <div class=\"iMenu\">\
-    <div class=\"iPanel\">\
-        <fieldset>\
-            <legend>Lumieres</legend>\
-            <ul>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_C3)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_C3,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_C3)+"_Light0\">Plafond</label></li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Ouvertures</legend>\
-            <ul>\
-                <li><a href=\"javascript:lost_room_shutter_set(ROOM_C3,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_C3,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_C3,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Info</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_Chambre AmisInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-            </ul>\
-        </fieldset>\
-    </div>\
-    </div>\
-</div>\
-");
-document.write("\
-<div class=\"iLayer\" id=\"waC4\" title=\"Dressing\">\
-    <div class=\"iMenu\">\
-    <div class=\"iPanel\">\
-        <fieldset>\
-            <legend>Lumieres</legend>\
-            <ul>\
-                <li><input type=\"checkbox\" id=\"Room"+String(ROOM_C4)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_C4,0,this);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_C4)+"_Light0\">Plafond</label></li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Ouvertures</legend>\
-            <ul>\
-                <li><a href=\"javascript:lost_room_shutter_set(ROOM_C4,0,ROOM_SHUTTER_DOWN);\" class=\"iButton iBWarn\" style=\"width:60px\">FERMER</a><a href=\"javascript:lost_room_shutter_set(ROOM_C4,0,ROOM_SHUTTER_STOP);\" class=\"iButton iBAction\" style=\"width:60px\">STOP</a><a href=\"javascript:lost_room_shutter_set(ROOM_C4,0,ROOM_SHUTTER_UP);\" class=\"iButton iBWarn\" style=\"width:60px\">OUVRIR</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Volets</li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Info</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_DressingInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-            </ul>\
-        </fieldset>\
-    </div>\
-    </div>\
-</div>\
-");
-document.write("\
-<div class=\"iLayer\" id=\"waCombles\" title=\"Combles\">\
-    <div class=\"iMenu\">\
-    <div class=\"iPanel\">\
-        <fieldset>\
-            <legend>Lumieres</legend>\
-            <ul>\
-                <li><input type=\"checkbox\" disabled=\"disabled\" id=\"Room"+String(ROOM_COMBLES)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_COMBLES,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_COMBLES)+"_Light0\">Plafond</label></li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Info</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_ComblesInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-            </ul>\
-        </fieldset>\
-    </div>\
-    </div>\
-</div>\
-");
-document.write("\
-<div class=\"iLayer\" id=\"waSalon2\" title=\"Salon2\">\
-    <div class=\"iMenu\">\
-    <div class=\"iPanel\">\
-        <fieldset>\
-            <legend>Info</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_Salon2Info\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-            </ul>\
-        </fieldset>\
-    </div>\
-    </div>\
-</div>\
-");
-document.write("\
-<div class=\"iLayer\" id=\"waCouloir\" title=\"Couloir\">\
-    <div class=\"iMenu\">\
-    <div class=\"iPanel\">\
-      <fieldset>\
-          <legend>Lumieres</legend>\
-          <ul>\
-              <li><input type=\"checkbox\" id=\"Room"+String(ROOM_COULOIR)+"_Light0\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_COULOIR,0);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_COULOIR)+"_Light0\">Led Verte</label></li>\
-              <li><input type=\"checkbox\" id=\"Room"+String(ROOM_COULOIR)+"_Light1\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_room_light_set(ROOM_COULOIR,1);\"><img class=\"picto\" src=\""+lost_icons_path+"lamp.jpg\"><label for=\"Room"+String(ROOM_COULOIR)+"_Light1\">Led Rouge</label></li>\
-          </ul>\
-      </fieldset>\
-        <fieldset>\
-            <legend>Info</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_CouloirInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-            </ul>\
-        </fieldset>\
-    </div>\
+        <ul class=\"iArrow\">\
+            <li><a href=\"http://lebomb.free.fr/LOST/charts/chart.php?tab=fr\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Courbes de temperature</a></li>\
+        </ul>\
     </div>\
 </div>\
 ");
@@ -1491,100 +1156,14 @@ document.write("\
 <div class=\"iLayer\" id=\"waCameras\" title=\"Cameras\">\
     <div class=\"iMenu\">\
         <ul>\
-            <li><a href=\"http://bourdilot.no-ip.info:81\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"heden_V2_2.jpg\">Salle a manger</a></li>\
-            <li><a href=\"http://bourdilot.no-ip.info:82\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"heden_V2_2.jpg\">Bureau</a></li>\
-            <li><a href=\"http://bourdilot.no-ip.info:83\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"wvc54gca.jpg\">Exterieur</a></li>\
+            <li><a href=\"http://cambon.no-ip.info:81\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"heden_V5_5.jpg\">Salle a manger</a></li>\
         </ul>\
     </div>\
 </div>\
 ");
-
-function printRoomInfo(room, name)
-{
-document.write("\
-<div class=\"iLayer\" id=\"wa"+name+"Info\" title=\""+name+"\">\
-    <div class=\"iPanel\">\
-        <fieldset>\
-            <ul>\
-                <li id=\"Room"+String(room)+"_Error_bg\"><span id=\"Room"+String(room)+"_Error_Trig\">Unknown</span>Error</li>\
-            </ul>\
-            <ul>\
-                <li><span id=\"Room"+String(room)+"_Type\">Unknown</span>Type</li>\
-                <li><span id=\"Room"+String(room)+"_Version\">Unknown</span>Version</li>\
-                <li><span id=\"Room"+String(room)+"_Adress\">Unknown</span>Adresse</li>\
-            </ul>\
-            <ul>\
-                <li id=\"Room"+String(room)+"_Temp_Max_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"Room"+String(room)+"_Temp_Max\">Unknown</span>Temperature Max</li>\
-                <li id=\"Room"+String(room)+"_Temp_Max_Ctrl_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"Room"+String(room)+"_Temp_Max_Ctrl\">Unknown</span>Temperature Max Control</li>\
-                <li id=\"Room"+String(room)+"_Temp_Max_Th_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"Room"+String(room)+"_Temp_Max_Th\">Unknown</span>Temperature Max Threshold</li>\
-            </ul>\
-            <ul>\
-                <li id=\"Room"+String(room)+"_Temp_Min_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"Room"+String(room)+"_Temp_Min\">Unknown</span>Temperature Min</li>\
-                <li id=\"Room"+String(room)+"_Temp_Min_Ctrl_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"Room"+String(room)+"_Temp_Min_Ctrl\">Unknown</span>Temperature Min Control</li>\
-                <li id=\"Room"+String(room)+"_Temp_Min_Th_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"Room"+String(room)+"_Temp_Min_Th\">Unknown</span>Temperature Min Threshold</li>\
-            </ul>\
-            <ul>\
-                <li id=\"Room"+String(room)+"_Hum_bg\"><img class=\"picto\" src=\""+lost_icons_path+"water.jpg\"><span id=\"Room"+String(room)+"_Hum\">Unknown</span>Humidite</li>\
-                <li id=\"Room"+String(room)+"_Hum_Ctrl_bg\"><img class=\"picto\" src=\""+lost_icons_path+"water.jpg\"><span id=\"Room"+String(room)+"_Hum_Ctrl\">Unknown</span>Humidite Control</li>\
-            </ul>\
-            <ul>\
-                <li id=\"Room"+String(room)+"_Smoke_bg\"><img class=\"picto\" src=\""+lost_icons_path+"gaz.jpg\"><span id=\"Room"+String(room)+"_Smoke\">Unknown</span>Smoke</li>\
-                <li id=\"Room"+String(room)+"_Smoke_Ctrl_bg\"><img class=\"picto\" src=\""+lost_icons_path+"gaz.jpg\"><span id=\"Room"+String(room)+"_Smoke_Ctrl\">Unknown</span>Smoke Control</li>\
-            </ul>\
-            <ul>\
-                <li id=\"Room"+String(room)+"_Perimeter_bg\"><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\"><span id=\"Room"+String(room)+"_Perimeter\">Unknown</span>Perimeter</li>\
-                <li id=\"Room"+String(room)+"_Perimeter_Ctrl_bg\"><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\"><span id=\"Room"+String(room)+"_Perimeter_Ctrl\">Unknown</span>Perimeter Control</li>\
-            </ul>\
-            <ul>\
-                <li id=\"Room"+String(room)+"_Volume_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\"><span id=\"Room"+String(room)+"_Volume\">Unknown</span>Volume</li>\
-                <li id=\"Room"+String(room)+"_Volume_Ctrl_bg\"><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\"><span id=\"Room"+String(room)+"_Volume_Ctrl\">Unknown</span>Volume Control</li>\
-            </ul>\
-            <ul>\
-                <li id=\"Room"+String(room)+"_Simulation_bg\"><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\"><span id=\"Room"+String(room)+"_Simulation\">Unknown</span>Simulation</li>\
-                <li id=\"Room"+String(room)+"_Simulation_Ctrl_bg\"><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\"><span id=\"Room"+String(room)+"_Simulation_Ctrl\">Unknown</span>Simulation Control</li>\
-            </ul>\
-            <ul>\
-                <li id=\"Room"+String(room)+"_Clim_Cmd_bg\"><img class=\"picto\" src=\""+lost_icons_path+"clim.jpg\"><span id=\"Room"+String(room)+"_Clim_Cmd\">Unknown</span>Climatisation</li>\
-            </ul>\
-        </fieldset>\
-    </div>\
-</div>\
-");
-}
-
-printRoomInfo(ROOM_SALON   , "Salon"         );
-printRoomInfo(ROOM_CUISINE , "Cuisine"       );
-printRoomInfo(ROOM_BUREAU  , "Bureau"        );
-printRoomInfo(ROOM_TERRASSE, "Terrasse"      );
-printRoomInfo(ROOM_C1      , "Chambre Marine");
-printRoomInfo(ROOM_C2      , "Chambre M&M"   );
-printRoomInfo(ROOM_C3      , "Chambre Amis"  );
-printRoomInfo(ROOM_C4      , "Dressing"      );
-printRoomInfo(ROOM_COMBLES , "Combles"       );
-printRoomInfo(ROOM_SALON2  , "Salon2"        );
-printRoomInfo(ROOM_COULOIR , "Couloir"       );
 document.write("\
 <div class=\"iLayer\" id=\"waEvenements\" title=\"Evenements\">\
     <div class=\"iPanel\">\
-        <fieldset>\
-            <legend>Volets</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_ALL+"\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Tous</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_C1+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre 1</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_C2+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre 2</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_C3+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Chambre 3</a></li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Alarme</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_Event"+EVENT_ALARM_ALL+"\"><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\">Toutes</a></li>\
-                <li><a href=\"#_Event"+EVENT_ALARM_PERIMETER+"\"><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\">Périmétrique</a></li>\
-                <li><a href=\"#_Event"+EVENT_ALARM_PERIMETER_CHECK+"\"><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\">Périmétrique Auto</a></li>\
-                <li><a href=\"#_Event"+EVENT_ALARM_VOLUME+"\"><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\">Volumétrique</a></li>\
-                <li><a href=\"#_Event"+EVENT_SIMU+"\"><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\">Simulation Presence</a></li>\
-            </ul>\
-        </fieldset>\
         <fieldset>\
             <legend>Power</legend>\
             <ul class=\"iArrow\">\
@@ -1623,15 +1202,13 @@ document.write("\
         <fieldset>\
             <legend>Horloges</legend>\
             <ul>\
-                <li><input type=\"checkbox\" id=\"Event"+String(event)+"_StStart\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_ev_date_status_update("+String(event)+");\"><label for=\"Event"+String(event)+"_StStart\">Depart : Heure / Minute</label></li>\
-                <li>\
+                <li>Depart : Heure / Minute\
                 <SELECT id=\"Event"+String(event)+"_HStart\"><script language=\"Javascript\">printSelectOption(\"Event"+String(event)+"_HStart\",24);</script></SELECT>\
                 <SELECT id=\"Event"+String(event)+"_MStart\"><script language=\"Javascript\">printSelectOption(\"Event"+String(event)+"_MStart\",60);</script></SELECT>\
                 </li>\
             </ul>\
             <ul>\
-                <li><input type=\"checkbox\" id=\"Event"+String(event)+"_StEnd\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_ev_date_status_update("+String(event)+");\"><label for=\"Event"+String(event)+"_StEnd\">Fin : Heure / Minute</label></li>\
-                <li>\
+                <li>Fin : Heure / Minute\
                 <SELECT id=\"Event"+String(event)+"_HEnd\"><script language=\"Javascript\">printSelectOption(\"Event"+String(event)+"_HEnd\",24);</script></SELECT>\
                 <SELECT id=\"Event"+String(event)+"_MEnd\"><script language=\"Javascript\">printSelectOption(\"Event"+String(event)+"_MEnd\",60);</script></SELECT>\
                 </li>\
@@ -1642,19 +1219,7 @@ document.write("\
 ");
 }
 
-printEventInfo(EVENT_SHUTTERS_ALL         , "Tous"               );
-printEventInfo(EVENT_SHUTTERS_UPSTAIRS    , "Etage"              );
-printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS  , "Rez de Chaussé"     );
-printEventInfo(EVENT_SHUTTERS_MARINE      , "Marine"             );
-printEventInfo(EVENT_SHUTTERS_MM          , "M&M"                );
-printEventInfo(EVENT_SHUTTERS_FRIENDS     , "Amis"               );
-printEventInfo(EVENT_SHUTTERS_DRESSING    , "Dressing"           );
-printEventInfo(EVENT_ALARM_ALL            , "Toutes"             );
-printEventInfo(EVENT_ALARM_PERIMETER_CHECK, "Perimetrique"       );
-printEventInfo(EVENT_ALARM_PERIMETER      , "Perimetrique Auto"  );
-printEventInfo(EVENT_ALARM_VOLUME         , "Volumetrique"       );
-printEventInfo(EVENT_SIMU                 , "Simulation Presence");
-printEventInfo(EVENT_POWER_0              , "Wifi"               );
-printEventInfo(EVENT_POWER_1              , "Ethernet"           );
-printEventInfo(EVENT_POWER_2              , "Power 2"            );
-printEventInfo(EVENT_POWER_3              , "Power 3"            );
+printEventInfo(EVENT_POWER_0       , "Wifi"                   );
+printEventInfo(EVENT_POWER_1       , "Ethernet"               );
+printEventInfo(EVENT_POWER_2       , "Power 2"                );
+printEventInfo(EVENT_POWER_3       , "Power 3"                );

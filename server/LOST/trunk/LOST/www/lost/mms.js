@@ -871,10 +871,10 @@ function lost_room_elec_all_set(value)
 var EVENT_SHUTTERS_ALL          = 0;
 var EVENT_SHUTTERS_UPSTAIRS     = 1;
 var EVENT_SHUTTERS_DOWNSTAIRS   = 2;
-var EVENT_SHUTTERS_MARINE       = 3;
-var EVENT_SHUTTERS_MM           = 4;
-var EVENT_SHUTTERS_FRIENDS      = 5;
-var EVENT_SHUTTERS_DRESSING     = 6;
+var EVENT_SHUTTERS_C1           = 3;
+var EVENT_SHUTTERS_C2           = 4;
+var EVENT_SHUTTERS_C3           = 5;
+var EVENT_SHUTTERS_C4           = 6;
 var EVENT_ALARM_ALL             = 7;
 var EVENT_ALARM_PERIMETER       = 8;
 var EVENT_ALARM_VOLUME          = 9;
@@ -1097,10 +1097,10 @@ document.write("\
             <li id=\"Scene"+String(EVENT_SHUTTERS_ALL)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_ALL               , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_ALL        , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_ALL)+"_Status\">Unknown</span>Tous</li>\
             <li id=\"Scene"+String(EVENT_SHUTTERS_UPSTAIRS)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_UPSTAIRS     , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_UPSTAIRS   , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_UPSTAIRS)+"_Status\">Unknown</span>Etage</li>\
             <li id=\"Scene"+String(EVENT_SHUTTERS_DOWNSTAIRS)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_DOWNSTAIRS , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_DOWNSTAIRS , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_DOWNSTAIRS)+"_Status\">Unknown</span>Rez de Chaussé</li>\
-            <li id=\"Scene"+String(EVENT_SHUTTERS_MARINE)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_MARINE         , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_MARINE     , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_MARINE)+"_Status\">Unknown</span>Marine</li>\
-            <li id=\"Scene"+String(EVENT_SHUTTERS_MM)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_MM                 , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_MM         , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_MM)+"_Status\">Unknown</span>M&M</li>\
-            <li id=\"Scene"+String(EVENT_SHUTTERS_FRIENDS)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_FRIENDS       , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_FRIENDS    , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_FRIENDS)+"_Status\">Unknown</span>Amis</li>\
-            <li id=\"Scene"+String(EVENT_SHUTTERS_DRESSING)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_DRESSING     , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_DRESSING   , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_DRESSING)+"_Status\">Unknown</span>Dressing</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_C1)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C1                 , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C1         , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_C1)+"_Status\">Unknown</span>Marine</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_C2)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C2                 , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C2         , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_C2)+"_Status\">Unknown</span>M&M</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_C3)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C3                 , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C3         , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_C3)+"_Status\">Unknown</span>Amis</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_C3)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C4                 , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C4         , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_C4)+"_Status\">Unknown</span>Dressing</li>\
         </ul>\
         <legend>Alarme</legend>\
         <ul class=\"iArrow\">\
@@ -1209,7 +1209,7 @@ document.write("\
             <li id=\"Room"+String(ROOM_COULOIR)+"_bg\"><a href=\"#_Couloir\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Couloir</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
-            <li><a href=\"http://lebomb.free.fr/LOST/charts/index_mms.php\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Courbes de temperature</a></li>\
+            <li><a href=\"http://lebomb.free.fr/LOST/charts/chart.php?tab=mms\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\">Courbes de temperature</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
             <li><a href=\"#_Cameras\"><img class=\"picto\" src=\""+lost_icons_path+"cam.jpg\">Cameras</a></li>\
@@ -1580,10 +1580,10 @@ document.write("\
                 <li><a href=\"#_Event"+EVENT_SHUTTERS_ALL+"\"><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\">Tous</a></li>\
                 <li><a href=\"#_Event"+EVENT_SHUTTERS_UPSTAIRS+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Etage</a></li>\
                 <li><a href=\"#_Event"+EVENT_SHUTTERS_DOWNSTAIRS+"\"><img class=\"picto\" src=\""+lost_icons_path+"canape.jpg\">Rez de Chaussé</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_MARINE+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Marine</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_MM+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">M&M</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_FRIENDS+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Amis</a></li>\
-                <li><a href=\"#_Event"+EVENT_SHUTTERS_DRESSING+"\"><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\">Dressing</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_C1+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Marine</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_C2+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">M&M</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_C3+"\"><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\">Amis</a></li>\
+                <li><a href=\"#_Event"+EVENT_SHUTTERS_C4+"\"><img class=\"picto\" src=\""+lost_icons_path+"dressing.jpg\">Dressing</a></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
@@ -1656,10 +1656,10 @@ document.write("\
 printEventInfo(EVENT_SHUTTERS_ALL         , "Tous"               );
 printEventInfo(EVENT_SHUTTERS_UPSTAIRS    , "Etage"              );
 printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS  , "Rez de Chaussé"     );
-printEventInfo(EVENT_SHUTTERS_MARINE      , "Marine"             );
-printEventInfo(EVENT_SHUTTERS_MM          , "M&M"                );
-printEventInfo(EVENT_SHUTTERS_FRIENDS     , "Amis"               );
-printEventInfo(EVENT_SHUTTERS_DRESSING    , "Dressing"           );
+printEventInfo(EVENT_SHUTTERS_C1          , "Marine"             );
+printEventInfo(EVENT_SHUTTERS_C2          , "M&M"                );
+printEventInfo(EVENT_SHUTTERS_C3          , "Amis"               );
+printEventInfo(EVENT_SHUTTERS_C4          , "Dressing"           );
 printEventInfo(EVENT_ALARM_ALL            , "Toutes"             );
 printEventInfo(EVENT_ALARM_PERIMETER_CHECK, "Perimetrique"       );
 printEventInfo(EVENT_ALARM_PERIMETER      , "Perimetrique Auto"  );
