@@ -5,33 +5,33 @@
 #define LOST_GSM_SMS_CENTER_FREE
 #define LOST_GSM1 "0683585066"
 #define LOST_GSM2 "0689350159"
-#define LOST_STATUS "LOST/safety/mms_status.php"
-#define LOST_EMAIL "LOST/safety/mms_email.php?msg="
-#define LOST_INSERT "LOST/charts/mms_insert.php"
+#define LOST_STATUS "LOST/safety/status.php?tab=mms"
+#define LOST_EMAIL "LOST/safety/email.php?tab=mms&msg="
+#define LOST_INSERT "LOST/charts/insert.php?tab=mms"
 #endif
 #ifdef LOST_CONFIG_bt
 #define LOST_GSM_SMS_CENTER_FREE
 #define LOST_GSM1 "0689350159"
 #define LOST_GSM2 "0689350159"
-#define LOST_STATUS "LOST/safety/bt_status.php"
-#define LOST_EMAIL "LOST/safety/bt_email.php?msg="
-#define LOST_INSERT "LOST/charts/bt_insert.php"
+#define LOST_STATUS "LOST/safety/status.php?tab=bt"
+#define LOST_EMAIL "LOST/safety/email.php?tab=bt&msg="
+#define LOST_INSERT "LOST/charts/insert.php?tab=bt"
 #endif
 #ifdef LOST_CONFIG_lb
 #define LOST_GSM_SMS_CENTER_FREE
 #define LOST_GSM1 "0689350159"
 #define LOST_GSM2 "0689350159"
-#define LOST_STATUS "LOST/safety/lb_status.php"
-#define LOST_EMAIL "LOST/safety/lb_email.php?msg="
-#define LOST_INSERT "LOST/charts/lb_insert.php"
+#define LOST_STATUS "LOST/safety/status.php?tab=lb"
+#define LOST_EMAIL "LOST/safety/email.php?tab=lb&msg="
+#define LOST_INSERT "LOST/charts/insert.php?tab=lb"
 #endif
 #ifdef LOST_CONFIG_fr
 #define LOST_GSM_SMS_CENTER_FREE
 #define LOST_GSM1 "0689350159"
 #define LOST_GSM2 "0689350159"
-#define LOST_STATUS "LOST/safety/fr_status.php"
-#define LOST_EMAIL "LOST/safety/fr_email.php?msg="
-#define LOST_INSERT "LOST/charts/fr_insert.php"
+#define LOST_STATUS "LOST/safety/status.php?tab=fr"
+#define LOST_EMAIL "LOST/safety/email.php?tab=fr&msg="
+#define LOST_INSERT "LOST/charts/insert.php?tab=fr"
 #endif
 
 #endif
