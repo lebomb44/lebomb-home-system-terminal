@@ -56,29 +56,29 @@ THREAD(RemoteD, arg)
   {
     ret = fgetc(stdin);
     /* Search the synchro word */
-    if(ret == 0xAA)
+    if(0xAA == ret)
     {
       /* Get the mandatory header */
       for(i=0; i<RFIF_HEADER_SIZE; i++)
       {
         ret = fgetc(stdin);
-        if(ret >= 0) { buff[i] = ret; }
+        if(0 <= ret) { buff[i] = ret; }
         else { i = 0; break; }
       }
-      if((i == RFIF_HEADER_SIZE) && ((buff[1] == 0) || (buff[1] == 1)))
+      if((RFIF_HEADER_SIZE == i) && ((0 == buff[1]) || (1 == buff[1])))
       {
         /* Check the data length received */
-        if(buff[RFIF_REG_LB_TX_DATA_NB] <= ROOM_RF_DATA_NB)
+        if(ROOM_RF_DATA_NB >= buff[RFIF_REG_LB_TX_DATA_NB])
         {
           /* Get the data using the length included in the header */
           for(i=0; i<(buff[RFIF_REG_LB_TX_DATA_NB]+1); i++)
           {
             ret = fgetc(stdin);
-            if(ret >= 0) { buff[RFIF_REG_LB_TX_DATA_NB+1+i] = ret; }
+            if(0 <= ret) { buff[RFIF_REG_LB_TX_DATA_NB+1+i] = ret; }
             else { break; }
           }
           /* Check the received length */
-          if(i == (buff[RFIF_REG_LB_TX_DATA_NB]+1))
+          if((buff[RFIF_REG_LB_TX_DATA_NB]+1) == i)
           {
             /* Erase the checksum */
             cksum = 0;
@@ -88,13 +88,13 @@ THREAD(RemoteD, arg)
             if(cksum == buff[RFIF_REG_LB_CKSUM])
             {
               /* If this is a SCENE command */
-              if(buff[2] == 1)
+              if(1 == buff[2])
               {
                 /* We must have 2 data words */
-                if(buff[3] == 2)
+                if(2 == buff[3])
                 {
                   /* Execute the corresponding scene */
-                  if((0xCA <= buff[4]) && (buff[4] < (0xCA+EVENT_MAX)) && (0xCA <= buff[5])) { event_action(buff[4]-0xCA, buff[5]-0xCA); }
+                  if((0xCA <= buff[4]) && ((0xCA+EVENT_MAX) > buff[4]) && (0xCA <= buff[5])) { event_action(buff[4]-0xCA, buff[5]-0xCA); }
                   /* printf("scene=%d data=%d\n",buff[4],buff[5]); fflush(stdout); */
                 }
               }

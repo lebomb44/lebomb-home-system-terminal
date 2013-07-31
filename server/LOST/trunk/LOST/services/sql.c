@@ -47,7 +47,7 @@ uint8_t sql_send_once(uint8_t start)
   char* out = NULL;
 
   /* Connect and send the HTTP header */
-  if(http_request_header_start("212.27.63.116", 80, METHOD_POST, &sock, &stream) == 0)
+  if(0 == http_request_header_start("212.27.63.116", 80, METHOD_POST, &sock, &stream))
   {
     /* Send the URL */
     fputs(LOST_INSERT, stream);
@@ -56,7 +56,7 @@ uint8_t sql_send_once(uint8_t start)
     /* Build the POST request */
     for(i=0; i<ROOM_MAX; i++)
     {
-      if(i>0) { fputs("&", stream); }
+      if(0<i) { fputs("&", stream); }
       fprintf(stream, "room%02d_temp_value=%03d", i, room_temp_value_get(i));
     }
     fprintf(stream, "&safety_ups_temp=%05d", safety_ups_temp_value_get());
@@ -65,7 +65,7 @@ uint8_t sql_send_once(uint8_t start)
     fflush(stream);
     /* Catch the answer */
     buff = malloc(400);
-    if(buff != NULL)
+    if(NULL != buff)
     {
       while(fgets(buff, 400, stream))
       {
@@ -95,7 +95,7 @@ void sql_send(uint8_t start)
   for(i=0; i<10; i++)
   {
     /* If OK break the retry loop */
-    if(sql_send_once(start) == 0) { break; }
+    if(0 == sql_send_once(start)) { break; }
     /* Wait before retry */
     NutSleep(10000);
   }

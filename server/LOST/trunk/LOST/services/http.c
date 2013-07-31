@@ -65,19 +65,19 @@ THREAD(HttpD, arg)
      * Create a socket.
      */
     sock = NutTcpCreateSocket();
-    if(sock == NULL)
+    if(NULL == sock)
     {
       NutSleep(100);
       continue;
     }
     ret = NutTcpSetSockOpt(sock, SO_RCVTIMEO, &to, sizeof(to));
-    if(ret == 0)
+    if(0 == ret)
     {
       /*
        * Listen on port 80. If we return,
        * we got a client.
        */
-      if(NutTcpAccept(sock, 80) == 0)
+      if(0 == NutTcpAccept(sock, 80))
       {
         if(NutHeapAvailable() > 8192)
         {
@@ -85,7 +85,7 @@ THREAD(HttpD, arg)
            * Create a stream from the socket, so we can use stdio.
            */
           stream = _fdopen((int) ((uptr_t) sock), "r+b");
-          if(stream != NULL)
+          if(NULL != stream)
           {
             /*
              * Process http request.
@@ -136,16 +136,16 @@ uint8_t http_request_header_start(char* ip, uint16_t port, int method, TCPSOCKET
   u_long sock_opt = 0;
 
   /* Check the entries */
-  if((ip == NULL) || (sock == NULL) || (stream == NULL)) { return 1; }
+  if((NULL == ip) || (NULL == sock) || (NULL == stream)) { return 1; }
 
   /* Get the inet for the IP */
   rip = inet_addr(ip);
   /* Check the inet we got */
-  if(rip == 0) { *sock = NULL; *stream = NULL; return  2; }
+  if(0 == rip) { *sock = NULL; *stream = NULL; return  2; }
 
   /* Create of socket for the connection to the IP */
   *sock = NutTcpCreateSocket();
-  if(*sock == NULL) { *stream = NULL; return 3; }
+  if(NULL == *sock) { *stream = NULL; return 3; }
   /* Set send timeout */
   sock_opt = 10000;
   NutTcpSetSockOpt(*sock, SO_SNDTIMEO, &sock_opt, sizeof(sock_opt));
@@ -154,17 +154,17 @@ uint8_t http_request_header_start(char* ip, uint16_t port, int method, TCPSOCKET
   NutTcpSetSockOpt(*sock, SO_RCVTIMEO, &sock_opt, sizeof(sock_opt));
 
   /* Connect the server of the IP */
-  if(NutTcpConnect(*sock, rip, port) != 0) { NutTcpCloseSocket(*sock); *sock = NULL; *stream = NULL; return 4; }
+  if(0 != NutTcpConnect(*sock, rip, port)) { NutTcpCloseSocket(*sock); *sock = NULL; *stream = NULL; return 4; }
 
   /* Assign a stream to our connected socket */
   *stream = _fdopen((int) *sock, "r+b");
 
   /* Check the returned stream */
-  if(*stream == NULL) { NutTcpCloseSocket(*sock); *sock = NULL; return 5; }
+  if(NULL == *stream) { NutTcpCloseSocket(*sock); *sock = NULL; return 5; }
 
   /* Send the HTTP header according to the chosen method */
-  if(method == METHOD_GET) { fputs("GET", *stream); }
-  if(method == METHOD_POST) { fputs("POST", *stream); }
+  if(METHOD_GET == method) { fputs("GET", *stream); }
+  if(METHOD_POST == method) { fputs("POST", *stream); }
   fputs(" /", *stream);
 
   return 0;
@@ -173,12 +173,12 @@ uint8_t http_request_header_start(char* ip, uint16_t port, int method, TCPSOCKET
 void http_request_header_end(char* host_req, uint32_t content_length, FILE *stream)
 {
   /* Check the input stream */
-  if(stream != NULL)
+  if(NULL != stream)
   {
     /* Send all the fields of the header */
     fputs(HTTP_METHOD_END, stream);
     /* Send the host target if needed */
-    if(host_req!=NULL)
+    if(NULL != host_req)
     {
       fputs(HTTP_HOST_HEAD, stream);
       fputs(host_req, stream);
@@ -189,10 +189,10 @@ void http_request_header_end(char* host_req, uint32_t content_length, FILE *stre
     fputs("Accept: text/html\r\n",stream);
     fputs("Content-Type: application/x-www-form-urlencoded\r\n", stream);
     fputs("Connection: Close\r\n",stream);
-    if(content_length > 0) { fprintf(stream, "Content-Length: %ld\r\n", content_length); }
+    if(0 < content_length) { fprintf(stream, "Content-Length: %ld\r\n", content_length); }
     fputs(HTTP_REQ_END, stream);
     /* Flush the stream to really send the datas */
-    if(content_length == 0 ) { fflush(stream); }
+    if(0 == content_length) { fflush(stream); }
   }
 }
 
@@ -200,9 +200,9 @@ void http_request_close(TCPSOCKET **sock, FILE **stream)
 {
   /* The message has been sent. Now we can close the connection */
   /* Check the pointers and there contents */
-  if(stream != NULL) { if(*stream != NULL) { fflush(*stream); fclose(*stream); *stream = NULL; } }
+  if(NULL != stream) { if(NULL != *stream) { fflush(*stream); fclose(*stream); *stream = NULL; } }
   /* Also close the associated raw socket */
-  if(sock != NULL) { if(*sock != NULL) { NutTcpCloseSocket(*sock); *sock = NULL; } }
+  if(NULL != sock) { if(NULL != *sock) { NutTcpCloseSocket(*sock); *sock = NULL; } }
 }
 
 uint8_t http_status_get(void)
@@ -213,7 +213,7 @@ uint8_t http_status_get(void)
   char* out = NULL;
 
   /* Connect and send the HTTP header */
-  if(http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream) == 0)
+  if(0 == http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream))
   {
     /* Send the URL */
     fputs(LOST_STATUS, stream);
@@ -221,7 +221,7 @@ uint8_t http_status_get(void)
     http_request_header_end("www.lebomb.fr", 0, stream);
     /* Catch the answer */
     buff = malloc(400);
-    if(buff != NULL)
+    if(NULL != buff)
     {
       while(fgets(buff, 400, stream))
       {
@@ -252,17 +252,17 @@ uint8_t http_email_send_once(char* msg)
   char* out = NULL;
 
   /* Connect and send the HTTP header */
-  if(http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream) == 0)
+  if(0 == http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream))
   {
     /* Send the URL */
     fputs(LOST_EMAIL, stream);
     /* and the parameters of the URL */
-    if(msg != NULL) { fputs(msg, stream); }
+    if(NULL != msg) { fputs(msg, stream); }
     /* Send the host target */
     http_request_header_end("www.lebomb.fr", 0, stream);
     buff = malloc(400);
     /* Catch the answer */
-    if(buff != NULL)
+    if(NULL != buff)
     {
       while(fgets(buff, 400, stream))
       {
@@ -291,7 +291,7 @@ uint8_t http_email_send(char* msg)
 
   for(i=0; i<10; i++)
   {
-    if(http_email_send_once(msg) == 0) { return 0; }
+    if(0 == http_email_send_once(msg)) { return 0; }
     NutSleep(1000);
   }
 

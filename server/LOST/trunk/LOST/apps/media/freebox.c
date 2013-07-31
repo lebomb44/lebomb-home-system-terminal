@@ -23,13 +23,13 @@ int freebox_form(FILE * stream, REQUEST * req)
   FILE *stream_out = NULL;
   int nb = 0;
   int i;
-  char *name=NULL;
-  char *value=NULL;
+  char *name = NULL;
+  char *value = NULL;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
-  if(http_request_header_start("212.027.040.254", 80, METHOD_GET, &sock_out, &stream_out) == 0)
+  if(0 == http_request_header_start("212.027.040.254", 80, METHOD_GET, &sock_out, &stream_out))
   {
     /* Build the beginning of the URL */
     fputs("pub/remote_control?", stream_out);
@@ -43,10 +43,10 @@ int freebox_form(FILE * stream, REQUEST * req)
       /* Get the parameter value */
       value = NutHttpGetParameterValue(req, i);
       /* Check the received parameters */
-      if((name != NULL) && (value != NULL))
+      if((NULL != name) && (NULL != value))
       {
         /* Add a separator only if it is not the first parameter */
-        if(i>0) { fputs("&", stream_out); }
+        if(0 < i) { fputs("&", stream_out); }
         /* Concat this name */
         fputs(name, stream_out);
         /* Concat the separator */

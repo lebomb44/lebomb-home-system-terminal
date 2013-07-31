@@ -279,25 +279,25 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
   uint32_t tmo=0;
 
   /* Check arguments */
-  if(txlen > 0) { if(txdata == NULL) { return I2C_ERR_BAD_TX_ARG; } }
-  if(rxlen > 0) { if(rxdata == NULL) { return I2C_ERR_BAD_RX_ARG; } }
-  if(!((txlen == 0) ^ (rxlen == 0))) { return I2C_ERR_BAD_TRX_ARG; }
+  if(0 < txlen) { if(NULL == txdata) { return I2C_ERR_BAD_TX_ARG; } }
+  if(0 < rxlen) { if(NULL == rxdata) { return I2C_ERR_BAD_RX_ARG; } }
+  if(!((0 == txlen) ^ (0 == rxlen))) { return I2C_ERR_BAD_TRX_ARG; }
 
   /* Wait for the hardware interface to be free */
-  tmo = 100; while(tmo > 0) { if(i2c_mutex == 0) { i2c_mutex = 1; break; } else { NutSleep(1); tmo--; } }
+  tmo = 100; while(0 < tmo) { if(0 == i2c_mutex) { i2c_mutex = 1; break; } else { NutSleep(1); tmo--; } }
   /* Return if impossible to take the semaphore : do nothing */
   if(tmo == 0) { return I2C_ERR_IF_LOCKED; }
 
   /* Check the good health of the bus */
-  tmo = 4; while(tmo > 0) { if(((TWSR & 0xF8) == 0xF8) && ((TWCR & _BV(TWSTO)) == 0x00)) { break; } else { i2c_reset(); NutSleep(1); tmo--; } }
+  tmo = 4; while(0 < tmo) { if((0xF8 == (TWSR & 0xF8)) && (0x00 == (TWCR & _BV(TWSTO)))) { break; } else { i2c_reset(); NutSleep(1); tmo--; } }
   /* Return if impossible to force initialization of the bus */
-  if(tmo == 0) { i2c_mutex = 0; return I2C_ERR_BUS; }
+  if(0 == tmo) { i2c_mutex = 0; return I2C_ERR_BUS; }
 
   /* Set all parameters for master mode */
   i2c_mm_sla = sla << 1;
   i2c_mm_adr = adr;
   i2c_mm_err = I2C_ERR_OK;
-  if(rxlen > 0) { i2c_mt_len = 0;     i2c_mr_len = rxlen; }
+  if(0 < rxlen) { i2c_mt_len = 0;     i2c_mr_len = rxlen; }
   else          { i2c_mt_len = txlen; i2c_mr_len = 0;     }
   i2c_mt_idx = 0;
   i2c_mr_idx = 0;
@@ -307,14 +307,14 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
   /* Send a START*/
   TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTA) | _BV(TWEN) | _BV(TWIE);
   /* Wait for the data to be received or sent */
-  if(i2c_mr_len > 0) { tmo = 30; while(tmo > 0) { if(i2c_mr_idx == rxlen) { break; } else { NutSleep(1); tmo--; } } }
-  else               { tmo = 30; while(tmo > 0) { if(i2c_mt_idx == txlen) { break; } else { NutSleep(1); tmo--; } } }
+  if(0 < i2c_mr_len) { tmo = 30; while(0 < tmo) { if(i2c_mr_idx == rxlen) { break; } else { NutSleep(1); tmo--; } } }
+  else               { tmo = 30; while(0 < tmo) { if(i2c_mt_idx == txlen) { break; } else { NutSleep(1); tmo--; } } }
   /* Return if time-out */
-  if(tmo == 0)
+  if(0 == tmo)
   {
     i2c_reset();
     i2c_mutex = 0;
-    if(i2c_mm_err > 0) { return i2c_mm_err; } else { return I2C_ERR_TIMEOUT; }
+    if(0 < i2c_mm_err) { return i2c_mm_err; } else { return I2C_ERR_TIMEOUT; }
   }
 
   i2c_mutex = 0;
@@ -326,7 +326,7 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   uint8_t ret = I2C_ERR_BUS;
   uint8_t try = 3;
 
-  while((try > 0 ) && (ret != I2C_ERR_OK))
+  while((0 < try) && (I2C_ERR_OK != ret))
   {
     /* Do the exchange and check the returned code */
     ret = i2c_transact(sla, addr, 0, NULL, nb, data);
@@ -346,7 +346,7 @@ uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
   uint8_t ret = I2C_ERR_BUS;
   uint8_t try = 3;
 
-  while((try > 0 ) && (ret != I2C_ERR_OK))
+  while((0 < try) && (I2C_ERR_OK != ret))
   {
     /* Do the exchange and check the returned code */
     ret = i2c_transact(sla, addr, nb, data, 0, NULL);

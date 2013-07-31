@@ -82,16 +82,16 @@ uint8_t alarm_action_with_buzzer(char* msg)
 void alarm_perimeter_set(ALARM_TYPE_T type)
 {
   /* Check the argument */
-  if(type >= ALARM_TYPE_MAX) { return; }
+  if(ALARM_TYPE_MAX <= type) { return; }
 
   /* Mode OFF AUTO can only be done if alarm was already in mode ON AUTO */
-  if(type == ALARM_TYPE_OFF_AUTO)   { if(alarm_perimeter.type == ALARM_TYPE_ON_AUTO) { alarm_perimeter.control = 0; } else { return; } }
+  if(ALARM_TYPE_OFF_AUTO == type)   { if(ALARM_TYPE_ON_AUTO == alarm_perimeter.type) { alarm_perimeter.control = 0; } else { return; } }
   /* In any case, user can force OFF manually */
-  if(type == ALARM_TYPE_OFF_MANUAL) { alarm_perimeter.control = 0; }
+  if(ALARM_TYPE_OFF_MANUAL == type) { alarm_perimeter.control = 0; }
   /* Mode ON AUTO can only be done if alarm was NOT already set ON manually */
-  if(type == ALARM_TYPE_ON_AUTO)    { if(alarm_perimeter.type != ALARM_TYPE_ON_MANUAL) { alarm_perimeter.control = 60; } else { return; } }
+  if(ALARM_TYPE_ON_AUTO == type)    { if(ALARM_TYPE_ON_MANUAL != alarm_perimeter.type) { alarm_perimeter.control = 60; } else { return; } }
   /* In any case, user can force ON manually */
-  if(type == ALARM_TYPE_ON_MANUAL)  { alarm_perimeter.control = 60; }
+  if(ALARM_TYPE_ON_MANUAL == type)  { alarm_perimeter.control = 60; }
   /* Save the new mode set */
   alarm_perimeter.type = type;
   /* Reset the trigger status */
@@ -105,8 +105,8 @@ void alarm_perimeter_set(ALARM_TYPE_T type)
   rooms_perimeter_trig_set(0);
   /* Clear Green and Red LEDs */
   room_light_set(ROOM_COULOIR, 0, 0); room_light_set(ROOM_COULOIR, 1, 0);
-  if(type == ALARM_TYPE_OFF_MANUAL) { room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0); }
-  if(type == ALARM_TYPE_ON_MANUAL )
+  if(ALARM_TYPE_OFF_MANUAL == type) { room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0); }
+  if(ALARM_TYPE_ON_MANUAL == type)
   {
     room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0); NutSleep(100); 
 	room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0); NutSleep(100); 
@@ -121,16 +121,16 @@ void alarm_perimeter_set(ALARM_TYPE_T type)
 void alarm_volume_set(ALARM_TYPE_T type)
 {
   /* Check the argument */
-  if(type >= ALARM_TYPE_MAX) { return; }
+  if(ALARM_TYPE_MAX <= type) { return; }
 
   /* Mode OFF AUTO can only be done if alarm was already in mode ON AUTO */
-  if(type == ALARM_TYPE_OFF_AUTO)   { if(alarm_volume.type == ALARM_TYPE_ON_AUTO) { alarm_volume.control = 0; } else { return; } }
+  if(ALARM_TYPE_OFF_AUTO == type)   { if(ALARM_TYPE_ON_AUTO == alarm_volume.type) { alarm_volume.control = 0; } else { return; } }
   /* In any case, user can force OFF manually */
-  if(type == ALARM_TYPE_OFF_MANUAL) { alarm_volume.control = 0; }
+  if(ALARM_TYPE_OFF_MANUAL == type) { alarm_volume.control = 0; }
   /* Mode ON AUTO can only be done if alarm was NOT already set ON manually */
-  if(type == ALARM_TYPE_ON_AUTO)    { if(alarm_volume.type != ALARM_TYPE_ON_MANUAL) { alarm_volume.control = 60; } else { return; } }
+  if(ALARM_TYPE_ON_AUTO == type)    { if(ALARM_TYPE_ON_MANUAL != alarm_volume.type) { alarm_volume.control = 60; } else { return; } }
   /* In any case, user can force ON manually */
-  if(type == ALARM_TYPE_ON_MANUAL)  { alarm_volume.control = 60; }
+  if(ALARM_TYPE_ON_MANUAL == type)  { alarm_volume.control = 60; }
   /* Save the new mode set */
   alarm_volume.type = type;
   /* Reset the trigger status */
@@ -149,12 +149,12 @@ void alarm_volume_set(ALARM_TYPE_T type)
 void alarm_simulation_set(ALARM_TYPE_T type)
 {
   /* Check the argument */
-  if(type >= ALARM_TYPE_MAX) { return; }
+  if(ALARM_TYPE_MAX <= type) { return; }
 
   /* Mode OFF in any case */
-  if((type == ALARM_TYPE_OFF_MANUAL) || (type == ALARM_TYPE_OFF_AUTO)) { alarm_simulation.control = 0; }
+  if((ALARM_TYPE_OFF_MANUAL == type) || (ALARM_TYPE_OFF_AUTO == type)) { alarm_simulation.control = 0; }
   /* Mode ON in any case */
-  if((type == ALARM_TYPE_ON_MANUAL ) || (type == ALARM_TYPE_ON_AUTO )) { alarm_simulation.control = 1; }
+  if((ALARM_TYPE_ON_MANUAL == type ) || (ALARM_TYPE_ON_AUTO == type)) { alarm_simulation.control = 1; }
   /* Save the new mode set */
   alarm_simulation.type = type;
   /* Reset the trigger status */
@@ -172,24 +172,24 @@ THREAD(AlarmD, arg)
   while(1)
   {
     /* Only update the status if the alarm did not trigger */
-    if(alarm_perimeter.trig == 0)
+    if(0 == alarm_perimeter.trig)
     {
       /* If alarm is enabled */
-      if(alarm_perimeter.control == 1) { alarm_perimeter.status = rooms_perimeter_trig_get(&(alarm_perimeter.room)); }
+      if(1 == alarm_perimeter.control) { alarm_perimeter.status = rooms_perimeter_trig_get(&(alarm_perimeter.room)); }
       /* If alarm is NOT enabled */
       else { alarm_perimeter.status  = rooms_perimeter_status_get(&(alarm_perimeter.room)); }
     }
-    if(alarm_volume.trig == 0)
+    if(0 == alarm_volume.trig)
     {
       /* If alarm is enabled */
-      if(alarm_volume.control == 1) { alarm_volume.status = /* FIXME rooms_volume_trig_get(&(alarm_volume.room)) |*/ volume_status_get(); }
+      if(1 == alarm_volume.control) { alarm_volume.status = /* FIXME rooms_volume_trig_get(&(alarm_volume.room)) |*/ volume_status_get(); }
       /* If alarm is NOT enabled */
       else { alarm_volume.status  = /* FIXME rooms_volume_status_get(&(alarm_volume.room)) |*/ volume_status_get(); }
     }
-    if(alarm_simulation.trig == 0)
+    if(0 == alarm_simulation.trig)
     {
       /* If alarm is enabled */
-      if(alarm_simulation.control == 1) { alarm_simulation.status = rooms_simulation_status_get(&(alarm_simulation.room)); }
+      if(1 == alarm_simulation.control) { alarm_simulation.status = rooms_simulation_status_get(&(alarm_simulation.room)); }
       /* If alarm is NOT enabled */
       else { alarm_simulation.status  = rooms_simulation_status_get(&(alarm_simulation.room)); }
     }
@@ -198,25 +198,25 @@ THREAD(AlarmD, arg)
     /* Manage the watchdog ENABLE / DISABLE for the alarm PERIMETER */
     /* ************************************************************ */
     /* Step : Alarm enabled */
-    if(alarm_perimeter.control == 1)
+    if(1 == alarm_perimeter.control)
     {
       /* Step : Alarm trig watchdog is going to finish */
-      if(alarm_perimeter.trig == 2)
+      if(2 == alarm_perimeter.trig)
       {
         sprintf(msg, "Alarme-Perimetre-%d-%s", alarm_perimeter.status, room_name_get(alarm_perimeter.room));
         alarm_action_with_buzzer(msg);
       }
       /* Step : Alarm trig watchdog finished : Set Red LED */
-      if(alarm_perimeter.trig == 1) { room_light_set(ROOM_COULOIR, 1, 1); }
+      if(1 == alarm_perimeter.trig) { room_light_set(ROOM_COULOIR, 1, 1); }
       /* Step : Alarm trig during watchdog */
-      if(alarm_perimeter.trig > 1)
+      if(1 < alarm_perimeter.trig)
       {
         alarm_perimeter.trig--;
         /* Toggle Red LED */
         room_light_set(ROOM_COULOIR, 1, (alarm_perimeter.trig) & 0x01);
       }
       /* Step : Alarm did not triggered. Check to status */
-      if(alarm_perimeter.trig == 0)
+      if(0 == alarm_perimeter.trig)
       {
         /* Detection */
         if(alarm_perimeter.status)
@@ -229,10 +229,10 @@ THREAD(AlarmD, arg)
       }
     }
     /* Step : Alarm control is going to be enabled */
-    if(alarm_perimeter.control == 2)
+    if(2 == alarm_perimeter.control)
     {
       /* Only activate the alarm if all the shutters are closed */
-      if(rooms_perimeter_status_get(NULL) == 0)
+      if(0 == rooms_perimeter_status_get(NULL))
       {
         alarm_perimeter.control--;
         rooms_perimeter_control_set(0x01); /* FIXME Perimeter control only available on the first input in ROOM Nodes */
@@ -248,10 +248,10 @@ THREAD(AlarmD, arg)
       }
     }
     /* Step before enabling the alarm */
-    if(alarm_perimeter.control == 3)
+    if(3 == alarm_perimeter.control)
     {
       /* Check if all the shutters are closed else send alert message */
-      if(alarm_perimeter.status != 0)
+      if(0 != alarm_perimeter.status)
       {
         sprintf(msg, "Impossible-d-activer-Alarme-Perimetre-%d-%s", alarm_perimeter.status, room_name_get(alarm_perimeter.room));
         alarm_action(msg);
@@ -259,7 +259,7 @@ THREAD(AlarmD, arg)
     }
     /* Force all shutters down when enabling alarm perimeter */
     /* Step : Alarm control during watchdog for being enabled */
-    if(alarm_perimeter.control >  2)
+    if(2 < alarm_perimeter.control)
     {
       alarm_perimeter.control--;
       /* Toggle Green LED */
@@ -272,25 +272,25 @@ THREAD(AlarmD, arg)
     /* Manage the watchdog ENABLE / DISABLE for the alarm VOLUME */
     /* ********************************************************* */
     /* Step : Alarm enabled */
-    if(alarm_volume.control == 1)
+    if(1 == alarm_volume.control)
     {
       /* Step : Alarm trig watchdog is going to finish */
-      if(alarm_volume.trig == 2)
+      if(2 == alarm_volume.trig)
       {
         sprintf(msg, "Alarme-Volume-%d-%s", alarm_volume.status, room_name_get(alarm_volume.room));
         alarm_action_with_buzzer(msg);
       }
       /* Step : Alarm trig watchdog finished : Set Red LED */
-      if(alarm_volume.trig == 1) { room_light_set(ROOM_COULOIR, 1, 1); }
+      if(1 == alarm_volume.trig) { room_light_set(ROOM_COULOIR, 1, 1); }
       /* Step : Alarm trig during watchdog */
-      if(alarm_volume.trig > 1)
+      if(1 < alarm_volume.trig)
       {
         alarm_volume.trig--;
         /* Toggle Red LED */
         room_light_set(ROOM_COULOIR, 1, (alarm_volume.trig) & 0x01);
       }
       /* Step : Alarm did not triggered. Check to status */
-      if(alarm_volume.trig == 0)
+      if(0 == alarm_volume.trig)
       {
         if(alarm_volume.status)
         {
@@ -301,7 +301,7 @@ THREAD(AlarmD, arg)
       }
     }
     /* Step : Alarm control is going to be enabled */
-    if(alarm_volume.control == 2)
+    if(2 == alarm_volume.control)
     {
       /* Only activate the alarm if nothing is moving */
       if(/* FIXME (rooms_volume_status_get(NULL) == 0) &&*/ (!volume_status_get()))
@@ -313,7 +313,7 @@ THREAD(AlarmD, arg)
       }
     }
     /* Step before enabling the alarm */
-    if(alarm_volume.control == 3)
+    if(3 == alarm_volume.control)
     {
       /* Check if nothing is moving else send alert message */
       if((alarm_volume.status != 0) || volume_status_get())
@@ -323,7 +323,7 @@ THREAD(AlarmD, arg)
       }
     }
     /* Step : Alarm control during watchdog for being enabled */
-    if(alarm_volume.control >  2)
+    if(2 < alarm_volume.control)
     {
       alarm_volume.control--;
       /* Toggle Green LED */
@@ -336,30 +336,30 @@ THREAD(AlarmD, arg)
 
 int alarm_form(FILE * stream, REQUEST * req)
 {
-  char* arg_s=NULL;
+  char* arg_s = NULL;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
-  if (req->req_method == METHOD_GET)
+  if(METHOD_GET == req->req_method)
   {
     arg_s = NutHttpGetParameter(req, "perimeter_ctrl");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", alarm_perimeter.control); }
-      else { if(strtoul(arg_s, NULL, 10) > 0) { alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); } else { alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); } }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", alarm_perimeter.control); }
+      else { if(0 < strtoul(arg_s, NULL, 10)) { alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); } else { alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); } }
     }
     arg_s = NutHttpGetParameter(req, "volume_ctrl");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", alarm_volume.control); }
-      else { if(strtoul(arg_s, NULL, 10) > 0) { alarm_volume_set(ALARM_TYPE_ON_MANUAL); } else { alarm_volume_set(ALARM_TYPE_OFF_MANUAL); } }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", alarm_volume.control); }
+      else { if(0 < strtoul(arg_s, NULL, 10)) { alarm_volume_set(ALARM_TYPE_ON_MANUAL); } else { alarm_volume_set(ALARM_TYPE_OFF_MANUAL); } }
     }
     arg_s = NutHttpGetParameter(req, "simulation_ctrl");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", alarm_simulation.control); }
-      else { if(strtoul(arg_s, NULL, 10) > 0) { alarm_simulation_set(ALARM_TYPE_ON_MANUAL); } else { alarm_simulation_set(ALARM_TYPE_OFF_MANUAL); } }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", alarm_simulation.control); }
+      else { if(0 < strtoul(arg_s, NULL, 10)) { alarm_simulation_set(ALARM_TYPE_ON_MANUAL); } else { alarm_simulation_set(ALARM_TYPE_OFF_MANUAL); } }
     }
 
     fflush(stream);

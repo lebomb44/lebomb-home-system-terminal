@@ -24,7 +24,7 @@ uint8_t atmosphere_init(void)
 
 int atmosphere_form(FILE * stream, REQUEST * req)
 {
-  char* atm=0;
+  char* atm = NULL;
   unsigned int value = ATM_UNKNOWN;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");

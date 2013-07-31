@@ -27,7 +27,7 @@ void fbus_sync(void)
 uint8_t fbus_header(uint8_t *frame, uint8_t cmd, uint16_t data_len)
 {
   /* Check the frame pointer */
-  if(frame == NULL) { return 1; }
+  if(NULL == frame) { return 1; }
   /* Cable link */
   frame[0] = 0x1E;
   /* Destination device (cell phone) */
@@ -54,7 +54,7 @@ uint8_t fbus_trailer(uint8_t * frame, uint8_t seq)
   uint16_t pos = 0;
 
   /* Check the frame pointer */
-  if(frame == NULL) { return 1; }
+  if(NULL == frame) { return 1; }
   /* Get the length from the frame */
   pos = frame[4]; pos = pos << 8; pos += frame[5];
   /* Add header */
@@ -76,11 +76,11 @@ uint8_t fbus_send(uint8_t cmd, uint16_t data_len, uint8_t *data, uint8_t seq)
   uint8_t *frame = NULL;
 
   /* Check the data pointer to send */
-  if(data == NULL) { return 1; }
+  if(NULL == data) { return 1; }
   /* Allocate the frame buffer */
   frame = malloc(fbus_frame_len(data_len));
   /* Check the frame pointer */
-  if(frame == NULL) { return 2; }
+  if(NULL == frame) { return 2; }
   /* Build the frame header */
   fbus_header(frame, cmd, data_len);
   /* Copy the data in the frame buffer */
@@ -103,28 +103,28 @@ uint8_t fbus_receive(uint8_t *cmd, uint16_t *data_len, uint8_t **data, uint8_t *
   uint8_t xor2 = 0;
   int ret = 0;
 
-  if(fgetc(uart1_fd) != 0x1E) { /*printf("ERROR header0\n");*/ return 1; }
-  if(fgetc(uart1_fd) != 0x0C) { /*printf("ERROR header1\n");*/ return 2; }
-  if(fgetc(uart1_fd) != 0x00) { /*printf("ERROR header2\n");*/ return 3; }
+  if(0x1E != fgetc(uart1_fd)) { /*printf("ERROR header0\n");*/ return 1; }
+  if(0x0C != fgetc(uart1_fd)) { /*printf("ERROR header1\n");*/ return 2; }
+  if(0x00 != fgetc(uart1_fd)) { /*printf("ERROR header2\n");*/ return 3; }
 
-  ret = fgetc(uart1_fd); if(ret<0) { /*printf("ERROR data lenH\n");*/ return 4; }
+  ret = fgetc(uart1_fd); if(0>ret) { /*printf("ERROR data lenH\n");*/ return 4; }
   *cmd = ret;
 
-  ret = fgetc(uart1_fd); if(ret<0) { /*printf("ERROR data lenH\n");*/ return 5; }
+  ret = fgetc(uart1_fd); if(0>ret) { /*printf("ERROR data lenH\n");*/ return 5; }
   *data_len = (((ret)&0x00FF)<<8);
-  ret = fgetc(uart1_fd); if(ret<0) { /*printf("ERROR data lenL\n");*/ return 6; }
+  ret = fgetc(uart1_fd); if(0>ret) { /*printf("ERROR data lenL\n");*/ return 6; }
   *data_len = *data_len + ret;
-  if(*data_len<1) { /*printf("ERROR data len\n");*/ return 7; }
+  if(1>*data_len) { /*printf("ERROR data len\n");*/ return 7; }
   *data_len = (*data_len) - 1;
 
   buff_len = (*data_len) + ((*data_len)+1)%2 + 1 + 2;
   *data = malloc(buff_len);
-  if(*data == NULL) { /*printf("ERROR malloc\n");*/ return 8; }
+  if(NULL == *data) { /*printf("ERROR malloc\n");*/ return 8; }
 
   for(i=0; i<buff_len; i++)
   {
     ret = fgetc(uart1_fd);
-    if(ret<0) { /*printf("ERROR data\n");*/ free(*data); *data=NULL; return 9; }
+    if(0>ret) { /*printf("ERROR data\n");*/ free(*data); *data=NULL; return 9; }
     else { (*data)[i] = ret; }
   }
 
@@ -147,9 +147,9 @@ uint8_t fbus_receive_ack(uint8_t _cmd)
   uint8_t *data = NULL;
   uint8_t seq = 0;
 
-  if(fbus_receive(&cmd, &data_len, &data, &seq) != 0) { /*printf("ERROR receive\n");*/ return 1; }
-  if(cmd != NOKIA_3310_ACK) { free(data); /*printf("ERROR ack\n");*/ return 2; }
-  if(data_len != 1) { free(data); /*printf("ERROR ack len\n");*/ return 3; }
+  if(0 != fbus_receive(&cmd, &data_len, &data, &seq)) { /*printf("ERROR receive\n");*/ return 1; }
+  if(NOKIA_3310_ACK != cmd) { free(data); /*printf("ERROR ack\n");*/ return 2; }
+  if(1 != data_len) { free(data); /*printf("ERROR ack len\n");*/ return 3; }
   if(data[0] != _cmd) { free(data); /*printf("ERROR ack cmd\n");*/ return 4; }
 //if(seq != 0x00) { free(data); /*printf("ERROR ack seq\n");*/ return 5; }
   free(data);
@@ -185,31 +185,31 @@ uint8_t gsm_status_get(void)
   fbus_sync();
 
   ret = fbus_send(NOKIA_3310_NETW, 5, data, 0x60);
-  if(ret != 0) { return (10+ret); }
+  if(0 != ret) { return (10+ret); }
 // 1E 00 0C 0A 00 06 00 01 00 70 01 60 13 1D
 
   ret = fbus_receive_ack(NOKIA_3310_NETW);
-  if(ret != 0) { return (20+ret); }
+  if(0 != ret) { return (20+ret); }
 // 1E 0C 00 7F 00 02 0A 00 14 71
 
   ret = fbus_receive(&cmd, &data_len, &data_recv, &seq);
-  if(ret != 0) { return (30+ret); }
+  if(0 != ret) { return (30+ret); }
 // 0x0071, ?,?,?,length,netstatus,netsel,cellIDH,cellIDL,lacH,lacL,netcode,netcode,netcode
 // 1E 0C 00 0A 00 15 01 08 00 71 01 00 01 0B 01 02 0C 97 1D 4D 02 F8 01 00 00 01 47 00 4B 40
-  if(data_recv == NULL) { return 1; }
+  if(NULL == data_recv) { return 1; }
   /* Check the received data */
   ret = 0;
-  if(cmd != NOKIA_3310_NETW) { ret = 2; }
-  if(data_len != 20)         { ret = 3; }
-  if((data_recv[8] != 0x01) && (data_recv[8] != 0x02))   { ret = 4; } // Home Network
-  if(data_recv[9] != 0x02)   { ret = 5; } // Automatic Network selection
+  if(NOKIA_3310_NETW != cmd) { ret = 2; }
+  if(20 != data_len)         { ret = 3; }
+  if((0x01 != data_recv[8]) && (0x02 != data_recv[8]))   { ret = 4; } // Home Network
+  if(0x02 != data_recv[9])   { ret = 5; } // Automatic Network selection
 
   free(data_recv);
-  if(ret != 0) { return ret; }
+  if(0 != ret) { return ret; }
 
   data[0] = NOKIA_3310_NETW;
   ret = fbus_send(NOKIA_3310_ACK, 1, data, 0x01);
-  if(ret != 0) { return (40+ret); }
+  if(0 != ret) { return (40+ret); }
 
   return 0;
 }
@@ -227,25 +227,25 @@ uint8_t gsm_version_get(void)
   /* Synchronize the phone for the start of FBUS exchange */
   fbus_sync();
 
-  if(fbus_send(NOKIA_3310_HWSWV, 6, data, 0x60) != 0) { return 1; }
+  if(0 != fbus_send(NOKIA_3310_HWSWV, 6, data, 0x60)) { return 1; }
 // 1E 00 0C D1 00 07 00 01 00 03 00 01 60 00 72 D5
 
-  if(fbus_receive_ack(NOKIA_3310_HWSWV) != 0) { return 2; }
+  if(0 != fbus_receive_ack(NOKIA_3310_HWSWV)) { return 2; }
 // 1E 0C 00 7F 00 02 D1 00 CF 71
 
-  if(fbus_receive(&cmd, &data_len, &data_recv, &seq) != 0) { return 3; }
+  if(0 != fbus_receive(&cmd, &data_len, &data_recv, &seq)) { return 3; }
 // NOKIA 3310 : 1E 0C 00 D2 00 26 01 00 00 03 56 20 30 34 2E 33 35 0A 32 39 2D 30 33 2D 30 31 0A 4E 48 4D 2D 35 0A 28 63 29 20 4E 4D 50 2E 00 01 42 3A A8
 // NOKIA 3330 : 1E 0C 00 D2 00 26 01 00 00 03 56 20 30 34 2E 35 30 0A 31 32 2D 31 30 2D 30 31 0A 4E 48 4D 2D 36 0A 28 63 29 20 4E 4D 50 2E 00 01 XX XX XX
-  if(data_recv != NULL)
+  if(NULL != data_recv)
   {
     free(data_recv);
-    if(cmd != (NOKIA_3310_HWSWV+1)) { return 4; }
-    if(data_len != 37) { return 5; }
+    if((NOKIA_3310_HWSWV+1) != cmd) { return 4; }
+    if(37 != data_len) { return 5; }
   }
   else { return 6; }
 
   data[0] = NOKIA_3310_HWSWV;
-  if(fbus_send(NOKIA_3310_ACK, 1, data, 0x01) != 0) { return 7; }
+  if(0 != fbus_send(NOKIA_3310_ACK, 1, data, 0x01)) { return 7; }
 // 1E 00 0C 7F 00 02 D2 01 C0 7C
 
   return 0;
@@ -282,7 +282,7 @@ uint8_t gsm_sms_send_with_tel(char * tel, char * msg)
 // Hi All. This message was sent through F-Bus. Cool!!
 
   /* Check the phone number */
-  if(strnlen(tel, 10) != 10) { /*printf ("TEL bad len\n");*/ return 1; }
+  if(10 != strnlen(tel, 10)) { /*printf ("TEL bad len\n");*/ return 1; }
   /* Get the message length */
   up_msg_len = strnlen(msg, 160);
   /* Force end of message */
@@ -292,7 +292,7 @@ uint8_t gsm_sms_send_with_tel(char * tel, char * msg)
   /* Alloc the frame buffer */
   frame = malloc(fbus_frame_len(8+10+7+10+7+p_msg_len+1));
   /* Check the frame pointer */
-  if(frame == NULL) { return 2; }
+  if(NULL == frame) { return 2; }
   /* Build the frame header */
   fbus_header(frame, NOKIA_3310_SMSSEND, 8+10+7+10+7+p_msg_len+1);
   /* Build the data frame header */

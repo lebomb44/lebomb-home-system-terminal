@@ -23,31 +23,31 @@ uint8_t ext_init(void)
 
 int ext_form(FILE * stream, REQUEST * req)
 {
-  char* sla=0;
-  char* addr=0;
-  char* data=0;
-  uint8_t value=0;
-  uint8_t ret=0;
+  char* sla = NULL;
+  char* addr = NULL;
+  char* data = NULL;
+  uint8_t value = 0;
+  uint8_t ret = 0;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
-  if (req->req_method == METHOD_GET)
+  if(METHOD_GET == req->req_method)
   {
     sla = NutHttpGetParameter(req, "sla");
     addr = NutHttpGetParameter(req, "addr");
     data = NutHttpGetParameter(req, "data");
     if(sla && addr && data)
     {
-      if(data[0] == '?')
+      if('?' == data[0])
       {
-        ret=i2c_get(strtoul(sla, NULL, 10), strtoul(addr, NULL, 10), 1, (uint8_t*) &value);
+        ret = i2c_get(strtoul(sla, NULL, 10), strtoul(addr, NULL, 10), 1, (uint8_t*) &value);
         fprintf(stream, "I2C GET (%ld,%ld)(%d) : %d\n", strtoul(sla, NULL, 10), strtoul(addr, NULL, 10), ret, value);
       }
       else
       {
         value = strtoul(data, NULL, 10);
-        ret=i2c_set(strtoul(sla, NULL, 10), strtoul(addr, NULL, 10), 1, (uint8_t*) &value);
+        ret = i2c_set(strtoul(sla, NULL, 10), strtoul(addr, NULL, 10), 1, (uint8_t*) &value);
         fprintf(stream, "I2C SET (%ld,%ld)(%d) : %d\n", strtoul(sla, NULL, 10), strtoul(addr, NULL, 10), ret, value);
       }
     }

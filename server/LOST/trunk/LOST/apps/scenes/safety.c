@@ -294,8 +294,8 @@ THREAD(SafetyGsmD, arg)
   while(1)
   {
     ret = gsm_status_get();
-    if(ret != 0) { if(gsm_nb < 0xFF) { gsm_nb++; } } else { gsm_nb = 0; }
-    if(gsm_nb > 10) { safety_status.gsm = ret; } else { safety_status.gsm = 0; }
+    if(0 != ret) { if(0xFF > gsm_nb) { gsm_nb++; } } else { gsm_nb = 0; }
+    if(10 < gsm_nb) { safety_status.gsm = ret; } else { safety_status.gsm = 0; }
     if(safety_control.gsm)
     {
       if((!(safety_trig.gsm)) && (safety_status.gsm))
@@ -322,8 +322,8 @@ THREAD(SafetyHttpD, arg)
   while(1)
   {
     ret = http_status_get();
-    if(ret != 0) { if(http_nb < 0xFF) { http_nb++; } } else { http_nb = 0; }
-    if(http_nb > 10) { safety_status.http = ret; } else { safety_status.http = 0; }
+    if(0 != ret) { if(0xFF > http_nb) { http_nb++; } } else { http_nb = 0; }
+    if(10 < http_nb) { safety_status.http = ret; } else { safety_status.http = 0; }
     if(safety_control.http)
     {
       if((!(safety_trig.http)) && (safety_status.http))
@@ -340,101 +340,101 @@ THREAD(SafetyHttpD, arg)
 
 int safety_form(FILE * stream, REQUEST * req)
 {
-  char* arg_s=NULL;
+  char* arg_s = NULL;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
-  if (req->req_method == METHOD_GET)
+  if(METHOD_GET == req->req_method)
   {
     arg_s = NutHttpGetParameter(req, "rooms_error_ctrl");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rooms_error); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.rooms_error); }
       else { safety_trig.rooms_error = 0; safety_control.rooms_error = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "rooms_temp_max_ctrl");
     if(arg_s)
     {  
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rooms_temp_max); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.rooms_temp_max); }
       else { safety_trig.rooms_temp_max = 0; buzzer_stop(); safety_control.rooms_temp_max = strtoul(arg_s, NULL, 10); rooms_temp_max_control_set(safety_control.rooms_temp_max); }
     }
     arg_s = NutHttpGetParameter(req, "rooms_temp_max_th");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_value.rooms_temp_max_th); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_value.rooms_temp_max_th); }
       else { safety_value.rooms_temp_max_th = strtoul(arg_s, NULL, 10); rooms_temp_max_th_set(safety_value.rooms_temp_max_th); }
     }
     arg_s = NutHttpGetParameter(req, "rooms_temp_min_ctrl");
     if(arg_s)
     {  
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rooms_temp_min); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.rooms_temp_min); }
       else { safety_trig.rooms_temp_min = 0; safety_control.rooms_temp_min = strtoul(arg_s, NULL, 10); rooms_temp_min_control_set(safety_control.rooms_temp_min); }
     }
     arg_s = NutHttpGetParameter(req, "rooms_temp_min_th");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_value.rooms_temp_min_th); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_value.rooms_temp_min_th); }
       else { safety_value.rooms_temp_min_th = strtoul(arg_s, NULL, 10); rooms_temp_min_th_set(safety_value.rooms_temp_min_th); }
     }
     arg_s = NutHttpGetParameter(req, "rooms_hum_ctrl");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rooms_hum); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.rooms_hum); }
       else { safety_trig.rooms_hum = 0; safety_control.rooms_hum = strtoul(arg_s, NULL, 10); rooms_hum_control_set(safety_control.rooms_hum); }
     }
     arg_s = NutHttpGetParameter(req, "rooms_smoke_ctrl");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rooms_smoke); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.rooms_smoke); }
       else { safety_trig.rooms_smoke = 0; buzzer_stop(); safety_control.rooms_smoke = strtoul(arg_s, NULL, 10); rooms_smoke_control_set(safety_control.rooms_smoke); }
     }
     arg_s = NutHttpGetParameter(req, "ups_temp_ctrl");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.ups_temp); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.ups_temp); }
       else { safety_trig.ups_temp = 0; buzzer_stop(); safety_control.ups_temp = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "ups_temp_th");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_value.ups_temp_th); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_value.ups_temp_th); }
       else { safety_value.ups_temp_th = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "ups_power_ctrl");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.ups_power); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.ups_power); }
       else { safety_trig.ups_power = 0; safety_control.ups_power = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "rack_temp_ctrl");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rack_temp); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.rack_temp); }
       else { safety_trig.rack_temp = 0; buzzer_stop(); safety_control.rack_temp = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "rack_temp_th");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_value.rack_temp_th); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_value.rack_temp_th); }
       else { safety_value.rack_temp_th = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "rack_alarm_ctrl");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.rack_alarm); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.rack_alarm); }
       else { safety_trig.rack_alarm = 0; buzzer_stop(); safety_control.rack_alarm = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "http_ctrl");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.http); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.http); }
       else { safety_trig.http = 0; safety_control.http = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "gsm_ctrl");
     if(arg_s)
     {
-      if(arg_s[0] == '?') { fprintf(stream, "%d", safety_control.gsm); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.gsm); }
       else { safety_trig.gsm = 0; safety_control.gsm = strtoul(arg_s, NULL, 10); }
     }
 

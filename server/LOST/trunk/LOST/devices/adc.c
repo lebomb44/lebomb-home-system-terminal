@@ -25,7 +25,7 @@ uint16_t adc_get(uint8_t channel)
 {
   uint16_t temp_ADC = 0;
 
-  if(channel > 3) { return 0; }
+  if(3 < channel) { return 0; }
   /* Set the channel number in the hardware */
   ADMUX=(0x40+channel);
   NutSleep(100);

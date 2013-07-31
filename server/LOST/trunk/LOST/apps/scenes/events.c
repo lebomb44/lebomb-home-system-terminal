@@ -32,7 +32,7 @@ Event_T event_list[EVENT_MAX];
 
 uint8_t events_init(void)
 {
-  EVENT_T i=0;
+  EVENT_T i = 0;
 
   for(i=0; i<EVENT_MAX; i++)
   {
@@ -71,7 +71,7 @@ uint8_t events_init(void)
 
 void event_set(EVENT_T event, void (*fcnt_start)(void), void (*fcnt_end)(void))
 {
-  if(event < EVENT_MAX)
+  if(EVENT_MAX > event)
   {
     event_list[event].fcnt_start = fcnt_start;
     event_list[event].fcnt_end   = fcnt_end;
@@ -80,16 +80,16 @@ void event_set(EVENT_T event, void (*fcnt_start)(void), void (*fcnt_end)(void))
 
 void event_action(EVENT_T event, EVENT_STATUS_T status)
 {
-  if(event < EVENT_MAX)
+  if(EVENT_MAX > event)
   {
-    if(status == EVENT_STATUS_ON ) { if(event_list[event].fcnt_start != NULL) { (*(event_list[event].fcnt_start))(); } }
-    if(status == EVENT_STATUS_OFF) { if(event_list[event].fcnt_end   != NULL) { (*(event_list[event].fcnt_end))()  ; } }
+    if(EVENT_STATUS_ON  == status) { if(NULL != event_list[event].fcnt_start) { (*(event_list[event].fcnt_start))(); } }
+    if(EVENT_STATUS_OFF == status) { if(NULL != event_list[event].fcnt_end  ) { (*(event_list[event].fcnt_end))()  ; } }
   }
 }
 
 THREAD(EventsD, arg)
 {
-  EVENT_T i=0;
+  EVENT_T i = 0;
   time_t tt;
   tm time_now;
 
@@ -106,16 +106,16 @@ THREAD(EventsD, arg)
     for(i=0; i<EVENT_MAX; i++)
     {
       /* If the event is enabled */
-      if(event_list[i].status == EVENT_STATUS_ON)
+      if(EVENT_STATUS_ON == event_list[i].status)
       {
         /* Check for a specific recurrence or for a one-shot event */
-        if((event_list[i].rec & (1<<time_now.tm_wday)) || (event_list[i].rec == 0))
+        if((event_list[i].rec & (1<<time_now.tm_wday)) || (0 == event_list[i].rec))
         {
           /* If the event is programmed for now */
-          if((event_list[i].hour_start == time_now.tm_hour) && (event_list[i].minute_start == time_now.tm_min) && (time_now.tm_sec < 30))
+          if((event_list[i].hour_start == time_now.tm_hour) && (event_list[i].minute_start == time_now.tm_min) && (30 > time_now.tm_sec))
           {
             /* Check the process action and execute it */
-        	if(event_list[i].status_start == EVENT_STATUS_ON) { event_action(i, EVENT_STATUS_ON); }
+        	if(EVENT_STATUS_ON == event_list[i].status_start) { event_action(i, EVENT_STATUS_ON); }
             /* Now go to next step */
             event_list[i].status = EVENT_STATUS_IN_PROGRESS;
           }
@@ -123,16 +123,16 @@ THREAD(EventsD, arg)
       }
 
       /* If the event has already started */
-      if(event_list[i].status == EVENT_STATUS_IN_PROGRESS)
+      if(EVENT_STATUS_IN_PROGRESS == event_list[i].status)
       {
         /* Maybe, there is something to do if the end function is defined */
-        if(event_list[i].fcnt_end != NULL)
+        if(NULL != event_list[i].fcnt_end)
         {
           /* If the end is programmed for now */
           if((event_list[i].hour_end == time_now.tm_hour) && (event_list[i].minute_end == time_now.tm_min) && (30 < time_now.tm_sec))
           {
             /* Execute the end function (this function has already been checked) */
-        	if(event_list[i].status_end   == EVENT_STATUS_ON) { event_action(i, EVENT_STATUS_OFF); }
+        	if(EVENT_STATUS_ON == event_list[i].status_end) { event_action(i, EVENT_STATUS_OFF); }
             /* If there is a recurrence, we should let the event enabled. Else it is a one-shot event */
             if(event_list[i].rec) { event_list[i].status = EVENT_STATUS_ON; }
             else { event_list[i].status = EVENT_STATUS_OFF; }
@@ -166,60 +166,60 @@ int events_form(FILE * stream, REQUEST * req)
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
-  if (req->req_method == METHOD_GET)
+  if(METHOD_GET == req->req_method)
   {
     event_s = NutHttpGetParameter(req, "event");
     if(event_s)
     {
       event = strtoul(event_s, NULL, 10);
-      if(event < EVENT_MAX)
+      if(EVENT_MAX > event)
       {
         arg_s = NutHttpGetParameter(req, "status");
         if(arg_s)
         {
-          if(arg_s[0] == '?') { fprintf(stream, "%d", event_list[event].status); }
+          if('?' == arg_s[0]) { fprintf(stream, "%d", event_list[event].status); }
           else { event_list[event].status = strtoul(arg_s, NULL, 10); }
         }
         arg_s = NutHttpGetParameter(req, "ss");
         if(arg_s)
         {
-          if(arg_s[0] == '?') { fprintf(stream, "%d", event_list[event].status_start); }
+          if('?' == arg_s[0]) { fprintf(stream, "%d", event_list[event].status_start); }
           else { event_list[event].status_start = strtoul(arg_s, NULL, 10); }
         }
         arg_s = NutHttpGetParameter(req, "hs");
         if(arg_s)
         {
-          if(arg_s[0] == '?') { fprintf(stream, "%d", event_list[event].hour_start); }
+          if('?' == arg_s[0]) { fprintf(stream, "%d", event_list[event].hour_start); }
           else { event_list[event].hour_start = strtoul(arg_s, NULL, 10); }
         }
         arg_s = NutHttpGetParameter(req, "ms");
         if(arg_s)
         {
-          if(arg_s[0] == '?') { fprintf(stream, "%d", event_list[event].minute_start); }
+          if('?' == arg_s[0]) { fprintf(stream, "%d", event_list[event].minute_start); }
           else { event_list[event].minute_start = strtoul(arg_s, NULL, 10); }
         }
         arg_s = NutHttpGetParameter(req, "se");
         if(arg_s)
         {
-          if(arg_s[0] == '?') { fprintf(stream, "%d", event_list[event].status_end); }
+          if('?' == arg_s[0]) { fprintf(stream, "%d", event_list[event].status_end); }
           else { event_list[event].status_end = strtoul(arg_s, NULL, 10); }
         }
         arg_s = NutHttpGetParameter(req, "he");
         if(arg_s)
         {
-          if(arg_s[0] == '?') { fprintf(stream, "%d", event_list[event].hour_end); }
+          if('?' == arg_s[0]) { fprintf(stream, "%d", event_list[event].hour_end); }
           else { event_list[event].hour_end = strtoul(arg_s, NULL, 10); }
         }
         arg_s = NutHttpGetParameter(req, "me");
         if(arg_s)
         {
-          if(arg_s[0] == '?') { fprintf(stream, "%d", event_list[event].minute_end); }
+          if('?' == arg_s[0]) { fprintf(stream, "%d", event_list[event].minute_end); }
           else { event_list[event].minute_end = strtoul(arg_s, NULL, 10); }
         }
         arg_s = NutHttpGetParameter(req, "rec");
         if(arg_s)
         {
-          if(arg_s[0] == '?') { fprintf(stream, "%d", event_list[event].rec); }
+          if('?' == arg_s[0]) { fprintf(stream, "%d", event_list[event].rec); }
           else
           {
             value_s = NutHttpGetParameter(req, "value");
@@ -242,7 +242,7 @@ int events_form(FILE * stream, REQUEST * req)
 
 int events_xml_get(FILE * stream)
 {
-  uint8_t i=0;
+  uint8_t i = 0;
   char elt[10];
   for(i=0; i<EVENT_MAX; i++)
   {

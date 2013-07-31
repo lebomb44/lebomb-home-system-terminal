@@ -29,17 +29,17 @@ uint8_t power_init(void)
 
 void power_set(POWER_T power, uint8_t status)
 {
-  if(power == POWER_0) { GpioPinSet(POWER0_PORT, POWER0_BIT, status); }
-  if(power == POWER_1) { GpioPinSet(POWER1_PORT, POWER1_BIT, status); }
-  if(power == POWER_2) { GpioPinSet(POWER2_PORT, POWER2_BIT, status); }
-  if(power == POWER_3) { GpioPinSet(POWER3_PORT, POWER3_BIT, status); }
+  if(POWER_0 == power) { GpioPinSet(POWER0_PORT, POWER0_BIT, status); }
+  if(POWER_1 == power) { GpioPinSet(POWER1_PORT, POWER1_BIT, status); }
+  if(POWER_2 == power) { GpioPinSet(POWER2_PORT, POWER2_BIT, status); }
+  if(POWER_3 == power) { GpioPinSet(POWER3_PORT, POWER3_BIT, status); }
 }
 
 uint8_t power_get(POWER_T power)
 {
-  if(power == POWER_0) { return GpioPinGet(POWER0_PORT, POWER0_BIT); }
-  if(power == POWER_1) { return GpioPinGet(POWER1_PORT, POWER1_BIT); }
-  if(power == POWER_2) { return GpioPinGet(POWER2_PORT, POWER2_BIT); }
-  if(power == POWER_3) { return GpioPinGet(POWER3_PORT, POWER3_BIT); }
+  if(POWER_0 == power) { return GpioPinGet(POWER0_PORT, POWER0_BIT); }
+  if(POWER_1 == power) { return GpioPinGet(POWER1_PORT, POWER1_BIT); }
+  if(POWER_2 == power) { return GpioPinGet(POWER2_PORT, POWER2_BIT); }
+  if(POWER_3 == power) { return GpioPinGet(POWER3_PORT, POWER3_BIT); }
   return 0;
 }

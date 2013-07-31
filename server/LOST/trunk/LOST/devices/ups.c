@@ -40,7 +40,7 @@ uint16_t ups_temp_get(void)
 
 uint8_t ups_power_status_get(void)
 {
-  if(GpioPinGet(UPS_POWER_PORT, UPS_POWER_BIT) == 0)
+  if(0 == GpioPinGet(UPS_POWER_PORT, UPS_POWER_BIT))
   {
     return 0;
   }

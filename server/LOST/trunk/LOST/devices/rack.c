@@ -40,7 +40,7 @@ uint16_t rack_temp_get(void)
 
 uint8_t rack_alarm_status_get(void)
 {
-  if(GpioPinGet(RACK_ALARM_PORT, RACK_ALARM_BIT) == 0)
+  if(0 == GpioPinGet(RACK_ALARM_PORT, RACK_ALARM_BIT))
   {
     return 0;
   }

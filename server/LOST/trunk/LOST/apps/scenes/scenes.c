@@ -18,15 +18,15 @@ uint8_t scenes_init(void)
 
 int scenes_form(FILE * stream, REQUEST * req)
 {
-  char* scene_s=NULL;
+  char* scene_s = NULL;
   unsigned int scene = 0;
-  char* status_s=NULL;
+  char* status_s = NULL;
   unsigned int status = 0;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
-  if (req->req_method == METHOD_GET)
+  if(METHOD_GET == req->req_method)
   {
     scene_s = NutHttpGetParameter(req, "scene");
     status_s = NutHttpGetParameter(req, "status");
@@ -34,7 +34,7 @@ int scenes_form(FILE * stream, REQUEST * req)
     {
       scene = strtoul(scene_s, NULL, 10);
       status = strtoul(status_s, NULL, 10);
-      if(scene < EVENT_MAX) { event_action(scene, status); }
+      if(EVENT_MAX > scene) { event_action(scene, status); }
     }
     fflush(stream);
   }

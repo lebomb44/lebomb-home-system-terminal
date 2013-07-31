@@ -270,8 +270,8 @@ THREAD(RoomD, arg)
       if(room_error[i] == 0) { break; }
     }
     /* FIXME Only reset if none of the nodes are accessible */
-    if(i == ROOM_MAX) { trig_reset++; } else { trig_reset = 0; }
-    if(trig_reset > 10) { NutReset(); }
+    if(ROOM_MAX == i) { trig_reset++; } else { trig_reset = 0; }
+    if(10 < trig_reset) { NutReset(); }
     NutSleep(10000);
   }
 }
@@ -298,13 +298,13 @@ int rooms_form(FILE * stream, REQUEST * req)
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
-  if (req->req_method == METHOD_GET)
+  if(METHOD_GET == req->req_method)
   {
     room_s = NutHttpGetParameter(req, "room");
     if(room_s)
     {
       room = strtoul(room_s, NULL, 10);
-      if(room <= ROOM_MAX)
+      if(ROOM_MAX >= room)
       {
         ir_type_s = NutHttpGetParameter(req, "ir_type");
         clim_s    = NutHttpGetParameter(req, "clim");
@@ -326,7 +326,7 @@ int rooms_form(FILE * stream, REQUEST * req)
         }
         if(clim_s)
         {
-          if(value_s[0] == '?') { fprintf(stream, "%d", room_clim_get(room)); }
+          if('?' == value_s[0]) { fprintf(stream, "%d", room_clim_get(room)); }
           else
           {
             room_clim_set(room, strtoul(clim_s, NULL, 10));
@@ -335,10 +335,10 @@ int rooms_form(FILE * stream, REQUEST * req)
         if(light_s && value_s)
         {
           light = strtoul(light_s, NULL, 10);
-          if(value_s[0] == '?') { fprintf(stream, "%d", room_light_get(room, light)); }
+          if('?' == value_s[0]) { fprintf(stream, "%d", room_light_get(room, light)); }
           else
           {
-            if(light < ROOM_LIGHT_MAX)
+            if(ROOM_LIGHT_MAX > light)
             {
               room_light_set(room, light, strtoul(value_s, NULL, 10));
             }
@@ -354,10 +354,10 @@ int rooms_form(FILE * stream, REQUEST * req)
         if(shutter_s && value_s)
         {
           shutter = strtoul(shutter_s, NULL, 10);
-          if(value_s[0] == '?') { fprintf(stream, "%d", room_shutter_get(room, shutter)); }
+          if('?' == value_s[0]) { fprintf(stream, "%d", room_shutter_get(room, shutter)); }
           else
           {
-            if(shutter < ROOM_SHUTTER_MAX)
+            if(ROOM_SHUTTER_MAX > shutter)
             {
               room_shutter_set(room, shutter, strtoul(value_s, NULL, 10));
             }
@@ -373,10 +373,10 @@ int rooms_form(FILE * stream, REQUEST * req)
         if(heater_s && value_s)
         {
           heater = strtoul(heater_s, NULL, 10);
-          if(value_s[0] == '?') { fprintf(stream, "%d", room_heater_get(room, heater)); }
+          if('?' == value_s[0]) { fprintf(stream, "%d", room_heater_get(room, heater)); }
           else
           {
-            if(heater < ROOM_HEATER_MAX)
+            if(ROOM_HEATER_MAX > heater)
             {
               room_heater_set(room, heater, strtoul(value_s, NULL, 10));
             }
@@ -392,10 +392,10 @@ int rooms_form(FILE * stream, REQUEST * req)
         if(elec_s && value_s)
         {
           elec = strtoul(elec_s, NULL, 10);
-          if(value_s[0] == '?') { fprintf(stream, "%d", room_elec_get(room, elec)); }
+          if('?' == value_s[0]) { fprintf(stream, "%d", room_elec_get(room, elec)); }
           else
           {
-            if(elec < ROOM_ELEC_MAX)
+            if(ROOM_ELEC_MAX > elec)
             {
               room_elec_set(room, elec, strtoul(value_s, NULL, 10));
             }
@@ -417,8 +417,8 @@ int rooms_form(FILE * stream, REQUEST * req)
 
 int rooms_xml_get(FILE * stream)
 {
-  uint8_t i=0;
-  uint8_t j=0;
+  uint8_t i = 0;
+  uint8_t j = 0;
   char room_xml[10];
   char arg_xml[20];
 

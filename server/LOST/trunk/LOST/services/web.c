@@ -21,12 +21,14 @@ int web_ASPCallback (char *pASPFunction, FILE *stream)
 {
   time_t tt;
   tm time_now;
-  if (strncmp_P(pASPFunction, PSTR("host_name"), sizeof("host_name")) == 0) {
+  if(0 == strncmp_P(pASPFunction, PSTR("host_name"), sizeof("host_name")))
+  {
     fprintf_P(stream, PSTR("%s"), confos.hostname);
     return(0);
   }
 
-  else if (strncmp_P(pASPFunction, PSTR("usr_time"), sizeof("usr_time")) == 0) {
+  else if(0 == strncmp_P(pASPFunction, PSTR("usr_time"), sizeof("usr_time")))
+  {
     tt = time(NULL);
     localtime_r(&tt, &time_now);
     fprintf_P(stream, PSTR("%02d:%02d:%02d %04d-%02d-%02d"), time_now.tm_hour, time_now.tm_min, time_now.tm_sec, time_now.tm_year+1900, time_now.tm_mon+1, time_now.tm_mday);

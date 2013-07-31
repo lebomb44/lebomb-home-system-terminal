@@ -19,7 +19,7 @@ uint8_t buzzer_init(void)
 
 void buzzer_start(uint16_t duration)
 {
-  if(buzzer_time == 0)
+  if(0 == buzzer_time)
   {
     /* FIXME GpioPinSetHigh(BUZZER_PORT, BUZZER_BIT); */
     buzzer_time = duration;
@@ -34,7 +34,7 @@ void buzzer_stop(void)
 
 void buzzer_update(void)
 {
-  if(buzzer_time > 0) { buzzer_time--; }
+  if(0 < buzzer_time) { buzzer_time--; }
   else { buzzer_stop(); }
 }
 
