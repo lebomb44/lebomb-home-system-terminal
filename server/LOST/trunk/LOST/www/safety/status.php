@@ -1,7 +1,13 @@
 <?php
 header('Content-type: text/html');
 
-$fp = fopen ("bt_ip.txt", "w");
+if(!isset($_GET["tab"]))
+{
+  echo "ERROR : Arguments tab not set";
+  exit();
+}
+  
+$fp = fopen ($_GET["tab"]."_ip.txt", "w");
 if($fp === false)
 {
   print("Impossible to open file\r\n");
