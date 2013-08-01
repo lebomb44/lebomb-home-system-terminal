@@ -45,7 +45,7 @@
     //echo $r['safety_ups_temp'].",";
     echo "<safety_rack>".$r['safety_rack_temp']."</safety_rack>";
     //echo $r['safety_rack_temp']."]";
-    if($r['start'] == "1") { echo "<start>yes</start>"; }
+    if("1" == $r['start']) { echo "<start>yes</start>"; }
     echo "</sample".$nb.">";
     $nb++;
   }

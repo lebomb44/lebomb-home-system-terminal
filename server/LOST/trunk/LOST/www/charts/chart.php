@@ -103,9 +103,9 @@ function indexLoading(evt)
 
   xhr.onreadystatechange = function()
   {
-    if((xhr.readyState == 4))
+    if((4 == xhr.readyState))
     {
-      if(xhr.status == 200)
+      if(200 == xhr.status)
       {
         xml = xhr.responseXML;
         if(xml)

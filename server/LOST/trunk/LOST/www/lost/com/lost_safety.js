@@ -25,7 +25,7 @@ function lost_safety_power_update(xml)
     {
       if(in_id2)
       {
-        if(in_id2.firstChild.nodeValue == 1)
+        if(1 == in_id2.firstChild.nodeValue)
         {
           if(out_sc_id1) { out_sc_id1.innerHTML = "ON"; }
           if(out_sc_id2) { out_sc_id2.style.backgroundColor = "#FFFF99"; }
@@ -77,7 +77,7 @@ function lost_safety_rooms_temp_max_status_set()
     if(elt_Th)
     {
       elt_Th.disabled = status;
-      if(status == true)
+      if(true == status)
       { // *5*100)/1024)-32)*140)/252
         lost_set(url_safety+"rooms_temp_max_th="+String(Number((((((elt_Th.value)*252)/140)+32)*1024)/5)/100));
       }
@@ -100,7 +100,7 @@ function lost_safety_rooms_temp_min_status_set()
     if(elt_Th)
     {
       elt_Th.disabled = status;
-      if(status == true)
+      if(true == status)
       { // *5*100)/1024)-32)*140)/252
         lost_set(url_safety+"rooms_temp_min_th="+String(Number((((((elt_Th.value)*252)/140)+32)*1024)/5)/100));
       }
@@ -143,7 +143,7 @@ function lost_safety_ups_temp_status_set()
     if(elt_Th)
     {
       elt_Th.disabled = status;
-      if(status == true)
+      if(true == status)
       { // *5*100)/1024)-32)*140)/252
         lost_set(url_safety+"ups_temp_th="+String(Number((((((elt_Th.value)*252)/140)+32)*1024)/5)/100));
       }
@@ -176,7 +176,7 @@ function lost_safety_rack_temp_status_set()
     if(elt_Th)
     {
       elt_Th.disabled = status;
-      if(status == true)
+      if(true == status)
       { // *5*100)/1024)-32)*140)/252
         lost_set(url_safety+"rack_temp_th="+String(Number((((((elt_Th.value)*252)/140)+32)*1024)/5)/100));
       }

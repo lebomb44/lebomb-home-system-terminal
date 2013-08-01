@@ -19,10 +19,10 @@ MnM Insert POST Form
     echo "ERROR : Arguments tab not set";
     exit();
   }
-for($i=0; $i<10; $i++)
-{
-  echo "<TR><TD>room".$i."_temp_value</TD><TD><INPUT type=text name='room".sprintf('%02d',$i)."_temp_value' value='".$i."'></TD></TR>";
-}
+  for($i=0; $i<10; $i++)
+  {
+    echo "<TR><TD>room".$i."_temp_value</TD><TD><INPUT type=text name='room".sprintf('%02d',$i)."_temp_value' value='".$i."'></TD></TR>";
+  }
 ?>
 <TR><TD>safety_ups_temp</TD><TD><INPUT type=text name="safety_ups_temp" value="123"></TD></TR>
 <TR><TD>safety_rack_temp</TD><TD><INPUT type=text name="safety_rack_temp" value="231"></TD></TR>

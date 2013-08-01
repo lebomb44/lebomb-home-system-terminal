@@ -8,24 +8,24 @@ if(!isset($_GET["tab"]))
 }
   
 $fp = fopen ($_GET["tab"]."_ip.txt", "w");
-if($fp === false)
+if(false === $fp)
 {
   print("Impossible to open file\r\n");
   return;
 }
-if(ftruncate($fp,0) === false)
+if(false === ftruncate($fp,0))
 {
   print("Impossible to trunc file\r\n");
   fclose($fp);
   return;
 }
-if(fputs($fp, $_SERVER["REMOTE_ADDR"]) === false)
+if(false === fputs($fp, $_SERVER["REMOTE_ADDR"]))
 {
   print("Impossible to write in file\r\n");
   fclose($fp);
   return;
 }
-if(fclose($fp) === false)
+if(false === fclose($fp))
 {
   print("Impossible to close file\r\n");
   return;

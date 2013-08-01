@@ -1,14 +1,14 @@
 <?php
-  if(!isset($_GET["tab"]))
-  {
-    echo "ERROR : Arguments tab not set";
-    exit();
-  }
+if(!isset($_GET["tab"]))
+{
+  echo "ERROR : Arguments tab not set";
+  exit();
+}
 
-  define("NOM","lebomb");         //monnom = login chez free
-  define("PASSE","genesis");     // monpasse=votre mot de passe free
-  define("SERVEUR","sql.free.fr");// adresse du serveur free
-  define("BASE","lebomb");       //nombase = login chez free
+define("NOM","lebomb");         //monnom = login chez free
+define("PASSE","genesis");     // monpasse=votre mot de passe free
+define("SERVEUR","sql.free.fr");// adresse du serveur free
+define("BASE","lebomb");       //nombase = login chez free
 
 // Connection to the serveur
 $link = mysql_connect(SERVEUR,NOM,PASSE);

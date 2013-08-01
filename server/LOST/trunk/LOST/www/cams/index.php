@@ -53,7 +53,7 @@ $fichier= array(); // on declare le tableau contenant le nom des fichiers
 $dossier= array(); // on declare le tableau contenant le nom des dossiers
 
 while($element = readdir($dir)) {
-	if(($element != '.') && ($element != '..') && ($element != '.htaccess')  && ($element != 'index.php')) {
+	if(('.' != $element) && ('..' != $element) && ('.htaccess' != $element)  && ('index.php' != $element)) {
 		if (!is_dir($dir_nom.'/'.$element)) {$fichier[] = $element;}
 		else {$dossier[] = $element;}
 	}
