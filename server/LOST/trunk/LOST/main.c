@@ -47,7 +47,7 @@ int xml_get_form(FILE * stream, REQUEST * req)
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "application/xml", -1);
 
-  if (req->req_method == METHOD_GET)
+  if(METHOD_GET == req->req_method)
   {
     fprintf_XML_header(stream);
     fprintf_XML_elt_header("Lost", stream);
