@@ -30,7 +30,7 @@ int atmosphere_form(FILE * stream, REQUEST * req)
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
-  if (req->req_method == METHOD_GET)
+  if(METHOD_GET == req->req_method)
   {
     atm = NutHttpGetParameter(req, "atm");
     if(atm)

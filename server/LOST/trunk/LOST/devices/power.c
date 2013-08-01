@@ -41,5 +41,6 @@ uint8_t power_get(POWER_T power)
   if(POWER_1 == power) { return GpioPinGet(POWER1_PORT, POWER1_BIT); }
   if(POWER_2 == power) { return GpioPinGet(POWER2_PORT, POWER2_BIT); }
   if(POWER_3 == power) { return GpioPinGet(POWER3_PORT, POWER3_BIT); }
+
   return 0;
 }

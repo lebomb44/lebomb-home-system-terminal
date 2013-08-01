@@ -22,7 +22,7 @@ int freebox_form(FILE * stream, REQUEST * req)
   TCPSOCKET *sock_out = NULL;
   FILE *stream_out = NULL;
   int nb = 0;
-  int i;
+  int i = 0;
   char *name = NULL;
   char *value = NULL;
 
