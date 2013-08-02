@@ -189,7 +189,7 @@ function lost_trig2bg_update(xml, node, id)
     var in_id2 = in_id1.getElementsByTagName(id+"_Trig")[0];
     if(in_id2)
     {
-      if(Boolean(Number(in_id2.firstChild.nodeValue)) == true)
+      if(true == Boolean(Number(in_id2.firstChild.nodeValue)))
       {
         if(out_id1) { out_id1.style.backgroundColor = "#FF0000"; }
         if(out_id2) { out_id2.style.backgroundColor = "#FF0000"; }
@@ -237,7 +237,7 @@ function lost_elt_F2C_update(xml, node, id)
       if(out_id)
       {
         out_id.disabled = Boolean(Number(in_id2.firstChild.nodeValue));
-        if(Boolean(Number(in_id2.firstChild.nodeValue)) == true) { lost_select_F2C_update(xml, node, id+"_Th"); }
+        if(true == Boolean(Number(in_id2.firstChild.nodeValue))) { lost_select_F2C_update(xml, node, id+"_Th"); }
       }
     }
   }
