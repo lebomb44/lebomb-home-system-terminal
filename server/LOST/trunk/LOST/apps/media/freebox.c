@@ -25,39 +25,43 @@ int freebox_form(FILE * stream, REQUEST * req)
   int i = 0;
   char *name = NULL;
   char *value = NULL;
+  uint8_t ret = 0;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
-  if(0 == http_request_header_start("212.027.040.254", 80, METHOD_GET, &sock_out, &stream_out))
+  /* Connect and send the HTTP header */
+  ret = http_request_header_start("212.027.040.254", 80, METHOD_GET, &sock_out, &stream_out);
+  if(0 != ret) { return (10+ret); }
+
+  /* Build the beginning of the URL */
+  fputs("pub/remote_control?", stream_out);
+  /* Count the arguments in the request */
+  nb = NutHttpGetParameterCount(req);
+  /* Build the new request with all the arguments coming from the request */
+  for (i=0; i<nb; i++)
   {
-    /* Build the beginning of the URL */
-    fputs("pub/remote_control?", stream_out);
-    /* Count the arguments in the request */
-    nb = NutHttpGetParameterCount(req);
-    /* Build the new request with all the arguments coming from the request */
-    for (i=0; i<nb; i++)
+    /* Get the parameter name */
+    name = NutHttpGetParameterName(req, i);
+    /* Get the parameter value */
+    value = NutHttpGetParameterValue(req, i);
+    /* Check the received parameters */
+    if((NULL != name) && (NULL != value))
     {
-      /* Get the parameter name */
-      name = NutHttpGetParameterName(req, i);
-      /* Get the parameter value */
-      value = NutHttpGetParameterValue(req, i);
-      /* Check the received parameters */
-      if((NULL != name) && (NULL != value))
-      {
-        /* Add a separator only if it is not the first parameter */
-        if(0 < i) { fputs("&", stream_out); }
-        /* Concat this name */
-        fputs(name, stream_out);
-        /* Concat the separator */
-        fputs("=", stream_out);
-        /* Concat this value */
-        fputs(value, stream_out);
-      }
+      /* Add a separator only if it is not the first parameter */
+      if(0 < i) { fputs("&", stream_out); }
+      /* Concat this name */
+      fputs(name, stream_out);
+      /* Concat the separator */
+      fputs("=", stream_out);
+      /* Concat this value */
+      fputs(value, stream_out);
     }
-    http_request_header_end(NULL, 0, stream_out);
-    http_request_close(&sock_out, &stream_out);
   }
+  /* Send the host target */
+  http_request_header_end(NULL, 0, stream_out);
+  /* Close the connection : raw socket and the corresponding stream */
+  http_request_close(&sock_out, &stream_out);
 
   return 0;
 }
