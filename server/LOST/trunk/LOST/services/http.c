@@ -49,7 +49,7 @@ uint8_t http_init(void)
 THREAD(HttpD, arg)
 {
   TCPSOCKET *sock = NULL;
-  u_long to = 30000;
+  u_long to = 0;
   int ret = 0;
   FILE *stream = NULL;
 
@@ -70,6 +70,11 @@ THREAD(HttpD, arg)
       NutSleep(100);
       continue;
     }
+    /* Set send timeout */
+    to = 10000;
+    ret = NutTcpSetSockOpt(sock, SO_SNDTIMEO, &to, sizeof(to));
+    /* Set receive timeout */
+    to = 30000;
     ret = NutTcpSetSockOpt(sock, SO_RCVTIMEO, &to, sizeof(to));
     if(0 == ret)
     {
@@ -211,37 +216,40 @@ uint8_t http_status_get(void)
   FILE *stream = NULL;
   char* buff = NULL;
   char* out = NULL;
+  uint8_t ret = 0;
 
   /* Connect and send the HTTP header */
-  if(0 == http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream))
+  ret = http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream);
+  if(0 != ret) { return (ret+10); }
+
+  /* Send the URL */
+  fputs(LOST_STATUS, stream);
+  /* Send the host target */
+  http_request_header_end("www.lebomb.fr", 0, stream);
+
+  /* Catch the answer */
+  buff = malloc(400);
+  if(NULL == buff) { http_request_close(&sock, &stream); return 1; }
+  while(fgets(buff, 400, stream))
   {
-    /* Send the URL */
-    fputs(LOST_STATUS, stream);
-    /* Send the host target */
-    http_request_header_end("www.lebomb.fr", 0, stream);
-    /* Catch the answer */
-    buff = malloc(400);
-    if(NULL != buff)
-    {
-      while(fgets(buff, 400, stream))
-      {
-        /* Force the end of the string */
-        buff[399] = '\0';
-        /* On each string search the good answer */
-        out = strstr(buff, "LOST safety.http_status OK");
-        /* If the good answer is found, we can break the loop */
-        if(out) { break; }
-      }
-      /* The analyze is finished, so free the answer buffer */
-      free(buff);
-    }
-    /* Close the connection : raw socket and the corresponding stream */
-    http_request_close(&sock, &stream);
+    /* Force the end of the string */
+    buff[399] = '\0';
+    /* On each string search the good answer */
+    out = strstr(buff, "LOST safety.http_status OK");
+    /* If the good answer is found, we can break the loop */
+    if(out) { break; }
   }
+  /* The analyze is finished, so free the answer buffer */
+  free(buff);
+
+  /* Close the connection : raw socket and the corresponding stream */
+  http_request_close(&sock, &stream);
+
   /* Build the return status */
   if(out) { return 0; }
 
-  return 1;
+  /* The expected keyword was not found, so return error */
+  return 2;
 }
 
 uint8_t http_email_send_once(char* msg)
@@ -250,50 +258,56 @@ uint8_t http_email_send_once(char* msg)
   FILE *stream = NULL;
   char* buff = NULL;
   char* out = NULL;
+  uint8_t ret = 0;
 
   /* Connect and send the HTTP header */
-  if(0 == http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream))
+  ret = http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream);
+  if(0 != ret) { return (ret+10); }
+
+  /* Send the URL */
+  fputs(LOST_EMAIL, stream);
+  /* and the parameters of the URL */
+  if(NULL != msg) { fputs(msg, stream); }
+  /* Send the host target */
+  http_request_header_end("www.lebomb.fr", 0, stream);
+
+  /* Catch the answer */
+  buff = malloc(400);
+  if(NULL == buff) { http_request_close(&sock, &stream); return 1; }
+  while(fgets(buff, 400, stream))
   {
-    /* Send the URL */
-    fputs(LOST_EMAIL, stream);
-    /* and the parameters of the URL */
-    if(NULL != msg) { fputs(msg, stream); }
-    /* Send the host target */
-    http_request_header_end("www.lebomb.fr", 0, stream);
-    buff = malloc(400);
-    /* Catch the answer */
-    if(NULL != buff)
-    {
-      while(fgets(buff, 400, stream))
-      {
-        /* Force the end of the string */
-        buff[399] = '\0';
-        /* On each string search the good answer */
-        out = strstr(buff, "LOST Email OK");
-        /* If the good answer is found, we can break the loop */
-        if(out) { break; }
-      }
-      /* The analyze is finished, so free the answer buffer */
-      free(buff);
-    }
-    /* Close the connection : raw socket and the corresponding stream */
-    http_request_close(&sock, &stream);
+    /* Force the end of the string */
+    buff[399] = '\0';
+    /* On each string search the good answer */
+    out = strstr(buff, "LOST Email OK");
+    /* If the good answer is found, we can break the loop */
+    if(out) { break; }
   }
+  /* The analyze is finished, so free the answer buffer */
+  free(buff);
+
+  /* Close the connection : raw socket and the corresponding stream */
+  http_request_close(&sock, &stream);
+
   /* Build the return status */
   if(out) { return 0; }
 
-  return 1;
+  /* The expected keyword was not found, so return error */
+  return 2;
 }
 
 uint8_t http_email_send(char* msg)
 {
   uint8_t i = 0;
 
+  /* Try many times to send email */
   for(i=0; i<10; i++)
   {
+    /* Check if the email was correctly sent */
     if(0 == http_email_send_once(msg)) { return 0; }
     NutSleep(1000);
   }
 
+  /* After many tries, email failed. So return error */
   return 1;
 }

@@ -45,46 +45,50 @@ uint8_t sql_send_once(uint8_t start)
   uint8_t i = 0;
   char* buff = NULL;
   char* out = NULL;
+  uint8_t ret = 0;
 
   /* Connect and send the HTTP header */
-  if(0 == http_request_header_start("212.27.63.116", 80, METHOD_POST, &sock, &stream))
+  ret = http_request_header_start("212.27.63.116", 80, METHOD_POST, &sock, &stream);
+  if(0 != ret) { return (ret+10); }
+
+  /* Send the URL */
+  fputs(LOST_INSERT, stream);
+  /* Send the host target */
+  http_request_header_end("lebomb.free.fr", ((sizeof("roomXX.temp_value=XXX")-1)*ROOM_MAX)+ROOM_MAX-1+sizeof("&safety.ups_temp=XXXXX")-1+sizeof("&safety.rack_temp=XXXXX")-1+sizeof("&start=XXX")-1, stream);
+  /* Build the POST request */
+  for(i=0; i<ROOM_MAX; i++)
   {
-    /* Send the URL */
-    fputs(LOST_INSERT, stream);
-    /* Send the host target */
-    http_request_header_end("lebomb.free.fr", ((sizeof("roomXX.temp_value=XXX")-1)*ROOM_MAX)+ROOM_MAX-1+sizeof("&safety.ups_temp=XXXXX")-1+sizeof("&safety.rack_temp=XXXXX")-1+sizeof("&start=XXX")-1, stream);
-    /* Build the POST request */
-    for(i=0; i<ROOM_MAX; i++)
-    {
-      if(0<i) { fputs("&", stream); }
-      fprintf(stream, "room%02d_temp_value=%03d", i, room_temp_value_get(i));
-    }
-    fprintf(stream, "&safety_ups_temp=%05d", safety_ups_temp_value_get());
-    fprintf(stream, "&safety_rack_temp=%05d", safety_rack_temp_value_get());
-    fprintf(stream, "&start=%03d", start);
-    fflush(stream);
-    /* Catch the answer */
-    buff = malloc(400);
-    if(NULL != buff)
-    {
-      while(fgets(buff, 400, stream))
-      {
-        /* Force the end of the string */
-        buff[399] = '\0';
-        /* On each string search the good answer */
-        out = strstr(buff, "SQL Insert OK");
-        /* If the good answer is found, we can break the loop */
-        if(out) { break; }
-      }
-      /* The analyze is finished, so free the answer buffer */
-      free(buff);
-    }
-    http_request_close(&sock, &stream);
+    if(0<i) { fputs("&", stream); }
+    fprintf(stream, "room%02d_temp_value=%03d", i, room_temp_value_get(i));
   }
+  fprintf(stream, "&safety_ups_temp=%05d", safety_ups_temp_value_get());
+  fprintf(stream, "&safety_rack_temp=%05d", safety_rack_temp_value_get());
+  fprintf(stream, "&start=%03d", start);
+  fflush(stream);
+
+  /* Catch the answer */
+  buff = malloc(400);
+  if(NULL == buff) { http_request_close(&sock, &stream); return 1; }
+  while(fgets(buff, 400, stream))
+  {
+    /* Force the end of the string */
+    buff[399] = '\0';
+    /* On each string search the good answer */
+    out = strstr(buff, "SQL Insert OK");
+    /* If the good answer is found, we can break the loop */
+    if(out) { break; }
+  }
+  /* The analyze is finished, so free the answer buffer */
+  free(buff);
+
+  /* Close the connection : raw socket and the corresponding stream */
+  http_request_close(&sock, &stream);
+
   /* Build the return status */
   if(out) { return 0; }
 
-  return 1;
+  /* The expected keyword was not found, so return error */
+  return 2;
 }
 
 void sql_send(uint8_t start)
