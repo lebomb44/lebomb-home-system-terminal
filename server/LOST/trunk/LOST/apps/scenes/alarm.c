@@ -282,7 +282,7 @@ THREAD(AlarmD, arg)
     if(2 == alarm_perimeter.control)
     {
       /* Only activate the alarm if all the shutters are closed */
-      if(0 == rooms_perimeter_status_get(NULL))
+      if(0 == alarm_perimeter.status)
       {
         rooms_perimeter_control_set(0x01); /* FIXME Perimeter control only available on the first input in ROOM Nodes */
         room_perimeter_control_set(ROOM_SALON, 0x07); /* FIXME But we have the 3 shutters of the SALON available */
@@ -299,7 +299,7 @@ THREAD(AlarmD, arg)
     if(3 == alarm_perimeter.control)
     {
       /* Check if all the shutters are closed else send alert message */
-      if(0 != alarm_perimeter.status)
+      if(alarm_perimeter.status)
       {
         sprintf(msg, "Impossible-d-activer-Alarme-Perimetre-%d-%s", alarm_perimeter.status, room_name_get(alarm_perimeter.room));
         alarm_action(msg);
@@ -352,7 +352,7 @@ THREAD(AlarmD, arg)
     if(2 == alarm_volume.control)
     {
       /* Only activate the alarm if nothing is moving */
-      if(/* FIXME (rooms_volume_status_get(NULL) == 0) &&*/ (!volume_status_get()))
+      if(0 == alarm_volume.status)
       {
         /* FIXME rooms_volume_control_set(0x00); Volume not yet available in ROOM Nodes */
         alarm_volume.control = 1;
@@ -362,7 +362,7 @@ THREAD(AlarmD, arg)
     if(3 == alarm_volume.control)
     {
       /* Check if nothing is moving else send alert message */
-      if((alarm_volume.status != 0) || volume_status_get())
+      if(alarm_volume.status)
       {
         sprintf(msg, "Impossible-d-activer-Alarme-Volume-%d-%s", alarm_volume.status, room_name_get(alarm_volume.room));
         alarm_action(msg);
