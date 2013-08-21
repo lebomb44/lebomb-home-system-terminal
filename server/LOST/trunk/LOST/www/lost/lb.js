@@ -1644,11 +1644,11 @@ document.write("\
 
 printEventInfo(EVENT_SHUTTERS_ALL         , "Tous"               );
 printEventInfo(EVENT_SHUTTERS_UPSTAIRS    , "Etage"              );
-printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS  , "Rez de ChaussÃ©"     );
-printEventInfo(EVENT_SHUTTERS_C1          , "Marine"             );
-printEventInfo(EVENT_SHUTTERS_C2          , "M&M"                );
-printEventInfo(EVENT_SHUTTERS_C3          , "Amis"               );
-printEventInfo(EVENT_SHUTTERS_C4          , "Dressing"           );
+printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS  , "Rez de Chaussé"     );
+printEventInfo(EVENT_SHUTTERS_C1          , "Chambre 1"          );
+printEventInfo(EVENT_SHUTTERS_C2          , "Chambre 2"          );
+printEventInfo(EVENT_SHUTTERS_C3          , "Chambre 3"          );
+printEventInfo(EVENT_SHUTTERS_C4          , "Chambre 4"          );
 printEventInfo(EVENT_ALARM_ALL            , "Toutes"             );
 printEventInfo(EVENT_ALARM_PERIMETER_CHECK, "Perimetrique"       );
 printEventInfo(EVENT_ALARM_PERIMETER      , "Perimetrique Auto"  );
