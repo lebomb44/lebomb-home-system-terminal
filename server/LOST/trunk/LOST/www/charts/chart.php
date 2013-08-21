@@ -18,7 +18,7 @@ var lastDateV = new Date(0);
 <?php
 if(isset($_GET["tab"]))
 {
-  echo "var tab = \"".intval($_GET["tab"])."\";\n";
+  echo "var tab = \"".$_GET["tab"]."\";\n";
 }
 else
 {
