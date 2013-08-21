@@ -250,7 +250,6 @@ void rooms_elec_set              (               uint8_t no, uint8_t value) { if
 
 THREAD(RoomD, arg)
 {
-  uint8_t trig_reset = 0;
   uint8_t i = 0;
 
   arg = arg;
