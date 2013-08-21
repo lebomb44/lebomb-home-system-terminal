@@ -21,7 +21,7 @@ if(!mysql_select_db(BASE,$link)) { echo "Impossible to select the DB".mysql_erro
 
 // Build the SQL request
 // Build the header
-$request= "INSERT INTO ".$_GET["tab"])." (DATE, ";
+$request= "INSERT INTO ".$_GET["tab"]." (DATE, ";
 // Add the names of the parameters
 for($i=0; $i<10; $i++)
 {
