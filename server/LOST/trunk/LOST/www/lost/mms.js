@@ -1593,7 +1593,7 @@ document.write("\
                 <li><a href=\"#_Event"+EVENT_ALARM_PERIMETER+"\"><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\">Périmétrique</a></li>\
                 <li><a href=\"#_Event"+EVENT_ALARM_PERIMETER_CHECK+"\"><img class=\"picto\" src=\""+lost_icons_path+"perimetre.jpg\">Périmétrique Auto</a></li>\
                 <li><a href=\"#_Event"+EVENT_ALARM_VOLUME+"\"><img class=\"picto\" src=\""+lost_icons_path+"volume.jpg\">Volumétrique</a></li>\
-                <li><a href=\"#_Event"+EVENT_SIMU+"\"><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\">Simulation Presence</a></li>\
+                <li><a href=\"#_Event"+EVENT_SIMU+"\"><img class=\"picto\" src=\""+lost_icons_path+"man.jpg\">Simulation Présence</a></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
@@ -1655,7 +1655,7 @@ document.write("\
 
 printEventInfo(EVENT_SHUTTERS_ALL         , "Tous"               );
 printEventInfo(EVENT_SHUTTERS_UPSTAIRS    , "Etage"              );
-printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS  , "Rez de Chaussé"     );
+printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS  , "Rez de ChaussÃ©"     );
 printEventInfo(EVENT_SHUTTERS_C1          , "Marine"             );
 printEventInfo(EVENT_SHUTTERS_C2          , "M&M"                );
 printEventInfo(EVENT_SHUTTERS_C3          , "Amis"               );

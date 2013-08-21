@@ -1091,9 +1091,9 @@ document.write("\
         <legend>Volets</legend>\
         <ul class=\"iArrow\">\
             <li id=\"Scene"+String(EVENT_SHUTTERS_ALL)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_ALL , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_ALL , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"volet.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_ALL)+"_Status\">Unknown</span>Tous</li>\
-            <li id=\"Scene"+String(EVENT_SHUTTERS_C1)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C1   , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C1  , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_MARINE)+"_Status\">Unknown</span>Chambre 1</li>\
-            <li id=\"Scene"+String(EVENT_SHUTTERS_C2)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C2   , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C2  , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_MM)+"_Status\">Unknown</span>Chambre 2</li>\
-            <li id=\"Scene"+String(EVENT_SHUTTERS_C3)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C3   , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C3  , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_FRIENDS)+"_Status\">Unknown</span>Chambre 3</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_C1)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C1   , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C1  , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_C1)+"_Status\">Unknown</span>Chambre 1</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_C2)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C2   , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C2  , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_C2)+"_Status\">Unknown</span>Chambre 2</li>\
+            <li id=\"Scene"+String(EVENT_SHUTTERS_C3)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C3   , EVENT_STATUS_OFF);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_SHUTTERS_C3  , EVENT_STATUS_ON);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"lit.jpg\"><span id=\"Scene"+String(EVENT_SHUTTERS_C3)+"_Status\">Unknown</span>Chambre 3</li>\
         </ul>\
         <legend>Alarme</legend>\
         <ul class=\"iArrow\">\
@@ -1644,11 +1644,11 @@ document.write("\
 
 printEventInfo(EVENT_SHUTTERS_ALL         , "Tous"               );
 printEventInfo(EVENT_SHUTTERS_UPSTAIRS    , "Etage"              );
-printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS  , "Rez de Chaussé"     );
-printEventInfo(EVENT_SHUTTERS_MARINE      , "Marine"             );
-printEventInfo(EVENT_SHUTTERS_MM          , "M&M"                );
-printEventInfo(EVENT_SHUTTERS_FRIENDS     , "Amis"               );
-printEventInfo(EVENT_SHUTTERS_DRESSING    , "Dressing"           );
+printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS  , "Rez de ChaussÃ©"     );
+printEventInfo(EVENT_SHUTTERS_C1          , "Marine"             );
+printEventInfo(EVENT_SHUTTERS_C2          , "M&M"                );
+printEventInfo(EVENT_SHUTTERS_C3          , "Amis"               );
+printEventInfo(EVENT_SHUTTERS_C4          , "Dressing"           );
 printEventInfo(EVENT_ALARM_ALL            , "Toutes"             );
 printEventInfo(EVENT_ALARM_PERIMETER_CHECK, "Perimetrique"       );
 printEventInfo(EVENT_ALARM_PERIMETER      , "Perimetrique Auto"  );
