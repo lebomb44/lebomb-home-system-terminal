@@ -104,7 +104,7 @@ typedef enum _ALARM_LED_STATE_T
 /* LED management function */
 void alarm_led_set(ALARM_LED_T led, ALARM_LED_STATE_T state)
 {
-  ALARM_LED_STATE_T alarm_led_state[ALARM_LED_MAX] = {ALARM_LED_STATE_OFF, ALARM_LED_STATE_OFF};
+  ALARM_LED_STATE_T alarm_led_state[ALARM_LED_MAX] = { ALARM_LED_STATE_OFF, ALARM_LED_STATE_OFF };
 
   if(ALARM_LED_MAX > led)
   {
@@ -112,8 +112,8 @@ void alarm_led_set(ALARM_LED_T led, ALARM_LED_STATE_T state)
     if(ALARM_LED_STATE_ON     == state) { room_light_set(ROOM_COULOIR, led, 1); }
     if(ALARM_LED_STATE_TOGGLE == state)
     {
-      if(ALARM_LED_STATE_OFF == alarm_led_state[led]) { room_light_set(ROOM_COULOIR, led, 1); alarm_led_state[led] = ALARM_LED_ON ; }
-      else                                            { room_light_set(ROOM_COULOIR, led, 0); alarm_led_state[led] = ALARM_LED_OFF; }
+      if(ALARM_LED_STATE_OFF == alarm_led_state[led]) { room_light_set(ROOM_COULOIR, led, 1); alarm_led_state[led] = ALARM_LED_STATE_ON ; }
+      else                                            { room_light_set(ROOM_COULOIR, led, 0); alarm_led_state[led] = ALARM_LED_STATE_OFF; }
     }
   }
 }
