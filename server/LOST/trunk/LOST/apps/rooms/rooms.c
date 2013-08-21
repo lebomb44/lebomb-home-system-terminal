@@ -237,16 +237,16 @@ void rooms_ir_set(uint8_t type, uint8_t cmd0, uint8_t cmd1, uint8_t cmd2)
 void room_clim_set (ROOM_N_T room, uint8_t temp) { if(ROOM_MAX > room) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_CLIM, 1, &temp); } }
 void rooms_clim_set(               uint8_t temp) {                                          i2c_broadcast_set(     ROOM_REG_CLIM, 1, &temp); }
 
-void room_light_set              (ROOM_N_T room, uint8_t no, uint8_t value) { if((ROOM_MAX > room) && (no < ROOM_LIGHT_MAX)) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_LIGHT + no, 1, &value); } else { rooms_light_set(no, value); } }
-void rooms_light_set             (               uint8_t no, uint8_t value) { if(                     (no < ROOM_LIGHT_MAX)) {                    i2c_broadcast_set(     ROOM_REG_LIGHT + no, 1, &value); } }
-void room_shutter_set            (ROOM_N_T room, uint8_t no, uint8_t value) { uint8_t stop = ROOM_SHUTTER_STOP; if(ROOM_MAX > room) { if(no < ROOM_SHUTTER_MAX) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_SHUTTER+no, 1, &stop); room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_SHUTTER+no, 1, &value); } } else { rooms_shutter_set(no, value); } }
+void room_light_set              (ROOM_N_T room, uint8_t no, uint8_t value) { if((ROOM_MAX > room) && (no < ROOM_LIGHT_MAX  )) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_LIGHT   +no, 1, &value); } else { rooms_light_set(no, value); } }
+void rooms_light_set             (               uint8_t no, uint8_t value) { if(                      no < ROOM_LIGHT_MAX   ) {                    i2c_broadcast_set(     ROOM_REG_LIGHT   +no, 1, &value); } }
+void room_shutter_set            (ROOM_N_T room, uint8_t no, uint8_t value) { if(ROOM_MAX > room) { if(no < ROOM_SHUTTER_MAX ) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_SHUTTER +no, 1, &value); } else { room_shutters_set(room, value); } } else { rooms_shutter_set(no, value); } }
 void rooms_shutter_set           (               uint8_t no, uint8_t value) { uint8_t i = 0; for(i=0; i<ROOM_MAX;         i++) { room_shutter_set(i   , no, value); } }
 void room_shutters_set           (ROOM_N_T room,             uint8_t value) { uint8_t i = 0; for(i=0; i<ROOM_SHUTTER_MAX; i++) { room_shutter_set(room, i , value); } }
 void rooms_shutters_set          (                           uint8_t value) { uint8_t i = 0; for(i=0; i<ROOM_SHUTTER_MAX; i++) { rooms_shutter_set(     i , value); } }
-void room_heater_set             (ROOM_N_T room, uint8_t no, uint8_t value) { if((ROOM_MAX > room) && (no < ROOM_HEATER_MAX)) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_HEATER  +no, 1, &value); } else { rooms_heater_set(no, value); } }
-void rooms_heater_set            (               uint8_t no, uint8_t value) { if(                      no < ROOM_HEATER_MAX ) {                    i2c_broadcast_set(     ROOM_REG_HEATER  +no, 1, &value); } }
-void room_elec_set               (ROOM_N_T room, uint8_t no, uint8_t value) { if((ROOM_MAX > room) && (no < ROOM_ELEC_MAX  )) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_ELEC    +no, 1, &value); } else { rooms_elec_set(no, value); } }
-void rooms_elec_set              (               uint8_t no, uint8_t value) { if(                      no < ROOM_ELEC_MAX   ) {                    i2c_broadcast_set(      ROOM_REG_ELEC    +no, 1, &value); } }
+void room_heater_set             (ROOM_N_T room, uint8_t no, uint8_t value) { if((ROOM_MAX > room) && (no < ROOM_HEATER_MAX )) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_HEATER  +no, 1, &value); } else { rooms_heater_set(no, value); } }
+void rooms_heater_set            (               uint8_t no, uint8_t value) { if(                      no < ROOM_HEATER_MAX  ) {                    i2c_broadcast_set(     ROOM_REG_HEATER  +no, 1, &value); } }
+void room_elec_set               (ROOM_N_T room, uint8_t no, uint8_t value) { if((ROOM_MAX > room) && (no < ROOM_ELEC_MAX   )) { room_error[room] = i2c_set(room+ROOM_SLA, ROOM_REG_ELEC    +no, 1, &value); } else { rooms_elec_set(no, value); } }
+void rooms_elec_set              (               uint8_t no, uint8_t value) { if(                      no < ROOM_ELEC_MAX    ) {                    i2c_broadcast_set(     ROOM_REG_ELEC    +no, 1, &value); } }
 
 THREAD(RoomD, arg)
 {
@@ -264,14 +264,7 @@ THREAD(RoomD, arg)
       room_error[i] = i2c_get(ROOM_SLA+i, 0, ROOM_REG_MAX, &room_list[i][0]);
       NutSleep(1);
     }
-    /* FIXME : Check that all nodes are available */
-    for(i=0; i<ROOM_MAX; i++)
-    {
-      if(0 == room_error[i]) { break; }
-    }
-    /* FIXME Only reset if none of the nodes are accessible */
-    if(ROOM_MAX == i) { trig_reset++; } else { trig_reset = 0; }
-    if(10 < trig_reset) { NutReset(); }
+
     NutSleep(10000);
   }
 }
@@ -338,17 +331,7 @@ int rooms_form(FILE * stream, REQUEST * req)
           if('?' == value_s[0]) { fprintf(stream, "%d", room_light_get(room, light)); }
           else
           {
-            if(ROOM_LIGHT_MAX > light)
-            {
-              room_light_set(room, light, strtoul(value_s, NULL, 10));
-            }
-            else
-            {
-              for(light=0; light<ROOM_LIGHT_MAX; light++)
-              {
-                room_light_set(room, light, strtoul(value_s, NULL, 10));
-              }
-            }
+            room_light_set(room, light, strtoul(value_s, NULL, 10));
           }
         }
         if(shutter_s && value_s)
@@ -357,17 +340,7 @@ int rooms_form(FILE * stream, REQUEST * req)
           if('?' == value_s[0]) { fprintf(stream, "%d", room_shutter_get(room, shutter)); }
           else
           {
-            if(ROOM_SHUTTER_MAX > shutter)
-            {
-              room_shutter_set(room, shutter, strtoul(value_s, NULL, 10));
-            }
-            else
-            {
-              for(shutter=0; shutter<ROOM_SHUTTER_MAX; shutter++)
-              {
-                room_shutter_set(room, shutter, strtoul(value_s, NULL, 10));
-              }
-            }
+            room_shutter_set(room, shutter, strtoul(value_s, NULL, 10));
           }
         }
         if(heater_s && value_s)
@@ -376,17 +349,7 @@ int rooms_form(FILE * stream, REQUEST * req)
           if('?' == value_s[0]) { fprintf(stream, "%d", room_heater_get(room, heater)); }
           else
           {
-            if(ROOM_HEATER_MAX > heater)
-            {
-              room_heater_set(room, heater, strtoul(value_s, NULL, 10));
-            }
-            else
-            {
-              for(heater=0; heater<ROOM_HEATER_MAX; heater++)
-              {
-                room_heater_set(room, heater, strtoul(value_s, NULL, 10));
-              }
-            }
+            room_heater_set(room, heater, strtoul(value_s, NULL, 10));
           }
         }
         if(elec_s && value_s)
@@ -395,17 +358,7 @@ int rooms_form(FILE * stream, REQUEST * req)
           if('?' == value_s[0]) { fprintf(stream, "%d", room_elec_get(room, elec)); }
           else
           {
-            if(ROOM_ELEC_MAX > elec)
-            {
-              room_elec_set(room, elec, strtoul(value_s, NULL, 10));
-            }
-            else
-            {
-              for(elec=0; elec<ROOM_ELEC_MAX; elec++)
-              {
-                room_elec_set(room, elec, strtoul(value_s, NULL, 10));
-              }
-            }
+            room_elec_set(room, elec, strtoul(value_s, NULL, 10));
           }
         }
       }
