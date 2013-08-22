@@ -292,7 +292,7 @@ THREAD(AlarmD, arg)
       /* If the shutters are not closed try to close them */
       else
       {
-        rooms_shutters_set(ROOM_SHUTTER_DOWN);
+    	  rooms_shutters_set(ROOM_SHUTTER_STOP); rooms_shutters_set(ROOM_SHUTTER_DOWN);
       }
     }
     /* Step before enabling the alarm */
