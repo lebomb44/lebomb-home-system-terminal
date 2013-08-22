@@ -145,8 +145,8 @@ uint8_t safety_action_with_buzzer(char* msg)
 #define TEMP_NB 32
 THREAD(SafetyUpsRackD, arg)
 {
-  uint16_t ups_temp[TEMP_NB] = {0}; /* FIXME Should be set to a correct value : 20 C */
-  uint16_t rack_temp[TEMP_NB] = {0}; /* FIXME Should be set to a correct value : 20 C */
+  uint16_t ups_temp[TEMP_NB] = { 139 }; /* 20°C */
+  uint16_t rack_temp[TEMP_NB] = { 139 }; /* 20°C */
 
   uint8_t temp_index = 0;
   uint32_t temp_sum = 0;
