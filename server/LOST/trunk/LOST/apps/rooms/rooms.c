@@ -162,7 +162,7 @@ uint8_t rooms_smoke_trig_get       (ROOM_N_T* room) { uint8_t i = 0; for(i=0; i<
 uint8_t room_perimeter_status_get  (ROOM_N_T room ) { if(ROOM_MAX > room) { return room_list[room][ROOM_REG_PERI_STATUS     ]; } else { return 0; } }
 uint8_t rooms_perimeter_status_get (ROOM_N_T* room) { uint8_t i = 0; for(i=0; i<ROOM_MAX; i++) { if(room_perimeter_status_get(i) & 0x01 /* FIXME All lines must be checked */ ) { if(room != NULL) { *room = i; } return (room_perimeter_status_get(i) & 0x01); } } return 0; }
 uint8_t room_perimeter_control_get (ROOM_N_T room ) { if(ROOM_MAX > room) { return room_list[room][ROOM_REG_PERI_CONTROL    ]; } else { return 0; } }
-uint8_t room_perimeter_trig_get    (ROOM_N_T room ) { uint8_t trig = 0; if(ROOM_MAX > room) { trig = room_list[room][ROOM_REG_PERI_TRIG]; if(trig & 0xF8) { return 0; } else { return trig; } } else { return 0; } }
+uint8_t room_perimeter_trig_get    (ROOM_N_T room ) { uint8_t trig = 0; if(ROOM_MAX > room) { trig = room_list[room][ROOM_REG_PERI_TRIG]; /* FIXME Remove this check */ if(trig & 0xF8) { return 0; } else { return trig; } } else { return 0; } }
 uint8_t rooms_perimeter_trig_get   (ROOM_N_T* room) { uint8_t i = 0; for(i=0; i<ROOM_MAX; i++) { if(room_perimeter_trig_get(i)) { if(room != NULL) { *room = i; } return room_perimeter_trig_get(i); } } return 0; }
 
 uint8_t room_volume_status_get     (ROOM_N_T room ) { if(ROOM_MAX > room) { return room_list[room][ROOM_REG_VOL_STATUS      ]; } else { return 0; } }

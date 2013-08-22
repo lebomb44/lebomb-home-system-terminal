@@ -354,7 +354,7 @@ THREAD(AlarmD, arg)
       /* Only activate the alarm if nothing is moving */
       if(0 == alarm_volume.status)
       {
-        /* FIXME rooms_volume_control_set(0x00); Volume not yet available in ROOM Nodes */
+        /* FIXME rooms_volume_control_set(0xFF); Volume not yet available in ROOM Nodes */
         alarm_volume.control = 1;
       }
     }
