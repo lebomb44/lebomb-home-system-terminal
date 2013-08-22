@@ -104,7 +104,7 @@ typedef enum _ALARM_LED_STATE_T
 /* LED management function */
 void alarm_led_set(ALARM_LED_T led, ALARM_LED_STATE_T state)
 {
-  ALARM_LED_STATE_T alarm_led_state[ALARM_LED_MAX] = { ALARM_LED_STATE_OFF, ALARM_LED_STATE_OFF };
+  static ALARM_LED_STATE_T alarm_led_state[ALARM_LED_MAX] = { ALARM_LED_STATE_OFF, ALARM_LED_STATE_OFF };
 
   if(ALARM_LED_MAX > led)
   {
