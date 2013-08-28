@@ -12,7 +12,7 @@ function lost_safety_power_update(xml)
   var in_id1 = xml.getElementsByTagName("Safety")[0];
   var in_id2;
 
-  for(i=0; i<3; i++)
+  for(i=0; i<4; i++)
   {
     if(in_id1) { in_id2 = in_id1.getElementsByTagName("Power"+String(i))[0]; } else { in_id2 = null; }
     out_sc_str = "Scene"+String(EVENT_POWER_0+i)+"_Status";

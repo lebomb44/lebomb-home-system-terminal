@@ -441,7 +441,7 @@ function lost_safety_power_update(xml)
   var in_id1 = xml.getElementsByTagName("Safety")[0];
   var in_id2;
 
-  for(i=0; i<3; i++)
+  for(i=0; i<4; i++)
   {
     if(in_id1) { in_id2 = in_id1.getElementsByTagName("Power"+String(i))[0]; } else { in_id2 = null; }
     out_sc_str = "Scene"+String(EVENT_POWER_0+i)+"_Status";
@@ -1108,7 +1108,7 @@ document.write("\
             <li id=\"Scene"+String(EVENT_POWER_0)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_0, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"Scene"+String(EVENT_POWER_0)+"_Status\">Unknown</span>Wifi</li>\
             <li id=\"Scene"+String(EVENT_POWER_1)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_1, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"Scene"+String(EVENT_POWER_1)+"_Status\">Unknown</span>Reseau</li>\
             <li id=\"Scene"+String(EVENT_POWER_2)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_2, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_2, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\"><span id=\"Scene"+String(EVENT_POWER_2)+"_Status\">Unknown</span>POWER 2</li>\
-            <li id=\"Scene"+String(EVENT_POWER_3)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\"><span id=\"Scene"+String(EVENT_POWER_3)+"_Status\">Unknown</span>POWER 3</li>\
+            <li id=\"Scene"+String(EVENT_POWER_3)+"_Status_bg\"><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"radiateur.jpg\"><span id=\"Scene"+String(EVENT_POWER_3)+"_Status\">Unknown</span>Chauffage</li>\
         </ul>\
     </div>\
 </div>\
@@ -1591,7 +1591,7 @@ document.write("\
                 <li><a href=\"#_Event"+EVENT_POWER_0+"\"><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">Wifi</a></li>\
                 <li><a href=\"#_Event"+EVENT_POWER_1+"\"><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">Ethernet</a></li>\
                 <li><a href=\"#_Event"+EVENT_POWER_2+"\"><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">Power 2</a></li>\
-                <li><a href=\"#_Event"+EVENT_POWER_3+"\"><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">Power 3</a></li>\
+                <li><a href=\"#_Event"+EVENT_POWER_3+"\"><img class=\"picto\" src=\""+lost_icons_path+"radiateur.jpg\">Chauffage</a></li>\
             </ul>\
         </fieldset>\
     </div>\
@@ -1657,4 +1657,4 @@ printEventInfo(EVENT_SIMU                 , "Simulation Presence");
 printEventInfo(EVENT_POWER_0              , "Wifi"               );
 printEventInfo(EVENT_POWER_1              , "Ethernet"           );
 printEventInfo(EVENT_POWER_2              , "Power 2"            );
-printEventInfo(EVENT_POWER_3              , "Power 3"            );
+printEventInfo(EVENT_POWER_3              , "Chauffage"          );

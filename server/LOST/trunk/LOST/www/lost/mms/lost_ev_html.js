@@ -29,7 +29,7 @@ document.write("\
                 <li><a href=\"#_Event"+EVENT_POWER_0+"\"><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">Wifi</a></li>\
                 <li><a href=\"#_Event"+EVENT_POWER_1+"\"><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\">Ethernet</a></li>\
                 <li><a href=\"#_Event"+EVENT_POWER_2+"\"><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">Power 2</a></li>\
-                <li><a href=\"#_Event"+EVENT_POWER_3+"\"><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">Power 3</a></li>\
+                <li><a href=\"#_Event"+EVENT_POWER_3+"\"><img class=\"picto\" src=\""+lost_icons_path+"radiateur.jpg\">Chauffage</a></li>\
             </ul>\
         </fieldset>\
     </div>\
@@ -82,7 +82,7 @@ document.write("\
 
 printEventInfo(EVENT_SHUTTERS_ALL         , "Tous"               );
 printEventInfo(EVENT_SHUTTERS_UPSTAIRS    , "Etage"              );
-printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS  , "Rez de ChaussÃ©"     );
+printEventInfo(EVENT_SHUTTERS_DOWNSTAIRS  , "Rez de Chaussé"     );
 printEventInfo(EVENT_SHUTTERS_C1          , "Marine"             );
 printEventInfo(EVENT_SHUTTERS_C2          , "M&M"                );
 printEventInfo(EVENT_SHUTTERS_C3          , "Amis"               );
@@ -95,4 +95,4 @@ printEventInfo(EVENT_SIMU                 , "Simulation Presence");
 printEventInfo(EVENT_POWER_0              , "Wifi"               );
 printEventInfo(EVENT_POWER_1              , "Ethernet"           );
 printEventInfo(EVENT_POWER_2              , "Power 2"            );
-printEventInfo(EVENT_POWER_3              , "Power 3"            );
+printEventInfo(EVENT_POWER_3              , "Chauffage"          );
