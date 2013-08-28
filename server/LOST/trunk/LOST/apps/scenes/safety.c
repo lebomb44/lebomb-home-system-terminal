@@ -102,9 +102,9 @@ uint8_t safety_init(void)
   safety_value.rooms_temp_min_th = 213;
   safety_value.room_temp_min_nb  = ROOM_MAX;
   safety_value.ups_temp          = 0;
-  safety_value.ups_temp_th       = 213; /* 40°C */
+  safety_value.ups_temp_th       = 213; /* 40ï¿½C */
   safety_value.rack_temp         = 0;
-  safety_value.rack_temp_th      = 213; /* 40°C */
+  safety_value.rack_temp_th      = 213; /* 40ï¿½C */
 
   NutThreadCreate("SafetyUnRD"  , SafetyUpsRackD  , 0, 512);
   NutThreadCreate("SafetyRoomsD", SafetyRoomsD, 0, 512);
@@ -145,8 +145,8 @@ uint8_t safety_action_with_buzzer(char* msg)
 #define TEMP_NB 32
 THREAD(SafetyUpsRackD, arg)
 {
-  uint16_t ups_temp[TEMP_NB] = { 139 }; /* 20°C */
-  uint16_t rack_temp[TEMP_NB] = { 139 }; /* 20°C */
+  uint16_t ups_temp[TEMP_NB] = { 139 }; /* 20ï¿½C */
+  uint16_t rack_temp[TEMP_NB] = { 139 }; /* 20ï¿½C */
 
   uint8_t temp_index = 0;
   uint32_t temp_sum = 0;
@@ -465,10 +465,10 @@ int safety_xml_get(FILE * stream)
   fprintf_XML_elt_int("Power0"           , power_get(POWER_0)            , stream);
   fprintf_XML_elt_int("Power1"           , power_get(POWER_1)            , stream);
   fprintf_XML_elt_int("Power2"           , power_get(POWER_2)            , stream);
+  fprintf_XML_elt_int("Power3"           , power_get(POWER_3)            , stream);
   fprintf_XML_elt_int("RACK_Temp"        , safety_value.rack_temp        , stream);
   fprintf_XML_elt_int("RACK_Temp_Th"     , safety_value.rack_temp_th     , stream);
   fprintf_XML_elt_int("RACK_Alarm"       , safety_status.rack_alarm      , stream);
-  fprintf_XML_elt_int("Heater"           , power_get(POWER_3)            , stream);
   fprintf_XML_elt_int("Buzzer"           , buzzer_state()                , stream);
   fprintf_XML_elt_int("HTTP"             , safety_status.http            , stream);
   fprintf_XML_elt_int("GSM"              , safety_status.gsm             , stream);
