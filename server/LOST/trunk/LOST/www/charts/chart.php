@@ -105,6 +105,7 @@ function indexLoading(evt)
   {
     if((4 == xhr.readyState))
     {
+      chart.showLoading("Loading data : "+Math.round(100*(myDate.getTime()-firstDate.getTime())/(lastDate.getTime()-firstDate.getTime()))+" %");
       if(200 == xhr.status)
       {
         xml = xhr.responseXML;
@@ -151,8 +152,12 @@ function indexLoading(evt)
       }
       else
       {
+   	    chart.showLoading("Loading data : 100 %");
+   	    chart.showLoading("Redrawing chart...");
         chart.redraw();
         chart.xAxis[0].setExtremes(firstDate.getTime(), lastDate.getTime());
+   	    chart.showLoading("Redraw finished ! Enjoy !");
+        chart.hideLoading();
       }
     }
   };
@@ -190,6 +195,7 @@ $(document).ready(function() {
     ]
   });
   chart.redraw();
+  chart.showLoading("Loading data...");
   indexLoading();
 });
 
