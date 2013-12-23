@@ -264,7 +264,7 @@ THREAD(AlarmD, arg)
       if(2 < alarm_perimeter.trig)
       {
         now = time(NULL);
-        if(2 < (alarm_perimeter.time - now)) { alarm_perimeter.trig = alarm_perimeter.time - now; }
+        if((2 + now) < alarm_perimeter.time) { alarm_perimeter.trig = alarm_perimeter.time - now; }
         else { alarm_perimeter.trig = 2; }
       }
       /* Step : Alarm did not triggered. Check the status */
@@ -311,7 +311,7 @@ THREAD(AlarmD, arg)
     if(3 < alarm_perimeter.control)
     {
       now = time(NULL);
-      if(3 < (alarm_perimeter.time - now)) { alarm_perimeter.control = alarm_perimeter.time - now; }
+      if((3 + now) < alarm_perimeter.time) { alarm_perimeter.control = alarm_perimeter.time - now; }
       else { alarm_perimeter.control = 3; }
       /* Close all shutters */
       rooms_shutters_set(ROOM_SHUTTER_DOWN);
@@ -334,7 +334,7 @@ THREAD(AlarmD, arg)
       if(2 < alarm_volume.trig)
       {
         now = time(NULL);
-        if(2 < (alarm_volume.time - now)) { alarm_volume.trig = alarm_volume.time - now; }
+        if((2 + now) < alarm_volume.time) { alarm_volume.trig = alarm_volume.time - now; }
         else { alarm_volume.trig = 2; }
       }
       /* Step : Alarm did not triggered. Check the status */
@@ -373,7 +373,7 @@ THREAD(AlarmD, arg)
     if(3 < alarm_volume.control)
     {
       now = time(NULL);
-      if(3 < (alarm_volume.time - now)) { alarm_volume.control = alarm_volume.time - now; }
+      if((3 + now) < alarm_volume.time) { alarm_volume.control = alarm_volume.time - now; }
       else { alarm_volume.control = 3; }
     }
 
