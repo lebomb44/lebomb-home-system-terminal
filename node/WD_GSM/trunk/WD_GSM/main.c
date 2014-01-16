@@ -1,57 +1,119 @@
 #include "global.h"
 
-#include "devices/adc.h"
-#include "devices/button.h"
-#include "devices/eeprom.h"
-#include "devices/i2c.h"
-#include "devices/ir.h"
-#include "devices/relay.h"
-#include "devices/timer.h"
-#include "devices/uart.h"
+void timer_init(void)
+{
+  /* Initialisations de Timer0 */
+  sbi(TIMSK,0);  /* Interruption Timer0 owerflow */
+  TCNT0 = 0x00;  /* Initialisation Timer0 */
+  TCCR0 = 0x00;  /* Clock Select STOP */
+  /* Initialisations de Timer2 */
+  // sbi(TIMSK,6);    // Interruption Timer2 owerflow
+  // TCNT2=0x00;         // Initialisation timer2
+}
 
-#include "apps/light.h"
-#include "apps/shutter.h"
-#include "apps/heater.h"
-#include "apps/elec.h"
-#include "apps/node.h"
-#include "apps/safety.h"
-#include "apps/alarm.h"
-#include "apps/remote.h"
+void timer_start(void)
+{
+  TCCR0 = 0x05;  /* Clock Select clkio/1024 */
+}
+
+void timer_stop(void)
+{
+  TCCR0 = 0x00;  /* Clock Select STOP */
+}
+
+void sleep_mode(void)
+{
+  MCUCR = 0x80; /* Sleep mode */
+}
+
+/* Timer0 */
+SIGNAL(TIMER0_OVF_vect)
+{
+  TCNT0=0x00;
+}
+
+/*
+SIGNAL(TIMER2_OVF_vect)
+{
+}
+*/
+
+void sleep_seconds(u08 secs)
+{
+  u08 i = 0;
+
+  while(0 < secs)
+  {
+    sleep();
+    for(i=0; i<30; i++) { sleep(); }
+    secs--;
+  }
+}
+
+#define RESPDDR DDRD
+#define RESPPIN PIND
+#define RESPPORT PORTD
+#define RESPBIT 2
+#define POWERDDR DDRD
+#define POWERPORT PORTD
+#define POWERBIT 6
+#define CMDDDR DDRD
+#define CMDPORT PORTD
+#define CMDBIT 7
+
+/* 30 ticks/sec * 30 secs/cycle * 4 cycles */
+#define RESP_TIMEOUT (30*30*4)
 
 int main(void)
 {
-  button_init();
-  relay_init();
-  /* uart_init(); UART pins used as output for relay */
-  i2c_init();
-  ir_init();
-  adc_init();
-  eeprom_init();
-  timer_init();
+  u32 time_out = RESP_TIMEOUT;
 
-  node_init();
-  safety_init();
-  alarm_init();
-  light_init();
-  shutter_init();
-  heater_init();
-  elec_init();
-  /* remote_init();  UART pins used as output for relay */
+  /* Pins initialization */
+  cbi(RESPDDR, RESPBIT); sbi(RESPPORT, RESPBIT);
+  sbi(POWERDDR, POWERBIT); cbi(POWERPORT, POWERBIT);
+  sbi(CMDDDR, CMDBIT); cbi(CMDPORT, CMDBIT);
 
+  /* Timer sleep mode enable */
   sleep_mode();
   sbi(SREG,7);
   timer_start();
+
+  /* Power the phone */
+  sleep_seconds(1); sbi(POWERPORT, POWERBIT);
+  /* Wait for start sequence */
+  sleep_seconds(2);
+  /* Switch ON the phone */
+  sbi(CMDPORT, CMDBIT); sleep_seconds(3); cbi(CMDPORT, CMDBIT);
+
   while(1)
   {
-    safety_cycle();
-    alarm_cycle();
-    light_cycle();
-    shutter_cycle();
-    heater_cycle();
-    elec_cycle();
-    /* remote_cycle(); UART pins used as output for relay */
+    /* Check if the phone answer on the LOST UART */
+    if(bit_is_clear(RESPPIN, RESPBIT))
+    {
+      /* 30 ticks/sec * 30 secs/cycle * 4 cycles */
+      time_out = RESP_TIMEOUT;
+    }
+    else
+    {
+      /* It does not answered */
+      if(0 < time_out) { time_out--; }
+    }
+    /* Now time is over */
+    if(0 == time_out)
+    {
+      /* Unpower the phone */
+      cbi(CMDPORT, CMDBIT);
+      cbi(POWERPORT, POWERBIT);
+      /* Power the phone */
+      sleep_seconds(2); sbi(POWERPORT, POWERBIT);
+      /* Wait for start sequence */
+      sleep_seconds(2);
+      /* Switch ON the phone */
+      sbi(CMDPORT, CMDBIT); sleep_seconds(3); cbi(CMDPORT, CMDBIT);
+      /* Reset timer */
+      time_out = RESP_TIMEOUT;
+    }
     sleep();
-    /* uart_putc((u08)'.'); UART pins used as output for relay */
   }
   return 0;
 }

@@ -2,7 +2,6 @@
 # make all = Make software.
 # make clean = Clean out built project files.
 # make coff = Convert ELF to COFF using objtool.
-# make burn = Burn the target.
 #
 # To rebuild project do "make clean" then "make all".
 #
@@ -10,8 +9,6 @@
 
 # MCU name
 MCU = atmega8
-# MCU to burn with avrdude 
-BURNTARGET=m8
 
 # Output format. (can be srec, ihex)
 FORMAT = ihex
@@ -25,9 +22,7 @@ OPT = s
 
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c \
-devices/adc.c devices/button.c devices/eeprom.c devices/i2c.c devices/ir.c devices/relay.c devices/timer.c devices/uart.c \
-apps/alarm.c apps/node.c apps/light.c apps/shutter.c apps/heater.c apps/elec.c apps/safety.c apps/remote.c
+SRC = $(TARGET).c
 
 # List Assembler source files here.
 # Make them always end in a capital .S.  Files ending in a lowercase .s
@@ -44,7 +39,6 @@ ASRC =
 # Optional compiler flags.
 CFLAGS = -g -O$(OPT) -funsigned-char -funsigned-bitfields -fpack-struct \
 -fshort-enums -Wall -Wstrict-prototypes -Wa,-ahlms=$(<:.c=.lst)
-CFLAGS += -DNODE_ROOM_CONFIG_$(NODE_ROOM_CONFIG)
 
 # Optional assembler flags.
 ASFLAGS = -Wa,-ahlms=$(<:.S=.lst),-gstabs 
@@ -178,10 +172,11 @@ coff: $(TARGET).cof end
 	$(CC) -c $(ALL_ASFLAGS) $< -o $@
 
 
-# Burn tool.
+# Target: burn project.
 BURN=avrdude
-# Burn serial port for avrdude (defined in env.*)
-#BURNPORT=/dev/ttyS0
+BURNPORT=com1
+BURNTARGET=$(MCU)
+#BURNFLAGS=-dprog=stk500 -dserial=$(BURNPORT) -dspeed=115200 -dpart=$(BURNTARGET) --erase --upload if=$(TARG)
 
 # Programming support using avrdude. Settings and variables.
 
@@ -191,7 +186,7 @@ BURN=avrdude
 # Type: avrdude -c ?
 # to get a full listing.
 #
-AVRDUDE_PROGRAMMER = stk500v2
+AVRDUDE_PROGRAMMER = ponyser
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 #AVRDUDE_WRITE_EEPROM = -U eeprom:w:$(TARGET).eep
@@ -205,7 +200,7 @@ AVRDUDE_FLAGS = -p $(BURNTARGET) -P $(BURNPORT) -c $(AVRDUDE_PROGRAMMER)
 
 # Uncomment the following if you do /not/ wish a verification to be
 # performed after programming the device.
-#AVRDUDE_FLAGS += -V
+AVRDUDE_FLAGS += -V
 
 # Increase verbosity level.  Please use this when submitting bug
 # reports about avrdude. See <http://savannah.nongnu.org/projects/avrdude>
