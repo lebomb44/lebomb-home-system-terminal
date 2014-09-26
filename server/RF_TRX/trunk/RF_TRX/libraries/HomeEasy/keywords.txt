@@ -16,9 +16,10 @@ push	KEYWORD2
 codeIsReady	KEYWORD2
 getCode	KEYWORD2
 getDevice	KEYWORD2
-getGroup	KEYWORD2
 getStatus	KEYWORD2
+getGroup	KEYWORD2
 getManufacturer	KEYWORD2
+send	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

@@ -11,12 +11,9 @@ void LB_Com::init(void)
 {
   uint16_t i = 0;
 
-  this->src = 0;
-  this->dst = 0;
-  this->len = 0;
-  for(i=0; i<LB_COM_DATA_MAX_SIZE; i++)
+  for(i=0; i<(4+LB_COM_DATA_MAX_SIZE+1); i++)
   {
-    this->data[i] = 0;
+    this->rawData[i] = 0;
   }
 }
 
@@ -28,32 +25,45 @@ bool LB_Com::packetIsReady(void)
 {
 }
 
-bool LB_Com::getSrc(void)
+uint8_t LB_Com::getSrc(void)
 {
-  return this->src;
+  return this->rawData[0];
 }
 
-bool LB_Com::getDst(void)
+uint8_t LB_Com::getDst(void)
 {
-  return this->dst;
+  return this->rawData[1];
 }
 
-bool LB_Com::getLen(void)
+uint8_t LB_Com::getCmd(void)
 {
-  return this->len;
+  return this->rawData[2];
 }
 
-bool LB_Com::getRawLen(void)
+uint8_t LB_Com::getLen(void)
 {
-  return this->len;
+  return this->rawData[3];
+}
+
+uint8_t LB_Com::getRawLen(void)
+{
+  return (4 + (this->getLen()) + 1);
 }
 
 uint8_t * LB_Com::getData(void)
 {
-  return &(this->rawData[3]);
+  return &(this->rawData[4]);
 }
 
 uint8_t * LB_Com::getRawData(void)
 {
   return this->rawData;
 }
+
+void LB_Com::send(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len, uint8_t * data)
+{
+  Serial.write(0xAA);
+  Serial.write(src); Serial.write(dst); Serial.write(cmd); Serial.write(len);
+  Serial.write(data, len);
+}
+

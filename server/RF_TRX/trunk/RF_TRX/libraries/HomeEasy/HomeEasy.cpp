@@ -46,13 +46,13 @@ bool HomeEasy::codeIsReady(void)
       /* Serial.print(chaconBitStream[2*cBit]); Serial.print(chaconBitStream[(2*cBit) + 1]); */
       if((false == this->codeBitStream[2*cBit]) && (true == this->codeBitStream[(2*cBit) + 1]))
       {
-        bitClear(this->code, cBit);
+        bitClear(this->code, 31-cBit);
       }
       else
       {
         if((true == this->codeBitStream[2*cBit]) && (false == this->codeBitStream[(2*cBit) + 1]))
         {
-          bitSet(this->code, cBit);
+          bitSet(this->code, 31-cBit);
         }
         else
         {
@@ -70,29 +70,34 @@ bool HomeEasy::codeIsReady(void)
   }
 }
 
-uint32_t HomeEasy::getCode(void)
+uint32_t * HomeEasy::getCode(void)
 {
-  return this->code;
+  return &(this->code);
 }
 
 uint8_t HomeEasy::getDevice(void)
 {
-  return (0xF0000000 & this->code) >> 28;
-}
-
-bool HomeEasy::getGroup(void)
-{
-  return (0x08000000 & this->code) >> 27;
+  return (0x0000000F & this->code);
 }
 
 bool HomeEasy::getStatus(void)
 {
-  return (0x04000000 & this->code) >> 26;
+  return (0x00000010 & this->code) >> 4;
+}
+
+bool HomeEasy::getGroup(void)
+{
+  return (0x00000020 & this->code) >> 5;
 }
 
 uint32_t HomeEasy::getManufacturer(void)
 {
-  return (0x03FFFFFF & this->code);
+  return (0xFFFFFFC0 & this->code) >> 6;
+}
+
+void HomeEasy::send(uint32_t pcode)
+{
+  /* FIXME : Not implemented */
 }
 
 bool HomeEasy::isHigh(uint16_t timeU16)
