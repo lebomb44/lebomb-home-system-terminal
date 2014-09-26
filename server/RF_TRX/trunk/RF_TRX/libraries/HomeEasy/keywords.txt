@@ -1,0 +1,25 @@
+#######################################
+# Syntax Coloring Map HomeEasy
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+HomeEasy	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+init	KEYWORD2
+push	KEYWORD2
+codeIsReady	KEYWORD2
+getCode	KEYWORD2
+getDevice	KEYWORD2
+getGroup	KEYWORD2
+getStatus	KEYWORD2
+getManufacturer	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
