@@ -12,13 +12,15 @@ class HomeEasy
 public:
   HomeEasy();
   void init(void);
-  void push(uint16_t dataU16);
-  bool codeIsReady(void);
-  uint32_t * getCode(void);
-  uint8_t getDevice(void);
-  bool getStatus(void);
-  bool getGroup(void);
-  uint32_t getManufacturer(void);
+  void run(void);
+  bool rxCodeIsReady(void);
+  uint32_t rxGetCode(void);
+  uint8_t rxGetDevice(void);
+  bool rxGetStatus(void);
+  bool rxGetGroup(void);
+  uint32_t rxGetManufacturer(void);
+  void rxRelease(void);
+  bool txIsReady(void);
   void send(uint32_t code);
 private:
    uint32_t code;

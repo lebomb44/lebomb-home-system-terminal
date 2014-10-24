@@ -1,14 +1,14 @@
-#ifndef LB_Com_h
-#define LB_Com_h
+#ifndef LB_NRF24_h
+#define LB_NRF24_h
 
 #include <inttypes.h>
 
-#define LB_COM_DATA_MAX_SIZE (4+255+1)
+#define LB_NRF24_DATA_MAX_SIZE (4+255+1)
 
-class LB_Com
+class LB_NRF24
 {
 public:
-  LB_Com();
+  LB_NRF24();
   void init(void);
   void run(void);
   bool rxIsReady(void);
@@ -21,7 +21,7 @@ public:
   bool txIsReady(void);
   void send(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len, uint8_t * data);
 private:
-   uint8_t rawData[LB_COM_DATA_MAX_SIZE];
+   uint8_t rawData[LB_NRF24_DATA_MAX_SIZE];
 };
 
 #endif

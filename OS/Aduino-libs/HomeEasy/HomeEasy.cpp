@@ -16,26 +16,31 @@ void HomeEasy::init(void)
   this->step = 0;
 }
 
+void HomeEasy::run(void)
+{
+
+}
+/*
 void HomeEasy::push(uint16_t dataU16)
 {
   if((1 < this->step) && (this->step < 130))
   {
-    if(0 == (this->step%2)) { if(this->isHigh(dataU16)) { this->step++; } else { /*Serial.print("BadHigh");Serial.print("-");Serial.println(dataU16);*/ this->step = 0; } }
+    if(0 == (this->step%2)) { if(this->isHigh(dataU16)) { this->step++; } else { this->step = 0; } }
     else
     {
       if(this->isLowShort(dataU16)) { this->codeBitStream[(this->step-3)/2] = false; this->step++; }
       else
       {
         if(this->isLowLong(dataU16)) { this->codeBitStream[(this->step-3)/2] = true; this->step++; }
-        else { /*Serial.print(this->step);Serial.print("-");Serial.println(dataU16);*/ this->step = 0; }
+        else { this->step = 0; }
       }
     }
   }
   if(1 == this->step) { if(this->isLowSync(dataU16)) { this->step++; } else { this->step = 0; } }
   if(0 == this->step) { if(this->isHigh(dataU16)) { this->step++; } }
 }
-
-bool HomeEasy::codeIsReady(void)
+*/
+bool HomeEasy::rxCodeIsReady(void)
 {
   uint8_t cBit = 0;
 
@@ -70,35 +75,47 @@ bool HomeEasy::codeIsReady(void)
   }
 }
 
-uint32_t * HomeEasy::getCode(void)
+uint32_t HomeEasy::rxGetCode(void)
 {
-  return &(this->code);
+  return (this->code);
 }
 
-uint8_t HomeEasy::getDevice(void)
+uint8_t HomeEasy::rxGetDevice(void)
 {
   return (0x0000000F & this->code);
 }
 
-bool HomeEasy::getStatus(void)
+bool HomeEasy::rxGetStatus(void)
 {
   return (0x00000010 & this->code) >> 4;
 }
 
-bool HomeEasy::getGroup(void)
+bool HomeEasy::rxGetGroup(void)
 {
   return (0x00000020 & this->code) >> 5;
 }
 
-uint32_t HomeEasy::getManufacturer(void)
+uint32_t HomeEasy::rxGetManufacturer(void)
 {
   return (0xFFFFFFC0 & this->code) >> 6;
+}
+
+void HomeEasy::rxRelease(void)
+{
+  /* FIXME : Not implemented */
+}
+
+bool HomeEasy::txIsReady(void)
+{
+  /* FIXME : Not implemented */
 }
 
 void HomeEasy::send(uint32_t pcode)
 {
   /* FIXME : Not implemented */
 }
+
+/******************** PRIVATE ***************************/
 
 bool HomeEasy::isHigh(uint16_t timeU16)
 {
