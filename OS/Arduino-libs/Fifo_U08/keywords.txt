@@ -1,27 +1,21 @@
 #######################################
-# Syntax Coloring Map HomeEasy
+# Syntax Coloring Map Fifo_U08
 #######################################
 
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
 
-HomeEasy	KEYWORD1
+Fifo_U08	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 init	KEYWORD2
-run	KEYWORD2
-rxCodeIsReady	KEYWORD2
-rxGetCode	KEYWORD2
-rxGetDevice	KEYWORD2
-rxGetStatus	KEYWORD2
-rxGetGroup	KEYWORD2
-rxGetManufacturer	KEYWORD2
-rxRelease	KEYWORD2
-txIsReady	KEYWORD2
-send	KEYWORD2
+push	KEYWORD2
+pop	KEYWORD2
+isEmpty	KEYWORD2
+isFull	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

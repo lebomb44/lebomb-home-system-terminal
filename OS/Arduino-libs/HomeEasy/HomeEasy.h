@@ -2,10 +2,14 @@
 #define HomeEasy_h
 
 #include <inttypes.h>
+#include <Fifo_U16/Fifo_U16.h>
 
 #define HOME_EASY_UNKNOWN_CMD 0
 #define HOME_EASY_DIG_CMD 1
 #define HOME_EASY_ANA_CMD 2
+
+extern Fifo_U16 * extInt0_Fifo;
+void extInt0(void);
 
 class HomeEasy
 {
@@ -23,13 +27,14 @@ public:
   bool txIsReady(void);
   void send(uint32_t code);
 private:
-   uint32_t code;
-   bool codeBitStream[64];
-   uint16_t step;
-   bool isHigh(uint16_t timeU16);
-   bool isLowShort(uint16_t timeU16);
-   bool isLowLong(uint16_t timeU16);
-   bool isLowSync(uint16_t timeU16);
+  Fifo_U16 rx_fifo;
+  uint32_t code;
+  bool codeBitStream[64];
+  uint16_t step;
+  bool isHigh(uint16_t timeU16);
+  bool isLowShort(uint16_t timeU16);
+  bool isLowLong(uint16_t timeU16);
+  bool isLowSync(uint16_t timeU16);
 };
 
 #endif

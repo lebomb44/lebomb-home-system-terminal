@@ -11,68 +11,71 @@ void HomeEasy::init(void)
 {
   uint8_t i = 0;
 
+  this->rx_fifo.init();
   this->code = 0;
   for(i=0; i<64; i++) { this->codeBitStream[i] = false; }
   this->step = 0;
+
+  extInt0_Fifo = &(this->rx_fifo);
+  attachInterrupt(0, extInt0, CHANGE);
 }
 
 void HomeEasy::run(void)
 {
-
-}
-/*
-void HomeEasy::push(uint16_t dataU16)
-{
-  if((1 < this->step) && (this->step < 130))
-  {
-    if(0 == (this->step%2)) { if(this->isHigh(dataU16)) { this->step++; } else { this->step = 0; } }
-    else
-    {
-      if(this->isLowShort(dataU16)) { this->codeBitStream[(this->step-3)/2] = false; this->step++; }
-      else
-      {
-        if(this->isLowLong(dataU16)) { this->codeBitStream[(this->step-3)/2] = true; this->step++; }
-        else { this->step = 0; }
-      }
-    }
-  }
-  if(1 == this->step) { if(this->isLowSync(dataU16)) { this->step++; } else { this->step = 0; } }
-  if(0 == this->step) { if(this->isHigh(dataU16)) { this->step++; } }
-}
-*/
-bool HomeEasy::rxCodeIsReady(void)
-{
+  uint16_t dataU16 = 0;
   uint8_t cBit = 0;
 
-  if(129 < this->step)
+  if(130 > this->step)
   {
-    for(cBit=0; cBit<32; cBit++)
+    if(false == this->rx_fifo.isEmpty())
     {
-      /* Serial.print(chaconBitStream[2*cBit]); Serial.print(chaconBitStream[(2*cBit) + 1]); */
-      if((false == this->codeBitStream[2*cBit]) && (true == this->codeBitStream[(2*cBit) + 1]))
+      dataU16 = this->rx_fifo.pop();
+      if((1 < this->step) && (this->step < 130))
       {
-        bitClear(this->code, 31-cBit);
-      }
-      else
-      {
-        if((true == this->codeBitStream[2*cBit]) && (false == this->codeBitStream[(2*cBit) + 1]))
-        {
-          bitSet(this->code, 31-cBit);
-        }
+        if(0 == (this->step%2)) { if(this->isHigh(dataU16)) { this->step++; } else { this->step = 0; } }
         else
         {
-          /* Serial.print("Bad sequence-");Serial.print(cBit);Serial.print("=");Serial.print(chaconBitStream[2*cBit]);Serial.println(chaconBitStream[(2*cBit) +1]); */
-          this->init();
-		  return false;
+          if(this->isLowShort(dataU16)) { this->codeBitStream[(this->step-3)/2] = false; this->step++; }
+          else
+          {
+            if(this->isLowLong(dataU16)) { this->codeBitStream[(this->step-3)/2] = true; this->step++; }
+            else { this->step = 0; }
+          }
         }
       }
+      if(130 == this->step)
+      {
+        for(cBit=0; cBit<32; cBit++)
+        {
+          /* Serial.print(chaconBitStream[2*cBit]); Serial.print(chaconBitStream[(2*cBit) + 1]); */
+          if((false == this->codeBitStream[2*cBit]) && (true == this->codeBitStream[(2*cBit) + 1]))
+          {
+            bitClear(this->code, 31-cBit);
+          }
+          else
+          {
+            if((true == this->codeBitStream[2*cBit]) && (false == this->codeBitStream[(2*cBit) + 1]))
+            {
+              bitSet(this->code, 31-cBit);
+            }
+            else
+            {
+              /* Serial.print("Bad sequence-");Serial.print(cBit);Serial.print("=");Serial.print(chaconBitStream[2*cBit]);Serial.println(chaconBitStream[(2*cBit) +1]); */
+              this->init();
+            }
+          }
+        }
+      }
+      if(1 == this->step) { if(this->isLowSync(dataU16)) { this->step++; } else { this->step = 0; } }
+      if(0 == this->step) { if(this->isHigh(dataU16)) { this->step++; } }
     }
-    return true;
   }
-  else
-  {
-    return false;
-  }
+}
+
+bool HomeEasy::rxCodeIsReady(void)
+{
+  if(130 == this->step) { return true; }
+  else { return false; }
 }
 
 uint32_t HomeEasy::rxGetCode(void)
@@ -102,7 +105,7 @@ uint32_t HomeEasy::rxGetManufacturer(void)
 
 void HomeEasy::rxRelease(void)
 {
-  /* FIXME : Not implemented */
+  this->init();
 }
 
 bool HomeEasy::txIsReady(void)
@@ -139,4 +142,21 @@ bool HomeEasy::isLowSync(uint16_t timeU16)
 {
   if((4815 < timeU16) && (timeU16 < 5585)) { return true; }
   else { return false; }
+}
+
+Fifo_U16 * extInt0_Fifo = NULL;
+void extInt0(void)
+{
+  word dataU16 = 0;
+
+  dataU16 = TCNT1;
+  TCNT1 = 0x0000;
+
+  if((432 < dataU16) && (dataU16 < 5585))
+  {
+    if(false == extInt0_Fifo->isFull())
+    {
+    	extInt0_Fifo->push(dataU16);
+    }
+  }
 }
