@@ -1,3 +1,4 @@
+#include <inttypes.h>
 #include <Arduino.h> 
 
 #include "HomeEasy.h"
@@ -25,7 +26,7 @@ void HomeEasy::run(void)
   uint16_t dataU16 = 0;
   uint8_t cBit = 0;
 
-  if(130 > this->step)
+  if(false == this->rxCodeIsReady())
   {
     if(false == this->rx_fifo.isEmpty())
     {
@@ -42,26 +43,26 @@ void HomeEasy::run(void)
             else { this->step = 0; }
           }
         }
-      }
-      if(130 == this->step)
-      {
-        for(cBit=0; cBit<32; cBit++)
+        if(true == this->rxCodeIsReady())
         {
-          /* Serial.print(chaconBitStream[2*cBit]); Serial.print(chaconBitStream[(2*cBit) + 1]); */
-          if((false == this->codeBitStream[2*cBit]) && (true == this->codeBitStream[(2*cBit) + 1]))
+          for(cBit=0; cBit<32; cBit++)
           {
-            bitClear(this->code, 31-cBit);
-          }
-          else
-          {
-            if((true == this->codeBitStream[2*cBit]) && (false == this->codeBitStream[(2*cBit) + 1]))
+            /* Serial.print(chaconBitStream[2*cBit]); Serial.print(chaconBitStream[(2*cBit) + 1]); */
+            if((false == this->codeBitStream[2*cBit]) && (true == this->codeBitStream[(2*cBit) + 1]))
             {
-              bitSet(this->code, 31-cBit);
+              bitClear(this->code, 31-cBit);
             }
             else
             {
-              /* Serial.print("Bad sequence-");Serial.print(cBit);Serial.print("=");Serial.print(chaconBitStream[2*cBit]);Serial.println(chaconBitStream[(2*cBit) +1]); */
-              this->init();
+              if((true == this->codeBitStream[2*cBit]) && (false == this->codeBitStream[(2*cBit) + 1]))
+              {
+                bitSet(this->code, 31-cBit);
+              }
+              else
+              {
+                /* Serial.print("Bad sequence-");Serial.print(cBit);Serial.print("=");Serial.print(chaconBitStream[2*cBit]);Serial.println(chaconBitStream[(2*cBit) +1]); */
+                this->rxRelease();
+              }
             }
           }
         }
@@ -105,12 +106,17 @@ uint32_t HomeEasy::rxGetManufacturer(void)
 
 void HomeEasy::rxRelease(void)
 {
-  this->init();
+  uint8_t i = 0;
+
+  this->code = 0;
+  for(i=0; i<64; i++) { this->codeBitStream[i] = false; }
+  this->step = 0;
 }
 
 bool HomeEasy::txIsReady(void)
 {
   /* FIXME : Not implemented */
+  return true;
 }
 
 void HomeEasy::send(uint32_t pcode)
