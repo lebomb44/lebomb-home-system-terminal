@@ -1,10 +1,10 @@
 #include <inttypes.h>
 #include <Arduino.h>
 
-#include <ID.h>
-#include <HomeEasy.h>
-#include <LB_NRF24.h>
-#include <LB_Com.h>
+#include <ID/ID.h>
+#include <HomeEasy/HomeEasy.h>
+#include <LB_NRF24/LB_NRF24.h>
+#include <LB_Com/LB_Com.h>
 
 HomeEasy homeEasy;
 LB_NRF24 nrf24;

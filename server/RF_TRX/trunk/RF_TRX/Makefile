@@ -22,16 +22,19 @@ OPT = s
 
 ARDUINO_CORE = $(LIB_PATH)/arduino/cores/arduino
 # List C source files here. (C dependencies are automatically generated.)
-SRC = 
+SRC = $(ARDUINO_CORE)/wiring.c $(ARDUINO_CORE)/WInterrupts.c $(ARDUINO_CORE)/wiring_analog.c $(ARDUINO_CORE)/wiring_digital.c \
+$(ARDUINO_CORE)/wiring_pulse.c $(ARDUINO_CORE)/wiring_shift.c
 # List C++ source files here.
 CXXSRC = $(TARGET).cpp \
 $(LIB_PATH)/Fifo_U16/Fifo_U16.cpp $(LIB_PATH)/HomeEasy/HomeEasy.cpp \
-$(LIB_PATH)/LB_Com/LB_Com.cpp $(LIB_PATH)/LB_NRF24/LB_NRF24.cpp
-# $(ARDUINO_CORE)/new.cpp \
-# $(ARDUINO_CORE)/WString.cpp \
-# $(ARDUINO_CORE)/Print.cpp \
-# $(ARDUINO_CORE)/Stream.cpp \
-# $(ARDUINO_CORE)/HardwareSerial.cpp
+$(LIB_PATH)/LB_Com/LB_Com.cpp $(LIB_PATH)/LB_NRF24/LB_NRF24.cpp \
+$(ARDUINO_CORE)/new.cpp \
+$(ARDUINO_CORE)/WString.cpp \
+$(ARDUINO_CORE)/Print.cpp \
+$(ARDUINO_CORE)/Stream.cpp \
+$(ARDUINO_CORE)/HardwareSerial.cpp \
+$(ARDUINO_CORE)/Tone.cpp \
+$(ARDUINO_CORE)/WMath.cpp
 
 # List Assembler source files here.
 # Make them always end in a capital .S.  Files ending in a lowercase .s
@@ -44,8 +47,8 @@ ASRC =
 
 DFLAGS = -DF_CPU=16000000L -MMD -DUSB_VID=null -DUSB_PID=null -DARDUINO=101
 
-IFLAGS = -I. -I../Arduino-libs/ID -I../Arduino-libs/Fifo_U16 -I../Arduino-libs/HomeEasy -I../Arduino-libs/LB_Com -I../Arduino-libs/LB_NRF24 \
--I../Arduino-libs/arduino/cores/arduino -I../Arduino-libs/arduino/variants/eightanaloginputs
+IFLAGS = -I. -I$(LIB_PATH) \
+-I$(ARDUINO_CORE) -I$(ARDUINO_CORE)/../../variants/eightanaloginputs
 
 # Optional compiler flags.
 CFLAGS = -g -O$(OPT)  \
