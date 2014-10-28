@@ -20,20 +20,9 @@ void HomeEasy::init(void)
   this->step = 0;
 
   extInt0_Fifo = &(this->rx_fifo);
-/*
-#if defined(EICRA) && defined(ISC00) && defined(EIMSK)
-  EICRA = (EICRA & ~((1 << ISC00) | (1 << ISC01))) | (mode << ISC00);
+
+  EICRA = (EICRA & ~((1 << ISC00) | (1 << ISC01))) | (1 << ISC00);
   EIMSK |= (1 << INT0);
-#elif defined(MCUCR) && defined(ISC00) && defined(GICR)
-  MCUCR = (MCUCR & ~((1 << ISC00) | (1 << ISC01))) | (mode << ISC00);
-  GICR |= (1 << INT0);
-#elif defined(MCUCR) && defined(ISC00) && defined(GIMSK)
-  MCUCR = (MCUCR & ~((1 << ISC00) | (1 << ISC01))) | (mode << ISC00);
-  GIMSK |= (1 << INT0);
-#else
-  #error attachInterrupt not finished for this CPU (case 0)
-#endif
-*/
 }
 
 void HomeEasy::run(void)
