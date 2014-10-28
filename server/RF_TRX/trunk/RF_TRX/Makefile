@@ -22,19 +22,22 @@ OPT = s
 
 ARDUINO_CORE = $(LIB_PATH)/arduino/cores/arduino
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(ARDUINO_CORE)/wiring.c $(ARDUINO_CORE)/WInterrupts.c $(ARDUINO_CORE)/wiring_analog.c $(ARDUINO_CORE)/wiring_digital.c \
+SRC = $(ARDUINO_CORE)/wiring.c $(ARDUINO_CORE)/wiring_analog.c $(ARDUINO_CORE)/wiring_digital.c \
 $(ARDUINO_CORE)/wiring_pulse.c $(ARDUINO_CORE)/wiring_shift.c
 # List C++ source files here.
 CXXSRC = $(TARGET).cpp \
-$(LIB_PATH)/Fifo_U16/Fifo_U16.cpp $(LIB_PATH)/HomeEasy/HomeEasy.cpp \
+$(LIB_PATH)/Fifo_U08/Fifo_U08.cpp $(LIB_PATH)/Fifo_U16/Fifo_U16.cpp \
+$(LIB_PATH)/HomeEasy/HomeEasy.cpp \
 $(LIB_PATH)/LB_Com/LB_Com.cpp $(LIB_PATH)/LB_NRF24/LB_NRF24.cpp \
 $(ARDUINO_CORE)/new.cpp \
 $(ARDUINO_CORE)/WString.cpp \
 $(ARDUINO_CORE)/Print.cpp \
 $(ARDUINO_CORE)/Stream.cpp \
-$(ARDUINO_CORE)/HardwareSerial.cpp \
 $(ARDUINO_CORE)/Tone.cpp \
 $(ARDUINO_CORE)/WMath.cpp
+
+# $(ARDUINO_CORE)/HardwareSerial.cpp \
+# $(ARDUINO_CORE)/WInterrupts.c
 
 # List Assembler source files here.
 # Make them always end in a capital .S.  Files ending in a lowercase .s
