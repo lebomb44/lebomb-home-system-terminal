@@ -6,9 +6,6 @@
 
 #define LB_COM_DATA_MAX_SIZE (4+255)
 
-extern Fifo_U08 * uart_rx_fifo;
-extern Fifo_U08 * uart_tx_fifo;
-
 class LB_Com
 {
 public:
@@ -29,6 +26,7 @@ private:
   uint8_t rxData[LB_COM_DATA_MAX_SIZE];
   uint16_t rx_step;
   Fifo_U08 tx_fifo;
+  void send_char(uint8_t data);
 };
 
 #endif

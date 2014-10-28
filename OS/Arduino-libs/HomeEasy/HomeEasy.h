@@ -8,9 +8,6 @@
 #define HOME_EASY_DIG_CMD 1
 #define HOME_EASY_ANA_CMD 2
 
-extern Fifo_U16 * extInt0_Fifo;
-void extInt0(void);
-
 class HomeEasy
 {
 public:

@@ -3,6 +3,8 @@
 
 #include "HomeEasy.h"
 
+Fifo_U16 * extInt0_Fifo = NULL;
+
 HomeEasy::HomeEasy()
 {
   this->init();
@@ -18,7 +20,20 @@ void HomeEasy::init(void)
   this->step = 0;
 
   extInt0_Fifo = &(this->rx_fifo);
-  attachInterrupt(0, extInt0, CHANGE);
+/*
+#if defined(EICRA) && defined(ISC00) && defined(EIMSK)
+  EICRA = (EICRA & ~((1 << ISC00) | (1 << ISC01))) | (mode << ISC00);
+  EIMSK |= (1 << INT0);
+#elif defined(MCUCR) && defined(ISC00) && defined(GICR)
+  MCUCR = (MCUCR & ~((1 << ISC00) | (1 << ISC01))) | (mode << ISC00);
+  GICR |= (1 << INT0);
+#elif defined(MCUCR) && defined(ISC00) && defined(GIMSK)
+  MCUCR = (MCUCR & ~((1 << ISC00) | (1 << ISC01))) | (mode << ISC00);
+  GIMSK |= (1 << INT0);
+#else
+  #error attachInterrupt not finished for this CPU (case 0)
+#endif
+*/
 }
 
 void HomeEasy::run(void)
@@ -150,8 +165,7 @@ bool HomeEasy::isLowSync(uint16_t timeU16)
   else { return false; }
 }
 
-Fifo_U16 * extInt0_Fifo = NULL;
-void extInt0(void)
+ISR(INT0_vect)
 {
   word dataU16 = 0;
 

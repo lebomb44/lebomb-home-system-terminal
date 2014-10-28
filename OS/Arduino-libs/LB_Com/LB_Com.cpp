@@ -5,7 +5,11 @@
 #include <avr/interrupt.h>
 #include <util/crc16.h>
 #include "wiring_private.h"
+#include <Fifo_U08/Fifo_U08.h>
 #include "LB_Com.h"
+
+Fifo_U08 * uart_rx_fifo = NULL;
+Fifo_U08 * uart_tx_fifo = NULL;
 
 LB_Com::LB_Com()
 {
@@ -27,10 +31,10 @@ void LB_Com::init(void)
   uart_rx_fifo = &(this->rx_fifo);
   uart_tx_fifo = &(this->tx_fifo);
 
-  sbi(UCSRB, RXEN);
-  sbi(UCSRB, TXEN);
-  sbi(UCSRB, RXCIE);
-  cbi(UCSRB, UDRIE);
+  sbi(UCSR0B, RXEN0);
+  sbi(UCSR0B, TXEN0);
+  sbi(UCSR0B, RXCIE0);
+  cbi(UCSR0B, UDRIE0);
 }
 
 void LB_Com::run(void)
@@ -121,34 +125,37 @@ void LB_Com::send(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len, uint8_t * 
 {
   uint16_t i = 0;
   uint8_t crc = 0;
-  while(true == this->tx_fifo.isFull()); this->tx_fifo.push(0xAA); sbi(UCSRB, UDRIE); crc = _crc_ibutton_update(crc, 0xAA);
-  while(true == this->tx_fifo.isFull()); this->tx_fifo.push(src); sbi(UCSRB, UDRIE); crc = _crc_ibutton_update(crc, src);
-  while(true == this->tx_fifo.isFull()); this->tx_fifo.push(dst); sbi(UCSRB, UDRIE); crc = _crc_ibutton_update(crc, dst);
-  while(true == this->tx_fifo.isFull()); this->tx_fifo.push(cmd); sbi(UCSRB, UDRIE); crc = _crc_ibutton_update(crc, cmd);
-  while(true == this->tx_fifo.isFull()); this->tx_fifo.push(len); sbi(UCSRB, UDRIE); crc = _crc_ibutton_update(crc, len);
+  this->send_char(0xAA); crc = _crc_ibutton_update(crc, 0xAA);
+  this->send_char(src); crc = _crc_ibutton_update(crc, src);
+  this->send_char(dst); crc = _crc_ibutton_update(crc, dst);
+  this->send_char(cmd); crc = _crc_ibutton_update(crc, cmd);
+  this->send_char(len); crc = _crc_ibutton_update(crc, len);
   for(i=0; i<len ; i++)
   {
-	  while(true == this->tx_fifo.isFull()); this->tx_fifo.push(data[i]); sbi(UCSRB, UDRIE); crc = _crc_ibutton_update(crc, data[i]);
+    this->send_char(data[i]); crc = _crc_ibutton_update(crc, data[i]);
   }
-  while(true == this->tx_fifo.isFull()); this->tx_fifo.push(crc); sbi(UCSRB, UDRIE);
+  this->send_char(crc);
 
 }
 
-Fifo_U08 * uart_rx_fifo = NULL;
+void LB_Com::send_char(uint8_t data)
+{
+  while(true == this->tx_fifo.isFull()); this->tx_fifo.push(data); sbi(UCSR0B, UDRIE0);
+}
+
 ISR(USART_RX_vect)
 {
-  uart_rx_fifo->push(UDR);
+  uart_rx_fifo->push(UDR0);
 }
 
-Fifo_U08 * uart_tx_fifo = NULL;
-ISR(UART_UDRE_vect)
+ISR(USART_UDRE_vect)
 {
   if(true == uart_tx_fifo->isEmpty())
   {
-    cbi(UCSRB, UDRIE);
+    cbi(UCSR0B, UDRIE0);
   }
   else
   {
-    UDR = uart_tx_fifo->pop();
+    UDR0 = uart_tx_fifo->pop();
   }
 }

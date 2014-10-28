@@ -30,7 +30,7 @@ void Fifo_U08::push(uint8_t data)
 
 uint8_t Fifo_U08::pop(void)
 {
-  uint08_t data = 0;
+  uint8_t data = 0;
 
   if(false == this->isEmpty())
   {
