@@ -3,7 +3,7 @@
 // Copyright (C) 2012 Mike McCauley
 // $Id: NRF24.cpp,v 1.2 2014/05/20 06:00:55 mikem Exp mikem $
 
-#include <NRF24.h>
+#include "NRF24.h"
 #include <SPI.h>
 
 NRF24::NRF24(uint8_t chipEnablePin, uint8_t chipSelectPin)

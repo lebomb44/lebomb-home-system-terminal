@@ -1,6 +1,7 @@
 #include <Arduino.h> 
 
 #include "LB_NRF24.h"
+#include <SPI.h>
 
 LB_NRF24::LB_NRF24()
 {
@@ -9,6 +10,38 @@ LB_NRF24::LB_NRF24()
 
 void LB_NRF24::init(void)
 {
+    pinMode(cePin,OUTPUT);
+    pinMode(csnPin,OUTPUT);
+
+    ceLow();
+    csnHi();
+
+    // Initialize spi module
+    spi->begin();
+    SPI.setDataMode(SPI_MODE0);
+    SPI.setBitOrder(MSBFIRST);
+    SPI.setClockDivider(SPI_CLOCK_DIV2); // 8MHz SPI clock
+
+    ce(LOW);
+    csn(HIGH);
+
+    delay( 5 ) ;
+    write_register(SETUP_RETR,(B0100 << ARD) | (B1111 << ARC));
+    setPALevel( RF24_PA_MAX ) ;
+    setDataRate( RF24_1MBPS ) ;
+    setCRCLength( RF24_CRC_16 ) ;
+    setCRCLength( RF24_CRC_16 ) ;
+    write_register(DYNPD,0);
+    write_register(STATUS,_BV(RX_DR) | _BV(TX_DS) | _BV(MAX_RT) );
+    setChannel(76);
+
+    spiWriteRegister(NRF24_REG_07_STATUS, NRF24_RX_DR | NRF24_TX_DS | NRF24_MAX_RT)
+    powerDown();
+    flush_rx();
+    flush_tx();
+    powerUpRx();
+
+    setRetries(15,15);
 }
 
 void LB_NRF24::run(void)

@@ -123,7 +123,7 @@ bool HomeEasy::txIsReady(void)
   return true;
 }
 
-void HomeEasy::send(uint32_t pcode)
+void HomeEasy::send(uint32_t code)
 {
   /* FIXME : Not implemented */
 }

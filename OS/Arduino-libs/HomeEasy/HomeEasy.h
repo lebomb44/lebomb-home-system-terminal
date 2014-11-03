@@ -4,10 +4,6 @@
 #include <inttypes.h>
 #include <Fifo_U16/Fifo_U16.h>
 
-#define HOME_EASY_UNKNOWN_CMD 0
-#define HOME_EASY_DIG_CMD 1
-#define HOME_EASY_ANA_CMD 2
-
 class HomeEasy
 {
 public:
