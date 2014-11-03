@@ -3,17 +3,31 @@
 
 #include <ID/ID.h>
 #include <HomeEasy/HomeEasy.h>
-#include <LB_NRF24/LB_NRF24.h>
+#include <RH_NRF24/NRF24.h>
 #include <LB_Com/LB_Com.h>
 
 HomeEasy homeEasy;
-LB_NRF24 nrf24;
+NRF24 nrf24;
 LB_Com lbCom;
 
 int main(void)
 {
+  uint8_t nrf24_dstAddr[5] = {0};
+  nrf24_dstAddr[0] = LOST_ID;
+  nrf24_dstAddr[1] = 0;
+  nrf24_dstAddr[2] = 0;
+  nrf24_dstAddr[3] = 0;
+  nrf24_dstAddr[4] = 0;
+  uint8_t nrf24_txRawData[32] = {0};
+  uint8_t nrf24_rxRawData[32] = {0};
+  uint8_t nrf24_rxLen = 32;
+
   homeEasy.init();
   nrf24.init();
+  nrf24.setChannel(1);
+  nrf24.setThisAddress(nrf24_dstAddr, 5);
+  nrf24.setPayloadSize(32);
+  nrf24.setRF(NRF24::NRF24DataRate2Mbps, NRF24::NRF24TransmitPower0dBm);
   lbCom.init();
 
   while(1)
@@ -29,17 +43,18 @@ int main(void)
     Serial.print(homeEasy.rxGetDevice(), HEX);Serial.print("-");
     Serial.print(homeEasy.rxGetStatus(), HEX);Serial.println();
 */
-      if(HOME_EASY_ROVER_RC == homeEasy.rxGetManufacturer())
+      if(HOME_EASY_ROVER0_RC == homeEasy.rxGetManufacturer())
       {
-        if(true == nrf24.txIsReady())
+        if(false == nrf24.isSending())
         {
-          uint8_t cmd = 0xFF;
-          if(0 == homeEasy.rxGetDevice()) { cmd = ROVER_CMD_FWD; }
-          if(1 == homeEasy.rxGetDevice()) { cmd = ROVER_CMD_TURN; }
-          if(2 == homeEasy.rxGetDevice()) { cmd = ROVER_CMD_STOP; }
-          uint8_t status = 0;
-          status = homeEasy.rxGetStatus();
-          nrf24.send(ROVER_RC_ID, ROVER_ID, cmd, 1, & status);
+          nrf24_dstAddr[0] = ROVER0_ID;
+          nrf24.setTransmitAddress(nrf24_dstAddr, 5);
+          nrf24_txRawData[0] = ROVER0_RC_ID;
+          if(0 == homeEasy.rxGetDevice()) { nrf24_txRawData[1] = ROVER_CMD_FWD; }
+          if(1 == homeEasy.rxGetDevice()) { nrf24_txRawData[1] = ROVER_CMD_TURN; }
+          if(2 == homeEasy.rxGetDevice()) { nrf24_txRawData[1] = ROVER_CMD_STOP; }
+          nrf24_txRawData[2] = homeEasy.rxGetStatus();
+          nrf24.send(nrf24_txRawData, 3);
           homeEasy.rxRelease();
         }
       }
@@ -75,21 +90,29 @@ int main(void)
       }
       else
       {
-        if(true == nrf24.txIsReady())
+        if(false == nrf24.isSending())
         {
-          nrf24.send(lbCom.rxGetSrc(), lbCom.rxGetDst(), lbCom.rxGetCmd(), lbCom.rxGetLen(), lbCom.rxGetData());
+          if(33 > lbCom.rxGetLen())
+          {
+            nrf24_dstAddr[0] = lbCom.rxGetDst();
+            nrf24.setTransmitAddress(nrf24_dstAddr, 5);
+            nrf24_txRawData[0] = lbCom.rxGetSrc();
+            nrf24_txRawData[1] = lbCom.rxGetCmd();
+            for(uint8_t i=0; i<lbCom.rxGetLen(); i++) { nrf24_txRawData[2+i] = lbCom.rxGetData()[i]; }
+            nrf24.send(nrf24_txRawData , 2+lbCom.rxGetLen());
+          }
           lbCom.rxRelease();
         }
       }
     }
 
-    nrf24.run();
-    if(true == nrf24.rxIsReady())
+    if(true == nrf24.available())
     {
       if(true == lbCom.txIsReady())
       {
-        lbCom.send(nrf24.rxGetSrc(), nrf24.rxGetDst(), nrf24.rxGetCmd(), nrf24.rxGetLen(), nrf24.rxGetData());
-        nrf24.rxRelease();
+        nrf24_rxLen = 32;
+        nrf24.recv(nrf24_rxRawData, &nrf24_rxLen);
+        lbCom.send(nrf24_rxRawData[0], LOST_ID, nrf24_rxRawData[1], nrf24_rxLen-2, &nrf24_rxRawData[2]);
       }
     }
   }

@@ -28,7 +28,7 @@ $(ARDUINO_CORE)/wiring_pulse.c $(ARDUINO_CORE)/wiring_shift.c
 CXXSRC = $(TARGET).cpp \
 $(LIB_PATH)/Fifo_U08/Fifo_U08.cpp $(LIB_PATH)/Fifo_U16/Fifo_U16.cpp \
 $(LIB_PATH)/HomeEasy/HomeEasy.cpp \
-$(LIB_PATH)/LB_Com/LB_Com.cpp $(LIB_PATH)/LB_NRF24/LB_NRF24.cpp \
+$(LIB_PATH)/LB_Com/LB_Com.cpp $(LIB_PATH)/RH_NRF24/NRF24.cpp \
 $(ARDUINO_CORE)/new.cpp \
 $(ARDUINO_CORE)/WString.cpp \
 $(ARDUINO_CORE)/Print.cpp \

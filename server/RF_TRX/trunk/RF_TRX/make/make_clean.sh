@@ -1,6 +1,6 @@
 source ../env.sh
 cd $DEVBASE_DRIVE
-cd $DEVBASE/WD_GSM
+cd $DEVBASE/RF_TRX
 echo $PATH
 make clean
 
