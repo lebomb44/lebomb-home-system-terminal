@@ -28,12 +28,7 @@ $(ARDUINO_CORE)/wiring_pulse.c $(ARDUINO_CORE)/wiring_shift.c
 CXXSRC = $(TARGET).cpp \
 $(LIB_PATH)/IR/IR.cpp \
 $(LIB_PATH)/RH_NRF24/NRF24.cpp \
-$(ARDUINO_CORE)/new.cpp \
-$(ARDUINO_CORE)/WString.cpp \
-$(ARDUINO_CORE)/Print.cpp \
-$(ARDUINO_CORE)/Stream.cpp \
-$(ARDUINO_CORE)/Tone.cpp \
-$(ARDUINO_CORE)/WMath.cpp
+$(LIB_PATH)/SPI/SPI.cpp
 
 # $(ARDUINO_CORE)/HardwareSerial.cpp \
 # $(ARDUINO_CORE)/WInterrupts.c
