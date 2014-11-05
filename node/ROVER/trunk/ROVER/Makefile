@@ -27,11 +27,8 @@ $(ARDUINO_CORE)/wiring_pulse.c $(ARDUINO_CORE)/wiring_shift.c
 # List C++ source files here.
 CXXSRC = $(TARGET).cpp \
 $(LIB_PATH)/RH_NRF24/NRF24.cpp \
-$(ARDUINO_CORE)/new.cpp \
-$(ARDUINO_CORE)/WString.cpp \
-$(ARDUINO_CORE)/Print.cpp \
-$(ARDUINO_CORE)/Stream.cpp \
-$(ARDUINO_CORE)/Tone.cpp \
+$(LIB_PATH)/SPI/SPI.cpp \
+$(LIB_PATH)/Servo/Servo.cpp \
 $(ARDUINO_CORE)/WMath.cpp
 
 # $(ARDUINO_CORE)/HardwareSerial.cpp \

@@ -2,10 +2,10 @@
 #include <Arduino.h>
 
 #include <ID/ID.h>
-#include <Servo.h>
+#include <Servo/Servo.h>
 #include <RH_NRF24/NRF24.h>
 
-Relai relaiCam;
+#define RELAICAM 0
 Servo servoL;
 Servo servoR;
 Servo servoCamLR;
@@ -25,12 +25,13 @@ int main(void)
   uint8_t nrf24_rxRawData[32] = {0};
   uint8_t nrf24_rxLen = 32;
 
-  relaiCam.init();
-  servoL.init();
-  servoR.init();
-  servoCamLR.init();
-  servoCamUD.init();
-  servoCharge.init();
+  pinMode(RELAICAM, OUTPUT);
+  digitalWrite(RELAICAM, LOW);
+  servoL.attach(2);
+  servoR.attach(3);
+  servoCamLR.attach(4);
+  servoCamUD.attach(5);
+  servoCharge.attach(6);
 
   nrf24.init();
   nrf24.setChannel(1);
@@ -50,21 +51,21 @@ int main(void)
           nrf24.setTransmitAddress(nrf24_dstAddr, 5);
           nrf24_txRawData[0] = ROVER0_ID;
           nrf24_txRawData[1] = ROVER_CMD_TM;
-    	  nrf24_txRawData[2] = servoL.getAngle();
-    	  nrf24_txRawData[3] = servoR.getAngle();
-    	  nrf24_txRawData[4] = relaiCam.getState();
-    	  nrf24_txRawData[5] = relaiCamLR.getState();
-    	  nrf24_txRawData[6] = relaiCamUD.getState();
-    	  nrf24_txRawData[7] = servoCharge.getAngle();
+          nrf24_txRawData[2] = digitalRead(RELAICAM);
+          nrf24_txRawData[3] = servoL.read();
+          nrf24_txRawData[4] = servoR.read();
+          nrf24_txRawData[5] = servoCamLR.read();
+          nrf24_txRawData[6] = servoCamUD.read();
+          nrf24_txRawData[7] = servoCharge.read();
           nrf24.send(nrf24_txRawData , 8);
       }
-      if(ROVER_CMD_CAM_POWER == nrf24_rxRawData[1]) { relaiCam.setState(nrf24_rxRawData[2]); }
-      if(ROVER_CMD_CAM_LR == nrf24_rxRawData[1]) { servoCamLR.set(nrf24_rxRawData[2]); }
-      if(ROVER_CMD_CAM_UD == nrf24_rxRawData[1]) { servoCamUD.set(nrf24_rxRawData[2]); }
-      if(ROVER_CMD_CHARGE == nrf24_rxRawData[1]) { servoCharge.set(nrf24_rxRawData[2]); }
-      if(ROVER_CMD_FWD == nrf24_rxRawData[1]) { servoL.set(); servoR.set(); }
-      if(ROVER_CMD_TURN == nrf24_rxRawData[1]) { servoL.set(); servoR.set(); }
-      if(ROVER_CMD_STOP == nrf24_rxRawData[1]) { servoL.set(180); servoR.set(180); }
+      if(ROVER_CMD_CAM_POWER == nrf24_rxRawData[1]) { digitalWrite(RELAICAM, nrf24_rxRawData[2]); }
+      if(ROVER_CMD_CAM_LR == nrf24_rxRawData[1]) { servoCamLR.write(nrf24_rxRawData[2]); }
+      if(ROVER_CMD_CAM_UD == nrf24_rxRawData[1]) { servoCamUD.write(nrf24_rxRawData[2]); }
+      if(ROVER_CMD_CHARGE == nrf24_rxRawData[1]) { servoCharge.write(nrf24_rxRawData[2]); }
+      if(ROVER_CMD_FWD == nrf24_rxRawData[1]) { servoL.write(0); servoR.write(0); }
+      if(ROVER_CMD_TURN == nrf24_rxRawData[1]) { servoL.write(360); servoR.write(360); }
+      if(ROVER_CMD_STOP == nrf24_rxRawData[1]) { servoL.write(180); servoR.write(180); }
     }
   }
 }
