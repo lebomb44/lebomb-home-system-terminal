@@ -644,7 +644,7 @@ public:
     /// Prints the value of all chip registers
     /// for debugging purposes
     /// \return true on success
-    boolean printRegisters();
+    // OCM boolean printRegisters();
 
     /// Checks whether a received message is available.
     /// This can be called multiple times in a timeout loop

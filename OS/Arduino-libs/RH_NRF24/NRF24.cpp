@@ -4,7 +4,7 @@
 // $Id: NRF24.cpp,v 1.2 2014/05/20 06:00:55 mikem Exp mikem $
 
 #include "NRF24.h"
-#include <SPI.h>
+#include <SPI/SPI.h>
 
 NRF24::NRF24(uint8_t chipEnablePin, uint8_t chipSelectPin)
 {
@@ -254,7 +254,7 @@ boolean NRF24::isSending()
 {
     return !(spiReadRegister(NRF24_REG_00_CONFIG) & NRF24_PRIM_RX) && !(statusRead() & (NRF24_TX_DS | NRF24_MAX_RT));
 }
-
+/* OCM
 boolean NRF24::printRegisters()
 {
     uint8_t registers[] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0d, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x1c, 0x1d};
@@ -268,7 +268,7 @@ boolean NRF24::printRegisters()
     }
     return true;
 }
-
+*/
 boolean NRF24::available()
 {
     if (spiReadRegister(NRF24_REG_17_FIFO_STATUS) & NRF24_RX_EMPTY)
