@@ -5,15 +5,15 @@
 #include <Servo/Servo.h>
 #include <RH_NRF24/NRF24.h>
 
-#define RELAICAM_ON 0
-#define RELAICAM_OFF 1
-#define RELAICAM_STATUS 2
-Servo servoL;
-Servo servoR;
-Servo servoCamLR;
-Servo servoCamUD;
-Servo servoCharge;
-NRF24 nrf24;
+#define RELAICAM_ON A7
+#define RELAICAM_OFF A6
+#define RELAICAM_STATUS A5
+Servo servoL; // D7
+Servo servoR; // D6
+Servo servoCamLR; // D5
+Servo servoCamUD; // D4
+Servo servoCharge; // D3
+NRF24 nrf24(D7, SS); // B4(MISO), B3(MOSI), B2(SS), D7(CE)
 
 int main(void)
 {
@@ -32,11 +32,11 @@ int main(void)
   pinMode(RELAICAM_OFF, OUTPUT);
   digitalWrite(RELAICAM_OFF, LOW);
   pinMode(RELAICAM_STATUS, INPUT);
-  servoL.attach(2);
-  servoR.attach(3);
-  servoCamLR.attach(4);
-  servoCamUD.attach(5);
-  servoCharge.attach(6);
+  servoL.attach(D7);
+  servoR.attach(D6);
+  servoCamLR.attach(D5);
+  servoCamUD.attach(D4);
+  servoCharge.attach(D3);
 
   nrf24.init();
   nrf24.setChannel(1);
