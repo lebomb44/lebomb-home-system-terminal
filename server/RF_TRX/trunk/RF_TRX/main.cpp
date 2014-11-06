@@ -7,7 +7,7 @@
 #include <LB_Com/LB_Com.h>
 
 HomeEasy homeEasy; // OUT = B1(OC1A), IN = B0(ICP)
-NRF24 nrf24(D7, SS); // B4(MISO), B3(MOSI), B2(SS), D7(CE)
+NRF24 nrf24(7, SS); // B4(MISO), B3(MOSI), B2(SS), D7(CE)
 LB_Com lbCom; // OUT = D1(TXD), IN = D0(RXD)
 
 int main(void)
