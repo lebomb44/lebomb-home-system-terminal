@@ -7,7 +7,7 @@
 
 #define RELAICAM A7
 IR ir; // B1(OC1A)
-NRF24 nrf24(D7, SS); // B4(MISO), B3(MOSI), B2(SS), D7(CE)
+NRF24 nrf24(7, SS); // B4(MISO), B3(MOSI), B2(SS), D7(CE)
 
 int main(void)
 {
