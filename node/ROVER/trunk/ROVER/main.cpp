@@ -13,7 +13,7 @@ Servo servoR; // D6
 Servo servoCamLR; // D5
 Servo servoCamUD; // D4
 Servo servoCharge; // D3
-NRF24 nrf24(D7, SS); // B4(MISO), B3(MOSI), B2(SS), D7(CE)
+NRF24 nrf24(7, SS); // B4(MISO), B3(MOSI), B2(SS), D7(CE)
 
 int main(void)
 {
@@ -32,11 +32,11 @@ int main(void)
   pinMode(RELAICAM_OFF, OUTPUT);
   digitalWrite(RELAICAM_OFF, LOW);
   pinMode(RELAICAM_STATUS, INPUT);
-  servoL.attach(D7);
-  servoR.attach(D6);
-  servoCamLR.attach(D5);
-  servoCamUD.attach(D4);
-  servoCharge.attach(D3);
+  servoL.attach(7);
+  servoR.attach(6);
+  servoCamLR.attach(5);
+  servoCamUD.attach(4);
+  servoCharge.attach(3);
 
   nrf24.init();
   nrf24.setChannel(1);
