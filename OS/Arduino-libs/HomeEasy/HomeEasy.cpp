@@ -1,6 +1,7 @@
 #include <inttypes.h>
 #include <Arduino.h> 
 
+#include "wiring_private.h"
 #include "HomeEasy.h"
 
 Fifo_U16 * extInt0_Fifo = NULL;
