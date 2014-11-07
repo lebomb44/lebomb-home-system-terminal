@@ -13,7 +13,7 @@ Servo servoR; // D6
 Servo servoCamLR; // D5
 Servo servoCamUD; // D4
 Servo servoCharge; // D3
-NRF24 nrf24(7, SS); // B4(MISO), B3(MOSI), B2(SS), D7(CE)
+NRF24 nrf24(7, SS); // B5(SCK), B4(MISO), B3(MOSI), B2(SS), D7(CE)
 
 int main(void)
 {
