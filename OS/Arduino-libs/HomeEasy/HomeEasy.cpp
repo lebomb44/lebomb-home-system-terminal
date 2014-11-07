@@ -21,8 +21,82 @@ void HomeEasy::init(void)
 
   extInt0_Fifo = &(this->rx_fifo);
 
-  EICRA = (EICRA & ~((1 << ISC00) | (1 << ISC01))) | (1 << ISC00);
-  EIMSK |= (1 << INT0);
+  pinMode(8, INPUT); // B0(ICP)
+  pinMode(9, OUTPUT); // B1(OC1A)
+  digitalWrite(9, LOW);
+
+  cbi(TCCR1B, CS12); // Bit 2:0 – CS12:0: Clock Select : 000 = No clock source (Timer/Counter stopped).
+  cbi(TCCR1B, CS11);
+  cbi(TCCR1B, CS10);
+
+  cbi(TCCR1A, COM1A1); // Bit 7:6 – COM1A1:0: Compare Output Mode for Channel A : Normal port operation, OC1A disconnected.
+  cbi(TCCR1A, COM1A0);
+  cbi(TCCR1A, COM1B1); // Bit 5:4 – COM1B1:0: Compare Output Mode for Channel B : Normal port operation, OC1B disconnected.
+  cbi(TCCR1A, COM1B0);
+  // Bit 3 : reserved
+  // Bit 2 : reserved
+  cbi(TCCR1A, WGM11); // Bit 1:0 – WGM11:0: Waveform Generation Mode : 0 = 0000 = Normal
+  cbi(TCCR1A, WGM10);
+
+  cbi(TCCR1B, ICNC1); // Bit 7 – ICNC1: Input Capture Noise Canceler : Disabled
+  cbi(TCCR1B, ICES1); // Bit 6 – ICES1: Input Capture Edge Select : Disabled
+  // Bit 5 : reserved
+  cbi(TCCR1B, WGM13); // Bit 4:3 – WGM13:2: Waveform Generation Mode : 0 = 0000 = Normal
+  cbi(TCCR1B, WGM12);
+
+  cbi(TCCR1C, FOC1A); // Bit 7 – FOC1A: Force Output Compare for Channel A
+  cbi(TCCR1C, FOC1A); // Bit 6 – FOC1B: Force Output Compare for Channel B
+  // Bit 5 : reserved
+  // Bit 4 : reserved
+  // Bit 3 : reserved
+  // Bit 2 : reserved
+  // Bit 1 : reserved
+  // Bit 0 : reserved
+
+  TCNT1 = 0x0000;
+  OCR1A = 0x0000;
+  OCR1B = 0x0000;
+  ICR1 = 0x0000;
+
+  // Bit 7 : reserved
+  // Bit 6 : reserved
+  cbi(TIMSK1, ICIE1); // Bit 5 – ICIE1: Timer/Counter1, Input Capture Interrupt Enable : Disabled
+  // Bit 4 : reserved
+  // Bit 3 : reserved
+  cbi(TIMSK1, OCIE1B); // Bit 2 – OCIE1B: Timer/Counter1, Output Compare B Match Interrupt Enable : Disabled
+  cbi(TIMSK1, OCIE1A); // Bit 1 – OCIE1A: Timer/Counter1, Output Compare A Match Interrupt Enable : Disabled
+  cbi(TIMSK1,TOIE1); // Bit 0 – TOIE1: Timer/Counter1, Overflow Interrupt Enable : Disabled
+
+  // Bit 7 : reserved
+  // Bit 6 : reserved
+  cbi(TIFR1, ICF1); // Bit 5 – ICF1: Timer/Counter1, Input Capture Flag
+  // Bit 4 : reserved
+  // Bit 3 : reserved
+  cbi(TIFR1, OCF1B); // Bit 2 – OCF1B: Timer/Counter1, Output Compare B Match Flag
+  cbi(TIFR1, OCF1A); // Bit 1 – OCF1A: Timer/Counter1, Output Compare A Match Flag
+  cbi(TIFR1, TOV1); // Bit 0 – TOV1: Timer/Counter1, Overflow Flag
+
+  cbi(TCCR1B, CS12); // Bit 2:0 – CS12:0: Clock Select : 010 = clkI/O/8 (From prescaler)
+  sbi(TCCR1B, CS11);
+  cbi(TCCR1B, CS10);
+
+  // Bit 7 : reserved
+  // Bit 6 : reserved
+  // Bit 5 : reserved
+  // Bit 4 : reserved
+  cbi(EICRA, ISC11); // Bit 3, 2 – ISC11, ISC10: Interrupt Sense Control 1 Bit 1 and Bit 0 : 00 = The low level of INT1 generates an interrupt request.
+  cbi(EICRA, ISC10);
+  cbi(EICRA, ISC01); // Bit 1, 0 – ISC01, ISC00: Interrupt Sense Control 0 Bit 1 and Bit 0 : 01 = Any logical change on INT0 generates an interrupt request.
+  sbi(EICRA, ISC00);
+
+  // Bit 7 : reserved
+  // Bit 6 : reserved
+  // Bit 5 : reserved
+  // Bit 4 : reserved
+  // Bit 3 : reserved
+  // Bit 2 : reserved
+  cbi(EIMSK, INT1); // Bit 1 – INT1: External Interrupt Request 1 Enable : Disabled
+  sbi(EIMSK, INT0); // Bit 0 – INT0: External Interrupt Request 0 Enable : Enabled
 }
 
 void HomeEasy::run(void)
@@ -150,7 +224,7 @@ bool HomeEasy::isLowLong(uint16_t timeU16)
 
 bool HomeEasy::isLowSync(uint16_t timeU16)
 {
-  if((4815 < timeU16) && (timeU16 < 5585)) { return true; }
+  if((4815 < timeU16) && (timeU16 < 5885)) { return true; }
   else { return false; }
 }
 
