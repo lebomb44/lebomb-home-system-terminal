@@ -6,7 +6,7 @@
 #include <RH_NRF24/NRF24.h>
 #include <LB_Com/LB_Com.h>
 
-HomeEasy homeEasy; // OUT = B1(OC1A), IN = B0(ICP)
+HomeEasy homeEasy; // OUT = B1(OC1A), IN = B0(ICP), MODE = D5, EN = D4
 NRF24 nrf24(7, SS); // B5(SCK), B4(MISO), B3(MOSI), B2(SS), D7(CE)
 LB_Com lbCom; // OUT = D1(TXD), IN = D0(RXD)
 
