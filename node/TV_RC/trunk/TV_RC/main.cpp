@@ -5,7 +5,8 @@
 #include <IR/IR.h>
 #include <RH_NRF24/NRF24.h>
 
-#define RELAICAM A7
+#define RELAICAM_ON A7
+#define RELAICAM_OFF A6
 IR ir; // B1(OC1A)
 NRF24 nrf24(7, SS); // B5(SCK), B4(MISO), B3(MOSI), B2(SS), D7(CE)
 
