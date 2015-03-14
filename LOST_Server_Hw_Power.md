@@ -1,0 +1,47 @@
+# Introduction #
+
+The power interface is designed to manage all the power functions of the server.
+
+
+# Details #
+
+Power functions:
+  * Power supply 12V
+  * Check power supply: presence and temperature
+  * 3 power commands: you can command three independent power lines.
+
+
+# Detailed functions #
+
+## Power Supply ##
+
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Supply_Front.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Supply_Front.jpg)
+
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Supply_Back.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Supply_Back.jpg)
+
+
+## Power interface ##
+
+Here is the description of the power interface on I/O board.
+
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Interface.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Interface.jpg)
+
+
+Connector Pinout:
+
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Connector_1.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Connector_1.jpg)
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_RJ45.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_RJ45.jpg)
+
+
+## Check power supply ##
+
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Front.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Front.jpg)
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Back_1.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Back_1.jpg)
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Back_2.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Back_2.jpg)
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Led.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Led.jpg)
+
+## Power lines commands ##
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Cmd.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Cmd.jpg)
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Cmd_Front.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Cmd_Front.jpg)
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Cmd_Back.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Cmd_Back.jpg)
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Switch.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Power_Switch.jpg)

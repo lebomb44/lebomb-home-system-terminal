@@ -1,0 +1,47 @@
+# Introduction #
+
+This page describes the interface to the GSM.
+We use a Nokia 3330 has a modem.
+
+It has many advantages:
+  * Low Cost (20 dollars on Ebay).
+  * Simple interface (UART 8bits).
+
+
+# Details #
+The phone is connected to the Ethernut board through the I/O board.
+We use a RJ11 connector as it is really simple to connect and disconnect when needed.
+
+Here is the connector pin-out:
+  * RX : Ethernut UART1 receive <- GSM transmit.
+  * TX : Ethernut UART1 transmit -> GSM receive.
+  * 12V Power.
+  * GND.
+
+# Phone modification #
+The phone has been modified in order to be connected to the Ethernut board.
+Because of:
+  * Power : no battery needed.
+  * UART level adaptation : 5V (Ethernut) / 3.3V (GSM)
+
+# Phone communication #
+As we already said, the communication is done through the UART interface.
+
+The protocol has been built by Nokia. It is called FBUS.
+
+[See a description of the protocol on Wayne's web pages.](http://www.embedtronics.com/nokia/fbus.html)
+
+[See also the GNOKII project for more information.](http://gnokii.org)
+
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_Front.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_Front.jpg)
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_Back.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_Back.jpg)
+
+# Connection on I/O Board #
+The phone is connected through the RJ11 connector.
+
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_RJ11_Front.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_RJ11_Front.jpg)
+
+Here is the details of the pin-out on the connector.
+
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_RJ11_Back.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_RJ11_Back.jpg)
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_RJ11_Pinout.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/GSM_RJ11_Pinout.jpg)

@@ -1,0 +1,29 @@
+# Introduction #
+
+This interface detects when a contact to GND is opened.
+
+
+# Details #
+
+On each line, a diode 1N4001 has been added in order to protect the MCU against voltage overshot.
+Normally, the line must be closed to GND.
+If the line is opened, the MCU will detect it.
+Of course the internal pull-up of the MCU line must be activated to detect this opening.
+
+# Pin-out description #
+
+
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Move_Front.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Move_Front.jpg)
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Move_Back.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Move_Back.jpg)
+
+## RJ45 - 0 ##
+
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Move_RJ45_0.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Move_RJ45_0.jpg)
+
+## RJ45 - 1 ##
+
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Move_RJ45_1.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Move_RJ45_1.jpg)
+
+## RJ45 - 2 ##
+
+![http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Move_RJ45_2.jpg](http://lebomb-home-system-terminal.googlecode.com/svn/wiki/LOST_Server/Hw/Images/Move_RJ45_2.jpg)
