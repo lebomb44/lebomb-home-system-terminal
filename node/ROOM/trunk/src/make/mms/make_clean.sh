@@ -1,6 +1,6 @@
 source ../../env.sh
 cd $DEVBASE_DRIVE
-cd $DEVBASE/NODE_REMOTE
+cd $DEVBASE/node/ROOM/trunk/src
 echo $PATH
 make clean
 
