@@ -2,7 +2,7 @@
 #define HomeEasy_h
 
 #include <inttypes.h>
-#include <Fifo_U16/Fifo_U16.h>
+#include <Fifo_U16.h>
 
 class HomeEasy
 {
