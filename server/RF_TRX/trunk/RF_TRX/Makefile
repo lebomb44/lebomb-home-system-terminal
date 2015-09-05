@@ -197,7 +197,7 @@ $(TARGET).elf: $(OBJ)
 
 # Target: burn project.
 BURN=avrdude
-BURNPORT=com1
+BURNPORT=/dev/ttyUSB1
 BURNRATE=19200
 BURNTARGET=$(MCU)
 #BURNFLAGS=-dprog=stk500 -dserial=$(BURNPORT) -dspeed=115200 -dpart=$(BURNTARGET) --erase --upload if=$(TARG)
