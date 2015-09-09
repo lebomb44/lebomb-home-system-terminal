@@ -22,6 +22,7 @@ rxGetManufacturer	KEYWORD2
 rxRelease	KEYWORD2
 txIsReady	KEYWORD2
 send	KEYWORD2
+purge	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

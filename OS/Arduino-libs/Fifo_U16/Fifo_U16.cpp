@@ -63,3 +63,14 @@ bool Fifo_U16::isFull(void)
     return false;
   }
 }
+
+void Fifo_U16::purge(void)
+{
+  volatile uint16_t data = 0;
+
+  while(false == isEmpty())
+  {
+    data = pop();
+  }
+}
+

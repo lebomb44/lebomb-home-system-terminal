@@ -199,6 +199,11 @@ void HomeEasy::send(uint32_t code)
   /* FIXME : Not implemented */
 }
 
+void HomeEasy::purge(void)
+{
+  rx_fifo.purge();
+}
+
 /******************** PRIVATE ***************************/
 
 bool HomeEasy::isHigh(uint16_t timeU16)

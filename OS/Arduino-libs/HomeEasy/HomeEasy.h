@@ -19,6 +19,7 @@ public:
   void rxRelease(void);
   bool txIsReady(void);
   void send(uint32_t code);
+  void purge(void);
 private:
   Fifo_U16 rx_fifo;
   uint32_t code;

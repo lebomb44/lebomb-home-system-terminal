@@ -14,10 +14,11 @@ public:
   uint16_t pop(void);
   bool isEmpty(void);
   bool isFull(void);
+  void purge(void);
 private:
-   uint16_t fifo_buff[FIFO_U16_SIZE];
-   uint8_t fifo_in;
-   uint8_t fifo_out;
+   volatile uint16_t fifo_buff[FIFO_U16_SIZE];
+   volatile uint8_t fifo_in;
+   volatile uint8_t fifo_out;
 };
 
 #endif

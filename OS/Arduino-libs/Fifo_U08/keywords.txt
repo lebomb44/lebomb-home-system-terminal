@@ -16,6 +16,7 @@ push	KEYWORD2
 pop	KEYWORD2
 isEmpty	KEYWORD2
 isFull	KEYWORD2
+purge	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
