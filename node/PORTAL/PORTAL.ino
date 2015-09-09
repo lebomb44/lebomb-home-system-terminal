@@ -11,23 +11,23 @@
 #define MOTOR_PWM_pin 6
 
 #define PORTAL_FULL_SLOT (PORTAL_SLOW_SLOT + PORTAL_CRUISE_SLOT + PORTAL_SLOW_SLOT + PORTAL_SLOW_SLOT)
-#define PORTAL_SLOW_SLOT 3000
+#define PORTAL_SLOW_SLOT 4000
 #define PORTAL_CRUISE_SLOT 6000
 
 #define PORTAL_CMD_CLOSE 0
 #define PORTAL_CMD_OPEN  1
 
-#define MOTOR_MAX_CURRENT 70
-#define MOTOR_MAX_SLOW_CURRENT 15
+#define MOTOR_MAX_CURRENT 90
+#define MOTOR_MAX_SLOW_CURRENT 20
 
 HomeEasy homeEasy;
 int portal_last_cmd = PORTAL_CMD_CLOSE;
 int portal_cmd = PORTAL_CMD_CLOSE;
 boolean portal_cmd_accepted = false;
-uint16_t portal_start_position = 0;
-uint16_t portal_position = 0;
+uint16_t portal_start_position = PORTAL_SLOW_SLOT + PORTAL_CRUISE_SLOT + PORTAL_SLOW_SLOT;
+uint16_t portal_position = PORTAL_SLOW_SLOT + PORTAL_CRUISE_SLOT + PORTAL_SLOW_SLOT;
 uint16_t portal_force = 0;
-int motor_max_current = MOTOR_MAX_SLOW_CURRENT;
+int motor_max_current = MOTOR_MAX_CURRENT;
 
 uint16_t get_force(uint16_t _begin_position, uint16_t _position) {
   uint16_t _begin_force = 0;
@@ -85,6 +85,8 @@ void loop()
     Serial.print(homeEasy.rxGetGroup(), HEX);Serial.print("-");
     Serial.print(homeEasy.rxGetDevice(), HEX);Serial.print("-");
     Serial.print(homeEasy.rxGetStatus(), HEX);Serial.println();
+    delay(500);
+    homeEasy.purge();
     /* Check the authorized codes */
     if(((0xFCE1CE == homeEasy.rxGetManufacturer()) && (0x0 == homeEasy.rxGetGroup()) && (0x2 == homeEasy.rxGetDevice())) \
     || ((0xFCBDD6 == homeEasy.rxGetManufacturer()) && (0x0 == homeEasy.rxGetGroup()) && (0x2 == homeEasy.rxGetDevice()))) {
@@ -105,6 +107,7 @@ void loop()
           portal_position = portal_start_position;
         }
         portal_cmd_accepted = true;
+        Serial.print("CLOSE at: "); Serial.println(portal_position, DEC);
       }
       if(PORTAL_CMD_OPEN == homeEasy.rxGetStatus()) {
         digitalWrite(RELAY_LEFT_pin, LOW);
@@ -122,6 +125,7 @@ void loop()
           portal_position = portal_start_position;
         }
         portal_cmd_accepted = true;
+        Serial.print("OPEN at: "); Serial.println(portal_position, DEC);
       }
     }
     homeEasy.rxRelease();
@@ -139,21 +143,24 @@ void loop()
       portal_position = PORTAL_FULL_SLOT;
     }
     portal_force = get_force(portal_start_position, portal_position);
-    Serial.print("-");
+    if((PORTAL_SLOW_SLOT + PORTAL_CRUISE_SLOT + PORTAL_SLOW_SLOT) >portal_position) {
+      motor_max_current = MOTOR_MAX_CURRENT;
+    }
+    else {
+      motor_max_current = MOTOR_MAX_SLOW_CURRENT;
+    }
   }
-Serial.print(portal_cmd, DEC);Serial.print(":");
-Serial.print(portal_force, DEC);Serial.print(" : ");
-Serial.print(portal_start_position, DEC);Serial.print(":");
-Serial.println(portal_position, DEC);;
 
   /* Back to idle mode : everything OFF */
-  if(motor_max_current < analogRead(MOTOR_SENSE_pin)) {
+  int motor_currentRead = analogRead(MOTOR_SENSE_pin);
+  if(motor_max_current < motor_currentRead) {
     digitalWrite(MOTOR_PWM_pin, LOW);
     digitalWrite(RELAY_LEFT_pin, LOW);
     digitalWrite(RELAY_RIGHT_pin, LOW);
     digitalWrite(IR_POWER_pin, LOW);
     portal_cmd_accepted = false;
     portal_force = 0;
+    Serial.print("CURRENT MAX detected: "); Serial.println(motor_currentRead, DEC);
   }
   /* Clone LED status on RF signal */
   //digitalWrite(MOTOR_PWM_pin, HIGH);
