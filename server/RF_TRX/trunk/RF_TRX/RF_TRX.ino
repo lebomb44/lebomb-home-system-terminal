@@ -1,7 +1,7 @@
 #include <Fifo_U16.h>
 #include <HomeEasy.h>
 #include <SoftwareSerial.h>
-#include <FBus.h>
+#include <GSM_FBus.h>
 
 #define LED_pin 13
 
@@ -15,7 +15,7 @@
 #define PHONE_POWER_pin 10
 
 HomeEasy homeEasy;
-FBus fbus(PHONE_RX_pin, PHONE_TX_pin);
+GSM_FBus gsm_fbus(PHONE_RX_pin, PHONE_TX_pin);
 
 void setup()
 {
@@ -60,5 +60,9 @@ void loop()
     }
     homeEasy.rxRelease();
   }
+  Serial.print("GSM status= "); Serial.println(gsm_fbus.gsm_status_get(), DEC);
+  delay(1000);
+  Serial.print("GSM version= "); Serial.println(gsm_fbus.gsm_version_get(), DEC);
+  delay(1000);
 }
 
