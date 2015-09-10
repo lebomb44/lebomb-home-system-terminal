@@ -15,7 +15,7 @@
 #define PHONE_POWER_pin 10
 
 HomeEasy homeEasy;
-GSM_FBus gsm_fbus(PHONE_RX_pin, PHONE_TX_pin);
+GSM_FBus gsm_fbus(PHONE_TX_pin, PHONE_RX_pin);
 
 void setup()
 {
@@ -61,8 +61,8 @@ void loop()
     homeEasy.rxRelease();
   }
   Serial.print("GSM status= "); Serial.println(gsm_fbus.gsm_status_get(), DEC);
-  delay(1000);
+  delay(10000);
   Serial.print("GSM version= "); Serial.println(gsm_fbus.gsm_version_get(), DEC);
-  delay(1000);
+  delay(10000);
 }
 

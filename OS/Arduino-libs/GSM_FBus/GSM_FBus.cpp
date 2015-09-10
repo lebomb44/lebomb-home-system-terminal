@@ -11,7 +11,7 @@
 #define NOKIA_3310_SMSSEND 0x02
 #define NOKIA_3310_ACK     0x7F
 
-GSM_FBus::GSM_FBus(const uint8_t rxPin_, const uint8_t txPin_) : _serial(rxPin_, txPin_)
+GSM_FBus::GSM_FBus(const uint8_t txPin_, const uint8_t rxPin_) : _serial(txPin_, rxPin_)
 {
   this->init();
 }
@@ -19,7 +19,7 @@ GSM_FBus::GSM_FBus(const uint8_t rxPin_, const uint8_t txPin_) : _serial(rxPin_,
 void GSM_FBus::init(void)
 {
   _serial.begin(115200);
-  _serial.setTimeout(1000);
+  _serial.setTimeout(3000);
 }
 
 void GSM_FBus::fbus_sync(void)

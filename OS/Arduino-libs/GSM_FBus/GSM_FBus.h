@@ -7,7 +7,7 @@
 class GSM_FBus
 {
 public:
-  GSM_FBus(const uint8_t rxPin_, const uint8_t txPin_);
+  GSM_FBus(const uint8_t txPin_, const uint8_t rxPin_);
   void init(void);
   uint8_t gsm_status_get(void);
   uint8_t gsm_version_get(void);
