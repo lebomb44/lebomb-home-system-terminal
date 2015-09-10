@@ -1,5 +1,7 @@
 #include <Fifo_U16.h>
 #include <HomeEasy.h>
+#include <SoftwareSerial.h>
+#include <FBus.h>
 
 #define LED_pin 13
 
@@ -13,6 +15,7 @@
 #define PHONE_POWER_pin 10
 
 HomeEasy homeEasy;
+FBus fbus(PHONE_RX_pin, PHONE_TX_pin);
 
 void setup()
 {

@@ -1,0 +1,25 @@
+#######################################
+# Syntax Coloring Map FBus
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+FBus	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+init	KEYWORD2
+sync	KEYWORD2
+header	KEYWORD2
+frame_len	KEYWORD2
+trailer	KEYWORD2
+send	KEYWORD2
+receive	KEYWORD2
+receive_ack	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
