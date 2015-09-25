@@ -12,7 +12,7 @@
 
 #define PORTAL_FULL_SLOT (PORTAL_SLOW_SLOT + PORTAL_CRUISE_SLOT + PORTAL_SLOW_SLOT + PORTAL_SLOW_SLOT)
 #define PORTAL_SLOW_SLOT 4000
-#define PORTAL_CRUISE_SLOT 6000
+#define PORTAL_CRUISE_SLOT 5000
 
 #define PORTAL_CMD_CLOSE 0
 #define PORTAL_CMD_OPEN  1
@@ -28,6 +28,7 @@ uint16_t portal_start_position = PORTAL_SLOW_SLOT + PORTAL_CRUISE_SLOT + PORTAL_
 uint16_t portal_position = PORTAL_SLOW_SLOT + PORTAL_CRUISE_SLOT + PORTAL_SLOW_SLOT;
 uint16_t portal_force = 0;
 int motor_max_current = MOTOR_MAX_CURRENT;
+uint16_t motor_max_current_nb = 0;
 
 uint16_t get_force(uint16_t _begin_position, uint16_t _position) {
   uint16_t _begin_force = 0;
@@ -89,7 +90,9 @@ void loop()
     homeEasy.purge();
     /* Check the authorized codes */
     if(((0xFCE1CE == homeEasy.rxGetManufacturer()) && (0x0 == homeEasy.rxGetGroup()) && (0x2 == homeEasy.rxGetDevice())) \
-    || ((0xFCBDD6 == homeEasy.rxGetManufacturer()) && (0x0 == homeEasy.rxGetGroup()) && (0x2 == homeEasy.rxGetDevice()))) {
+    || ((0xFCBDD6 == homeEasy.rxGetManufacturer()) && (0x0 == homeEasy.rxGetGroup()) && (0x2 == homeEasy.rxGetDevice())) \
+    || ((0xFCDAD2 == homeEasy.rxGetManufacturer()) && (0x0 == homeEasy.rxGetGroup()) && (0x2 == homeEasy.rxGetDevice())) \
+    || ((0xFCC302 == homeEasy.rxGetManufacturer()) && (0x0 == homeEasy.rxGetGroup()) && (0x2 == homeEasy.rxGetDevice()))) {
       digitalWrite(IR_POWER_pin, HIGH);
       if(PORTAL_CMD_CLOSE == homeEasy.rxGetStatus()) {
         digitalWrite(RELAY_LEFT_pin, HIGH);
@@ -143,8 +146,15 @@ void loop()
       portal_position = PORTAL_FULL_SLOT;
     }
     portal_force = get_force(portal_start_position, portal_position);
-    if((PORTAL_SLOW_SLOT + PORTAL_CRUISE_SLOT + PORTAL_SLOW_SLOT) >portal_position) {
-      motor_max_current = MOTOR_MAX_CURRENT;
+    /* Set to MAX force to unstruck the portal */
+    if(100 > portal_position) { portal_force = PORTAL_SLOW_SLOT; }
+    if((PORTAL_SLOW_SLOT + PORTAL_CRUISE_SLOT + PORTAL_SLOW_SLOT) > portal_position) {
+      if(100 > portal_position) {
+        motor_max_current = 1024;
+      }
+      else {
+        motor_max_current = MOTOR_MAX_CURRENT;
+      }
     }
     else {
       motor_max_current = MOTOR_MAX_SLOW_CURRENT;
@@ -154,6 +164,12 @@ void loop()
   /* Back to idle mode : everything OFF */
   int motor_currentRead = analogRead(MOTOR_SENSE_pin);
   if(motor_max_current < motor_currentRead) {
+    motor_max_current_nb++;
+  }
+  else {
+    motor_max_current_nb = 0;
+  }
+  if(100 < motor_max_current_nb) {
     digitalWrite(MOTOR_PWM_pin, LOW);
     digitalWrite(RELAY_LEFT_pin, LOW);
     digitalWrite(RELAY_RIGHT_pin, LOW);
