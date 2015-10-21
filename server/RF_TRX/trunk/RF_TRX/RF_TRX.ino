@@ -12,22 +12,30 @@
 
 #define PHONE_TX_pin 3
 #define PHONE_RX_pin 8
-#define PHONE_POWER_pin 10
+#define PHONE_POWER_pin A1
+
+#define LOST_TX_pin A0
+#define LOST_RX_pin 10
 
 HomeEasy homeEasy;
-GSM_FBus gsm_fbus(PHONE_TX_pin, PHONE_RX_pin);
+GSM_FBus gsm_fbus(PHONE_RX_pin, PHONE_TX_pin);
 
 void setup()
 {
   homeEasy.init();
   Serial.begin(115200);
   pinMode(LED_pin, OUTPUT); 
-  /*
-  pinMode(PHONE_TX_pin, INPUT);
-  pinMode(PHONE_RX_pin, INPUT);
+
+  pinMode(PHONE_TX_pin, OUTPUT);
+  digitalWrite(PHONE_TX_pin, HIGH);
+  pinMode(PHONE_RX_pin, INPUT_PULLUP);
   pinMode(PHONE_POWER_pin, OUTPUT);
   digitalWrite(PHONE_POWER_pin, LOW);
-  */
+
+  pinMode(LOST_TX_pin, OUTPUT);
+  digitalWrite(LOST_TX_pin, HIGH);
+  pinMode(LOST_RX_pin, INPUT_PULLUP);
+
   pinMode(RF_IN_pin, INPUT);
   pinMode(RF_OUT_pin, OUTPUT);
   digitalWrite(RF_OUT_pin, LOW);
@@ -43,6 +51,7 @@ void loop()
 {
   homeEasy.run();
 //Serial.println(homeEasy.getU16(), DEC);
+
   if(true == homeEasy.rxCodeIsReady())
   {
     Serial.print(homeEasy.rxGetCode(), HEX);Serial.print(" : ");
@@ -50,7 +59,6 @@ void loop()
     Serial.print(homeEasy.rxGetGroup(), HEX);Serial.print("-");
     Serial.print(homeEasy.rxGetDevice(), HEX);Serial.print("-");
     Serial.print(homeEasy.rxGetStatus(), HEX);Serial.println();
-    /* Check the authorized codes */
     if(((0xFCE1CE == homeEasy.rxGetManufacturer()) && (0x0 == homeEasy.rxGetGroup()) && (0x2 == homeEasy.rxGetDevice())) \
     || ((0xFCBDD6 == homeEasy.rxGetManufacturer()) && (0x0 == homeEasy.rxGetGroup()) && (0x2 == homeEasy.rxGetDevice()))) {
       if(0 == homeEasy.rxGetStatus()) {
@@ -60,9 +68,10 @@ void loop()
     }
     homeEasy.rxRelease();
   }
-  Serial.print("GSM status= "); Serial.println(gsm_fbus.gsm_status_get(), DEC);
-  delay(10000);
-  Serial.print("GSM version= "); Serial.println(gsm_fbus.gsm_version_get(), DEC);
-  delay(10000);
+
+  //Serial.print("GSM status= "); Serial.println(gsm_fbus.gsm_status_get(), DEC);
+  //delay(10000);
+  //Serial.print("GSM version= "); Serial.println(gsm_fbus.gsm_version_get(), DEC);
+  //delay(3000);
 }
 
