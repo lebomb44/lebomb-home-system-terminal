@@ -1,6 +1,6 @@
 source ../env.sh
 cd $DEVBASE_DRIVE
-cd $DEVBASE/ROVER
+cd $DEVBASE/node/ROVER
 echo $PATH
 make clean
 
