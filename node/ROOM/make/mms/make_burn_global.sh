@@ -1,6 +1,6 @@
 source ../../env.sh
 cd $DEVBASE_DRIVE
-cd $DEVBASE/NODE_REMOTE
+cd $DEVBASE/node/REMOTE
 echo $PATH
 make clean
 export NODE_REMOTE_CONFIG=global
