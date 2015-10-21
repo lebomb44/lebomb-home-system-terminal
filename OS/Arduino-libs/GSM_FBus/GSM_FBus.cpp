@@ -109,9 +109,9 @@ uint8_t GSM_FBus::fbus_receive(uint8_t *cmd, uint16_t *data_len, uint8_t **data,
   uint8_t xor2 = 0;
   int ret = 0;
 
-  if(0x1E != _serial.read()) { /*printf("ERROR header0\n");*/ return 1; }
-  if(0x0C != _serial.read()) { /*printf("ERROR header1\n");*/ return 2; }
-  if(0x00 != _serial.read()) { /*printf("ERROR header2\n");*/ return 3; }
+  if(0x1E != _serial.read()) { Serial.print("ERROR header0\n"); return 1; }
+  if(0x0C != _serial.read()) { Serial.print("ERROR header1\n"); return 2; }
+  if(0x00 != _serial.read()) { Serial.print("ERROR header2\n"); return 3; }
 
   ret = _serial.read(); if(0>ret) { /*printf("ERROR data lenH\n");*/ return 4; }
   *cmd = ret;
