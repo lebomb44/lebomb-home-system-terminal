@@ -5,7 +5,7 @@
 #include <avr/interrupt.h>
 #include <util/crc16.h>
 #include "wiring_private.h"
-#include <Fifo_U08/Fifo_U08.h>
+#include <Fifo_U08.h>
 #include "LB_Com.h"
 
 Fifo_U08 * uart_rx_fifo = NULL;
@@ -35,12 +35,12 @@ void LB_Com::init(void)
   pinMode(1, OUTPUT); // D1(TXD)
   digitalWrite(1, HIGH);
 
-  cbi(UCSR0B, RXEN0); // Bit 4 – RXENn: Receiver Enable n : Disabled
-  cbi(UCSR0B, TXEN0); // Bit 3 – TXENn: Transmitter Enable n : Disabled
+  cbi(UCSR0B, RXEN0); // Bit 4 : RXENn: Receiver Enable n : Disabled
+  cbi(UCSR0B, TXEN0); // Bit 3 : TXENn: Transmitter Enable n : Disabled
 
   // Bit 7 (RO) – RXCn: USART Receive Complete
-  cbi(UCSR0A, TXC0); // Bit 6 – TXCn: USART Transmit Complete
-  // Bit 5 (RO) – UDREn: USART Data Register Empty
+  cbi(UCSR0A, TXC0); // Bit 6 : TXCn: USART Transmit Complete
+  // Bit 5 (RO) : UDREn: USART Data Register Empty
   // Bit 4 (RO) – FEn: Frame Error
   // Bit 3 (RO) – DORn: Data OverRun
   // Bit 2 (RO) – UPEn: USART Parity Error

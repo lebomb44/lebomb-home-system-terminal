@@ -2,7 +2,7 @@
 #define LB_Com_h
 
 #include <inttypes.h>
-#include <Fifo_U08/Fifo_U08.h>
+#include <Fifo_U08.h>
 
 #define LB_COM_DATA_MAX_SIZE (4+255)
 

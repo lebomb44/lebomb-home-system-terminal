@@ -1,7 +1,8 @@
+#include <Fifo_U08.h>
 #include <Fifo_U16.h>
 #include <HomeEasy.h>
-#include <SoftwareSerial.h>
-#include <GSM_FBus.h>
+#include <LB_Com.h>
+#include <ID.h>
 
 #define LED_pin 13
 
@@ -18,7 +19,7 @@
 #define LOST_RX_pin 10
 
 HomeEasy homeEasy;
-GSM_FBus gsm_fbus(PHONE_RX_pin, PHONE_TX_pin);
+LB_Com lbCom;
 
 void setup()
 {
@@ -59,19 +60,14 @@ void loop()
     Serial.print(homeEasy.rxGetGroup(), HEX);Serial.print("-");
     Serial.print(homeEasy.rxGetDevice(), HEX);Serial.print("-");
     Serial.print(homeEasy.rxGetStatus(), HEX);Serial.println();
-    if(((0xFCE1CE == homeEasy.rxGetManufacturer()) && (0x0 == homeEasy.rxGetGroup()) && (0x2 == homeEasy.rxGetDevice())) \
-    || ((0xFCBDD6 == homeEasy.rxGetManufacturer()) && (0x0 == homeEasy.rxGetGroup()) && (0x2 == homeEasy.rxGetDevice()))) {
-      if(0 == homeEasy.rxGetStatus()) {
-      }
-      if(1 == homeEasy.rxGetStatus()) {
-      }
-    }
+    *((uint32_t *) &buff[0]) = homeEasy.rxGetManufacturer();
+    buff[4] = homeEasy.rxGetGroup();
+    buff[5] = homeEasy.rxGetStatus();
+    buff[6] = homeEasy.rxGetDevice();
+
+    lbCom.send(id.homeEasy, id.lost, x, homeEasy.async_cmd, buff);
     homeEasy.rxRelease();
   }
 
-  //Serial.print("GSM status= "); Serial.println(gsm_fbus.gsm_status_get(), DEC);
-  //delay(10000);
-  //Serial.print("GSM version= "); Serial.println(gsm_fbus.gsm_version_get(), DEC);
-  //delay(3000);
 }
 
