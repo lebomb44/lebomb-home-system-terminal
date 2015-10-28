@@ -1,8 +1,9 @@
+#!/bin/bash
 source ../../env.sh
 cd $DEVBASE_DRIVE
-cd $DEVBASE/node/REMOTE
+cd $DEVBASE/node/ROOM
 echo $PATH
 make clean
-export NODE_REMOTE_CONFIG=global
+export NODE_ROOM_CONFIG=global
 make burn
 

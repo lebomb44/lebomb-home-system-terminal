@@ -11,6 +11,8 @@
 #include <sys/thread.h>
 #include <sys/heap.h>
 
+#include <util/crc16.h>
+
 #include "i2c.h"
 
 #define I2C_ERR_OK	         0
@@ -25,11 +27,16 @@
 #define I2C_ERR_BAD_RX_ARG   9
 #define I2C_ERR_BAD_TRX_ARG  10
 
+#define I2C_CRC_INITIAL_VALUE 0x00
+
 volatile uint8_t i2c_mutex;
 
 uint8_t i2c_mm_sla = 0;
 uint8_t i2c_mm_adr = 0;
+uint8_t i2c_mm_crc = I2C_CRC_INITIAL_VALUE;
+uint8_t i2c_sl_crc = I2C_CRC_INITIAL_VALUE;
 uint8_t i2c_mm_err = 0;
+
 
 uint16_t i2c_mt_len = 0;
 uint16_t i2c_mt_idx = 0;
@@ -37,7 +44,7 @@ uint8_t *i2c_mt_buf = NULL;
 
 uint16_t i2c_mr_len = 0;
 uint16_t i2c_mr_idx = 0;
-uint8_t *i2c_mr_buf = NULL;
+uint8_t i2c_mr_buf[255] = {0};
 
 static void I2C_Interrupt(void *arg)
 {
@@ -57,9 +64,13 @@ static void I2C_Interrupt(void *arg)
         /* We are entering the master mode. Mark the interface busy. */
         i2c_mt_idx = 0;
         i2c_mr_idx = 0;
+		i2c_mm_crc = I2C_CRC_INITIAL_VALUE;
+		i2c_sl_crc = I2C_CRC_INITIAL_VALUE;
 //printf("Start\n");
         /* Send the slave address in SLA+T */
         TWDR = i2c_mm_sla;
+        /* Add the SLA to the CRC */
+        i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mm_sla);
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
         break;
 
@@ -67,17 +78,21 @@ static void I2C_Interrupt(void *arg)
      * 0x10: Repeated start condition has been transmitted.
      */
     case TW_REP_START:
-       /* We are entering the master mode. Mark the interface busy. */
+        /* We are entering the master mode. Mark the interface busy. */
         i2c_mt_idx = 0;
         i2c_mr_idx = 0;
+		i2c_mm_crc = I2C_CRC_INITIAL_VALUE;
+		i2c_sl_crc = I2C_CRC_INITIAL_VALUE;
 //printf("Rep Start\n");
 
         /*
          * If in data are necessary, transmit SLA+R. Logic will
          * switch to master receiver mode.
          */
-        if (i2c_mr_len) {
+        if(0 < i2c_mr_len) {
             TWDR = i2c_mm_sla | 1;
+            /* Add the SLA to the CRC */
+			i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mm_sla);
             TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
         }
         else {
@@ -94,6 +109,8 @@ static void I2C_Interrupt(void *arg)
         /* Send the address register */
 //printf("MT SLA ACK\n");
         TWDR = i2c_mm_adr;
+        /* Add the ADR to the CRC */
+        i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mm_adr);
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
 
         break;
@@ -115,19 +132,48 @@ static void I2C_Interrupt(void *arg)
      */
     case TW_MT_DATA_ACK:
 //printf("MT DATA ACK\n");
-    	/* If we have to receive data, send a new REPEATED START */
-        if (i2c_mr_len) {
-            TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTA) | _BV(TWEN) | _BV(TWIE);
-        }
-        else {
-            /* If outgoing data left to send, put the next byte in the data register */
-            if (i2c_mt_idx < i2c_mt_len) {
-                TWDR = i2c_mt_buf[i2c_mt_idx];
-                i2c_mt_idx++;
+    	/* If we have to receive data, send len, crc and a REPEATED START */
+        if(0 < i2c_mr_len) {
+            /* Set the data in the register */
+            if(0 == i2c_mt_idx) {
+                TWDR = i2c_mr_len;
+                i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mr_len);
+            }
+            /* Increment step */
+            i2c_mt_idx++;
+            /* Start transition */
+            if(i2c_mt_idx < 2) {
                 TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
             }
             else {
-                /* No more data to send : send a STOP */
+                TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTA) | _BV(TWEN) | _BV(TWIE);
+            }
+        }
+        else {
+            /* Set the data in the register */
+            if(0 == i2c_mt_idx) {
+                TWDR = i2c_mt_len;
+                i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mt_len);
+            }
+            else {
+                /* If outgoing data left to send, put the next byte in the data register */
+                if (i2c_mt_idx < (i2c_mt_len + 1)) {
+                    TWDR = i2c_mt_buf[i2c_mt_idx-1];
+                    i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mt_buf[i2c_mt_idx-1]);
+                }
+                else {
+                    if (i2c_mt_idx == (i2c_mt_len + 1)) {
+                        TWDR = i2c_mm_crc;
+                    }
+                }
+            }
+            /* Increment step */
+            i2c_mt_idx++;
+            /* Start transition */
+            if (i2c_mt_idx < (i2c_mt_len + 3)) {
+                TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
+            }
+            else {
                 TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE);
             }
         }
@@ -173,14 +219,19 @@ static void I2C_Interrupt(void *arg)
         /*
          * Store the data byte in the master receive buffer.
          */
+        /* Get the data in the register */
         if (i2c_mr_idx < i2c_mr_len) {
         	i2c_mr_buf[i2c_mr_idx] = TWDR;
+			i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mr_buf[i2c_mr_idx]);
+            /* Increment step */
             i2c_mr_idx++;
-        }
-        if (i2c_mr_idx < i2c_mr_len) {
+            /* Start transmition */
             TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
         }
-        else {
+		else {
+            i2c_sl_crc = TWDR;
+            /* Increment step */
+            i2c_mr_idx++;
             /* Send a STOP */
             TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE);
         }
@@ -244,7 +295,6 @@ uint8_t i2c_init(void)
   i2c_mt_len = 0;
   i2c_mt_buf = NULL;
   i2c_mr_len = 0;
-  i2c_mr_buf = NULL;
 
   /* Authorize the use of the hardware interface */
   i2c_mutex = 0;
@@ -276,7 +326,8 @@ void i2c_reset(void)
 
 uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, uint8_t rxlen, uint8_t *rxdata)
 {
-  uint32_t tmo=0;
+  uint32_t tmo = 0;
+  uint16_t i = 0;
 
   /* Check arguments */
   if(0 < txlen) { if(NULL == txdata) { return I2C_ERR_BAD_TX_ARG; } }
@@ -286,7 +337,7 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
   /* Wait for the hardware interface to be free */
   tmo = 100; while(0 < tmo) { if(0 == i2c_mutex) { i2c_mutex = 1; break; } else { NutSleep(1); tmo--; } }
   /* Return if impossible to take the semaphore : do nothing */
-  if(tmo == 0) { return I2C_ERR_IF_LOCKED; }
+  if(0 == tmo) { return I2C_ERR_IF_LOCKED; }
 
   /* Check the good health of the bus */
   tmo = 4; while(0 < tmo) { if((0xF8 == (TWSR & 0xF8)) && (0x00 == (TWCR & _BV(TWSTO)))) { break; } else { i2c_reset(); NutSleep(1); tmo--; } }
@@ -302,13 +353,12 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
   i2c_mt_idx = 0;
   i2c_mr_idx = 0;
   i2c_mt_buf = txdata;
-  i2c_mr_buf = rxdata;
 
-  /* Send a START*/
+  /* Send a START */
   TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTA) | _BV(TWEN) | _BV(TWIE);
   /* Wait for the data to be received or sent */
-  if(0 < i2c_mr_len) { tmo = 30; while(0 < tmo) { if(i2c_mr_idx == rxlen) { break; } else { NutSleep(1); tmo--; } } }
-  else               { tmo = 30; while(0 < tmo) { if(i2c_mt_idx == txlen) { break; } else { NutSleep(1); tmo--; } } }
+  if(0 < rxlen) { tmo = 30; while(0 < tmo) { if((i2c_mt_idx == 2          ) && (i2c_mr_idx == (rxlen + 1))) { break; } else { NutSleep(1); tmo--; } } }
+  else          { tmo = 30; while(0 < tmo) { if((i2c_mt_idx == (txlen + 3)) && (i2c_mr_idx == 0          )) { break; } else { NutSleep(1); tmo--; } } }
   /* Return if time-out */
   if(0 == tmo)
   {
@@ -316,9 +366,23 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
     i2c_mutex = 0;
     if(0 < i2c_mm_err) { return i2c_mm_err; } else { return I2C_ERR_TIMEOUT; }
   }
-
-  i2c_mutex = 0;
-  return I2C_ERR_OK;
+  else
+  {
+    if(i2c_sl_crc == i2c_mm_crc)
+    {
+      for(i=0; i<rxlen; i++)
+      {
+        rxdata[i] = i2c_mr_buf[i];
+        i2c_mutex = 0;
+        return I2C_ERR_OK;
+      }
+    }
+	else
+    {
+      i2c_mutex = 0;
+      return I2C_ERR_BUS;
+    }
+  }
 }
 
 uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)

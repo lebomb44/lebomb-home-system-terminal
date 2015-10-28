@@ -1,4 +1,5 @@
 #include <util/twi.h>
+#include <util/crc16.h>
 #include "../global.h"
 #include "../config.h"
 #include "uart.h"
@@ -6,11 +7,16 @@
 #include "../apps/node.h"
 #include "i2c.h"
 
+#define TW_CRC_INITIAL_VALUE 0x00
+
 volatile u08 tw_sm_sla;   /* Slave address received. */
 volatile u08 tw_sm_adr;   /* Slave memory address received. */
+volatile u08 tw_sm_len;   /* Slave data len to receive or transmit */
+volatile u08 tw_sm_crc;   /* Slave crc to receive or transmit */
 
 volatile u16 tw_st_idx;  /* Current slave transmit buffer index. */
 volatile u16 tw_sr_idx;  /* Current slave receive buffer index. */
+volatile u08 tw_sr_buf[NODE_REG_MAX] = {0}; /* Current slave receive buffer */
 
 #define TWGO    (_BV(TWINT) | _BV(TWEN) | _BV(TWIE))
 
@@ -19,7 +25,8 @@ volatile u16 tw_sr_idx;  /* Current slave receive buffer index. */
  */
 SIGNAL(SIG_2WIRE_SERIAL)
 {
-    u08 twsr;
+    u08 twsr = 0;
+    u16 i = 0;
 
     /*
      * Read the status and interpret its contents.
@@ -48,8 +55,10 @@ SIGNAL(SIG_2WIRE_SERIAL)
 
         /* We are entering the slave receive mode. Mark the interface busy. */
         tw_sm_sla = TWDR;
-        TWCR = TWGO | _BV(TWEA);
+		tw_sm_crc = TW_CRC_INITIAL_VALUE;
+        tw_sm_crc = _crc_ibutton_update(tw_sm_crc, tw_sm_sla);
         tw_sr_idx = 0;
+        TWCR = TWGO | _BV(TWEA);
 //uart_printf((u08*)"TW SR Sla=0x%x\n",tw_sm_sla);
         break;
 
@@ -63,24 +72,56 @@ SIGNAL(SIG_2WIRE_SERIAL)
         /*
          * If the receive buffer isn't filled up, store data byte.
          */
-        if(tw_sr_idx==0)
+        if(0 == tw_sr_idx)
         {
           tw_sm_adr = TWDR;
+          tw_sm_crc = _crc_ibutton_update(tw_sm_crc, tw_sm_adr);
 //uart_printf((u08*)"TW SR ADR=0x%x\n",tw_sm_adr);
         }
         else
         {
-          if((tw_sm_adr+tw_sr_idx-1) < NODE_REG_MAX)
+          if(1 == tw_sr_idx)
           {
-            node[tw_sm_adr+tw_sr_idx-1] = TWDR;
-//uart_printf((u08*)"TW SR data=0x%x\n",node[tw_sm_adr+tw_sr_idx-1]);
+            tw_sm_len = TWDR;
+            tw_sm_crc = _crc_ibutton_update(tw_sm_crc, tw_sm_len);
           }
           else
           {
+            if((tw_sm_adr + tw_sm_len) < (NODE_REG_MAX + 1))
+            {
+              if(tw_sr_idx < (tw_sm_len + 2))
+              {
+                tw_sr_buf[tw_sr_idx - 2] = TWDR;
+                tw_sm_crc = _crc_ibutton_update(tw_sm_crc, tw_sr_buf[tw_sr_idx - 2]);
+              }
+              else
+              {
+                if(tw_sr_idx == (tw_sm_len + 2))
+                {
+                  if(tw_sm_crc == TWDR)
+                  {
+                    for(i=0; i<tw_sm_len; i++)
+                    {
+                      node[tw_sm_adr + i] = tw_sr_buf[i];
+                    }
+				  }
+                  else
+                  {
+                  }
+                }
+                else
+                {
+                }
+              }
+//uart_printf((u08*)"TW SR data=0x%x\n",node[tw_sm_adr+tw_sr_idx-1]);
+            }
+            else
+            {
 //uart_puts((u08*)"TW SR over\n");
+            }
           }
         }
-        if((tw_sm_adr+tw_sr_idx) <= NODE_REG_MAX)
+        if((tw_sm_adr+tw_sr_idx) < (NODE_REG_MAX + 3))
         {
           tw_sr_idx++;
         }
@@ -102,7 +143,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
          * Continue not accepting more data.
          */
 //uart_puts((u08*)"TW SR Nack\n");
-        tw_sr_idx = NODE_REG_MAX+1;
+        tw_sr_idx = NODE_REG_MAX + 3;
         TWCR = TWGO | _BV(TWEA);
         break;
 
@@ -117,7 +158,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
          * interface.
          */
 //uart_puts((u08*)"TW SR Stop\n");
-        tw_sr_idx = NODE_REG_MAX+1;
+        tw_sr_idx = NODE_REG_MAX + 3;
         TWCR = TWGO | _BV(TWEA);
         break;
 
@@ -130,20 +171,26 @@ SIGNAL(SIG_2WIRE_SERIAL)
     case TW_ST_ARB_LOST_SLA_ACK:
         /* Reset transmit index and fall through for outgoing data. */
         tw_sm_sla = TWDR;
+        tw_sm_crc = _crc_ibutton_update(tw_sm_crc, tw_sm_sla);
         tw_st_idx = 0;
-        if((tw_sm_adr+tw_st_idx) < NODE_REG_MAX)
+        if(0 < tw_sm_len)
         {
-          TWDR = node[tw_sm_adr+tw_st_idx];
+          if((tw_sm_adr + tw_st_idx) < NODE_REG_MAX)
+          {
+            TWDR = node[tw_sm_adr + tw_st_idx];
+			tw_sm_crc = _crc_ibutton_update(tw_sm_crc, node[tw_sm_adr + tw_st_idx]);
+          }
+          else
+          {
+            /* No more data. Continue sending dummies. */
+            TWDR = 0;
+          }
         }
         else
         {
-          /* No more data. Continue sending dummies. */
-          TWDR = 0;
-        }
-        if((tw_sm_adr+tw_st_idx) < NODE_REG_MAX)
-        {
-          tw_st_idx++;
-        }
+          TWDR = tw_sm_crc;
+		}
+        tw_st_idx++;
         TWCR = TWGO | _BV(TWEA);
 //uart_printf((u08*)"TW ST Sla=0x%x\n",tw_sm_sla);
 //uart_printf((u08*)"TW ST ADR=0x%x\n",tw_sm_adr);
@@ -157,22 +204,33 @@ SIGNAL(SIG_2WIRE_SERIAL)
          * If outgoing data left to send, put the next byte in the
          * data register. Otherwise transmit a dummy byte.
          */
-        if((tw_sm_adr+tw_st_idx) < NODE_REG_MAX)
+        if(tw_st_idx < tw_sm_len)
         {
-          TWDR = node[tw_sm_adr+tw_st_idx];
+          if((tw_sm_adr + tw_st_idx) < NODE_REG_MAX)
+          {
+            TWDR = node[tw_sm_adr + tw_st_idx];
+            tw_sm_crc = _crc_ibutton_update(tw_sm_crc, node[tw_sm_adr + tw_st_idx]);
 //uart_printf((u08*)"TW ST data=0x%x\n",node[tw_sm_adr+tw_st_idx]);
+          }
+          else
+          {
+//uart_puts((u08*)"TW ST over !\n");
+            /* No more data. Continue sending dummies. */
+            TWDR = 0;
+          }
         }
         else
         {
-//uart_puts((u08*)"TW ST over !\n");
-          /* No more data. Continue sending dummies. */
-          TWDR = 0;
+          if(tw_st_idx == tw_sm_len)
+          {
+            TWDR = tw_sm_crc;
+          }
+          else
+          {
+            TWDR = 0;
+          }
         }
-        if((tw_sm_adr+tw_st_idx) < NODE_REG_MAX)
-        {
-          tw_st_idx++;
-        }
-
+        tw_st_idx++;
         TWCR = TWGO | _BV(TWEA);
         break;
 
@@ -192,7 +250,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
      * 0x00: Bus error.
      */
     case TW_BUS_ERROR:
-        tw_sr_idx = NODE_REG_MAX+1;
+        tw_sr_idx = NODE_REG_MAX + 3;
         tw_st_idx = NODE_REG_MAX;
         TWCR = TWGO | _BV(TWEA) | _BV(TWSTO);
 //uart_puts((u08*)"TW Error\n");

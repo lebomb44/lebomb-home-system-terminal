@@ -1,8 +1,9 @@
+#!/bin/bash
 source ../../env.sh
 cd $DEVBASE_DRIVE
 cd $DEVBASE/node/ROOM
 echo $PATH
 make clean
-export NODE_REMOTE_CONFIG=mms_c2
+export NODE_ROOM_CONFIG=mms_c2
 make burn
 
