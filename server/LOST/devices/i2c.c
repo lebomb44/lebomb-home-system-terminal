@@ -26,15 +26,16 @@
 #define I2C_ERR_BAD_TX_ARG   8
 #define I2C_ERR_BAD_RX_ARG   9
 #define I2C_ERR_BAD_TRX_ARG  10
+#define I2C_ERR_BAD_CRC      11
 
-#define I2C_CRC_INITIAL_VALUE 0x00
+#define I2C_CRC_INITIAL_VALUE 0xFFFF
 
-volatile uint8_t i2c_mutex;
+volatile uint8_t i2c_mutex = 0;
 
 uint8_t i2c_mm_sla = 0;
 uint8_t i2c_mm_adr = 0;
-uint8_t i2c_mm_crc = I2C_CRC_INITIAL_VALUE;
-uint8_t i2c_sl_crc = I2C_CRC_INITIAL_VALUE;
+uint16_t i2c_mm_crc = I2C_CRC_INITIAL_VALUE;
+uint16_t i2c_sl_crc = I2C_CRC_INITIAL_VALUE;
 uint8_t i2c_mm_err = 0;
 
 
@@ -48,7 +49,7 @@ uint8_t i2c_mr_buf[255] = {0};
 
 static void I2C_Interrupt(void *arg)
 {
-    uint8_t twsr;
+    uint8_t twsr = 0;
     arg = arg;
 
     /*
@@ -70,7 +71,7 @@ static void I2C_Interrupt(void *arg)
         /* Send the slave address in SLA+T */
         TWDR = i2c_mm_sla;
         /* Add the SLA to the CRC */
-        i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mm_sla);
+        i2c_mm_crc = _crc_ccitt_update(i2c_mm_crc, i2c_mm_sla);
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
         break;
 
@@ -79,9 +80,7 @@ static void I2C_Interrupt(void *arg)
      */
     case TW_REP_START:
         /* We are entering the master mode. Mark the interface busy. */
-        i2c_mt_idx = 0;
         i2c_mr_idx = 0;
-		i2c_mm_crc = I2C_CRC_INITIAL_VALUE;
 		i2c_sl_crc = I2C_CRC_INITIAL_VALUE;
 //printf("Rep Start\n");
 
@@ -92,12 +91,15 @@ static void I2C_Interrupt(void *arg)
         if(0 < i2c_mr_len) {
             TWDR = i2c_mm_sla | 1;
             /* Add the SLA to the CRC */
-			i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mm_sla);
+			i2c_mm_crc = _crc_ccitt_update(i2c_mm_crc, i2c_mm_sla | 1);
             TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
+//printf("Rep Start MR %d\n", TWDR);
         }
         else {
             /* Stop the transmission because we should not be in a REPEATED START if we are in MT mode */
             TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE);
+            while(TWCR & _BV(TWSTO)) {}
+//printf("Rep Start stop\n");
         }
 
         break;
@@ -107,10 +109,10 @@ static void I2C_Interrupt(void *arg)
      */
     case TW_MT_SLA_ACK:
         /* Send the address register */
-//printf("MT SLA ACK\n");
+//printf("MT SLA ACK %d\n", i2c_mm_sla);
         TWDR = i2c_mm_adr;
         /* Add the ADR to the CRC */
-        i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mm_adr);
+        i2c_mm_crc = _crc_ccitt_update(i2c_mm_crc, i2c_mm_adr);
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
 
         break;
@@ -121,10 +123,11 @@ static void I2C_Interrupt(void *arg)
     case TW_MT_SLA_NACK:
         /* Set error code */
         i2c_mm_err = I2C_ERR_MT_SLA_NACK;
-//printf("MT SLA NACK\n");
+//printf("MT SLA NACK %d\n", i2c_mm_sla);
 
         /* Send a STOP */
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE);
+        while(TWCR & _BV(TWSTO)) {}
         break;
 
     /*
@@ -137,44 +140,56 @@ static void I2C_Interrupt(void *arg)
             /* Set the data in the register */
             if(0 == i2c_mt_idx) {
                 TWDR = i2c_mr_len;
-                i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mr_len);
+                i2c_mm_crc = _crc_ccitt_update(i2c_mm_crc, i2c_mr_len);
             }
             /* Increment step */
             i2c_mt_idx++;
             /* Start transition */
             if(i2c_mt_idx < 2) {
                 TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
+//printf("MT DATA ACK next\n");
             }
             else {
                 TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTA) | _BV(TWEN) | _BV(TWIE);
+//printf("MT DATA ACK last\n");
             }
         }
         else {
             /* Set the data in the register */
             if(0 == i2c_mt_idx) {
                 TWDR = i2c_mt_len;
-                i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mt_len);
+                i2c_mm_crc = _crc_ccitt_update(i2c_mm_crc, i2c_mt_len);
             }
             else {
                 /* If outgoing data left to send, put the next byte in the data register */
                 if (i2c_mt_idx < (i2c_mt_len + 1)) {
                     TWDR = i2c_mt_buf[i2c_mt_idx-1];
-                    i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mt_buf[i2c_mt_idx-1]);
+                    i2c_mm_crc = _crc_ccitt_update(i2c_mm_crc, i2c_mt_buf[i2c_mt_idx-1]);
                 }
                 else {
                     if (i2c_mt_idx == (i2c_mt_len + 1)) {
-                        TWDR = i2c_mm_crc;
+                        TWDR = (i2c_mm_crc >> 8) & 0x00FF;
+                    }
+                    else {
+                        if (i2c_mt_idx == (i2c_mt_len + 2)) {
+                            TWDR = i2c_mm_crc & 0x00FF;
+                        }
+                        else {
+                            TWDR = 0xFF;
+                        }
                     }
                 }
             }
+
             /* Increment step */
             i2c_mt_idx++;
             /* Start transition */
-            if (i2c_mt_idx < (i2c_mt_len + 3)) {
+            if (i2c_mt_idx < (i2c_mt_len + 4)) {
                 TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
             }
             else {
                 TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE);
+                while(TWCR & _BV(TWSTO)) {}
             }
         }
         break;
@@ -189,6 +204,7 @@ static void I2C_Interrupt(void *arg)
 
         /* Send a STOP */
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE);
+        while(TWCR & _BV(TWSTO)) {}
         break;
 
     /*
@@ -203,12 +219,13 @@ static void I2C_Interrupt(void *arg)
      * 0x48: SLA+R has been transmitted, but not acknowledged.
      */
     case TW_MR_SLA_NACK:
-//printf("MR_SLA_NACK\n");
+//printf("MR_SLA_NACK %d\n",TWDR);
         /* Set unique error code. */
         i2c_mm_err = I2C_ERR_MR_SLA_NACK;
 
         /* Send a STOP */
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE);
+        while(TWCR & _BV(TWSTO)) { continue; }
         break;
 
     /*
@@ -222,19 +239,35 @@ static void I2C_Interrupt(void *arg)
         /* Get the data in the register */
         if (i2c_mr_idx < i2c_mr_len) {
         	i2c_mr_buf[i2c_mr_idx] = TWDR;
-			i2c_mm_crc = _crc_ibutton_update(i2c_mm_crc, i2c_mr_buf[i2c_mr_idx]);
-            /* Increment step */
-            i2c_mr_idx++;
+			i2c_mm_crc = _crc_ccitt_update(i2c_mm_crc, i2c_mr_buf[i2c_mr_idx]);
+        }
+        else {
+            if (i2c_mr_idx == i2c_mr_len) {
+                i2c_sl_crc = ~i2c_mm_crc;
+                i2c_sl_crc = ((((uint16_t) TWDR) << 8) & 0xFF00) | (i2c_sl_crc & 0x00FF);
+            }
+            else {
+                if (i2c_mr_idx == (i2c_mr_len + 1)) {
+                    i2c_sl_crc = (i2c_sl_crc & 0xFF00) | (((uint16_t) TWDR) & 0x00FF);
+                }
+            }
+        }
+        /* Increment step */
+        i2c_mr_idx++;
+
+        if (i2c_mr_idx < (i2c_mr_len + 2)) {
             /* Start transmition */
             TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
         }
-		else {
-            i2c_sl_crc = TWDR;
-            /* Increment step */
-            i2c_mr_idx++;
+        else {
             /* Send a STOP */
             TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE);
+            while(TWCR & _BV(TWSTO)) {}
         }
+        //printf("mt idx %d\n", i2c_mt_idx);
+        //printf("mr idx %d\n", i2c_mr_idx);
+        //printf("sl_crc %d\n", i2c_sl_crc);
+        //printf("mm_crc %d\n", i2c_mm_crc);
         break;
 
     /*
@@ -247,6 +280,7 @@ static void I2C_Interrupt(void *arg)
 
         /* Send a STOP */
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE);
+        while(TWCR & _BV(TWSTO)) {}
         break;
 
     /*
@@ -256,6 +290,7 @@ static void I2C_Interrupt(void *arg)
 //printf("Default\n");
     	i2c_mm_err = I2C_ERR_BUS;
         TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE);
+        while(TWCR & _BV(TWSTO)) {}
 
         break;
     }
@@ -275,7 +310,7 @@ uint8_t i2c_init(void)
   sbi(PORTD,1);
 
   /* Set as I2C master */
-  if (NutRegisterIrqHandler(&sig_2WIRE_SERIAL, I2C_Interrupt, 0)) { return -1; }
+  if (NutRegisterIrqHandler(&sig_2WIRE_SERIAL, I2C_Interrupt, 0)) { i2c_mutex = 0; return -1; }
 
   /*
    * Set address register, enable general call address, set transfer
@@ -304,24 +339,12 @@ uint8_t i2c_init(void)
 
 void i2c_reset(void)
 {
-  /* Clear the interrupt */
-  TWCR = _BV(TWINT);
-  /* Wait a little bit */
-  NutSleep(1);
   /* Generate a STOP */
-  TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN);
+  TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE);
   /* Wait a little bit */
-  NutSleep(1);
-  /* Stop the I2C core component */
-  TWCR = 0;
-  /* Wait a little bit */
-  NutSleep(1);
+  NutSleep(10);
   /* Start the I2C core component */
   TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE);
-  /* Initialize TWI */
-  i2c_init();
-  /* Wait a little bit */
-  NutSleep(1);
 }
 
 uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, uint8_t rxlen, uint8_t *rxdata)
@@ -329,6 +352,7 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
   uint32_t tmo = 0;
   uint16_t i = 0;
 
+//printf("sla=%d\n", sla);
   /* Check arguments */
   if(0 < txlen) { if(NULL == txdata) { return I2C_ERR_BAD_TX_ARG; } }
   if(0 < rxlen) { if(NULL == rxdata) { return I2C_ERR_BAD_RX_ARG; } }
@@ -347,6 +371,8 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
   /* Set all parameters for master mode */
   i2c_mm_sla = sla << 1;
   i2c_mm_adr = adr;
+  i2c_mm_crc = I2C_CRC_INITIAL_VALUE;
+  i2c_sl_crc = I2C_CRC_INITIAL_VALUE;
   i2c_mm_err = I2C_ERR_OK;
   if(0 < rxlen) { i2c_mt_len = 0;     i2c_mr_len = rxlen; }
   else          { i2c_mt_len = txlen; i2c_mr_len = 0;     }
@@ -357,11 +383,12 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
   /* Send a START */
   TWCR = _BV(TWINT) | _BV(TWEA) | _BV(TWSTA) | _BV(TWEN) | _BV(TWIE);
   /* Wait for the data to be received or sent */
-  if(0 < rxlen) { tmo = 30; while(0 < tmo) { if((i2c_mt_idx == 2          ) && (i2c_mr_idx == (rxlen + 1))) { break; } else { NutSleep(1); tmo--; } } }
-  else          { tmo = 30; while(0 < tmo) { if((i2c_mt_idx == (txlen + 3)) && (i2c_mr_idx == 0          )) { break; } else { NutSleep(1); tmo--; } } }
+  if(0 < rxlen) { tmo = 30; while(0 < tmo) { if((i2c_mt_idx == 2          ) && (i2c_mr_idx == (rxlen + 2))) { break; } else { NutSleep(1); tmo--; } } }
+  else          { tmo = 30; while(0 < tmo) { if((i2c_mt_idx == (txlen + 4)) && (i2c_mr_idx == 0          )) { break; } else { NutSleep(1); tmo--; } } }
   /* Return if time-out */
   if(0 == tmo)
   {
+//printf("I2C timeout\n");
     i2c_reset();
     i2c_mutex = 0;
     if(0 < i2c_mm_err) { return i2c_mm_err; } else { return I2C_ERR_TIMEOUT; }
@@ -373,14 +400,19 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
       for(i=0; i<rxlen; i++)
       {
         rxdata[i] = i2c_mr_buf[i];
-        i2c_mutex = 0;
-        return I2C_ERR_OK;
       }
+//printf("I2C rxlen %d\n", rxlen);
+//printf("ok i2c_crc %04X\n", i2c_sl_crc);
+      i2c_mutex = 0;
+      return I2C_ERR_OK;
     }
 	else
     {
+//for(i=0; i<rxlen; i++) { printf("Rx data %d = %d\n", i, i2c_mr_buf[i]); }
+//printf("bad i2c_sl_crc %04X\n", i2c_sl_crc);
+//printf("bad i2c_mm_crc %04X\n", i2c_mm_crc);
       i2c_mutex = 0;
-      return I2C_ERR_BUS;
+      return I2C_ERR_BAD_CRC;
     }
   }
 }
@@ -388,7 +420,7 @@ uint8_t i2c_transact(uint8_t sla, uint8_t adr, uint8_t txlen, uint8_t *txdata, u
 uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
 {
   uint8_t ret = I2C_ERR_BUS;
-  uint8_t try = 3;
+  uint8_t try = 1 /* FIXME 3 */;
 
   while((0 < try) && (I2C_ERR_OK != ret))
   {
@@ -408,7 +440,7 @@ uint8_t i2c_get(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
 uint8_t i2c_set(uint8_t sla, uint8_t addr, uint8_t nb, uint8_t* data)
 {
   uint8_t ret = I2C_ERR_BUS;
-  uint8_t try = 3;
+  uint8_t try = 1 /* FIXME 3 */;
 
   while((0 < try) && (I2C_ERR_OK != ret))
   {

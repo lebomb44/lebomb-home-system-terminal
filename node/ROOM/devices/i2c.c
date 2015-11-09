@@ -7,18 +7,19 @@
 #include "../apps/node.h"
 #include "i2c.h"
 
-#define TW_CRC_INITIAL_VALUE 0x00
+#define TW_CRC_INITIAL_VALUE 0xFFFF
 
 volatile u08 tw_sm_sla;   /* Slave address received. */
 volatile u08 tw_sm_adr;   /* Slave memory address received. */
 volatile u08 tw_sm_len;   /* Slave data len to receive or transmit */
-volatile u08 tw_sm_crc;   /* Slave crc to receive or transmit */
+volatile u16 tw_sm_crc;   /* Slave crc to receive or transmit */
+volatile u16 tw_mm_crc;   /* Master crc to receive */
 
 volatile u16 tw_st_idx;  /* Current slave transmit buffer index. */
 volatile u16 tw_sr_idx;  /* Current slave receive buffer index. */
 volatile u08 tw_sr_buf[NODE_REG_MAX] = {0}; /* Current slave receive buffer */
 
-#define TWGO    (_BV(TWINT) | _BV(TWEN) | _BV(TWIE))
+#define TWGO    (_BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE))
 
 /*
  * TWI interrupt handler.
@@ -56,9 +57,9 @@ SIGNAL(SIG_2WIRE_SERIAL)
         /* We are entering the slave receive mode. Mark the interface busy. */
         tw_sm_sla = TWDR;
 		tw_sm_crc = TW_CRC_INITIAL_VALUE;
-        tw_sm_crc = _crc_ibutton_update(tw_sm_crc, tw_sm_sla);
+        tw_sm_crc = _crc_ccitt_update(tw_sm_crc, tw_sm_sla);
         tw_sr_idx = 0;
-        TWCR = TWGO | _BV(TWEA);
+        TWCR = TWGO;
 //uart_printf((u08*)"TW SR Sla=0x%x\n",tw_sm_sla);
         break;
 
@@ -75,7 +76,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
         if(0 == tw_sr_idx)
         {
           tw_sm_adr = TWDR;
-          tw_sm_crc = _crc_ibutton_update(tw_sm_crc, tw_sm_adr);
+          tw_sm_crc = _crc_ccitt_update(tw_sm_crc, tw_sm_adr);
 //uart_printf((u08*)"TW SR ADR=0x%x\n",tw_sm_adr);
         }
         else
@@ -83,7 +84,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
           if(1 == tw_sr_idx)
           {
             tw_sm_len = TWDR;
-            tw_sm_crc = _crc_ibutton_update(tw_sm_crc, tw_sm_len);
+            tw_sm_crc = _crc_ccitt_update(tw_sm_crc, tw_sm_len);
           }
           else
           {
@@ -92,36 +93,44 @@ SIGNAL(SIG_2WIRE_SERIAL)
               if(tw_sr_idx < (tw_sm_len + 2))
               {
                 tw_sr_buf[tw_sr_idx - 2] = TWDR;
-                tw_sm_crc = _crc_ibutton_update(tw_sm_crc, tw_sr_buf[tw_sr_idx - 2]);
+                tw_sm_crc = _crc_ccitt_update(tw_sm_crc, tw_sr_buf[tw_sr_idx - 2]);
               }
               else
               {
                 if(tw_sr_idx == (tw_sm_len + 2))
                 {
-                  if(tw_sm_crc == TWDR)
-                  {
-                    for(i=0; i<tw_sm_len; i++)
-                    {
-                      node[tw_sm_adr + i] = tw_sr_buf[i];
-                    }
-				  }
-                  else
-                  {
-                  }
+                  tw_mm_crc = ~tw_sm_crc;
+                  tw_mm_crc = ((((u16) TWDR) << 8) & 0xFF00) | (tw_mm_crc & 0x00FF);
                 }
                 else
                 {
+                  if(tw_sr_idx == (tw_sm_len + 3))
+                  {
+                    tw_mm_crc = (tw_mm_crc & 0xFF00) | (((u16) TWDR) & 0x00FF);
+                    if(tw_sm_crc == tw_mm_crc)
+                    {
+                      for(i=0; i<tw_sm_len; i++)
+                      {
+                        node[tw_sm_adr + i] = tw_sr_buf[i];
+                      }
+				    }
+                  }
+                  else
+                  {
+                    tw_mm_crc = TWDR;
+                  }
                 }
               }
 //uart_printf((u08*)"TW SR data=0x%x\n",node[tw_sm_adr+tw_sr_idx-1]);
             }
             else
             {
+              tw_mm_crc = TWDR;
 //uart_puts((u08*)"TW SR over\n");
             }
           }
         }
-        if((tw_sm_adr+tw_sr_idx) < (NODE_REG_MAX + 3))
+        if((tw_sm_adr+tw_sr_idx) < (NODE_REG_MAX + 4))
         {
           tw_sr_idx++;
         }
@@ -129,37 +138,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
          * If more space is available for incoming data, then continue
          * receiving. Otherwise do not acknowledge new data bytes.
          */
-        TWCR = TWGO | _BV(TWEA);
-        break;
-
-    /*
-     * 0x88: Data byte received, but not acknowledged.
-     * 0x98: Data byte for general call address received, but not
-     *       acknowledged.
-     */
-    case TW_SR_DATA_NACK:
-    case TW_SR_GCALL_DATA_NACK:
-        /*
-         * Continue not accepting more data.
-         */
-//uart_puts((u08*)"TW SR Nack\n");
-        tw_sr_idx = NODE_REG_MAX + 3;
-        TWCR = TWGO | _BV(TWEA);
-        break;
-
-    /*
-     * 0xA0: Stop condition or repeated start condition received.
-     */
-    case TW_SR_STOP:
-        /*
-         * Wake up the application. If successful, do nothing. This
-         * will keep SCL low and thus block the bus. The application
-         * must now setup the transmit buffer and re-enable the
-         * interface.
-         */
-//uart_puts((u08*)"TW SR Stop\n");
-        tw_sr_idx = NODE_REG_MAX + 3;
-        TWCR = TWGO | _BV(TWEA);
+        TWCR = TWGO;
         break;
 
     /*
@@ -171,27 +150,27 @@ SIGNAL(SIG_2WIRE_SERIAL)
     case TW_ST_ARB_LOST_SLA_ACK:
         /* Reset transmit index and fall through for outgoing data. */
         tw_sm_sla = TWDR;
-        tw_sm_crc = _crc_ibutton_update(tw_sm_crc, tw_sm_sla);
+        tw_sm_crc = _crc_ccitt_update(tw_sm_crc, tw_sm_sla);
         tw_st_idx = 0;
         if(0 < tw_sm_len)
         {
           if((tw_sm_adr + tw_st_idx) < NODE_REG_MAX)
           {
             TWDR = node[tw_sm_adr + tw_st_idx];
-			tw_sm_crc = _crc_ibutton_update(tw_sm_crc, node[tw_sm_adr + tw_st_idx]);
+		    tw_sm_crc = _crc_ccitt_update(tw_sm_crc, node[tw_sm_adr + tw_st_idx]);
           }
           else
           {
             /* No more data. Continue sending dummies. */
-            TWDR = 0;
+            TWDR = 0xFF;
           }
         }
         else
         {
-          TWDR = tw_sm_crc;
+          TWDR = (tw_sm_crc >> 8) & 0x00FF;
 		}
         tw_st_idx++;
-        TWCR = TWGO | _BV(TWEA);
+        TWCR = TWGO;
 //uart_printf((u08*)"TW ST Sla=0x%x\n",tw_sm_sla);
 //uart_printf((u08*)"TW ST ADR=0x%x\n",tw_sm_adr);
         break;
@@ -209,55 +188,59 @@ SIGNAL(SIG_2WIRE_SERIAL)
           if((tw_sm_adr + tw_st_idx) < NODE_REG_MAX)
           {
             TWDR = node[tw_sm_adr + tw_st_idx];
-            tw_sm_crc = _crc_ibutton_update(tw_sm_crc, node[tw_sm_adr + tw_st_idx]);
+            tw_sm_crc = _crc_ccitt_update(tw_sm_crc, node[tw_sm_adr + tw_st_idx]);
 //uart_printf((u08*)"TW ST data=0x%x\n",node[tw_sm_adr+tw_st_idx]);
           }
           else
           {
 //uart_puts((u08*)"TW ST over !\n");
             /* No more data. Continue sending dummies. */
-            TWDR = 0;
+            TWDR = 0xFF;
           }
         }
         else
         {
           if(tw_st_idx == tw_sm_len)
           {
-            TWDR = tw_sm_crc;
+            TWDR = (tw_sm_crc >> 8) & 0x00FF;
           }
           else
           {
-            TWDR = 0;
+            if(tw_st_idx == (tw_sm_len + 1))
+            {
+              TWDR = tw_sm_crc & 0x00FF;
+            }
+            else
+            {
+              TWDR = 0xFF;
+            }
           }
         }
         tw_st_idx++;
-        TWCR = TWGO | _BV(TWEA);
+        TWCR = TWGO;
         break;
 
-    /*
-     * 0xC0: Data byte has been transmitted, but not acknowledged.
-     * 0xC8: Last data byte has been transmitted and acknowledged.
-     */
+    case TW_NO_INFO:
+        break;
+
+    case TW_SR_STOP:
+    case TW_SR_DATA_NACK:
+    case TW_SR_GCALL_DATA_NACK:
     case TW_ST_DATA_NACK:
     case TW_ST_LAST_DATA:
-//uart_puts((u08*)"TW ST Nack\n");
-        /* Transmit start condition, if a master transfer is waiting. */
-        tw_st_idx = NODE_REG_MAX;
-        TWCR = TWGO | _BV(TWEA);
+        TWDR = 0xFF;
+        TWCR = TWGO;
         break;
 
     /*
      * 0x00: Bus error.
      */
     case TW_BUS_ERROR:
+    default:
         tw_sr_idx = NODE_REG_MAX + 3;
         tw_st_idx = NODE_REG_MAX;
-        TWCR = TWGO | _BV(TWEA) | _BV(TWSTO);
-//uart_puts((u08*)"TW Error\n");
-        break;
-
-    default:
-        TWCR = TWGO | _BV(TWEA);
+        TWDR = 0xFF;
+        TWCR = TWGO | _BV(TWSTO);
 //uart_puts((u08*)"TW Default\n");
         break;
     }
