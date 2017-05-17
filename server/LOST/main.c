@@ -28,12 +28,6 @@
 #include "services/sql.h"
 #include "services/web.h"
 
-#include "apps/media/freebox.h"
-#include "apps/media/remote.h"
-
-#include "apps/rooms/rooms.h"
-#include "apps/rooms/ext.h"
-
 #include "apps/scenes/alarm.h"
 #include "apps/scenes/atmosphere.h"
 #include "apps/scenes/safety.h"
@@ -52,11 +46,9 @@ int xml_get_form(FILE * stream, REQUEST * req)
     fprintf_XML_header(stream);
     fprintf_XML_elt_header("Lost", stream);
     mon_xml_get(stream);
-    rooms_xml_get(stream);
     events_xml_get(stream);
     alarm_xml_get(stream);
     safety_xml_get(stream);
-    ext_xml_get(stream);
     fprintf_XML_elt_trailer("Lost", stream);
   }
   fflush(stream);
@@ -81,12 +73,6 @@ int main(void)
   sql_init();
 
   mon_init();
-
-  freebox_init();
-  remote_init();
-
-  rooms_init();
-  ext_init();
 
   alarm_init();
   atmosphere_init();
