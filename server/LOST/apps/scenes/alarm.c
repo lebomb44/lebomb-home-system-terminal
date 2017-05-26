@@ -10,10 +10,9 @@
 
 #include "../../devices/volume.h"
 #include "../../devices/buzzer.h"
-#include "../../devices/gsm.h"
+#include "../../devices/lbcom.h"
 #include "../../services/http.h"
 #include "../../services/web.h"
-#include "../rooms/rooms.h"
 #include "alarm.h"
 
 typedef struct _ALARM_T
@@ -37,24 +36,18 @@ uint8_t alarm_init(void)
   alarm_perimeter.control = 0; // TODO
   alarm_perimeter.time    = 0;
   alarm_perimeter.trig    = 0;
-  alarm_perimeter.room    = ROOM_MAX;
 
   alarm_volume.status  = 0;
   alarm_volume.type    = ALARM_TYPE_OFF_AUTO;
   alarm_volume.control = 0; // TODO
   alarm_volume.time    = 0;
   alarm_volume.trig    = 0;
-  alarm_volume.room    = ROOM_MAX;
 
   alarm_simulation.status  = 0;
   alarm_simulation.type    = ALARM_TYPE_OFF_AUTO;
   alarm_simulation.control = 0;
   alarm_simulation.time    = 0;
   alarm_simulation.trig    = 0;
-  alarm_simulation.room    = ROOM_MAX;
-
-  /* Clear Green and Red LEDs */
-  room_light_set(ROOM_COULOIR, 0, 0); room_light_set(ROOM_COULOIR, 1, 0);
 
   NutThreadCreate("AlarmD", AlarmD, 0, 512);
   NutRegisterCgi("alarm.cgi", alarm_form);
@@ -69,7 +62,7 @@ uint8_t alarm_init(void)
 /* This function is executed if an alarm is detected */
 uint8_t alarm_action(char* msg)
 {
-  gsm_sms_send(msg);
+  lbcom_gsm_sms_send(msg);
   http_email_send(msg);
 
   return 0;
@@ -142,13 +135,8 @@ void alarm_perimeter_set(ALARM_TYPE_T type)
   NutSleep(100);
   /* Reset the alarm trigger status in every rooms */
   rooms_perimeter_trig_set(0);
-  if(ALARM_TYPE_OFF_MANUAL == type) { room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0); }
-  if(ALARM_TYPE_ON_MANUAL == type)
-  {
-    room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0); NutSleep(100); 
-	room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0); NutSleep(100); 
-	room_elec_set(ROOM_COULOIR, 0, 1); NutSleep(100); room_elec_set(ROOM_COULOIR, 0, 0);
-  }
+  if(ALARM_TYPE_OFF_MANUAL == type) { }
+  if(ALARM_TYPE_ON_MANUAL == type) { }
   /* Set bipper OFF again ! */
   NutSleep(1); room_elec_set(ROOM_COULOIR, 0, 0);
   /* ... and again ! */
@@ -174,11 +162,6 @@ void alarm_volume_set(ALARM_TYPE_T type)
   alarm_volume.trig = 0;
   /* Stop the buzzer */
   buzzer_stop();
-  /* Stop the alarm monitoring in every rooms */
-  rooms_volume_control_set(0);
-  NutSleep(100);
-  /* Reset the alarm trigger status in every rooms */
-  rooms_volume_trig_set(0);
 }
 
 void alarm_simulation_set(ALARM_TYPE_T type)
@@ -194,8 +177,6 @@ void alarm_simulation_set(ALARM_TYPE_T type)
   alarm_simulation.type = type;
   /* Reset the trigger status */
   alarm_simulation.trig = 0;
-  /* Stop the simulation in every rooms */
-  rooms_simulation_control_set(alarm_simulation.control);
 }
 
 THREAD(AlarmD, arg)
@@ -256,7 +237,7 @@ THREAD(AlarmD, arg)
       /* Step : Alarm trig watchdog is going to finish */
       if(2 == alarm_perimeter.trig)
       {
-        sprintf(msg, "Alarme-Perimetre-%d-%s", alarm_perimeter.status, room_name_get(alarm_perimeter.room));
+        sprintf(msg, "Alarme-Perimetre-%d-%s", alarm_perimeter.status, "TODO");
         alarm_action_with_buzzer(msg);
         alarm_perimeter.trig = 1;
       }
@@ -284,15 +265,7 @@ THREAD(AlarmD, arg)
       /* Only activate the alarm if all the shutters are closed */
       if(0 == alarm_perimeter.status)
       {
-        rooms_perimeter_control_set(0x01); /* FIXME Perimeter control only available on the first input in ROOM Nodes */
-        room_perimeter_control_set(ROOM_SALON, 0x07); /* FIXME But we have the 3 shutters of the SALON available */
-        room_perimeter_control_set(ROOM_BUREAU, 0x07); /* FIXME But we have the 1 shutter and 2 doors of the BUREAU available */
         alarm_perimeter.control = 1;
-      }
-      /* If the shutters are not closed try to close them */
-      else
-      {
-    	  rooms_shutters_set(ROOM_SHUTTER_STOP); rooms_shutters_set(ROOM_SHUTTER_DOWN);
       }
     }
     /* Step before enabling the alarm */
@@ -421,17 +394,14 @@ int alarm_xml_get(FILE * stream)
   fprintf_XML_elt_int("Perimeter"      , alarm_perimeter.status , stream);
   fprintf_XML_elt_int("Perimeter_Ctrl" , alarm_perimeter.control , stream);
   fprintf_XML_elt_int("Perimeter_Trig" , alarm_perimeter.trig , stream);
-  fprintf_XML_elt_int("Perimeter_Room" , alarm_perimeter.room , stream);
 
   fprintf_XML_elt_int("Volume"         , alarm_volume.status    , stream);
   fprintf_XML_elt_int("Volume_Ctrl"    , alarm_volume.control    , stream);
   fprintf_XML_elt_int("Volume_Trig"    , alarm_volume.trig    , stream);
-  fprintf_XML_elt_int("Volume_Room"    , alarm_volume.room    , stream);
 
   fprintf_XML_elt_int("Simulation"     , alarm_simulation.status, stream);
   fprintf_XML_elt_int("Simulation_Ctrl", alarm_simulation.control, stream);
   fprintf_XML_elt_int("Simulation_Trig", alarm_simulation.trig, stream);
-  fprintf_XML_elt_int("Simulation_Room", alarm_simulation.room, stream);
   fprintf_XML_elt_trailer("Alarm", stream);
 
   return 0;
