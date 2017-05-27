@@ -22,7 +22,6 @@ typedef struct _ALARM_T
   uint8_t control;
   time_t time;
   uint8_t trig;
-  ROOM_N_T room;
 } ALARM_T;
 
 ALARM_T alarm_perimeter;
@@ -94,23 +93,6 @@ typedef enum _ALARM_LED_STATE_T
   ALARM_LED_STATE_MAX
 } ALARM_LED_STATE_T;
 
-/* LED management function */
-void alarm_led_set(ALARM_LED_T led, ALARM_LED_STATE_T state)
-{
-  static ALARM_LED_STATE_T alarm_led_state[ALARM_LED_MAX] = { ALARM_LED_STATE_OFF, ALARM_LED_STATE_OFF };
-
-  if(ALARM_LED_MAX > led)
-  {
-    if(ALARM_LED_STATE_OFF    == state) { room_light_set(ROOM_COULOIR, led, 0); }
-    if(ALARM_LED_STATE_ON     == state) { room_light_set(ROOM_COULOIR, led, 1); }
-    if(ALARM_LED_STATE_TOGGLE == state)
-    {
-      if(ALARM_LED_STATE_OFF == alarm_led_state[led]) { room_light_set(ROOM_COULOIR, led, 1); alarm_led_state[led] = ALARM_LED_STATE_ON ; }
-      else                                            { room_light_set(ROOM_COULOIR, led, 0); alarm_led_state[led] = ALARM_LED_STATE_OFF; }
-    }
-  }
-}
-
 void alarm_perimeter_set(ALARM_TYPE_T type)
 {
   /* Check the argument */
@@ -131,16 +113,16 @@ void alarm_perimeter_set(ALARM_TYPE_T type)
   /* Stop the buzzer */
   buzzer_stop();
   /* Stop the alarm monitoring in every rooms */
-  rooms_perimeter_control_set(0);
+  // TODO rooms_perimeter_control_set(0);
   NutSleep(100);
   /* Reset the alarm trigger status in every rooms */
-  rooms_perimeter_trig_set(0);
+  // TODO rooms_perimeter_trig_set(0);
   if(ALARM_TYPE_OFF_MANUAL == type) { }
   if(ALARM_TYPE_ON_MANUAL == type) { }
   /* Set bipper OFF again ! */
-  NutSleep(1); room_elec_set(ROOM_COULOIR, 0, 0);
+  NutSleep(1); // TODO room_elec_set(ROOM_COULOIR, 0, 0);
   /* ... and again ! */
-  NutSleep(1); room_elec_set(ROOM_COULOIR, 0, 0);
+  NutSleep(1); // TODO room_elec_set(ROOM_COULOIR, 0, 0);
 }
 
 void alarm_volume_set(ALARM_TYPE_T type)
@@ -192,41 +174,41 @@ THREAD(AlarmD, arg)
     if(0 == alarm_perimeter.trig)
     {
       /* If alarm is enabled */
-      if(1 == alarm_perimeter.control) { alarm_perimeter.status = rooms_perimeter_trig_get(&(alarm_perimeter.room)); }
+      if(1 == alarm_perimeter.control) { /* TODO alarm_perimeter.status = rooms_perimeter_trig_get(&(alarm_perimeter.room)); */ }
       /* If alarm is NOT enabled */
-      else { alarm_perimeter.status  = rooms_perimeter_status_get(&(alarm_perimeter.room)); }
+      else { /* TODO alarm_perimeter.status  = rooms_perimeter_status_get(&(alarm_perimeter.room)); */ }
     }
     if(0 == alarm_volume.trig)
     {
       /* If alarm is enabled */
-      if(1 == alarm_volume.control) { alarm_volume.status = /* FIXME rooms_volume_trig_get(&(alarm_volume.room)) |*/ volume_status_get(); }
+      if(1 == alarm_volume.control) { alarm_volume.status = volume_status_get(); }
       /* If alarm is NOT enabled */
-      else { alarm_volume.status  = /* FIXME rooms_volume_status_get(&(alarm_volume.room)) |*/ volume_status_get(); }
+      else { alarm_volume.status  = volume_status_get(); }
     }
     if(0 == alarm_simulation.trig)
     {
       /* If alarm is enabled */
-      if(1 == alarm_simulation.control) { alarm_simulation.status = rooms_simulation_status_get(&(alarm_simulation.room)); }
+      if(1 == alarm_simulation.control) { /* TODO alarm_simulation.status = rooms_simulation_status_get(&(alarm_simulation.room)); */ }
       /* If alarm is NOT enabled */
-      else { alarm_simulation.status  = rooms_simulation_status_get(&(alarm_simulation.room)); }
+      else { /* TODO alarm_simulation.status  = rooms_simulation_status_get(&(alarm_simulation.room)); */ }
     }
 
     /* ********** Update Green LED state ********** */
     /* At least one alarm is enabled -> Green LED ON */
-    if((1 == alarm_perimeter.control) || (1 == alarm_volume.control)) { alarm_led_set(ALARM_LED_GREEN, ALARM_LED_STATE_ON); }
+    if((1 == alarm_perimeter.control) || (1 == alarm_volume.control)) { /* TODO alarm_led_set(ALARM_LED_GREEN, ALARM_LED_STATE_ON); */ }
     /* At least one alarm is going to be enabled -> Toggle Green LED */
-    else if((1 < alarm_perimeter.control) || (1 < alarm_volume.control)) { alarm_led_set(ALARM_LED_GREEN, ALARM_LED_STATE_TOGGLE); }
+    else if((1 < alarm_perimeter.control) || (1 < alarm_volume.control)) { /* TODO alarm_led_set(ALARM_LED_GREEN, ALARM_LED_STATE_TOGGLE); */ }
     /* All alarms are off -> Green LED OFF */
-    if((0 == alarm_perimeter.control) && (0 == alarm_volume.control)) { alarm_led_set(ALARM_LED_GREEN, ALARM_LED_STATE_OFF); }
+    if((0 == alarm_perimeter.control) && (0 == alarm_volume.control)) { /* TODO alarm_led_set(ALARM_LED_GREEN, ALARM_LED_STATE_OFF); */ }
     /* ********** Update Red LED state ********** */
     /* At least one alarm is triggered -> Red LED ON */
-    if((1 == alarm_perimeter.trig) || (1 == alarm_volume.trig)) { alarm_led_set(ALARM_LED_RED, ALARM_LED_STATE_ON); }
+    if((1 == alarm_perimeter.trig) || (1 == alarm_volume.trig)) { /* TODO alarm_led_set(ALARM_LED_RED, ALARM_LED_STATE_ON); */ }
     /* At least one alarm is going to trigger -> Toggle Red LED */
-    else if((1 < alarm_perimeter.trig) || (1 < alarm_volume.trig)) { alarm_led_set(ALARM_LED_RED, ALARM_LED_STATE_TOGGLE); }
+    else if((1 < alarm_perimeter.trig) || (1 < alarm_volume.trig)) { /* TODO alarm_led_set(ALARM_LED_RED, ALARM_LED_STATE_TOGGLE); */ }
     /* All triggers are off -> Red LED OFF */
-    if((0 == alarm_perimeter.trig) && (0 == alarm_volume.trig)) { alarm_led_set(ALARM_LED_RED, ALARM_LED_STATE_OFF); }
+    if((0 == alarm_perimeter.trig) && (0 == alarm_volume.trig)) { /* TODO alarm_led_set(ALARM_LED_RED, ALARM_LED_STATE_OFF); */ }
     /* Both alarm triggered -> Green LED OFF */
-    if((1 == alarm_perimeter.trig) && (1 == alarm_volume.trig)) { alarm_led_set(ALARM_LED_GREEN, ALARM_LED_STATE_OFF); }
+    if((1 == alarm_perimeter.trig) && (1 == alarm_volume.trig)) { /* TODO alarm_led_set(ALARM_LED_GREEN, ALARM_LED_STATE_OFF); */ }
 
     /* ************************************************************ */
     /* Manage the watchdog ENABLE / DISABLE for the alarm PERIMETER */
@@ -274,7 +256,7 @@ THREAD(AlarmD, arg)
       /* Check if all the shutters are closed else send alert message */
       if(alarm_perimeter.status)
       {
-        sprintf(msg, "Impossible-d-activer-Alarme-Perimetre-%d-%s", alarm_perimeter.status, room_name_get(alarm_perimeter.room));
+        sprintf(msg, "Impossible-d-activer-Alarme-Perimetre-%d-%s", alarm_perimeter.status, "TODO");
         alarm_action(msg);
       }
       alarm_perimeter.control = 2;
@@ -286,8 +268,6 @@ THREAD(AlarmD, arg)
       now = time(NULL);
       if((3 + now) < alarm_perimeter.time) { alarm_perimeter.control = alarm_perimeter.time - now; }
       else { alarm_perimeter.control = 3; }
-      /* Close all shutters */
-      rooms_shutters_set(ROOM_SHUTTER_DOWN);
     }
 
     /* ********************************************************* */
@@ -299,7 +279,7 @@ THREAD(AlarmD, arg)
       /* Step : Alarm trig watchdog is going to finish */
       if(2 == alarm_volume.trig)
       {
-        sprintf(msg, "Alarme-Volume-%d-%s", alarm_volume.status, room_name_get(alarm_volume.room));
+        sprintf(msg, "Alarme-Volume-%d-%s", alarm_volume.status, "TODO");
         alarm_action_with_buzzer(msg);
         alarm_volume.trig = 1;
       }
@@ -337,7 +317,7 @@ THREAD(AlarmD, arg)
       /* Check if nothing is moving else send alert message */
       if(alarm_volume.status)
       {
-        sprintf(msg, "Impossible-d-activer-Alarme-Volume-%d-%s", alarm_volume.status, room_name_get(alarm_volume.room));
+        sprintf(msg, "Impossible-d-activer-Alarme-Volume-%d-%s", alarm_volume.status, "TODO");
         alarm_action(msg);
       }
       alarm_volume.control = 2;

@@ -1,22 +1,28 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/timer.h>
+#include <util/crc16.h>
 
 #include "../config.h"
 #include "uart.h"
 #include "lbcom.h"
 
-lbcom_rxData[4+255] = {0};
-lbcom_rx_step = 0;
+#define LBCOM_FRAME_MAX_SIZE (4+255)
 
-void lbcom_init(void)
+uint8_t lbcom_rxData[LBCOM_FRAME_MAX_SIZE] = {0};
+uint16_t lbcom_rx_step = 0;
+
+uint8_t lbcom_init(void)
 {
   lbcom_rxRelease();
+
+  return 0;
 }
 
 void lbcom_run(void)
 {
-  int dataU08 = 0;
+  int data = 0;
 
   if(0 == lbcom_rxIsReady())
   {
@@ -25,7 +31,7 @@ void lbcom_run(void)
     {
       if(0 < lbcom_rx_step)
       {
-        if(lbcom_rx_step < LB_COM_DATA_MAX_SIZE+1)
+        if(lbcom_rx_step < (LBCOM_FRAME_MAX_SIZE+2))
         {
           if(1+4+lbcom_rxGetLen() == lbcom_rx_step)
           {
@@ -102,7 +108,7 @@ void lbcom_send(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len, uint8_t * da
   uint16_t i = 0;
   uint8_t crc = 0;
 
-  if(NULL == data=) { return; } 
+  if(NULL == data) { return; } 
   fputc(0xAA, uart1_fd); crc = _crc_ibutton_update(crc, 0xAA);
   fputc(src, uart1_fd); crc = _crc_ibutton_update(crc, src);
   fputc(dst, uart1_fd); crc = _crc_ibutton_update(crc, dst);
@@ -142,6 +148,8 @@ uint8_t lbcom_gsm_sms_send_with_phone(char * phone, char * msg)
   }
   fputc(crc, uart1_fd);
   fflush(uart1_fd);
+
+  return 0;
 }
 
 uint8_t lbcom_gsm_sms_send(char * msg)

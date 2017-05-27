@@ -32,7 +32,7 @@ THREAD(RemoteD, arg)
         {
           if(1 == lbcom_rxGetLen())
           {
-             safety_gsm_connection_set(lbcom_rxGetData[0]);
+             safety_gsm_status_set(lbcom_rxGetData()[0]);
           }
         }
       }

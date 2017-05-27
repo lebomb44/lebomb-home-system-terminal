@@ -2,37 +2,17 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../rooms/rooms.h"
 #include "alarm.h"
 #include "../../devices/power.h"
 #include "events.h"
 #include "events_proc.h"
 
-void event_proc_shutters_upstairs_start(void)   { room_shutters_set(ROOM_C1, ROOM_SHUTTER_UP); room_shutters_set(ROOM_C2, ROOM_SHUTTER_UP);
-                                                  room_shutters_set(ROOM_C3, ROOM_SHUTTER_UP); room_shutters_set(ROOM_C4, ROOM_SHUTTER_UP); }
-void event_proc_shutters_upstairs_end(void)     { room_shutters_set(ROOM_C1, ROOM_SHUTTER_DOWN); room_shutters_set(ROOM_C2, ROOM_SHUTTER_DOWN);
-                                                  room_shutters_set(ROOM_C3, ROOM_SHUTTER_DOWN); room_shutters_set(ROOM_C4, ROOM_SHUTTER_DOWN); }
-void event_proc_shutters_downstairs_start(void) { room_shutters_set(ROOM_BUREAU  , ROOM_SHUTTER_UP); room_shutters_set(ROOM_SALON  , ROOM_SHUTTER_UP);
-                                                  room_shutters_set(ROOM_CUISINE , ROOM_SHUTTER_UP); room_shutters_set(ROOM_COULOIR, ROOM_SHUTTER_UP); }
-void event_proc_shutters_downstairs_end(void)   { room_shutters_set(ROOM_BUREAU  , ROOM_SHUTTER_DOWN); room_shutters_set(ROOM_SALON  , ROOM_SHUTTER_DOWN);
-                                                  room_shutters_set(ROOM_CUISINE , ROOM_SHUTTER_DOWN); room_shutters_set(ROOM_COULOIR, ROOM_SHUTTER_DOWN); }
-void event_proc_shutters_all_start(void)        { event_proc_shutters_upstairs_start(); event_proc_shutters_downstairs_start(); }
-void event_proc_shutters_all_end(void)          { event_proc_shutters_upstairs_end(); event_proc_shutters_downstairs_end(); }
-void event_proc_shutters_c1_start(void)         { room_shutters_set(ROOM_C1, ROOM_SHUTTER_UP); }
-void event_proc_shutters_c1_end(void)           { room_shutters_set(ROOM_C1, ROOM_SHUTTER_DOWN); }
-void event_proc_shutters_c2_start(void)         { room_shutters_set(ROOM_C2, ROOM_SHUTTER_UP); }
-void event_proc_shutters_c2_end(void)           { room_shutters_set(ROOM_C2, ROOM_SHUTTER_DOWN); }
-void event_proc_shutters_c3_start(void)         { room_shutters_set(ROOM_C3, ROOM_SHUTTER_UP); }
-void event_proc_shutters_c3_end(void)           { room_shutters_set(ROOM_C3, ROOM_SHUTTER_DOWN); }
-void event_proc_shutters_c4_start(void)         { room_shutters_set(ROOM_C4, ROOM_SHUTTER_UP); }
-void event_proc_shutters_c4_end(void)           { room_shutters_set(ROOM_C4, ROOM_SHUTTER_DOWN); }
-
 void event_proc_alarm_all_start(void)             { alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); alarm_volume_set(ALARM_TYPE_ON_MANUAL); }
 void event_proc_alarm_all_end(void)               { alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); alarm_volume_set(ALARM_TYPE_OFF_MANUAL); }
 void event_proc_alarm_perimeter_start(void)       { alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); }
 void event_proc_alarm_perimeter_end(void)         { alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); }
-void event_proc_alarm_perimeter_check_start(void) { if(!rooms_perimeter_status_get(NULL)) { alarm_perimeter_set(ALARM_TYPE_ON_AUTO); } }
-void event_proc_alarm_perimeter_check_end(void)   { if(!rooms_perimeter_status_get(NULL)) { alarm_perimeter_set(ALARM_TYPE_OFF_AUTO); } }
+void event_proc_alarm_perimeter_check_start(void) { alarm_perimeter_set(ALARM_TYPE_ON_AUTO); }
+void event_proc_alarm_perimeter_check_end(void)   { alarm_perimeter_set(ALARM_TYPE_OFF_AUTO); }
 void event_proc_alarm_volume_start(void)          { alarm_volume_set(ALARM_TYPE_ON_MANUAL); }
 void event_proc_alarm_volume_end(void)            { alarm_volume_set(ALARM_TYPE_OFF_MANUAL); }
 void event_proc_alarm_simulation_start(void)      { alarm_simulation_set(ALARM_TYPE_ON_AUTO); }
@@ -49,14 +29,6 @@ void event_proc_power_3_end(void)   { power_set(POWER_3, 0); }
 
 uint8_t events_proc_init(void)
 {
-  event_set(EVENT_SHUTTERS_ALL       , &event_proc_shutters_all_start       , &event_proc_shutters_all_end);
-  event_set(EVENT_SHUTTERS_UPSTAIRS  , &event_proc_shutters_upstairs_start  , &event_proc_shutters_upstairs_end);
-  event_set(EVENT_SHUTTERS_DOWNSTAIRS, &event_proc_shutters_downstairs_start, &event_proc_shutters_downstairs_end);
-  event_set(EVENT_SHUTTERS_C1        , &event_proc_shutters_c1_start        , &event_proc_shutters_c1_end);
-  event_set(EVENT_SHUTTERS_C2        , &event_proc_shutters_c2_start        , &event_proc_shutters_c2_end);
-  event_set(EVENT_SHUTTERS_C3        , &event_proc_shutters_c3_start        , &event_proc_shutters_c3_end);
-  event_set(EVENT_SHUTTERS_C4        , &event_proc_shutters_c4_start        , &event_proc_shutters_c4_end);
-
   event_set(EVENT_ALARM_ALL            , &event_proc_alarm_all_start            , &event_proc_alarm_all_end);
   event_set(EVENT_ALARM_PERIMETER      , &event_proc_alarm_perimeter_start      , &event_proc_alarm_perimeter_end);
   event_set(EVENT_ALARM_PERIMETER_CHECK, &event_proc_alarm_perimeter_check_start, &event_proc_alarm_perimeter_check_end);
