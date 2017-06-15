@@ -4,7 +4,6 @@
 #include <HomeEasy.h>
 #include <GPRS_Shield_Arduino.h>
 #include <RF24.h>
-#include <RH_NRF24/NRF24.h>
 #include <ID.h>
 
 #define LED_pin 13
@@ -26,20 +25,10 @@
 
 HomeEasy homeEasy;
 LbCom lbCom;
-NRF24 nrf24(7, SS); // B5(SCK), B4(MISO), B3(MOSI), B2(SS), D7(CE)
+RF24 nrf24(7,8);
+GPRS gprs(&Serial3, 19200);
 
-void setup()
-{
-  homeEasy.init();
-  lbCom.init();
-
-  nrf24.init();
-  nrf24.setChannel(1);
-  nrf24.setThisAddress(nrf24_dstAddr, 5);
-  nrf24.setPayloadSize(32);
-  nrf24.setRF(NRF24::NRF24DataRate2Mbps, NRF24::NRF24TransmitPower0dBm);
-
-
+void setup() {
   Serial.begin(115200);
   pinMode(LED_pin, OUTPUT); 
 
@@ -65,16 +54,23 @@ void setup()
   pinMode(NRF24_SCK_pin, OUTPUT);
   digitalWrite(NRF24_SCK_pin, HIGH);
 
+  homeEasy.init();
+  lbCom.init();
+  nrf24.begin();
+  nrf24.setPALevel(RF24_PA_LOW);
+  nrf24.setAddressWidth(4);
+  uint32_t nrf24Adr = ID_LOST;
+  nrf24.openReadingPipe(1, &nrf24Adr);
+  nrf24.startListening();
+
+  gprs.init();
+  
   Serial.println("Init OK");
 }
 
-void loop()
-{
+void loop() {
   homeEasy.run();
-//Serial.println(homeEasy.getU16(), DEC);
-
-  if(true == homeEasy.rxCodeIsReady())
-  {
+  if(true == homeEasy.rxCodeIsReady()) {
     uint8_t buff[7] = {0};
     Serial.print(homeEasy.rxGetCode(), HEX);Serial.print(" : ");
     Serial.print(homeEasy.rxGetManufacturer(), HEX);Serial.print("-");
@@ -90,64 +86,34 @@ void loop()
     lbCom.send(ID_HOME_EASY, ID_LOST, ID_HOME_EASY_RCV_TM, 7, buff);
   }
 
-
-
-    lbCom.run();
-    if(true == lbCom.rxIsReady())
-    {
-      if(HOME_EASY_ID == lbCom.rxGetDst())
-      {
-        if(4 == lbCom.rxGetLen())
-        {
-          if(true == homeEasy.txIsReady())
-          {
+  lbCom.run();
+  if(true == lbCom.rxIsReady()) {
+    if(ID_HOME_EASY == lbCom.rxGetDst()) {
+      if(ID_HOME_EASY_SEND_TC == lbCom.rxGetCmd()) {
+        if(4 == lbCom.rxGetDataLen()) {
+          if(true == homeEasy.txIsReady()) {
             homeEasy.send(*((uint32_t *)lbCom.rxGetData()));
-            lbCom.rxRelease();
           }
         }
-        else
-        {
-          lbCom.rxRelease();
-        }
       }
-      else
-      {
-        if(true == nrf24.txIsReady())
-        {
-          nrf24.send(lbCom.rxGetSrc(), lbCom.rxGetDst(), lbCom.rxGetCmd(), lbCom.rxGetLen(), lbCom.rxGetData());
-          lbCom.rxRelease();
-        }
+      if(ID_GSM_SMS_SEND_TC == lbCom.rxGetCmd()) {
+        lbCom.rxGetData()[10] = 0;
+        lbCom.rxGetData()[lbCom.rxGetDataLen()] = 0;
+        gprs.sendSMS(&(lbCom.rxGetData()[0]), &(lbCom.rxGetData()[11]));
       }
     }
-
-    nrf24.run();
-    if(true == nrf24.rxIsReady())
-    {
-      if(true == lbCom.txIsReady())
-      {
-        lbCom.send(nrf24.rxGetSrc(), nrf24.rxGetDst(), nrf24.rxGetCmd(), nrf24.rxGetLen(), nrf24.rxGetData());
-        nrf24.rxRelease();
-      }
+    else {
+      uint32_t nrf24Adr = lbCom.rxGetDst();
+      nrf24.openWritingPipe(&nrf24Adr);
+      nrf24.write(lbCom.rxGetFrame(), lbCom.rxGetFrameLen());
     }
+    lbCom.rxRelease();
+  }
 
-    if(true == nrf24.available())
-    {
-      nrf24_rxLen = 32;
-      nrf24.recv(nrf24_rxRawData, &nrf24_rxLen);
-      if(TV_RC_CMD_TM == nrf24_rxRawData[1])
-      {
-        nrf24_dstAddr[0] = nrf24_rxRawData[0];
-        nrf24.setTransmitAddress(nrf24_dstAddr, 5);
-        nrf24_txRawData[0] = TV_RC_ID;
-        nrf24_txRawData[1] = TV_RC_CMD_TM;
-  	    nrf24_txRawData[2] = digitalRead(RELAICAM);
-        nrf24.send(nrf24_txRawData , 3);
-      }
-      if(TV_RC_CMD_CAM_POWER == nrf24_rxRawData[1]) { digitalWrite(RELAICAM, nrf24_rxRawData[2]); }
-      if(TV_RC_CMD_IR_RAW_SAMSUNG == nrf24_rxRawData[1]) { ir.setSamsung(nrf24_rxRawData[2]); }
-      if(TV_RC_CMD_IR_MACRO_SAMSUNG_GO_HDMI1 == nrf24_rxRawData[1]) { ir.setSamsung(0); ir.setSamsung(1); ir.setSamsung(2); }
-      if(TV_RC_CMD_IR_MACRO_SAMSUNG_GO_TV == nrf24_rxRawData[1]) { ir.setSamsung(0); ir.setSamsung(1); ir.setSamsung(2); }
-    }
-
+  if(true == nrf24.available()) {
+    uint8_t lbComFrame[LBCOM_FRAME_MAX_SIZE] = {0};
+    nrf24.read(&lbComFrame[0], 4);
+    nrf24.read(&lbComFrame[4], lbComFrame[3]+1);
+  }
 }
 
