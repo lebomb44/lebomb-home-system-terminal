@@ -5,13 +5,14 @@
 #include <GPRS_Shield_Arduino.h>
 #include <RF24.h>
 #include <ID.h>
+#include <Cmd.h>
 
 #define LED_pin 13
 
 #define LOST_TX_pin 16
 #define LOST_RX_pin 17
 
-#define HOME_EASY_IN_pin 2
+#define HOME_EASY_IN_pin 21
 
 #define GSM_TX_pin    14
 #define GSM_RX_pin    15
@@ -25,8 +26,36 @@
 
 HomeEasy homeEasy;
 LbCom lbCom;
-RF24 nrf24(7,8);
+RF24 nrf24(NRF24_CE_pin, NRF24_CSN_pin);
 GPRS gprs(&Serial3, 19200);
+
+bool nrf24_printIsEnabled = false;
+bool gprs_printIsEnabled = false;
+
+void homeEasySend(int arg_cnt, char **args) {
+  if(1 == arg_cnt) {
+    homeEasy.send(cmdStr2Num(args[0], 16));
+    Serial.print("homeEasySend "); Serial.println(args[0]);
+  }
+  else { Serial.print("ERROR homeEasySend incorrect arg !"); }
+}
+void homeEasyEnablePrint(int arg_cnt, char **args) { homeEasy.enablePrint(); Serial.print("HomeEasy print enabled"); }
+void homeEasyDisablePrint(int arg_cnt, char **args) { homeEasy.disablePrint(); Serial.print("HomeEasy print disabled"); }
+
+void lbComSend(int arg_cnt, char **args) {
+}
+void lbComEnablePrint(int arg_cnt, char **args) { lbCom.enablePrint(); Serial.print("LbCom print enabled"); }
+void lbComDisablePrint(int arg_cnt, char **args) { lbCom.disablePrint(); Serial.print("LbCom print disabled"); }
+
+void nrf24Send(int arg_cnt, char **args) {
+}
+void nrf24EnablePrint(int arg_cnt, char **args) { nrf24_printIsEnabled = true; Serial.print("NRF24 print enabled"); }
+void nrf24DisablePrint(int arg_cnt, char **args) { nrf24_printIsEnabled = false; Serial.print("NRF24 print disabled"); }
+
+void gprsSendSMS(int arg_cnt, char **args) {
+}
+void gprsEnablePrint(int arg_cnt, char **args) { gprs_printIsEnabled = true; Serial.print("GPRS print enabled"); }
+void gprsDisablePrint(int arg_cnt, char **args) { gprs_printIsEnabled = false; Serial.print("GPRS print disabled"); }
 
 void setup() {
   Serial.begin(115200);
@@ -64,6 +93,20 @@ void setup() {
   nrf24.startListening();
 
   gprs.init();
+
+  cmdInit();
+  cmdAdd("homeEasySend", "Send HomeEsay HEX code", homeEasySend);
+  cmdAdd("homeEasyEnablePrint", "Enable print in HomeEasy lib", homeEasyEnablePrint);
+  cmdAdd("homeEasyDisablePrint", "Disable print in HomeEasy lib", homeEasyDisablePrint);
+  cmdAdd("lbComSend", "Send frame on lbCom port", lbComSend);
+  cmdAdd("lbComEnablePrint", "Enable print in LbCom lib", lbComEnablePrint);
+  cmdAdd("lbComDisbalePrint", "Disable print in LbCom lib", lbComDisablePrint);
+  cmdAdd("nrf24Send", "Send frame on NRF24 link", nrf24Send);
+  cmdAdd("nrf24EnablePrint", "Enable print in NRF24 lib", nrf24EnablePrint);
+  cmdAdd("nrf24DisbalePrint", "Disable print in NRF24 lib", nrf24DisablePrint);
+  cmdAdd("gprsSendSMS", "Send SMS", gprsSendSMS);
+  cmdAdd("gprsEnablePrint", "Enable print in GPRS lib", gprsEnablePrint);
+  cmdAdd("gprsDisablePrint", "Disable print in GPRS lib", gprsDisablePrint);
   
   Serial.println("Init OK");
 }
@@ -72,11 +115,13 @@ void loop() {
   homeEasy.run();
   if(true == homeEasy.rxCodeIsReady()) {
     uint8_t buff[7] = {0};
-    Serial.print(homeEasy.rxGetCode(), HEX);Serial.print(" : ");
-    Serial.print(homeEasy.rxGetManufacturer(), HEX);Serial.print("-");
-    Serial.print(homeEasy.rxGetGroup(), HEX);Serial.print("-");
-    Serial.print(homeEasy.rxGetDevice(), HEX);Serial.print("-");
-    Serial.print(homeEasy.rxGetStatus(), HEX);Serial.println();
+    if(true==homeEasy.printIsEnabled()) {
+      Serial.print(homeEasy.rxGetCode(), HEX);Serial.print(" : ");
+      Serial.print(homeEasy.rxGetManufacturer(), HEX);Serial.print("-");
+      Serial.print(homeEasy.rxGetGroup(), HEX);Serial.print("-");
+      Serial.print(homeEasy.rxGetDevice(), HEX);Serial.print("-");
+      Serial.print(homeEasy.rxGetStatus(), HEX);Serial.println();
+    }
     *((uint32_t *) &buff[0]) = homeEasy.rxGetManufacturer();
     buff[4] = homeEasy.rxGetGroup();
     buff[5] = homeEasy.rxGetStatus();
@@ -114,6 +159,9 @@ void loop() {
     uint8_t lbComFrame[LBCOM_FRAME_MAX_SIZE] = {0};
     nrf24.read(&lbComFrame[0], 4);
     nrf24.read(&lbComFrame[4], lbComFrame[3]+1);
+    lbCom.send(lbComFrame[0], lbComFrame[1], lbComFrame[2], lbComFrame[3], &lbComFrame[4]);
   }
+
+  cmdPoll();
 }
 
