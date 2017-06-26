@@ -1,11 +1,11 @@
 #include <Fifo_U08.h>
 #include <Fifo_U16.h>
+#include <Cmd.h>
 #include <LbCom.h>
 #include <HomeEasy.h>
 #include <GPRS_Shield_Arduino.h>
 #include <RF24.h>
 #include <ID.h>
-#include <Cmd.h>
 
 #define LED_pin 13
 
@@ -35,30 +35,34 @@ bool gprs_printIsEnabled = false;
 void homeEasySend(int arg_cnt, char **args) {
   if(1 == arg_cnt) {
     homeEasy.send(cmdStr2Num(args[0], 16));
-    Serial.print("homeEasySend "); Serial.println(args[0]);
+    Serial.println("homeEasySend "); Serial.println(args[0]);
   }
-  else { Serial.print("ERROR homeEasySend incorrect arg !"); }
+  else { Serial.println("ERROR homeEasySend incorrect arg !"); }
 }
-void homeEasyEnablePrint(int arg_cnt, char **args) { homeEasy.enablePrint(); Serial.print("HomeEasy print enabled"); }
-void homeEasyDisablePrint(int arg_cnt, char **args) { homeEasy.disablePrint(); Serial.print("HomeEasy print disabled"); }
 
+/* HomeEasy */
+void homeEasyEnablePrint(int arg_cnt, char **args) { homeEasy.enablePrint(); Serial.println("HomeEasy print enabled"); }
+void homeEasyDisablePrint(int arg_cnt, char **args) { homeEasy.disablePrint(); Serial.println("HomeEasy print disabled"); }
+/* LbCom */
 void lbComSend(int arg_cnt, char **args) {
 }
-void lbComEnablePrint(int arg_cnt, char **args) { lbCom.enablePrint(); Serial.print("LbCom print enabled"); }
-void lbComDisablePrint(int arg_cnt, char **args) { lbCom.disablePrint(); Serial.print("LbCom print disabled"); }
-
+void lbComEnablePrint(int arg_cnt, char **args) { lbCom.enablePrint(); Serial.println("LbCom print enabled"); }
+void lbComDisablePrint(int arg_cnt, char **args) { lbCom.disablePrint(); Serial.println("LbCom print disabled"); }
+/* NRF24 */
 void nrf24Send(int arg_cnt, char **args) {
 }
-void nrf24EnablePrint(int arg_cnt, char **args) { nrf24_printIsEnabled = true; Serial.print("NRF24 print enabled"); }
-void nrf24DisablePrint(int arg_cnt, char **args) { nrf24_printIsEnabled = false; Serial.print("NRF24 print disabled"); }
-
+void nrf24EnablePrint(int arg_cnt, char **args) { nrf24_printIsEnabled = true; Serial.println("NRF24 print enabled"); }
+void nrf24DisablePrint(int arg_cnt, char **args) { nrf24_printIsEnabled = false; Serial.println("NRF24 print disabled"); }
+/* GPRS */
 void gprsSendSMS(int arg_cnt, char **args) {
 }
-void gprsEnablePrint(int arg_cnt, char **args) { gprs_printIsEnabled = true; Serial.print("GPRS print enabled"); }
-void gprsDisablePrint(int arg_cnt, char **args) { gprs_printIsEnabled = false; Serial.print("GPRS print disabled"); }
+void gprsEnablePrint(int arg_cnt, char **args) { gprs_printIsEnabled = true; Serial.println("GPRS print enabled"); }
+void gprsDisablePrint(int arg_cnt, char **args) { gprs_printIsEnabled = false; Serial.println("GPRS print disabled"); }
 
 void setup() {
   Serial.begin(115200);
+  Serial.println("Starting...");
+
   pinMode(LED_pin, OUTPUT); 
 
   pinMode(LOST_TX_pin, OUTPUT);
@@ -91,10 +95,9 @@ void setup() {
   uint32_t nrf24Adr = ID_LOST;
   nrf24.openReadingPipe(1, &nrf24Adr);
   nrf24.startListening();
-
   gprs.init();
-
   cmdInit();
+
   cmdAdd("homeEasySend", "Send HomeEsay HEX code", homeEasySend);
   cmdAdd("homeEasyEnablePrint", "Enable print in HomeEasy lib", homeEasyEnablePrint);
   cmdAdd("homeEasyDisablePrint", "Disable print in HomeEasy lib", homeEasyDisablePrint);
@@ -107,15 +110,17 @@ void setup() {
   cmdAdd("gprsSendSMS", "Send SMS", gprsSendSMS);
   cmdAdd("gprsEnablePrint", "Enable print in GPRS lib", gprsEnablePrint);
   cmdAdd("gprsDisablePrint", "Disable print in GPRS lib", gprsDisablePrint);
-  
+  cmdAdd("help", "List commands", cmdList);
+
   Serial.println("Init OK");
+  homeEasy.enablePrint();
 }
 
 void loop() {
   homeEasy.run();
   if(true == homeEasy.rxCodeIsReady()) {
     uint8_t buff[7] = {0};
-    if(true==homeEasy.printIsEnabled()) {
+    if(true == homeEasy.printIsEnabled()) {
       Serial.print(homeEasy.rxGetCode(), HEX);Serial.print(" : ");
       Serial.print(homeEasy.rxGetManufacturer(), HEX);Serial.print("-");
       Serial.print(homeEasy.rxGetGroup(), HEX);Serial.print("-");
@@ -128,9 +133,9 @@ void loop() {
     buff[6] = homeEasy.rxGetDevice();
     homeEasy.rxRelease();
 
-    lbCom.send(ID_HOME_EASY, ID_LOST, ID_HOME_EASY_RCV_TM, 7, buff);
+    // FIXME lbCom.send(ID_HOME_EASY, ID_LOST, ID_HOME_EASY_RCV_TM, 7, buff);
   }
-
+/*
   lbCom.run();
   if(true == lbCom.rxIsReady()) {
     if(ID_HOME_EASY == lbCom.rxGetDst()) {
@@ -154,11 +159,16 @@ void loop() {
     }
     lbCom.rxRelease();
   }
-
+*/
   if(true == nrf24.available()) {
     uint8_t lbComFrame[LBCOM_FRAME_MAX_SIZE] = {0};
+    Serial.print("NRF24 rx:");
     nrf24.read(&lbComFrame[0], 4);
     nrf24.read(&lbComFrame[4], lbComFrame[3]+1);
+    if(true == nrf24_printIsEnabled) {
+      for(uint16_t i=0; i<(4+lbComFrame[3]+1); i++) { Serial.print(" "); Serial.print(lbComFrame[i], HEX); }
+      Serial.println();
+    }
     lbCom.send(lbComFrame[0], lbComFrame[1], lbComFrame[2], lbComFrame[3], &lbComFrame[4]);
   }
 
