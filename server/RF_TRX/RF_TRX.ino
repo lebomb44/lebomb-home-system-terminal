@@ -30,7 +30,7 @@ LbCom lbCom;
 RF24 nrf24(NRF24_CE_pin, NRF24_CSN_pin);
 GPRS gprs(&Serial3, 19200);
 
-bool nrf24_printIsEnabled = false;
+bool nrf24_printIsEnabled = true;
 bool gprs_printIsEnabled = false;
 
 void homeEasySend(int arg_cnt, char **args) {
