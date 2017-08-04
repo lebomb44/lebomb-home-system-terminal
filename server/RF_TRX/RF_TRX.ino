@@ -34,7 +34,7 @@ uint32_t gprs_checkPowerUp_counter = 0;
 
 bool lbCom_printIsEnabled = true;
 bool nrf24_printIsEnabled = true;
-bool gprs_printIsEnabled = false;
+bool gprs_printIsEnabled = true;
 
 #define LBCOM_PRINT(m) if(true == lbCom_printIsEnabled) { m }
 #define NRF24_PRINT(m) if(true == nrf24_printIsEnabled) { m }
@@ -63,7 +63,21 @@ void nrf24EnablePrint(int arg_cnt, char **args) { nrf24_printIsEnabled = true; S
 void nrf24DisablePrint(int arg_cnt, char **args) { nrf24_printIsEnabled = false; Serial.println("NRF24 print disabled"); }
 /* GPRS */
 void gprsSendSMS(int arg_cnt, char **args) {
+  if(3 == arg_cnt) {
+    Serial.print("Sending SMS...");
+    if(true == gprs.sendSMS(args[1], args[2])) { Serial.println("OK"); }
+    else { Serial.println("ERROR"); }
+  }
+  else { Serial.println("Incorrect number of arguments"); }
 }
+void gprsGetSignalStrength(int arg_cnt, char **args) {
+  Serial.print("GPRS signal strength...");
+  int signalStrenght = 0;
+  if(true == gprs.getSignalStrength(&signalStrenght)) { Serial.print("OK = "); Serial.print(signalStrenght); Serial.println(); } else { Serial.println("ERROR"); }
+}
+void gprsPowerUpDown(int arg_cnt, char **args) { gprs.powerUpDown(GSM_POWER_pin); Serial.println("GPRS power Up-Down done"); }
+void gprsCheckPowerUp(int arg_cnt, char **args) { Serial.print("GPRS check power up..."); if(true == gprs.checkPowerUp()) { Serial.println("OK"); } else { Serial.println("ERROR"); } }
+void gprsInit(int arg_cnt, char **args) { Serial.print("GPRS init..."); if(true == gprs.init()) { Serial.println("OK"); } else { Serial.println("ERROR"); } }
 void gprsEnablePrint(int arg_cnt, char **args) { gprs_printIsEnabled = true; Serial.println("GPRS print enabled"); }
 void gprsDisablePrint(int arg_cnt, char **args) { gprs_printIsEnabled = false; Serial.println("GPRS print disabled"); }
 
@@ -113,8 +127,8 @@ void setup() {
   nrf24.startListening();
   Serial.println("NRF24 listening started");
   gprs.init();
-  cmdInit();
 
+  cmdInit();
   cmdAdd("homeEasySend", "Send HomeEsay HEX code", homeEasySend);
   cmdAdd("homeEasyEnablePrint", "Enable print in HomeEasy lib", homeEasyEnablePrint);
   cmdAdd("homeEasyDisablePrint", "Disable print in HomeEasy lib", homeEasyDisablePrint);
@@ -125,6 +139,10 @@ void setup() {
   cmdAdd("nrf24EnablePrint", "Enable print in NRF24 lib", nrf24EnablePrint);
   cmdAdd("nrf24DisbalePrint", "Disable print in NRF24 lib", nrf24DisablePrint);
   cmdAdd("gprsSendSMS", "Send SMS", gprsSendSMS);
+  cmdAdd("gprsGetSignalStrength", "Get GPRS signal strength", gprsGetSignalStrength);
+  cmdAdd("gprsPowerUpDown", "GPRS power up-down", gprsPowerUpDown);
+  cmdAdd("gprsCheckPowerUp", "Check GPRS power up", gprsCheckPowerUp);
+  cmdAdd("gprsInit", "Initialize GPRS", gprsInit);
   cmdAdd("gprsEnablePrint", "Enable print in GPRS lib", gprsEnablePrint);
   cmdAdd("gprsDisablePrint", "Disable print in GPRS lib", gprsDisablePrint);
   cmdAdd("help", "List commands", cmdList);
@@ -174,15 +192,15 @@ void loop() {
           LBCOM_PRINT( Serial.println("  LBCOM tc: ID_GSM_INIT_TC"); )
           LbMsg tm(1); tm.setSrc(ID_GSM); tm.setDst(ID_LOST); tm.setCmd(ID_GSM_INIT_TM);
           tm.getData()[0] = gprs.init(); tm.compute(); lbCom.send(tm);
-          LBCOM_PRINT( Serial.print("    LBCOM tm: "); tm.print(); Serial.println(); )
-          LBCOM_PRINT( Serial.print("    LBCOM tm: ID_GSM_INIT_TM: "); Serial.println(tm.getData()[0]); )
+          LBCOM_PRINT( Serial.print("    LBCOM tm: ID_GSM_INIT_TM ("); Serial.print(tm.getData()[0]); )
+          LBCOM_PRINT( Serial.print(") : "); tm.print(); Serial.println(); )
         }
         if(ID_GSM_CHECKPOWERUP_TC == msg.getCmd()) {
           LBCOM_PRINT( Serial.println("  LBCOM tc: ID_GSM_CHECKPOWERUP_TC"); )
           LbMsg tm(1); tm.setSrc(ID_GSM); tm.setDst(ID_LOST); tm.setCmd(ID_GSM_CHECKPOWERUP_TM);
           tm.getData()[0] = gprs.checkPowerUp(); tm.compute(); lbCom.send(tm);
-          LBCOM_PRINT( Serial.print("    LBCOM tm: "); tm.print(); Serial.println(); )
-          LBCOM_PRINT( Serial.print("    LBCOM tm: ID_GSM_CHECKPOWERUP_TM: "); Serial.println(tm.getData()[0]); )
+          LBCOM_PRINT( Serial.print("    LBCOM tm: ID_GSM_CHECKPOWERUP_TM ("); Serial.print(tm.getData()[0]); )
+          LBCOM_PRINT( Serial.print(") : "); tm.print(); Serial.println(); )
         }
         if(ID_GSM_POWERUPDOWN_TC == msg.getCmd()) {
           LBCOM_PRINT( Serial.println("  LBCOM tc: ID_GSM_POWERUPDOWN_TC"); )
@@ -194,8 +212,8 @@ void loop() {
           LbMsg tm(1 + sizeof(int)); tm.setSrc(ID_GSM); tm.setDst(ID_LOST); tm.setCmd(ID_GSM_GETSIGNALSTRENGHT_TM);
           tm.getData()[0] = gprs.getSignalStrength((int *)(tm.getData() + 1));
           tm.compute(); lbCom.send(tm);
-          LBCOM_PRINT( Serial.print("    LBCOM tm: "); tm.print(); Serial.println(); )
-          LBCOM_PRINT( Serial.print("    LBCOM tm: ID_GSM_GETSIGNALSTRENGHT_TM: "); Serial.print(tm.getData()[0]); Serial.print(", "); Serial.println(*((int*)(tm.getData()+1))); )
+          LBCOM_PRINT( Serial.print("    LBCOM tm: ID_GSM_GETSIGNALSTRENGHT_TM ("); Serial.print(tm.getData()[0]); Serial.print(", "); Serial.print(*((int*)(tm.getData()+1))); )
+          LBCOM_PRINT( Serial.print(") : "); tm.print(); Serial.println(); )
         }
         if(ID_GSM_SENDSMS_TC == msg.getCmd()) {
           LBCOM_PRINT( Serial.println("  LBCOM tc: ID_GSM_SENDSMS_TC"); )
@@ -205,8 +223,8 @@ void loop() {
             LbMsg tm(1); tm.setSrc(ID_GSM); tm.setDst(ID_LOST); tm.setCmd(ID_GSM_SENDSMS_TM);
             tm.getData()[0] = gprs.sendSMS(&(msg.getData()[0]), &(msg.getData()[11]));
             tm.compute(); lbCom.send(tm);
-            LBCOM_PRINT( Serial.print("    LBCOM tm: "); tm.print(); Serial.println(); )
-            LBCOM_PRINT( Serial.print("    LBCOM tm: ID_GSM_SENDSMS_TM: "); Serial.println(tm.getData()[0]); )
+            LBCOM_PRINT( Serial.print("    LBCOM tm: ID_GSM_SENDSMS_TM ("); Serial.print(tm.getData()[0]); )
+            LBCOM_PRINT( Serial.print(") : "); tm.print(); Serial.println(); )
           }
         }
       }
@@ -243,13 +261,15 @@ void loop() {
     hktm.getData()[0] = 0;
     if(true == gprs.getSignalStrength((int *)(hktm.getData() + 1))) { gprs_checkPowerUp_counter = 0; hktm.getData()[0] = 1; }
     hktm.compute(); lbCom.send(hktm);
-    LBCOM_PRINT( Serial.print("LBCOM hktm: "); hktm.print(); Serial.println(); )
-    LBCOM_PRINT( Serial.print("LBCOM hktm: ID_GSM_GETSIGNALSTRENGHT_TM: "); Serial.print(hktm.getData()[0]); Serial.print(", "); Serial.println(*((int*)(hktm.getData()+1))); )
+    LBCOM_PRINT( Serial.print("LBCOM hktm: ID_GSM_GETSIGNALSTRENGHT_TM ("); Serial.print(hktm.getData()[0]); Serial.print(", "); Serial.print(*((int*)(hktm.getData()+1))); )
+    LBCOM_PRINT( Serial.print(") : "); hktm.print(); Serial.println(); )
     if(6 < gprs_checkPowerUp_counter) {
       gprs_checkPowerUp_counter = 0;
+      GPRS_PRINT( Serial.print("Powering up GPRS..."); )
       gprs.powerUpDown(GSM_POWER_pin);
+      GPRS_PRINT( Serial.println("done"); )
       GPRS_PRINT( Serial.print("GPRS init..."); )
-      if(true == gprs.init()) { GPRS_PRINT( Serial.println("OK"); ) } else { GPRS_PRINT( Serial.print("ERROR"); ) }
+      if(true == gprs.init()) { GPRS_PRINT( Serial.println("OK"); ) } else { GPRS_PRINT( Serial.println("ERROR"); ) }
     }
   }
 
