@@ -322,7 +322,7 @@ void setup() {
   Serial.println("NRF24 PA level set");
   //nrf24.setAddressWidth(4);
   Serial.println("NRF24 address width set");
-  /* Open open for Slave to Master messages */
+  /* Open pipe for Slave to Master messages */
   uint8_t nrf24AdrR[6] = "LBS2M";
   nrf24.openReadingPipe(1, nrf24AdrR);
   Serial.println("NRF24 reading pipe opened");
