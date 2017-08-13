@@ -5,7 +5,6 @@
 #include <sys/thread.h>
 #include <sys/socket.h>
 
-#include "../apps/rooms/rooms.h"
 #include "../apps/scenes/safety.h"
 #include "../config.h"
 #include "http.h"
@@ -42,7 +41,6 @@ uint8_t sql_send_once(uint8_t start)
 {
   TCPSOCKET *sock = NULL;
   FILE *stream = NULL;
-  uint8_t i = 0;
   char* buff = NULL;
   char* out = NULL;
   uint8_t ret = 0;
@@ -54,13 +52,8 @@ uint8_t sql_send_once(uint8_t start)
   /* Send the URL */
   fputs(LOST_INSERT, stream);
   /* Send the host target */
-  http_request_header_end("lebomb.free.fr", ((sizeof("roomXX.temp_value=XXX")-1)*ROOM_MAX)+ROOM_MAX-1+sizeof("&safety.ups_temp=XXXXX")-1+sizeof("&safety.rack_temp=XXXXX")-1+sizeof("&start=XXX")-1, stream);
+  http_request_header_end("lebomb.free.fr", sizeof("&safety.ups_temp=XXXXX")-1+sizeof("&safety.rack_temp=XXXXX")-1+sizeof("&start=XXX")-1, stream);
   /* Build the POST request */
-  for(i=0; i<ROOM_MAX; i++)
-  {
-    if(0<i) { fputs("&", stream); }
-    fprintf(stream, "room%02d_temp_value=%03d", i, room_temp_value_get(i));
-  }
   fprintf(stream, "&safety_ups_temp=%05d", safety_ups_temp_value_get());
   fprintf(stream, "&safety_rack_temp=%05d", safety_rack_temp_value_get());
   fprintf(stream, "&start=%03d", start);

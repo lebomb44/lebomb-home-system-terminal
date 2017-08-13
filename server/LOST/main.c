@@ -20,8 +20,7 @@
 #include "devices/ups.h"
 #include "devices/rack.h"
 #include "devices/volume.h"
-#include "devices/gsm.h"
-#include "devices/i2c.h"
+#include "devices/lbcom.h"
 
 #include "services/http.h"
 #include "services/monitor.h"
@@ -66,13 +65,11 @@ int main(void)
   ups_init();
   rack_init();
   volume_init();
-  gsm_init();
-  i2c_init();
+  lbcom_init();
 
   http_init();
-  sql_init();
-
   mon_init();
+  sql_init();
 
   alarm_init();
   atmosphere_init();
@@ -102,3 +99,4 @@ ISR(BADISR_vect, ISR_NOBLOCK)
 {
 // user code here
 }
+

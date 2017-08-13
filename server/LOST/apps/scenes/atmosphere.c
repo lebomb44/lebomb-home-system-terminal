@@ -4,7 +4,6 @@
 
 #include <pro/httpd.h>
 
-#include "../rooms/rooms.h"
 #include "atmosphere.h"
 
 enum ATM_T
@@ -39,16 +38,10 @@ int atmosphere_form(FILE * stream, REQUEST * req)
       switch(value)
       {
         case ATM_CINEMA :
-          room_light_set(ROOM_SALON, 0, 100);
-          room_shutter_set(ROOM_SALON, 0, 0);
           break;
         case ATM_ROMANTIQUE :
-          room_light_set(ROOM_SALON, 0, 100);
-          room_shutter_set(ROOM_SALON, 0, 0);
           break;
         case ATM_ECO :
-          room_light_set(ROOM_SALON, 0, 100);
-          room_shutter_set(ROOM_SALON, 0, 0);
           break;
         default :
           break;
