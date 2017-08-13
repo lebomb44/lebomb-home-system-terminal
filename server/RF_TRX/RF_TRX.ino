@@ -1,5 +1,6 @@
 #include <Fifo_U08.h>
 #include <Fifo_U16.h>
+#include <histogram.h>
 #include <Cmd.h>
 #include <LbCom.h>
 #include <LbMsg.h>
@@ -18,6 +19,7 @@
 #define LOST_RX_pin 17
 
 #define HOME_EASY_IN_pin 21
+#define HOME_EASY_ICP_pin 49
 
 #define GSM_TX_pin    14
 #define GSM_RX_pin    15
@@ -60,6 +62,7 @@ bool gprs_printIsEnabled  = true;
  * *****************************
  */
 /* HomeEasy */
+void homeEasyHistoDump(int arg_cnt, char **args) { homeEasy.histoDump(); }
 void homeEasySend(int arg_cnt, char **args) {
   /* > homeEasySend 1234 */
   if(2 == arg_cnt) {
@@ -286,7 +289,8 @@ void setup() {
   digitalWrite(LOST_TX_pin, HIGH);
   pinMode(LOST_RX_pin, INPUT_PULLUP);
 
-  pinMode(HOME_EASY_IN_pin, INPUT);
+  pinMode(HOME_EASY_IN_pin, INPUT_PULLUP);
+  pinMode(HOME_EASY_ICP_pin, INPUT_PULLUP);
 
   pinMode(GSM_TX_pin, OUTPUT);
   digitalWrite(GSM_TX_pin, HIGH);
@@ -341,6 +345,7 @@ void setup() {
    *  Register commands for command line
    * ***********************************
    */
+  cmdAdd("histoDump", "Dump histogram", homeEasyHistoDump);
   cmdAdd("lbMsgExec", "Execute LB message", lbMsgExec);
   cmdAdd("lbMsgSend", "Send LB message", lbMsgSend);
   cmdAdd("homeEasySend", "Send HomeEsay HEX code", homeEasySend);
@@ -358,7 +363,7 @@ void setup() {
   cmdAdd("gprsEnablePrint", "Enable print in GPRS lib", gprsEnablePrint);
   cmdAdd("gprsDisablePrint", "Disable print in GPRS lib", gprsDisablePrint);
   cmdAdd("help", "List commands", cmdList);
-
+  
   Serial.println("RF_TRX Init done");
 }
 
@@ -370,13 +375,14 @@ void loop() {
   homeEasy.run();
   /* A full code as been received */
   if(true == homeEasy.rxCodeIsReady()) {
-    if(true == homeEasy.printIsEnabled()) {
+    HOME_EASY_PRINT(
       Serial.print(homeEasy.rxGetCode(), HEX);Serial.print(" : ");
       Serial.print(homeEasy.rxGetManufacturer(), HEX);Serial.print("-");
       Serial.print(homeEasy.rxGetGroup(), HEX);Serial.print("-");
       Serial.print(homeEasy.rxGetDevice(), HEX);Serial.print("-");
       Serial.print(homeEasy.rxGetStatus(), HEX);Serial.println();
-    }
+      //homeEasy.histoDump();
+    )
     /* Prepare the message to send to the central */
     LbMsg msg(7);
     msg.setSrc(ID_HOME_EASY);
@@ -465,5 +471,4 @@ void loop() {
   /* Wait a minimum for cyclic task */
   delay(1);
 }
-
 
