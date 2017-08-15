@@ -20,7 +20,7 @@
 #include "devices/ups.h"
 #include "devices/rack.h"
 #include "devices/volume.h"
-#include "devices/lbcom.h"
+#include "devices/lbcomif.h"
 
 #include "services/http.h"
 #include "services/monitor.h"
@@ -32,6 +32,8 @@
 #include "apps/scenes/safety.h"
 #include "apps/scenes/events.h"
 #include "apps/scenes/scenes.h"
+#include "apps/scenes/homeeasy.h"
+#include "apps/scenes/lbcom.h"
 
 #include "config.h"
 
@@ -65,7 +67,7 @@ int main(void)
   ups_init();
   rack_init();
   volume_init();
-  lbcom_init();
+  lbcomif_init();
 
   http_init();
   mon_init();
@@ -76,6 +78,8 @@ int main(void)
   safety_init();
   events_init();
   scenes_init();
+  homeeasy_init();
+  lbcom_init();
 
   /* Set the time zone to Paris */
   _timezone = -1L * 60L * 60L;

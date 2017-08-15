@@ -37,6 +37,7 @@ typedef enum _EVENT_T
 
 extern uint8_t events_init(void);
 extern void event_set(EVENT_T event, void (*fcnt_start)(void), void (*fcnt_end)(void));
+extern void event_config(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len, uint8_t * data);
 extern void event_action(EVENT_T event, EVENT_STATUS_T status);
 extern void EventsD(void *arg) __attribute__ ((noreturn));
 extern int events_form(FILE * stream, REQUEST * req);

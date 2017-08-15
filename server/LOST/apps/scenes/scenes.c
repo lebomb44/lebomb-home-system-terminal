@@ -4,16 +4,25 @@
 
 #include <pro/httpd.h>
 
-#include "../rooms/rooms.h"
+#include "../../devices/lbcomif.h"
+
 #include "events.h"
-#include "../../devices/power.h"
 #include "scenes.h"
 
 uint8_t scenes_init(void)
 {
+  lbcomif_registerSlaveCallBack(ID_LOST_SCENES_EXEC_TC, event_config);
   NutRegisterCgi("scenes.cgi", scenes_form);
 
   return 0;
+}
+
+void scenes_exec(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len, uint8_t * data)
+{
+  if(2 == len)
+  {
+    event_action(data[0], data[1]);
+  }
 }
 
 int scenes_form(FILE * stream, REQUEST * req)
@@ -41,3 +50,4 @@ int scenes_form(FILE * stream, REQUEST * req)
 
   return 0;
 }
+

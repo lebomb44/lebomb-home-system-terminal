@@ -11,7 +11,7 @@
 #include "../../devices/power.h"
 #include "../../devices/rack.h"
 #include "../../devices/buzzer.h"
-#include "../../devices/lbcom.h"
+#include "../../devices/lbcomif.h"
 #include "../../services/http.h"
 #include "../../services/web.h"
 #include "safety.h"
@@ -95,7 +95,7 @@ uint16_t safety_rack_temp_value_get(void)
 /* This function is executed if a safety problem is detected */
 uint8_t safety_action(char* msg)
 {
-  lbcom_gsm_sms_send(msg);
+  lbcomif_gsm_sms_send(msg);
   http_email_send(msg);
 
   return 0;
@@ -179,35 +179,6 @@ THREAD(SafetyUpsRackD, arg)
     buzzer_update();
 
     NutSleep(1000);
-  }
-}
-
-THREAD(SafetyGsmD, arg)
-{
-  uint8_t gsm_nb = 0;
-  char msg[20];
-
-  arg = arg;
-  NutThreadSetPriority(102);
-
-  NutSleep(3000);
-
-  while(1)
-  {
-    if(1 != safety_value.gsm_status) { if(0xFF > gsm_nb) { gsm_nb++; } } else { gsm_nb = 0; }
-    safety_gsm_status_set(0);
-    if(10 < gsm_nb) { safety_status.gsm = 1; } else { safety_status.gsm = 0; }
-    if(safety_control.gsm)
-    {
-      if((!(safety_trig.gsm)) && (safety_status.gsm))
-      {
-        sprintf(msg, "Probleme-GSM-E%d", safety_status.gsm);
-        safety_action(msg);
-        safety_trig.gsm = 1;
-      }
-    }
-
-    NutSleep(30000);
   }
 }
 
@@ -338,3 +309,4 @@ int safety_xml_get(FILE * stream)
 
   return 0;
 }
+

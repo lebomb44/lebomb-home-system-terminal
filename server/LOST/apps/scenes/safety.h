@@ -12,8 +12,6 @@ extern void safety_gsm_status_set(uint8_t gsm_connection);
 extern uint16_t safety_ups_temp_value_get(void);
 extern uint16_t safety_rack_temp_value_get(void);
 extern void SafetyUpsRackD(void *arg) __attribute__ ((noreturn));
-extern void SafetyRoomsD(void *arg) __attribute__ ((noreturn));
-extern void SafetyGsmD(void *arg) __attribute__ ((noreturn));
 extern void SafetyHttpD(void *arg) __attribute__ ((noreturn));
 extern int safety_form(FILE * stream, REQUEST * req);
 extern int safety_xml_get(FILE * stream);

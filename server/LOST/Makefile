@@ -7,14 +7,15 @@ CFLAGS += -DLOST_CONFIG_$(LOST_CONFIG)
 
 SRCS =  $(PROJ).c \
 devices/eth.c devices/uart.c devices/adc.c devices/buzzer.c devices/power.c devices/ups.c devices/rack.c devices/volume.c \
-devices/lbcom.c \
+devices/lbcomif.c \
 services/http.c services/sql.c services/web.c services/monitor.c \
-apps/media/freebox.c apps/media/remote.c \
 apps/scenes/alarm.c apps/scenes/safety.c apps/scenes/atmosphere.c \
 apps/scenes/events.c apps/scenes/events_proc.c apps/scenes/scenes.c \
+apps/scenes/lbcom_homeeasy.c apps/scenes/lbcom_gsm.c apps/scenes/lbcom.c \
 $(WEBFILE)
 
-#devices/xflash.c services/tftp.c \
+#apps/media/freebox.c apps/media/remote.c \
+#devices/xflash.c services/tftp.c devices/gsm.c \
 
 LIBS =  $(LIBDIR)/nutinit.o -lnutpro -lnutos -lnutarch -lnutdev -lnutgorp -lnutnet -lnutfs -lnutcrt
 

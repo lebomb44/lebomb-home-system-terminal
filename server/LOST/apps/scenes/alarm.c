@@ -10,7 +10,7 @@
 
 #include "../../devices/volume.h"
 #include "../../devices/buzzer.h"
-#include "../../devices/lbcom.h"
+#include "../../devices/lbcomif.h"
 #include "../../services/http.h"
 #include "../../services/web.h"
 #include "alarm.h"
@@ -61,7 +61,7 @@ uint8_t alarm_init(void)
 /* This function is executed if an alarm is detected */
 uint8_t alarm_action(char* msg)
 {
-  lbcom_gsm_sms_send(msg);
+  lbcomif_gsm_sms_send(msg);
   http_email_send(msg);
 
   return 0;

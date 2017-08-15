@@ -7,6 +7,7 @@
 
 #include <pro/httpd.h>
 
+#include "../../devices/lbcomif.h"
 #include "../../services/web.h"
 
 #include <time.h>
@@ -64,6 +65,7 @@ uint8_t events_init(void)
   event_list[EVENT_POWER_1].rec          = 0xFF;
 
   NutThreadCreate("EventsD", EventsD, 0, 512);
+  lbcomif_registerSlaveCallBack(ID_LOST_EVENTS_CONFIG_TC, event_config);
   NutRegisterCgi("events.cgi", events_form);
 
   return 0;
@@ -75,6 +77,28 @@ void event_set(EVENT_T event, void (*fcnt_start)(void), void (*fcnt_end)(void))
   {
     event_list[event].fcnt_start = fcnt_start;
     event_list[event].fcnt_end   = fcnt_end;
+  }
+}
+
+void event_config(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len, uint8_t * data)
+{
+  uint8_t event = 0;
+
+  if(10 == len)
+  {
+    event = data[0];
+    if(EVENT_MAX > event)
+    {
+      event_list[event].status       = data[1];
+      event_list[event].status_start = data[2];
+      event_list[event].hour_start   = data[3];
+      event_list[event].minute_start = data[4];
+      event_list[event].status_end   = data[5];
+      event_list[event].hour_end     = data[6];
+      event_list[event].minute_end   = data[7];
+      if(data[9]) { event_list[event].rec |= 1<<data[8]; }
+      else { event_list[event].rec &= ~(1<<data[8]); }
+    }
   }
 }
 

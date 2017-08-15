@@ -120,7 +120,7 @@ void lbMsgSend(int arg_cnt, char **args) {
 }
 void sendLbMsg(LbMsg & msg) {
   /* Id destination is ID_LOST it should be sent en lbCom link */
-  if(ID_LOST == msg.getDst()) {
+  if((ID_LOST_MASTER == msg.getDst()) || (ID_LOST_SLAVE == msg.getDst())) {
     LBCOM_PRINT( Serial.print("->LBCOM send: "); msg.print(); )
     /* Send the message now */
     lbCom.send(msg);
@@ -168,14 +168,18 @@ bool execMsg(String ife, LbMsg & msg) {
     /* OK, it is well formed */
     LBMSG_PRINT( Serial.println(": OK"); )
     /* This message is for HOME EASY module */
-    if(ID_HOME_EASY == msg.getDst()) {
+    if(ID_HOME_EASY_SLAVE == msg.getDst()) {
       if(ID_HOME_EASY_SEND_TC == msg.getCmd()) {
         HOME_EASY_PRINT( Serial.print("  " + ife + " tc: ID_HOME_EASY_SEND_TC: "); )
         /* Data is the full HomeEasy frame */
-        if(4 == msg.getDataLen()) {
+        if(7 == msg.getDataLen()) {
           if(true == homeEasy.txIsReady()) {
-            /* This command i not implemented */
-            homeEasy.send(*((uint32_t *)msg.getData()));
+            /* This command is not implemented */
+            uint32_t manufacturer = (0xFF000000 & (((uint32_t)msg.getData()[0])<<24)) | (0x00FF0000 & (((uint32_t)msg.getData()[1])<<16)) | (0x0000FF00 & (((uint32_t)msg.getData()[2])<<8)) | (0x000000FF & ((uint32_t)msg.getData()[3]));
+            uint8_t group = msg.getData()[4];
+            uint8_t device = msg.getData()[5];
+            uint8_t status = msg.getData()[6];
+            homeEasy.send(manufacturer, group, device, status);
             HOME_EASY_PRINT( Serial.println("OK"); )
           }
           else { HOME_EASY_PRINT( Serial.println("ERROR: device busy"); ) }
@@ -188,7 +192,7 @@ bool execMsg(String ife, LbMsg & msg) {
     }
     else {
       /* This message is for GPRS module */
-      if(ID_GSM == msg.getDst()) {
+      if(ID_GSM_SLAVE == msg.getDst()) {
         if(ID_GSM_INIT_TC == msg.getCmd()) {
           GPRS_PRINT( Serial.print("  " + ife + " tc: ID_GSM_INIT_TC: "); )
           /* No data for this command */
@@ -391,8 +395,8 @@ void loop() {
     /* Set the data */
     *((uint32_t *) &(msg.getData()[0])) = homeEasy.rxGetManufacturer();
     msg.getData()[4] = homeEasy.rxGetGroup();
-    msg.getData()[5] = homeEasy.rxGetStatus();
-    msg.getData()[6] = homeEasy.rxGetDevice();
+    msg.getData()[5] = homeEasy.rxGetDevice();
+    msg.getData()[6] = homeEasy.rxGetStatus();
     /* Release as soon as possible */
     homeEasy.rxRelease();
     /* Finalize the message */
