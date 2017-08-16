@@ -14,6 +14,9 @@ extern uint8_t lbcom_homeeasyTM_group_get(void);
 extern uint8_t lbcom_homeeasyTM_device_get(void);
 extern uint8_t lbcom_homeeasyTM_status_get(void);
 
+extern int lbcom_homeeasyTM_form(FILE * stream, REQUEST * req);
+extern int lbcom_homeeasyTM_xml_get(FILE * stream);
+
 __END_DECLS
 
 #endif

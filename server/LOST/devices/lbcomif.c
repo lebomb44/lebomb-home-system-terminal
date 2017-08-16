@@ -142,7 +142,7 @@ void lbcomif_send(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len, uint8_t * 
   lbcomif_sendByte(len); crc = _crc_ibutton_update(crc, len);
   for(i=0; i<len ; i++)
   {
-    lbcomif_sendByte(data[i], uart1_fd); crc = _crc_ibutton_update(crc, data[i]);
+    lbcomif_sendByte(data[i]); crc = _crc_ibutton_update(crc, data[i]);
   }
   lbcomif_sendByte(crc);
   lbcomif_flush();

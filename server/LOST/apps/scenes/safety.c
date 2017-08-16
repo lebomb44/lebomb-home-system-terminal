@@ -12,14 +12,20 @@
 #include "../../devices/rack.h"
 #include "../../devices/buzzer.h"
 #include "../../devices/lbcomif.h"
+
 #include "../../services/http.h"
 #include "../../services/web.h"
+
+#include "../lbcom/lbcom_gsmTC.h"
+#include "../lbcom/lbcom_bourdilot_freezerTM.h"
+
 #include "safety.h"
 
 typedef struct _SAFETY_T
 { /* 0 if no error else error code */
   uint8_t http;
-  uint8_t gsm;
+  int16_t btfz_temp      :1;
+  uint8_t btfz_net       :1;
   uint8_t ups_temp       :1;
   uint8_t ups_power      :1;
   uint8_t rack_temp      :1;
@@ -28,7 +34,8 @@ typedef struct _SAFETY_T
 
 typedef struct _SAFETY_VALUE_T
 {
-  uint8_t gsm_status;
+  int16_t btfz_temp;
+  int16_t btfz_temp_th;
   uint16_t ups_temp;
   uint16_t ups_temp_th;
   uint16_t rack_temp;
@@ -43,43 +50,41 @@ SAFETY_VALUE_T safety_value;
 uint8_t safety_init(void)
 {
   safety_status.http           = 0;
-  safety_status.gsm            = 0;
+  safety_status.btfz_temp      = 0;
+  safety_status.btfz_net       = 0;
   safety_status.ups_temp       = 0;
   safety_status.ups_power      = 0;
   safety_status.rack_temp      = 0;
   safety_status.rack_alarm     = 0;
 
   safety_control.http           = 1;
-  safety_control.gsm            = 1;
+  safety_control.btfz_temp      = 1;
+  safety_control.btfz_net       = 1;
   safety_control.ups_temp       = 1;
   safety_control.ups_power      = 1;
   safety_control.rack_temp      = 1;
   safety_control.rack_alarm     = 0; // Do not watch at the rack alarm when starting because the door is open !
 
   safety_trig.http           = 0;
-  safety_trig.gsm            = 0;
+  safety_trig.btfz_temp      = 0;
+  safety_trig.btfz_net       = 0;
   safety_trig.ups_temp       = 0;
   safety_trig.ups_power      = 0;
   safety_trig.rack_temp      = 0;
   safety_trig.rack_alarm     = 0;
 
-  safety_value.gsm_status    = 0;
+  safety_value.btfz_temp         = 400;
+  safety_value.btfz_temp_th      = 400;
   safety_value.ups_temp          = 0;
   safety_value.ups_temp_th       = 213; /* 40C */
   safety_value.rack_temp         = 0;
   safety_value.rack_temp_th      = 213; /* 40C */
 
   NutThreadCreate("SafetyUnRD"  , SafetyUpsRackD  , 0, 512);
-  NutThreadCreate("SafetyGsmD"  , SafetyGsmD  , 0, 512);
-  NutThreadCreate("SafetyHttpD" , SafetyHttpD , 0, 512);
+  NutThreadCreate("SafetyHttpFzD" , SafetyHttpBtfzD , 0, 512);
   NutRegisterCgi("safety.cgi", safety_form);
 
   return 0;
-}
-
-void safety_gsm_status_set(uint8_t gsm_status)
-{
-  safety_value.gsm_status = gsm_status;
 }
 
 uint16_t safety_ups_temp_value_get(void)
@@ -95,7 +100,7 @@ uint16_t safety_rack_temp_value_get(void)
 /* This function is executed if a safety problem is detected */
 uint8_t safety_action(char* msg)
 {
-  lbcomif_gsm_sms_send(msg);
+  lbcom_gsmTC_sms_send(msg);
   http_email_send(msg);
 
   return 0;
@@ -182,10 +187,17 @@ THREAD(SafetyUpsRackD, arg)
   }
 }
 
-THREAD(SafetyHttpD, arg)
+THREAD(SafetyHttpBtfzD, arg)
 {
   uint8_t http_nb = 0;
-  uint8_t ret = 0;
+  uint8_t http_ret = 0;
+
+  int16_t btfz_temp[TEMP_NB] = { 400 }; /* 40C */
+
+  uint8_t temp_index = 0;
+  uint32_t temp_sum = 0;
+  uint8_t i = 0;
+
   char msg[25];
 
   arg = arg;
@@ -193,9 +205,9 @@ THREAD(SafetyHttpD, arg)
 
   while(1)
   {
-    ret = http_status_get();
-    if(0 != ret) { if(0xFF > http_nb) { http_nb++; } } else { http_nb = 0; }
-    if(10 < http_nb) { safety_status.http = ret; } else { safety_status.http = 0; }
+    http_ret = http_status_get();
+    if(0 != http_ret) { if(0xFF > http_nb) { http_nb++; } } else { http_nb = 0; }
+    if(10 < http_nb) { safety_status.http = http_ret; } else { safety_status.http = 0; }
     if(safety_control.http)
     {
       if((!(safety_trig.http)) && (safety_status.http))
@@ -205,6 +217,33 @@ THREAD(SafetyHttpD, arg)
         safety_trig.http = 1;
       }
     }
+
+    btfz_temp[temp_index] = lbcom_bourdilot_freezerTM_temp_get();
+    temp_index++; temp_index = temp_index % TEMP_NB;
+    temp_sum = 0;
+    for(i=0; i<TEMP_NB; i++) { temp_sum = temp_sum + btfz_temp[i]; }
+    if(!(safety_trig.btfz_temp)) { safety_value.btfz_temp = temp_sum / TEMP_NB; }
+    if(!(safety_trig.btfz_net)) { safety_status.btfz_net = lbcom_bourdilot_freezerTM_network_get(); }
+
+    if(safety_control.btfz_temp)
+    {
+      if((!(safety_trig.btfz_temp )) && (safety_value.btfz_temp>=safety_value.btfz_temp_th))
+      {
+        sprintf(msg, "Temperature-Freezer-Elevee-%d", safety_value.btfz_temp);
+        safety_action_with_buzzer(msg);
+        safety_trig.rack_temp = 1;
+      }
+    }
+    if(safety_control.btfz_net)
+    {
+      if((!(safety_trig.btfz_net)) && (safety_status.btfz_net))
+      {
+        safety_action_with_buzzer("Alerte-Freezer-Network");
+        safety_trig.btfz_net = 1;
+      }
+    }
+    lbcom_bourdilot_freezerTM_network_set(0);
+    lbcom_bourdilot_freezerTM_temp_set(400);
 
     NutSleep(30000);
   }
@@ -261,11 +300,23 @@ int safety_form(FILE * stream, REQUEST * req)
       if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.http); }
       else { safety_trig.http = 0; safety_control.http = strtoul(arg_s, NULL, 10); }
     }
-    arg_s = NutHttpGetParameter(req, "gsm_ctrl");
+    arg_s = NutHttpGetParameter(req, "btfz_temp_ctrl");
     if(arg_s)
     {
-      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.gsm); }
-      else { safety_trig.gsm = 0; safety_control.gsm = strtoul(arg_s, NULL, 10); }
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.btfz_temp); }
+      else { safety_trig.btfz_temp = 0; buzzer_stop(); safety_control.btfz_temp = strtoul(arg_s, NULL, 10); }
+    }
+    arg_s = NutHttpGetParameter(req, "btfz_temp_th");
+    if(arg_s)
+    {
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_value.btfz_temp_th); }
+      else { safety_value.btfz_temp_th = strtoul(arg_s, NULL, 10); }
+    }
+    arg_s = NutHttpGetParameter(req, "btfz_net_ctrl");
+    if(arg_s)
+    {
+      if('?' == arg_s[0]) { fprintf(stream, "%d", safety_control.btfz_net); }
+      else { safety_trig.btfz_net = 0; buzzer_stop(); safety_control.btfz_net = strtoul(arg_s, NULL, 10); }
     }
 
     fflush(stream);
@@ -277,7 +328,6 @@ int safety_form(FILE * stream, REQUEST * req)
 int safety_xml_get(FILE * stream)
 {
   fprintf_XML_elt_header("Safety" , stream);
-  fprintf_XML_elt_int("GSM_St"           , safety_value.gsm_status       , stream);
   fprintf_XML_elt_int("UPS_Temp"         , safety_value.ups_temp         , stream);
   fprintf_XML_elt_int("UPS_Temp_Th"      , safety_value.ups_temp_th      , stream);
   fprintf_XML_elt_int("UPS_Power"        , safety_status.ups_power       , stream);
@@ -290,21 +340,25 @@ int safety_xml_get(FILE * stream)
   fprintf_XML_elt_int("RACK_Alarm"       , safety_status.rack_alarm      , stream);
   fprintf_XML_elt_int("Buzzer"           , buzzer_state()                , stream);
   fprintf_XML_elt_int("HTTP"             , safety_status.http            , stream);
-  fprintf_XML_elt_int("GSM"              , safety_status.gsm             , stream);
+  fprintf_XML_elt_int("BtFz_Temp"        , safety_value.btfz_temp        , stream);
+  fprintf_XML_elt_int("BtFz_Temp_Th"     , safety_value.btfz_temp_th     , stream);
+  fprintf_XML_elt_int("BtFz_Net"         , safety_status.btfz_net        , stream);
 
   fprintf_XML_elt_int("UPS_Temp_Ctrl"      , safety_control.ups_temp      , stream);
   fprintf_XML_elt_int("UPS_Power_Ctrl"     , safety_control.ups_power     , stream);
   fprintf_XML_elt_int("RACK_Temp_Ctrl"     , safety_control.rack_temp     , stream);
   fprintf_XML_elt_int("RACK_Alarm_Ctrl"    , safety_control.rack_alarm    , stream);
   fprintf_XML_elt_int("HTTP_Ctrl"          , safety_control.http          , stream);
-  fprintf_XML_elt_int("GSM_Ctrl"           , safety_control.gsm           , stream);
+  fprintf_XML_elt_int("BtFz_Temp_Ctrl"     , safety_control.btfz_temp     , stream);
+  fprintf_XML_elt_int("BtFz_Net_Ctrl"      , safety_control.btfz_net      , stream);
 
   fprintf_XML_elt_int("UPS_Temp_Trig"      , safety_trig.ups_temp      , stream);
   fprintf_XML_elt_int("UPS_Power_Trig"     , safety_trig.ups_power     , stream);
   fprintf_XML_elt_int("RACK_Temp_Trig"     , safety_trig.rack_temp     , stream);
   fprintf_XML_elt_int("RACK_Alarm_Trig"    , safety_trig.rack_alarm    , stream);
   fprintf_XML_elt_int("HTTP_Trig"          , safety_trig.http          , stream);
-  fprintf_XML_elt_int("GSM_Trig"           , safety_trig.gsm           , stream);
+  fprintf_XML_elt_int("BtFz_Temp_Trig"     , safety_trig.btfz_temp     , stream);
+  fprintf_XML_elt_int("BtFz_Net_Trig"      , safety_trig.btfz_net      , stream);
   fprintf_XML_elt_trailer("Safety" , stream);
 
   return 0;

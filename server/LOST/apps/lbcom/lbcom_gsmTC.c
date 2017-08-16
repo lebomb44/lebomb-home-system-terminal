@@ -2,7 +2,15 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <sys/timer.h>
+
+#include <util/crc16.h>
+
 #include "../../devices/lbcomif.h"
+
+#include "../../config.h"
+
+#include "lbcom_gsmTC.h"
 
 void lbcom_gsmTC_init(void)
 {
@@ -16,12 +24,12 @@ void lbcom_gsmTC_checkpowerup(void)
 
 void lbcom_gsmTC_powerupdown(void)
 {
-  lbcomif_gsm_send(ID_LOST_MASTER, ID_GSM_SLAVE, ID_GSM_POWERUPDOWN_TC, 0, NULL);
+  lbcomif_send(ID_LOST_MASTER, ID_GSM_SLAVE, ID_GSM_POWERUPDOWN_TC, 0, NULL);
 }
 
 void lbcom_gsmTC_powerreset(void)
 {
-  lbcomif_gsm_send(ID_LOST_MASTER, ID_GSM_SLAVE, ID_GSM_POWERRESET_TC, 0, NULL);
+  lbcomif_send(ID_LOST_MASTER, ID_GSM_SLAVE, ID_GSM_POWERRESET_TC, 0, NULL);
 }
 
 void lbcom_gsmTC_getsignalstrenght(void)
@@ -69,11 +77,47 @@ uint8_t lbcom_gsmTC_sms_send(char * msg)
   uint8_t ret1 = 0;
   uint8_t ret2 = 0;
 
-  ret1 = lbcomif_gsm_sms_send_with_phone(LOST_GSM1, msg);
+  ret1 = lbcom_gsmTC_sms_send_with_phone(LOST_GSM1, msg);
   NutSleep(2000);
-  ret2 = lbcomif_gsm_sms_send_with_phone(LOST_GSM2, msg);
+  ret2 = lbcom_gsmTC_sms_send_with_phone(LOST_GSM2, msg);
 
   return (ret1 + ret2);
 }
 
+int lbcom_gsmTC_form(FILE * stream, REQUEST * req)
+{
+  char* arg_s = NULL;
+  char* phone_s = NULL;
+  char* msg_s = NULL;
+
+  NutHttpSendHeaderTop(stream, req, 200, "Ok");
+  NutHttpSendHeaderBottom(stream, req, "text/html", -1);
+
+  if(METHOD_GET == req->req_method)
+  {
+    arg_s = NutHttpGetParameter(req, "init");
+    if(arg_s) { lbcom_gsmTC_init(); }
+
+    arg_s = NutHttpGetParameter(req, "checkpowerup");
+    if(arg_s) { lbcom_gsmTC_checkpowerup(); }
+
+    arg_s = NutHttpGetParameter(req, "getsignalstrenght");
+    if(arg_s) { lbcom_gsmTC_getsignalstrenght(); }
+
+    arg_s = NutHttpGetParameter(req, "sendsms");
+    if(arg_s)
+    {
+      phone_s = NutHttpGetParameter(req, "phone");
+      msg_s = NutHttpGetParameter(req, "msg");
+      if((NULL != phone_s) && (NULL != msg_s))
+      {
+        lbcom_gsmTC_sms_send_with_phone(phone_s, msg_s);
+      }
+    }
+
+    fflush(stream);
+  }
+
+  return 0;
+}
 

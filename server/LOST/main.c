@@ -32,8 +32,8 @@
 #include "apps/scenes/safety.h"
 #include "apps/scenes/events.h"
 #include "apps/scenes/scenes.h"
-#include "apps/scenes/homeeasy.h"
-#include "apps/scenes/lbcom.h"
+
+#include "apps/lbcom/lbcom.h"
 
 #include "config.h"
 
@@ -50,6 +50,7 @@ int xml_get_form(FILE * stream, REQUEST * req)
     events_xml_get(stream);
     alarm_xml_get(stream);
     safety_xml_get(stream);
+    lbcom_xml_get(stream);
     fprintf_XML_elt_trailer("Lost", stream);
   }
   fflush(stream);
@@ -78,7 +79,7 @@ int main(void)
   safety_init();
   events_init();
   scenes_init();
-  homeeasy_init();
+
   lbcom_init();
 
   /* Set the time zone to Paris */

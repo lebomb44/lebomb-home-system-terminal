@@ -13,6 +13,8 @@ extern void lbcom_bourdilot_freezerTM_network_set(uint8_t network);
 extern int16_t lbcom_bourdilot_freezerTM_temp_get(void);
 extern void lbcom_bourdilot_freezerTM_temp_set(int16_t temp);
 
+extern int lbcom_bourdilot_freezerTM_form(FILE * stream, REQUEST * req);
+extern int lbcom_bourdilot_freezerTM_xml_get(FILE * stream);
 
 __END_DECLS
 

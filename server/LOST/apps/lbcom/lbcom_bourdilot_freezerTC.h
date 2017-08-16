@@ -9,6 +9,8 @@ __BEGIN_DECLS
 extern void lbcom_bourdilot_freezerTC_network(void);
 extern void lbcom_bourdilot_freezerTC_temp(void);
 
+extern int lbcom_bourdilot_freezerTC_form(FILE * stream, REQUEST * req);
+
 __END_DECLS
 
 #endif
