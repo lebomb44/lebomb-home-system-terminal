@@ -14,9 +14,9 @@ extern uint8_t lbcom_gsmTM_init_status_get(void);
 extern void lbcom_gsmTM_checkpowerup_status_set(uint8_t status);
 extern uint8_t lbcom_gsmTM_checkpowerup_status_get(void);
 
-extern void lbcom_gsmTM_signalstrenght_status_set(uint8_t status, uint32_t value);
-extern uint8_t lbcom_gsmTM_signalstrenght_status_get(void);
-extern uint32_t lbcom_gsmTM_signalstrenght_value_get(void);
+extern void lbcom_gsmTM_signalstrength_set(uint8_t status, uint16_t value);
+extern uint8_t lbcom_gsmTM_signalstrength_status_get(void);
+extern uint16_t lbcom_gsmTM_signalstrength_value_get(void);
 
 extern void lbcom_gsmTM_sendsms_status_set(uint8_t status);
 extern uint8_t lbcom_gsmTM_sendsms_status_get(void);

@@ -10,7 +10,7 @@ extern void lbcom_gsmTC_init(void);
 extern void lbcom_gsmTC_checkpowerup(void);
 extern void lbcom_gsmTC_powerupdown(void);
 extern void lbcom_gsmTC_powerreset(void);
-extern void lbcom_gsmTC_getsignalstrenght(void);
+extern void lbcom_gsmTC_getsignalstrength(void);
 extern uint8_t lbcom_gsmTC_sms_send_with_phone(char * phone, char * msg);
 extern uint8_t lbcom_gsmTC_sms_send(char * msg);
 

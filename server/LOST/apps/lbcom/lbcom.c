@@ -39,15 +39,15 @@ THREAD(LbComD, arg)
 
   while(1)
   {
-    lbcomif_run();
+    while(lbcomif_run());
     /* Is there something received ? */
     if(1 == lbcomif_rxIsReady())
     {
       if(ID_LOST_MASTER == lbcomif_rxGetDst())
       {
-             if(ID_HOME_EASY_SLAVE         == lbcomif_rxGetDst()) { lbcom_homeeasyTM_receive(lbcomif_rxGetSrc(), lbcomif_rxGetDst(), lbcomif_rxGetCmd(), lbcomif_rxGetLen(), lbcomif_rxGetData()); }
-        else if(ID_GSM_SLAVE               == lbcomif_rxGetDst()) { lbcom_gsmTM_receive(lbcomif_rxGetSrc(), lbcomif_rxGetDst(), lbcomif_rxGetCmd(), lbcomif_rxGetLen(), lbcomif_rxGetData()); }
-        else if(ID_BOURDILOT_FREEZER_SLAVE == lbcomif_rxGetDst()) { lbcom_bourdilot_freezerTM_receive(lbcomif_rxGetSrc(), lbcomif_rxGetDst(), lbcomif_rxGetCmd(), lbcomif_rxGetLen(), lbcomif_rxGetData()); }
+             if(ID_HOME_EASY_SLAVE         == lbcomif_rxGetSrc()) { lbcom_homeeasyTM_receive(lbcomif_rxGetSrc(), lbcomif_rxGetDst(), lbcomif_rxGetCmd(), lbcomif_rxGetLen(), lbcomif_rxGetData()); }
+        else if(ID_GSM_SLAVE               == lbcomif_rxGetSrc()) { lbcom_gsmTM_receive(lbcomif_rxGetSrc(), lbcomif_rxGetDst(), lbcomif_rxGetCmd(), lbcomif_rxGetLen(), lbcomif_rxGetData()); }
+        else if(ID_BOURDILOT_FREEZER_SLAVE == lbcomif_rxGetSrc()) { lbcom_bourdilot_freezerTM_receive(lbcomif_rxGetSrc(), lbcomif_rxGetDst(), lbcomif_rxGetCmd(), lbcomif_rxGetLen(), lbcomif_rxGetData()); }
       }
       else if(ID_LOST_SLAVE == lbcomif_rxGetDst())
       {
@@ -57,7 +57,7 @@ THREAD(LbComD, arg)
     }
     else
     {
-      NutSleep(1000);
+      NutSleep(1);
     }
   }
 }
@@ -90,17 +90,21 @@ int lbcom_form(FILE * stream, REQUEST * req)
     arg_s = NutHttpGetParameter(req, "len");
     if(arg_s) { len = strtoul(arg_s, NULL, 10); } else { return 4; }
 
-    data = malloc(len);
-    if(NULL != data)
+    if(0 < len)
     {
-      for(i=0; i<len; i++)
+      data = malloc(len);
+      if(NULL != data)
       {
-        argData[4] = i/100; argData[5] = (i/10) % 10; argData[6] = i%10; argData[7] = 0;
-        arg_s = NutHttpGetParameter(req, argData);
-        if(arg_s) { data[i] = strtoul(arg_s, NULL, 10); } else { free(data); return 5; }
+        for(i=0; i<len; i++)
+        {
+          argData[4] = '0'+ (i/100); argData[5] = '0' + ((i/10) % 10); argData[6] = '0' + (i%10); argData[7] = 0;
+          arg_s = NutHttpGetParameter(req, argData);
+          if(arg_s) { data[i] = strtoul(arg_s, NULL, 10); } else { free(data); return 5; }
+        }
       }
-      free(data);
     }
+    lbcomif_send(src, dst, cmd, len, data);
+    if(NULL != data) { free(data); data = NULL; }
 
     fflush(stream);
   }

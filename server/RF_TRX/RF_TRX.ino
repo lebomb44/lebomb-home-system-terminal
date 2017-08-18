@@ -64,9 +64,9 @@ bool gprs_printIsEnabled  = true;
 /* HomeEasy */
 void homeEasyHistoDump(int arg_cnt, char **args) { homeEasy.histoDump(); }
 void homeEasySend(int arg_cnt, char **args) {
-  /* > homeEasySend 1234 */
-  if(2 == arg_cnt) {
-    homeEasy.send(cmdStr2Num(args[1], 16));
+  /* > homeEasySend 1234 56 2 1*/
+  if(5 == arg_cnt) {
+    homeEasy.send(cmdStr2Num(args[1], 16), cmdStr2Num(args[2], 16), cmdStr2Num(args[3], 16), cmdStr2Num(args[4], 16));
     Serial.print("homeEasySend: "); Serial.println(args[1]);
   }
   else { Serial.println("ERROR homeEasySend incorrect arg !"); }
@@ -92,9 +92,9 @@ void gprsSendSMS(int arg_cnt, char **args) {
 }
 void gprsGetSignalStrength(int arg_cnt, char **args) {
   Serial.print("GPRS signal strength...");
-  int signalStrenght = 0;
+  int signalStrength = 0;
   /* Get signal strength: [0..100] % */
-  if(true == gprs.getSignalStrength(&signalStrenght)) { Serial.print("OK = "); Serial.print(signalStrenght); Serial.println(); } else { Serial.println("ERROR"); }
+  if(true == gprs.getSignalStrength(&signalStrength)) { Serial.print("OK = "); Serial.print(signalStrength); Serial.println(); } else { Serial.println("ERROR"); }
 }
 void gprsPowerUpDown(int arg_cnt, char **args) { gprs.powerUpDown(GSM_POWER_pin); Serial.println("GPRS power Up-Down done"); }
 void gprsCheckPowerUp(int arg_cnt, char **args) { Serial.print("GPRS check power up..."); if(true == gprs.checkPowerUp()) { Serial.println("OK"); } else { Serial.println("ERROR"); } }
@@ -230,18 +230,21 @@ bool execMsg(String ife, LbMsg & msg) {
           else { GPRS_PRINT( Serial.println("ERROR: bad data length"); ) }
         }
         //else if(ID_GSM_POWERRESET_TC == msg.getCmd()) { gprs.powerReset(/* FIXME */); }
-        else if(ID_GSM_GETSIGNALSTRENGHT_TC == msg.getCmd()) {
-          GPRS_PRINT( Serial.print("  " + ife + " tc: ID_GSM_GETSIGNALSTRENGHT_TC: "); )
+        else if(ID_GSM_GETSIGNALSTRENGTH_TC == msg.getCmd()) {
+          GPRS_PRINT( Serial.print("  " + ife + " tc: ID_GSM_GETSIGNALSTRENGTH_TC: "); )
           /* No data for this command */
           if(0 == msg.getDataLen()) {
             GPRS_PRINT( Serial.println("OK"); )
             /* Build a TM to send back containing the status of the command execution and the signal strength */
-            LbMsg tm(1 + sizeof(int)); tm.setSrc(msg.getDst()); tm.setDst(msg.getSrc()); tm.setCmd(ID_GSM_GETSIGNALSTRENGHT_TM);
-            /* Set the data: status of the exectution and the signal strenght (LE) */
-            tm.getData()[0] = gprs.getSignalStrength((int *)(tm.getData() + 1));
+            LbMsg tm(1 + sizeof(int)); tm.setSrc(msg.getDst()); tm.setDst(msg.getSrc()); tm.setCmd(ID_GSM_GETSIGNALSTRENGTH_TM);
+            /* Set the data: status of the exectution and the signal strength */
+            int signalStrengthValue = 0;
+            tm.getData()[0] = gprs.getSignalStrength(&signalStrengthValue);
+            tm.getData()[1] = 0x000000FF & (signalStrengthValue>>8);
+            tm.getData()[2] = 0x000000FF & (signalStrengthValue);
             /* Compute the CRC and send the message */
             tm.compute(); sendLbMsg(tm);
-            GPRS_PRINT( Serial.print("    " + ife + " tm: ID_GSM_GETSIGNALSTRENGHT_TM: "); Serial.print(tm.getData()[0]); Serial.print(", "); Serial.println(*((int*)(tm.getData()+1))); )
+            GPRS_PRINT( Serial.print("    " + ife + " tm: ID_GSM_GETSIGNALSTRENGTH_TM: "); Serial.print(tm.getData()[0]); Serial.print(", "); Serial.println(*((int*)(tm.getData()+1))); )
           }
           else { GPRS_PRINT( Serial.println("ERROR: bad data length"); ) }
         }
@@ -360,7 +363,7 @@ void setup() {
   cmdAdd("nrf24EnablePrint", "Enable print in NRF24 lib", nrf24EnablePrint);
   cmdAdd("nrf24DisbalePrint", "Disable print in NRF24 lib", nrf24DisablePrint);
   cmdAdd("gprsSendSMS", "Send SMS", gprsSendSMS);
-  cmdAdd("gprsGetSignalStrength", "Get GPRS signal strength", gprsGetSignalStrength);
+  cmdAdd("gprsGetSignal", "Get GPRS signal strength", gprsGetSignalStrength);
   cmdAdd("gprsPowerUpDown", "GPRS power up-down", gprsPowerUpDown);
   cmdAdd("gprsCheckPowerUp", "Check GPRS power up", gprsCheckPowerUp);
   cmdAdd("gprsInit", "Initialize GPRS", gprsInit);
@@ -389,11 +392,15 @@ void loop() {
     )
     /* Prepare the message to send to the central */
     LbMsg msg(7);
-    msg.setSrc(ID_HOME_EASY);
-    msg.setDst(ID_LOST);
+    msg.setSrc(ID_HOME_EASY_SLAVE);
+    msg.setDst(ID_LOST_MASTER);
     msg.setCmd(ID_HOME_EASY_RCV_TM);
     /* Set the data */
-    *((uint32_t *) &(msg.getData()[0])) = homeEasy.rxGetManufacturer();
+    uint32_t manufacturer = homeEasy.rxGetManufacturer();
+    msg.getData()[0] = 0x000000FF & (manufacturer>>24);
+    msg.getData()[1] = 0x000000FF & (manufacturer>>16);
+    msg.getData()[2] = 0x000000FF & (manufacturer>>8);
+    msg.getData()[3] = 0x000000FF & (manufacturer);
     msg.getData()[4] = homeEasy.rxGetGroup();
     msg.getData()[5] = homeEasy.rxGetDevice();
     msg.getData()[6] = homeEasy.rxGetStatus();
@@ -444,15 +451,18 @@ void loop() {
     /* Power Up cycle */
     gprs_checkPowerUp_counter++;
     /* Prepare the message to send to the central */
-    LbMsg hktm(1 + sizeof(int)); hktm.setSrc(ID_GSM); hktm.setDst(ID_LOST); hktm.setCmd(ID_GSM_GETSIGNALSTRENGHT_TM);
+    LbMsg hktm(1 + sizeof(int)); hktm.setSrc(ID_GSM_SLAVE); hktm.setDst(ID_LOST_MASTER); hktm.setCmd(ID_GSM_GETSIGNALSTRENGTH_TM);
     hktm.getData()[0] = 0;
     /* Get the signal strength and set it in the message */
     /* SRC DST CMS LEN status signalStrength CRC */
     /* But also reset the power Up timeout */
-    if(true == gprs.getSignalStrength((int *)(hktm.getData() + 1))) { gprs_checkPowerUp_counter = 0; hktm.getData()[0] = 1; }
+    int signalStrengthValue = 0;
+    if(true == gprs.getSignalStrength(&signalStrengthValue)) { gprs_checkPowerUp_counter = 0; hktm.getData()[0] = 1; }
+    hktm.getData()[1] = 0x000000FF & (signalStrengthValue>>8);
+    hktm.getData()[2] = 0x000000FF & (signalStrengthValue);
     /* Compute the CRC */
     hktm.compute();
-    LBCOM_PRINT( Serial.print("hktm: ID_GSM_GETSIGNALSTRENGHT_TM ("); Serial.print(hktm.getData()[0]); Serial.print(", "); Serial.print(*((int*)(hktm.getData()+1))); )
+    LBCOM_PRINT( Serial.print("hktm: ID_GSM_GETSIGNALSTRENGTH_TM ("); Serial.print(hktm.getData()[0]); Serial.print(", "); Serial.print(signalStrengthValue); )
     /* Send the message */
     LBCOM_PRINT( Serial.print(") : "); ) sendLbMsg(hktm);
     /* Timeout ! */

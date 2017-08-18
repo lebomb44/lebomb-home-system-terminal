@@ -11,7 +11,6 @@
 #include "../../devices/power.h"
 #include "../../devices/rack.h"
 #include "../../devices/buzzer.h"
-#include "../../devices/lbcomif.h"
 
 #include "../../services/http.h"
 #include "../../services/web.h"
@@ -145,7 +144,7 @@ THREAD(SafetyUpsRackD, arg)
       if((!(safety_trig.ups_temp )) && (safety_value.ups_temp>=safety_value.ups_temp_th))
       {
         sprintf(msg, "Temperature-Alimentation-Elevee-%d", safety_value.ups_temp);
-        safety_action_with_buzzer(msg);
+        safety_action(msg);
         safety_trig.ups_temp  = 1;
       }
     }
@@ -168,7 +167,7 @@ THREAD(SafetyUpsRackD, arg)
       if((!(safety_trig.rack_temp )) && (safety_value.rack_temp>=safety_value.rack_temp_th))
       {
         sprintf(msg, "Temperature-Boitier-Elevee-%d", safety_value.rack_temp);
-        safety_action_with_buzzer(msg);
+        safety_action(msg);
         safety_trig.rack_temp = 1;
       }
     }
@@ -176,7 +175,7 @@ THREAD(SafetyUpsRackD, arg)
     {
       if((!(safety_trig.rack_alarm)) && (safety_status.rack_alarm))
       {
-        safety_action_with_buzzer("Alerte-Boitier-Ouvert");
+        safety_action("Alerte-Boitier-Ouvert");
         safety_trig.rack_alarm = 1;
       }
     }
@@ -230,15 +229,15 @@ THREAD(SafetyHttpBtfzD, arg)
       if((!(safety_trig.btfz_temp )) && (safety_value.btfz_temp>=safety_value.btfz_temp_th))
       {
         sprintf(msg, "Temperature-Freezer-Elevee-%d", safety_value.btfz_temp);
-        safety_action_with_buzzer(msg);
-        safety_trig.rack_temp = 1;
+        safety_action(msg);
+        safety_trig.btfz_temp = 1;
       }
     }
     if(safety_control.btfz_net)
     {
-      if((!(safety_trig.btfz_net)) && (safety_status.btfz_net))
+      if((!(safety_trig.btfz_net)) && (0==safety_status.btfz_net))
       {
-        safety_action_with_buzzer("Alerte-Freezer-Network");
+        safety_action("Alerte-Freezer-Network");
         safety_trig.btfz_net = 1;
       }
     }

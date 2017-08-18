@@ -36,7 +36,7 @@ void lbcomif_execSlaveCallBack(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t le
   if(NULL != lbcomif_SlaveCallBack[cmd]) { (*lbcomif_SlaveCallBack[cmd])(src, dst, cmd, len, data); }
 }
 
-void lbcomif_run(void)
+uint8_t lbcomif_run(void)
 {
   int data = 0;
 
@@ -51,7 +51,7 @@ void lbcomif_run(void)
         {
           if(1+4+lbcomif_rxGetLen() == lbcomif_rx_step)
           {
-            uint8_t crc = 0;
+            uint8_t crc = 0x55;
             uint16_t i = 0;
             for(i=0; i<(lbcomif_rx_step-1); i++)
             {
@@ -69,12 +69,14 @@ void lbcomif_run(void)
         else { lbcomif_rxRelease(); }
       }
       if(0 == lbcomif_rx_step) { if(0xAA == data) { lbcomif_rx_step++; } }
+      return 1;
     }
     else
     {
       lbcomif_rxRelease();
     }
   }
+  return 0;
 }
 
 uint8_t lbcomif_rxIsReady(void)
@@ -134,7 +136,6 @@ void lbcomif_send(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len, uint8_t * 
   uint16_t i = 0;
   uint8_t crc = 0x55;
 
-  if(NULL == data) { return; } 
   lbcomif_sendByte(0xAA);
   lbcomif_sendByte(src); crc = _crc_ibutton_update(crc, src);
   lbcomif_sendByte(dst); crc = _crc_ibutton_update(crc, dst);

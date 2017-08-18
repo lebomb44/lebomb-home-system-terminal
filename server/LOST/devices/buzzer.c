@@ -17,11 +17,21 @@ uint8_t buzzer_init(void)
   return 0;
 }
 
+void buzzer_on(void)
+{
+  GpioPinSetHigh(BUZZER_PORT, BUZZER_BIT);
+}
+
+void buzzer_off(void)
+{
+  GpioPinSetLow(BUZZER_PORT, BUZZER_BIT);
+}
+
 void buzzer_start(uint16_t duration)
 {
   if(0 == buzzer_time)
   {
-    GpioPinSetHigh(BUZZER_PORT, BUZZER_BIT);
+    buzzer_on();
     buzzer_time = duration;
   }
 }
@@ -29,7 +39,7 @@ void buzzer_start(uint16_t duration)
 void buzzer_stop(void)
 {
   buzzer_time = 0;
-  GpioPinSetLow(BUZZER_PORT, BUZZER_BIT);
+  buzzer_off();
 }
 
 void buzzer_update(void)
@@ -42,3 +52,4 @@ uint16_t buzzer_state(void)
 {
   return buzzer_time;
 }
+

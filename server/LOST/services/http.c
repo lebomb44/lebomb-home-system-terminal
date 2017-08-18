@@ -219,7 +219,7 @@ uint8_t http_status_get(void)
   uint8_t ret = 0;
 
   /* Connect and send the HTTP header */
-  ret = http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream);
+  ret = http_request_header_start("62.210.16.61", 80, METHOD_GET, &sock, &stream);
   if(0 != ret) { return (ret+10); }
 
   /* Send the URL */
@@ -261,7 +261,7 @@ uint8_t http_email_send_once(char* msg)
   uint8_t ret = 0;
 
   /* Connect and send the HTTP header */
-  ret = http_request_header_start("88.190.253.248", 80, METHOD_GET, &sock, &stream);
+  ret = http_request_header_start("62.210.16.61", 80, METHOD_GET, &sock, &stream);
   if(0 != ret) { return (ret+10); }
 
   /* Send the URL */

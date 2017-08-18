@@ -153,6 +153,11 @@ void fprintf_XML_elt_int02(char* elt, int data, FILE *stream)
   fprintf(stream, "<%s>%02d</%s>", elt, data, elt);
 }
 
+void fprintf_XML_elt_u32(char* elt, uint32_t data, FILE *stream)
+{
+  fprintf(stream, "<%s>%ld</%s>", elt, data, elt);
+}
+
 void fprintf_XML_elt_str(char* elt, char* data, FILE *stream)
 {
   fprintf(stream, "<%s>%s</%s>", elt, data, elt);

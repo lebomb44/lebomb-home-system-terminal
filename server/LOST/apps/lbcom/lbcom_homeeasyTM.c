@@ -25,15 +25,6 @@ void lbcom_homeeasyTM_receive(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len
       _lbcom_homeeasyTM_group = data[4];
       _lbcom_homeeasyTM_device = data[5];
       _lbcom_homeeasyTM_status = data[6];
-      /* Check the authorized codes */
-      if(((0xFCE1CE == _lbcom_homeeasyTM_manufacturer) && (0x0 == _lbcom_homeeasyTM_group) && (0x2 == _lbcom_homeeasyTM_device)) \
-      || ((0xFCBDD6 == _lbcom_homeeasyTM_manufacturer) && (0x0 == _lbcom_homeeasyTM_group) && (0x2 == _lbcom_homeeasyTM_device)) \
-      || ((0xFCDAD2 == _lbcom_homeeasyTM_manufacturer) && (0x0 == _lbcom_homeeasyTM_group) && (0x2 == _lbcom_homeeasyTM_device)) \
-      || ((0xFCC302 == _lbcom_homeeasyTM_manufacturer) && (0x0 == _lbcom_homeeasyTM_group) && (0x2 == _lbcom_homeeasyTM_device)))
-      {
-        if(0 == _lbcom_homeeasyTM_status) {}
-        else if(1 == _lbcom_homeeasyTM_status) {}
-      }
     }
   }
 }
@@ -100,7 +91,7 @@ int lbcom_homeeasyTM_form(FILE * stream, REQUEST * req)
 int lbcom_homeeasyTM_xml_get(FILE * stream)
 {
   fprintf_XML_elt_header("LbCom_HomeEasyTM" , stream);
-  fprintf_XML_elt_int("Manufacturer", lbcom_homeeasyTM_manufacturer_get(), stream);
+  fprintf_XML_elt_u32("Manufacturer", lbcom_homeeasyTM_manufacturer_get(), stream);
   fprintf_XML_elt_int("Group"       , lbcom_homeeasyTM_group_get()       , stream);
   fprintf_XML_elt_int("Device"      , lbcom_homeeasyTM_device_get()      , stream);
   fprintf_XML_elt_int("Status"      , lbcom_homeeasyTM_status_get()      , stream);

@@ -32,9 +32,9 @@ void lbcom_gsmTC_powerreset(void)
   lbcomif_send(ID_LOST_MASTER, ID_GSM_SLAVE, ID_GSM_POWERRESET_TC, 0, NULL);
 }
 
-void lbcom_gsmTC_getsignalstrenght(void)
+void lbcom_gsmTC_getsignalstrength(void)
 {
-  lbcomif_send(ID_LOST_MASTER, ID_GSM_SLAVE, ID_GSM_GETSIGNALSTRENGHT_TC, 0, NULL);
+  lbcomif_send(ID_LOST_MASTER, ID_GSM_SLAVE, ID_GSM_GETSIGNALSTRENGTH_TC, 0, NULL);
 }
 
 uint8_t lbcom_gsmTC_sms_send_with_phone(char * phone, char * msg)
@@ -101,8 +101,8 @@ int lbcom_gsmTC_form(FILE * stream, REQUEST * req)
     arg_s = NutHttpGetParameter(req, "checkpowerup");
     if(arg_s) { lbcom_gsmTC_checkpowerup(); }
 
-    arg_s = NutHttpGetParameter(req, "getsignalstrenght");
-    if(arg_s) { lbcom_gsmTC_getsignalstrenght(); }
+    arg_s = NutHttpGetParameter(req, "getsignalstrength");
+    if(arg_s) { lbcom_gsmTC_getsignalstrength(); }
 
     arg_s = NutHttpGetParameter(req, "sendsms");
     if(arg_s)

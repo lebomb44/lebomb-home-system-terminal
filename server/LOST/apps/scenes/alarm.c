@@ -13,6 +13,7 @@
 #include "../../services/http.h"
 #include "../../services/web.h"
 
+#include "../lbcom/lbcom_homeeasyTM.h"
 #include "../lbcom/lbcom_gsmTC.h"
 
 #include "alarm.h"
@@ -138,11 +139,46 @@ void alarm_simulation_set(ALARM_TYPE_T type)
 THREAD(AlarmD, arg)
 {
   char msg[60];
+  uint32_t homeeasyTM_manufacturer = 0;
+  uint8_t homeeasyTM_group = 0;
+  uint8_t homeeasyTM_device = 0;
+  uint8_t homeeasyTM_status = 0;
+
   arg = arg;
   NutThreadSetPriority(105);
 
   while(1)
   {
+    homeeasyTM_manufacturer = lbcom_homeeasyTM_manufacturer_get();
+    homeeasyTM_group = lbcom_homeeasyTM_group_get();
+    homeeasyTM_device = lbcom_homeeasyTM_device_get();
+    homeeasyTM_status = lbcom_homeeasyTM_status_get();
+
+    /* Check the authorized codes */
+    if(((0xFCE1CE == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
+    || ((0xFCBDD6 == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
+    || ((0xFCDAD2 == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
+    || ((0xFCC302 == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)))
+    {
+      if(0 == homeeasyTM_status)
+      {
+        buzzer_stop();
+        buzzer_on(); NutSleep(500); buzzer_off();
+        alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); alarm_volume_set(ALARM_TYPE_OFF_MANUAL);
+      }
+      else if(1 == homeeasyTM_status)
+      {
+        buzzer_stop();
+        buzzer_on(); NutSleep(500); buzzer_off(); NutSleep(500);
+        buzzer_on(); NutSleep(500); buzzer_off(); NutSleep(500);
+        buzzer_on(); NutSleep(500); buzzer_off();
+        alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); alarm_volume_set(ALARM_TYPE_ON_MANUAL);
+      }
+      lbcom_homeeasyTM_code_reset();
+    }
+
+
+
     /* Only update the status if the alarm did not trigger */
     if(0 == alarm_perimeter.trig)
     {

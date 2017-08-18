@@ -10,7 +10,7 @@ __BEGIN_DECLS
 extern uint8_t lbcomif_init(void);
 extern void lbcomif_registerSlaveCallBack(uint8_t cmd, void (*callBack) (uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len, uint8_t * data));
 void lbcomif_execSlaveCallBack(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len, uint8_t * data);
-extern void lbcomif_run(void);
+extern uint8_t lbcomif_run(void);
 extern uint8_t lbcomif_rxIsReady(void);
 extern uint8_t lbcomif_rxGetSrc(void);
 extern uint8_t lbcomif_rxGetDst(void);
