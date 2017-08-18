@@ -9,11 +9,11 @@
 #include "lbcom_bourdilot_freezerTM.h"
 
 uint8_t _lbcom_bourdilot_freezerTM_network = 0;
-int16_t _lbcom_bourdilot_freezerTM_temp = 0;
+int16_t _lbcom_bourdilot_freezerTM_temp = -20;
 
 void lbcom_bourdilot_freezerTM_receive(uint8_t src, uint8_t dst, uint8_t cmd, uint8_t len, uint8_t * data)
 {
-       if(ID_BOURDILOT_FREEZER_NETWORK_TM == cmd) { if(0 == len) { _lbcom_bourdilot_freezerTM_network++; if(0 == _lbcom_bourdilot_freezerTM_network) { _lbcom_bourdilot_freezerTM_network++; } } }
+       if(ID_BOURDILOT_FREEZER_NETWORK_TM == cmd) { if(0 == len) { _lbcom_bourdilot_freezerTM_network = 1; } }
   else if(ID_BOURDILOT_FREEZER_TEMP_TM    == cmd) { if(2 == len) { _lbcom_bourdilot_freezerTM_temp = (0xFF00 & (((int16_t)data[0])<<8)) | (0x00FF & ((int16_t)data[1])); } }
 }
 

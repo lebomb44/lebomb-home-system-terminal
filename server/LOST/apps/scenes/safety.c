@@ -23,7 +23,7 @@
 typedef struct _SAFETY_T
 { /* 0 if no error else error code */
   uint8_t http;
-  int16_t btfz_temp      :1;
+  uint8_t btfz_temp      :1;
   uint8_t btfz_net       :1;
   uint8_t ups_temp       :1;
   uint8_t ups_power      :1;
@@ -72,8 +72,8 @@ uint8_t safety_init(void)
   safety_trig.rack_temp      = 0;
   safety_trig.rack_alarm     = 0;
 
-  safety_value.btfz_temp         = 400;
-  safety_value.btfz_temp_th      = 400;
+  safety_value.btfz_temp         = -200; /* -20C */
+  safety_value.btfz_temp_th      = -100; /* -10C */
   safety_value.ups_temp          = 0;
   safety_value.ups_temp_th       = 213; /* 40C */
   safety_value.rack_temp         = 0;
@@ -123,7 +123,7 @@ THREAD(SafetyUpsRackD, arg)
   uint32_t temp_sum = 0;
   uint8_t i = 0;
 
-  char msg[40];
+  char msg[40] = { 0 };
 
   arg = arg;
   NutThreadSetPriority(100);
@@ -189,14 +189,10 @@ THREAD(SafetyUpsRackD, arg)
 THREAD(SafetyHttpBtfzD, arg)
 {
   uint8_t http_nb = 0;
-  uint8_t http_ret = 0;
 
-  int16_t btfz_temp[TEMP_NB] = { 400 }; /* 40C */
+  uint8_t net_nb = 0;
 
-  uint8_t temp_index = 0;
-  uint32_t temp_sum = 0;
-  uint8_t i = 0;
-
+  uint8_t ret = 0;
   char msg[25];
 
   arg = arg;
@@ -204,9 +200,11 @@ THREAD(SafetyHttpBtfzD, arg)
 
   while(1)
   {
-    http_ret = http_status_get();
-    if(0 != http_ret) { if(0xFF > http_nb) { http_nb++; } } else { http_nb = 0; }
-    if(10 < http_nb) { safety_status.http = http_ret; } else { safety_status.http = 0; }
+    NutSleep(60000);
+
+    ret = http_status_get();
+    if(0 != ret) { if(0xFF > http_nb) { http_nb++; } } else { http_nb = 0; }
+    if(10 < http_nb) { safety_status.http = ret; } else { safety_status.http = 0; }
     if(safety_control.http)
     {
       if((!(safety_trig.http)) && (safety_status.http))
@@ -217,22 +215,21 @@ THREAD(SafetyHttpBtfzD, arg)
       }
     }
 
-    btfz_temp[temp_index] = lbcom_bourdilot_freezerTM_temp_get();
-    temp_index++; temp_index = temp_index % TEMP_NB;
-    temp_sum = 0;
-    for(i=0; i<TEMP_NB; i++) { temp_sum = temp_sum + btfz_temp[i]; }
-    if(!(safety_trig.btfz_temp)) { safety_value.btfz_temp = temp_sum / TEMP_NB; }
-    if(!(safety_trig.btfz_net)) { safety_status.btfz_net = lbcom_bourdilot_freezerTM_network_get(); }
-
+    if(!(safety_trig.btfz_temp)) { safety_value.btfz_temp = lbcom_bourdilot_freezerTM_temp_get(); }
     if(safety_control.btfz_temp)
     {
       if((!(safety_trig.btfz_temp )) && (safety_value.btfz_temp>=safety_value.btfz_temp_th))
       {
-        sprintf(msg, "Temperature-Freezer-Elevee-%d", safety_value.btfz_temp);
+        sprintf(msg, "Temp-Freezer-Elevee-%d", safety_value.btfz_temp/10);
         safety_action(msg);
         safety_trig.btfz_temp = 1;
       }
     }
+    lbcom_bourdilot_freezerTM_temp_set(400);
+
+    ret = lbcom_bourdilot_freezerTM_network_get();
+    if(0 == ret) { if(0xFF > net_nb) { net_nb++; } } else { net_nb = 0; }
+    if(2 < net_nb) { safety_status.btfz_net = 0; } else { safety_status.btfz_net = 1; }
     if(safety_control.btfz_net)
     {
       if((!(safety_trig.btfz_net)) && (0==safety_status.btfz_net))
@@ -242,9 +239,6 @@ THREAD(SafetyHttpBtfzD, arg)
       }
     }
     lbcom_bourdilot_freezerTM_network_set(0);
-    lbcom_bourdilot_freezerTM_temp_set(400);
-
-    NutSleep(30000);
   }
 }
 
@@ -309,7 +303,7 @@ int safety_form(FILE * stream, REQUEST * req)
     if(arg_s)
     {
       if('?' == arg_s[0]) { fprintf(stream, "%d", safety_value.btfz_temp_th); }
-      else { safety_value.btfz_temp_th = strtoul(arg_s, NULL, 10); }
+      else { safety_value.btfz_temp_th = strtol(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "btfz_net_ctrl");
     if(arg_s)

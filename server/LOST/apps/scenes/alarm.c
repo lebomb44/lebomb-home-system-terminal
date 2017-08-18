@@ -138,7 +138,7 @@ void alarm_simulation_set(ALARM_TYPE_T type)
 
 THREAD(AlarmD, arg)
 {
-  char msg[60];
+  char msg[60] = { 0 };
   uint32_t homeeasyTM_manufacturer = 0;
   uint8_t homeeasyTM_group = 0;
   uint8_t homeeasyTM_device = 0;
@@ -177,24 +177,26 @@ THREAD(AlarmD, arg)
       lbcom_homeeasyTM_code_reset();
     }
 
-
-
     /* Only update the status if the alarm did not trigger */
     if(0 == alarm_perimeter.trig)
     {
+      /* Update status */
+      alarm_perimeter.status = volume_status_group1_get();
       /* If alarm is enabled */
       if(1 == alarm_perimeter.control)
+      {
         if(0 != alarm_perimeter.status)
         {
           sprintf(msg, "Alarme-Perimetre-%d", alarm_perimeter.status);
           alarm_action_with_buzzer(msg);
           alarm_perimeter.trig = 1;
         }
+      }
     }
     if(0 == alarm_volume.trig)
     {
       /* Update status */
-      alarm_volume.status = volume_status_get();
+      alarm_volume.status = volume_status_group2_get();
       /* If alarm is enabled */
       if(1 == alarm_volume.control)
       {

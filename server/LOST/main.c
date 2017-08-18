@@ -34,6 +34,7 @@
 #include "apps/scenes/scenes.h"
 
 #include "apps/lbcom/lbcom.h"
+#include "apps/lbcom/lbcom_gsmTC.h"
 
 #include "config.h"
 
@@ -91,6 +92,7 @@ int main(void)
   NutRegisterCgi("get.xml", xml_get_form);
 
   printf("Starting LOST\n");
+  lbcom_gsmTC_sms_send("Starting_LOST");
   http_email_send("Starting_LOST");
 
   NutThreadSetPriority(148);
