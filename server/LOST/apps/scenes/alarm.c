@@ -158,6 +158,8 @@ THREAD(AlarmD, arg)
     if(((0xFCE1CE == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
     || ((0xFCBDD6 == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
     || ((0xFCDAD2 == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
+    || ((0xFCBC2E == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
+    || ((0xD0A3B2 == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
     || ((0xFCC302 == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)))
     {
       if(0 == homeeasyTM_status)
