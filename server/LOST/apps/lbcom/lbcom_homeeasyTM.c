@@ -60,25 +60,25 @@ int lbcom_homeeasyTM_form(FILE * stream, REQUEST * req)
     arg_s = NutHttpGetParameter(req, "manufacturer");
     if(arg_s)
     {
-      if('?' == arg_s[0]) { fprintf(stream, "%ld\n", lbcom_homeeasyTM_manufacturer_get()); }
+      if('?' == arg_s[0]) { fprintf(stream, "%lX\n", lbcom_homeeasyTM_manufacturer_get()); }
       else { manufacturer = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "group");
     if(arg_s)
     {
-      if('?' == arg_s[0]) { fprintf(stream, "%d\n", lbcom_homeeasyTM_group_get()); }
+      if('?' == arg_s[0]) { fprintf(stream, "%X\n", lbcom_homeeasyTM_group_get()); }
       else { group = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "device");
     if(arg_s)
     {
-      if('?' == arg_s[0]) { fprintf(stream, "%d\n", lbcom_homeeasyTM_device_get()); }
+      if('?' == arg_s[0]) { fprintf(stream, "%X\n", lbcom_homeeasyTM_device_get()); }
       else { device = strtoul(arg_s, NULL, 10); }
     }
     arg_s = NutHttpGetParameter(req, "status");
     if(arg_s)
     {
-      if('?' == arg_s[0]) { fprintf(stream, "%d\n", lbcom_homeeasyTM_status_get()); }
+      if('?' == arg_s[0]) { fprintf(stream, "%X\n", lbcom_homeeasyTM_status_get()); }
       else { status = strtoul(arg_s, NULL, 10); }
     }
 
