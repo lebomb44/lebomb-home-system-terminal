@@ -18,6 +18,7 @@ type com\lost_mon.js >> bt.js
 type com\lost_alarm.js >> bt.js
 type com\lost_atm.js >> bt.js
 type com\lost_safety.js >> bt.js
+type com\lost_lbcom.js >> bt.js
 type com\lost_rooms.js >> bt.js
 type com\lost_ev.js >> bt.js
 type bt\lost_html.js >> bt.js
@@ -25,6 +26,7 @@ type com\lost_mon_html.js >> bt.js
 type com\lost_alarm_html.js >> bt.js
 type bt\lost_atm_html.js >> bt.js
 type bt\lost_safety_html.js >> bt.js
+type bt\lost_lbcom_html.js >> bt.js
 type bt\lost_rooms_html.js >> bt.js
 type bt\lost_ev_html.js >> bt.js
 

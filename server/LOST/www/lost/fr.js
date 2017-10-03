@@ -110,7 +110,7 @@ function lost_innerHTML_update(xml, node, id)
   var out_id = document.getElementById(node+"_"+id);
   if(out_id)
   {
-	var in_id1 = xml.getElementsByTagName(node)[0];
+    var in_id1 = xml.getElementsByTagName(node)[0];
     if(in_id1)
     {
       var in_id2 = in_id1.getElementsByTagName(id)[0];
@@ -260,6 +260,7 @@ function indexLoading(evt)
           lost_mon_xml_get(xml);
           lost_alarm_xml_get(xml);
           lost_safety_xml_get(xml);
+          lost_lbcom_xml_get(xml);
           lost_rooms_xml_get(xml);
           lost_ev_xml_get(xml);
         }

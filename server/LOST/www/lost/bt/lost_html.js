@@ -7,8 +7,9 @@ document.write("\
             <li><a href=\"#_Evenements\"><img class=\"picto\" src=\""+lost_icons_path+"wakeup.jpg\"/>Evenements</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
-            <li id=\"Safety_bg\"><a href=\"#_Surveillances\"><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"/>Surveillances</a></li>\
+            <li id=\"Safety_bg\"><a href=\"#_Surveillances\"><img class=\"picto\" src=\""+lost_icons_path+"safety.jpg\"/>Surveillances</a></li>\
             <li id=\"Alarm_bg\"><a href=\"#_Alarmes\"><img class=\"picto\" src=\""+lost_icons_path+"detector.jpg\"/>Alarmes</a></li>\
+            <li id=\"Communications_bg\"><a href=\"#_Communications\"><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"/>Communications</a></li>\
         </ul>\
         <ul class=\"iArrow\">\
             <li><a href=\"cgi/monitor.cgi\" target=\"_self\"><img class=\"picto\" src=\""+lost_icons_path+"system.jpg\" alt=\"System\">System</a></li>\
