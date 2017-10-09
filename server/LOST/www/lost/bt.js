@@ -663,6 +663,12 @@ function lost_safety_xml_get(xml)
   lost_safety_power_update(xml);
 }
 var url_lbcom="cgi/lbcom.cgi?";
+var url_lbcom_homeeasyTM="cgi/lbcom_homeeasyTC.cgi?";
+var url_lbcom_homeeasyTC="cgi/lbcom_homeeasyTM.cgi?";
+var url_lbcom_gsmTC="cgi/lbcom_gsmTC.cgi?";
+var url_lbcom_gsmTM="cgi/lbcom_gsmTM.cgi?";
+var url_lbcom_bourdilot_freezerTC="cgi/lbcom_bourdilot_freezerTC.cgi?";
+var url_lbcom_bourdilot_freezerTM="cgi/lbcom_bourdilot_freezerTM.cgi?";
 
 function lost_lbcom_xml_get(xml)
 {
@@ -677,6 +683,83 @@ function lost_lbcom_xml_get(xml)
   lost_innerHTML_update(xml, "LbCom_Bourdilot_FreezerTM", "Network");
   lost_innerHTML_update(xml, "LbCom_Bourdilot_FreezerTM", "Temp");
 }
+
+/* ********** SET ********** */
+function lost_lbcom_send()
+{
+  var src;
+  src = document.getElementById("LbCom_Src");
+  var dst;
+  dst = document.getElementById("LbCom_Dst");
+  var cmd;
+  cmd = document.getElementById("LbCom_Cmd");
+  var dataStr;
+  dataStr = document.getElementById("LbCom_Data");
+  var data;
+  var len = 0;
+  if("" == dataStr.value) { len = 0; }
+  else
+  {
+    data = dataStr.value.split(" "); 
+    len = data.length;
+  }
+
+  var url= url_lbcom+"src="+String(Number(src.value))+"&dst="+String(Number(dst.value))+"&cmd="+String(Number(cmd.value))+"&len="+String(len);
+  if(src && dst && cmd && dataStr)
+  {
+    var i = 0;
+    for(i=0; i<len; i++) { url = url + "&data" + ("000"+i).slice(-3) + "=" + String(Number(data[i])); }
+    lost_set(url);
+  }
+}
+
+function lost_lbcom_homeeasytm_codereset() { lost_set(url_lbcom_homeeasyTM+"code_reset=1"); }
+function lost_lbcom_homeeasytm_manufacturer_set(manufacturer) { lost_set(url_lbcom_homeeasyTM+"manufacturer="+String(manufacturer)); }
+function lost_lbcom_homeeasytm_group_set(group) { lost_set(url_lbcom_gsmTM+"group="+String(group)); }
+function lost_lbcom_homeeasytm_device_set(device) { lost_set(url_lbcom_gsmTM+"device="+String(device)); }
+function lost_lbcom_homeeasytm_status_set(status) { lost_set(url_lbcom_gsmTM+"status="+String(status)); }
+function lost_lbcom_homeeasytc_send()
+{
+  var manufacturer;
+  manufacturer = document.getElementById("HomeEasySend_Manufacturer");
+  var group;
+  group = document.getElementById("HomeEasySend_Group");
+  var device;
+  device = document.getElementById("HomeEasySend_Device");
+  var status;
+  status = document.getElementById("HomeEasySend_Status");
+
+  if(manufacturer && group && device && status)
+  {
+    lost_set(url_lbcom_gsmTM+"send=1&manufacturer="+String(Number(manufacturer.value))+"&group="+String(Number(group.value))+"&device="+String(Number(device.value))+"&status="+String(Number(status.checked)));
+  }
+}
+
+function lost_lbcom_gsmtm_init_set(init) { lost_set(url_lbcom_gsmTM+"init="+String(init)); }
+function lost_lbcom_gsmtc_init_get() { lost_set(url_lbcom_gsmTC+"init=1"); }
+function lost_lbcom_gsmtm_checkpowerup_set(checkpowerup) { lost_set(url_lbcom_gsmTM+"checkpowerup="+String(checkpowerup)); }
+function lost_lbcom_gsmtc_checkpowerup_get() { lost_set(url_lbcom_gsmTC+"checkpowerup=1"); }
+function lost_lbcom_gsmtm_signalstrength_set(status, value) { lost_set(url_lbcom_gsmTM+"signalstrength=1&status="+String(status)+"&value="+String(value)); }
+function lost_lbcom_gsmtc_signalstrength_get() { lost_set(url_lbcom_gsmTC+"getsignalstrength=1"); }
+function lost_lbcom_gsmtm_sendsms_status_set(status) { lost_set(url_lbcom_gsmTM+"sendsms="+String(status)); }
+function lost_lbcom_gsmtc_sendsms()
+{
+  var phone;
+  phone = document.getElementById("GsmSendSMS_Phone");
+  var msg;
+  msg = document.getElementById("GsmSendSMS_Msg");
+
+  if(phone && msg)
+  {
+    lost_set(url_lbcom_gsmTC+"sendsms=1&phone="+String(phone.value)+"&msg="+String(msg.value));
+  }
+}
+
+function lost_lbcom_bourdilot_freezertm_network_set(network) { lost_set(url_lbcom_bourdilot_freezerTM+"network="+String(network)); }
+function lost_lbcom_bourdilot_freezertc_network_get() { lost_set(url_lbcom_bourdilot_freezerTC+"network=1"); }
+function lost_lbcom_bourdilot_freezertm_temp_set(temp) { lost_set(url_lbcom_bourdilot_freezerTM+"temp="+String(temp)); }
+function lost_lbcom_bourdilot_freezertc_temp_get() { lost_set(url_lbcom_bourdilot_freezerTC+"temp=1"); }
+
 var ROOM_SHUTTER_UP   = 255
 var ROOM_SHUTTER_STOP = 0
 var ROOM_SHUTTER_DOWN = 1
@@ -1131,53 +1214,84 @@ document.write("\
 ");
 document.write("\
 <div class=\"iLayer\" id=\"waCommunications\" title=\"Communications\">\
-    <div class=\"iPanel\">\
-        <fieldset>\
-            <legend>RF_TRX</legend>\
-            <ul>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Info</legend>\
-            <ul class=\"iArrow\">\
-                <li><a href=\"#_CommunicationsInfo\"><img class=\"picto\" src=\""+lost_icons_path+"info.jpg\">Info</a></li>\
-            </ul>\
-        </fieldset>\
+    <div class=\"iMenu\">\
+        <legend>HomeEasy</legend>\
+        <ul>\
+            <li id=\"LbCom_HomeEasyTM_Manufacturer_bg\"><img class=\"picto\" src=\""+lost_icons_path+"manufacturer.jpg\"><span id=\"LbCom_HomeEasyTM_Manufacturer\">Unknown</span>Manufacturer</li>\
+            <li id=\"LbCom_HomeEasyTM_Group_bg\"><img class=\"picto\" src=\""+lost_icons_path+"group.jpg\"><span id=\"LbCom_HomeEasyTM_Group\">Unknown</span>Group</li>\
+            <li id=\"LbCom_HomeEasyTM_Device_bg\"><img class=\"picto\" src=\""+lost_icons_path+"device.jpg\"><span id=\"LbCom_HomeEasyTM_Device\">Unknown</span>Device</li>\
+            <li id=\"LbCom_HomeEasyTM_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"status.jpg\"><span id=\"LbCom_HomeEasyTM_Status\">Unknown</span>Status</li>\
+            <li id=\"LbCom_HomeEasyTM_CodeReset_bg\"><a href=\"javascript:lost_lbcom_homeeasytm_codereset();\" class=\"iButton iBWarn\" style=\"width:60px\">Reset</a><img class=\"picto\" src=\""+lost_icons_path+"reset.jpg\"><span id=\"LbCom_HomeEasyTM_CodeReset\"></span>CodeReset</li>\
+        </ul>\
+        <ul class=\"iArrow\">\
+            <li><a href=\"#_HomeEasySend\"><img class=\"picto\" src=\""+lost_icons_path+"send.jpg\"/>Send</a></li>\
+        </ul>\
+        <legend>GSM</legend>\
+        <ul>\
+            <li id=\"LbCom_GsmTM_Init_bg\"><a href=\"javascript:lost_lbcom_gsmtc_init_get();\" class=\"iButton iBAction\" style=\"width:60px\">Get</a><a href=\"javascript:lost_lbcom_gsmtm_init_set(0);\" class=\"iButton iBWarn\" style=\"width:60px\">Reset</a><img class=\"picto\" src=\""+lost_icons_path+"init.jpg\"><span id=\"LbCom_GsmTM_Init\">Unknown</span>Init</li>\
+            <li id=\"LbCom_GsmTM_CheckPowerUp_bg\"><a href=\"javascript:lost_lbcom_gsmtc_checkpowerup_get();\" class=\"iButton iBAction\" style=\"width:60px\">Get</a><a href=\"javascript:lost_lbcom_gsmtm_checkpowerup_set(0);\" class=\"iButton iBWarn\" style=\"width:60px\">Reset</a><img class=\"picto\" src=\""+lost_icons_path+"powerup.jpg\"><span id=\"LbCom_GsmTM_CheckPowerUp\">Unknown</span>CheckPowerUp</li>\
+            <li id=\"LbCom_GsmTM_SignalStrength_status_bg\"><a href=\"javascript:lost_lbcom_gsmtc_signalstrength_get();\" class=\"iButton iBAction\" style=\"width:60px\">Get</a><a href=\"javascript:lost_lbcom_gsmtm_signalstrength_set(0, 0);\" class=\"iButton iBWarn\" style=\"width:60px\">Reset</a><img class=\"picto\" src=\""+lost_icons_path+"status.jpg\"><span id=\"LbCom_GsmTM_SignalStrength_status\">Unknown</span>Signal Strength Status</li>\
+            <li id=\"LbCom_GsmTM_SignalStrength_value_bg\"><a href=\"javascript:lost_lbcom_gsmtc_signalstrength_get();\" class=\"iButton iBAction\" style=\"width:60px\">Get</a><a href=\"javascript:lost_lbcom_gsmtm_signalstrength_set(0, 0);\" class=\"iButton iBWarn\" style=\"width:60px\">Reset</a><img class=\"picto\" src=\""+lost_icons_path+"signalstrength.jpg\"><span id=\"LbCom_GsmTM_SignalStrength_value\">Unknown</span>Signal Strength Value</li>\
+        </ul>\
+        <ul class=\"iArrow\">\
+            <li><a href=\"#_GsmSendSMS\"><img class=\"picto\" src=\""+lost_icons_path+"send.jpg\"/>Send</a></li>\
+        </ul>\
+        <legend>Freezer</legend>\
+        <ul>\
+            <li id=\"LbCom_Bourdilot_FreezerTM_Network_bg\"><a href=\"javascript:lost_lbcom_bourdilot_freezertc_network_get();\" class=\"iButton iBAction\" style=\"width:60px\">Get</a><a href=\"javascript:lost_lbcom_bourdilot_freezertm_network_set(0);\" class=\"iButton iBWarn\" style=\"width:60px\">Reset</a><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"LbCom_Bourdilot_FreezerTM_Network\">Unknown</span>Network</li>\
+            <li id=\"LbCom_Bourdilot_FreezerTM_Temp_bg\"><a href=\"javascript:lost_lbcom_bourdilot_freezertc_temp_get();\" class=\"iButton iBAction\" style=\"width:60px\">Get</a><a href=\"javascript:lost_lbcom_bourdilot_freezertm_temp_set(444);\" class=\"iButton iBWarn\" style=\"width:60px\">Reset</a><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"LbCom_Bourdilot_FreezerTM_Temp\">Unknown</span>Temperature</li>\
+        </ul>\
+        <legend>LbCom</legend>\
+        <ul class=\"iArrow\">\
+            <li><a href=\"#_LbComSend\"><img class=\"picto\" src=\""+lost_icons_path+"send.jpg\"/>Send</a></li>\
+        </ul>\
     </div>\
 </div>\
 ");
 
 document.write("\
-<div class=\"iLayer\" id=\"waCommunicationsInfo\" title=\"Communications Info\">\
-    <div class=\"iPanel\">\
-        <fieldset>\
-            <legend>HomeEasy</legend>\
-            <ul>\
-                <li id=\"LbCom_HomeEasyTM_Manufacturer_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"LbCom_HomeEasyTM_Manufacturer\">Unknown</span>Manufacturer</li>\
-                <li id=\"LbCom_HomeEasyTM_Group_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"LbCom_HomeEasyTM_Group\">Unknown</span>Group</li>\
-                <li id=\"LbCom_HomeEasyTM_Device_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"LbCom_HomeEasyTM_Device\">Unknown</span>Device</li>\
-                <li id=\"LbCom_HomeEasyTM_Status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"LbCom_HomeEasyTM_Status\">Unknown</span>Status</li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>GSM</legend>\
-            <ul>\
-                <li id=\"LbCom_GsmTM_Init_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"LbCom_GsmTM_Init\">Unknown</span>Init</li>\
-                <li id=\"LbCom_GsmTM_CheckPowerUp_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"LbCom_GsmTM_CheckPowerUp\">Unknown</span>CheckPowerUp</li>\
-                <li id=\"LbCom_GsmTM_SignalStrength_status_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"LbCom_GsmTM_SignalStrength_status\">Unknown</span>Signal Strength Status</li>\
-                <li id=\"LbCom_GsmTM_SignalStrength_value_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"LbCom_GsmTM_SignalStrength_value\">Unknown</span>Signal Strength Value</li>\
-            </ul>\
-        </fieldset>\
-        <fieldset>\
-            <legend>Freezer</legend>\
-            <ul>\
-                <li id=\"LbCom_Bourdilot_FreezerTM_Network_bg\"><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"LbCom_Bourdilot_FreezerTM_Network\">Unknown</span>Network</li>\
-                <li id=\"LbCom_Bourdilot_FreezerTM_Temp_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"LbCom_Bourdilot_FreezerTM_Temp\">Unknown</span>Manufacturer</li>\
-            </ul>\
-        </fieldset>\
+<div class=\"iLayer\" id=\"waHomeEasySend\" title=\"Home Easy Send\">\
+    <div class=\"iMenu\">\
+        <legend>HomeEasy Code</legend>\
+        <ul>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"manufacturer.jpg\"><label>Manufacturer</label><input type=\"text\" id=\"HomeEasySend_Manufacturer\"/></li>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"group.jpg\"><label>Group</label><input type=\"text\" id=\"HomeEasySend_Group\"/></li>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"device.jpg\"><label>Device</label><input type=\"text\" id=\"HomeEasySend_Device\"/></li>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"status.jpg\"><input type=\"checkbox\" id=\"HomeEasySend_Status\" class=\"iToggle\" title=\"ON|OFF\"><label for=\"HomeEasySend_Status\">Status</label></li>\
+        </ul>\
+        <input type=\"button\" class=\"iPush iBCancel\" value=\"Send\" style=\"width:100%\" onClick=\"lost_lbcom_homeeasytc_send();\"/>\
     </div>\
 </div>\
 ");
+
+document.write("\
+<div class=\"iLayer\" id=\"waGsmSendSMS\" title=\"Send SMS\">\
+    <div class=\"iMenu\">\
+        <legend>SMS</legend>\
+        <ul>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"phone.jpg\"><label>Phone</label><input type=\"text\" id=\"GsmSendSMS_Phone\"/></li>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"msg.jpg\"><label>Message</label><input type=\"text\" id=\"GsmSendSMS_Msg\"/></li>\
+        </ul>\
+        <input type=\"button\" class=\"iPush iBCancel\" value=\"Send\" style=\"width:100%\" onClick=\"lost_lbcom_gsmtc_sendsms();\"/>\
+    </div>\
+</div>\
+");
+
+document.write("\
+<div class=\"iLayer\" id=\"waLbComSend\" title=\"LbCom Send\">\
+    <div class=\"iMenu\">\
+        <legend>LbCom Frame</legend>\
+        <ul>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"out.jpg\"><label>Source</label><input type=\"text\" id=\"LbCom_Src\"/></li>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"in.jpg\"><label>Destination</label><input type=\"text\" id=\"LbCom_Dst\"/></li>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"cmd.jpg\"><label>Command</label><input type=\"text\" id=\"LbCom_Cmd\"/></li>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"data.jpg\"><label>Data</label><input type=\"text\" id=\"LbCom_Data\"/></li>\
+        </ul>\
+        <input type=\"button\" class=\"iPush iBCancel\" value=\"Send\" style=\"width:100%\" onClick=\"lost_lbcom_send();\"/>\
+    </div>\
+</div>\
+");
+
 document.write("\
 <div class=\"iLayer\" id=\"waRooms\" title=\"Rooms\">\
     <div class=\"iMenu\">\
