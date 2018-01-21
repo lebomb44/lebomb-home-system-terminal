@@ -12,7 +12,7 @@
 #ifdef LOST_CONFIG_bt
 #define LOST_GSM_SMS_CENTER_FREE
 #define LOST_GSM1 "0689350159"
-#define LOST_GSM2 "0689350159"
+#define LOST_GSM2 "0676970721"
 #define LOST_STATUS "LOST/safety/status.php?tab=bt"
 #define LOST_EMAIL "LOST/safety/email.php?tab=bt&msg="
 #define LOST_INSERT "LOST/charts/insert.php?tab=bt"
