@@ -57,8 +57,8 @@ uint8_t safety_init(void)
   safety_status.rack_alarm     = 0;
 
   safety_control.http           = 1;
-  safety_control.btfz_temp      = 1;
-  safety_control.btfz_net       = 1;
+  safety_control.btfz_temp      = 0;
+  safety_control.btfz_net       = 0;
   safety_control.ups_temp       = 1;
   safety_control.ups_power      = 1;
   safety_control.rack_temp      = 1;
