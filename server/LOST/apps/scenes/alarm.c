@@ -8,6 +8,8 @@
 
 #include <pro/httpd.h>
 
+
+#include "../../config.h"
 #include "../../devices/volume.h"
 #include "../../devices/buzzer.h"
 #include "../../devices/lbcom.h"
