@@ -242,7 +242,7 @@ int alarm_form(FILE * stream, REQUEST * req)
     arg_s = NutHttpGetParameter(req, "password");
     if(arg_s)
     {
-      if(strncmp(arg_s, LOST_PASSWORD, strnlen(LOST_PASSWORD, 10))) { password_ok = 1; }
+      if(0 == strncmp(arg_s, LOST_PASSWORD, strnlen(LOST_PASSWORD, 10))) { password_ok = 1; }
       else { password_ok = 0; }
     }
     arg_s = NutHttpGetParameter(req, "perimeter_ctrl");
