@@ -231,29 +231,36 @@ THREAD(AlarmD, arg)
 int alarm_form(FILE * stream, REQUEST * req)
 {
   char* arg_s = NULL;
+  uint8_t password_ok = 0;
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
 
   if(METHOD_GET == req->req_method)
   {
+    arg_s = NutHttpGetParameter(req, "password");
+    if(arg_s)
+    {
+      if(strncmp(arg_s, LOST_PASSWORD, strnlen(LOST_PASSWORD)) { password_ok = 1; }
+      else { password_ok = 0; }
+    }
     arg_s = NutHttpGetParameter(req, "perimeter_ctrl");
     if(arg_s)
     {
       if('?' == arg_s[0]) { fprintf(stream, "%d", alarm_perimeter.control); }
-      else { if(0 < strtoul(arg_s, NULL, 10)) { alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); } else { alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); } }
+      else { if(0 < strtoul(arg_s, NULL, 10) && (1 == password_ok)) { alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); } else { alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); } }
     }
     arg_s = NutHttpGetParameter(req, "volume_ctrl");
     if(arg_s)
     {
       if('?' == arg_s[0]) { fprintf(stream, "%d", alarm_volume.control); }
-      else { if(0 < strtoul(arg_s, NULL, 10)) { alarm_volume_set(ALARM_TYPE_ON_MANUAL); } else { alarm_volume_set(ALARM_TYPE_OFF_MANUAL); } }
+      else { if(0 < strtoul(arg_s, NULL, 10) && (1 == password_ok)) { alarm_volume_set(ALARM_TYPE_ON_MANUAL); } else { alarm_volume_set(ALARM_TYPE_OFF_MANUAL); } }
     }
     arg_s = NutHttpGetParameter(req, "simulation_ctrl");
     if(arg_s)
     {
       if('?' == arg_s[0]) { fprintf(stream, "%d", alarm_simulation.control); }
-      else { if(0 < strtoul(arg_s, NULL, 10)) { alarm_simulation_set(ALARM_TYPE_ON_MANUAL); } else { alarm_simulation_set(ALARM_TYPE_OFF_MANUAL); } }
+      else { if(0 < strtoul(arg_s, NULL, 10) && (1 == password_ok)) { alarm_simulation_set(ALARM_TYPE_ON_MANUAL); } else { alarm_simulation_set(ALARM_TYPE_OFF_MANUAL); } }
     }
 
     fflush(stream);
