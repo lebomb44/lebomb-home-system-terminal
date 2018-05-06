@@ -249,21 +249,65 @@ int alarm_form(FILE * stream, REQUEST * req)
     if(arg_s)
     {
       if('?' == arg_s[0]) { fprintf(stream, "%d", alarm_perimeter.control); }
-      else { if(0 < strtoul(arg_s, NULL, 10) && (1 == password_ok)) { alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); } else { alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); } }
+      else 
+      {
+        if(1 == password_ok)
+        {
+          if(0 < strtoul(arg_s, NULL, 10))
+          {
+            alarm_perimeter_set(ALARM_TYPE_ON_MANUAL);
+            fputs_P(PSTR("ALARM PERIMETER ON OK"), stream);
+          }
+          else
+          {
+            alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL);
+            fputs_P(PSTR("ALARM PERIMETER OFF OK"), stream);
+          }
+        }
+      }
     }
     arg_s = NutHttpGetParameter(req, "volume_ctrl");
     if(arg_s)
     {
       if('?' == arg_s[0]) { fprintf(stream, "%d", alarm_volume.control); }
-      else { if(0 < strtoul(arg_s, NULL, 10) && (1 == password_ok)) { alarm_volume_set(ALARM_TYPE_ON_MANUAL); } else { alarm_volume_set(ALARM_TYPE_OFF_MANUAL); } }
+      else
+      {
+        if(1 == password_ok)
+        {
+          if(0 < strtoul(arg_s, NULL, 10))
+          {
+            alarm_volume_set(ALARM_TYPE_ON_MANUAL);
+            fputs_P(PSTR("ALARM VOLUME ON OK"), stream);
+          }
+          else
+          {
+            alarm_volume_set(ALARM_TYPE_OFF_MANUAL);
+            fputs_P(PSTR("ALARM VOLUME OFF OK"), stream);
+          }
+        }
+      }
     }
     arg_s = NutHttpGetParameter(req, "simulation_ctrl");
     if(arg_s)
     {
       if('?' == arg_s[0]) { fprintf(stream, "%d", alarm_simulation.control); }
-      else { if(0 < strtoul(arg_s, NULL, 10) && (1 == password_ok)) { alarm_simulation_set(ALARM_TYPE_ON_MANUAL); } else { alarm_simulation_set(ALARM_TYPE_OFF_MANUAL); } }
+      else
+      {
+        if(1 == password_ok)
+        {
+          if(0 < strtoul(arg_s, NULL, 10))
+          {
+            alarm_simulation_set(ALARM_TYPE_ON_MANUAL);
+            fputs_P(PSTR("ALARM SIMULATION ON OK"), stream);
+          }
+          else
+          {
+            alarm_simulation_set(ALARM_TYPE_OFF_MANUAL);
+            fputs_P(PSTR("ALARM SIMULATION OFF OK"), stream);
+          }
+        }
+      }
     }
-
     fflush(stream);
   }
 
