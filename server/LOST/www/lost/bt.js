@@ -1163,6 +1163,13 @@ document.write("\
             <li><a href=\"javascript:lost_scene_set(EVENT_POWER_2, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_2, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">POWER 2</li>\
             <li><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_POWER_3, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\">POWER 3</li>\
         </ul>\
+        <legend>Alarm</legend>\
+        <ul class=\"iArrow\">\
+            <li><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER_CHECK, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER_CHECK, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"alarm.jpg\">Alarm check</li>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_PERIMETER, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"alarm.jpg\">Alarm perimeter</li>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_ALARM_VOLUME, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_VOLUME, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"alarm.jpg\">Alarm volume</li>\
+            <li><a href=\"javascript:lost_scene_set(EVENT_ALARM_ALL, 0);\" class=\"iButton iBAction\" style=\"width:60px\">OFF</a><a href=\"javascript:lost_scene_set(EVENT_ALARM_ALL, 1);\" class=\"iButton iBWarn\" style=\"width:60px\">ON</a><img class=\"picto\" src=\""+lost_icons_path+"alarm.jpg\">Alarm all</li>\
+        </ul>\
     </div>\
 </div>\
 ");
@@ -1336,6 +1343,15 @@ document.write("\
                 <li><a href=\"#_Event"+EVENT_POWER_3+"\"><img class=\"picto\" src=\""+lost_icons_path+"radiateur.jpg\">Chauffage</a></li>\
             </ul>\
         </fieldset>\
+        <fieldset>\
+            <legend>Alarm</legend>\
+            <ul class=\"iArrow\">\
+                <li><a href=\"#_Event"+EVENT_ALARM_PERIMETER_CHECK+"\"><img class=\"picto\" src=\""+lost_icons_path+"alarm.jpg\">Alarm check</a></li>\
+                <li><a href=\"#_Event"+EVENT_ALARM_PERIMETER+"\"><img class=\"picto\" src=\""+lost_icons_path+"alarm.jpg\">Alarm perimeter</a></li>\
+                <li><a href=\"#_Event"+EVENT_ALARM_VOLUME+"\"><img class=\"picto\" src=\""+lost_icons_path+"alarm.jpg\">Alarm volume</a></li>\
+                <li><a href=\"#_Event"+EVENT_ALARM_ALL+"\"><img class=\"picto\" src=\""+lost_icons_path+"alarm.jpg\">Alarm all</a></li>\
+            </ul>\
+        </fieldset>\
     </div>\
 </div>\
 ");
@@ -1386,3 +1402,8 @@ printEventInfo(EVENT_POWER_0       , "Wifi"                   );
 printEventInfo(EVENT_POWER_1       , "Ethernet"               );
 printEventInfo(EVENT_POWER_2       , "Power 2"                );
 printEventInfo(EVENT_POWER_3       , "Chauffage"              );
+printEventInfo(EVENT_ALARM_PERIMETER_CHECK, "Alarm check"     );
+printEventInfo(EVENT_ALARM_PERIMETER      , "Alarm perimeter" );
+printEventInfo(EVENT_ALARM_VOLUME         , "Alarm volume"    );
+printEventInfo(EVENT_ALARM_ALL            , "Alarm all"       );
+

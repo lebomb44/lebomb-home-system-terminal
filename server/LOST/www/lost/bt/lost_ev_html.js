@@ -10,6 +10,15 @@ document.write("\
                 <li><a href=\"#_Event"+EVENT_POWER_3+"\"><img class=\"picto\" src=\""+lost_icons_path+"radiateur.jpg\">Chauffage</a></li>\
             </ul>\
         </fieldset>\
+        <fieldset>\
+            <legend>Alarm</legend>\
+            <ul class=\"iArrow\">\
+                <li><a href=\"#_Event"+EVENT_ALARM_PERIMETER_CHECK+"\"><img class=\"picto\" src=\""+lost_icons_path+"alarm.jpg\">Alarm check</a></li>\
+                <li><a href=\"#_Event"+EVENT_ALARM_PERIMETER+"\"><img class=\"picto\" src=\""+lost_icons_path+"alarm.jpg\">Alarm perimeter</a></li>\
+                <li><a href=\"#_Event"+EVENT_ALARM_VOLUME+"\"><img class=\"picto\" src=\""+lost_icons_path+"alarm.jpg\">Alarm volume</a></li>\
+                <li><a href=\"#_Event"+EVENT_ALARM_ALL+"\"><img class=\"picto\" src=\""+lost_icons_path+"alarm.jpg\">Alarm all</a></li>\
+            </ul>\
+        </fieldset>\
     </div>\
 </div>\
 ");
@@ -60,3 +69,8 @@ printEventInfo(EVENT_POWER_0       , "Wifi"                   );
 printEventInfo(EVENT_POWER_1       , "Ethernet"               );
 printEventInfo(EVENT_POWER_2       , "Power 2"                );
 printEventInfo(EVENT_POWER_3       , "Chauffage"              );
+printEventInfo(EVENT_ALARM_PERIMETER_CHECK, "Alarm check"     );
+printEventInfo(EVENT_ALARM_PERIMETER      , "Alarm perimeter" );
+printEventInfo(EVENT_ALARM_VOLUME         , "Alarm volume"    );
+printEventInfo(EVENT_ALARM_ALL            , "Alarm all"       );
+
