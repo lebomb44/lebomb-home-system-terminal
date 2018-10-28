@@ -14,7 +14,7 @@
 #include "../../services/http.h"
 #include "../../services/web.h"
 
-#include "../lbcom/lbcom_homeeasyTM.h"
+#include "../lbcom/lbcom_ht12eTM.h"
 #include "../lbcom/lbcom_gsmTC.h"
 
 #include "alarm.h"
@@ -140,36 +140,27 @@ void alarm_simulation_set(ALARM_TYPE_T type)
 THREAD(AlarmD, arg)
 {
   char msg[60] = { 0 };
-  uint32_t homeeasyTM_manufacturer = 0;
-  uint8_t homeeasyTM_group = 0;
-  uint8_t homeeasyTM_device = 0;
-  uint8_t homeeasyTM_status = 0;
+  uint16_t ht12eTM_address = 0;
+  uint8_t ht12eTM_data = 0;
 
   arg = arg;
   NutThreadSetPriority(105);
 
   while(1)
   {
-    homeeasyTM_manufacturer = lbcom_homeeasyTM_manufacturer_get();
-    homeeasyTM_group = lbcom_homeeasyTM_group_get();
-    homeeasyTM_device = lbcom_homeeasyTM_device_get();
-    homeeasyTM_status = lbcom_homeeasyTM_status_get();
+    ht12eTM_address = lbcom_ht12eTM_address_get();
+    ht12eTM_data = lbcom_ht12eTM_data_get();
 
     /* Check the authorized codes */
-    if(((0xFCE1CE == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
-    || ((0xFCBDD6 == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
-    || ((0xFCDAD2 == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
-    || ((0xFCBC2E == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
-    || ((0xD0A3B2 == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)) \
-    || ((0xFCC302 == homeeasyTM_manufacturer) && (0x0 == homeeasyTM_group) && (0x2 == homeeasyTM_device)))
+    if(0x5956 == ht12eTM_address)
     {
-      if(0 == homeeasyTM_status)
+      if(0x99 == ht12eTM_data) // = D button (B button = 0xA9)
       {
         buzzer_stop();
         buzzer_on(); NutSleep(500); buzzer_off();
         alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); alarm_volume_set(ALARM_TYPE_OFF_MANUAL);
       }
-      else if(1 == homeeasyTM_status)
+      else if(0x59 == ht12eTM_data) // = C button (A button = 0x69)
       {
         buzzer_stop();
         buzzer_on(); NutSleep(500); buzzer_off(); NutSleep(500);
@@ -177,7 +168,7 @@ THREAD(AlarmD, arg)
         buzzer_on(); NutSleep(500); buzzer_off();
         alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); alarm_volume_set(ALARM_TYPE_ON_MANUAL);
       }
-      lbcom_homeeasyTM_code_reset();
+      lbcom_ht12eTM_code_reset();
     }
 
     /* Only update the status if the alarm did not trigger */

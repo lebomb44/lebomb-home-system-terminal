@@ -13,6 +13,8 @@
 #include "lbcom.h"
 #include "lbcom_homeeasyTC.h"
 #include "lbcom_homeeasyTM.h"
+#include "lbcom_ht12eTC.h"
+#include "lbcom_ht12eTM.h"
 #include "lbcom_gsmTC.h"
 #include "lbcom_gsmTM.h"
 #include "lbcom_bourdilot_freezerTC.h"
@@ -24,6 +26,8 @@ uint8_t lbcom_init(void)
   NutRegisterCgi("lbcom.cgi", lbcom_form);
   NutRegisterCgi("lbcom_homeeasyTC.cgi", lbcom_homeeasyTC_form);
   NutRegisterCgi("lbcom_homeeasyTM.cgi", lbcom_homeeasyTM_form);
+  NutRegisterCgi("lbcom_ht12eTC.cgi", lbcom_ht12eTC_form);
+  NutRegisterCgi("lbcom_ht12eTM.cgi", lbcom_ht12eTM_form);
   NutRegisterCgi("lbcom_gsmTC.cgi", lbcom_gsmTC_form);
   NutRegisterCgi("lbcom_gsmTM.cgi", lbcom_gsmTM_form);
   NutRegisterCgi("lbcom_bourdilot_freezerTC.cgi", lbcom_bourdilot_freezerTC_form);
@@ -46,6 +50,7 @@ THREAD(LbComD, arg)
       if(ID_LOST_MASTER == lbcomif_rxGetDst())
       {
              if(ID_HOME_EASY_SLAVE         == lbcomif_rxGetSrc()) { lbcom_homeeasyTM_receive(lbcomif_rxGetSrc(), lbcomif_rxGetDst(), lbcomif_rxGetCmd(), lbcomif_rxGetLen(), lbcomif_rxGetData()); }
+        else if(ID_HT12E_SLAVE             == lbcomif_rxGetSrc()) { lbcom_ht12eTM_receive(lbcomif_rxGetSrc(), lbcomif_rxGetDst(), lbcomif_rxGetCmd(), lbcomif_rxGetLen(), lbcomif_rxGetData()); }
         else if(ID_GSM_SLAVE               == lbcomif_rxGetSrc()) { lbcom_gsmTM_receive(lbcomif_rxGetSrc(), lbcomif_rxGetDst(), lbcomif_rxGetCmd(), lbcomif_rxGetLen(), lbcomif_rxGetData()); }
         else if(ID_BOURDILOT_FREEZER_SLAVE == lbcomif_rxGetSrc()) { lbcom_bourdilot_freezerTM_receive(lbcomif_rxGetSrc(), lbcomif_rxGetDst(), lbcomif_rxGetCmd(), lbcomif_rxGetLen(), lbcomif_rxGetData()); }
       }
@@ -115,6 +120,7 @@ int lbcom_form(FILE * stream, REQUEST * req)
 int lbcom_xml_get(FILE * stream)
 {
   lbcom_homeeasyTM_xml_get(stream);
+  lbcom_ht12eTM_xml_get(stream);
   lbcom_gsmTM_xml_get(stream);
   lbcom_bourdilot_freezerTM_xml_get(stream);
 

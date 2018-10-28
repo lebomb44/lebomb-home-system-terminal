@@ -13,6 +13,7 @@ apps/scenes/alarm.c apps/scenes/safety.c apps/scenes/atmosphere.c \
 apps/scenes/events.c apps/scenes/events_proc.c apps/scenes/scenes.c \
 apps/lbcom/lbcom.c \
 apps/lbcom/lbcom_homeeasyTC.c apps/lbcom/lbcom_homeeasyTM.c \
+apps/lbcom/lbcom_ht12eTC.c apps/lbcom/lbcom_ht12eTM.c \
 apps/lbcom/lbcom_gsmTC.c apps/lbcom/lbcom_gsmTM.c \
 apps/lbcom/lbcom_bourdilot_freezerTC.c apps/lbcom/lbcom_bourdilot_freezerTM.c \
 $(WEBFILE)

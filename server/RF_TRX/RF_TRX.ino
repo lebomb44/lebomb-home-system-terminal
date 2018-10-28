@@ -4,7 +4,7 @@
 #include <Cmd.h>
 #include <LbCom.h>
 #include <LbMsg.h>
-#include <HomeEasy.h>
+#include <HT12E.h>
 #include <GPRS_Shield_Arduino.h>
 #include <RF24.h>
 #include <ID.h>
@@ -18,8 +18,8 @@
 #define LOST_TX_pin 16
 #define LOST_RX_pin 17
 
-#define HOME_EASY_IN_pin 21
-#define HOME_EASY_ICP_pin 49
+#define HT12E_IN_pin 21
+#define HT12E_ICP_pin 49
 
 #define GSM_TX_pin    14
 #define GSM_RX_pin    15
@@ -35,7 +35,7 @@
  *  Global variables
  * *****************************
  */
-HomeEasy homeEasy;
+HT12E ht12e;
 LbCom lbCom;
 RF24 nrf24(NRF24_CE_pin, NRF24_CSN_pin);
 GPRS gprs(&Serial3, 19200);
@@ -46,12 +46,12 @@ uint32_t gprs_checkPowerUp_counter = 0;
  *  Debug Macros
  * *****************************
  */
-bool homeEasy_printIsEnabled = true;
+bool ht12e_printIsEnabled = true;
 bool lbMsg_printIsEnabled = true;
 bool lbCom_printIsEnabled = true;
 bool nrf24_printIsEnabled = true;
 bool gprs_printIsEnabled  = true;
-#define HOME_EASY_PRINT(m) if(true == homeEasy_printIsEnabled) { m }
+#define HT12E_PRINT(m) if(true == ht12e_printIsEnabled) { m }
 #define LBMSG_PRINT(m) if(true == lbMsg_printIsEnabled) { m }
 #define LBCOM_PRINT(m) if(true == lbCom_printIsEnabled) { m }
 #define NRF24_PRINT(m) if(true == nrf24_printIsEnabled) { m }
@@ -61,18 +61,18 @@ bool gprs_printIsEnabled  = true;
  *  Command lines funstions
  * *****************************
  */
-/* HomeEasy */
-void homeEasyHistoDump(int arg_cnt, char **args) { homeEasy.histoDump(); }
-void homeEasySend(int arg_cnt, char **args) {
-  /* > homeEasySend 1234 56 2 1*/
+/* HT12E */
+void ht12eHistoDump(int arg_cnt, char **args) { ht12e.histoDump(); }
+void ht12eSend(int arg_cnt, char **args) {
+  /* > ht12eSend 1234 56 2 1*/
   if(5 == arg_cnt) {
-    homeEasy.send(cmdStr2Num(args[1], 16), cmdStr2Num(args[2], 16), cmdStr2Num(args[3], 16), cmdStr2Num(args[4], 16));
-    Serial.print("homeEasySend: "); Serial.println(args[1]);
+    ht12e.send(cmdStr2Num(args[1], 16), cmdStr2Num(args[2], 16));
+    Serial.print("ht12eSend: "); Serial.println(args[1]);
   }
-  else { Serial.println("ERROR homeEasySend incorrect arg !"); }
+  else { Serial.println("ERROR ht12eSend incorrect arg !"); }
 }
-void homeEasyEnablePrint(int arg_cnt, char **args) { homeEasy_printIsEnabled = true; Serial.println("HomeEasy print enabled"); }
-void homeEasyDisablePrint(int arg_cnt, char **args) { homeEasy_printIsEnabled = false; Serial.println("HomeEasy print disabled"); }
+void ht12eEnablePrint(int arg_cnt, char **args) { ht12e_printIsEnabled = true; Serial.println("HT12E print enabled"); }
+void ht12eDisablePrint(int arg_cnt, char **args) { ht12e_printIsEnabled = false; Serial.println("HT12E print disabled"); }
 /* LbCom */
 void lbComEnablePrint(int arg_cnt, char **args) { lbCom_printIsEnabled = true; Serial.println("LbCom print enabled"); }
 void lbComDisablePrint(int arg_cnt, char **args) { lbCom_printIsEnabled = false; Serial.println("LbCom print disabled"); }
@@ -167,27 +167,25 @@ bool execMsg(String ife, LbMsg & msg) {
   if(true == msg.check()) {
     /* OK, it is well formed */
     LBMSG_PRINT( Serial.println(": OK"); )
-    /* This message is for HOME EASY module */
-    if(ID_HOME_EASY_SLAVE == msg.getDst()) {
-      if(ID_HOME_EASY_SEND_TC == msg.getCmd()) {
-        HOME_EASY_PRINT( Serial.print("  " + ife + " tc: ID_HOME_EASY_SEND_TC: "); )
-        /* Data is the full HomeEasy frame */
+    /* This message is for HT12E module */
+    if(ID_HT12E_SLAVE == msg.getDst()) {
+      if(ID_HT12E_SEND_TC == msg.getCmd()) {
+        HT12E_PRINT( Serial.print("  " + ife + " tc: ID_HT12E_SEND_TC: "); )
+        /* Data is the full HT12E frame */
         if(7 == msg.getDataLen()) {
-          if(true == homeEasy.txIsReady()) {
+          if(true == ht12e.txIsReady()) {
             /* This command is not implemented */
-            uint32_t manufacturer = (0xFF000000 & (((uint32_t)msg.getData()[0])<<24)) | (0x00FF0000 & (((uint32_t)msg.getData()[1])<<16)) | (0x0000FF00 & (((uint32_t)msg.getData()[2])<<8)) | (0x000000FF & ((uint32_t)msg.getData()[3]));
-            uint8_t group = msg.getData()[4];
-            uint8_t device = msg.getData()[5];
-            uint8_t status = msg.getData()[6];
-            homeEasy.send(manufacturer, group, device, status);
-            HOME_EASY_PRINT( Serial.println("OK"); )
+            uint16_t address = (0xFF00 & (((uint16_t)msg.getData()[0])<<8)) | (0x00FF & ((uint16_t)msg.getData()[1]));
+            uint8_t data = msg.getData()[2];
+            ht12e.send(address, data);
+            HT12E_PRINT( Serial.println("OK"); )
           }
-          else { HOME_EASY_PRINT( Serial.println("ERROR: device busy"); ) }
+          else { HT12E_PRINT( Serial.println("ERROR: device busy"); ) }
         }
-        else { HOME_EASY_PRINT( Serial.println("ERROR: bad data length"); ) }
+        else { HT12E_PRINT( Serial.println("ERROR: bad data length"); ) }
       }
       else {
-        HOME_EASY_PRINT( Serial.println("  " + ife + " tc: HOME_EASY UNKNOWN TC"); )
+        HT12E_PRINT( Serial.println("  " + ife + " tc: HT12E UNKNOWN TC"); )
       }
     }
     else {
@@ -271,7 +269,7 @@ bool execMsg(String ife, LbMsg & msg) {
         }
       }
       else {
-        /* The message is neither for HOME_ESAY not for GPRS */
+        /* The message is neither for HT12E not for GPRS */
         /* So we try to route it */
         sendLbMsg(msg);
       }
@@ -296,8 +294,8 @@ void setup() {
   digitalWrite(LOST_TX_pin, HIGH);
   pinMode(LOST_RX_pin, INPUT_PULLUP);
 
-  pinMode(HOME_EASY_IN_pin, INPUT_PULLUP);
-  pinMode(HOME_EASY_ICP_pin, INPUT_PULLUP);
+  pinMode(HT12E_IN_pin, INPUT_PULLUP);
+  pinMode(HT12E_ICP_pin, INPUT_PULLUP);
 
   pinMode(GSM_TX_pin, OUTPUT);
   digitalWrite(GSM_TX_pin, HIGH);
@@ -319,7 +317,7 @@ void setup() {
  *  Modules initialization
  * ****************************
  */
-  homeEasy.init();
+  ht12e.init();
 
   lbCom.init();
 
@@ -331,6 +329,10 @@ void setup() {
   /* NRF24L01: -18dBm, -12dBm,-6dBM, and 0dBm */
   nrf24.setPALevel(RF24_PA_MAX);
   Serial.println("NRF24 PA level set");
+  nrf24.setDataRate(RF24_250KBPS);
+  Serial.println("NRF24 data rate set");
+  nrf24.setRetries(15, 15);
+  Serial.println("NRF24 retries set");
   //nrf24.setAddressWidth(4);
   Serial.println("NRF24 address width set");
   /* Open pipe for Slave to Master messages */
@@ -352,12 +354,12 @@ void setup() {
    *  Register commands for command line
    * ***********************************
    */
-  cmdAdd("histoDump", "Dump histogram", homeEasyHistoDump);
+  cmdAdd("histoDump", "Dump histogram", ht12eHistoDump);
   cmdAdd("lbMsgExec", "Execute LB message", lbMsgExec);
   cmdAdd("lbMsgSend", "Send LB message", lbMsgSend);
-  cmdAdd("homeEasySend", "Send HomeEsay HEX code", homeEasySend);
-  cmdAdd("homeEasyEnablePrint", "Enable print in HomeEasy lib", homeEasyEnablePrint);
-  cmdAdd("homeEasyDisablePrint", "Disable print in HomeEasy lib", homeEasyDisablePrint);
+  cmdAdd("ht12eSend", "Send HT12E HEX code", ht12eSend);
+  cmdAdd("ht12eEnablePrint", "Enable print in HT12E lib", ht12eEnablePrint);
+  cmdAdd("ht12eDisablePrint", "Disable print in HT12E lib", ht12eDisablePrint);
   cmdAdd("lbComEnablePrint", "Enable print in LbCom lib", lbComEnablePrint);
   cmdAdd("lbComDisbalePrint", "Disable print in LbCom lib", lbComDisablePrint);
   cmdAdd("nrf24EnablePrint", "Enable print in NRF24 lib", nrf24EnablePrint);
@@ -376,40 +378,36 @@ void setup() {
 
 void loop() {
   /* ****************************
-   *  Home Easy loop
+   *  HT12E loop
    * ****************************
    */
-  homeEasy.run();
+  ht12e.run();
   /* A full code as been received */
-  if(true == homeEasy.rxCodeIsReady()) {
-    HOME_EASY_PRINT(
-      Serial.print(homeEasy.rxGetCode(), HEX);Serial.print(" : ");
-      Serial.print(homeEasy.rxGetManufacturer(), HEX);Serial.print("-");
-      Serial.print(homeEasy.rxGetGroup(), HEX);Serial.print("-");
-      Serial.print(homeEasy.rxGetDevice(), HEX);Serial.print("-");
-      Serial.print(homeEasy.rxGetStatus(), HEX);Serial.println();
-      //homeEasy.histoDump();
+  if(true == ht12e.rxCodeIsReady()) {
+    HT12E_PRINT(
+      Serial.print(ht12e.rxGetCode(), HEX);Serial.print(" : ");
+      Serial.print(ht12e.rxGetAddress(), HEX);Serial.print(" - ");
+      Serial.print(ht12e.rxGetData(), HEX);Serial.println();
+      //ht12e.histoDump();
     )
+    ht12e.purge();
     /* Prepare the message to send to the central */
-    LbMsg msg(7);
-    msg.setSrc(ID_HOME_EASY_SLAVE);
+    LbMsg msg(3);
+    msg.setSrc(ID_HT12E_SLAVE);
     msg.setDst(ID_LOST_MASTER);
-    msg.setCmd(ID_HOME_EASY_RCV_TM);
+    msg.setCmd(ID_HT12E_RCV_TM);
     /* Set the data */
-    uint32_t manufacturer = homeEasy.rxGetManufacturer();
-    msg.getData()[0] = 0x000000FF & (manufacturer>>24);
-    msg.getData()[1] = 0x000000FF & (manufacturer>>16);
-    msg.getData()[2] = 0x000000FF & (manufacturer>>8);
-    msg.getData()[3] = 0x000000FF & (manufacturer);
-    msg.getData()[4] = homeEasy.rxGetGroup();
-    msg.getData()[5] = homeEasy.rxGetDevice();
-    msg.getData()[6] = homeEasy.rxGetStatus();
+    uint16_t addr = ht12e.rxGetAddress();
+    msg.getData()[0] = 0x00FF & (addr>>8);
+    msg.getData()[1] = 0x00FF & (addr);
+    msg.getData()[2] = ht12e.rxGetData();
+
     /* Release as soon as possible */
-    homeEasy.rxRelease();
+    ht12e.rxRelease();
     /* Finalize the message */
     msg.compute();
     /* and send it */
-    sendLbMsg(msg);
+    if(0x5956 == addr) { sendLbMsg(msg); }
   }
 
   /* ****************************
@@ -485,4 +483,3 @@ void loop() {
   /* Wait a minimum for cyclic task */
   delay(1);
 }
-
