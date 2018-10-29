@@ -12,6 +12,15 @@ document.write("\
         <ul class=\"iArrow\">\
             <li><a href=\"#_HomeEasySend\"><img class=\"picto\" src=\""+lost_icons_path+"send.jpg\"/>Send</a></li>\
         </ul>\
+        <legend>HT12E</legend>\
+        <ul>\
+            <li id=\"LbCom_HT12ETM_Address_bg\"><img class=\"picto\" src=\""+lost_icons_path+"device.jpg\"><span id=\"LbCom_HT12ETM_Address\">Unknown</span>Address</li>\
+            <li id=\"LbCom_HT12ETM_Data_bg\"><img class=\"picto\" src=\""+lost_icons_path+"status.jpg\"><span id=\"LbCom_HT12ETM_Data\">Unknown</span>Data</li>\
+            <li id=\"LbCom_HT12ETM_CodeReset_bg\"><a href=\"javascript:lost_lbcom_ht12etm_codereset();\" class=\"iButton iBWarn\" style=\"width:60px\">Reset</a><img class=\"picto\" src=\""+lost_icons_path+"reset.jpg\"><span id=\"LbCom_HT12ETM_CodeReset\"></span>CodeReset</li>\
+        </ul>\
+        <ul class=\"iArrow\">\
+            <li><a href=\"#_HT12ESend\"><img class=\"picto\" src=\""+lost_icons_path+"send.jpg\"/>Send</a></li>\
+        </ul>\
         <legend>GSM</legend>\
         <ul>\
             <li id=\"LbCom_GsmTM_Init_bg\"><a href=\"javascript:lost_lbcom_gsmtc_init_get();\" class=\"iButton iBAction\" style=\"width:60px\">Get</a><a href=\"javascript:lost_lbcom_gsmtm_init_set(0);\" class=\"iButton iBWarn\" style=\"width:60px\">Reset</a><img class=\"picto\" src=\""+lost_icons_path+"init.jpg\"><span id=\"LbCom_GsmTM_Init\">Unknown</span>Init</li>\
@@ -46,6 +55,19 @@ document.write("\
             <li><img class=\"picto\" src=\""+lost_icons_path+"status.jpg\"><input type=\"checkbox\" id=\"HomeEasySend_Status\" class=\"iToggle\" title=\"ON|OFF\"><label for=\"HomeEasySend_Status\">Status</label></li>\
         </ul>\
         <input type=\"button\" class=\"iPush iBCancel\" value=\"Send\" style=\"width:100%\" onClick=\"lost_lbcom_homeeasytc_send();\"/>\
+    </div>\
+</div>\
+");
+
+document.write("\
+<div class=\"iLayer\" id=\"waHT12ESend\" title=\"HT12E Send\">\
+    <div class=\"iMenu\">\
+        <legend>HT12E Code</legend>\
+        <ul>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"device.jpg\"><label>Address</label><input type=\"text\" id=\"HT12ESend_Address\"/></li>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"status.jpg\"><label>Data</label><input type=\"text\" id=\"HT12ESend_Data\"/></li>\
+        </ul>\
+        <input type=\"button\" class=\"iPush iBCancel\" value=\"Send\" style=\"width:100%\" onClick=\"lost_lbcom_ht12etc_send();\"/>\
     </div>\
 </div>\
 ");

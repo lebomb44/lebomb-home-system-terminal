@@ -1,6 +1,8 @@
 var url_lbcom="cgi/lbcom.cgi?";
-var url_lbcom_homeeasyTM="cgi/lbcom_homeeasyTC.cgi?";
-var url_lbcom_homeeasyTC="cgi/lbcom_homeeasyTM.cgi?";
+var url_lbcom_homeeasyTC="cgi/lbcom_homeeasyTC.cgi?";
+var url_lbcom_homeeasyTM="cgi/lbcom_homeeasyTM.cgi?";
+var url_lbcom_ht12eTC="cgi/lbcom_ht12eTC.cgi?";
+var url_lbcom_ht12eTM="cgi/lbcom_ht12eTM.cgi?";
 var url_lbcom_gsmTC="cgi/lbcom_gsmTC.cgi?";
 var url_lbcom_gsmTM="cgi/lbcom_gsmTM.cgi?";
 var url_lbcom_bourdilot_freezerTC="cgi/lbcom_bourdilot_freezerTC.cgi?";
@@ -12,6 +14,8 @@ function lost_lbcom_xml_get(xml)
   lost_innerHTML_update(xml, "LbCom_HomeEasyTM", "Group");
   lost_innerHTML_update(xml, "LbCom_HomeEasyTM", "Device");
   lost_innerHTML_update(xml, "LbCom_HomeEasyTM", "Status");
+  lost_innerHTML_update(xml, "LbCom_HT12ETM", "Address");
+  lost_innerHTML_update(xml, "LbCom_HT12ETM", "Data");
   lost_innerHTML_update(xml, "LbCom_GsmTM", "Init");
   lost_innerHTML_update(xml, "LbCom_GsmTM", "CheckPowerUp");
   lost_innerHTML_update(xml, "LbCom_GsmTM", "SignalStrength_status");
@@ -51,9 +55,9 @@ function lost_lbcom_send()
 
 function lost_lbcom_homeeasytm_codereset() { lost_set(url_lbcom_homeeasyTM+"code_reset=1"); }
 function lost_lbcom_homeeasytm_manufacturer_set(manufacturer) { lost_set(url_lbcom_homeeasyTM+"manufacturer="+String(manufacturer)); }
-function lost_lbcom_homeeasytm_group_set(group) { lost_set(url_lbcom_gsmTM+"group="+String(group)); }
-function lost_lbcom_homeeasytm_device_set(device) { lost_set(url_lbcom_gsmTM+"device="+String(device)); }
-function lost_lbcom_homeeasytm_status_set(status) { lost_set(url_lbcom_gsmTM+"status="+String(status)); }
+function lost_lbcom_homeeasytm_group_set(group) { lost_set(url_lbcom_homeeasyTM+"group="+String(group)); }
+function lost_lbcom_homeeasytm_device_set(device) { lost_set(url_lbcom_homeeasyTM+"device="+String(device)); }
+function lost_lbcom_homeeasytm_status_set(status) { lost_set(url_lbcom_homeeasyTM+"status="+String(status)); }
 function lost_lbcom_homeeasytc_send()
 {
   var manufacturer;
@@ -67,7 +71,23 @@ function lost_lbcom_homeeasytc_send()
 
   if(manufacturer && group && device && status)
   {
-    lost_set(url_lbcom_gsmTM+"send=1&manufacturer="+String(Number(manufacturer.value))+"&group="+String(Number(group.value))+"&device="+String(Number(device.value))+"&status="+String(Number(status.checked)));
+    lost_set(url_lbcom_homeeasyTC+"send=1&manufacturer="+String(Number(manufacturer.value))+"&group="+String(Number(group.value))+"&device="+String(Number(device.value))+"&status="+String(Number(status.checked)));
+  }
+}
+
+function lost_lbcom_ht12etm_codereset() { lost_set(url_lbcom_ht12eTM+"code_reset=1"); }
+function lost_lbcom_ht12etm_address_set(address) { lost_set(url_lbcom_ht12eTM+"address="+String(address)); }
+function lost_lbcom_ht12etm_data_set(data) { lost_set(url_lbcom_ht12eTM+"data="+String(data)); }
+function lost_lbcom_ht12etc_send()
+{
+  var address;
+  address = document.getElementById("HT12ESend_Address");
+  var data;
+  data = document.getElementById("HT12ESend_Data");
+
+  if(address && data)
+  {
+    lost_set(url_lbcom_ht12eTC+"send=1&address="+String(Number(address.value))+"&data="+String(Number(data.value)));
   }
 }
 

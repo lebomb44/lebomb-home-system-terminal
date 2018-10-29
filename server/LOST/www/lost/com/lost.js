@@ -177,6 +177,22 @@ function printSelectOption(id, nb)
   }
 }
 
+function printSelectOptionMinMax(id, minNb, maxNb)
+{
+  var elt;
+  var i;
+  elt = document.getElementById(id);
+  if(elt)
+  {
+    elt.length = Number(maxNb) - Number(minNb);
+    for(i=Number(minNb); i<Number(maxNb); i++)
+    {
+      elt.options[i].value = i;
+      elt.options[i].text = String(i);
+    }
+  }
+}
+
 function lost_trig2bg_update(xml, node, id)
 {
   var out_id1 = document.getElementById(node+"_"+id+"_bg");

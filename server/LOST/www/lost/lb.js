@@ -177,6 +177,22 @@ function printSelectOption(id, nb)
   }
 }
 
+function printSelectOptionMinMax(id, minNb, maxNb)
+{
+  var elt;
+  var i;
+  elt = document.getElementById(id);
+  if(elt)
+  {
+    elt.length = Number(maxNb) - Number(minNb);
+    for(i=Number(minNb); i<Number(maxNb); i++)
+    {
+      elt.options[i].value = i;
+      elt.options[i].text = String(i);
+    }
+  }
+}
+
 function lost_trig2bg_update(xml, node, id)
 {
   var out_id1 = document.getElementById(node+"_"+id+"_bg");
@@ -645,20 +661,55 @@ function lost_safety_gsm_status_set()
   }
 }
 
+function lost_safety_btfz_temp_status_set()
+{
+  var elt_Ctrl;
+  var elt_Th;
+  var status;
+
+  elt_Ctrl = document.getElementById("Safety_BtFz_Temp_Ctrl");
+  if(elt_Ctrl)
+  {
+    status = elt_Ctrl.checked;
+    elt_Th = document.getElementById("Safety_BtFz_Temp_Th");
+    if(elt_Th)
+    {
+      elt_Th.disabled = status;
+      if(true == status)
+      { // *5*100)/1024)-32)*140)/252
+        lost_set(url_safety+"btfz_temp_th="+String(Number(elt_Th.value)));
+      }
+      lost_set(url_safety+"btfz_temp_ctrl="+String(Number(status)));
+    }
+  }
+}
+
+function lost_safety_btfz_network_status_set()
+{
+  var elt;
+  elt = document.getElementById("Safety_BtFz_Net_Ctrl");
+  if(elt)
+  {
+    lost_set(url_safety+"btfz_net_ctrl="+String(Number(elt.checked)));
+  }
+}
+
 function lost_safety_xml_get(xml)
 {
+/*
   lost_elt_bool_update(xml, "Safety", "Rooms_Error");
   lost_elt_F2C_update(xml, "Safety", "Rooms_Temp_Max");
   lost_elt_F2C_update(xml, "Safety", "Rooms_Temp_Min");
   lost_elt_bool_update(xml, "Safety", "Rooms_Hum");
   lost_elt_bool_update(xml, "Safety", "Rooms_Smoke");
-
+*/
   lost_elt_F2C_update(xml, "Safety", "UPS_Temp");
   lost_elt_bool_update(xml, "Safety", "UPS_Power");
   lost_elt_F2C_update(xml, "Safety", "RACK_Temp");
   lost_elt_bool_update(xml, "Safety", "RACK_Alarm");
   lost_elt_bool_update(xml, "Safety", "HTTP");
-  lost_elt_bool_update(xml, "Safety", "GSM");
+  lost_elt_F2C_update(xml, "Safety", "BtFz_Temp");
+  lost_elt_bool_update(xml, "Safety", "BtFz_Net");
 
   lost_safety_power_update(xml);
 }

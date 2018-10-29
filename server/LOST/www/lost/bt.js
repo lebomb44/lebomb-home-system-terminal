@@ -177,6 +177,22 @@ function printSelectOption(id, nb)
   }
 }
 
+function printSelectOptionMinMax(id, minNb, maxNb)
+{
+  var elt;
+  var i;
+  elt = document.getElementById(id);
+  if(elt)
+  {
+    elt.length = Number(maxNb) - Number(minNb);
+    for(i=Number(minNb); i<Number(maxNb); i++)
+    {
+      elt.options[i].value = i;
+      elt.options[i].text = String(i);
+    }
+  }
+}
+
 function lost_trig2bg_update(xml, node, id)
 {
   var out_id1 = document.getElementById(node+"_"+id+"_bg");
@@ -645,26 +661,63 @@ function lost_safety_gsm_status_set()
   }
 }
 
+function lost_safety_btfz_temp_status_set()
+{
+  var elt_Ctrl;
+  var elt_Th;
+  var status;
+
+  elt_Ctrl = document.getElementById("Safety_BtFz_Temp_Ctrl");
+  if(elt_Ctrl)
+  {
+    status = elt_Ctrl.checked;
+    elt_Th = document.getElementById("Safety_BtFz_Temp_Th");
+    if(elt_Th)
+    {
+      elt_Th.disabled = status;
+      if(true == status)
+      { // *5*100)/1024)-32)*140)/252
+        lost_set(url_safety+"btfz_temp_th="+String(Number(elt_Th.value)));
+      }
+      lost_set(url_safety+"btfz_temp_ctrl="+String(Number(status)));
+    }
+  }
+}
+
+function lost_safety_btfz_network_status_set()
+{
+  var elt;
+  elt = document.getElementById("Safety_BtFz_Net_Ctrl");
+  if(elt)
+  {
+    lost_set(url_safety+"btfz_net_ctrl="+String(Number(elt.checked)));
+  }
+}
+
 function lost_safety_xml_get(xml)
 {
+/*
   lost_elt_bool_update(xml, "Safety", "Rooms_Error");
   lost_elt_F2C_update(xml, "Safety", "Rooms_Temp_Max");
   lost_elt_F2C_update(xml, "Safety", "Rooms_Temp_Min");
   lost_elt_bool_update(xml, "Safety", "Rooms_Hum");
   lost_elt_bool_update(xml, "Safety", "Rooms_Smoke");
-
+*/
   lost_elt_F2C_update(xml, "Safety", "UPS_Temp");
   lost_elt_bool_update(xml, "Safety", "UPS_Power");
   lost_elt_F2C_update(xml, "Safety", "RACK_Temp");
   lost_elt_bool_update(xml, "Safety", "RACK_Alarm");
   lost_elt_bool_update(xml, "Safety", "HTTP");
-  lost_elt_bool_update(xml, "Safety", "GSM");
+  lost_elt_F2C_update(xml, "Safety", "BtFz_Temp");
+  lost_elt_bool_update(xml, "Safety", "BtFz_Net");
 
   lost_safety_power_update(xml);
 }
 var url_lbcom="cgi/lbcom.cgi?";
-var url_lbcom_homeeasyTM="cgi/lbcom_homeeasyTC.cgi?";
-var url_lbcom_homeeasyTC="cgi/lbcom_homeeasyTM.cgi?";
+var url_lbcom_homeeasyTC="cgi/lbcom_homeeasyTC.cgi?";
+var url_lbcom_homeeasyTM="cgi/lbcom_homeeasyTM.cgi?";
+var url_lbcom_ht12eTC="cgi/lbcom_ht12eTC.cgi?";
+var url_lbcom_ht12eTM="cgi/lbcom_ht12eTM.cgi?";
 var url_lbcom_gsmTC="cgi/lbcom_gsmTC.cgi?";
 var url_lbcom_gsmTM="cgi/lbcom_gsmTM.cgi?";
 var url_lbcom_bourdilot_freezerTC="cgi/lbcom_bourdilot_freezerTC.cgi?";
@@ -676,6 +729,8 @@ function lost_lbcom_xml_get(xml)
   lost_innerHTML_update(xml, "LbCom_HomeEasyTM", "Group");
   lost_innerHTML_update(xml, "LbCom_HomeEasyTM", "Device");
   lost_innerHTML_update(xml, "LbCom_HomeEasyTM", "Status");
+  lost_innerHTML_update(xml, "LbCom_HT12ETM", "Address");
+  lost_innerHTML_update(xml, "LbCom_HT12ETM", "Data");
   lost_innerHTML_update(xml, "LbCom_GsmTM", "Init");
   lost_innerHTML_update(xml, "LbCom_GsmTM", "CheckPowerUp");
   lost_innerHTML_update(xml, "LbCom_GsmTM", "SignalStrength_status");
@@ -715,9 +770,9 @@ function lost_lbcom_send()
 
 function lost_lbcom_homeeasytm_codereset() { lost_set(url_lbcom_homeeasyTM+"code_reset=1"); }
 function lost_lbcom_homeeasytm_manufacturer_set(manufacturer) { lost_set(url_lbcom_homeeasyTM+"manufacturer="+String(manufacturer)); }
-function lost_lbcom_homeeasytm_group_set(group) { lost_set(url_lbcom_gsmTM+"group="+String(group)); }
-function lost_lbcom_homeeasytm_device_set(device) { lost_set(url_lbcom_gsmTM+"device="+String(device)); }
-function lost_lbcom_homeeasytm_status_set(status) { lost_set(url_lbcom_gsmTM+"status="+String(status)); }
+function lost_lbcom_homeeasytm_group_set(group) { lost_set(url_lbcom_homeeasyTM+"group="+String(group)); }
+function lost_lbcom_homeeasytm_device_set(device) { lost_set(url_lbcom_homeeasyTM+"device="+String(device)); }
+function lost_lbcom_homeeasytm_status_set(status) { lost_set(url_lbcom_homeeasyTM+"status="+String(status)); }
 function lost_lbcom_homeeasytc_send()
 {
   var manufacturer;
@@ -731,7 +786,23 @@ function lost_lbcom_homeeasytc_send()
 
   if(manufacturer && group && device && status)
   {
-    lost_set(url_lbcom_gsmTM+"send=1&manufacturer="+String(Number(manufacturer.value))+"&group="+String(Number(group.value))+"&device="+String(Number(device.value))+"&status="+String(Number(status.checked)));
+    lost_set(url_lbcom_homeeasyTC+"send=1&manufacturer="+String(Number(manufacturer.value))+"&group="+String(Number(group.value))+"&device="+String(Number(device.value))+"&status="+String(Number(status.checked)));
+  }
+}
+
+function lost_lbcom_ht12etm_codereset() { lost_set(url_lbcom_ht12eTM+"code_reset=1"); }
+function lost_lbcom_ht12etm_address_set(address) { lost_set(url_lbcom_ht12eTM+"address="+String(address)); }
+function lost_lbcom_ht12etm_data_set(data) { lost_set(url_lbcom_ht12eTM+"data="+String(data)); }
+function lost_lbcom_ht12etc_send()
+{
+  var address;
+  address = document.getElementById("HT12ESend_Address");
+  var data;
+  data = document.getElementById("HT12ESend_Data");
+
+  if(address && data)
+  {
+    lost_set(url_lbcom_ht12eTC+"send=1&address="+String(Number(address.value))+"&data="+String(Number(data.value)));
   }
 }
 
@@ -1184,7 +1255,8 @@ document.write("\
                 <li id=\"Safety_RACK_Temp_Ctrl_bg\"><input type=\"checkbox\" id=\"Safety_RACK_Temp_Ctrl\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_safety_rack_temp_status_set();\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><label for=\"Safety_RACK_Temp_Ctrl\">RACK Temperature</label></li>\
                 <li id=\"Safety_RACK_Alarm_Ctrl_bg\"><input type=\"checkbox\" id=\"Safety_RACK_Alarm_Ctrl\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_safety_rack_alarm_status_set();\"><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\"><label for=\"Safety_RACK_Alarm_Ctrl\">RACK Alarm</label></li>\
                 <li id=\"Safety_HTTP_Ctrl_bg\"><input type=\"checkbox\" id=\"Safety_HTTP_Ctrl\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_safety_http_status_set();\"><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><label for=\"Safety_HTTP_Ctrl\">Connexion Internet</label></li>\
-                <li id=\"Safety_GSM_Ctrl_bg\"><input type=\"checkbox\" id=\"Safety_GSM_Ctrl\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_safety_gsm_status_set();\"><img class=\"picto\" src=\""+lost_icons_path+"sat.jpg\"><label for=\"Safety_GSM_Ctrl\">Reseau GSM</label></li>\
+                <li id=\"Safety_BtFz_Temp_Ctrl_bg\"><input type=\"checkbox\" id=\"Safety_BtFz_Temp_Ctrl\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_safety_btfz_temp_status_set();\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><label for=\"Safety_BtFz_Temp_Ctrl\">Freezer Temperature</label></li>\
+                <li id=\"Safety_BtFz_Net_Ctrl_bg\"><input type=\"checkbox\" id=\"Safety_BtFz_Net_Ctrl\" class=\"iToggle\" title=\"ON|OFF\" onClick=\"lost_safety_btfz_network_status_set();\"><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\"><label for=\"Safety_BtFz_Net_Ctrl\">Freezer Network</label></li>\
             </ul>\
         </fieldset>\
         <fieldset>\
@@ -1213,7 +1285,11 @@ document.write("\
                 </li>\
                 <li id=\"Safety_RACK_Alarm_bg\"><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\"><span id=\"Safety_RACK_Alarm\">Unknown</span>RACK Alarm</li>\
                 <li id=\"Safety_HTTP_bg\"><img class=\"picto\" src=\""+lost_icons_path+"net.jpg\"><span id=\"Safety_HTTP\">Unknown</span>Connexion Internet</li>\
-                <li id=\"Safety_GSM_bg\"><img class=\"picto\" src=\""+lost_icons_path+"sat.jpg\"><span id=\"Safety_GSM\">Unknown</span>Reseau GSM</li>\
+                <li id=\"Safety_BtFz_Temp_bg\"><img class=\"picto\" src=\""+lost_icons_path+"temperature.jpg\"><span id=\"Safety_BtFz_Temp\">Unknown</span>Freezer Temperature</li>\
+                <li>Freezer Temperature Threshold\
+                <SELECT id=\"Safety_BtFz_Temp_Th\"><script language=\"Javascript\">printSelectOptionMinMax(\"Safety_BtFz_Temp_Th\",0,20);</script></SELECT>\
+                </li>\
+                <li id=\"Safety_BtFz_Net_bg\"><img class=\"picto\" src=\""+lost_icons_path+"elec.jpg\"><span id=\"Safety_BtFz_Net\">Unknown</span>Freezer Network</li>\
             </ul>\
         </fieldset>\
     </div>\
@@ -1232,6 +1308,15 @@ document.write("\
         </ul>\
         <ul class=\"iArrow\">\
             <li><a href=\"#_HomeEasySend\"><img class=\"picto\" src=\""+lost_icons_path+"send.jpg\"/>Send</a></li>\
+        </ul>\
+        <legend>HT12E</legend>\
+        <ul>\
+            <li id=\"LbCom_HT12ETM_Address_bg\"><img class=\"picto\" src=\""+lost_icons_path+"device.jpg\"><span id=\"LbCom_HT12ETM_Address\">Unknown</span>Address</li>\
+            <li id=\"LbCom_HT12ETM_Data_bg\"><img class=\"picto\" src=\""+lost_icons_path+"status.jpg\"><span id=\"LbCom_HT12ETM_Data\">Unknown</span>Data</li>\
+            <li id=\"LbCom_HT12ETM_CodeReset_bg\"><a href=\"javascript:lost_lbcom_ht12etm_codereset();\" class=\"iButton iBWarn\" style=\"width:60px\">Reset</a><img class=\"picto\" src=\""+lost_icons_path+"reset.jpg\"><span id=\"LbCom_HT12ETM_CodeReset\"></span>CodeReset</li>\
+        </ul>\
+        <ul class=\"iArrow\">\
+            <li><a href=\"#_HT12ESend\"><img class=\"picto\" src=\""+lost_icons_path+"send.jpg\"/>Send</a></li>\
         </ul>\
         <legend>GSM</legend>\
         <ul>\
@@ -1267,6 +1352,19 @@ document.write("\
             <li><img class=\"picto\" src=\""+lost_icons_path+"status.jpg\"><input type=\"checkbox\" id=\"HomeEasySend_Status\" class=\"iToggle\" title=\"ON|OFF\"><label for=\"HomeEasySend_Status\">Status</label></li>\
         </ul>\
         <input type=\"button\" class=\"iPush iBCancel\" value=\"Send\" style=\"width:100%\" onClick=\"lost_lbcom_homeeasytc_send();\"/>\
+    </div>\
+</div>\
+");
+
+document.write("\
+<div class=\"iLayer\" id=\"waHT12ESend\" title=\"HT12E Send\">\
+    <div class=\"iMenu\">\
+        <legend>HT12E Code</legend>\
+        <ul>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"device.jpg\"><label>Address</label><input type=\"text\" id=\"HT12ESend_Address\"/></li>\
+            <li><img class=\"picto\" src=\""+lost_icons_path+"status.jpg\"><label>Data</label><input type=\"text\" id=\"HT12ESend_Data\"/></li>\
+        </ul>\
+        <input type=\"button\" class=\"iPush iBCancel\" value=\"Send\" style=\"width:100%\" onClick=\"lost_lbcom_ht12etc_send();\"/>\
     </div>\
 </div>\
 ");
