@@ -154,13 +154,13 @@ THREAD(AlarmD, arg)
     /* Check the authorized codes */
     if(0x5956 == ht12eTM_address)
     {
-      if(0x99 == ht12eTM_data) // = D button (B button = 0xA9)
+      if(0x99 == ht12eTM_data) // = C button
       {
         buzzer_stop();
         buzzer_on(); NutSleep(500); buzzer_off();
         alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); alarm_volume_set(ALARM_TYPE_OFF_MANUAL);
       }
-      else if(0x59 == ht12eTM_data) // = C button (A button = 0x69)
+      else if(0xA9 == ht12eTM_data) // = D button
       {
         buzzer_stop();
         buzzer_on(); NutSleep(500); buzzer_off(); NutSleep(500);

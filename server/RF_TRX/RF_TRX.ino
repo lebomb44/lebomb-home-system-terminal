@@ -385,10 +385,13 @@ void loop() {
   /* A full code as been received */
   if(true == ht12e.rxCodeIsReady()) {
     HT12E_PRINT(
-      Serial.print(ht12e.rxGetCode(), HEX);Serial.print(" : ");
-      Serial.print(ht12e.rxGetAddress(), HEX);Serial.print(" - ");
-      Serial.print(ht12e.rxGetData(), HEX);Serial.println();
-      //ht12e.histoDump();
+      if(0x5956 == ht12e.rxGetAddress())
+      {
+        Serial.print(ht12e.rxGetCode(), HEX);Serial.print(" : ");
+        Serial.print(ht12e.rxGetAddress(), HEX);Serial.print(" - ");
+        Serial.print(ht12e.rxGetData(), HEX);Serial.println();
+        //ht12e.histoDump();
+      }
     )
     ht12e.purge();
     /* Prepare the message to send to the central */
