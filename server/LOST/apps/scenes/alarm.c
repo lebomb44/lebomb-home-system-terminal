@@ -318,18 +318,44 @@ int alarm_form(FILE * stream, REQUEST * req)
 
 int alarm_xml_get(FILE * stream)
 {
+  tm time_now;
+
   fprintf_XML_elt_header("Alarm", stream);
   fprintf_XML_elt_int("Perimeter"      , alarm_perimeter.status , stream);
   fprintf_XML_elt_int("Perimeter_Ctrl" , alarm_perimeter.control , stream);
   fprintf_XML_elt_int("Perimeter_Trig" , alarm_perimeter.trig , stream);
+  localtime_r(&(alarm_perimeter.time), &time_now);
+  fprintf_XML_elt_int02("Perimeter_wday", time_now.tm_wday     , stream);
+  fprintf_XML_elt_int02("Perimeter_mon" , time_now.tm_mon+1    , stream);
+  fprintf_XML_elt_int02("Perimeter_mday", time_now.tm_mday     , stream);
+  fprintf_XML_elt_int02("Perimeter_hour", time_now.tm_hour     , stream);
+  fprintf_XML_elt_int02("Perimeter_min" , time_now.tm_min      , stream);
+  fprintf_XML_elt_int02("Perimeter_sec" , time_now.tm_sec      , stream);
+  fprintf_XML_elt_int02("Perimeter_year", time_now.tm_year+1900, stream);
 
   fprintf_XML_elt_int("Volume"         , alarm_volume.status    , stream);
   fprintf_XML_elt_int("Volume_Ctrl"    , alarm_volume.control    , stream);
   fprintf_XML_elt_int("Volume_Trig"    , alarm_volume.trig    , stream);
+  localtime_r(&(alarm_volume.time), &time_now);
+  fprintf_XML_elt_int02("Volume_wday", time_now.tm_wday     , stream);
+  fprintf_XML_elt_int02("Volume_mon" , time_now.tm_mon+1    , stream);
+  fprintf_XML_elt_int02("Volume_mday", time_now.tm_mday     , stream);
+  fprintf_XML_elt_int02("Volume_hour", time_now.tm_hour     , stream);
+  fprintf_XML_elt_int02("Volume_min" , time_now.tm_min      , stream);
+  fprintf_XML_elt_int02("Volume_sec" , time_now.tm_sec      , stream);
+  fprintf_XML_elt_int02("Volume_year", time_now.tm_year+1900, stream);
 
   fprintf_XML_elt_int("Simulation"     , alarm_simulation.status, stream);
   fprintf_XML_elt_int("Simulation_Ctrl", alarm_simulation.control, stream);
   fprintf_XML_elt_int("Simulation_Trig", alarm_simulation.trig, stream);
+  localtime_r(&(alarm_simulation.time), &time_now);
+  fprintf_XML_elt_int02("Simulation_wday", time_now.tm_wday     , stream);
+  fprintf_XML_elt_int02("Simulation_mon" , time_now.tm_mon+1    , stream);
+  fprintf_XML_elt_int02("Simulation_mday", time_now.tm_mday     , stream);
+  fprintf_XML_elt_int02("Simulation_hour", time_now.tm_hour     , stream);
+  fprintf_XML_elt_int02("Simulation_min" , time_now.tm_min      , stream);
+  fprintf_XML_elt_int02("Simulation_sec" , time_now.tm_sec      , stream);
+  fprintf_XML_elt_int02("Simulation_year", time_now.tm_year+1900, stream);
   fprintf_XML_elt_trailer("Alarm", stream);
 
   return 0;
