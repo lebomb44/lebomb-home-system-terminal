@@ -137,11 +137,15 @@ void alarm_simulation_set(ALARM_TYPE_T type)
   alarm_simulation.trig = 0;
 }
 
+#define HISTO_PERIMETER_SIZE 10
 THREAD(AlarmD, arg)
 {
   char msg[60] = { 0 };
   uint16_t ht12eTM_address = 0;
   uint8_t ht12eTM_data = 0;
+  uint8_t histo_perimeter[HISTO_PERIMETER_SIZE] = { 0 };
+  uint8_t histo_perimeter_index = 0;
+  uint8_t i = 0;
 
   arg = arg;
   NutThreadSetPriority(105);
@@ -175,7 +179,14 @@ THREAD(AlarmD, arg)
     if(0 == alarm_perimeter.trig)
     {
       /* Update status */
-      alarm_perimeter.status = volume_status_group1_get();
+      histo_perimeter[histo_perimeter_index] = volume_status_group1_get();
+      histo_perimeter_index = (histo_perimeter_index + 1) % HISTO_PERIMETER_SIZE;
+      /* Compute filtered status */
+      alarm_perimeter.status = 0xFF;
+      for(i=0; i<HISTO_PERIMETER_SIZE; i++)
+      {
+        alarm_perimeter.status = alarm_perimeter.status & histo_perimeter[i];
+      }
       /* If alarm is enabled */
       if(1 == alarm_perimeter.control)
       {
@@ -216,7 +227,7 @@ THREAD(AlarmD, arg)
       }
     }
 
-    NutSleep(1000);
+    NutSleep(100);
   }
 }
 
