@@ -253,7 +253,7 @@ int alarm_form(FILE * stream, REQUEST * req)
       if('?' == arg_s[0]) { fprintf(stream, "%d", alarm_perimeter.control); }
       else 
       {
-        if(1 == password_ok)
+        /* FIXME if(1 == password_ok) */
         {
           if(0 < strtoul(arg_s, NULL, 10))
           {
