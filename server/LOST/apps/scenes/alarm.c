@@ -234,7 +234,7 @@ THREAD(AlarmD, arg)
 int alarm_form(FILE * stream, REQUEST * req)
 {
   char* arg_s = NULL;
-  uint8_t password_ok = 0;
+  uint8_t password_ok = 1; /* FIXME */
 
   NutHttpSendHeaderTop(stream, req, 200, "Ok");
   NutHttpSendHeaderBottom(stream, req, "text/html", -1);
@@ -253,7 +253,7 @@ int alarm_form(FILE * stream, REQUEST * req)
       if('?' == arg_s[0]) { fprintf(stream, "%d", alarm_perimeter.control); }
       else 
       {
-        /* FIXME if(1 == password_ok) */
+        if(1 == password_ok)
         {
           if(0 < strtoul(arg_s, NULL, 10))
           {
