@@ -1,4 +1,4 @@
-SET DEVBASE_DRIVE=D:
-SET DEVBASE=%DEVBASE_DRIVE%/workspace/lebomb-home-system-terminal
+SET DEVBASE_DRIVE=Z:
+SET DEVBASE=%DEVBASE_DRIVE%/home/nicole/workspace/lebomb-home-system-terminal
 SET COMPILER_VERSION=WinAVR_20100110
 SET OS_VERSION=2.1B_4.10.3.1
