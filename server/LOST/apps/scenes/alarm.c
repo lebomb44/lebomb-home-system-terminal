@@ -74,8 +74,8 @@ uint8_t alarm_action(char* msg)
 /* This function is executed if an alarm is detected */
 uint8_t alarm_action_with_buzzer(char* msg)
 {
-  alarm_action(msg);
   buzzer_start(60*60); /* 60 minutes */
+  alarm_action(msg);
 
   return 0;
 }
