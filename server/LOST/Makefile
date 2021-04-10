@@ -16,6 +16,7 @@ apps/lbcom/lbcom_homeeasyTC.c apps/lbcom/lbcom_homeeasyTM.c \
 apps/lbcom/lbcom_ht12eTC.c apps/lbcom/lbcom_ht12eTM.c \
 apps/lbcom/lbcom_gsmTC.c apps/lbcom/lbcom_gsmTM.c \
 apps/lbcom/lbcom_bourdilot_freezerTC.c apps/lbcom/lbcom_bourdilot_freezerTM.c \
+apps/lbcom/lbcom_alarmTC.c apps/lbcom/lbcom_alarmTM.c \
 $(WEBFILE)
 
 #apps/media/freebox.c apps/media/remote.c \
