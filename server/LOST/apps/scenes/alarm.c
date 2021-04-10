@@ -11,11 +11,13 @@
 #include "../../config.h"
 #include "../../devices/volume.h"
 #include "../../devices/buzzer.h"
+#include "../../devices/ID.h"
 #include "../../services/http.h"
 #include "../../services/web.h"
 
 #include "../lbcom/lbcom_ht12eTM.h"
 #include "../lbcom/lbcom_gsmTC.h"
+#include "../lbcom/lbcom_alarmTM.h"
 
 #include "alarm.h"
 
@@ -141,8 +143,7 @@ void alarm_simulation_set(ALARM_TYPE_T type)
 THREAD(AlarmD, arg)
 {
   char msg[60] = { 0 };
-  uint16_t ht12eTM_address = 0;
-  uint8_t ht12eTM_data = 0;
+  uint8_t alarm_status = 0;
   uint8_t histo_perimeter[HISTO_PERIMETER_SIZE] = { 0 };
   uint8_t histo_perimeter_index = 0;
   uint8_t i = 0;
@@ -152,28 +153,23 @@ THREAD(AlarmD, arg)
 
   while(1)
   {
-    ht12eTM_address = lbcom_ht12eTM_address_get();
-    ht12eTM_data = lbcom_ht12eTM_data_get();
+    alarm_status = lbcom_alarmTM_status_get();
 
-    /* Check the authorized codes */
-    if(0x5956 == ht12eTM_address)
+    if(ID_ALARM_OFF_TM == alarm_status)
     {
-      if(0x99 == ht12eTM_data) // = C button
-      {
-        buzzer_stop();
-        buzzer_on(); NutSleep(500); buzzer_off();
-        alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); alarm_volume_set(ALARM_TYPE_OFF_MANUAL);
-      }
-      else if(0xA9 == ht12eTM_data) // = D button
-      {
-        buzzer_stop();
-        buzzer_on(); NutSleep(500); buzzer_off(); NutSleep(500);
-        buzzer_on(); NutSleep(500); buzzer_off(); NutSleep(500);
-        buzzer_on(); NutSleep(500); buzzer_off();
-        alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); alarm_volume_set(ALARM_TYPE_ON_MANUAL);
-      }
-      lbcom_ht12eTM_code_reset();
+      buzzer_stop();
+      buzzer_on(); NutSleep(500); buzzer_off();
+      alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); alarm_volume_set(ALARM_TYPE_OFF_MANUAL);
     }
+    else if(ID_ALARM_ON_TM == alarm_status)
+    {
+      buzzer_stop();
+      buzzer_on(); NutSleep(500); buzzer_off(); NutSleep(500);
+      buzzer_on(); NutSleep(500); buzzer_off(); NutSleep(500);
+      buzzer_on(); NutSleep(500); buzzer_off();
+      alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); alarm_volume_set(ALARM_TYPE_ON_MANUAL);
+    }
+    lbcom_alarmTM_status_reset();
 
     /* Only update the status if the alarm did not trigger */
     if(0 == alarm_perimeter.trig)
