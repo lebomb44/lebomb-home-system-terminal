@@ -31,6 +31,9 @@
 #define NRF24_MISO_pin 50
 #define NRF24_SCK_pin  52
 
+#define ALARM_STATUS_pin 2
+#define ALARM_STATUS_NB_MAX 200
+
 /* *****************************
  *  Global variables
  * *****************************
@@ -41,6 +44,9 @@ RF24 nrf24(NRF24_CE_pin, NRF24_CSN_pin);
 GPRS gprs(&Serial3, 19200);
 uint32_t gprs_checkPowerUp_task = 0;
 uint32_t gprs_checkPowerUp_counter = 0;
+uint8_t alarm_status_previous = 0;
+uint8_t alarm_status_current = 0;
+uint8_t alarm_status_nb = ALARM_STATUS_NB_MAX;
 
 /* *****************************
  *  Debug Macros
@@ -313,6 +319,8 @@ void setup() {
   pinMode(NRF24_SCK_pin, OUTPUT);
   digitalWrite(NRF24_SCK_pin, HIGH);
 
+  pinMode(ALARM_STATUS_pin, INPUT_PULLUP);
+
 /* ****************************
  *  Modules initialization
  * ****************************
@@ -347,6 +355,10 @@ void setup() {
   Serial.println("NRF24 listening started");
 
   gprs.init();
+
+  alarm_status_previous = 0;
+  alarm_status_current = 0;
+  alarm_status_nb = ALARM_STATUS_NB_MAX;
 
   cmdInit();
 
@@ -479,6 +491,34 @@ void loop() {
       /* Try to initialize thr shield */
       if(true == gprs.init()) { GPRS_PRINT( Serial.println("OK"); ) } else { GPRS_PRINT( Serial.println("ERROR"); ) }
     }
+  }
+
+  /* ****************************
+   *  Alarm loop
+   * ****************************
+   */
+  if(LOW == digitalRead(ALARM_STATUS_pin)) {
+    if(0 < alarm_status_nb) { alarm_status_nb--; }
+  }
+  else {
+    if(alarm_status_nb < ALARM_STATUS_NB_MAX) { alarm_status_nb++; }
+  }
+  if(alarm_status_nb < ALARM_STATUS_NB_MAX / 2) {
+    alarm_status_current = ID_ALARM_ON_TM;
+  }
+  else {
+    alarm_status_current = ID_ALARM_OFF_TM;
+  }
+
+  if(alarm_status_current != alarm_status_previous) {
+    /* Prepare the message to send to the central */
+    LbMsg hktm(0); hktm.setSrc(ID_GSM_SLAVE); hktm.setDst(ID_LOST_MASTER); hktm.setCmd(alarm_status_current);
+    /* Compute the CRC */
+    hktm.compute();
+    LBCOM_PRINT( Serial.print("hktm: ID_ALARM_ON_TM"); )
+    /* Send the message */
+    LBCOM_PRINT( Serial.print(") : "); ) sendLbMsg(hktm);
+    alarm_status_previous = alarm_status_current;
   }
 
   /* Poll for new command line */
