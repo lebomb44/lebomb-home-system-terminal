@@ -31,7 +31,7 @@
 #define NRF24_MISO_pin 50
 #define NRF24_SCK_pin  52
 
-#define ALARM_STATUS_pin 2
+#define ALARM_STATUS_pin A15
 #define ALARM_STATUS_NB_MAX 200
 
 /* *****************************
