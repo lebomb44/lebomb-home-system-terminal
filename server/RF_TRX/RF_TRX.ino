@@ -255,15 +255,15 @@ bool execMsg(String ife, LbMsg & msg) {
         else if(ID_GSM_SENDSMS_TC == msg.getCmd()) {
           GPRS_PRINT( Serial.print("  " + ife + " tc: ID_GSM_SENDSMS_TC: "); )
           /* Data is phone number + '0' + text + '0' */
-          if(11 < msg.getDataLen()) {
+          if(13 < msg.getDataLen()) {
             GPRS_PRINT( Serial.println("OK"); )
             /* Force the end of line at the end of the phone number string */
-            msg.getData()[10] = 0;
+            msg.getData()[12] = 0;
             /* Force the end of line at the end of the test string which is the latest data */
             msg.getData()[msg.getDataLen()-1] = 0;
             /* Build a TM to send back containing the status of the command execution */
             LbMsg tm(1); tm.setSrc(msg.getDst()); tm.setDst(msg.getSrc()); tm.setCmd(ID_GSM_SENDSMS_TM);
-            tm.getData()[0] = gprs.sendSMS(&(msg.getData()[0]), &(msg.getData()[11]));
+            tm.getData()[0] = gprs.sendSMS(&(msg.getData()[0]), &(msg.getData()[13]));
             /* Compute the CRC and send the message */
             tm.compute(); sendLbMsg(tm);
             GPRS_PRINT( Serial.print("    " + ife + " tm: ID_GSM_SENDSMS_TM: "); Serial.println(tm.getData()[0]); )
@@ -515,9 +515,14 @@ void loop() {
     LbMsg hktm(0); hktm.setSrc(ID_GSM_SLAVE); hktm.setDst(ID_LOST_MASTER); hktm.setCmd(alarm_status_current);
     /* Compute the CRC */
     hktm.compute();
-    LBCOM_PRINT( Serial.print("hktm: ID_ALARM_ON_TM"); )
+    if(ID_ALARM_ON_TM == alarm_status_current) {
+      LBCOM_PRINT( Serial.print("hktm: ID_ALARM_ON_TM"); )
+    }
+    if(ID_ALARM_OFF_TM == alarm_status_current) {
+      LBCOM_PRINT( Serial.print("hktm: ID_ALARM_OFF_TM"); )
+    }
     /* Send the message */
-    LBCOM_PRINT( Serial.print(") : "); ) sendLbMsg(hktm);
+    sendLbMsg(hktm);
     alarm_status_previous = alarm_status_current;
   }
 
