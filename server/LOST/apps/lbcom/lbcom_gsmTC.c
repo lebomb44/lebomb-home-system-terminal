@@ -46,8 +46,8 @@ uint8_t lbcom_gsmTC_sms_send_with_phone(char * phone, char * msg)
   int msg_len = 0;
 
   phone_len = strnlen(phone, 12);
-  if(10 != phone_len) { return 1; }
-  msg_len = strnlen(msg, 255-12-1-1);
+  if(12 == phone_len) { phone[0] = '+'; }
+  msg_len = strnlen(msg, 255-phone_len-1-1);
 
   lbcomif_sendByte(0xAA);
   lbcomif_sendByte(ID_LOST_MASTER); crc = _crc_ibutton_update(crc, ID_LOST_MASTER);
