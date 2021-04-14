@@ -512,7 +512,7 @@ void loop() {
 
   if(alarm_status_current != alarm_status_previous) {
     /* Prepare the message to send to the central */
-    LbMsg hktm(0); hktm.setSrc(ID_GSM_SLAVE); hktm.setDst(ID_LOST_MASTER); hktm.setCmd(alarm_status_current);
+    LbMsg hktm(0); hktm.setSrc(ID_ALARM_SLAVE); hktm.setDst(ID_LOST_MASTER); hktm.setCmd(alarm_status_current);
     /* Compute the CRC */
     hktm.compute();
     if(ID_ALARM_ON_TM == alarm_status_current) {
