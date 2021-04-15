@@ -52,6 +52,6 @@ uint8_t volume_status_group1_get(void)
 uint8_t volume_status_group2_get(void)
 {
   return ((GpioPinGet(VOLUME2_PORT, VOLUME2_BIT) << 2 ) | \
-          (GpioPinGet(VOLUME3_PORT, VOLUME3_BIT) << 3 ));
+          /* FIXME (GpioPinGet(VOLUME3_PORT, VOLUME3_BIT) << 3 ) */);
 }
 
