@@ -76,12 +76,16 @@ uint8_t lbcom_gsmTC_sms_send(char * msg)
 {
   uint8_t ret1 = 0;
   uint8_t ret2 = 0;
+  uint8_t ret3 = 0;
 
   ret1 = lbcom_gsmTC_sms_send_with_phone(LOST_GSM1, msg);
   NutSleep(2000);
   ret2 = lbcom_gsmTC_sms_send_with_phone(LOST_GSM2, msg);
+  NutSleep(2000);
+  ret3 = lbcom_gsmTC_sms_send_with_phone(LOST_GSM3, msg);
+  NutSleep(2000);
 
-  return (ret1 + ret2);
+  return (ret1 + ret2 + ret3);
 }
 
 int lbcom_gsmTC_form(FILE * stream, REQUEST * req)
