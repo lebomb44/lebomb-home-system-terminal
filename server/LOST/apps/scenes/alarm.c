@@ -160,6 +160,7 @@ THREAD(AlarmD, arg)
       buzzer_stop();
       buzzer_on(); NutSleep(500); buzzer_off();
       alarm_perimeter_set(ALARM_TYPE_OFF_MANUAL); alarm_volume_set(ALARM_TYPE_OFF_MANUAL);
+      alarm_action("Alarme-desactivee-OFF");
     }
     else if(ID_ALARM_ON_TM == alarm_status)
     {
@@ -168,6 +169,7 @@ THREAD(AlarmD, arg)
       buzzer_on(); NutSleep(500); buzzer_off(); NutSleep(500);
       buzzer_on(); NutSleep(500); buzzer_off();
       alarm_perimeter_set(ALARM_TYPE_ON_MANUAL); alarm_volume_set(ALARM_TYPE_ON_MANUAL);
+      alarm_action("Alarme-activee-ON");
     }
     lbcom_alarmTM_status_reset();
 
