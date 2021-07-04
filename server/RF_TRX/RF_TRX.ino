@@ -63,6 +63,8 @@ bool gprs_printIsEnabled  = true;
 #define NRF24_PRINT(m) if(true == nrf24_printIsEnabled) { m }
 #define GPRS_PRINT(m)  if(true == gprs_printIsEnabled) { m }
 
+void(* resetArduino) (void) = 0;
+
 /* *****************************
  *  Command lines funstions
  * *****************************
@@ -530,4 +532,9 @@ void loop() {
   cmdPoll();
   /* Wait a minimum for cyclic task */
   delay(1);
+
+  /* Reset every day */
+  if(86400000<millis()) {
+    resetArduino();
+  }
 }
