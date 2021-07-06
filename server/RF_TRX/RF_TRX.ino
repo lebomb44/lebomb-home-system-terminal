@@ -44,8 +44,8 @@ RF24 nrf24(NRF24_CE_pin, NRF24_CSN_pin);
 GPRS gprs(&Serial3, 19200);
 uint32_t gprs_checkPowerUp_task = 0;
 uint32_t gprs_checkPowerUp_counter = 0;
-uint8_t alarm_status_previous = 0;
-uint8_t alarm_status_current = 0;
+uint8_t alarm_status_previous = ID_ALARM_OFF_TM;
+uint8_t alarm_status_current = ID_ALARM_OFF_TM;
 uint8_t alarm_status_nb = ALARM_STATUS_NB_MAX;
 
 /* *****************************
@@ -358,8 +358,8 @@ void setup() {
 
   gprs.init();
 
-  alarm_status_previous = 0;
-  alarm_status_current = 0;
+  alarm_status_previous = ID_ALARM_OFF_TM;
+  alarm_status_current = ID_ALARM_OFF_TM;
   alarm_status_nb = ALARM_STATUS_NB_MAX;
 
   cmdInit();
