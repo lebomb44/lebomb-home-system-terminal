@@ -266,7 +266,7 @@ bool execMsg(String ife, LbMsg & msg) {
             /* Build a TM to send back containing the status of the command execution */
             LbMsg tm(1); tm.setSrc(msg.getDst()); tm.setDst(msg.getSrc()); tm.setCmd(ID_GSM_SENDSMS_TM);
             char ph[] = "0689350159";
-            tm.getData()[0] = gprs.sendSMS(ph /*&(msg.getData()[0]*/), &(msg.getData()[13]));
+            tm.getData()[0] = gprs.sendSMS(ph /*&(msg.getData()[0])*/, &(msg.getData()[13]));
             /* Compute the CRC and send the message */
             tm.compute(); sendLbMsg(tm);
             GPRS_PRINT( Serial.print("    " + ife + " tm: ID_GSM_SENDSMS_TM: "); Serial.println(tm.getData()[0]); )
