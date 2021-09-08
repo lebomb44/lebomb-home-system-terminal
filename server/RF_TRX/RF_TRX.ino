@@ -473,10 +473,24 @@ void loop() {
     /* SRC DST CMS LEN status signalStrength CRC */
     /* But also reset the power Up timeout */
     int signalStrengthValue = 0;
-    if(true == gprs.getSignalStrength(&signalStrengthValue)) {
-      if(0 < signalStrengthValue) {
-        gprs_checkPowerUp_counter = 0; hktm.getData()[0] = 1;
+    if(true == gprs.init()) {
+      hktm.getData()[0] = 1;
+      if(true == gprs.isNetworkRegistered()) {
+        if(true == gprs.getSignalStrength(&signalStrengthValue)) {
+          if(0 < signalStrengthValue) {
+            gprs_checkPowerUp_counter = 0;
+          }
+        }
+        else {
+          LBCOM_PRINT( Serial.println("ERROR gprs.getSignalStrength"); )
+        }
       }
+      else {
+        LBCOM_PRINT( Serial.println("ERROR gprs.isNetworkRegistered"); )
+      }
+    }
+    else {
+      LBCOM_PRINT( Serial.println("ERROR gprs.init"); )
     }
     hktm.getData()[1] = 0x000000FF & (signalStrengthValue>>8);
     hktm.getData()[2] = 0x000000FF & (signalStrengthValue);
