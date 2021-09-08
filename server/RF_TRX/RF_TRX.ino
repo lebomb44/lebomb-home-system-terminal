@@ -250,7 +250,7 @@ bool execMsg(String ife, LbMsg & msg) {
             tm.getData()[2] = 0x000000FF & (signalStrengthValue);
             /* Compute the CRC and send the message */
             tm.compute(); sendLbMsg(tm);
-            GPRS_PRINT( Serial.print("    " + ife + " tm: ID_GSM_GETSIGNALSTRENGTH_TM: "); Serial.print(tm.getData()[0]); Serial.print(", "); Serial.println(*((int*)(tm.getData()+1))); )
+            GPRS_PRINT( Serial.print("    " + ife + " tm: ID_GSM_GETSIGNALSTRENGTH_TM: "); Serial.print(tm.getData()[0]); Serial.print(", "); Serial.println(signalStrengthValue); )
           }
           else { GPRS_PRINT( Serial.println("ERROR: bad data length"); ) }
         }
