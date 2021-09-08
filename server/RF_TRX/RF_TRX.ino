@@ -265,14 +265,10 @@ bool execMsg(String ife, LbMsg & msg) {
             msg.getData()[msg.getDataLen()-1] = 0;
             /* Build a TM to send back containing the status of the command execution */
             LbMsg tm(1); tm.setSrc(msg.getDst()); tm.setDst(msg.getSrc()); tm.setCmd(ID_GSM_SENDSMS_TM);
-            char ph[] = "+33689350159";
-            tm.getData()[0] = gprs.sendSMS(ph /*&(msg.getData()[0])*/, &(msg.getData()[13]));
+            tm.getData()[0] = gprs.sendSMS(&(msg.getData()[0]), &(msg.getData()[13]));
             /* Compute the CRC and send the message */
             tm.compute(); sendLbMsg(tm);
             GPRS_PRINT( Serial.print("    " + ife + " tm: ID_GSM_SENDSMS_TM: "); Serial.println(tm.getData()[0]); )
-            
-            Serial.print("CHECK PU: "); Serial.println(gprs.checkPowerUp());
-            Serial.print("CHECK INIT: "); Serial.println(gprs.init());
           }
           else { GPRS_PRINT( Serial.println("ERROR: data length too short"); ) }
         }
