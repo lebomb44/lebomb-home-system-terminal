@@ -359,6 +359,7 @@ void setup() {
   nrf24.startListening();
   Serial.println("NRF24 listening started");
 
+  gprs.powerUpDown(GSM_POWER_pin);
   gprs.init();
 
   alarm_status_previous = ID_ALARM_OFF_TM;
